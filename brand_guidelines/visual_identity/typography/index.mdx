@@ -1,14 +1,549 @@
+---
+title: Typography
+description: Typography system and usage guidelines for the job orchestrator platform
+---
+
+import ColorDisplay from '@site/src/components/guidelines/ColorDisplay';
+import TypographyTable from '@site/src/components/guidelines/TypographyTable';
+
 # Typography
 
-*This section is ready for your typography guidelines.*
+Our typography system is designed for **clarity, efficiency, and minimalism**. With limited screen space in a complex developer tool, we prioritize readability and information density over decorative hierarchy.
 
-## Suggested Content Structure
+## Design Principles
 
-- Primary and secondary font families
-- Typography scale (headings, body text, captions)
-- Font weights and usage guidelines
-- Line height and spacing recommendations
-- Responsive typography guidelines
-- Code implementation examples
+- **Space-efficient**: Default to 12px for body text to maximize content visibility
+- **Minimal hierarchy**: Only 3 header levels to avoid confusion
+- **Weight over size**: Use font-weight to create hierarchy, not excessive size changes
+- **Functional**: Every style has a clear, specific purpose
 
-Add your specific typography guidelines and specifications here.
+## Font Family
+
+We use **Inter** for all UI text due to its excellent readability at small sizes and professional appearance.
+For technical content (IDs, code snippets, JSON), use the system **monospace** font.
+
+## Text Colors
+
+<ColorDisplay
+	colors={[
+		{
+			name: 'text-primary',
+			hex: '#4a5568',
+			description: 'Default text, body content, descriptions'
+		},
+		{
+			name: 'text-emphasis',
+			hex: '#2d3748',
+			description: 'Headers, labels, emphasized content'
+		},
+		{
+			name: 'text-secondary',
+			hex: '#718096',
+			description: 'Supporting information, metadata, timestamps'
+		},
+		{
+			name: 'text-hint',
+			hex: '#757E8F',
+			description: 'Placeholders, tooltips, subtle hints'
+		},
+		{
+			name: 'text-disabled',
+			hex: '#a0aec0',
+			description: 'Disabled states, unavailable options'
+		}
+	]}
+	darkColors={[
+		{
+			name: 'text-primary',
+			hex: '#d4d8dd',
+			description: 'Default text, body content, descriptions'
+		},
+		{
+			name: 'text-emphasis',
+			hex: '#f3f4f6',
+			description: 'Headers, labels, emphasized content'
+		},
+		{
+			name: 'text-secondary',
+			hex: '#aab0bb',
+			description: 'Supporting information, metadata, timestamps'
+		},
+		{
+			name: 'text-hint',
+			hex: '#9196a1',
+			description: 'Placeholders, tooltips, subtle hints'
+		},
+		{
+			name: 'text-disabled',
+			hex: '#ffffff',
+			description: 'Disabled states, unavailable options'
+		}
+	]}
+/>
+
+### Color Philosophy
+
+We use a **lighter default** with a **darker emphasis option** to:
+
+- Reduce eye strain during extended use
+- Create clear visual hierarchy without relying on size
+- Make emphasized content truly stand out
+- Align with modern developer tool aesthetics
+
+**Key principle:** Use `text-primary` for most content, reserve `text-emphasis` for true importance.
+
+## Type Styles
+
+### Typography Scale Overview
+
+<TypographyTable
+	lightExamples={[
+		{
+			style: 'Page Title',
+			example: <div style={{ fontSize: '24px', fontWeight: '600', color: '#2d3748' }}>Home</div>,
+			specifications: '24px • 600 weight • text-emphasis',
+			usage: 'Main application page titles'
+		},
+		{
+			style: 'Title',
+			example: (
+				<div style={{ fontSize: '18px', fontWeight: '600', color: '#2d3748' }}>Flow inputs</div>
+			),
+			specifications: '18px • 600 weight • text-emphasis',
+			usage: 'Top-level page headings, modal titles'
+		},
+		{
+			style: 'Section Header',
+			example: (
+				<div style={{ fontSize: '14px', fontWeight: '600', color: '#2d3748' }}>
+					Advanced settings
+				</div>
+			),
+			specifications: '14px • 600 weight • text-emphasis',
+			usage: 'Panel headers, card titles, sidebar groups'
+		},
+		{
+			style: 'Body',
+			example: (
+				<div style={{ fontSize: '12px', fontWeight: '400', color: '#4a5568' }}>
+					Default text throughout the application
+				</div>
+			),
+			specifications: '12px • 400 weight • text-primary',
+			usage: 'Descriptions, content, list items, table cells'
+		},
+		{
+			style: 'Body Emphasized',
+			example: (
+				<div style={{ fontSize: '12px', fontWeight: '500', color: '#2d3748' }}>Field name:</div>
+			),
+			specifications: '12px • 500 weight • text-emphasis',
+			usage: 'Labels, form field labels, tab labels'
+		},
+		{
+			style: 'Secondary Text',
+			example: (
+				<div style={{ fontSize: '12px', fontWeight: '400', color: '#718096' }}>
+					Last run 2 hours ago
+				</div>
+			),
+			specifications: '12px • 400 weight • text-secondary',
+			usage: 'Supporting information, metadata, timestamps'
+		},
+		{
+			style: 'Caption',
+			example: (
+				<div style={{ fontSize: '11px', fontWeight: '400', color: '#718096' }}>Optional field</div>
+			),
+			specifications: '11px • 400 weight • text-secondary',
+			usage: 'Helper text, table headers, annotations'
+		},
+		{
+			style: 'Hint',
+			example: (
+				<div style={{ fontSize: '11px', fontWeight: '400', color: '#757E8F' }}>
+					Enter job name...
+				</div>
+			),
+			specifications: '11px • 400 weight • text-hint',
+			usage: 'Input placeholders, tooltips, empty states'
+		},
+		{
+			style: 'Code/Monospace',
+			example: (
+				<code
+					style={{
+						fontSize: '11px',
+						fontFamily: 'monospace',
+						color: '#2d3748',
+						backgroundColor: '#f7fafc',
+						padding: '2px 6px',
+						borderRadius: '3px'
+					}}
+				>
+					job_id_12345
+				</code>
+			),
+			specifications: '11px • 400 weight • monospace • text-emphasis',
+			usage: 'Job IDs, code snippets, file paths, API endpoints'
+		}
+	]}
+	darkExamples={[
+		{
+			style: 'Page Title',
+			example: <div style={{ fontSize: '24px', fontWeight: '600', color: '#f3f4f6' }}>Home</div>,
+			specifications: '24px • 600 weight • text-emphasis',
+			usage: 'Main application page titles'
+		},
+		{
+			style: 'Title',
+			example: (
+				<div style={{ fontSize: '18px', fontWeight: '600', color: '#f3f4f6' }}>Flow inputs</div>
+			),
+			specifications: '18px • 600 weight • text-emphasis',
+			usage: 'Top-level page headings, modal titles'
+		},
+		{
+			style: 'Section Header',
+			example: (
+				<div style={{ fontSize: '14px', fontWeight: '600', color: '#f3f4f6' }}>
+					Advanced settings
+				</div>
+			),
+			specifications: '14px • 600 weight • text-emphasis',
+			usage: 'Panel headers, card titles, sidebar groups'
+		},
+		{
+			style: 'Body',
+			example: (
+				<div style={{ fontSize: '12px', fontWeight: '400', color: '#d4d8dd' }}>
+					Default text throughout the application
+				</div>
+			),
+			specifications: '12px • 400 weight • text-primary',
+			usage: 'Descriptions, content, list items, table cells'
+		},
+		{
+			style: 'Body Emphasized',
+			example: (
+				<div style={{ fontSize: '12px', fontWeight: '500', color: '#f3f4f6' }}>Field name:</div>
+			),
+			specifications: '12px • 500 weight • text-emphasis',
+			usage: 'Labels, form field labels, tab labels'
+		},
+		{
+			style: 'Secondary Text',
+			example: (
+				<div style={{ fontSize: '12px', fontWeight: '400', color: '#aab0bb' }}>
+					Last run 2 hours ago
+				</div>
+			),
+			specifications: '12px • 400 weight • text-secondary',
+			usage: 'Supporting information, metadata, timestamps'
+		},
+		{
+			style: 'Caption',
+			example: (
+				<div style={{ fontSize: '11px', fontWeight: '400', color: '#aab0bb' }}>Optional field</div>
+			),
+			specifications: '11px • 400 weight • text-secondary',
+			usage: 'Helper text, table headers, annotations'
+		},
+		{
+			style: 'Hint',
+			example: (
+				<div style={{ fontSize: '11px', fontWeight: '400', color: '#9196a1' }}>
+					Enter job name...
+				</div>
+			),
+			specifications: '11px • 400 weight • text-hint',
+			usage: 'Input placeholders, tooltips, empty states'
+		},
+		{
+			style: 'Code/Monospace',
+			example: (
+				<code
+					style={{
+						fontSize: '11px',
+						fontFamily: 'monospace',
+						color: '#f3f4f6',
+						backgroundColor: '#3b4252',
+						padding: '2px 6px',
+						borderRadius: '3px'
+					}}
+				>
+					job_id_12345
+				</code>
+			),
+			specifications: '11px • 400 weight • monospace • text-emphasis',
+			usage: 'Job IDs, code snippets, file paths, API endpoints'
+		}
+	]}
+/>
+
+### App Page Title
+
+**When to use**: Main application page titles, primary navigation headings
+
+```tsx
+className = 'font-semibold text-2xl text-emphasis';
+```
+
+- **Size**: 24px (`text-2xl`)
+- **Weight**: 600 (`font-semibold`)
+- **Color**: `text-emphasis`
+- **Example**: "Job Orchestrator", "Flow Builder", "Resource Manager"
+
+---
+
+### Page Title
+
+**When to use**: Top-level page headings, modal titles, main view names
+
+```tsx
+className = 'text-lg font-semibold text-emphasis';
+```
+
+- **Size**: 18px (`text-lg`)
+- **Weight**: 600 (`font-semibold`)
+- **Color**: `text-emphasis`
+- **Example**: "Job Orchestrator Dashboard", "Edit Flow Configuration"
+
+---
+
+### Section Header
+
+**When to use**: Panel headers, card titles, collapsible section names, sidebar groups
+
+```tsx
+className = 'text-sm font-semibold text-emphasis';
+```
+
+- **Size**: 14px (`text-sm`)
+- **Weight**: 600 (`font-semibold`)
+- **Color**: `text-emphasis`
+- **Example**: "Active Jobs", "Configuration", "Environment Variables"
+
+---
+
+### Body
+
+**When to use**: Default text throughout the application - descriptions, content, list items, table cells
+
+```tsx
+className = 'text-xs font-normal text-primary';
+```
+
+- **Size**: 12px (`text-xs`)
+- **Weight**: 400 (`font-normal`)
+- **Color**: `text-primary`
+- **Example**: Form descriptions, paragraph content, dialog text
+
+**This is your default**. When in doubt, use this style.
+
+---
+
+### Body Emphasized
+
+**When to use**: Important labels, form field labels, tab labels, emphasis within body text
+
+```tsx
+className = 'text-xs font-medium text-emphasis';
+```
+
+- **Size**: 12px (`text-xs`)
+- **Weight**: 500 (`font-medium`)
+- **Color**: `text-emphasis`
+- **Example**: "Job Name:", "Status:", button labels
+
+---
+
+### Secondary Text
+
+**When to use**: Supporting information, metadata, timestamps, status descriptions
+
+```tsx
+className = 'text-xs font-normal text-secondary';
+```
+
+- **Size**: 12px (`text-xs`)
+- **Weight**: 400 (`font-normal`)
+- **Color**: `text-secondary`
+- **Example**: "Last run 2 hours ago", "Created by John Doe", file sizes
+
+---
+
+### Caption
+
+**When to use**: Helper text below inputs, table column headers, inline annotations, badges
+
+```tsx
+className = 'text-2xs font-normal text-secondary';
+```
+
+- **Size**: 11px (`text-2xs`)
+- **Weight**: 400 (`font-normal`)
+- **Color**: `text-secondary`
+- **Example**: "Optional field", "Max 100 characters", column headers
+
+---
+
+### Hint
+
+**When to use**: Input placeholders, tooltip content, empty state messages, subtle guidance
+
+```tsx
+className = 'text-2xs font-normal text-hint';
+```
+
+- **Size**: 11px (`text-2xs`)
+- **Weight**: 400 (`font-normal`)
+- **Color**: `text-hint`
+- **Example**: "Enter job name...", "Search flows", tooltip text
+
+---
+
+### Code/Monospace
+
+**When to use**: Job IDs, code snippets, file paths, API endpoints, JSON keys, technical identifiers
+
+```tsx
+className = 'text-2xs font-mono font-normal text-emphasis';
+```
+
+- **Size**: 11px (`text-2xs`)
+- **Weight**: 400 (`font-normal`)
+- **Color**: `text-emphasis`
+- **Font**: System monospace
+- **Example**: `job_id_12345`, `/api/v1/jobs`, `ENV_VAR_NAME`
+
+**Note**: Use `text-emphasis` for code to ensure technical values stand out and are easily scannable.
+
+---
+
+## Usage Guidelines
+
+### Creating Hierarchy
+
+Use these methods in order of preference:
+
+1. **Font weight** - Semibold (600) for headers, medium (500) for emphasis, normal (400) for body
+2. **Color** - Primary for main content, secondary for supporting info, hint for subtle guidance
+3. **Size** - Only change size for true hierarchy levels (page title vs section header vs body)
+
+**Don't** create hierarchy by:
+
+- Making text larger than 24px (except for App Page Titles)
+- Using more than 3 header levels
+- Adding excessive spacing or borders
+
+## Text Casing
+
+### Primary Rule: Use Sentence Case
+
+Use sentence case for all UI text—capitalize only the first word and proper nouns. This approach improves readability and is faster to implement consistently.
+
+**Examples:**
+
+- ✅ "Create new flow"
+- ✅ "Edit Windmill resource"
+- ❌ "Create New Flow"
+- ❌ "SAVE CHANGES"
+
+### Casing by Component Type
+
+**Page titles and headings**
+
+- Use sentence case: "Job orchestrator dashboard"
+
+**Buttons and actions**
+
+- Use sentence case: "Save changes", "Delete job"
+
+**Form labels**
+
+- Use sentence case: "Job name", "Resource type"
+
+**Navigation items**
+
+- Use sentence case: "User settings", "Resource manager"
+
+**Error messages and notifications**
+
+- Use sentence case: "Job completed successfully"
+
+### Always Capitalize
+
+- **Proper nouns**: Windmill, Docker, Python, GitHub
+- **Acronyms**: API, HTTP, JSON, SQL
+- **First word** of any sentence or UI element
+
+### Special Cases
+
+- **Technical identifiers**: Keep original casing (`job_id_123`, `ENV_VAR`)
+- **Brand names**: Follow brand guidelines (iPhone, macOS)
+- **Abbreviations**: Use standard forms (ID, URL, vs.)
+
+### Accessibility Note
+
+Avoid ALL CAPS text except for very short labels (2-3 characters max). All caps text is slower to read and can appear aggressive to users.
+
+## Decision Tree
+
+Not sure which style to use? Follow this:
+
+Is it a main application page title?
+→ **Yes**: App Page Title (24px, semibold)
+→ **No**: Continue
+
+Is it a page or modal title?
+→ **Yes**: Page Title (18px, semibold)
+→ **No**: Continue
+
+Is it a section/panel header?
+→ **Yes**: Section Header (14px, semibold)
+→ **No**: Continue
+
+Is it technical data (ID, code, path)?
+→ **Yes**: Code/Monospace (11px, mono)
+→ **No**: Continue
+
+Is it a placeholder or tooltip?
+→ **Yes**: Hint (11px, hint color)
+→ **No**: Continue
+
+Is it helper text or a table header?
+→ **Yes**: Caption (11px, secondary color)
+→ **No**: Continue
+
+Is it metadata or supporting info?
+→ **Yes**: Secondary Text (12px, secondary color)
+→ **No**: Continue
+
+Is it a label or needs emphasis?
+→ **Yes**: Body Emphasized (12px, medium weight, emphasis color)
+→ **No**: Body (12px, normal, primary color) ← **DEFAULT**
+
+## Accessibility
+
+- Maintain WCAG AA contrast ratios (4.5:1 for normal text, 3:1 for large text)
+- All text colors meet contrast requirements on standard backgrounds
+- Never use font size alone to convey meaning
+- Ensure disabled text (`text-disabled`) is paired with visual disabled states
+
+## Common Mistakes
+
+❌ **Don't** create custom font sizes between defined styles  
+✅ **Do** use the defined type styles
+
+❌ **Don't** use Section Header inside table cells  
+✅ **Do** use Caption for table headers
+
+❌ **Don't** use Body Emphasized everywhere for "importance"  
+✅ **Do** reserve it for labels and truly emphasized content
+
+❌ **Don't** make job IDs or code bold/colored  
+✅ **Do** use monospace font with text-emphasis for technical identifiers
+
+❌ **Don't** use text-emphasis for body paragraphs  
+✅ **Do** use text-primary for most content, text-emphasis for headers/labels
