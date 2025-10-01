@@ -1,14 +1,218 @@
+---
+title: Logo
+description: Logo guidelines and usage for Windmill brand identity
+---
+
+import LogoDownload from '@site/src/components/guidelines/LogoDownload';
+
 # Logo
 
-*This section is ready for your logo guidelines.*
+The Windmill logo represents a windmill with sharp blades, a reference to the first automation in history. The two colors emulate the constant movement of the windmill, conveying **motion, efficiency, and reliability**.
 
-## Suggested Content Structure
+## Logo Philosophy
 
-- Primary logo variations (horizontal, vertical, icon-only)
-- Logo sizing and clear space requirements
-- Color variations (full-color, monochrome, reversed)
-- Usage do's and don'ts
-- File formats and technical specifications
-- Background usage guidelines
+The Windmill logo embodies our core values:
 
-Add your specific logo guidelines and assets here.
+- **Automation**: Like a windmill harnesses wind power, Windmill harnesses workflow automation
+- **Efficiency**: Continuous rotation represents streamlined, optimized processes
+- **Reliability**: Solid, geometric construction conveys stability and dependability
+- **Innovation**: Modern interpretation of a classic symbol bridges tradition with technology
+
+## Logo Variants
+
+We provide multiple logo variants to ensure optimal display across different contexts and backgrounds.
+
+<LogoDownload
+	logos={[
+		{
+			variant: 'Primary',
+			description: 'Blue logo for light backgrounds',
+			url: 'http://localhost:3845/assets/fb5dbe6474d628fdb6d0a9d20c0f3f69e59b67b9.svg',
+			filename: 'windmill-logo-primary.svg',
+			background: '#ffffff'
+		},
+		{
+			variant: 'Secondary (Dark)',
+			description: 'White logo for dark backgrounds',
+			url: 'http://localhost:3845/assets/81cc07bc8d2fcf10c4678b892bc03eb550cb53ca.svg',
+			filename: 'windmill-logo-secondary-dark.svg',
+			background: '#2d3748'
+		},
+		{
+			variant: 'Secondary (Light)',
+			description: 'White logo for light backgrounds with border',
+			url: 'http://localhost:3845/assets/ce6cccdb5ec869f16aa75e1cee046dec49068390.svg',
+			filename: 'windmill-logo-secondary-light.svg',
+			background: '#ffffff'
+		}
+	]}
+/>
+
+### Primary Variant
+
+**When to use:** The primary variant is the preferred logo choice for most applications.
+
+- **Primary**: Use on light backgrounds, white surfaces, and light-colored layouts
+
+### Secondary Variants
+
+**When to use:** Secondary variants provide contrast on dark backgrounds or when the primary logo doesn't have sufficient contrast.
+
+- **Secondary (Dark)**: Use on dark backgrounds, colored surfaces, and dark-themed interfaces
+- **Secondary (Light)**: Use on light backgrounds when you need a subtle, monochromatic appearance
+
+## Logo Animation
+
+The windmill logo is designed to rotate **clockwise** when animated. This direction reinforces the natural movement of wind-powered generators and suggests forward progress.
+
+### Animation Guidelines
+
+- **Direction**: Always rotate clockwise
+- **Speed**: Smooth, moderate rotation (not too fast to be distracting)
+- **Usage**: Use sparingly for loading states, success animations, or brand moments
+- **Duration**: 2-4 seconds per full rotation for optimal visual effect
+
+## Usage Guidelines
+
+### Logo Sizing
+
+**Minimum sizes:**
+
+- Digital: 16px height minimum
+- Print: 0.5 inch (12.7mm) height minimum
+- Favicon: 16px x 16px (use simplified version if needed)
+
+**Optimal sizes:**
+
+- Website headers: 32-48px height
+- App interfaces: 24-32px height
+- Marketing materials: 48px+ height
+- Large displays: Scale proportionally
+
+### Clear Space
+
+Maintain clear space around the logo equal to the height of one windmill blade. This ensures the logo has proper visual breathing room and maintains its impact.
+
+**Clear space = 0.25x logo height on all sides**
+
+<div style={{ textAlign: 'center', margin: '24px 0' }}>
+	<img
+		src="/img/brand/margin.svg"
+		alt="Logo clear space guidelines"
+		style={{ maxWidth: '400px', height: 'auto' }}
+	/>
+</div>
+
+### Background Usage
+
+**Primary (Blue) logo works on:**
+
+- White backgrounds
+- Light gray backgrounds (#F8F9FA or lighter)
+- Light colored surfaces with sufficient contrast
+
+**Secondary (White) logo works on:**
+
+- Dark backgrounds (#2D3748 or darker)
+- Colored backgrounds (ensure sufficient contrast)
+- Photography with dark tones
+- Brand color backgrounds
+
+## Do's and Don'ts
+
+### ✅ Do
+
+- Use the provided SVG files for the best quality
+- Maintain proper clear space around the logo
+- Use appropriate logo variant for the background
+- Scale the logo proportionally
+- Use high-contrast combinations
+- Rotate clockwise when animating
+- Use the logo on clean, uncluttered backgrounds
+- Use the white logo variant on dark backgrounds
+- Scale proportionally to maintain aspect ratio
+- Use only the approved color variants
+- Use clean, high-contrast backgrounds
+
+### ❌ Don't
+
+- Stretch or distort the logo proportions
+- Use low-resolution or pixelated versions
+- Place logo on busy or conflicting backgrounds
+- Use colors other than the approved variants
+- Rotate counter-clockwise or in other directions
+- Place text too close to the logo
+- Use the logo smaller than minimum size requirements
+- Add effects, shadows, or modifications to the logo
+- Use on backgrounds with insufficient contrast
+- Place the blue logo on dark backgrounds
+- Stretch the logo horizontally or vertically
+- Use custom colors or gradients on the logo
+- Place logo on busy photographic backgrounds
+
+## Technical Specifications
+
+### File Formats
+
+- **SVG**: Primary format for web and digital use
+- **PNG**: High-resolution with transparent background
+- **PDF**: Vector format for print applications
+
+### Color Specifications
+
+**Primary (Blue) Logo:**
+
+- Primary color: #758FF8 (accent-primary)
+- Secondary color: #293676 (accent-secondary)
+- Use on light backgrounds in both light and dark themes
+
+**Secondary (White) Logo:**
+
+- Single color: #FFFFFF (white)
+- Use on dark backgrounds in both light and dark themes
+
+### Export Settings
+
+**For digital use:**
+
+- Format: SVG (vector)
+- Fallback: PNG at 2x resolution
+- Transparent background
+
+**For print use:**
+
+- Format: PDF or EPS (vector)
+- CMYK color mode
+- 300 DPI minimum
+
+## Brand Integration
+
+The Windmill logo should be used consistently across all brand touchpoints:
+
+- **Website**: Header navigation, favicons, loading states
+- **Application**: Interface headers, splash screens, empty states
+- **Marketing**: Business cards, presentations, social media
+- **Documentation**: Headers, watermarks, covers
+- **Merchandise**: T-shirts, stickers, promotional items
+
+## Accessibility
+
+- Always include proper `alt` text: "Windmill" or "Windmill logo"
+- Ensure sufficient color contrast (minimum 3:1 ratio)
+- Provide text alternatives in critical contexts
+- Test logo visibility in high contrast mode
+- Consider users with color vision deficiencies
+
+## Quick Reference
+
+| Context           | Logo Variant      | Background        | File                             |
+| ----------------- | ----------------- | ----------------- | -------------------------------- |
+| Light backgrounds | Primary (Blue)    | White, light gray | windmill-logo-primary.svg        |
+| Dark backgrounds  | Secondary (White) | Dark gray, black  | windmill-logo-secondary-dark.svg |
+| Light theme UI    | Primary (Blue)    | Light surfaces    | windmill-logo-primary.svg        |
+| Dark theme UI     | Primary (Blue)    | Light surfaces    | windmill-logo-primary.svg        |
+| Dark theme UI     | Secondary (White) | Dark surfaces     | windmill-logo-secondary-dark.svg |
+| Print materials   | Primary (Blue)    | White paper       | windmill-logo-primary.pdf        |
+| Favicons          | Primary (Blue)    | Browser UI        | windmill-favicon.ico             |
+
+Remember: **The logo is the cornerstone of our brand identity.** Use it consistently and respectfully to build strong brand recognition and trust.
