@@ -1,14 +1,537 @@
-# Color System
+---
+title: Color system
+description: Color palette and usage guidelines for the job orchestrator platform
+---
 
-*This section is ready for your color system guidelines.*
+import ColorDisplay from '@site/src/components/guidelines/ColorDisplay';
 
-## Suggested Content Structure
+# Color system
 
-- Primary brand colors with hex codes and RGB values
-- Secondary and accent colors
-- Semantic colors (success, warning, error, info)
-- Neutral/grayscale palette
-- Color usage guidelines and accessibility requirements
-- Code examples and CSS variables
+Our color system is designed for **reliability, clarity, and trust**. Windmill is destined to be used by big companies, so colors must convey a sense of professionalism and seriousness. We stay away from vibrant colors in the application interface and use monochromatic tones with purposeful accent colors.
 
-Add your specific color system and specifications here.
+## Design Principles
+
+- **Meaningful, not decorative**: Every color serves a functional purpose
+- **Reliability over vibrancy**: Muted tones convey trust and professionalism
+- **Context-aware**: Different palettes for app vs marketing contexts
+- **Accessible**: All colors meet WCAG AA contrast requirements
+- **Consistent**: Systematic approach to color usage across all interfaces
+
+## Color Philosophy
+
+**Colors are meaningful and never decorative.** We distinguish between:
+
+- **App palette**: Less vibrant colors for the core application interface
+- **Web palette**: More vibrant colors for marketing and brand recognition
+- **Monochromatic scale**: Nord-based neutrals for surfaces and backgrounds
+
+## Accent Colors
+
+The **luminance-blue** is our primary accent color, used throughout the app for interactive elements, active states, and user actions.
+
+<ColorDisplay
+	colors={[
+		{
+			name: 'accent-primary',
+			hex: '#758FF8',
+			description: 'Primary accent color for buttons, links, active states'
+		},
+		{
+			name: 'accent-hover',
+			hex: '#5074F6',
+			description: 'Hover state for interactive accent elements'
+		},
+		{
+			name: 'accent-clicked',
+			hex: '#2C5BEB',
+			description: 'Active/pressed state for accent elements'
+		},
+		{
+			name: 'accent-secondary',
+			hex: '#293676',
+			description: 'Secondary accent for subtle emphasis'
+		},
+		{
+			name: 'accent-selected',
+			hex: 'rgba(191, 219, 254, 0.3)',
+			description: 'Selected state background with transparency'
+		}
+	]}
+	darkColors={[
+		{
+			name: 'accent-primary',
+			hex: '#758FF8',
+			description: 'Primary accent color for buttons, links, active states'
+		},
+		{
+			name: 'accent-hover',
+			hex: '#5074F6',
+			description: 'Hover state for interactive accent elements'
+		},
+		{
+			name: 'accent-clicked',
+			hex: '#2C5BEB',
+			description: 'Active/pressed state for accent elements'
+		},
+		{
+			name: 'accent-secondary',
+			hex: '#E8EBFB',
+			description: 'Secondary accent for subtle emphasis'
+		},
+		{
+			name: 'accent-selected',
+			hex: 'rgba(37, 99, 235, 0.3)',
+			description: 'Selected state background with transparency'
+		}
+	]}
+/>
+
+**When to use:**
+
+- Call-to-action buttons
+- Active navigation items
+- Toggle switches (on state)
+- Progress bars
+- Interactive links
+- Selected states
+
+## Surface Colors
+
+Surface colors create depth and layout structure with clear hierarchy between different interface levels.
+
+<ColorDisplay
+	colors={[
+		{
+			name: 'surface-primary',
+			hex: '#FBFBFD',
+			description: 'Main application background'
+		},
+		{
+			name: 'surface-secondary',
+			hex: '#EFEFF4',
+			description: 'Secondary backgrounds, sections'
+		},
+		{
+			name: 'surface-tertiary',
+			hex: '#FFFFFF',
+			description: 'Cards, modals, elevated surfaces'
+		},
+		{
+			name: 'surface-hover',
+			hex: '#EEEEF5',
+			description: 'Hover states for neutral elements'
+		},
+		{
+			name: 'surface-selected',
+			hex: '#FFFFFF',
+			description: 'Selected neutral elements'
+		},
+		{
+			name: 'surface-disabled',
+			hex: '#D8D8E4',
+			description: 'Disabled elements, inactive states'
+		}
+	]}
+	darkColors={[
+		{
+			name: 'surface-primary',
+			hex: '#3B4252',
+			description: 'Main application background'
+		},
+		{
+			name: 'surface-secondary',
+			hex: '#2E3440',
+			description: 'Secondary backgrounds, sections'
+		},
+		{
+			name: 'surface-tertiary',
+			hex: '#434C5E',
+			description: 'Cards, modals, elevated surfaces'
+		},
+		{
+			name: 'surface-hover',
+			hex: '#454F64',
+			description: 'Hover states for neutral elements'
+		},
+		{
+			name: 'surface-selected',
+			hex: '#434C5E',
+			description: 'Selected neutral elements'
+		},
+		{
+			name: 'surface-disabled',
+			hex: '#212732',
+			description: 'Disabled elements, inactive states'
+		}
+	]}
+/>
+
+## Text Colors
+
+Text colors provide clear hierarchy and readability across light and dark themes.
+
+<ColorDisplay
+	colors={[
+		{
+			name: 'text-primary',
+			hex: '#4A5568',
+			description: 'Default text, body content'
+		},
+		{
+			name: 'text-emphasis',
+			hex: '#2D3748',
+			description: 'Headers, labels, emphasized content'
+		},
+		{
+			name: 'text-secondary',
+			hex: '#718096',
+			description: 'Supporting information, metadata'
+		},
+		{
+			name: 'text-tertiary',
+			hex: '#A4A9B2',
+			description: 'Subtle text, captions'
+		},
+		{
+			name: 'text-hint',
+			hex: '#757E8F',
+			description: 'Placeholders, tooltips, hints'
+		},
+		{
+			name: 'text-disabled',
+			hex: '#A0AEC0',
+			description: 'Disabled states, unavailable options'
+		}
+	]}
+	darkColors={[
+		{
+			name: 'text-primary',
+			hex: '#D4D8DD',
+			description: 'Default text, body content'
+		},
+		{
+			name: 'text-emphasis',
+			hex: '#F3F4F6',
+			description: 'Headers, labels, emphasized content'
+		},
+		{
+			name: 'text-secondary',
+			hex: '#AAB0BB',
+			description: 'Supporting information, metadata'
+		},
+		{
+			name: 'text-tertiary',
+			hex: '#A8A9AC',
+			description: 'Subtle text, captions'
+		},
+		{
+			name: 'text-hint',
+			hex: '#9196A1',
+			description: 'Placeholders, tooltips, hints'
+		},
+		{
+			name: 'text-disabled',
+			hex: '#FFFFFF',
+			description: 'Disabled states, unavailable options'
+		}
+	]}
+/>
+
+## Border Colors
+
+Border colors define element separation and structure.
+
+<ColorDisplay
+	colors={[
+		{
+			name: 'border-light',
+			hex: '#E5E7EB',
+			description: 'Subtle borders, dividers'
+		},
+		{
+			name: 'border-normal',
+			hex: '#9CA3AF',
+			description: 'Standard borders, form inputs'
+		},
+		{
+			name: 'border-accent',
+			hex: '#758FF8',
+			description: 'Accent borders, focus states'
+		}
+	]}
+	darkColors={[
+		{
+			name: 'border-light',
+			hex: '#495A72',
+			description: 'Subtle borders, dividers'
+		},
+		{
+			name: 'border-normal',
+			hex: '#AAB0BB',
+			description: 'Standard borders, form inputs'
+		},
+		{
+			name: 'border-accent',
+			hex: '#FFFFFF',
+			description: 'Accent borders, focus states'
+		}
+	]}
+/>
+
+## Feedback Colors
+
+Standard semantic colors for system feedback and status communication.
+
+<ColorDisplay
+	colors={[
+		{
+			name: 'success',
+			hex: '#22C55E',
+			description: 'Success states, positive feedback, completed actions (green-500)'
+		},
+		{
+			name: 'warning',
+			hex: '#EAB308',
+			description: 'Warning states, caution messages, pending actions (yellow-500)'
+		},
+		{
+			name: 'error',
+			hex: '#EF4444',
+			description: 'Error states, failed actions, destructive operations (red-500)'
+		},
+		{
+			name: 'info',
+			hex: '#3B82F6',
+			description: 'Information states, neutral notifications (blue-500)'
+		}
+	]}
+	darkColors={[
+		{
+			name: 'success',
+			hex: '#22C55E',
+			description: 'Success states, positive feedback, completed actions (green-500)'
+		},
+		{
+			name: 'warning',
+			hex: '#EAB308',
+			description: 'Warning states, caution messages, pending actions (yellow-500)'
+		},
+		{
+			name: 'error',
+			hex: '#EF4444',
+			description: 'Error states, failed actions, destructive operations (red-500)'
+		},
+		{
+			name: 'info',
+			hex: '#3B82F6',
+			description: 'Information states, neutral notifications (blue-500)'
+		}
+	]}
+/>
+
+## Reserved Colors
+
+These colors are exclusively reserved for specific features and should not be used elsewhere.
+
+<ColorDisplay
+	colors={[
+		{
+			name: 'ai-primary',
+			hex: '#8B5CF6',
+			description: 'AI features, magic wand icon, AI-powered functionality'
+		}
+	]}
+	darkColors={[
+		{
+			name: 'ai-primary',
+			hex: '#8B5CF6',
+			description: 'AI features, magic wand icon, AI-powered functionality'
+		}
+	]}
+/>
+
+**Usage:**
+
+- AI-powered script generation
+- Magic wand icons
+- AI assistance features
+- Smart suggestions
+
+## Web/Marketing Colors
+
+More vibrant colors used exclusively for marketing materials and the website (not in the core application).
+
+<ColorDisplay
+	colors={[
+		{
+			name: 'brand-vibrant',
+			hex: '#3B82F6',
+			description: 'Marketing primary, website headers, brand materials'
+		},
+		{
+			name: 'brand-secondary',
+			hex: '#1E40AF',
+			description: 'Marketing accent, call-to-action buttons on website'
+		},
+		{
+			name: 'brand-tertiary',
+			hex: '#DBEAFE',
+			description: 'Marketing backgrounds, website sections'
+		}
+	]}
+/>
+
+**Important:** These colors should **never** be used in the core application interface. They are reserved for:
+
+- Marketing website
+- Landing pages
+- Documentation site headers
+- Brand materials
+- Social media assets
+
+## Usage Guidelines
+
+### When to Use Each Color
+
+**Accent colors**:
+- `accent-primary` (#758FF8): Call-to-action buttons, links, active states
+- `accent-hover` (#5074F6): Hover states for interactive elements
+- `accent-clicked` (#2C5BEB): Active/pressed states
+- `accent-secondary`: Subtle accent backgrounds and emphasis
+- `accent-selected`: Selected item backgrounds with transparency
+
+**Surface colors**:
+- `surface-primary`: Main application background
+- `surface-secondary`: Section backgrounds, panels
+- `surface-tertiary`: Cards, modals, elevated content
+- `surface-hover`: Hover states for neutral elements
+- `surface-selected`: Selected neutral elements
+- `surface-disabled`: Disabled element backgrounds
+
+**Text colors**:
+- `text-primary`: Default body text and content
+- `text-emphasis`: Headers, labels, important content
+- `text-secondary`: Supporting information, metadata
+- `text-tertiary`: Subtle text, captions
+- `text-hint`: Placeholders, tooltips, form hints
+- `text-disabled`: Disabled or unavailable text
+
+**Border colors**:
+- `border-light`: Subtle dividers, section separators
+- `border-normal`: Standard borders, form inputs
+- `border-accent`: Focus states, accent borders
+
+**Feedback colors**:
+- System notifications
+- Form validation states
+- Status indicators
+- Alert messages
+
+**Reserved colors**:
+- AI-specific features only
+- Magic wand iconography
+- Smart assistance UI
+
+### Color Roles
+
+Each color category serves specific interface roles:
+
+- **Surface**: Background colors for layout structure and hierarchy
+- **Text**: Content colors with proper contrast and hierarchy
+- **Border**: Element separation and structure definition
+- **Accent**: Interactive elements and brand expression
+- **Feedback**: System communication and status indication
+
+## Do's and Don'ts
+
+### ✅ Do
+
+- Use `accent-primary` sparingly for important actions
+- Rely on surface colors for most interface backgrounds
+- Apply text colors according to content hierarchy
+- Use proper border colors for element separation
+- Apply feedback colors consistently for their semantic meaning
+- Test color combinations for accessibility compliance
+- Use the exact hex values provided
+- Reserve AI purple exclusively for AI features
+- Follow the defined color token structure
+
+### ❌ Don't
+
+- Mix web/marketing colors with app interface colors
+- Use AI purple for non-AI features
+- Create custom color variations between defined tokens
+- Use color alone to convey meaning (pair with icons/text)
+- Apply accent colors to large surface areas
+- Use marketing blue (`#3B82F6`) in the app interface
+- Use AI purple for regular buttons
+- Use `accent-primary` for large backgrounds
+- Mix different color token categories inappropriately
+
+## Implementation
+
+When implementing these colors, use the exact hex values provided. Avoid creating custom variations between the defined color tokens.
+
+## Accessibility
+
+### Contrast Requirements
+
+All color combinations meet WCAG AA standards:
+
+- **Normal text** (12px-17px): 4.5:1 contrast ratio minimum
+- **Large text** (18px+): 3:1 contrast ratio minimum
+- **Interactive elements**: 3:1 contrast ratio for focus states
+
+### Color-Blind Considerations
+
+- Never use color alone to convey information
+- Pair color with icons, text, or patterns
+- Test designs with color-blind simulation tools
+- Ensure sufficient contrast in monochrome
+
+### Focus States
+
+Always provide visible focus indicators for interactive elements. Use a 2px ring with the `border-accent` color and appropriate offset for buttons and links.
+
+## Testing Colors
+
+Before using colors in production:
+
+1. **Accessibility**: Test with WebAIM Contrast Checker
+2. **Color blindness**: Use Stark or similar tools
+3. **Dark mode**: Verify appearance in both themes
+4. **Print**: Ensure readability when printed in grayscale
+
+## Quick Reference
+
+| Color Token | Light Theme | Dark Theme | Usage |
+|-------------|-------------|------------|-------|
+| **Accent Colors** ||||
+| accent-primary | `#758FF8` | `#758FF8` | Buttons, links, active states |
+| accent-hover | `#5074F6` | `#5074F6` | Interactive hover states |
+| accent-clicked | `#2C5BEB` | `#2C5BEB` | Active/pressed states |
+| accent-secondary | `#293676` | `#E8EBFB` | Subtle accent backgrounds |
+| **Surface Colors** ||||
+| surface-primary | `#FBFBFD` | `#3B4252` | Main application background |
+| surface-secondary | `#EFEFF4` | `#2E3440` | Section backgrounds |
+| surface-tertiary | `#FFFFFF` | `#434C5E` | Cards, modals |
+| surface-hover | `#EEEEF5` | `#454F64` | Hover states |
+| surface-disabled | `#D8D8E4` | `#212732` | Disabled elements |
+| **Text Colors** ||||
+| text-primary | `#4A5568` | `#D4D8DD` | Default body text |
+| text-emphasis | `#2D3748` | `#F3F4F6` | Headers, labels |
+| text-secondary | `#718096` | `#AAB0BB` | Supporting information |
+| text-hint | `#757E8F` | `#9196A1` | Placeholders, tooltips |
+| **Border Colors** ||||
+| border-light | `#E5E7EB` | `#495A72` | Subtle dividers |
+| border-normal | `#9CA3AF` | `#AAB0BB` | Standard borders |
+| border-accent | `#758FF8` | `#FFFFFF` | Focus states |
+| **Feedback Colors** ||||
+| Success | `#22C55E` | `#22C55E` | Success messages (green-500) |
+| Warning | `#EAB308` | `#EAB308` | Warnings (yellow-500) |
+| Error | `#EF4444` | `#EF4444` | Errors (red-500) |
+| Info | `#3B82F6` | `#3B82F6` | Information (blue-500) |
+| **Reserved Colors** ||||
+| AI Purple | `#8B5CF6` | `#8B5CF6` | AI features only |
+
+Remember: **Colors are meaningful, not decorative.** Every color choice should serve a clear functional purpose in the user interface.
