@@ -19,10 +19,10 @@ const ColorDisplay = ({ colors, darkColors }) => {
 					gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
 					gap: '16px',
 					marginBottom: '24px',
-					padding: hasToggle && isDarkMode ? '16px' : '0',
-					backgroundColor: hasToggle && isDarkMode ? '#2e3440' : 'transparent',
-					borderRadius: hasToggle && isDarkMode ? '8px' : '0',
-					border: hasToggle && isDarkMode ? '1px solid #3e4c60' : 'none'
+					padding: '16px',
+					backgroundColor: hasToggle && isDarkMode ? '#2e3440' : '#FBFBFD',
+					borderRadius: '6px',
+					border: '1px solid #e2e8f0'
 				}}
 			>
 				{currentColors.map((color, index) => (
@@ -50,7 +50,7 @@ const ColorDisplay = ({ colors, darkColors }) => {
 						<code
 							style={{
 								fontSize: '12px',
-								color: hasToggle && isDarkMode ? '#aab0bb' : '#718096'
+								color: '#718096'
 							}}
 						>
 							{color.hex}
