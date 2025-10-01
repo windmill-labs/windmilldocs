@@ -51,6 +51,11 @@ const sidebars = {
 					type: 'doc',
 					id: 'visual_identity/typography/index',
 					label: 'Typography'
+				},
+				{
+					type: 'doc',
+					id: 'visual_identity/elevation/index',
+					label: 'Elevation'
 				}
 			]
 		},

@@ -1,14 +1,45 @@
-# Spacing & Grid
+---
+title: Spacing & Layout
+description: Layout system and spacing guidelines for Windmill interfaces
+---
 
-*This section is ready for your spacing and grid system guidelines.*
+# Spacing & Layout
 
-## Suggested Content Structure
+Windmill uses **Tailwind CSS spacing utilities** and **flex containers** to create consistent, responsive layouts across all interfaces.
 
-- Spacing scale and units
-- Grid system specifications
-- Layout principles and breakpoints
-- Responsive design guidelines
-- Margin and padding standards
-- Implementation examples
+## Spacing Scale
 
-Add your specific spacing and grid system guidelines here.
+Our spacing system follows **Tailwind's default spacing scale** based on 4px increments:
+
+- **`space-1`** (4px): Micro spacing between related elements
+- **`space-2`** (8px): Base unit for component padding and margins
+- **`space-4`** (16px): Standard spacing between components
+- **`space-6`** (24px): Section spacing and larger gaps
+- **`space-8`** (32px): Page margins and major sections
+- **`space-12`** (48px): Large spacing for visual breaks
+- **`space-16`** (64px): Maximum spacing for major layout divisions
+
+## Layout System
+
+We use **Tailwind's flex utilities** for responsive layouts:
+
+- **Flex containers**: `flex flex-col` or `flex flex-row` for layout direction
+- **Spacing**: `space-x-4` and `space-y-4` for consistent gaps between elements
+- **Max width**: `max-w-6xl` (1152px) for content areas
+
+## Do's and Don'ts
+
+### ✅ Do
+
+- Use Tailwind spacing utilities (`p-4`, `m-6`, `space-x-4`) for all measurements
+- Use flex responsive classes (`flex-col md:flex-row`, `justify-between`)
+- Apply consistent container patterns (`container mx-auto px-8`)
+- Use `space-x-*` and `space-y-*` for gaps between flex items
+- Leverage Tailwind's responsive breakpoints (`sm:`, `md:`, `lg:`, `xl:`)
+
+### ❌ Don't
+
+- Use arbitrary spacing values with square brackets `[32px]`
+- Mix CSS spacing with Tailwind utilities in the same component
+- Use fixed pixel values instead of responsive utilities
+- Break responsive design patterns with custom CSS
