@@ -6,25 +6,29 @@ const videoTabs = [
 		label: 'Script editor',
 		icon: Code,
 		id: 'script-editor',
-		videoUrl: 'https://www.youtube.com/embed/QRf8C8qF7CY'
+		videoUrl: 'https://www.youtube.com/embed/QRf8C8qF7CY',
+		duration: '11 min'
 	},
 	{
 		label: 'Flow editor',
 		icon: List,
 		id: 'flow-editor',
-		videoUrl: 'https://www.youtube.com/embed/yE-eDNWTj3g'
+		videoUrl: 'https://www.youtube.com/embed/yE-eDNWTj3g',
+		duration: '17 min'
 	},
 	{
 		label: 'App editor',
 		icon: LayoutDashboard,
 		id: 'app-editor',
-		videoUrl: 'https://www.youtube.com/embed/CNtRLDXbfOE'
+		videoUrl: 'https://www.youtube.com/embed/CNtRLDXbfOE',
+		duration: '6 min'
 	},
 	{
 		label: 'Local development',
 		icon: Monitor,
 		id: 'local-development',
-		videoUrl: 'https://www.youtube.com/embed/sxNW_6J4RG8'
+		videoUrl: 'https://www.youtube.com/embed/sxNW_6J4RG8',
+		duration: '3 min'
 	}
 ];
 
@@ -73,6 +77,7 @@ export default function VideoTour() {
 							>
 								<Icon size={18} />
 								<span className="font-medium">{tab.label}</span>
+								<span className="text-xs text-gray-500 dark:text-gray-400">({tab.duration})</span>
 							</button>
 						);
 					})}
