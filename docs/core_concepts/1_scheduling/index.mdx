@@ -269,6 +269,52 @@ You can pick the Slack or Microsoft Teams pre-set schedule recovery handler.
 
 ![Schedule Recovery Handler](./15_schedule_recovery_handler.png.webp)
 
+### Dynamic skip validation
+
+Schedules can use a validation script to determine whether a scheduled run should execute. The validator receives the scheduled datetime and returns a boolean indicating whether to proceed.
+
+The dynamic skip handler is useful for:
+- Skipping runs on weekends, holidays, or specific dates
+- Checking external conditions before execution (e.g., API availability, data freshness)
+- Implementing custom scheduling logic beyond standard cron expressions
+
+#### How it works
+
+1. Configure a schedule with a dynamic skip handler script
+2. Before the scheduled job executes, Windmill runs the handler script
+3. The handler receives `scheduled_for` (ISO 8601 datetime string) as a parameter
+4. If the handler returns `true`, the scheduled job executes normally
+5. If the handler returns any other value, the job is skipped (marked as success with `skipped` flag)
+6. If the handler throws an exception, normal error handling applies and the job fails
+
+#### Example handler
+
+```typescript
+export async function main(scheduled_for: string): Promise<boolean> {
+  const date = new Date(scheduled_for);
+  const dayOfWeek = date.getUTCDay();
+
+  // Skip on weekends (0 = Sunday, 6 = Saturday)
+  if (dayOfWeek === 0 || dayOfWeek === 6) {
+    return false;
+  }
+
+  // Check if it's a holiday (example: checking external API)
+  const isHoliday = await checkHolidayAPI(date);
+  return !isHoliday;
+}
+```
+
+From the schedule configuration, select your validation script in the "Dynamic skip" section.
+
+![Dynamic skip configuration](./dynamic_skip.png 'Dynamic skip configuration')
+
+:::info
+
+If the validation handler script is deleted or archived after the schedule is created, the schedule will fail at runtime with a clear error message indicating the handler script was not found.
+
+:::
+
 ### Be notified every time a scheduled workflow has been executed
 
 For scheduled flows, add a simple step to be notified about the execution of the scheduled flow.
