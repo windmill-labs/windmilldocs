@@ -111,15 +111,15 @@ export default function HeroExample() {
 								Fully open-source and easy to deploy on small and large infra. Any dependency with zero-config.
 							</p>
 						</div>
-						<div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
+						<div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 mt-6">
 							<div className="flex flex-col gap-2">
-								{videoTabs.map((tab) => {
+								{videoTabs.map((tab, idx) => {
 									const Icon = tab.icon;
 									return (
 										<button
 											key={tab.id}
 											onClick={() => handleVideoTabChange(tab.id)}
-											className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left ${
+											className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left w-full ${
 												selectedVideoTab === tab.id
 													? 'bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400'
 													: 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
@@ -128,6 +128,7 @@ export default function HeroExample() {
 											<Icon size={18} />
 											<span className="font-medium">{tab.label}</span>
 											<span className="text-xs text-gray-500 dark:text-gray-400">({tab.duration})</span>
+											<span className="ml-auto text-xs text-gray-400 dark:text-gray-500">{idx + 1}</span>
 										</button>
 									);
 								})}
