@@ -122,6 +122,36 @@ Controls randomness in text generation:
 #### output_schema (json-schema)
 Define a JSON schema that the AI agent will follow for its response format. This ensures structured, predictable outputs that can be easily processed by subsequent flow steps.
 
+#### messages_context_length (number)
+Specifies the number of previous messages to include as context for the AI agent. This enables the agent to maintain conversation history and remember past interactions. When set, the agent will have access to the specified number of previous messages from the conversation, allowing for more contextual and coherent responses across multiple interactions.
+
+## Chat mode
+
+Flows with AI agents can be run in chat mode, which transforms the standard flow interface into a conversational chat UI. This mode is particularly useful for creating interactive AI applications where users can have ongoing conversations with the AI agent.
+
+### Enabling chat mode
+
+To enable chat mode for a flow:
+1. Navigate to the flow inputs configuration
+2. Toggle the "Chat mode" option
+3. When the flow is run, it will display as a chat interface instead of the standard form interface
+
+### Features
+
+- **Conversational interface**: The flow runs in a chat-like UI where users can send messages and receive responses in a familiar messaging format
+- **Multiple conversations**: Users can maintain multiple different conversation threads within the same flow
+- **Conversation history**: Each conversation maintains its own history, allowing users to scroll back through previous messages
+- **Persistent context**: When using the `messages_context_length` parameter, the AI agent can remember and reference previous messages in the conversation
+
+### Use cases
+
+Chat mode is ideal for:
+- Building customer support bots
+- Creating interactive Q&A systems
+- Developing conversational workflows
+- Implementing AI assistants with memory
+- Building chatbots that can execute actions through tools
+
 ## Output
 
 The AI Agent step returns an object with two keys:
