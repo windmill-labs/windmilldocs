@@ -140,7 +140,7 @@ module.exports = {
 					'hint-light': '#757E8F',
 					'hint-dark': '#9196A1',
 					'disabled-light': '#A0AEC0',
-					'disabled-dark': '#FFFFFF'
+					'disabled-dark': '#727C88'
 				},
 				// Border colors - flattened for proper Tailwind class generation
 				border: {
