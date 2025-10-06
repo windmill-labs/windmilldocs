@@ -63,9 +63,19 @@ The **luminance-blue** is our primary accent color, used throughout the app for 
 			description: 'Secondary accent for subtle emphasis'
 		},
 		{
+			name: 'accent-secondary-hover',
+			hex: '#1E255F',
+			description: 'Hover state for accent secondary elements'
+		},
+		{
+			name: 'accent-secondary-clicked',
+			hex: '#303F82',
+			description: 'Active/pressed state for accent secondary elements'
+		},
+		{
 			name: 'accent-selected',
-			hex: 'rgba(191, 219, 254, 0.3)',
-			description: 'Selected state background with transparency'
+			hex: 'rgba(191, 219, 254, 0.30)',
+			description: 'Selected state background'
 		}
 	]}
 	darkColors={[
@@ -90,9 +100,19 @@ The **luminance-blue** is our primary accent color, used throughout the app for 
 			description: 'Secondary accent for subtle emphasis'
 		},
 		{
+			name: 'accent-secondary-hover',
+			hex: '#C3C9DF',
+			description: 'Hover state for accent secondary elements'
+		},
+		{
+			name: 'accent-secondary-clicked',
+			hex: '#9DA6CA',
+			description: 'Active/pressed state for accent secondary elements'
+		},
+		{
 			name: 'accent-selected',
-			hex: 'rgba(37, 99, 235, 0.3)',
-			description: 'Selected state background with transparency'
+			hex: 'rgba(103, 144, 196, 0.30)',
+			description: 'Selected state background'
 		}
 	]}
 />
@@ -266,7 +286,7 @@ Border colors define element separation and structure.
 		},
 		{
 			name: 'border-accent',
-			hex: '#758FF8',
+			hex: '#2C5BEB',
 			description: 'Accent borders, focus states'
 		}
 	]}
@@ -283,7 +303,7 @@ Border colors define element separation and structure.
 		},
 		{
 			name: 'border-accent',
-			hex: '#FFFFFF',
+			hex: '#2C5BEB',
 			description: 'Accent borders, focus states'
 		}
 	]}
@@ -348,14 +368,14 @@ These colors are exclusively reserved for specific features and should not be us
 	colors={[
 		{
 			name: 'ai-primary',
-			hex: '#8B5CF6',
+			hex: '#DE75F8',
 			description: 'AI features, magic wand icon, AI-powered functionality'
 		}
 	]}
 	darkColors={[
 		{
 			name: 'ai-primary',
-			hex: '#8B5CF6',
+			hex: '#DE75F8',
 			description: 'AI features, magic wand icon, AI-powered functionality'
 		}
 	]}
@@ -390,6 +410,23 @@ More vibrant colors used exclusively for marketing materials and the website (no
 			description: 'Marketing backgrounds, website sections'
 		}
 	]}
+	darkColors={[
+		{
+			name: 'brand-vibrant',
+			hex: '#3B82F6',
+			description: 'Marketing primary, website headers, brand materials'
+		},
+		{
+			name: 'brand-secondary',
+			hex: '#1E40AF',
+			description: 'Marketing accent, call-to-action buttons on website'
+		},
+		{
+			name: 'brand-tertiary',
+			hex: '#DBEAFE',
+			description: 'Marketing backgrounds, website sections'
+		}
+	]}
 />
 
 **Important:** These colors should **never** be used in the core application interface. They are reserved for:
@@ -400,94 +437,47 @@ More vibrant colors used exclusively for marketing materials and the website (no
 - Brand materials
 - Social media assets
 
-## Usage Guidelines
+## Color Reference
 
-### When to Use Each Color
+Complete color system with usage guidelines, hex values, and Tailwind classes:
 
-**Accent colors**:
+**Implementation Rule:** Always use the provided Tailwind classes in your components. Never use hex values directly in styles - this ensures consistency and theme switching compatibility.
 
-- `accent-primary` (#758FF8): Call-to-action buttons, links, active states
-- `accent-hover` (#5074F6): Hover states for interactive elements
-- `accent-clicked` (#2C5BEB): Active/pressed states
-- `accent-secondary`: Subtle accent backgrounds and emphasis
-- `accent-selected`: Selected item backgrounds with transparency
+```jsx
+// ✅ Correct - use Tailwind classes
+<button className="bg-accent-primary text-white">Save</button>
+<div className="bg-surface-primary-light border-border-normal-light">Content</div>
 
-**Surface colors**:
-
-- `surface-primary`: Main application background
-- `surface-secondary`: Section backgrounds, panels
-- `surface-tertiary`: Cards, modals, elevated content
-- `surface-hover`: Hover states for neutral elements
-- `surface-selected`: Selected neutral elements
-- `surface-disabled`: Disabled element backgrounds
-
-**Text colors**:
-
-- `text-primary`: Default body text and content
-- `text-emphasis`: Headers, labels, important content
-- `text-secondary`: Supporting information, metadata
-- `text-tertiary`: Subtle text, captions
-- `text-hint`: Placeholders, tooltips, form hints
-- `text-disabled`: Disabled or unavailable text
-
-**Border colors**:
-
-- `border-light`: Subtle dividers, section separators
-- `border-normal`: Standard borders, form inputs
-- `border-accent`: Focus states, accent borders
-
-**Feedback colors**:
-
-- System notifications
-- Form validation states
-- Status indicators
-- Alert messages
-
-**Reserved colors**:
-
-- AI-specific features only
-- Magic wand iconography
-- Smart assistance UI
-
-### Color Roles
-
-Each color category serves specific interface roles:
-
-- **Surface**: Background colors for layout structure and hierarchy
-- **Text**: Content colors with proper contrast and hierarchy
-- **Border**: Element separation and structure definition
-- **Accent**: Interactive elements and brand expression
-- **Feedback**: System communication and status indication
+// ❌ Wrong - don't use hex values
+<button style={{ backgroundColor: '#758FF8', color: 'white' }}>Save</button>
+<div style={{ backgroundColor: '#FBFBFD', border: '1px solid #9CA3AF' }}>Content</div>
+```
 
 ## Do's and Don'ts
 
 ### ✅ Do
 
+- Use provided Tailwind classes for all color implementations
 - Use `accent-primary` sparingly for important actions
 - Rely on surface colors for most interface backgrounds
 - Apply text colors according to content hierarchy
 - Use proper border colors for element separation
 - Apply feedback colors consistently for their semantic meaning
 - Test color combinations for accessibility compliance
-- Use the exact hex values provided
 - Reserve AI purple exclusively for AI features
 - Follow the defined color token structure
 
 ### ❌ Don't
 
+- Use hex values directly in component styles or CSS
 - Mix web/marketing colors with app interface colors
 - Use AI purple for non-AI features
 - Create custom color variations between defined tokens
 - Use color alone to convey meaning (pair with icons/text)
 - Apply accent colors to large surface areas
 - Use marketing blue (`#3B82F6`) in the app interface
-- Use AI purple for regular buttons
 - Use `accent-primary` for large backgrounds
 - Mix different color token categories inappropriately
-
-## Implementation
-
-When implementing these colors, use the exact hex values provided. Avoid creating custom variations between the defined color tokens.
 
 ## Accessibility
 
@@ -521,34 +511,44 @@ Before using colors in production:
 
 ## Quick Reference
 
-| Color Token         | Light Theme | Dark Theme | Usage                         |
-| ------------------- | ----------- | ---------- | ----------------------------- |
-| **Accent Colors**   |             |            |                               |
-| accent-primary      | `#758FF8`   | `#758FF8`  | Buttons, links, active states |
-| accent-hover        | `#5074F6`   | `#5074F6`  | Interactive hover states      |
-| accent-clicked      | `#2C5BEB`   | `#2C5BEB`  | Active/pressed states         |
-| accent-secondary    | `#293676`   | `#E8EBFB`  | Subtle accent backgrounds     |
-| **Surface Colors**  |             |            |                               |
-| surface-primary     | `#FBFBFD`   | `#3B4252`  | Main application background   |
-| surface-secondary   | `#EFEFF4`   | `#2E3440`  | Section backgrounds           |
-| surface-tertiary    | `#FFFFFF`   | `#434C5E`  | Cards, modals                 |
-| surface-hover       | `#EEEEF5`   | `#454F64`  | Hover states                  |
-| surface-disabled    | `#D8D8E4`   | `#212732`  | Disabled elements             |
-| **Text Colors**     |             |            |                               |
-| text-primary        | `#4A5568`   | `#D4D8DD`  | Default body text             |
-| text-emphasis       | `#2D3748`   | `#F3F4F6`  | Headers, labels               |
-| text-secondary      | `#718096`   | `#AAB0BB`  | Supporting information        |
-| text-hint           | `#757E8F`   | `#9196A1`  | Placeholders, tooltips        |
-| **Border Colors**   |             |            |                               |
-| border-light        | `#E5E7EB`   | `#495A72`  | Subtle dividers               |
-| border-normal       | `#9CA3AF`   | `#AAB0BB`  | Standard borders              |
-| border-accent       | `#758FF8`   | `#FFFFFF`  | Focus states                  |
-| **Feedback Colors** |             |            |                               |
-| Success             | `#22C55E`   | `#22C55E`  | Success messages (green-500)  |
-| Warning             | `#EAB308`   | `#EAB308`  | Warnings (yellow-500)         |
-| Error               | `#EF4444`   | `#EF4444`  | Errors (red-500)              |
-| Info                | `#3B82F6`   | `#3B82F6`  | Information (blue-500)        |
-| **Reserved Colors** |             |            |                               |
-| AI Purple           | `#8B5CF6`   | `#8B5CF6`  | AI features only              |
+| Color Token                | Light Theme                                                                                                                                                                                                                | Dark Theme                                                                                                                                                                                                                 | Usage                                              |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| **Accent Colors**          |                                                                                                                                                                                                                            |                                                                                                                                                                                                                            |                                                    |
+| `accent-primary`           | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#758FF8', border: '1px solid #ccc', marginRight: '8px'}}></span>`#758FF8`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#758FF8', border: '1px solid #ccc', marginRight: '8px'}}></span>`#758FF8`                                     | Call-to-action buttons, links, active states       |
+| `accent-hover`             | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#5074F6', border: '1px solid #ccc', marginRight: '8px'}}></span>`#5074F6`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#5074F6', border: '1px solid #ccc', marginRight: '8px'}}></span>`#5074F6`                                     | Hover states for interactive elements              |
+| `accent-clicked`           | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#2C5BEB', border: '1px solid #ccc', marginRight: '8px'}}></span>`#2C5BEB`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#2C5BEB', border: '1px solid #ccc', marginRight: '8px'}}></span>`#2C5BEB`                                     | Active/pressed states                              |
+| `accent-secondary`         | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#293676', border: '1px solid #ccc', marginRight: '8px'}}></span>`#293676`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#E8EBFB', border: '1px solid #ccc', marginRight: '8px'}}></span>`#E8EBFB`                                     | Subtle accent backgrounds and emphasis             |
+| `accent-secondary-hover`   | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#1E255F', border: '1px solid #ccc', marginRight: '8px'}}></span>`#1E255F`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#C3C9DF', border: '1px solid #ccc', marginRight: '8px'}}></span>`#C3C9DF`                                     | Hover state for accent secondary elements          |
+| `accent-secondary-clicked` | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#303F82', border: '1px solid #ccc', marginRight: '8px'}}></span>`#303F82`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#9DA6CA', border: '1px solid #ccc', marginRight: '8px'}}></span>`#9DA6CA`                                     | Active/pressed state for accent secondary elements |
+| `accent-selected`          | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'rgba(191, 219, 254, 0.30)', border: '1px solid #ccc', marginRight: '8px'}}></span>`rgba(191, 219, 254, 0.30)` | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'rgba(103, 144, 196, 0.30)', border: '1px solid #ccc', marginRight: '8px'}}></span>`rgba(103, 144, 196, 0.30)` | Selected item backgrounds                          |
+| **Surface Colors**         |                                                                                                                                                                                                                            |                                                                                                                                                                                                                            |                                                    |
+| `surface-primary`          | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#FBFBFD', border: '1px solid #ccc', marginRight: '8px'}}></span>`#FBFBFD`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#3B4252', border: '1px solid #ccc', marginRight: '8px'}}></span>`#3B4252`                                     | Main application background                        |
+| `surface-secondary`        | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#EFEFF4', border: '1px solid #ccc', marginRight: '8px'}}></span>`#EFEFF4`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#2E3440', border: '1px solid #ccc', marginRight: '8px'}}></span>`#2E3440`                                     | Section backgrounds, panels                        |
+| `surface-tertiary`         | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#FFFFFF', border: '1px solid #ccc', marginRight: '8px'}}></span>`#FFFFFF`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#434C5E', border: '1px solid #ccc', marginRight: '8px'}}></span>`#434C5E`                                     | Cards, modals, elevated content                    |
+| `surface-hover`            | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#EEEEF5', border: '1px solid #ccc', marginRight: '8px'}}></span>`#EEEEF5`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#454F64', border: '1px solid #ccc', marginRight: '8px'}}></span>`#454F64`                                     | Hover states for neutral elements                  |
+| `surface-selected`         | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#FFFFFF', border: '1px solid #ccc', marginRight: '8px'}}></span>`#FFFFFF`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#434C5E', border: '1px solid #ccc', marginRight: '8px'}}></span>`#434C5E`                                     | Selected neutral elements                          |
+| `surface-disabled`         | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#D8D8E4', border: '1px solid #ccc', marginRight: '8px'}}></span>`#D8D8E4`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#212732', border: '1px solid #ccc', marginRight: '8px'}}></span>`#212732`                                     | Disabled element backgrounds                       |
+| **Text Colors**            |                                                                                                                                                                                                                            |                                                                                                                                                                                                                            |                                                    |
+| `text-primary`             | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#4A5568', border: '1px solid #ccc', marginRight: '8px'}}></span>`#4A5568`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#D4D8DD', border: '1px solid #ccc', marginRight: '8px'}}></span>`#D4D8DD`                                     | Default body text and content                      |
+| `text-emphasis`            | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#2D3748', border: '1px solid #ccc', marginRight: '8px'}}></span>`#2D3748`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#F3F4F6', border: '1px solid #ccc', marginRight: '8px'}}></span>`#F3F4F6`                                     | Headers, labels, important content                 |
+| `text-secondary`           | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#718096', border: '1px solid #ccc', marginRight: '8px'}}></span>`#718096`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#AAB0BB', border: '1px solid #ccc', marginRight: '8px'}}></span>`#AAB0BB`                                     | Supporting information, metadata                   |
+| `text-tertiary`            | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#A4A9B2', border: '1px solid #ccc', marginRight: '8px'}}></span>`#A4A9B2`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#A8A9AC', border: '1px solid #ccc', marginRight: '8px'}}></span>`#A8A9AC`                                     | Subtle text, captions                              |
+| `text-hint`                | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#757E8F', border: '1px solid #ccc', marginRight: '8px'}}></span>`#757E8F`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#9196A1', border: '1px solid #ccc', marginRight: '8px'}}></span>`#9196A1`                                     | Placeholders, tooltips, form hints                 |
+| `text-disabled`            | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#A0AEC0', border: '1px solid #ccc', marginRight: '8px'}}></span>`#A0AEC0`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#727C88', border: '1px solid #ccc', marginRight: '8px'}}></span>`#727C88`                                     | Disabled or unavailable text                       |
+| **Border Colors**          |                                                                                                                                                                                                                            |                                                                                                                                                                                                                            |                                                    |
+| `border-light`             | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#E5E7EB', border: '1px solid #ccc', marginRight: '8px'}}></span>`#E5E7EB`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#495A72', border: '1px solid #ccc', marginRight: '8px'}}></span>`#495A72`                                     | Subtle dividers, section separators                |
+| `border-normal`            | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#9CA3AF', border: '1px solid #ccc', marginRight: '8px'}}></span>`#9CA3AF`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#AAB0BB', border: '1px solid #ccc', marginRight: '8px'}}></span>`#AAB0BB`                                     | Standard borders, form inputs                      |
+| `border-accent`            | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#2C5BEB', border: '1px solid #ccc', marginRight: '8px'}}></span>`#2C5BEB`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#2C5BEB', border: '1px solid #ccc', marginRight: '8px'}}></span>`#2C5BEB`                                     | Focus states, accent borders                       |
+| **Feedback Colors**        |                                                                                                                                                                                                                            |                                                                                                                                                                                                                            |                                                    |
+| `success`                  | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#22C55E', border: '1px solid #ccc', marginRight: '8px'}}></span>`#22C55E`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#22C55E', border: '1px solid #ccc', marginRight: '8px'}}></span>`#22C55E`                                     | Success messages, positive feedback                |
+| `warning`                  | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#EAB308', border: '1px solid #ccc', marginRight: '8px'}}></span>`#EAB308`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#EAB308', border: '1px solid #ccc', marginRight: '8px'}}></span>`#EAB308`                                     | Warning states, caution messages                   |
+| `error`                    | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#EF4444', border: '1px solid #ccc', marginRight: '8px'}}></span>`#EF4444`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#EF4444', border: '1px solid #ccc', marginRight: '8px'}}></span>`#EF4444`                                     | Error states, failed actions                       |
+| `info`                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#3B82F6', border: '1px solid #ccc', marginRight: '8px'}}></span>`#3B82F6`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#3B82F6', border: '1px solid #ccc', marginRight: '8px'}}></span>`#3B82F6`                                     | Information states, neutral notifications          |
+| **Reserved Colors**        |                                                                                                                                                                                                                            |                                                                                                                                                                                                                            |                                                    |
+| `ai-primary`               | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#DE75F8', border: '1px solid #ccc', marginRight: '8px'}}></span>`#DE75F8`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#DE75F8', border: '1px solid #ccc', marginRight: '8px'}}></span>`#DE75F8`                                     | AI features, magic wand icons                      |
+| **Web/Marketing Colors**   |                                                                                                                                                                                                                            |                                                                                                                                                                                                                            |                                                    |
+| `brand-vibrant`            | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#3B82F6', border: '1px solid #ccc', marginRight: '8px'}}></span>`#3B82F6`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#3B82F6', border: '1px solid #ccc', marginRight: '8px'}}></span>`#3B82F6`                                     | Marketing primary, website headers                 |
+| `brand-secondary`          | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#1E40AF', border: '1px solid #ccc', marginRight: '8px'}}></span>`#1E40AF`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#1E40AF', border: '1px solid #ccc', marginRight: '8px'}}></span>`#1E40AF`                                     | Marketing accent, website CTAs                     |
+| `brand-tertiary`           | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#DBEAFE', border: '1px solid #ccc', marginRight: '8px'}}></span>`#DBEAFE`                                     | <span style={{display: 'inline-block', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#DBEAFE', border: '1px solid #ccc', marginRight: '8px'}}></span>`#DBEAFE`                                     | Marketing backgrounds, website sections            |
 
 Remember: **Colors are meaningful, not decorative.** Every color choice should serve a clear functional purpose in the user interface.
