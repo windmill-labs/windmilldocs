@@ -74,25 +74,9 @@ const sidebars = {
 					label: 'Spacing & Grid'
 				},
 				{
-					type: 'category',
-					label: 'Components',
-					items: [
-						{
-							type: 'doc',
-							id: 'design_system/components/overview/index',
-							label: 'Overview'
-						},
-						{
-							type: 'doc',
-							id: 'design_system/components/buttons/index',
-							label: 'Buttons'
-						},
-						{
-							type: 'doc',
-							id: 'design_system/components/form_components/index',
-							label: 'Form Components'
-						}
-					]
+					type: 'doc',
+					id: 'design_system/components/index',
+					label: 'Components'
 				},
 				{
 					type: 'doc',

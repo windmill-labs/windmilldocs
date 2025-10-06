@@ -1,0 +1,78 @@
+---
+title: Components
+description: Component library usage rules and guidelines for Windmill developers
+---
+
+import ButtonShowcase from '@site/src/components/guidelines/ButtonThemeToggle';
+
+# Components
+
+## Core Rules
+
+### 1. Always Use the Component Library
+
+**Never create custom components.** Use only the provided components from Windmill's library. If you need functionality that doesn't exist, request it from the design system team.
+
+### 2. No Style Hacking
+
+**Do not override component styles.** Components provide props for all supported variants and configurations. If you need a different appearance, use the appropriate prop variant.
+
+```jsx
+// ✅ Correct - use provided variants
+<Button variant="primary" size="large">Submit</Button>
+
+// ❌ Wrong - don't add custom styles
+<Button class="bg-red-500 px-8">Submit</Button>
+```
+
+### 3. Check Guidelines First
+
+**Always consult these component guidelines** before implementing. Each component section specifies:
+
+- When to use each variant
+- Proper implementation patterns
+- Accessibility requirements
+- Common mistakes to avoid
+
+## Quick Reference
+
+### Before You Code
+
+1. Check if a component exists for your use case
+2. Read the component's specific guidelines
+3. Use only the documented props and variants
+4. Test accessibility with keyboard navigation
+
+---
+
+## Buttons
+
+Windmill uses **4 button types** with clear hierarchy. Each button type comes in 3 variants (text, icon+text, icon-only) and should not be mixed arbitrarily.
+
+<ButtonShowcase />
+
+**Button Hierarchy:**
+
+- **Accent Secondary** (Highest Priority): Main conversion CTAs on landing pages - "Sign up", "Get started", "Download"
+- **Accent** (High Priority): Most important action per view - "Save", "Submit", "Create" (only one per screen)
+- **Default** (Standard Priority): Secondary actions and most UI interactions - "Cancel", "Edit", "Delete"
+- **Subtle** (Low Priority): Tertiary actions in dense interfaces - toolbars, button groups
+
+**Usage Rules:**
+- ✅ Use appropriate hierarchy, provide tooltips for icon-only buttons, test all states
+- ❌ Don't use multiple Accent buttons per view, use Accent Secondary outside marketing, create custom styles
+
+## Form Components
+
+Form components are currently being redesigned and will be documented here when ready.
+
+---
+
+## Implementation Notes
+
+When implementing any component:
+
+1. **Follow the design system**: Use only the components and variants documented here
+2. **Accessibility first**: All components include built-in accessibility features
+3. **Test thoroughly**: Verify functionality across different states and themes
+4. **Ask questions**: When in doubt, consult the design system team before creating custom solutions
