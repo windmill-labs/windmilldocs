@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import DarkModeToggle from './DarkModeToggle';
+import { getTextClass, getSurfaceClass, getBorderClass } from '../../utils/themeColors';
 
 const ColorDisplay = ({ colors, darkColors }) => {
 	const [isDarkMode, setIsDarkMode] = useState(false);
@@ -13,56 +14,21 @@ const ColorDisplay = ({ colors, darkColors }) => {
 					<DarkModeToggle isDarkMode={isDarkMode} onToggle={() => setIsDarkMode(!isDarkMode)} />
 				</div>
 			)}
-			<div
-				style={{
-					display: 'grid',
-					gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-					gap: '16px',
-					marginBottom: '24px',
-					padding: '16px',
-					backgroundColor: hasToggle && isDarkMode ? '#2e3440' : '#FBFBFD',
-					borderRadius: '6px',
-					border: '1px solid #e2e8f0'
-				}}
-			>
+			<div className={`grid gap-4 mb-6 p-4 rounded-md border ${getSurfaceClass('primary', isDarkMode)} ${getBorderClass('light', isDarkMode)}`} style={{gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))'}}>
 				{currentColors.map((color, index) => (
 					<div key={index}>
 						<div
-							style={{
-								width: '100%',
-								height: '48px',
-								backgroundColor: color.hex,
-								borderRadius: '4px',
-								marginBottom: '8px',
-								border: '1px solid #e2e8f0'
-							}}
+							className={`w-full h-12 rounded mb-2 border ${getBorderClass('light', isDarkMode)}`}
+							style={{ backgroundColor: color.hex }}
 						></div>
-						<div
-							style={{
-								fontSize: '14px',
-								fontWeight: '600',
-								marginBottom: '4px',
-								color: hasToggle && isDarkMode ? '#f3f4f6' : '#2d3748'
-							}}
-						>
+						<div className={`text-sm font-semibold mb-1 ${getTextClass('emphasis', isDarkMode)}`}>
 							{color.name}
 						</div>
-						<code
-							style={{
-								fontSize: '12px',
-								color: '#718096'
-							}}
-						>
+						<code className={`text-xs ${getTextClass('secondary', isDarkMode)}`}>
 							{color.hex}
 						</code>
 						{color.description && (
-							<div
-								style={{
-									fontSize: '12px',
-									color: hasToggle && isDarkMode ? '#aab0bb' : '#718096',
-									marginTop: '4px'
-								}}
-							>
+							<div className={`text-xs mt-1 ${getTextClass('secondary', isDarkMode)}`}>
 								{color.description}
 							</div>
 						)}

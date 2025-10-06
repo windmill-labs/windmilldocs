@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import DarkModeToggle from './DarkModeToggle';
+import { getTextClass, getSurfaceClass } from '../../utils/themeColors';
 
 const TypographyTable = ({ lightExamples, darkExamples }) => {
 	const [isDarkMode, setIsDarkMode] = useState(false);
@@ -11,64 +12,20 @@ const TypographyTable = ({ lightExamples, darkExamples }) => {
 				<DarkModeToggle isDarkMode={isDarkMode} onToggle={() => setIsDarkMode(!isDarkMode)} />
 			</div>
 
-			<div
-				style={{
-					padding: isDarkMode ? '16px' : '0',
-					backgroundColor: isDarkMode ? '#2e3440' : 'transparent',
-					borderRadius: isDarkMode ? '8px' : '0'
-				}}
-			>
-				<table
-					style={{
-						width: '100%',
-						borderCollapse: 'collapse',
-						overflow: 'hidden'
-					}}
-				>
+			<div className={isDarkMode ? `p-4 rounded-lg ${getSurfaceClass('secondary', true)}` : ''}>
+				<table className="w-full border-collapse overflow-hidden">
 					<thead>
 						<tr>
-							<th
-								style={{
-									textAlign: 'left',
-									padding: '12px 8px',
-									fontSize: '12px',
-									fontWeight: '600',
-									color: isDarkMode ? '#D4D8DD' : '#4A5568'
-								}}
-							>
+							<th className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}>
 								Style
 							</th>
-							<th
-								style={{
-									textAlign: 'left',
-									padding: '12px 8px',
-									fontSize: '12px',
-									fontWeight: '600',
-									color: isDarkMode ? '#D4D8DD' : '#4A5568'
-								}}
-							>
+							<th className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}>
 								Example
 							</th>
-							<th
-								style={{
-									textAlign: 'left',
-									padding: '12px 8px',
-									fontSize: '12px',
-									fontWeight: '600',
-									color: isDarkMode ? '#D4D8DD' : '#4A5568'
-								}}
-							>
+							<th className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}>
 								Specifications
 							</th>
-							<th
-								style={{
-									textAlign: 'left',
-									padding: '12px 8px',
-									fontSize: '12px',
-									fontWeight: '600',
-									color: isDarkMode ? '#D4D8DD' : '#4A5568'
-								}}
-							>
+							<th className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}>
 								Usage
 							</th>
 						</tr>
@@ -76,39 +33,16 @@ const TypographyTable = ({ lightExamples, darkExamples }) => {
 					<tbody>
 						{currentExamples.map((row, index) => (
 							<tr key={index}>
-								<td
-									style={{
-										padding: '12px 8px',
-										fontSize: '12px',
-										fontWeight: '500',
-										color: isDarkMode ? '#D4D8DD' : '#4A5568'
-									}}
-								>
+								<td className={`py-3 px-2 text-xs font-medium ${getTextClass('primary', isDarkMode)}`}>
 									<strong>{row.style}</strong>
 								</td>
-								<td
-									style={{
-										padding: '12px 8px'
-									}}
-								>
+								<td className="py-3 px-2">
 									{row.example}
 								</td>
-								<td
-									style={{
-										padding: '12px 8px',
-										fontSize: '11px',
-										color: isDarkMode ? '#aab0bb' : '#718096'
-									}}
-								>
+								<td className={`py-3 px-2 text-2xs ${getTextClass('secondary', isDarkMode)}`}>
 									{row.specifications}
 								</td>
-								<td
-									style={{
-										padding: '12px 8px',
-										fontSize: '11px',
-										color: isDarkMode ? '#aab0bb' : '#718096'
-									}}
-								>
+								<td className={`py-3 px-2 text-2xs ${getTextClass('secondary', isDarkMode)}`}>
 									{row.usage}
 								</td>
 							</tr>

@@ -101,18 +101,18 @@ const LogoDownload = ({ logos }) => {
 		}, 3000);
 	};
 
-	const getButtonColor = (status) => {
+	const getButtonClasses = (status) => {
 		switch (status) {
 			case 'downloading':
-				return '#9CA3AF';
+				return 'bg-gray-400';
 			case 'success':
-				return '#10B981';
+				return 'bg-feedback-success';
 			case 'error':
-				return '#EF4444';
+				return 'bg-feedback-error';
 			case 'opened':
-				return '#F59E0B';
+				return 'bg-feedback-warning';
 			default:
-				return '#758ff8';
+				return 'bg-accent-primary hover:bg-accent-hover';
 		}
 	};
 
@@ -131,7 +131,7 @@ const LogoDownload = ({ logos }) => {
 		}
 	};
 
-	const getTextColors = (background) => {
+	const getTextClasses = (background) => {
 		// Determine if background is dark based on color value
 		const isDarkBackground = background === '#2d3748' ||
 								 background.toLowerCase().includes('dark') ||
@@ -139,13 +139,13 @@ const LogoDownload = ({ logos }) => {
 
 		if (isDarkBackground) {
 			return {
-				title: '#f3f4f6',     // text-emphasis for dark backgrounds
-				description: '#aab0bb' // text-secondary for dark backgrounds
+				title: 'text-text-emphasis-dark',
+				description: 'text-text-secondary-dark'
 			};
 		} else {
 			return {
-				title: '#2d3748',     // text-emphasis for light backgrounds
-				description: '#718096' // text-secondary for light backgrounds
+				title: 'text-text-emphasis-light',
+				description: 'text-text-secondary-light'
 			};
 		}
 	};
@@ -160,15 +160,12 @@ const LogoDownload = ({ logos }) => {
 			}}
 		>
 			{logos.map((logo, index) => {
-				const textColors = getTextColors(logo.background);
+				const textClasses = getTextClasses(logo.background);
 				return (
 					<div
 						key={index}
+						className="border border-border-light-light rounded-lg p-6 text-center"
 						style={{
-							border: '1px solid #e2e8f0',
-							borderRadius: '8px',
-							padding: '24px',
-							textAlign: 'center',
 							backgroundColor: logo.background || '#ffffff'
 						}}
 					>
@@ -192,50 +189,20 @@ const LogoDownload = ({ logos }) => {
 								}}
 							/>
 						</div>
-						<div
-							style={{
-								fontSize: '14px',
-								fontWeight: '600',
-								marginBottom: '8px',
-								color: textColors.title
-							}}
-						>
+						<div className={`text-sm font-semibold mb-2 ${textClasses.title}`}>
 							{logo.variant}
 						</div>
-						<div
-							style={{
-								fontSize: '12px',
-								color: textColors.description,
-								marginBottom: '16px'
-							}}
-						>
+						<div className={`text-xs mb-4 ${textClasses.description}`}>
 							{logo.description}
 						</div>
 					<button
 						onClick={() => downloadSVG(logo.url, logo.filename)}
 						disabled={downloadStatus[logo.filename] === 'downloading'}
-						style={{
-							backgroundColor: getButtonColor(downloadStatus[logo.filename]),
-							color: 'white',
-							border: 'none',
-							borderRadius: '6px',
-							padding: '8px 16px',
-							fontSize: '12px',
-							fontWeight: '500',
-							cursor: downloadStatus[logo.filename] === 'downloading' ? 'not-allowed' : 'pointer',
-							transition: 'background-color 0.2s',
-							opacity: downloadStatus[logo.filename] === 'downloading' ? 0.7 : 1
-						}}
-						onMouseOver={(e) => {
-							if (downloadStatus[logo.filename] !== 'downloading') {
-								e.target.style.backgroundColor = '#5074f6';
-							}
-						}}
-						onMouseOut={(e) => {
-							if (downloadStatus[logo.filename] !== 'downloading') {
-								e.target.style.backgroundColor = getButtonColor(downloadStatus[logo.filename]);
-							}
-						}}
+						className={`text-white border-none rounded-md px-4 py-2 text-xs font-medium transition-colors duration-200 ${
+							downloadStatus[logo.filename] === 'downloading'
+								? 'cursor-not-allowed opacity-70'
+								: 'cursor-pointer'
+						} ${getButtonClasses(downloadStatus[logo.filename])}`}
 					>
 						{getButtonText(downloadStatus[logo.filename])}
 					</button>
