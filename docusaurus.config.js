@@ -161,13 +161,6 @@ const config = {
 						docsPluginId: 'default'
 					},
 					{
-						type: 'doc',
-						docId: 'index',
-						position: 'left',
-						label: 'Brand Guidelines',
-						docsPluginId: 'brand-guidelines'
-					},
-					{
 						to: 'https://app.windmill.dev',
 						position: 'left',
 						label: 'Cloud'
