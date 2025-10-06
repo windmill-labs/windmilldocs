@@ -49,6 +49,12 @@ const ButtonShowcase = () => {
 			/>
 
 			<ButtonThemeToggle
+				buttonType="accent-secondary"
+				title="Accent Secondary Button"
+				description="Use exclusively for main Call-to-Action (CTA) buttons. Reserved for the primary conversion action on landing pages and marketing materials."
+			/>
+
+			<ButtonThemeToggle
 				buttonType="default"
 				title="Default Button"
 				description="Use for most actions. This is your primary button type for standard interactions."

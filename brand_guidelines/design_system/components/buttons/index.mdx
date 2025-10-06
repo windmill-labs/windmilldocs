@@ -7,9 +7,9 @@ import ButtonShowcase from '@site/src/components/guidelines/ButtonThemeToggle';
 
 # Buttons
 
-Windmill uses **only 3 button types**. Each type has a specific purpose and should not be mixed arbitrarily.
+Windmill uses **4 button types**. Each type has a specific purpose and should not be mixed arbitrarily.
 
-## The 3 Button Types
+## The 4 Button Types
 
 <ButtonShowcase />
 
@@ -35,11 +35,36 @@ Each button type comes in 3 variants:
 - **Format**: Icon only with tooltip
 - **Requirements**: Must have clear context and tooltip
 
+## Button Hierarchy
+
+### When to Use Each Type
+
+**Accent Secondary** (Highest Priority)
+- Main conversion CTAs on landing pages
+- "Sign up", "Get started", "Download" buttons on marketing pages
+- Primary conversion actions that drive business goals
+
+**Accent** (High Priority)
+- Most important action in application views
+- Primary actions like "Save", "Submit", "Create"
+- Only one per view/screen
+
+**Default** (Standard Priority)
+- Secondary actions and most UI interactions
+- "Cancel", "Edit", "Delete", "View details"
+- Your go-to button for standard functionality
+
+**Subtle** (Low Priority)
+- Tertiary actions in dense interfaces
+- Toolbar buttons and action menus
+- Use only when button context is clear
+
 ## Usage Rules
 
 ### ✅ Do
 
 - Use **Accent** buttons for the single most important action per view
+- Use **Accent Secondary** buttons exclusively for main Call-to-Action (CTA) on landing pages and marketing materials
 - Use **Default** buttons for most standard actions
 - Use **Subtle** buttons only in clear button contexts (toolbars, button groups)
 - Provide tooltips for icon-only buttons
@@ -48,8 +73,9 @@ Each button type comes in 3 variants:
 ### ❌ Don't
 
 - Use multiple Accent buttons in the same view
+- Use Accent Secondary buttons outside of marketing/CTA contexts
 - Use Subtle buttons where context is unclear
-- Create custom button styles outside these 3 types
+- Create custom button styles outside these 4 types
 - Use icon-only buttons without sufficient context
 - Mix different button systems in the same interface
 
