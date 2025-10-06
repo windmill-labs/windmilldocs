@@ -43,7 +43,17 @@ module.exports = {
 		'bg-feedback-success',
 		'bg-feedback-warning',
 		'bg-feedback-error',
-		'bg-feedback-info'
+		'bg-feedback-info',
+		// Typography classes used in guidelines
+		'text-2xl',
+		'text-lg',
+		'text-sm',
+		'text-xs',
+		'text-2xs',
+		'font-normal',
+		'font-medium',
+		'font-semibold',
+		'font-mono'
 	],
 	extend: {
 		height: {
@@ -70,6 +80,9 @@ module.exports = {
 				'"Courier New"',
 				'monospace'
 			]
+		},
+		fontSize: {
+			'2xs': ['11px', { lineHeight: '16px' }]
 		}
 	},
 	theme: {
