@@ -30,7 +30,7 @@ const ButtonThemeToggle = ({ buttonType, title, description }) => {
 				<img
 					src={getImageSrc(buttonType, isDark ? 'dark' : 'light')}
 					alt={`${title} examples in ${isDark ? 'dark' : 'light'} mode showing text, icon+text, and icon-only variants`}
-					className="max-w-md"
+					className="w-auto h-auto"
 				/>
 			</div>
 

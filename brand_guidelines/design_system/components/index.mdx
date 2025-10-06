@@ -47,7 +47,7 @@ import ButtonShowcase from '@site/src/components/guidelines/ButtonThemeToggle';
 
 ## Buttons
 
-Windmill uses **4 button types** with clear hierarchy. Each button type comes in 3 variants (text, icon+text, icon-only) and should not be mixed arbitrarily.
+Windmill uses **4 button types** with clear hierarchy. Each button type comes in 3 variants (text, icon+text, icon-only) and supports multiple states including hover, active, disabled, and selected (default and subtle only).
 
 <ButtonShowcase />
 
@@ -58,9 +58,17 @@ Windmill uses **4 button types** with clear hierarchy. Each button type comes in
 - **Default** (Standard Priority): Secondary actions and most UI interactions - "Cancel", "Edit", "Delete"
 - **Subtle** (Low Priority): Tertiary actions in dense interfaces - toolbars, button groups
 
+**Button States:**
+
+- **Default**: Standard button appearance
+- **Hover**: Interactive feedback when cursor hovers over button
+- **Active/Pressed**: Visual feedback when button is clicked or pressed
+- **Disabled**: Non-interactive state for unavailable actions
+- **Selected**: Active selection state (available only for Default and Subtle variants)
+
 **Usage Rules:**
-- ✅ Use appropriate hierarchy, provide tooltips for icon-only buttons, test all states
-- ❌ Don't use multiple Accent buttons per view, use Accent Secondary outside marketing, create custom styles
+- ✅ Use appropriate hierarchy, provide tooltips for icon-only buttons, test all states including disabled and selected
+- ❌ Don't use multiple Accent buttons per view, use Accent Secondary outside marketing, create custom styles, or use selected state on Accent variants
 
 ## Form Components
 
