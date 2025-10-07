@@ -12,20 +12,28 @@ const TypographyTable = ({ lightExamples, darkExamples }) => {
 				<DarkModeToggle isDarkMode={isDarkMode} onToggle={() => setIsDarkMode(!isDarkMode)} />
 			</div>
 
-			<div className={isDarkMode ? `p-4 rounded-lg ${getSurfaceClass('secondary', true)}` : ''}>
+			<div className={`p-4 rounded-lg ${getSurfaceClass('primary', isDarkMode)}`}>
 				<table className="w-full border-collapse overflow-hidden">
 					<thead>
 						<tr>
-							<th className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}>
+							<th
+								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}
+							>
 								Style
 							</th>
-							<th className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}>
+							<th
+								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}
+							>
 								Example
 							</th>
-							<th className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}>
+							<th
+								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}
+							>
 								Specifications
 							</th>
-							<th className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}>
+							<th
+								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}
+							>
 								Usage
 							</th>
 						</tr>
@@ -33,12 +41,12 @@ const TypographyTable = ({ lightExamples, darkExamples }) => {
 					<tbody>
 						{currentExamples.map((row, index) => (
 							<tr key={index}>
-								<td className={`py-3 px-2 text-xs font-medium ${getTextClass('primary', isDarkMode)}`}>
+								<td
+									className={`py-3 px-2 text-xs font-medium ${getTextClass('primary', isDarkMode)}`}
+								>
 									<strong>{row.style}</strong>
 								</td>
-								<td className="py-3 px-2">
-									{row.example}
-								</td>
+								<td className="py-3 px-2">{row.example}</td>
 								<td className={`py-3 px-2 text-2xs ${getTextClass('secondary', isDarkMode)}`}>
 									{row.specifications}
 								</td>
