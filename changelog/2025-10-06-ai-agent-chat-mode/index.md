@@ -3,6 +3,7 @@ slug: ai-agent-chat-mode
 version: v1.555.0
 title: AI Agent chat mode and conversation memory
 tags: ['AI Agents', 'Flow editor', 'Chat', 'Conversation']
+video: /videos/chat_mode.mp4
 description: AI Agents in flows now support a chat mode interface with conversation history and memory capabilities.
 features:
   [
