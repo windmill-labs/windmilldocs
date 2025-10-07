@@ -18,10 +18,6 @@ We also provide [values in our Helm chart](https://github.com/windmill-labs/wind
 Once your Private Hub is up and running, you need to change the hub base url field in the core [instance settings](../../advanced/18_instance_settings/index.mdx#private-hub-base-url) to your Private Hub url.
 
 :::warning
-To limit access to your Private Hub resources exclusively to your team and instances, ensure it is hosted within an internal network or behind a VPN.
-:::
-
-:::warning
 Authentication on the Hub is performed via the Windmill instance.
 The Hub and Windmill instances must have the same root domain name for authentication to work.
 For example, if the Windmill instance is available on windmill.example.com, the Hub must be accessible on a similar sub-domain such as hub.example.com.
@@ -29,6 +25,13 @@ You'll also need to set the COOKIE_DOMAIN [environment variable](../47_environme
 :::
 
 If you are interested in having your own Private Hub, please [contact us](mailto:contact@windmill.dev).
+
+## Restricting access to your Private Hub
+
+To restrict access to your Private Hub, you need to set the `API_SECRET` environment variable on your Private Hub instance.
+You will also need to set the `Private Hub api secret` field in the [instance settings](../../advanced/18_instance_settings/index.mdx#private-hub-api-secret) on your Windmill instance to the same value.
+
+When an `API_SECRET` is set, the Private Hub will only be accessible to logged in users or to requests authenticated with the `X-api-secret` header.
 
 ## Local syncing and syncing with the public Hub
 
