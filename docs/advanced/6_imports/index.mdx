@@ -126,6 +126,15 @@ e.g.:
 Import-Module -Name MyModule
 ```
 
+You can specify the version of the module to install by using the `-RequiredVersion` parameter.
+
+e.g.:
+
+```powershell
+Import-Module -Name MyModule -RequiredVersion 1.0.0
+```
+
+
 ### Private repository (Azure artifacts feed)
 
 To setup an Azure artifacts feed as a private PowerShell repository, follow the [Azure documentation](https://learn.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library).
