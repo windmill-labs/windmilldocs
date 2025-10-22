@@ -185,6 +185,36 @@ const pricing = {
 					]
 				},
 				{ text: 'Support with 48h response time by email' }
+			],
+			features_nonprofit: [
+				{
+					text: (
+						<span>
+							Windmill <b className="text-teal-600">Enterprise</b> Edition features (see table
+							below), including:
+						</span>
+					),
+					features: [
+						{ text: 'Audit logs' },
+						{ text: 'Distributed dependency cache backed by S3' },
+						{ text: 'SAML support including groups synchronization' }
+					]
+				},
+				{ text: 'Uncapped SSO (requires seats)' },
+				{
+					text: <span>Commercial licence</span>
+				},
+				{
+					text: (
+						<span>SLA & Priority Support 24/7 with 3h response time and engineer assistance</span>
+					)
+				},
+				{
+					text: <span>Dedicated Slack or Discord channel</span>
+				},
+				{
+					text: <span>No redlines to our standard MSA</span>
+				}
 			]
 		}
 	],
@@ -705,6 +735,8 @@ export default function Pricing() {
 							>
 								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro' ? (
 									<FeatureList features={tier.features_pro} level={1} id={tier.id} />
+								) : tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit' ? (
+									<FeatureList features={tier.features_nonprofit} level={1} id={tier.id} />
 								) : (
 									<FeatureList features={tier.features} level={1} id={tier.id} />
 								)}
