@@ -575,6 +575,14 @@ Database resource can be specified from the UI or directly within the script wit
 <br/>
 You can then write your prepared statement.
 
+## Contextual variables
+
+You can use [contextual variables](../../../core_concepts/47_environment_variables/index.mdx#contextual-variables) in your queries. They need to be wrapped in `%%` like this:
+
+```sql
+SELECT '%%WM_WORKSPACE%%'
+```
+
 ## Raw queries
 
 ### Safe interpolated arguments
