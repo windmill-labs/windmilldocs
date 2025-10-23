@@ -8,30 +8,28 @@ import DocCard from '@site/src/components/DocCard';
 
 Job debouncing prevents redundant job executions by canceling pending jobs with identical characteristics when new ones are submitted within a specified time window. This feature helps optimize resource usage and prevents unnecessary duplicate computations.
 
-Job debouncing is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) only feature.
+Job debouncing is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) only.
 
-Debouncing can be configured from the Settings menu. When enabled, pending jobs with matching tags or arguments are canceled when new jobs arrive within the debounce window.
+Debouncing can be set from the Settings menu. When jobs with matching characteristics are submitted within the debounce window, pending jobs are automatically canceled in favor of the newest one.
 
-The debouncing feature involves two key parameters:
-- [Time window in seconds](../core_concepts/22_job_debouncing/index.mdx#time-window-in-seconds)
-- [Custom debounce key](../core_concepts/22_job_debouncing/index.mdx#custom-debounce-key)
+The Job debouncing operates globally and across flow runs. It involves two key parameters:
+- [Time window in seconds](../core_concepts/22_job_debouncing/index.md#time-window-in-seconds)
+- [Custom debounce key](../core_concepts/22_job_debouncing/index.md#custom-debounce-key)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Job debouncing"
-		description="Prevent redundant job executions by canceling duplicate jobs within a time window."
+		description="Job debouncing prevents redundant job executions by canceling pending jobs with identical characteristics."
 		href="/docs/core_concepts/job_debouncing"
 	/>
 </div>
 
-## Flow debouncing
+## Job debouncing of flow
 
-From the Flow Settings Advanced menu, select "Debouncing" and define the debounce time window and optionally a custom debounce key.
+From the Flow Settings menu, pick "Debouncing" and define a time window and optionally a custom debounce key.
 
-This is particularly useful for flows triggered by webhooks or events that may fire multiple times in quick succession.
+## Job debouncing of scripts within flow
 
-## Debouncing for scripts within flows
+The Job debouncing operates globally and across flow runs.
 
-Individual steps within a flow can have their own debounce settings. This can be configured in the `Advanced` menu of each step, under the "Runtime" tab in the "Debouncing" section.
-
-This allows you to prevent redundant executions of specific steps that might be triggered multiple times as a flow executes.
+Debouncing can be set for each step of a flow in the `Advanced` menu, on tab "Debouncing".
