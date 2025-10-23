@@ -1028,6 +1028,7 @@ const sidebars = {
 				'misc/worker_group_management_ui/index',
 				'core_concepts/autoscaling/index',
 				'core_concepts/concurrency_limits/index',
+				'core_concepts/job_debouncing/index',
 				'misc/s3_cache/index',
 				'core_concepts/oidc/index',
 				'misc/saml_and_scim/index',

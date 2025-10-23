@@ -91,6 +91,18 @@ The Concurrency limit feature allows you to define concurrency limits for script
 	/>
 </div>
 
+### Job debouncing
+
+Job debouncing prevents redundant job executions by canceling pending jobs with identical characteristics when new ones are submitted within a specified time window.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Job debouncing"
+		description="Prevent redundant job executions by canceling duplicate jobs within a time window."
+		href="/docs/core_concepts/job_debouncing"
+	/>
+</div>
+
 ### Worker group tag
 
 Scripts can be assigned custom [worker groups](../core_concepts/9_worker_groups/index.mdx) for efficient execution on different machines with varying specifications.
