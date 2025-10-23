@@ -8,7 +8,7 @@ Debouncing can be set from the Settings menu. When jobs with matching characteri
 
 The Job debouncing operates globally and across flow runs. It involves two key parameters:
 
-## Time window in seconds
+## Debounce delay in seconds
 
 Set in seconds, the time window defines the period during which duplicate jobs are canceled. When a new job arrives within this window with matching characteristics, any pending jobs are canceled.
 
