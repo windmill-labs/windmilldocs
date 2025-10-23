@@ -1,7 +1,7 @@
 ---
 slug: job-debouncing
 version: v1.590.0
-title: Normal Job Debouncing
+title: Job Debouncing
 tags: ['Jobs', 'Performance', 'Debouncing']
 description: Prevent redundant job executions by canceling duplicate jobs within a specified time window. Debouncing is enabled by default for dependency jobs.
 features:
