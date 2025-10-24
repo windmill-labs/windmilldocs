@@ -21,7 +21,9 @@ Once your Private Hub is up and running, you need to change the hub base url fie
 Authentication on the Hub is performed via the Windmill instance.
 The Hub and Windmill instances must have the same root domain name for authentication to work.
 For example, if the Windmill instance is available on windmill.example.com, the Hub must be accessible on a similar sub-domain such as hub.example.com.
-You'll also need to set the COOKIE_DOMAIN [environment variable](../47_environment_variables/index.mdx) of the Windmill instance (server) to the root domain name (e.g. example.com).
+You'll also need to set the COOKIE_DOMAIN [environment variable](../47_environment_variables/index.mdx) of the Windmill instance (server) to the root domain name (e.g. example.com). 
+If you're using the [Helm chart](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml), there is a built-in `cookieDomain` value for this.
+**Make sure to log out and log back in after setting the cookie domain.**
 :::
 
 If you are interested in having your own Private Hub, please [contact us](mailto:contact@windmill.dev).
