@@ -10,9 +10,10 @@
  */
 export const getTextClasses = (background, isDarkMode = false) => {
 	// Determine if background is dark based on color value
-	const isDarkBackground = background === '#2d3748' ||
-							 background.toLowerCase().includes('dark') ||
-							 (background.startsWith('#') && parseInt(background.slice(1), 16) < 0x808080);
+	const isDarkBackground =
+		background === '#2d3748' ||
+		background.toLowerCase().includes('dark') ||
+		(background.startsWith('#') && parseInt(background.slice(1), 16) < 0x808080);
 
 	if (isDarkBackground) {
 		return {
@@ -54,7 +55,7 @@ export const getButtonClasses = (status) => {
  * @returns {string} Tailwind class for surface color
  */
 export const getSurfaceClass = (variant = 'primary', isDarkMode = false) => {
-	const theme = isDarkMode ? 'dark' : 'light';
+	const theme = isDarkMode ? 'dark-3' : 'light';
 	return `bg-surface-${variant}-${theme}`;
 };
 
@@ -65,7 +66,7 @@ export const getSurfaceClass = (variant = 'primary', isDarkMode = false) => {
  * @returns {string} Tailwind class for text color
  */
 export const getTextClass = (variant = 'primary', isDarkMode = false) => {
-	const theme = isDarkMode ? 'dark' : 'light';
+	const theme = isDarkMode ? 'dark-3' : 'light';
 	return `text-text-${variant}-${theme}`;
 };
 
@@ -76,7 +77,7 @@ export const getTextClass = (variant = 'primary', isDarkMode = false) => {
  * @returns {string} Tailwind class for border color
  */
 export const getBorderClass = (variant = 'normal', isDarkMode = false) => {
-	const theme = isDarkMode ? 'dark' : 'light';
+	const theme = isDarkMode ? 'dark-3' : 'light';
 	return `border-border-${variant}-${theme}`;
 };
 

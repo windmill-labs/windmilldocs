@@ -135,9 +135,9 @@ We use a **lighter default** with a **darker emphasis option** to:
 		{
 			style: 'Body Emphasized',
 			example: (
-				<div style={{ fontSize: '12px', fontWeight: '500', color: '#2d3748' }}>Field name:</div>
+				<div style={{ fontSize: '12px', fontWeight: '600', color: '#2d3748' }}>Field name:</div>
 			),
-			specifications: '12px (text-xs) • 500 weight (font-medium) • text-emphasis',
+			specifications: '12px (text-xs) • 600 weight (font-semibold) • text-emphasis',
 			usage: 'Labels, form field labels, tab labels'
 		},
 		{
@@ -226,9 +226,9 @@ We use a **lighter default** with a **darker emphasis option** to:
 		{
 			style: 'Body Emphasized',
 			example: (
-				<div style={{ fontSize: '12px', fontWeight: '500', color: '#f3f4f6' }}>Field name:</div>
+				<div style={{ fontSize: '12px', fontWeight: '600', color: '#f3f4f6' }}>Field name:</div>
 			),
-			specifications: '12px (text-xs) • 500 weight (font-medium) • text-emphasis',
+			specifications: '12px (text-xs) • 600 weight (font-semibold) • text-emphasis',
 			usage: 'Labels, form field labels, tab labels'
 		},
 		{
@@ -348,11 +348,11 @@ className = 'text-xs font-normal text-primary';
 **When to use**: Important labels, form field labels, tab labels, emphasis within body text
 
 ```tsx
-className = 'text-xs font-medium text-emphasis';
+className = 'text-xs font-semibold text-emphasis';
 ```
 
 - **Size**: 12px (`text-xs`)
-- **Weight**: 500 (`font-medium`)
+- **Weight**: 600 (`font-semibold`)
 - **Color**: `text-emphasis`
 - **Example**: "Job Name:", "Status:", button labels
 
@@ -427,7 +427,7 @@ className = 'text-2xs font-mono font-normal text-emphasis';
 
 Use these methods in order of preference:
 
-1. **Font weight** - Semibold (600) for headers, medium (500) for emphasis, normal (400) for body
+1. **Font weight** - Semibold (600) for headers and emphasis, normal (400) for body
 2. **Color** - Primary for main content, secondary for supporting info, hint for subtle guidance
 3. **Size** - Only change size for true hierarchy levels (page title vs section header vs body)
 
@@ -439,7 +439,7 @@ Use these methods in order of preference:
 
 ## Creating Visual Hierarchy - Priority Order
 
-1. **Font Weight** - Use medium (500) or semibold (600) for emphasis
+1. **Font Weight** - Use semibold (600) for emphasis
 2. **Color** - Use textEmphasis for important content
 3. **Position & Spacing** - Group related content, add white space
 4. **Size** - Only use defined type styles, never custom sizes
@@ -538,7 +538,7 @@ Is it metadata or supporting info?
 → **No**: Continue
 
 Is it a label or needs emphasis?
-→ **Yes**: Body Emphasized (12px, medium weight, emphasis color)
+→ **Yes**: Body Emphasized (12px, semibold weight, emphasis color)
 → **No**: Body (12px, normal, primary color) ← **DEFAULT**
 
 ## Accessibility
