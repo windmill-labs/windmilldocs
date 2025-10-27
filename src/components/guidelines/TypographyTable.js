@@ -47,10 +47,10 @@ const TypographyTable = ({ lightExamples, darkExamples }) => {
 									<strong>{row.style}</strong>
 								</td>
 								<td className="py-3 px-2">{row.example}</td>
-								<td className={`py-3 px-2 text-2xs ${getTextClass('secondary', isDarkMode)}`}>
+								<td className={`py-3 px-2 text-2xs ${getTextClass('primary', isDarkMode)}`}>
 									{row.specifications}
 								</td>
-								<td className={`py-3 px-2 text-2xs ${getTextClass('secondary', isDarkMode)}`}>
+								<td className={`py-3 px-2 text-2xs ${getTextClass('primary', isDarkMode)}`}>
 									{row.usage}
 								</td>
 							</tr>

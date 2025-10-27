@@ -1,4 +1,82 @@
 const plugin = require('tailwindcss/plugin');
+const tokens = require('./src/data/tokens.json');
+
+// Theme selector - change this to switch between dark themes
+const DARK_THEME = 'dark-3';
+
+// Helper function to generate theme colors from tokens
+function generateThemeColors() {
+	const lightTokens = tokens.tokens.light;
+	const darkTokens = tokens.tokens[DARK_THEME];
+
+	return {
+		// Surface colors
+		surface: {
+			'primary-light': lightTokens['surface-primary'],
+			'primary-dark': darkTokens['surface-primary'],
+			'secondary-light': lightTokens['surface-secondary'],
+			'secondary-dark': darkTokens['surface-secondary'],
+			'tertiary-light': lightTokens['surface-tertiary'],
+			'tertiary-dark': darkTokens['surface-tertiary'],
+			'hover-light': lightTokens['surface-hover'],
+			'hover-dark': darkTokens['surface-hover'],
+			'selected-light': lightTokens['surface-selected'],
+			'selected-dark': darkTokens['surface-selected'],
+			'disabled-light': lightTokens['surface-disabled'],
+			'disabled-dark': darkTokens['surface-disabled'],
+			'sunken-light': lightTokens['surface-sunken'],
+			'sunken-dark': darkTokens['surface-sunken'],
+			'input-light': lightTokens['surface-input'],
+			'input-dark': darkTokens['surface-input']
+		},
+		// Text colors
+		text: {
+			'primary-light': lightTokens['text-primary'],
+			'primary-dark': darkTokens['text-primary'],
+			'emphasis-light': lightTokens['text-emphasis'],
+			'emphasis-dark': darkTokens['text-emphasis'],
+			'secondary-light': lightTokens['text-secondary'],
+			'secondary-dark': darkTokens['text-secondary'],
+			'tertiary-light': lightTokens['text-tertiary'],
+			'tertiary-dark': darkTokens['text-tertiary'],
+			'hint-light': lightTokens['text-hint'],
+			'hint-dark': darkTokens['text-hint'],
+			'disabled-light': lightTokens['text-disabled'],
+			'disabled-dark': darkTokens['text-disabled'],
+			'accent-light': lightTokens['text-accent'],
+			'accent-dark': darkTokens['text-accent'],
+			'primary-inverse-light': lightTokens['text-primary-inverse'],
+			'primary-inverse-dark': darkTokens['text-primary-inverse'],
+			'secondary-inverse-light': lightTokens['text-secondary-inverse'],
+			'secondary-inverse-dark': darkTokens['text-secondary-inverse'],
+			'tertiary-inverse-light': lightTokens['text-tertiary-inverse'],
+			'tertiary-inverse-dark': darkTokens['text-tertiary-inverse'],
+			'emphasis-inverse-light': lightTokens['text-emphasis-inverse'],
+			'emphasis-inverse-dark': darkTokens['text-emphasis-inverse']
+		},
+		// Border colors
+		border: {
+			'light-light': lightTokens['border-light'],
+			'light-dark': darkTokens['border-light'],
+			'normal-light': lightTokens['border-normal'],
+			'normal-dark': darkTokens['border-normal'],
+			'accent-light': lightTokens['border-accent'],
+			'accent-dark': darkTokens['border-accent'],
+			'selected-light': lightTokens['border-selected'],
+			'selected-dark': darkTokens['border-selected']
+		},
+		// Accent colors (shared between themes)
+		accent: {
+			primary: lightTokens['surface-accent-primary'],
+			hover: lightTokens['surface-accent-hover'],
+			clicked: lightTokens['surface-accent-clicked'],
+			'secondary-light': lightTokens['surface-accent-secondary'],
+			'secondary-dark': darkTokens['surface-accent-secondary'],
+			'selected-light': lightTokens['surface-accent-selected'],
+			'selected-dark': darkTokens['surface-accent-selected']
+		}
+	};
+}
 
 module.exports = {
 	darkMode: ['class', '[data-theme="dark"]'],
@@ -17,6 +95,10 @@ module.exports = {
 		'bg-surface-selected-dark',
 		'bg-surface-disabled-light',
 		'bg-surface-disabled-dark',
+		'bg-surface-sunken-light',
+		'bg-surface-sunken-dark',
+		'bg-surface-input-light',
+		'bg-surface-input-dark',
 		'text-text-primary-light',
 		'text-text-primary-dark',
 		'text-text-emphasis-light',
@@ -29,17 +111,31 @@ module.exports = {
 		'text-text-hint-dark',
 		'text-text-disabled-light',
 		'text-text-disabled-dark',
+		'text-text-accent-light',
+		'text-text-accent-dark',
+		'text-text-primary-inverse-light',
+		'text-text-primary-inverse-dark',
+		'text-text-secondary-inverse-light',
+		'text-text-secondary-inverse-dark',
+		'text-text-tertiary-inverse-light',
+		'text-text-tertiary-inverse-dark',
+		'text-text-emphasis-inverse-light',
+		'text-text-emphasis-inverse-dark',
 		'border-border-light-light',
 		'border-border-light-dark',
 		'border-border-normal-light',
 		'border-border-normal-dark',
 		'border-border-accent-light',
 		'border-border-accent-dark',
+		'border-border-selected-light',
+		'border-border-selected-dark',
 		'bg-accent-primary',
 		'bg-accent-hover',
 		'bg-accent-clicked',
 		'bg-accent-secondary-light',
 		'bg-accent-secondary-dark',
+		'bg-accent-selected-light',
+		'bg-accent-selected-dark',
 		'bg-feedback-success',
 		'bg-feedback-warning',
 		'bg-feedback-error',
@@ -102,55 +198,8 @@ module.exports = {
 					950: '#1e232e',
 					1000: '#181c24'
 				},
-				// Brand accent colors
-				accent: {
-					primary: '#758FF8',
-					hover: '#5074F6',
-					clicked: '#2C5BEB',
-					'secondary-light': '#293676',
-					'secondary-dark': '#E8EBFB',
-					'selected-light': 'rgba(191, 219, 254, 0.3)',
-					'selected-dark': 'rgba(37, 99, 235, 0.3)'
-				},
-				// Surface colors - flattened for proper Tailwind class generation
-				surface: {
-					'primary-light': '#FBFBFD',
-					'primary-dark': '#3B4252',
-					'secondary-light': '#EFEFF4',
-					'secondary-dark': '#2E3440',
-					'tertiary-light': '#FFFFFF',
-					'tertiary-dark': '#434C5E',
-					'hover-light': '#EEEEF5',
-					'hover-dark': '#454F64',
-					'selected-light': '#FFFFFF',
-					'selected-dark': '#434C5E',
-					'disabled-light': '#D8D8E4',
-					'disabled-dark': '#212732'
-				},
-				// Text colors - flattened for proper Tailwind class generation
-				text: {
-					'primary-light': '#4A5568',
-					'primary-dark': '#D4D8DD',
-					'emphasis-light': '#2D3748',
-					'emphasis-dark': '#F3F4F6',
-					'secondary-light': '#718096',
-					'secondary-dark': '#AAB0BB',
-					'tertiary-light': '#A4A9B2',
-					'tertiary-dark': '#A8A9AC',
-					'hint-light': '#757E8F',
-					'hint-dark': '#9196A1',
-					'disabled-light': '#A0AEC0',
-					'disabled-dark': '#727C88'
-				},
-				// Border colors - flattened for proper Tailwind class generation
-				border: {
-					'light-light': '#E5E7EB',
-					'light-dark': '#495A72',
-					'normal-light': '#9CA3AF',
-					'normal-dark': '#AAB0BB',
-					'accent-light': '#758FF8',
-					'accent-dark': '#FFFFFF'
-				},
+				// Dynamic colors from tokens.json
+				...generateThemeColors(),
 				// Feedback colors (same for light/dark)
 				feedback: {
 					success: '#22C55E',
@@ -160,7 +209,7 @@ module.exports = {
 				},
 				// Reserved colors
 				ai: {
-					primary: '#8B5CF6'
+					primary: tokens.tokens.light['reserved-ai']
 				},
 				// Web/Marketing colors (not for app use)
 				brand: {

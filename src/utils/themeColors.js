@@ -17,8 +17,8 @@ export const getTextClasses = (background, isDarkMode = false) => {
 
 	if (isDarkBackground) {
 		return {
-			title: 'text-text-emphasis-dark',
-			description: 'text-text-secondary-dark'
+			title: 'text-text-emphasis-dark-3',
+			description: 'text-text-secondary-dark-3'
 		};
 	} else {
 		return {
@@ -55,7 +55,7 @@ export const getButtonClasses = (status) => {
  * @returns {string} Tailwind class for surface color
  */
 export const getSurfaceClass = (variant = 'primary', isDarkMode = false) => {
-	const theme = isDarkMode ? 'dark-3' : 'light';
+	const theme = isDarkMode ? 'dark' : 'light';
 	return `bg-surface-${variant}-${theme}`;
 };
 
@@ -66,8 +66,8 @@ export const getSurfaceClass = (variant = 'primary', isDarkMode = false) => {
  * @returns {string} Tailwind class for text color
  */
 export const getTextClass = (variant = 'primary', isDarkMode = false) => {
-	const theme = isDarkMode ? 'dark-3' : 'light';
-	return `text-text-${variant}-${theme}`;
+	const theme = isDarkMode ? 'dark' : 'light';
+	return `!text-text-${variant}-${theme}`;
 };
 
 /**
