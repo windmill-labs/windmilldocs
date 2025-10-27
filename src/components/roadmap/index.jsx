@@ -4,38 +4,19 @@ import styles from './styles.module.css';
 // Roadmap data
 const roadmapItems = [
 	{
-		title: 'Ruby support',
-		month: 'September',
-		category: 'Languages',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/3201',
-		description: ''
-	},
-	{
-		title: 'Settable permissions within object storage by folders',
-		month: 'August',
-		category: 'Backend',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5446',
-		description: `Currently the workspace object storage is all or nothing. You can either see the object explorer or not, and you can either write and read everywhere or not.
-
-This would be a settable setting such that the layout within the buckets can follow the standard u/ and f/ layouts of windmill and that list, read and write permissions would be inherited from the folder permissions.`
-	},
-	{
 		title: 'Hide sensitive values from logs',
-		month: 'September',
 		category: 'Backend',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5450',
 		description: `SDK clients should automatically propagate to the workers (maybe using a special pattern in stdout) that there is some strings that are sensitive because they correspond to secrets pulled with getResource and getValue. Additionally, workers should be able to have a list of values to consider secrets synced from an external source-of-truth. Those sensitive values would always be masked in logs.`
 	},
 	{
 		title: 'Database explorer for every SQL',
-		month: 'August',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5448',
 		description: `It would be nice to have a database explorer similar to Supabase to explore your database data and run REPL like commands directly from a windmill db resource`
 	},
 	{
 		title: 'Dedicated workers improvements',
-		month: 'August',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5337',
 		description:
 			'Dedicated workers are currently a setting for individual scripts, flows and worker groups. A dedicated worker can only be dedicated to one script or flow. We mean to change that so that in the extreme case, it can handle a full workspace.\n\nWe want them to now have a configuration, let\'s call it the dedicated worker configurations that select all the flows and scripts (potentially apps) it will be dedicated to:\nfor all those it needs to do a compaction for ts and python where it will essentially route internally the job to the right subfunction based on job path which mean all those scripts can now run on the same runtime and we have at most 2 running runtimes (bun, python) on a dedicated worker. Those configuration can be deployed and each deployment will have a deployment version and a status . It corresponds to the status of creating the single lockfile for ts and single lockfile for python. If we have incompatible reqs for different scripts it will fail otherwise it pass.\n\nInstead of having to declare if a script or flow is ran on dedicated worker on the script or flow, they will be automatically updated when they are part of a successful deployment of a worker config such that their tag become dedicated:<dedicated_worker_config_name>\nThe creation of the compacted view is the "hard part". Once we have those, we can use our normal traversers to generated or fail to generate the single lockfile.',
@@ -43,7 +24,6 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Interactive script debugger',
-		month: 'August',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5432',
 		important: true,
@@ -51,7 +31,6 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Code/React UI builder',
-		month: 'August',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5433',
 		important: true,
 		description:
@@ -59,28 +38,18 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Cloudflare workers support',
-		month: 'TBD',
 		category: 'Backend',
 		issueLink: '',
 		description: 'Cloudflare workers support for native jobs'
 	},
 	{
 		title: 'Free form flows',
-		month: 'August',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5435',
 		description:
 			'- Free positioning of nodes\n- Colorable Rectangle to group nodes\n- Free Text annotable anywhere'
 	},
 	{
-		title: 'AI step as flow primitive',
-		month: 'September',
-		category: 'AI',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5436',
-		description: '- More powerful and native API calls to AI models'
-	},
-	{
 		title: 'Improved local dev experience',
-		month: 'August',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5440',
 		description:
@@ -88,24 +57,13 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Exhaustive Hub integrations generated by AI',
-		month: 'September',
 		category: 'Integration',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5441',
 		description:
 			'- Improve AI agents to generate both code and test for all possible integrations\n- Make it easier for community to contribute to this process'
 	},
 	{
-		title: 'Data pipelines v2: DuckLake integration',
-		month: 'October',
-		category: 'Backend',
-		important: true,
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5442',
-		description:
-			'- Apache iceberg support\n- Data lineage + column-wise data-lineage\n- Asset/Dataset centric view of data pipelines\n- Better support for data materialization\n- Better support for streaming/incremental pipelines\n- Integration with metadata platforms\n- Better integration with duckdb'
-	},
-	{
 		title: 'Shardable job queue for unlimited scalability',
-		month: 'October',
 		category: 'Backend',
 		issueLink: '',
 		description:
@@ -176,22 +134,6 @@ const categorizedItems = roadmapItems.map((item) => {
 	};
 });
 
-// Group timeline items by month
-function groupByMonth(items) {
-	const groups = {};
-
-	items.forEach((item) => {
-		const month = item.month || 'TBD';
-
-		if (!groups[month]) {
-			groups[month] = [];
-		}
-		groups[month].push(item);
-	});
-
-	return groups;
-}
-
 function WindmillRoadmap() {
 	// State to track which cards have truncated content
 	const [truncatedItems, setTruncatedItems] = React.useState({});
@@ -220,104 +162,85 @@ function WindmillRoadmap() {
 	}, []);
 
 	const renderTimeline = () => {
-		const groupedItems = groupByMonth(categorizedItems);
-
-		// Sort months in chronological order
-		const sortOrder = {
-			January: 1,
-			February: 2,
-			March: 3,
-			May: 4,
-			May: 5,
-			August: 6,
-			September: 7,
-			October: 8,
-			October: 9,
-			October: 10,
-			November: 11,
-			December: 12,
-			TBD: 99
-		};
-
-		const sortedMonths = Object.keys(groupedItems).sort((a, b) => {
-			return sortOrder[a] - sortOrder[b];
-		});
-
+		// Single section "Next 6 months" with all items
 		return (
 			<div className={styles.timeline}>
-				{sortedMonths.map((month) => (
-					<div key={month} className={styles.monthGroup}>
-						<div className={styles.monthMarker}></div>
-						<div className={styles.monthLabel}>{month}</div>
+				<div className={styles.monthGroup}>
+					<div className={styles.monthMarker}></div>
+					<div className={styles.monthLabel}>Next 6 months</div>
 
-						{groupedItems[month].map((item, index) => {
-							const itemKey = `${month}-${index}`;
-							
-							return (
+					{categorizedItems.map((item, index) => {
+						const itemKey = `next-${index}`;
+						
+						return (
+						<div
+							key={itemKey}
+							className={`${styles.timelineCard} ${styles.right} ${
+								item.important ? styles.important : ''
+							}`}
+						>
 							<div
-								key={itemKey}
-								className={`${styles.timelineCard} ${styles.right} ${
-									item.important ? styles.important : ''
-								}`}
+								className={styles.cardContent}
+								style={{
+									borderColor: categoryColors[item.category] || categoryColors.Default
+								}}
 							>
-								<div
-									className={styles.cardContent}
-									style={{
-										borderColor: categoryColors[item.category] || categoryColors.Default
-									}}
-								>
-									{item.important && <div className={styles.importantBadge}>★</div>}
-									<h3 className={styles.cardTitle}>
-										{item.title}
-										<span className={styles.cardCategory}>
-											{item.category} &nbsp; &nbsp;
-											{item.issueLink && (
-												<a
-													className={styles.detailLink}
-													href={item.issueLink}
-													target="_blank"
-													rel="noopener noreferrer"
+								{item.important && <div className={styles.importantBadge}>★</div>}
+								<h3 className={styles.cardTitle}>
+									{item.title}
+									<span className={styles.cardCategory}>
+										{item.category} &nbsp; &nbsp;
+										{item.issueLink && (
+											<a
+												className={styles.detailLink}
+												href={item.issueLink}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												<svg
+													height="16"
+													width="16"
+													viewBox="0 0 16 16"
+													fill="currentColor"
+													style={{ verticalAlign: 'middle' }}
 												>
-													<svg
-														height="16"
-														width="16"
-														viewBox="0 0 16 16"
-														fill="currentColor"
-														style={{ verticalAlign: 'middle' }}
-													>
-														<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-													</svg>
-												</a>
-											)}
-										</span>
-									</h3>
+													<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+												</svg>
+											</a>
+										)}
+									</span>
+								</h3>
 
-									<div className={styles.cardPreviewContainer}>
-										<div 
-											ref={el => textRefs.current[itemKey] = el}
-											className={`${styles.cardText} ${truncatedItems[itemKey] ? styles.truncated : ''} text-gray-500 dark:text-gray-300`}
-										>
-											{item.description.split('\n').map((line, i) => (
-												<React.Fragment key={i}>
-													{line}
-													<br />
-												</React.Fragment>
-											))}
-										</div>
+								<div className={styles.cardPreviewContainer}>
+									<div 
+										ref={el => textRefs.current[itemKey] = el}
+										className={`${styles.cardText} ${truncatedItems[itemKey] ? styles.truncated : ''} text-gray-500 dark:text-gray-300`}
+									>
+										{item.description.split('\n').map((line, i) => (
+											<React.Fragment key={i}>
+												{line}
+												<br />
+											</React.Fragment>
+										))}
 									</div>
 								</div>
-								</div>
-							);
-						})}
-					</div>
-				))}
+							</div>
+							</div>
+						);
+					})}
+				</div>
 			</div>
 		);
 	};
 
 	return (
 		<div className={styles.roadmapContainer}>
-			<div className={styles.container}>{renderTimeline()}</div>
+			<div className={styles.container}>
+				<div style={{ marginBottom: '1rem', color: 'var(--ifm-color-primary-dark)' }}>
+					For what’s been shipped recently, see the <a href="/changelog">changelog</a>.
+				</div>
+				{renderTimeline()}
+			</div>
 		</div>
 	);
 }

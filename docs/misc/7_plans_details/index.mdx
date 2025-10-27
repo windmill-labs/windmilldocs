@@ -320,6 +320,35 @@ services:
 ```
 Note: Services like db, windmill_server, lsp, multiplayer, indexer, and caddy don't count towards Compute Units.
 
+### Configuring native workers with Helm
+
+For users deploying Windmill using Helm, native workers can be configured by modifying the `values.yaml` file in the Windmill Helm chart. The configuration is done through the `workerGroups` section with the `extraEnv` field.
+
+Here's how to configure native workers in your `values.yaml`:
+
+```yaml
+workerGroups:
+  - name: "native"
+    replicas: 1
+    extraEnv:
+      - name: "NUM_WORKERS"
+        value: "8"
+      - name: "SLEEP_QUEUE"
+        value: "200"
+```
+
+In this configuration:
+
+- `name: "native"`: Specifies the native worker group that handles query language jobs
+- `replicas: 1`: Sets the number of native worker replicas (typically 1)
+- `extraEnv`: Environment variables for the native workers:
+  - `NUM_WORKERS`: Number of subworker processes (default: 8, counts as 1 Compute Unit)
+  - `SLEEP_QUEUE`: Sleep duration between queue polling in milliseconds (default: 200)
+
+You can adjust the `NUM_WORKERS` value based on your needs. Setting it to 0 will disable native workers entirely.
+
+For the complete default configuration, refer to the [Windmill Helm chart values.yaml](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml#L172).
+
 ### Compute Units and autoscaling
 
 In terms of billing for Windmill Enterprise Edition with [autoscaling](../../core_concepts/42_autoscaling/index.mdx), Windmill measures how long the workers are online with a minute granularity. If you use 10 workers with 2GB for 1/10th of the month, it will count the same as if you had a single worker for the full month.

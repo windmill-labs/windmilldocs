@@ -24,17 +24,33 @@ Select or create an AI resource that contains your API credentials and endpoint 
 
 Choose the specific model you want to use from your selected provider. Available models depend on your chosen provider and resource configuration.
 
-## Tools
+## Script tools
 
-AI Agents can be equipped with tools that extend their capabilities beyond text and image generation. Tools are Windmill [scripts](../../script_editor/index.mdx) that the AI can call to perform specific actions or retrieve information. You can add tools from three sources:
+AI Agents can be equipped with script tools that extend their capabilities beyond text and image generation. Tools are Windmill [scripts](../../script_editor/index.mdx) that the AI can call to perform specific actions or retrieve information. You can add tools from three sources:
 
 - **Inline scripts** - Write custom tools directly within the flow
 - **Workspace scripts** - Use existing scripts from your Windmill workspace
 - **Hub scripts** - Leverage pre-built tools from the Windmill Hub
 
-Each tool must have a unique name within the AI agent step and contain only letters, numbers, and underscores. It should be descriptive of the tool's function to help the AI understand when to use them.
+Each script tool must have a unique name within the AI agent step and contain only letters, numbers, and underscores. It should be descriptive of the tool's function to help the AI understand when to use them.
 
-When tools are configured, the AI agent can decide when and how to use them based on the user's request. It selects the most appropriate tool by name, and issues a tool call with JSON arguments that conform to the tool’s input schema. Windmill executes the underlying `script` and returns a JSON result, which is surfaced back to the model as a tool response message and is included in `messages`.
+When script tools are configured, the AI agent can decide when and how to use them based on the user's request. It selects the most appropriate tool by name, and issues a tool call with JSON arguments that conform to the tool's input schema. Windmill executes the underlying `script` and returns a JSON result, which is surfaced back to the model as a tool response message and is included in `messages`.
+
+### MCP tools
+
+AI Agents can connect to [MCP (Model Context Protocol)](../51_mcp/index.mdx) servers as tools, enabling access to any tools exposed by MCP-compatible servers. To use MCP tools:
+
+1. Create an MCP resource in Windmill with:
+   - **Name**: Identifier for the MCP resource
+   - **URL**: The MCP server endpoint URL
+   - **Auth token** (optional): Authentication token for the MCP server
+   - **Headers** (optional): Additional HTTP headers for the connection
+
+2. Add the MCP resource to your AI Agent step as a tool
+
+3. The AI agent will automatically discover and use tools exposed by the MCP server
+
+**Note**: Only HTTP streamable MCP servers are supported.
 
 ## Input parameters
 
@@ -52,6 +68,12 @@ The system prompt that defines the AI's role, behavior, and context. This helps 
 Specifies the type of output the AI should generate:
 - `text` - Generate text responses (default).
 - `image` - Generate image outputs (supported by OpenAI, Google AI (Gemini), and OpenRouter). Requires an [S3 object storage](../38_object_storage_in_windmill/index.mdx) to be configured at the workspace level.
+
+#### output_schema (json-schema)
+Define a JSON schema that the AI agent will follow for its response format. This ensures structured, predictable outputs that can be easily processed by subsequent flow steps.
+
+#### messages_context_length (number)
+Specifies the number of previous messages to include as context for the AI agent. This enables the agent to maintain conversation history and remember past interactions. When set, the agent will have access to the specified number of previous messages from the conversation, allowing for more contextual and coherent responses across multiple interactions.
 
 #### streaming (optional)
 
@@ -119,8 +141,44 @@ Controls randomness in text generation:
 - `2.0` - Maximum creativity and randomness
 - Default values typically range from 0.1 to 1.0
 
-#### output_schema (json-schema)
-Define a JSON schema that the AI agent will follow for its response format. This ensures structured, predictable outputs that can be easily processed by subsequent flow steps.
+## Chat mode
+
+Flows with AI agents can be run in chat mode, which transforms the standard flow interface into a conversational chat UI. This mode is particularly useful for creating interactive AI applications where users can have ongoing conversations with the AI agent.
+
+### Enabling chat mode
+
+To enable chat mode for a flow:
+1. Navigate to the flow inputs configuration
+2. Toggle the "Chat mode" option on the top right
+3. When the flow is run, it will display as a chat interface instead of the standard form interface
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/chat_mode.mp4"
+/>
+
+
+### Features
+
+- **Conversational interface**: The flow runs in a chat-like UI where users can send messages and receive responses in a familiar messaging format
+- **Multiple conversations**: Users can maintain multiple different conversation threads within the same flow
+- **Conversation history**: Each conversation maintains its own history, allowing users to scroll back through previous messages
+- **Persistent context**: When using the `messages_context_length` parameter, the AI agent can remember and reference previous messages in the conversation
+
+### Recommended configuration
+
+For optimal chat mode experience, we recommend placing an AI agent step at the end of your flow with both `streaming` and `messages_context_length` enabled. This configuration:
+- Enables real-time response streaming for a more interactive chat experience
+- Maintains conversation context across multiple messages
+
+### Use cases
+
+Chat mode is ideal for:
+- Developing conversational workflows
+- Implementing AI assistants with memory
+- Building chatbots that can execute actions through tools
 
 ## Output
 
