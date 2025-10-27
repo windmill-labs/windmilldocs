@@ -134,26 +134,6 @@ export const organizeColorTokens = (theme = 'light') => {
       name: 'text-accent',
       hex: themeTokens['text-accent'],
       description: 'Accent colored text, links'
-    },
-    {
-      name: 'text-primary-inverse',
-      hex: themeTokens['text-primary-inverse'],
-      description: 'Primary text on dark backgrounds'
-    },
-    {
-      name: 'text-secondary-inverse',
-      hex: themeTokens['text-secondary-inverse'],
-      description: 'Secondary text on dark backgrounds'
-    },
-    {
-      name: 'text-tertiary-inverse',
-      hex: themeTokens['text-tertiary-inverse'],
-      description: 'Tertiary text on dark backgrounds'
-    },
-    {
-      name: 'text-emphasis-inverse',
-      hex: themeTokens['text-emphasis-inverse'],
-      description: 'Emphasized text on dark backgrounds'
     }
   ];
 
