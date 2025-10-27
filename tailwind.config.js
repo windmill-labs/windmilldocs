@@ -82,45 +82,86 @@ module.exports = {
 	darkMode: ['class', '[data-theme="dark"]'],
 	content: ['./src/**/*.{html,js,jsx,tsx}'],
 	safelist: [
-		// Brand color classes that may be generated dynamically
-		'bg-surface-primary-light',
-		'bg-surface-primary-dark',
-		'bg-surface-secondary-light',
-		'bg-surface-secondary-dark',
-		'bg-surface-tertiary-light',
-		'bg-surface-tertiary-dark',
-		'bg-surface-hover-light',
-		'bg-surface-hover-dark',
-		'bg-surface-selected-light',
-		'bg-surface-selected-dark',
-		'bg-surface-disabled-light',
-		'bg-surface-disabled-dark',
-		'bg-surface-sunken-light',
-		'bg-surface-sunken-dark',
-		'bg-surface-input-light',
-		'bg-surface-input-dark',
-		'text-text-primary-light',
-		'text-text-primary-dark',
-		'text-text-emphasis-light',
-		'text-text-emphasis-dark',
-		'text-text-secondary-light',
-		'text-text-secondary-dark',
-		'text-text-tertiary-light',
-		'text-text-tertiary-dark',
-		'text-text-hint-light',
-		'text-text-hint-dark',
-		'text-text-disabled-light',
-		'text-text-disabled-dark',
-		'text-text-accent-light',
-		'text-text-accent-dark',
-		'text-text-primary-inverse-light',
-		'text-text-primary-inverse-dark',
-		'text-text-secondary-inverse-light',
-		'text-text-secondary-inverse-dark',
-		'text-text-tertiary-inverse-light',
-		'text-text-tertiary-inverse-dark',
-		'text-text-emphasis-inverse-light',
-		'text-text-emphasis-inverse-dark',
+		// Surface utility classes that work with ! flag
+		'!bg-primary-light',
+		'!bg-primary-dark',
+		'!bg-secondary-light',
+		'!bg-secondary-dark',
+		'!bg-tertiary-light',
+		'!bg-tertiary-dark',
+		'!bg-hover-light',
+		'!bg-hover-dark',
+		'!bg-selected-light',
+		'!bg-selected-dark',
+		'!bg-disabled-light',
+		'!bg-disabled-dark',
+		'!bg-sunken-light',
+		'!bg-sunken-dark',
+		'!bg-input-light',
+		'!bg-input-dark',
+		// Regular surface classes without ! flag
+		'bg-primary-light',
+		'bg-primary-dark',
+		'bg-secondary-light',
+		'bg-secondary-dark',
+		'bg-tertiary-light',
+		'bg-tertiary-dark',
+		'bg-hover-light',
+		'bg-hover-dark',
+		'bg-selected-light',
+		'bg-selected-dark',
+		'bg-disabled-light',
+		'bg-disabled-dark',
+		'bg-sunken-light',
+		'bg-sunken-dark',
+		'bg-input-light',
+		'bg-input-dark',
+		// New text utility classes that work with ! flag
+		'!text-primary-light',
+		'!text-primary-dark',
+		'!text-emphasis-light',
+		'!text-emphasis-dark',
+		'!text-secondary-light',
+		'!text-secondary-dark',
+		'!text-tertiary-light',
+		'!text-tertiary-dark',
+		'!text-hint-light',
+		'!text-hint-dark',
+		'!text-disabled-light',
+		'!text-disabled-dark',
+		'!text-accent-light',
+		'!text-accent-dark',
+		'!text-primary-inverse-light',
+		'!text-primary-inverse-dark',
+		'!text-secondary-inverse-light',
+		'!text-secondary-inverse-dark',
+		'!text-tertiary-inverse-light',
+		'!text-tertiary-inverse-dark',
+		'!text-emphasis-inverse-light',
+		'!text-emphasis-inverse-dark',
+		// Regular versions without ! flag
+		'text-primary-light',
+		'text-primary-dark',
+		'text-emphasis-light',
+		'text-emphasis-dark',
+		'text-secondary-light',
+		'text-secondary-dark',
+		'text-tertiary-light',
+		'text-tertiary-dark',
+		'text-hint-light',
+		'text-hint-dark',
+		'text-disabled-light',
+		'text-disabled-dark',
+		'text-accent-light',
+		'text-accent-dark',
+		'text-primary-inverse-light',
+		'text-primary-inverse-dark',
+		'text-secondary-inverse-light',
+		'text-secondary-inverse-dark',
+		'text-tertiary-inverse-light',
+		'text-tertiary-inverse-dark',
+		'text-emphasis-inverse-light',
+		'text-emphasis-inverse-dark',
 		'border-border-light-light',
 		'border-border-light-dark',
 		'border-border-normal-light',
@@ -231,6 +272,28 @@ module.exports = {
 					fontWeight: '500'
 				}
 			});
+		}),
+		// Custom plugin to generate text utilities that work with ! flag
+		plugin(({ addUtilities, theme }) => {
+			const textColors = theme('colors.text');
+			const surfaceColors = theme('colors.surface');
+			const utilities = {};
+
+			// Generate text utilities that work with ! flag
+			Object.keys(textColors).forEach((key) => {
+				utilities[`.text-${key}`] = {
+					color: textColors[key]
+				};
+			});
+
+			// Generate surface/background utilities that work with ! flag
+			Object.keys(surfaceColors).forEach((key) => {
+				utilities[`.bg-${key}`] = {
+					backgroundColor: surfaceColors[key]
+				};
+			});
+
+			addUtilities(utilities);
 		})
 	]
 };

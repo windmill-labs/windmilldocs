@@ -56,7 +56,7 @@ export const getButtonClasses = (status) => {
  */
 export const getSurfaceClass = (variant = 'primary', isDarkMode = false) => {
 	const theme = isDarkMode ? 'dark' : 'light';
-	return `bg-surface-${variant}-${theme}`;
+	return `!bg-${variant}-${theme}`;
 };
 
 /**
@@ -67,7 +67,7 @@ export const getSurfaceClass = (variant = 'primary', isDarkMode = false) => {
  */
 export const getTextClass = (variant = 'primary', isDarkMode = false) => {
 	const theme = isDarkMode ? 'dark' : 'light';
-	return `!text-text-${variant}-${theme}`;
+	return `!text-${variant}-${theme}`;
 };
 
 /**
@@ -77,7 +77,7 @@ export const getTextClass = (variant = 'primary', isDarkMode = false) => {
  * @returns {string} Tailwind class for border color
  */
 export const getBorderClass = (variant = 'normal', isDarkMode = false) => {
-	const theme = isDarkMode ? 'dark-3' : 'light';
+	const theme = isDarkMode ? 'dark' : 'light';
 	return `border-border-${variant}-${theme}`;
 };
 

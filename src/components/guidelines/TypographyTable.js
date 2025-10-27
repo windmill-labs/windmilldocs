@@ -17,22 +17,22 @@ const TypographyTable = ({ lightExamples, darkExamples }) => {
 					<thead>
 						<tr>
 							<th
-								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}
+								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)} ${getSurfaceClass('secondary', isDarkMode)}`}
 							>
 								Style
 							</th>
 							<th
-								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}
+								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)} ${getSurfaceClass('secondary', isDarkMode)}`}
 							>
 								Example
 							</th>
 							<th
-								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}
+								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)} ${getSurfaceClass('secondary', isDarkMode)}`}
 							>
 								Specifications
 							</th>
 							<th
-								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)}`}
+								className={`text-left py-3 px-2 text-xs font-semibold ${getTextClass('primary', isDarkMode)} ${getSurfaceClass('secondary', isDarkMode)}`}
 							>
 								Usage
 							</th>
