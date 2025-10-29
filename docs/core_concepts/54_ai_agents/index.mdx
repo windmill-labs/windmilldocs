@@ -75,6 +75,15 @@ Define a JSON schema that the AI agent will follow for its response format. This
 #### messages_context_length (number)
 Specifies the number of previous messages to include as context for the AI agent. This enables the agent to maintain conversation history and remember past interactions. When set, the agent will have access to the specified number of previous messages from the conversation, allowing for more contextual and coherent responses across multiple interactions.
 
+##### Using messages_context_length with webhooks
+
+When using `messages_context_length` via webhook, you must include a `memory_id` query parameter in your request. The `memory_id` must be a 32-character UUID that uniquely identifies the conversation context. This allows the AI agent to maintain message history across webhook calls.
+
+Example webhook URL:
+```
+https://your-windmill-instance/api/w/your-workspace/jobs/run_wait_result/f/your-flow?memory_id=550e8400e29b41d4a716446655440000
+```
+
 #### streaming (optional)
 
 Whether to stream the progress of the AI agent.
