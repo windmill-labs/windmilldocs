@@ -33,7 +33,7 @@ def main():
     result = wmill.run_script_by_path('f/scripts/calculate', args={'x': 10, 'y': 20})
 ```
 
-## API Reference
+## API reference
 
 For detailed API documentation including all available methods, parameters, and return types, see the [Python SDK documentation](https://app.windmill.dev/pydocs/wmill.html).
 
@@ -41,7 +41,7 @@ For detailed API documentation including all available methods, parameters, and 
 
 The client provides both module-level convenience functions and a `Windmill` class for advanced usage:
 
-#### Module-level Functions
+#### Module-level functions
 
 - `get_resource(path)` - Get a resource from Windmill
 - `get_variable(path)` - Get a variable value
