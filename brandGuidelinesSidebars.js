@@ -82,11 +82,6 @@ const sidebars = {
 					type: 'doc',
 					id: 'design_system/layout/index',
 					label: 'Layout'
-				},
-				{
-					type: 'doc',
-					id: 'design_system/interaction_behavior/index',
-					label: 'Interaction & Behavior'
 				}
 			]
 		}
