@@ -13,4 +13,5 @@ features:
     'Applies to f/slack_bot/bot_token resource for workspace handlers and Slack approvals',
   ]
 docs: /docs/integrations/slack#workspace-level-slack-app-configuration
+image: ./workspace-slack.png
 ---
