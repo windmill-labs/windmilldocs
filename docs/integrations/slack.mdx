@@ -42,6 +42,12 @@ The Slack integration is done through OAuth. On [self-hosted instances](../advan
 
 :::
 
+:::tip Workspace-level configuration
+
+By default, the OAuth flow uses instance-level Slack app credentials configured by your administrator. Workspace admins can also [configure their own Slack app](#workspace-level-slack-app-configuration) with workspace-specific credentials for better isolation and independent management.
+
+:::
+
 Slack will ask you to allow Windmill to access your workspace. Click "Allow".
 
 <video
@@ -95,7 +101,7 @@ the `/windmill` command in your Slack workspace to trigger the Script. Try it
 out with `/windmill foo` and you should get back `ROGER foo`. Go ahead and
 customize the Script to your needs.
 
-In addition to response_url, the script/flow can use the following parameters, simply by having them as inputs with the proper name:
+In addition to `response_url`, the script/flow can use the following parameters, simply by having them as inputs with the proper name:
 
 ```
 channel_id
@@ -107,6 +113,170 @@ api_app_id
 ```
 
 ![Use the Windmill command](../assets/integrations/slack-5-slack-command.png.webp)
+
+### Using @mentions
+
+In addition to slash commands, you can trigger your Windmill scripts by @mentioning the Windmill bot in any channel, thread, or direct message. @mentions work identically to `/windmill` commands - they use the same handler script configured in your workspace settings and pass the same parameters.
+
+When you @mention the bot (e.g., `@Windmill hello world`), the bot mention is automatically stripped from the text before being passed to your handler script, so it receives just `hello world` - identical to how `/windmill hello world` would work.
+
+@mentions work in:
+- Public channels (when the bot is invited to the channel)
+- Private channels (when the bot is invited)
+- Direct messages with the bot
+- Message threads (reply to any message and @mention the bot)
+
+The `command` parameter will be set to `@mention` for @mention triggers (vs `/windmill` for slash commands), allowing your handler to distinguish between the two if needed.
+
+Available parameters for @mention triggers:
+
+```
+text           // Message text with bot mention stripped
+channel_id     // Channel where message was sent
+user_id        // Slack user ID who sent the message
+command        // Set to "@mention" for @mentions
+event_id       // Unique event identifier
+ts             // Message timestamp
+thread_ts      // Thread timestamp (if in a thread)
+```
+
+:::note
+@mentions are delivered via Slack's Events API, which means your handler must respond within 3 seconds. For longer-running operations, launch a job and send updates to Slack asynchronously using the Slack API.
+:::
+
+#### Responding to `/` commands vs `@` mentions
+
+When handling Slack triggers, the response method differs depending on the trigger type:
+
+**For `/windmill` slash commands**: Use the `response_url` parameter (a webhook URL) to send your response back to Slack.
+
+**For `@mention` triggers**: Use the Slack Web API with the bot token to post messages to the channel.
+
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="Deno" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { WebClient } from 'https://deno.land/x/slack_web_api@1.0.3/mod.ts';
+import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
+
+type Slack = {
+  token: string;
+};
+
+export async function main(
+  text: string,
+  response_url: string,
+  channel_id: string,
+  command: string
+) {
+  const responseText = `You said: ${text}`;
+
+  if (command === '@mention') {
+    // For @mentions: use Slack Web API
+    const slack = await wmill.getResource<Slack>('f/slack_bot/bot_token');
+    const web = new WebClient(slack.token);
+    await web.chat.postMessage({
+      channel: channel_id,
+      text: responseText
+    });
+  } else {
+    // For /windmill commands: use response_url
+    await fetch(response_url, {
+      method: 'POST',
+      body: JSON.stringify({ text: responseText })
+    });
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="bun" label="Bun" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { WebClient } from '@slack/web-api';
+import * as wmill from 'windmill-client';
+
+type Slack = {
+  token: string;
+};
+
+export async function main(
+  text: string,
+  response_url: string,
+  channel_id: string,
+  command: string
+) {
+  const responseText = `You said: ${text}`;
+
+  if (command === '@mention') {
+    // For @mentions: use Slack Web API
+    const slack = await wmill.getResource<Slack>('f/slack_bot/bot_token');
+    const web = new WebClient(slack.token);
+    await web.chat.postMessage({
+      channel: channel_id,
+      text: responseText
+    });
+  } else {
+    // For /windmill commands: use response_url
+    await fetch(response_url, {
+      method: 'POST',
+      body: JSON.stringify({ text: responseText })
+    });
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from slack_sdk import WebClient
+import wmill
+import requests
+import json
+
+def main(text: str, response_url: str, channel_id: str, command: str):
+    response_text = f"You said: {text}"
+
+    if command == "@mention":
+        # For @mentions: use Slack Web API
+        slack = wmill.get_resource("f/slack_bot/bot_token")
+        client = WebClient(token=slack["token"])
+        client.chat_postMessage(
+            channel=channel_id,
+            text=response_text
+        )
+    else:
+        # For /windmill commands: use response_url
+        requests.post(
+            response_url,
+            data=json.dumps({"text": response_text}),
+            headers={"Content-Type": "application/json"}
+        )
+```
+
+</TabItem>
+</Tabs>
+
+### Workspace-level Slack app configuration
+
+By default, workspaces use the instance-level Slack app configured by your Windmill administrator. However, workspace admins can optionally configure their own Slack app for their workspace. This provides:
+
+- **Workspace isolation**: Each workspace uses its own Slack app and credentials
+- **Separate rate limits**: Avoid sharing rate limits across workspaces
+- **Independent management**: Workspace admins can manage their own Slack integration
+
+To configure a workspace-specific Slack app:
+
+1. Navigate to workspace settings → Slack app section
+2. Enter your Slack app's **Client ID** and **Client Secret**
+3. Save the configuration
+
+:::note
+The workspace-level Slack app will only apply to the auomatically managed `f/slack_bot/bot_token` resource used for workspace handlers and slack approvals. For general user specific slack oauth tokens, the instance level OAuth connection will be used.
+:::
 
 You won't be able to have Slack interact with your [resources](../core_concepts/3_resources_and_types/index.mdx) and [variables](../core_concepts/2_variables_and_secrets/index.mdx) before adding them to the `slack` [group](../core_concepts/8_groups_and_folders/index.mdx#groups) that was automatically created by Windmill after you set up your Slack workspace on Windmill. Tutorial below.
 
