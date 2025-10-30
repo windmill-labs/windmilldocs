@@ -244,6 +244,8 @@ Custom flow states are a way to store data across steps in a [flow](../../flows/
 
 It's a powerful escape hatch when [passing data as output/input](../../flows/16_architecture.mdx) is not feasible and using [getResource/setResource](#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) has the issue of cluttering the workspace and inconvenient UX.
 
+**Important note:** Don't store large content in flow user state. For files, store them on [S3](../38_object_storage_in_windmill/index.mdx) and store the path in flow user state.
+
 <Tabs className="unique-tabs">
 <TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
@@ -251,7 +253,10 @@ It's a powerful escape hatch when [passing data as output/input](../../flows/16_
 import * as wmill from 'windmill-client@1.297.0';
 
 export async function main(x: string) {
+	// Set flow user state
 	await wmill.setFlowUserState('FOO', 42);
+
+	// Get flow user state
 	return await wmill.getFlowUserState('FOO');
 }
 ```
@@ -265,8 +270,33 @@ import wmill
 #wmill==1.297.0
 
 def main(x: str):
+    # Set flow user state
     wmill.set_flow_user_state("foobar", 43)
+
+    # Get flow user state
     return wmill.get_flow_user_state("foobar")
+```
+
+</TabItem>
+<TabItem value="Bash" label="Bash" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```bash
+# Get the root job ID (flow ID)
+ROOT_JOB_ID=$(curl -s -H "Authorization: Bearer $WM_TOKEN" \
+  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/jobs_u/get_root_job_id/$WM_JOB_ID" | jq -r .)
+
+# Set flow user state
+curl -s -X POST \
+  -H "Authorization: Bearer $WM_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '"my_value"' \
+  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/jobs/flow/user_states/$ROOT_JOB_ID/my_key"
+
+# Get flow user state
+VALUE=$(curl -s -H "Authorization: Bearer $WM_TOKEN" \
+  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/jobs/flow/user_states/$ROOT_JOB_ID/my_key")
+
+echo "Retrieved value: $VALUE"
 ```
 
 </TabItem>
@@ -370,25 +400,29 @@ All details on the [Add resources and variables to code editor](../../code_edito
 
 By clicking on `+ Resource`, you'll get to pick a resource from your workspace and be able to fetch it from within the script.
 
-TypeScript:
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
 wmill.getResource('u/user/foo');
 ```
 
-Python:
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 wmill.get_resource("u/user/foo")
 ```
 
-Go:
+</TabItem>
+<TabItem value="Go" label="Go" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```go
 wmill.GetResource("u/user/foo")
 ```
 
-Bash:
+</TabItem>
+<TabItem value="Bash" label="Bash" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```bash
 curl -s -H "Authorization: Bearer $WM_TOKEN" \
@@ -396,7 +430,8 @@ curl -s -H "Authorization: Bearer $WM_TOKEN" \
     | jq -r .value
 ```
 
-PowerShell:
+</TabItem>
+<TabItem value="PowerShell" label="PowerShell" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```powershell
 $Headers = @{
@@ -405,11 +440,15 @@ $Headers = @{
 Invoke-RestMethod -Headers $Headers -Uri "$Env:BASE_INTERNAL_URL/api/w/$Env:WM_WORKSPACE/resources/get/u/user/foo"
 ```
 
-Nu:
+</TabItem>
+<TabItem value="Nu" label="Nu" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 get_resource u/user/foo
 ```
+
+</TabItem>
+</Tabs>
 
 ![Fetch resource](./fetch_resource.png.webp)
 
