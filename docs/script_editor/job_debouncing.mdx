@@ -1,0 +1,21 @@
+---
+canonical_url: /docs/core_concepts/job_debouncing
+---
+
+# Job debouncing
+
+Job debouncing limits job duplicates. When a script is queued with the same debouncing key within the specified time window, only the most recent one will run. This helps prevent duplicate executions and reduces unnecessary API calls.
+
+Job debouncing is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) only feature.
+
+Job debouncing can be set from the Settings menu. When jobs share the same debouncing key within the time window, earlier jobs are automatically cancelled as "debounced" and only the latest job runs.
+
+The Job debouncing feature operates globally and involves two key parameters:
+
+## Debounce delay in seconds
+
+Set in seconds, the time window defines the period within which jobs with the same key are debounced.
+
+## Custom debouncing key  
+
+This parameter is optional. Debouncing keys are global, you can have them be workspace specific using the variable `$workspace`. You can also use an argument's value using `$args[name_of_arg]`.

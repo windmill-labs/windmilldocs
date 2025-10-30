@@ -100,7 +100,7 @@ The token includes standard claims:
 
 - `aud`: Intended audience for the token. This field is set by the user when fetching the ID token and is the only customizable field.
 - `iss`: The issuer of the token, your base_url set in in your i[nstance settings](../../advanced/18_instance_settings/index.mdx#base-url)
-- `sub`: The subject claim is validated by your cloud provider. The subject is formatted as `{email}::{script_path}::{flow_path}::{workspace}`.
+- `sub`: The subject claim is validated by your cloud provider. The subject is formatted as `{email}::{script_path}::{flow_path}::{workspace}`. For instance level, the sub claim is "instance". For SQS triggers and workspace level object storage, the sub claim is "`<workspace_id>`".
 - `exp`: The expiration time of the token.
 - `iat`: The time the token was issued.
 - `alg`: The algorithm used to sign the token.
@@ -205,7 +205,7 @@ Note that [AWS only supports conditions on the `aud`, `sub`, and `email` claims]
 }
 ```
 
-For instance level AWS OIDC for [instance object storage](../../advanced/18_instance_settings/index.mdx#instance-object-storage), the sub claim is "instance". For [workspace level object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage), the sub claim is "&lt;workspace_id&gt;".
+For instance level AWS OIDC for [instance object storage](../../advanced/18_instance_settings/index.mdx#instance-object-storage), the sub claim is "instance". For [workspace level object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage), and SQS oidc triggersthe sub claim is "&lt;workspace_id&gt;".
 
 ### Get AWS credentials
 

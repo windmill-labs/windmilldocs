@@ -122,9 +122,9 @@ const pricing = {
 			minPrice_pro: 48,
 			minPrice_nonprofit: 48,
 			description: 'For advanced needs in observability, security and performance.',
-			description_nonprofit: '60% discount for nonprofits & universities, no limits. Free if used as teaching material.',
-			description_pro:
-				'For individuals and small businesses.',
+			description_nonprofit:
+				'60% discount for nonprofits & universities, no limits. Free if used as teaching material.',
+			description_pro: 'For individuals and small businesses.',
 			enterprise_edition: true,
 			features: [
 				{
@@ -185,6 +185,36 @@ const pricing = {
 					]
 				},
 				{ text: 'Support with 48h response time by email' }
+			],
+			features_nonprofit: [
+				{
+					text: (
+						<span>
+							Windmill <b className="text-teal-600">Enterprise</b> Edition features (see table
+							below), including:
+						</span>
+					),
+					features: [
+						{ text: 'Audit logs' },
+						{ text: 'Distributed dependency cache backed by S3' },
+						{ text: 'SAML support including groups synchronization' }
+					]
+				},
+				{ text: 'Uncapped SSO (requires seats)' },
+				{
+					text: <span>Commercial licence</span>
+				},
+				{
+					text: (
+						<span>SLA & Priority Support 24/7 with 3h response time and engineer assistance</span>
+					)
+				},
+				{
+					text: <span>Dedicated Slack or Discord channel</span>
+				},
+				{
+					text: <span>No redlines to our standard MSA</span>
+				}
 			]
 		}
 	],
@@ -336,13 +366,20 @@ const pricing = {
 	]
 };
 
-function QualificationModal({ isOpen, closeModal, planType, qualificationText, setQualificationText, onConfirm }) {
+function QualificationModal({
+	isOpen,
+	closeModal,
+	planType,
+	qualificationText,
+	setQualificationText,
+	onConfirm
+}) {
 	const [organizationName, setOrganizationName] = useState('');
 
 	return (
 		<Dialog open={isOpen} onClose={closeModal} className="relative z-50">
 			<div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-			
+
 			<div className="fixed inset-0 flex items-center justify-center p-4">
 				<Dialog.Panel className="mx-auto w-full max-w-2xl rounded-xl bg-white dark:bg-gray-800 p-8">
 					<Dialog.Title className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
@@ -370,9 +407,11 @@ function QualificationModal({ isOpen, closeModal, planType, qualificationText, s
 							onChange={(e) => setQualificationText(e.target.value)}
 							className="w-full p-3 text-base border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
 							rows={6}
-							placeholder={planType === 'Pro' 
-								? 'Please explain how you qualify for the Pro plan (e.g., small business size, revenue, etc.).'
-								: 'Please explain how you qualify for the Nonprofit plan (e.g., organization status, registration number, etc.).'}
+							placeholder={
+								planType === 'Pro'
+									? 'Please explain how you qualify for the Pro plan (e.g., small business size, revenue, etc.).'
+									: 'Please explain how you qualify for the Nonprofit plan (e.g., organization status, registration number, etc.).'
+							}
 						/>
 					</div>
 
@@ -441,25 +480,28 @@ export default function Pricing() {
 		if (pendingUrl && qualificationText.trim()) {
 			// Call webhook
 			try {
-				await fetch('https://app.windmill.dev/api/w/windmill-labs/jobs/run_wait_result/f/f/bd/qualification_trial', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': 'Bearer Mk9WB1kn5ZkVNRW1nbD0sxdnl71KpPPV'
-					},
-					body: JSON.stringify({
-						qualificationText,
-						organizationName,
-						plan: selectedOption
-					})
-				});
+				await fetch(
+					'https://app.windmill.dev/api/w/windmill-labs/jobs/run_wait_result/f/f/bd/qualification_trial',
+					{
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: 'Bearer Mk9WB1kn5ZkVNRW1nbD0sxdnl71KpPPV'
+						},
+						body: JSON.stringify({
+							qualificationText,
+							organizationName,
+							plan: selectedOption
+						})
+					}
+				);
 			} catch (error) {
 				console.error('Error sending qualification data:', error);
 			}
 
 			// Open the pending URL in a new tab
 			window.open(pendingUrl, '_blank');
-			
+
 			// Reset modal state
 			setIsModalOpen(false);
 			setQualificationText('');
@@ -472,7 +514,9 @@ export default function Pricing() {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-4xl text-center">
 					<p className="text-4xl font-bold tracking-tight sm:text-5xl">Pricing</p>
-					<p className="text-lg font-medium text-gray-600 dark:text-gray-300 mt-2">Open source. Open pricing. No lock-in.</p>
+					<p className="text-lg font-medium text-gray-600 dark:text-gray-300 mt-2">
+						Open source. Open pricing. No lock-in.
+					</p>
 				</div>
 
 				<div className="mt-12 flex justify-center flex-col gap-4 items-center">
@@ -705,17 +749,15 @@ export default function Pricing() {
 							>
 								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro' ? (
 									<FeatureList features={tier.features_pro} level={1} id={tier.id} />
+								) : tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit' ? (
+									<FeatureList features={tier.features_nonprofit} level={1} id={tier.id} />
 								) : (
 									<FeatureList features={tier.features} level={1} id={tier.id} />
 								)}
 							</ul>
 							<div className="flex flex-col justify-between flex-1">
 								{Object.keys(tier.price).length > 0 ? (
-									<PriceCalculator
-										tier={tier}
-										period={period}
-										selectedOption={selectedOption}
-									/>
+									<PriceCalculator tier={tier} period={period} selectedOption={selectedOption} />
 								) : null}
 
 								{tier.id === 'tier-enterprise-selfhost' &&
@@ -727,14 +769,17 @@ export default function Pricing() {
 												onClick={(e) => {
 													e.preventDefault();
 													e.stopPropagation();
-													handlePlanClick('https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j', 'Enterprise');
+													handlePlanClick(
+														'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j',
+														'Enterprise'
+													);
 												}}
 												className="main-section"
 											>
 												Try it for a month
 											</a>
 											<a
-												href="https://app.windmill.dev/public/windmill-labs/cae76591e9a0c229a338636c50e67066"
+												href="https://app.windmill.dev/a/windmill-prod/windmill-trial"
 												className="hover-section"
 												target="_blank"
 												onClick={(e) => {
@@ -754,7 +799,9 @@ export default function Pricing() {
 														selectedOption === 'Pro'
 															? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
 															: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j' +
-															(selectedOption === 'Nonprofit' ? '?prefilled_promo_code=nonprofit' : ''),
+																	(selectedOption === 'Nonprofit'
+																		? '?prefilled_promo_code=nonprofit'
+																		: ''),
 														selectedOption
 													);
 												}}
@@ -769,8 +816,10 @@ export default function Pricing() {
 												Try it for a month
 											</a>
 											<a
-												href={`https://app.windmill.dev/public/windmill-labs/cae76591e9a0c229a338636c50e67066${
-													selectedOption !== 'Enterprise' ? `?plan=${selectedOption.toLowerCase()}` : ''
+												href={`https://app.windmill.dev/a/windmill-prod/windmill-trial${
+													selectedOption !== 'Enterprise'
+														? `?plan=${selectedOption.toLowerCase()}`
+														: ''
 												}`}
 												className="hover-section"
 												target="_blank"
