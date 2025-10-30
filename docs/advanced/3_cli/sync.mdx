@@ -150,9 +150,9 @@ Note that you can set the default TypeScript language and explicitly exclude (or
 ```yaml
 defaultTs: bun  # TypeScript runtime: 'bun' or 'deno'
 
-# File path filtering  
+# File path filtering
 includes:
-  - f/**  # Include patterns (glob format)
+  - f/**  # Include patterns (glob format)   [Use - "**" to include everything]
 excludes: [] # Exclude patterns
 extraIncludes: [] # Additional include patterns
 
@@ -161,7 +161,7 @@ codebases: []
 
 # Skip flags (what to exclude from sync)
 skipVariables: false
-skipResources: false  
+skipResources: false
 skipResourceTypes: false
 skipSecrets: true    # Secrets are skipped by default for security
 skipScripts: false
@@ -199,7 +199,7 @@ gitBranches:
         - "u/alex/prod_*"
       variables:
         - "u/alex/env_*"
-      
+
   staging:
     baseUrl: 'https://staging.windmill.dev/'
     workspaceId: staging-workspace
@@ -208,7 +208,7 @@ gitBranches:
       includeSettings: true
     promotionOverrides:
       skipSecrets: true
-      
+
   production:
     baseUrl: 'https://app.windmill.dev/'
     workspaceId: prod-workspace
@@ -218,7 +218,7 @@ gitBranches:
     promotionOverrides:
       skipApps: true      # Don't sync apps during promotion
       skipFlows: true     # Don't sync flows during promotion
-      
+
   # Common items that are branch-specific across all branches
   commonSpecificItems:
     resources:
@@ -255,7 +255,7 @@ codebases:
     inject: ['./polyfills.js']
 ```
 
-All sync options for your workspace can be found on this [file](https://github.com/windmill-labs/windmill/blob/main/cli/conf.ts#L3):
+All sync options for your workspace can be found on this [file](https://github.com/windmill-labs/windmill/blob/main/cli/src/core/conf.ts#L16):
 
 ```ts
 export interface SyncOptions {
@@ -265,7 +265,7 @@ export interface SyncOptions {
   failConflicts?: boolean;
   plainSecrets?: boolean;
   json?: boolean;
-  
+
   // File filtering options
   skipVariables?: boolean;
   skipResources?: boolean;
@@ -275,7 +275,7 @@ export interface SyncOptions {
   skipFlows?: boolean;
   skipApps?: boolean;
   skipFolders?: boolean;
-  
+
   // Include options
   includeSchedules?: boolean;
   includeTriggers?: boolean;
@@ -292,7 +292,7 @@ export interface SyncOptions {
   excludes?: string[];
   defaultTs?: 'bun' | 'deno';
   codebases?: Codebase[];
-  
+
   // Git branch configuration
   gitBranches?: {
     commonSpecificItems?: {
