@@ -26,3 +26,7 @@ yarn-error.log*
 .aider*
 !.aider/
 !.aiderignore
+
+# Brand guidelines generated files
+brand-guidelines.md
+brand-guidelines-assets/

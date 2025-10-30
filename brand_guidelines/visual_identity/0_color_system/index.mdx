@@ -1,0 +1,159 @@
+---
+title: Color system
+description: Color palette and usage guidelines for the job orchestrator platform
+---
+
+import ColorDisplay from '@site/src/components/guidelines/ColorDisplay';
+import ExampleImageDisplay from '@site/src/components/guidelines/ExampleImageDisplay';
+import ColorReferenceTable from '@site/src/components/guidelines/ColorReferenceTable';
+import { getColorDisplayData } from '@site/src/utils/tokenLoader';
+
+# Color system
+
+Our color system is designed for **reliability, clarity, and trust**. Windmill is destined to be used by big companies, so colors must convey a sense of professionalism and seriousness. We stay away from vibrant colors in the application interface and use monochromatic tones with purposeful accent colors.
+
+## Design Principles
+
+- **Meaningful, not decorative**: Every color serves a functional purpose
+- **Reliability over vibrancy**: Muted tones convey trust and professionalism
+- **Context-aware**: Different palettes for app vs marketing contexts
+- **Accessible**: All colors meet WCAG AA contrast requirements
+- **Consistent**: Systematic approach to color usage across all interfaces
+
+## Color Philosophy
+
+**Colors are meaningful and never decorative.** We distinguish between:
+
+- **App palette**: Less vibrant colors for the core application interface
+- **Web palette**: More vibrant colors for marketing and brand recognition
+- **Monochromatic scale**: Nord-based neutrals for surfaces and backgrounds
+
+## Color Palette Overview
+
+Our complete color system in action, showing how all color categories work together across light and dark themes:
+
+<ExampleImageDisplay
+	lightImageSrc="/img/brand/example-color-palette-light.svg"
+	darkImageSrc="/img/brand/example-color-palette-dark.svg"
+	altTextPrefix="Complete Windmill color palette"
+/>
+
+## Accent Colors
+
+The **luminance-blue** is our primary accent color, used throughout the app for interactive elements, active states, and user actions.
+
+<ColorDisplay {...getColorDisplayData('accent')} />
+
+**When to use:**
+
+- Call-to-action buttons
+- Active navigation items
+- Toggle switches (on state)
+- Progress bars
+- Interactive links
+- Selected states
+
+## Surface Colors
+
+Surface colors create depth and layout structure with clear hierarchy between different interface levels.
+
+<ColorDisplay {...getColorDisplayData('surface')} />
+
+## Text Colors
+
+Text colors provide clear hierarchy and readability across light and dark themes.
+
+<ColorDisplay {...getColorDisplayData('text')} />
+
+## Border Colors
+
+Border colors define element separation and structure.
+
+<ColorDisplay {...getColorDisplayData('border')} />
+
+## Feedback Colors
+
+Standard semantic colors for system feedback and status communication.
+
+<ColorDisplay {...getColorDisplayData('feedback')} />
+
+## Reserved Colors
+
+These colors are exclusively reserved for specific features and should not be used elsewhere.
+
+<ColorDisplay {...getColorDisplayData('reserved')} />
+
+**Usage:**
+
+- AI-powered script generation
+- Magic wand icons
+- AI assistance features
+- Smart suggestions
+
+## Web/Marketing Colors
+
+More vibrant colors used exclusively for marketing materials and the website (not in the core application).
+
+<ColorDisplay {...getColorDisplayData('webMarketing')} />
+
+**Important:** These colors should **never** be used in the core application interface. They are reserved for:
+
+- Marketing website
+- Landing pages
+- Documentation site headers
+- Brand materials
+- Social media assets
+
+## Color Reference
+
+Complete color system with usage guidelines, hex values, and Tailwind classes:
+
+**Implementation Rule:** Always use the provided Tailwind classes in your components. Never use hex values directly in styles - this ensures consistency and theme switching compatibility.
+
+```jsx
+// ✅ Correct - use Tailwind classes
+<button class="bg-accent-primary text-white">Save</button>
+<div class="bg-surface-primary border-border-normal">Content</div>
+
+// ❌ Wrong - don't use hex values
+<button class="bg-[#758FF8]">Save</button>
+```
+
+## Do's and Don'ts
+
+### ✅ Do
+
+- Use provided Tailwind classes for all color implementations
+- Use `accent-primary` sparingly for important actions
+- Rely on surface colors for most interface backgrounds
+- Apply text colors according to content hierarchy
+- Use proper border colors for element separation
+- Apply feedback colors consistently for their semantic meaning
+- Test color combinations for accessibility compliance
+- Reserve AI purple exclusively for AI features
+- Follow the defined color token structure
+
+### ❌ Don't
+
+- Use hex values directly in component styles or CSS
+- Mix web/marketing colors with app interface colors
+- Use AI purple for non-AI features
+- Create custom color variations between defined tokens
+- Use color alone to convey meaning (pair with icons/text)
+- Apply accent colors to large surface areas
+- Use marketing blue (`#3B82F6`) in the app interface
+- Use `accent-primary` for large backgrounds
+- Mix different color token categories inappropriately
+
+### Color-Blind Considerations
+
+- Never use color alone to convey information
+- Pair color with icons, text, or patterns
+- Test designs with color-blind simulation tools
+- Ensure sufficient contrast in monochrome
+
+## Quick Reference
+
+<ColorReferenceTable />
+
+Remember: **Colors are meaningful, not decorative.** Every color choice should serve a clear functional purpose in the user interface.
