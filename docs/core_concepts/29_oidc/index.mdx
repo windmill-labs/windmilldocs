@@ -100,7 +100,7 @@ The token includes standard claims:
 
 - `aud`: Intended audience for the token. This field is set by the user when fetching the ID token and is the only customizable field.
 - `iss`: The issuer of the token, your base_url set in in your i[nstance settings](../../advanced/18_instance_settings/index.mdx#base-url)
-- `sub`: The subject claim is validated by your cloud provider. The subject is formatted as `{email}::{script_path}::{flow_path}::{workspace}`. For instance level, the sub claim is "instance". For SQS triggers and workspace level object storage, the sub claim is "<workspace_id>".
+- `sub`: The subject claim is validated by your cloud provider. The subject is formatted as `{email}::{script_path}::{flow_path}::{workspace}`. For instance level, the sub claim is "instance". For SQS triggers and workspace level object storage, the sub claim is "`<workspace_id>`".
 - `exp`: The expiration time of the token.
 - `iat`: The time the token was issued.
 - `alg`: The algorithm used to sign the token.
