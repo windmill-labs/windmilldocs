@@ -3,6 +3,18 @@
 const fs = require('fs');
 const path = require('path');
 
+// Default excluded sections and subsections
+const DEFAULT_EXCLUSIONS = {
+	sections: [
+		'brand_foundation',
+		'form_components',
+		'overview',
+		'font_family',
+		'web/marketing_colors'
+	],
+	subsections: ['overview', 'logo', 'web/marketing_colors']
+};
+
 class BrandGuidelinesGenerator {
 	constructor(options = {}) {
 		this.brandDir = path.join(__dirname, 'brand_guidelines');
@@ -10,18 +22,22 @@ class BrandGuidelinesGenerator {
 		this.output = [];
 		this.imageCache = new Map();
 		this.options = options;
-		this.imageMode = options.imageMode || 'embed'; // 'embed' or 'link' (for backward compatibility)
 		this.assetsDir = path.join(__dirname, 'brand-guidelines-assets');
 		this.copiedImages = new Set(); // Track copied images to avoid duplicates
+
+		// Merge default exclusions with provided options
+		this.excludedSections = [...DEFAULT_EXCLUSIONS.sections, ...(options.excludedSections || [])];
+		this.excludedSubsections = [
+			...DEFAULT_EXCLUSIONS.subsections,
+			...(options.excludedSubsections || [])
+		];
 	}
 
 	async generate() {
 		console.log('🎨 Generating brand guidelines...');
 
-		// Create assets directory if using link mode
-		if (this.imageMode === 'link') {
-			this.ensureAssetsDirectory();
-		}
+		// Create assets directory for images
+		this.ensureAssetsDirectory();
 
 		this.output.push('# Windmill Brand Guidelines\n');
 		this.output.push(
@@ -50,8 +66,17 @@ class BrandGuidelinesGenerator {
 			return;
 		}
 
+		// Check if this section should be excluded
+		if (
+			this.excludedSections.includes(sectionDir) ||
+			this.excludedSections.includes(sectionTitle.toLowerCase()) ||
+			this.excludedSections.includes(sectionTitle)
+		) {
+			console.log(`⏭️  Skipping excluded section: ${sectionTitle}`);
+			return;
+		}
+
 		console.log(`📂 Processing ${sectionTitle}...`);
-		this.output.push(`## ${sectionTitle}\n\n`);
 
 		// Get all subdirectories and index file
 		const items = fs.readdirSync(sectionPath, { withFileTypes: true });
@@ -89,8 +114,17 @@ class BrandGuidelinesGenerator {
 			.replace(/_/g, ' ')
 			.replace(/\b\w/g, (l) => l.toUpperCase());
 
+		// Check if this subsection should be excluded
+		if (
+			this.excludedSubsections.includes(subsectionName) ||
+			this.excludedSubsections.includes(title.toLowerCase()) ||
+			this.excludedSubsections.includes(title)
+		) {
+			console.log(`  ⏭️  Skipping excluded subsection: ${title}`);
+			return;
+		}
+
 		console.log(`  📄 Processing ${title}...`);
-		this.output.push(`### ${title}\n\n`);
 
 		const content = await this.processMDXFile(indexFile);
 		this.output.push(content + '\n\n');
@@ -202,57 +236,7 @@ class BrandGuidelinesGenerator {
 	}
 
 	processImagePath(imagePath) {
-		if (this.options.imageMode === 'link') {
-			return this.copyImageToAssets(imagePath);
-		} else {
-			return this.getImageAsBase64(imagePath);
-		}
-	}
-
-	getImageAsBase64(imagePath) {
-		if (this.imageCache.has(imagePath)) {
-			return this.imageCache.get(imagePath);
-		}
-
-		if (!fs.existsSync(imagePath)) {
-			console.log(`⚠️  Image not found: ${imagePath}`);
-			this.imageCache.set(imagePath, null);
-			return null;
-		}
-
-		try {
-			const imageData = fs.readFileSync(imagePath);
-			const ext = path.extname(imagePath).toLowerCase();
-			let mimeType;
-
-			switch (ext) {
-				case '.png':
-					mimeType = 'image/png';
-					break;
-				case '.jpg':
-				case '.jpeg':
-					mimeType = 'image/jpeg';
-					break;
-				case '.svg':
-					mimeType = 'image/svg+xml';
-					break;
-				case '.webp':
-					mimeType = 'image/webp';
-					break;
-				default:
-					console.log(`⚠️  Unsupported image format: ${ext}`);
-					return null;
-			}
-
-			const base64 = `data:${mimeType};base64,${imageData.toString('base64')}`;
-			this.imageCache.set(imagePath, base64);
-			console.log(`  🖼️  Embedded image: ${path.basename(imagePath)}`);
-			return base64;
-		} catch (error) {
-			console.log(`⚠️  Error processing image ${imagePath}:`, error.message);
-			this.imageCache.set(imagePath, null);
-			return null;
-		}
+		return this.copyImageToAssets(imagePath);
 	}
 
 	generateColorReferenceTable() {
@@ -536,17 +520,41 @@ function showUsage() {
 Usage: node generate-brand-guidelines.js [options]
 
 Options:
-  --link-images    Generate linked images in assets folder instead of base64 embedding
-  --help          Show this help message
+  --exclude-sections "section1,section2"           Additional sections to exclude
+  --exclude-subsections "sub1,sub2"                Additional subsections to exclude
+  --help                                            Show this help message
 
 Examples:
-  node generate-brand-guidelines.js                 # Generate with base64 embedded images
-  node generate-brand-guidelines.js --link-images   # Generate with linked images in assets folder
+  node generate-brand-guidelines.js                                            # Generate with default exclusions
+  node generate-brand-guidelines.js --exclude-sections "design_system"        # Add design system to exclusions
+  node generate-brand-guidelines.js --exclude-subsections "typography,logo"   # Add subsections to exclusions
 
 Output:
   - brand-guidelines.md                             # Main brand guidelines document
-  - brand-guidelines-assets/                        # Images folder (with --link-images)
+  - brand-guidelines-assets/                        # Images folder
+
+Description:
+  Generates comprehensive brand guidelines from MDX source files with linked images
+  in a dedicated assets folder for easy distribution and viewing.
+
+Default exclusions:
+  Sections: ${DEFAULT_EXCLUSIONS.sections.length > 0 ? DEFAULT_EXCLUSIONS.sections.join(', ') : 'none'}
+  Subsections: ${DEFAULT_EXCLUSIONS.subsections.length > 0 ? DEFAULT_EXCLUSIONS.subsections.join(', ') : 'none'}
+
+Available sections: brand_foundation, voice_communication, visual_identity, design_system
 `);
+}
+
+// Helper function to parse comma-separated arguments
+function parseCommaSeparatedArg(args, argName) {
+	const argIndex = args.indexOf(argName);
+	if (argIndex !== -1 && argIndex + 1 < args.length) {
+		return args[argIndex + 1]
+			.split(',')
+			.map((s) => s.trim())
+			.filter((s) => s.length > 0);
+	}
+	return [];
 }
 
 // Run the generator
@@ -559,15 +567,33 @@ if (require.main === module) {
 		process.exit(0);
 	}
 
-	const linkImages = args.includes('--link-images');
+	// Parse exclusion options
+	const excludedSections = parseCommaSeparatedArg(args, '--exclude-sections');
+	const excludedSubsections = parseCommaSeparatedArg(args, '--exclude-subsections');
 
 	const options = {
-		imageMode: linkImages ? 'link' : 'embed'
+		excludedSections,
+		excludedSubsections
 	};
 
-	console.log(`📖 Image mode: ${options.imageMode === 'link' ? 'File paths' : 'Base64 embedding'}`);
-
+	// Create generator and get final exclusion lists (including defaults)
 	const generator = new BrandGuidelinesGenerator(options);
+	const totalExcludedSections = generator.excludedSections;
+	const totalExcludedSubsections = generator.excludedSubsections;
+
+	// Show what will be excluded
+	if (totalExcludedSections.length > 0 || totalExcludedSubsections.length > 0) {
+		console.log(`📖 Generating brand guidelines with exclusions...`);
+		if (totalExcludedSections.length > 0) {
+			console.log(`⏭️  Excluding sections: ${totalExcludedSections.join(', ')}`);
+		}
+		if (totalExcludedSubsections.length > 0) {
+			console.log(`⏭️  Excluding subsections: ${totalExcludedSubsections.join(', ')}`);
+		}
+	} else {
+		console.log(`📖 Generating complete brand guidelines...`);
+	}
+
 	generator.generate().catch(console.error);
 }
 
