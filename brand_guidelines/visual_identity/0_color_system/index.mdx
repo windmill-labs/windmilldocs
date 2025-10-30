@@ -112,12 +112,11 @@ Complete color system with usage guidelines, hex values, and Tailwind classes:
 
 ```jsx
 // ✅ Correct - use Tailwind classes
-<Button className="bg-accent-primary text-white">Save</Button>
-<div className="bg-surface-primary-light border-border-normal-light">Content</div>
+<button class="bg-accent-primary text-white">Save</button>
+<div class="bg-surface-primary border-border-normal">Content</div>
 
 // ❌ Wrong - don't use hex values
-<Button style={{ backgroundColor: '#758FF8', color: 'white' }}>Save</Button>
-<div style={{ backgroundColor: '#FBFBFD', border: '1px solid #9CA3AF' }}>Content</div>
+<button class="bg-[#758FF8]">Save</button>
 ```
 
 ## Do's and Don'ts
@@ -146,35 +145,12 @@ Complete color system with usage guidelines, hex values, and Tailwind classes:
 - Use `accent-primary` for large backgrounds
 - Mix different color token categories inappropriately
 
-## Accessibility
-
-### Contrast Requirements
-
-All color combinations meet WCAG AA standards:
-
-- **Normal text** (12px-17px): 4.5:1 contrast ratio minimum
-- **Large text** (18px+): 3:1 contrast ratio minimum
-- **Interactive elements**: 3:1 contrast ratio for focus states
-
 ### Color-Blind Considerations
 
 - Never use color alone to convey information
 - Pair color with icons, text, or patterns
 - Test designs with color-blind simulation tools
 - Ensure sufficient contrast in monochrome
-
-### Focus States
-
-Always provide visible focus indicators for interactive elements. Use a 2px ring with the `border-accent` color and appropriate offset for buttons and links.
-
-## Testing Colors
-
-Before using colors in production:
-
-1. **Accessibility**: Test with WebAIM Contrast Checker
-2. **Color blindness**: Use Stark or similar tools
-3. **Dark mode**: Verify appearance in both themes
-4. **Print**: Ensure readability when printed in grayscale
 
 ## Quick Reference
 
