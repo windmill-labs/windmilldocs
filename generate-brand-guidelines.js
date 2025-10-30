@@ -22,7 +22,8 @@ class BrandGuidelinesGenerator {
 		this.output = [];
 		this.imageCache = new Map();
 		this.options = options;
-		this.assetsDir = path.join(__dirname, 'brand-guidelines-assets');
+		this.assetsDir = options.assetsDir || path.join(__dirname, 'brand-guidelines-assets');
+		this.assetsPathPrefix = options.assetsPathPrefix || './brand-guidelines-assets';
 		this.copiedImages = new Set(); // Track copied images to avoid duplicates
 
 		// Merge default exclusions with provided options
@@ -221,14 +222,14 @@ class BrandGuidelinesGenerator {
 
 		// Avoid copying the same image multiple times
 		if (this.copiedImages.has(fileName)) {
-			return `./brand-guidelines-assets/${fileName}`;
+			return `${this.assetsPathPrefix}/${fileName}`;
 		}
 
 		try {
 			fs.copyFileSync(imagePath, destPath);
 			this.copiedImages.add(fileName);
 			console.log(`  🖼️  Copied image: ${fileName}`);
-			return `./brand-guidelines-assets/${fileName}`;
+			return `${this.assetsPathPrefix}/${fileName}`;
 		} catch (error) {
 			console.log(`⚠️  Error copying image ${imagePath}:`, error.message);
 			return null;
@@ -520,14 +521,18 @@ function showUsage() {
 Usage: node generate-brand-guidelines.js [options]
 
 Options:
-  --exclude-sections "section1,section2"           Additional sections to exclude
-  --exclude-subsections "sub1,sub2"                Additional subsections to exclude
-  --help                                            Show this help message
+	--exclude-sections "section1,section2"           Additional sections to exclude
+	--exclude-subsections "sub1,sub2"                Additional subsections to exclude
+	--assets-dir <path>                               Filesystem output dir for copied images
+	--assets-prefix <prefix>                          URL/relative prefix for image links
+	--help                                            Show this help message
 
 Examples:
-  node generate-brand-guidelines.js                                            # Generate with default exclusions
-  node generate-brand-guidelines.js --exclude-sections "design_system"        # Add design system to exclusions
-  node generate-brand-guidelines.js --exclude-subsections "typography,logo"   # Add subsections to exclusions
+	node generate-brand-guidelines.js                                            # Generate with default exclusions
+	node generate-brand-guidelines.js --exclude-sections "design_system"        # Add design system to exclusions
+	node generate-brand-guidelines.js --exclude-subsections "typography,logo"   # Add subsections to exclusions
+	node generate-brand-guidelines.js --assets-dir ./public/brand                # Copy images to ./public/brand
+	node generate-brand-guidelines.js --assets-prefix /brand                     # Link images with /brand prefix
 
 Output:
   - brand-guidelines.md                             # Main brand guidelines document
@@ -557,6 +562,15 @@ function parseCommaSeparatedArg(args, argName) {
 	return [];
 }
 
+// Helper function to parse single value argument
+function parseArgValue(args, argName) {
+	const argIndex = args.indexOf(argName);
+	if (argIndex !== -1 && argIndex + 1 < args.length) {
+		return args[argIndex + 1];
+	}
+	return undefined;
+}
+
 // Run the generator
 if (require.main === module) {
 	// Parse command line arguments
@@ -571,10 +585,24 @@ if (require.main === module) {
 	const excludedSections = parseCommaSeparatedArg(args, '--exclude-sections');
 	const excludedSubsections = parseCommaSeparatedArg(args, '--exclude-subsections');
 
+	// Parse asset path options
+	const assetsDirArg = parseArgValue(args, '--assets-dir');
+	const assetsPrefixArg = parseArgValue(args, '--assets-prefix');
+
 	const options = {
 		excludedSections,
 		excludedSubsections
 	};
+
+	if (assetsDirArg) {
+		options.assetsDir = path.isAbsolute(assetsDirArg)
+			? assetsDirArg
+			: path.join(__dirname, assetsDirArg);
+	}
+
+	if (assetsPrefixArg) {
+		options.assetsPathPrefix = assetsPrefixArg;
+	}
 
 	// Create generator and get final exclusion lists (including defaults)
 	const generator = new BrandGuidelinesGenerator(options);
