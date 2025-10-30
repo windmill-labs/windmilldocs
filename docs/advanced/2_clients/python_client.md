@@ -54,7 +54,7 @@ The client provides both module-level convenience functions and a `Windmill` cla
 - `get_state()` - Get the script's state
 - `set_state(value)` - Set the script's state
 
-#### Windmill Class
+#### Windmill class
 
 For advanced usage, you can instantiate the `Windmill` class directly:
 
