@@ -70,6 +70,15 @@ const config = {
 				blogSidebarCount: 0,
 				postsPerPage: 'ALL'
 			}
+		],
+		[
+			'@docusaurus/plugin-content-docs',
+			{
+				id: 'brand-guidelines',
+				path: 'brand_guidelines',
+				routeBasePath: 'brand-guidelines',
+				sidebarPath: require.resolve('./brandGuidelinesSidebars.js')
+			}
 		]
 	],
 	presets: [
@@ -79,6 +88,7 @@ const config = {
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
 				docs: {
+					id: 'default',
 					sidebarPath: require.resolve('./sidebars.js')
 				},
 				blog: {
@@ -147,7 +157,8 @@ const config = {
 						type: 'doc',
 						docId: 'intro',
 						position: 'left',
-						label: 'Docs'
+						label: 'Docs',
+						docsPluginId: 'default'
 					},
 					{
 						to: 'https://app.windmill.dev',
@@ -218,7 +229,7 @@ const config = {
 			prism: {
 				theme: lightCodeTheme,
 				darkTheme: darkCodeTheme,
-				additionalLanguages: ['powershell']
+				additionalLanguages: ['powershell', 'bash']
 			},
 			colorMode: {
 				defaultMode: 'dark',

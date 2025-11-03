@@ -1,0 +1,91 @@
+---
+title: Elevation
+description: Surface depth and shadow guidelines for Windmill interfaces
+---
+
+# Elevation
+
+Windmill uses a **minimal elevation system** based on surface colors and strategic shadows. We prioritize clarity and simplicity over complex layering effects.
+
+## Elevation Principles
+
+- **Surface colors create depth**: Darker surfaces appear deeper than lighter ones
+- **Shadows only for overlays and movement**: Not for making elements stand out
+- **Light borders for grouping**: Preferred over shadows for content separation
+- **Use sparingly**: Limit elevation to avoid visual noise
+
+## Surface Depth System
+
+We use surface colors from our color system to create depth hierarchy:
+
+- **`surface-primary`** (#FBFBFD): Default elevation, main backgrounds
+- **`surface-secondary`** (#EFEFF4): Sunken surfaces, recessed areas
+- **`surface-tertiary`** (#FFFFFF): Elevated cards and content areas
+
+## Shadow Usage
+
+### When to Use Shadows
+
+**✅ Use shadows for:**
+- **Overlays**: Modals, dropdowns, tooltips (`shadow-lg`)
+- **Moving elements**: Drag and drop, active states (`shadow-md`)
+
+**❌ Don't use shadows for:**
+- Making buttons or elements stand out
+- Content grouping or separation
+- Decorative purposes
+- Permanent interface elements
+
+### Shadow Specifications
+
+- **`shadow-md`**: For moving elements and temporary elevation
+- **`shadow-lg`**: For overlays and floating content
+- **Light borders**: `border-light` (#E5E7EB) for grouping instead of shadows
+
+## Examples
+
+### Overlay Elevation
+
+Modals, dropdowns, and floating content use `shadow-lg` with light borders:
+
+<div style={{ textAlign: 'center', margin: '24px 0' }}>
+	<img
+		src="/img/brand/elevation-overlay.svg"
+		alt="Overlay elevation example showing modal with shadow"
+		style={{ maxWidth: '400px', height: 'auto' }}
+	/>
+</div>
+
+### Sunken Surface
+
+Recessed areas use `surface-secondary` to appear deeper than the main background:
+
+<div style={{ textAlign: 'center', margin: '24px 0' }}>
+	<img
+		src="/img/brand/elevation-sunken.svg"
+		alt="Sunken surface example showing recessed area"
+		style={{ maxWidth: '400px', height: 'auto' }}
+	/>
+</div>
+
+## Do's and Don'ts
+
+### ✅ Do
+
+- Use `surface-secondary` for sunken or recessed areas
+- Apply `shadow-lg` only to overlays (modals, dropdowns)
+- Use `shadow-md` for elements being moved or dragged
+- Prefer light borders (`border-light`) for content grouping
+- Keep elevation simple and purposeful
+- Use `surface-tertiary` for elevated cards when needed
+
+### ❌ Don't
+
+- Use shadows to make buttons or static elements stand out
+- Combine multiple elevation techniques unnecessarily
+- Create custom shadow values outside the system
+- Use elevation purely for decoration
+- Apply heavy shadows that distract from content
+- Overuse elevation effects throughout the interface
+
+Remember: **Elevation should enhance usability, not create visual complexity.** When in doubt, use surface colors instead of shadows for depth.
