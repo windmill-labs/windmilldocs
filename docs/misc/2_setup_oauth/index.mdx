@@ -258,12 +258,13 @@ Pick "From an app manifest", then YAML.
 
 ![Slack Create App](./slack_create_app.png 'Slack Create App')
 
-Your app manifest should look like this, replacing `<YOUR INSTANCE URL>` in 3 places:
+Your app manifest should look like this, replacing `<YOUR INSTANCE URL>` in 4 places:
 
 :::warning
-`<YOUR INSTANCE URL>/api/oauth/slack_command` must be reachable from the public internet for the Slack command to work.
-
-`<YOUR INSTANCE URL>/api/slack` must be reachable from the public internet for interactive approvals to work.
+These URLs must be publicly accessible:
+- `<YOUR INSTANCE URL>/api/oauth/slack_command` - for slash commands
+- `<YOUR INSTANCE URL>/api/oauth/slack_events` - for @mention triggers
+- `<YOUR INSTANCE URL>/api/slack` - for interactive approvals
 :::
 
 ```yaml
@@ -300,7 +301,15 @@ oauth_config:
       - channels:join
       - files:write
       - commands
+      - app_mentions:read
+      - im:history
+      - im:read
 settings:
+  event_subscriptions:
+    request_url: <YOUR INSTANCE URL>/api/oauth/slack_events
+    bot_events:
+      - app_mention
+      - message.im
   interactivity:
     is_enabled: true
     request_url: <YOUR INSTANCE URL>/api/slack
@@ -322,6 +331,17 @@ As for any OAuth Settings, make sure that there is a corresponding resource type
 Now users should be able to connect to Slack through OAuth:
 
 ![Slack Connect](./slack_connect.png 'Slack Connect')
+
+#### Workspace-level Slack app
+
+In addition to instance-level configuration, workspace admins can configure their own Slack app with workspace-specific credentials. This provides workspace isolation, separate rate limits, and independent management.
+
+To enable workspace-level Slack apps:
+1. Follow the same app manifest setup above to create a Slack app
+2. In workspace settings, navigate to the Slack app section
+3. Enter the workspace-specific Client ID and Client Secret
+
+When configured, the workspace will use its own Slack app instead of the instance-level app. See the [Slack integration documentation](../../integrations/slack.mdx#workspace-level-slack-app-configuration) for more details on workspace-level configuration and when to use it.
 
 ### Microsoft Teams
 - Go to the [Azure Portal](https://portal.azure.com/) and create a new "Bot Service" of type "[Azure Bot](https://portal.azure.com/#create/Microsoft.AzureBot)".
