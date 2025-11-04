@@ -123,7 +123,7 @@ const pricing = {
 			minPrice_nonprofit: 48,
 			description: 'For advanced needs in observability, security and performance.',
 			description_nonprofit:
-				'60% discount for nonprofits & universities, no limits. Free if used as teaching material.',
+				'For nonprofits & universities, no limits. Free if used as teaching material.',
 			description_pro: 'For individuals and small businesses.',
 			enterprise_edition: true,
 			features: [
@@ -716,31 +716,95 @@ export default function Pricing() {
 								/>
 							</div>
 
-							<a
-								href={
-									tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
-										? '#pro-plan'
-										: tier.href
-								}
-								target="_blank"
-								aria-describedby={tier.id}
-								className={classNames(
-									tier.id === 'tier-team'
-										? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
-										: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
-										? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
-										: tier.enterprise_edition
-										? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
-										: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
-									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600'
-								)}
-							>
-								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
-									? 'Check if you qualify'
-									: tier.customMessage
-									? tier.customMessage
-									: 'Get in touch'}
-							</a>
+							{tier.id === 'tier-enterprise-selfhost' && selectedOption !== 'Pro' && frequency.value === 'selfhost' ? (
+								selectedOption === 'Enterprise' ? (
+									<div className="try-it-button">
+										<a
+											href="https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j"
+											onClick={(e) => {
+												e.preventDefault();
+												e.stopPropagation();
+												handlePlanClick(
+													'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j',
+													'Enterprise'
+												);
+											}}
+											className="main-section"
+										>
+											Try it for a month
+										</a>
+										<a
+											href="https://app.windmill.dev/a/windmill-prod/windmill-trial"
+											className="hover-section"
+											target="_blank"
+											onClick={(e) => {
+												e.stopPropagation();
+											}}
+										>
+											No credit card?
+										</a>
+									</div>
+								) : (
+									<div className="try-it-button">
+										<a
+											onClick={(e) => {
+												e.preventDefault();
+												e.stopPropagation();
+												handlePlanClick(
+													'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j' +
+														(selectedOption === 'Nonprofit' ? '?prefilled_promo_code=nonprofit' : ''),
+													selectedOption
+												);
+											}}
+											className={classNames(
+												'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
+												'main-section !no-underline text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+											)}
+											style={{ cursor: 'pointer' }}
+										>
+											Try it for a month
+										</a>
+										<a
+											href={`https://app.windmill.dev/a/windmill-prod/windmill-trial${
+												selectedOption !== 'Enterprise' ? `?plan=${selectedOption.toLowerCase()}` : ''
+											}`}
+											className="hover-section"
+											target="_blank"
+											onClick={(e) => {
+												e.stopPropagation();
+											}}
+										>
+											No credit card?
+										</a>
+									</div>
+								)
+							) : (
+								<a
+									href={
+										tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
+											? '#pro-plan'
+											: tier.href
+									}
+									target="_blank"
+									aria-describedby={tier.id}
+									className={classNames(
+										tier.id === 'tier-team'
+											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
+											: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
+											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
+											: tier.enterprise_edition
+											? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
+											: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
+										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600'
+									)}
+								>
+									{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
+										? 'Check if you qualify'
+										: tier.customMessage
+										? tier.customMessage
+										: 'Get in touch'}
+								</a>
+							)}
 
 							<ul
 								role="list"
@@ -762,75 +826,93 @@ export default function Pricing() {
 
 								{tier.id === 'tier-enterprise-selfhost' &&
 									frequency.value === 'selfhost' &&
-									(selectedOption === 'Enterprise' ? (
-										<div className="try-it-button">
-											<a
-												href="https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j"
-												onClick={(e) => {
-													e.preventDefault();
-													e.stopPropagation();
-													handlePlanClick(
-														'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j',
-														'Enterprise'
-													);
-												}}
-												className="main-section"
-											>
-												Try it for a month
-											</a>
-											<a
-												href="https://app.windmill.dev/a/windmill-prod/windmill-trial"
-												className="hover-section"
-												target="_blank"
-												onClick={(e) => {
-													e.stopPropagation();
-												}}
-											>
-												No credit card?
-											</a>
-										</div>
-									) : (
-										<div className="try-it-button">
-											<a
-												onClick={(e) => {
-													e.preventDefault();
-													e.stopPropagation();
-													handlePlanClick(
+									selectedOption !== 'Pro' ? (
+									<a
+										href={tier.href}
+										target="_blank"
+										aria-describedby={tier.id}
+										className={classNames(
+											tier.enterprise_edition
+												? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
+												: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
+											'!no-underline mt-2 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600'
+										)}
+									>
+										Get in touch
+									</a>
+								) : (
+									(tier.id === 'tier-enterprise-selfhost' &&
+										frequency.value === 'selfhost' &&
+										(selectedOption === 'Enterprise' ? (
+											<div className="try-it-button">
+												<a
+													href="https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j"
+													onClick={(e) => {
+														e.preventDefault();
+														e.stopPropagation();
+														handlePlanClick(
+															'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j',
+															'Enterprise'
+														);
+													}}
+													className="main-section"
+												>
+													Try it for a month
+												</a>
+												<a
+													href="https://app.windmill.dev/a/windmill-prod/windmill-trial"
+													className="hover-section"
+													target="_blank"
+													onClick={(e) => {
+														e.stopPropagation();
+													}}
+												>
+													No credit card?
+												</a>
+											</div>
+										) : (
+											<div className="try-it-button">
+												<a
+													onClick={(e) => {
+														e.preventDefault();
+														e.stopPropagation();
+														handlePlanClick(
+															selectedOption === 'Pro'
+																? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
+																: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j' +
+																		(selectedOption === 'Nonprofit'
+																			? '?prefilled_promo_code=nonprofit'
+																			: ''),
+															selectedOption
+														);
+													}}
+													className={classNames(
 														selectedOption === 'Pro'
-															? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
-															: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j' +
-																	(selectedOption === 'Nonprofit'
-																		? '?prefilled_promo_code=nonprofit'
-																		: ''),
-														selectedOption
-													);
-												}}
-												className={classNames(
-													selectedOption === 'Pro'
-														? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
-														: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
-													'main-section !no-underline text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
-												)}
-												style={{ cursor: 'pointer' }}
-											>
-												Try it for a month
-											</a>
-											<a
-												href={`https://app.windmill.dev/a/windmill-prod/windmill-trial${
-													selectedOption !== 'Enterprise'
-														? `?plan=${selectedOption.toLowerCase()}`
-														: ''
-												}`}
-												className="hover-section"
-												target="_blank"
-												onClick={(e) => {
-													e.stopPropagation();
-												}}
-											>
-												No credit card?
-											</a>
-										</div>
-									))}
+															? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
+															: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
+														'main-section !no-underline text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+													)}
+													style={{ cursor: 'pointer' }}
+												>
+													Try it for a month
+												</a>
+												<a
+													href={`https://app.windmill.dev/a/windmill-prod/windmill-trial${
+														selectedOption !== 'Enterprise'
+															? `?plan=${selectedOption.toLowerCase()}`
+															: ''
+													}`}
+													className="hover-section"
+													target="_blank"
+													onClick={(e) => {
+														e.stopPropagation();
+													}}
+												>
+													No credit card?
+												</a>
+											</div>
+										)))
+								)}
 							</div>
 						</div>
 					))}

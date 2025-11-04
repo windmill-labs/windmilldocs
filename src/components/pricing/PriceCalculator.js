@@ -4,6 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Slider from './Slider';
 import MemorySlider from './MemorySlider';
+import EditableValue from './EditableValue';
 import { QuoteForm } from '../QuoteForm';
 
 const plans = [
@@ -422,7 +423,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									<div className="flex justify-between w-full items-center">
 										<div>
 											<span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
-												{developers.toLocaleString()}
+												<EditableValue
+													value={developers}
+													onChange={(value) => setDevelopers(clamp(value, 1, pricing.seat.max))}
+													min={1}
+													max={pricing.seat.max}
+													step={1}
+												/>
 											</span>
 											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
 												{' '}{developers === 1 ? 'developer' : 'developers'}
@@ -441,7 +448,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										min={1}
 										max={pricing.seat.max}
 										step={1}
-										defaultValue={clamp(developers, 1, pricing.seat.max)}
+										defaultValue={developers}
 										onChange={(value) => {
 											setDevelopers(clamp(value, 1, pricing.seat.max));
 										}}
@@ -452,7 +459,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									<div className="flex justify-between w-full items-center">
 										<div>
 											<span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
-												{operators.toLocaleString()}
+												<EditableValue
+													value={operators}
+													onChange={(value) => setOperators(clamp(value, 0, pricing.seat.max * 2))}
+													min={0}
+													max={pricing.seat.max * 2}
+													step={2}
+												/>
 											</span>
 											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
 												{' '}{operators <= 1 ? 'operator' : 'operators'}{' '}
@@ -479,7 +492,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										min={0}
 										max={pricing.seat.max * 2}
 										step={2}
-										defaultValue={clamp(operators, 0, pricing.seat.max * 2)}
+										defaultValue={operators}
 										onChange={(value) => {
 											setOperators(clamp(value, 0, pricing.seat.max * 2));
 										}}
@@ -579,17 +592,24 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										{/* Number of workers slider */}
 										<div className="flex justify-between w-full items-center">
 										<span className="text-sm text-gray-600 dark:text-gray-200">
-												{group.workers % 1000 === 0 ? `${group.workers/1000}k` : group.workers.toLocaleString()}{" "}
+												<EditableValue
+													value={group.workers}
+													onChange={(value) => updateWorkerGroup(index, 'workers', value)}
+													min={1}
+													max={selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' ? 10 : 1000}
+													step={1}
+													formatDisplay={(val) => val % 1000 === 0 ? `${val/1000}k` : val.toLocaleString()}
+												/>{" "}
 												{group.workers === 1 ? (
 													<>
 														<span className={
-															group.memoryGB === 1 ? "font-semibold text-blue-800 dark:text-blue-600" : 
-															group.memoryGB === 2 ? "font-semibold text-blue-600 dark:text-blue-500" : 
+															group.memoryGB === 1 ? "font-semibold text-blue-800 dark:text-blue-600" :
+															group.memoryGB === 2 ? "font-semibold text-blue-600 dark:text-blue-500" :
 															"font-semibold text-blue-500 dark:text-blue-400"
 														}>
-															{group.memoryGB === 1 ? 'small' : 
-															 group.memoryGB === 2 ? 'standard' : 
-															 tier.id === 'tier-enterprise-cloud' ? `${group.memoryGB}GB` : 
+															{group.memoryGB === 1 ? 'small' :
+															 group.memoryGB === 2 ? 'standard' :
+															 tier.id === 'tier-enterprise-cloud' ? `${group.memoryGB}GB` :
 															 'large'}
 														</span>{" "}
 														worker
@@ -597,13 +617,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 												) : (
 													<>
 														<span className={
-															group.memoryGB === 1 ? "font-semibold text-blue-800 dark:text-blue-600" : 
-															group.memoryGB === 2 ? "font-semibold text-blue-600 dark:text-blue-500" : 
+															group.memoryGB === 1 ? "font-semibold text-blue-800 dark:text-blue-600" :
+															group.memoryGB === 2 ? "font-semibold text-blue-600 dark:text-blue-500" :
 															"font-semibold text-blue-500 dark:text-blue-400"
 														}>
-															{group.memoryGB === 1 ? 'small' : 
-															 group.memoryGB === 2 ? 'standard' : 
-															 tier.id === 'tier-enterprise-cloud' ? `${group.memoryGB}GB` : 
+															{group.memoryGB === 1 ? 'small' :
+															 group.memoryGB === 2 ? 'standard' :
+															 tier.id === 'tier-enterprise-cloud' ? `${group.memoryGB}GB` :
 															 'large'}
 														</span>{" "}
 														workers
@@ -612,15 +632,15 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 											</span>
 											<span className="text-sm text-gray-900 dark:text-white">
 												<span className="font-normal text-gray-400 dark:text-gray-300">
-													{(tier.id === 'tier-enterprise-cloud' 
+													{(tier.id === 'tier-enterprise-cloud'
 														? (group.memoryGB/2 * group.workers)
 														: (group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2)
 													).toLocaleString()} CU
 												</span>
 												{' · '}
 												<span className="font-semibold">
-													${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * 
-														(tier.id === 'tier-enterprise-cloud' ? 2 : 1) * 
+													${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers *
+														(tier.id === 'tier-enterprise-cloud' ? 2 : 1) *
 														(period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})}
 													/{period.value === 'annually' ? 'yr' : 'mo'}
 												</span>
@@ -637,7 +657,20 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										{/* Memory per worker slider */}
 										<div className="flex justify-between w-full items-center">
 											<span className="text-sm text-gray-600 dark:text-gray-200">
-												{group.memoryGB}GB memory limit {tier.id === 'tier-enterprise-cloud' && group.memoryGB >= 10 ? '/ worker' : 'per worker'}
+												<EditableValue
+													value={group.memoryGB}
+													onChange={(value) => {
+														// Snap to nearest valid step
+														const steps = [1, 2, 4, 6, 8, 12, 14, 16, 32, 48, 64, 80, 96, 112, 128];
+														const nearest = steps.reduce((prev, curr) =>
+															Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+														);
+														updateWorkerGroup(index, 'memoryGB', nearest);
+													}}
+													min={1}
+													max={128}
+													step={1}
+												/>GB memory limit {tier.id === 'tier-enterprise-cloud' && group.memoryGB >= 10 ? '/ worker' : 'per worker'}
 											</span>
 											<span className="text-sm text-gray-900 font-semibold dark:text-white">
 												{group.memoryGB >= 4 && tier.id === 'tier-enterprise-selfhost' && (
@@ -680,7 +713,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								
 								<div className="flex justify-between w-full items-center">
 									<span className="text-sm text-gray-600 dark:text-gray-200">
-										{nativeWorkers} native {nativeWorkers === 0 ? 'worker' : 'workers'}
+										<EditableValue
+											value={nativeWorkers}
+											onChange={(value) => setNativeWorkers(value)}
+											min={0}
+											max={selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' ? 32 : 200}
+											step={8}
+										/> native {nativeWorkers === 0 ? 'worker' : 'workers'}
 									</span>
 									<span className="text-sm text-gray-900 font-semibold dark:text-white">
 										${(Math.round((pricing.worker.native * nativeWorkers / 8) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}
@@ -690,7 +729,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									min={0}
 									max={selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' ? 32 : 200}
 									step={8}
-									defaultValue={8}
+									defaultValue={nativeWorkers}
 									onChange={(value) => setNativeWorkers(value)}
 									noExponential={true}
 								/>
@@ -712,7 +751,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								
 								<div className="flex justify-between w-full items-center">
 									<span className="text-sm text-gray-600 dark:text-gray-200">
-										{agentWorkers} agent {agentWorkers === 1 ? 'worker' : 'workers'}
+										<EditableValue
+											value={agentWorkers}
+											onChange={(value) => setAgentWorkers(value)}
+											min={0}
+											max={selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' ? 10 : 200}
+											step={tier.id === 'tier-enterprise-cloud' ? 2 : 1}
+										/> agent {agentWorkers === 1 ? 'worker' : 'workers'}
 									</span>
 									<span className="text-sm text-gray-900 font-semibold dark:text-white">
 										${(Math.round((pricing.worker.agent * (tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1)) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}
@@ -722,7 +767,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									min={0}
 									max={selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' ? 10 : 200}
 									step={tier.id === 'tier-enterprise-cloud' ? 2 : 1}
-									defaultValue={0}
+									defaultValue={agentWorkers}
 									onChange={(value) => setAgentWorkers(value)}
 									exponential={true}
 								/>

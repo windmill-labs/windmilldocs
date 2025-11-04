@@ -203,7 +203,7 @@ const clientTestimonials = [
 			dark: '/images/brands/logo-original-dark-transparent.png',
 			light: '/images/brands/logo-original-light-transparent.png',
 			anchor: 'photoroom',
-			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQEgFugU1CsFxA/profile-displayphoto-shrink_200_200/0/1709041891469?e=2147483647&v=beta&t=uH8qfqTTK2YmNCedLtJ7rURtXbtKegLF1QLtaOQKEDM',
+			profile_picture: '/contributors/eliot_andres.jpeg',
 		},
 		company_url: 'https://photoroom.com',
 		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
@@ -217,7 +217,7 @@ const clientTestimonials = [
 			dark: '/images/brands/pave-dark.svg',
 			light: '/images/brands/pave.svg',
 			anchor: 'pave',
-			profile_picture: 'https://media.licdn.com/dms/image/v2/C5103AQHz-67l95QEtA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517339626889?e=1754524800&v=beta&t=yUaXMWCh7gH7D0G3Gy7lDi-yzhktIoEPRHYz9wLFads'
+			profile_picture: '/contributors/lewis_ellis.jpeg',
 		},
 		company_url: 'https://www.pave.com/',
 		linkedIn: 'https://www.linkedin.com/in/lewisjellis/',
@@ -231,7 +231,7 @@ const clientTestimonials = [
 			dark: '/images/brands/Bloomcredit-Dark.svg',
 			light: '/images/brands/Bloomcredit-Light.svg',
 			anchor: 'bloomcredit',
-			profile_picture: 'https://bloomcredit.io/wp-content/uploads/2023/01/person-c.png'
+			profile_picture: '/contributors/mike_esler.jpeg'
 		},
 		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
 		company_url: 'https://bloomcredit.io',
@@ -245,7 +245,7 @@ const clientTestimonials = [
 			dark: '/images/brands/Investing-Dark.svg',
 			light: '/images/brands/Investing-Light.svg',
 			anchor: 'investing',
-			profile_picture: 'https://media.licdn.com/dms/image/v2/D4D03AQHh9uu2s-Aviw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1680507511387?e=1754524800&v=beta&t=fwHCnO4SDxsdxWELbMbRqqv1AfA8egAp_D_twzSU1WA'
+			profile_picture: '/contributors/yonathan_adest.jpeg'
 		},
 		company_url: 'https://www.investing.com',
 		linkedIn: 'https://www.linkedin.com/in/yonatan-adest/',
@@ -259,7 +259,7 @@ const clientTestimonials = [
 			dark: '/images/brands/Qovery-dark.svg',
 			light: '/images/brands/Qovery-light.svg',
 			anchor: 'qovery',
-			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQFlNTUW60HFbQ/profile-displayphoto-shrink_400_400/0/1693895615653?e=2147483647&v=beta&t=nxGuC4K8eXsJ2YAq1wqG-m8mEkhj8gugGqhccdckJZc'
+			profile_picture: '/contributors/romaric_philogene.webp'
 		},
 		company_url: 'https://www.qovery.com',
 		linkedIn: '/blog/qovery-case-study',
@@ -273,7 +273,7 @@ const clientTestimonials = [
 			dark: '/images/brands/Kahoot_Logo-dark.svg',
 			light: '/images/brands/Kahoot_Logo.svg',
 			anchor: 'kahoot',
-			profile_picture: 'https://avatars.githubusercontent.com/u/1047421?v=4'
+			profile_picture: '/contributors/sindre_svendby.jpeg'
 		},
 		company_url: 'https://motimateapp.com',
 		linkedIn: '/blog/kahoot-case-study',
@@ -287,7 +287,7 @@ const clientTestimonials = [
 			dark: '/images/brands/uaw_dark.svg',
 			light: '/images/brands/uaw.svg',
 			anchor: 'united-auto-workers',
-			profile_picture: 'https://media.licdn.com/dms/image/v2/C4D03AQGzZ5R0BHz7yg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1600310404802?e=2147483647&v=beta&t=guoo6kwwuEu24WJl1w_5nvJk9nTSDSoSosxBMmMLXBc'
+			profile_picture: '/contributors/ben_packer.jpeg'
 		},
 		company_url: 'https://uaw.org/',
 		linkedIn: 'https://www.linkedin.com/in/benpaulryanpacker/',
@@ -300,7 +300,7 @@ const clientTestimonials = [
 			position: 'Director, Indigenous Guardianship Program',
 			dark: '/images/brands/logo-conservation-metrics.png',
 			light: '/images/brands/logo-conservation-metrics.png',
-			profile_picture: 'https://media.licdn.com/dms/image/v2/D4D03AQGsDNU9khzxmQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1685649292887?e=1758153600&v=beta&t=l6BGPXXXfysecBGMq9YRgZt5thKAKvx-v59G7h8vaWQ'
+				profile_picture: '/contributors/rudo_kemper.jpeg'
 		},
 		company_url: 'https://conservationmetrics.com/',
 		linkedIn: '/blog/conservation-metrics-case-study',
