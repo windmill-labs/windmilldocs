@@ -80,11 +80,11 @@ When workspace forks are used with [git sync](../11_git_sync/index.mdx), Windmil
 the parent workspace, and keep track of changes there. External changes to the branch are then synced back to the forked workspace if the appropriate
 CI/CD actions are setup. Once the changes are ready, a PR can be opened to sync back changes to the original workspace.
 
-Workspace forks are really meant to be used with git sync, so make sure to have it properly setup and in particular the CI/CD actions specific to forks should be setup.
+Workspace forks are designed to be used with git sync, so make sure to have it properly setup and in particular the [CI/CD actions](../9_deploy_gh_gl/index.mdx#github-actions-setup) specific to forks should be set. Make sure to not forget the `push-on-merge-to-forks.yaml` action.
 
 ### Fork and branch naming
 
-Forks workspace IDs are always prefixed by `wm-forked-`. The associated branch name is always prefixed by `wm-fork/<originalBranch>/` where `<originalBranch>` is the branch that is associated with the original branch was worked from.
+Forks workspace IDs are always prefixed by `wm-fork-`. The associated branch name is always prefixed by `wm-fork/<originalBranch>/` where `<originalBranch>` is the branch that is associated with the original branch was worked from.
 
 For example:
 
@@ -92,7 +92,7 @@ For example:
 |--------------|--------------------------------------------------------------|-------------------|---------------------------|
 | windmill     | main                                                         | wm-fork-feature1  | wm-fork/main/feature1     |
 
-This naming convention is what enables Windmill to match branches to workspaces without having to reconfigure it for each branch. It is then important to understand that fork workspace ids and branch names cannot be changed.
+This naming convention is what enables Windmill to match branches to workspaces without having to reconfigure it for each branch. This is why fork workspace ids and branch names cannot be changed.
 
 
 ## Synchronization and merging
