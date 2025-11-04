@@ -90,6 +90,10 @@ inventory:
     # You can pin an inventory to this script:
     # resource: u/user/your_resource
 
+# Additional inventories available as script arguments
+additional_inventories:
+  - "gitrepo/hosts/inventory.ini"
+
 # File resources will be written in the relative \`target\` location before
 # running the playbook
 files:
@@ -268,6 +272,28 @@ inventory:
     name: hcloud.yml
 ```
 
+### Additional inventories
+
+You can also declare additional inventories that will be made available as script arguments without specifying their source. This allows users to dynamically select inventories when running the script.
+
+```yaml
+additional_inventories:
+  - name: "Extra inventories"
+    options:
+      - "gitrepo/hosts/inventory1.ini"
+      - "gitrepo/hosts/inventory2.ini"
+      - "gitrepo/hosts/inventory3.ini"
+```
+
+They can also be defined statically to always be passed in for this script:
+
+```yaml
+additional_inventories:
+  - "gitrepo/hosts/permanent_inventory.ini"
+```
+
+Note that this only declares the inventory, but you still need to make it available by either having it in a git repo or using [file resources](#other-non-inventory-file-resources). Otherwise ansible will fail saying it couldn't find your inventory.
+
 ### Other non-inventory file resources
 
 It sometimes happens that your Ansible playbook depends on some text file existing at a relative path to the playbook. This can be a configuration file, a template, some other file that you can't inline or otherwise is simpler to keep as a separate file. In this case, Windmill's [plain text file resources](../../../core_concepts/3_resources_and_types/index.mdx#plain-text-file-resources) can be used to create these files at the specified path before running the playbook. The syntax will be the following:
@@ -413,6 +439,45 @@ files:
   - variable: u/user/password_for_label3
     target: ./password_filename3
 ```
+
+### Delegate the environment setup to a git repo (EE)
+
+:::info EE feature
+Parts of this feature depend on instance-wide blob storage, which is only available in Enterprise Edition.
+:::
+
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/ansible_delegate_to_git_repo.mp4"
+/>
+
+You can choose to set a git repository that contains all your inventories, custom roles, and playbooks as an alternate way to run your ansible script. When declaring this you will get an additional UI that lets you explore the repository, and some helpers to help you define the inventories.
+You can do this by either declaring this section on the metadata part of the script:
+
+```yaml
+delegate_to_git_repo:
+  resource: u/user/git_repo_resource
+```
+
+Or using the utility button that will help you pick a git repo resource to be used.
+
+You will need to first create a git_repository resource that points to the repository you're trying to use.
+
+You will then see your editor split in two and a Hovering popup indicating the alternate execution mode is detected. The first time you do this the repo viewer will show a button to load the git repository. This will clone and cache the contents of your repository in blob storage, for you to explore the files from within windmill.
+
+If you click on the top-right floating pop-up, you will access a screen letting you manage the definition of the git repo, and will contain some utils for ease of use. You can for example use the inventories section to define a subfolder containing your inventories and quickly import the filenames into the script.
+
+If you want to set a path to the playbook you want executed, you can do so like so:
+
+```yaml
+delegate_to_git_repo:
+  resource: u/user/git_repo_resource
+  playbook: playbooks/your_playbook.yml
+```
+
+If this is undefined, the worker will default to using the second YAML section like normal.
 
 ## Instant preview & testing
 
