@@ -58,10 +58,12 @@ export default function MemorySlider({ min, max, defaultValue, onChange }) {
     const [position, setPosition] = useState(initialPosition);
 
     useEffect(() => {
-        setValue(defaultValue);
-        const newPosition = valueToPosition(defaultValue) * 0.9 + 10;
-        setPosition(newPosition);
-    }, [defaultValue, min, max]);
+        if (defaultValue !== value) {
+            setValue(defaultValue);
+            const newPosition = valueToPosition(defaultValue) * 0.9 + 10;
+            setPosition(newPosition);
+        }
+    }, [defaultValue, min, max, value]);
 
     const handleChange = (event) => {
         const rawPosition = parseFloat(event.target.value);
