@@ -37,7 +37,7 @@ def main():
 
 For detailed API documentation including all available methods, parameters, and return types, see the [Python SDK documentation](https://app.windmill.dev/pydocs/wmill.html).
 
-### Core Functions
+### Core functions
 
 The client provides both module-level convenience functions and a `Windmill` class for advanced usage:
 
@@ -71,7 +71,7 @@ client = Windmill(
 result = client.get_resource('u/user/resource')
 ```
 
-## S3 Integration
+## S3 integration
 
 The client includes helpers for working with S3-compatible storage:
 
