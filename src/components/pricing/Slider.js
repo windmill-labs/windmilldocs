@@ -49,13 +49,16 @@ function inverseExponentialScale(value, min, max) {
     return Math.min(displayValue, max);
 }
 
-export default function Slider({ min, max, step, defaultValue, onChange, noExponential = false }) {
+export default function Slider({ min, max, step, defaultValue, onChange, noExponential = false, exponential = false }) {
     const [value, setValue] = useState(defaultValue);
-    const isExponential = !noExponential && max > 99;
+    const isExponential = exponential || (!noExponential && max > 99);
 
     useEffect(() => {
-        setValue((prevValue) => clamp(prevValue, min, max));
-    }, [defaultValue, min, max]);
+        const clampedValue = clamp(defaultValue, min, max);
+        if (clampedValue !== value) {
+            setValue(clampedValue);
+        }
+    }, [defaultValue, min, max, value]);
 
     const handleChange = (event) => {
         let newValue = parseFloat(parseFloat(event.target.value).toFixed(2));
