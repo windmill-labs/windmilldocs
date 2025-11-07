@@ -118,7 +118,13 @@ const faqs = [
 		question: 'What are agent workers?',
 		answer: (
 			<span>
-				Agent workers are specialized workers that handle AI agent tasks and workflows. Each agent worker counts as 1 Compute Unit on the self-hosted plan and 0.5 Compute Unit on the cloud plan (therefore same price as on the self-hosted plan). Unless you are using agent workers for compute on a large machine, we will count them as 1 Compute Unit on cloud and 2 Compute Units on self-hosted.
+				<Link
+					to="/docs/core_concepts/agent_workers"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					Agent workers
+				</Link>{' '}
+				are remote computing resources that can execute jobs from anywhere. Each agent worker counts as 1 Compute Unit on self-hosted if not used for compute, and 0.5 Compute Unit on cloud if not used for compute.
 			</span>
 		)
 	},
