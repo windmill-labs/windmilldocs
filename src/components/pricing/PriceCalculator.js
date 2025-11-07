@@ -744,7 +744,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 										</svg>
 										<span className="invisible group-hover:visible absolute z-10 w-96 p-2 mt-2 text-sm font-normal text-white bg-slate-800 rounded-lg shadow-lg">
-											<a href="#agent-workers" className="text-blue-400 hover:text-blue-500">Agent</a> workers are specialized workers that handle AI agent tasks and workflows. Each agent worker counts as 1 Compute Unit on the self-hosted plan and 0.5 Compute Unit on the cloud plan. Unless you are using agent workers for compute on a large machine, we will count them as 1 Compute Unit on cloud and 2 Compute Units on self-hosted.
+											<a href="#agent-workers" className="text-blue-400 hover:text-blue-500">Agent</a> workers are remote computing resources that can execute jobs from anywhere. Each agent worker counts as 1 Compute Unit on self-hosted if not used for compute, and 0.5 Compute Unit on cloud if not used for compute.
 										</span>
 									</span>
 								</h6>
