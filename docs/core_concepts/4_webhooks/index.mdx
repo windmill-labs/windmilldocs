@@ -72,7 +72,7 @@ For scripts, there is an additional **synchronous** webhook available that accep
 
 Be cautious with potentially long-running jobs in **synchronous** mode.
 
-<br/>
+<br />
 
 You can set a [max timeout for sync endpoints](../../advanced/18_instance_settings/index.mdx#max-timeout-for-sync-endpoints) at the instance-level.
 
@@ -209,7 +209,6 @@ export async function main(body: any) {
 
 Similarly to request headers, if the query args contain `raw=true`, then an additional argument will be added: `raw_string` which contains the entire json payload as a string (without any parsing). This is useful to verify the signature of the payload for example (discord require the endpoints to verify the signature for instance).
 
-
 #### Handling form data (file uploads)
 
 The webhook endpoints also accept `multipart/form-data`, useful for file uploads. The payload should be a `FormData` object, where each key corresponds to an argument of the script/flow.
@@ -222,10 +221,10 @@ Here's an example script for handling form data with a file field:
 <TabItem value="bun" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import { S3Object } from 'windmill-client'
+import { S3Object } from 'windmill-client';
 
 export async function main(mytextfield: string, myfilefield: S3Object[]) {
-	return myfilefield
+	return myfilefield;
 }
 ```
 
@@ -242,7 +241,6 @@ def main(mytextfield: str, myfilefield: List[wmill.S3Object]):
 
 </TabItem>
 </Tabs>
-
 
 :::warning
 A [workspace object storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) must be configured to accept form data payloads.
@@ -318,7 +316,7 @@ Similar to the above, for all sync run jobs endpoints, if the response contains 
 
 ```json
 {
-	"windmill_headers": {"X-Custom-Header": "foo"},
+	"windmill_headers": { "X-Custom-Header": "foo" },
 	"result": {
 		"Hello": "World"
 	}
@@ -398,13 +396,14 @@ For a script, delete [logs](../14_audit_logs/index.mdx), arguments and results a
 :::warning
 
 This settings ONLY applies to [synchronous](#synchronous) webhooks. If used individually, this script must be triggered using a synchronous endpoint to have the desired effect.
-<br/>
-The logs, arguments and results of the job will be completely deleted from Windmill once it is complete and the result has been returned.
-<br/>
+
+<br />
+The logs, arguments and results of the job will be completely deleted from Windmill once it is complete
+and the result has been returned.
+<br />
 The deletion is irreversible.
 
 :::
-
 
 ## SSE stream webhooks
 
@@ -416,6 +415,8 @@ The endpoints follow the same convention as classical webhooks, but use the base
 You can find the SSE Stream Webhook URL on the Detail page of each Script and Flow, under the Details and Triggers tab.
 They support both `GET` and `POST` requests.
 
+To get the stream updates of an existing job with SSE, use `/api/w/:workspace/job_u/getupdate_sse/:id` (pass query arg `?fast=true` for a new job to get fast polling at first)
+
 For flows, a stream will be returned if the last step is a script that returns a stream.
 
 The SSE stream returns JSON objects with the detailed shape available [here](../20_jobs/index.mdx#job-progress-event-response).
@@ -426,7 +427,7 @@ For the stream endpoint, you will mainly get the following events with different
 {
 	"type": "update",
 	"new_result_stream": "string", // string: new result stream data since last update
-	"stream_offset": 456, // integer: current result stream offset
+	"stream_offset": 456 // integer: current result stream offset
 }
 ```
 
@@ -449,6 +450,7 @@ Always use the `only_result` field to get the complete result at the end, as the
 Windmill supports generating an OpenAPI 3.1 specification that includes both HTTP routes and webhook triggers.
 
 Webhook endpoints included in the spec:
+
 - Are matched using filters you define
 - Include `summary` and `description` if available
 - Are automatically mapped to use **JWT Bearer authentication** in the spec
