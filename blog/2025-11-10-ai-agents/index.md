@@ -10,7 +10,7 @@ title: 'AI agent steps in Windmill flows'
 
 The rise of large language models has created a new paradigm for workflow automation: instead of predefining every branch and decision in your workflows, you can let an AI agent reason about which tools to use and orchestrate them dynamically based on context.
 
-AI agent steps in Windmill bring this capability to your workflows. Define the tools available, a Windmill script, or any tools exposed by an MCP server, and let the agent decide which to call, when to call them, and how to combine their results. The agent becomes a flexible orchestrator that adapts to each request rather than following a rigid script.
+AI agent steps in Windmill bring this capability to your workflows. Define the tools available, a Windmill script or any tools exposed by an MCP server. Then let the agent decide which to call, when to call them, and how to combine their results. The agent becomes a flexible orchestrator that adapts to each request rather than following a rigid script.
 
 This post explores what AI agent steps enable for Windmill users, then dives into two technical challenges we solved: making structured output work consistently across different AI providers, and maintaining MCP protocol compliance as the ecosystem matures.
 
@@ -39,7 +39,7 @@ Agents can maintain conversation history, remembering earlier messages and build
 ### Image support
 
 Modern AI models can both understand and generate images. AI agent steps support both: provide images as input for the agent to analyze, or have the agent generate images in response to your request.
-When agents generate images, they're automatically stored in your workspace's S3-compatible [object storage](/docs/core_concepts/object_storage_in_windmill). This means generated images are immediately available for subsequent workflow steps—no manual file handling required. Process them with Python, upload them to a CMS with TypeScript, or include them in notifications, all using standard Windmill workflows.
+When agents generate images, they're automatically stored in your workspace's S3-compatible [object storage](/docs/core_concepts/object_storage_in_windmill). This means generated images are immediately available for subsequent workflow steps, no manual file handling required. Process them with Python, upload them to a CMS with TypeScript, or include them in notifications, all using standard Windmill workflows.
 
 ![Image output](./image_output.png "Generate images seamlessly")
 
@@ -75,7 +75,7 @@ From the user's perspective, structured output works uniformly across all provid
 
 ### MCP protocol compliance
 
-Windmill uses the official [rmcp](https://github.com/modelcontextprotocol/rust-sdk) Rust crate for MCP support. This is a well-engineered implementation that strictly follows the MCP protocol specification, exactly as it should. Protocol compliance isn't just about following rules; it's about ensuring different implementations can work together reliably.
+Windmill uses the official [rmcp](https://github.com/modelcontextprotocol/rust-sdk) Rust crate for MCP support. This is a well-engineered implementation that strictly follows the MCP protocol specification, exactly as it should.
 
 However, MCP is still a young protocol. As the ecosystem develops, we've encountered servers that don't implement the specification precisely. These aren't malicious implementations, they're often early versions or experimental servers where the authors interpreted certain edge cases differently than the spec intended.
 
@@ -87,10 +87,9 @@ The types of issues that arise typically involve:
 - Subtle differences in message format expectations
 
 When Windmill connects to a non-compliant server, the strict protocol implementation in rmcp correctly rejects the connection rather than trying to work around the deviation.
-This is a bet on the ecosystem's long-term health. Protocols only work when implementations follow them consistently. By maintaining strict compliance, we provide clear error messages about what's wrong and create incentives for servers to fix protocol issues. As the MCP ecosystem matures, these compatibility problems should hopefully diminish.
+This is a bet on the ecosystem's long-term health. By maintaining strict compliance, we provide clear error messages about what's wrong and create incentives for servers to fix protocol issues. As the MCP ecosystem matures, these compatibility problems should hopefully diminish.
 
 ## A natural fit for workflow orchestration
-
 
 AI agent steps in Windmill aren't a separate system grafted onto the platform, they're a natural extension of what Windmill already does well. By building on Windmill's existing workflow engine, multi-language support, and schema-first design, we created a feature that feels native because it truly is.
 
