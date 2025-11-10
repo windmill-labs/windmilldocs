@@ -323,7 +323,8 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 				native: nativeWorkers / 8,
 				small: counts.small || 0,
 				standard: counts.standard || 0,
-				large: counts.large || 0
+				large: counts.large || 0,
+				agent: agentWorkers / 1
 			};
 		}
 	}
