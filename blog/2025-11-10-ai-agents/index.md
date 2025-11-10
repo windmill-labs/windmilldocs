@@ -4,6 +4,7 @@ authors: [farhadgoulamabasse, hugocasa]
 tags: ['ai', 'windmill', 'agents']
 description: 'Building AI agent steps in Windmill flows'
 title: 'AI agent steps in Windmill flows'
+image: './thumbnail.png'
 ---
 
 # AI agent steps in Windmill flows
