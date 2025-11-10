@@ -31,6 +31,7 @@ const DetailRow = ({ label, value, isSubItem, calculation, className = '' }: Det
 
 type Workers = {
 	native: number;
+	agent?: number;
 } & (
 	| {
 		workerGroups: Array<{ workers: number; memoryGB: number }>;  // For cloud
@@ -102,11 +103,12 @@ export function QuoteForm({
 			// Calculate total compute units with minimum of 2
 			const computeUnits = plan === 'cloud_ee'
 				? Math.max(2, (workers as { workerGroups: Array<{ workers: number; memoryGB: number }> })
-					.workerGroups.reduce((sum, group) => sum + (group.memoryGB/2 * group.workers), 0) + workers.native)
-				: Math.max(2, Math.ceil((workers as { small: number }).small / 2) + 
-					(workers as { standard: number }).standard + 
-					workers.native + 
-					(2 * (workers as { large: number }).large));
+					.workerGroups.reduce((sum, group) => sum + (group.memoryGB/2 * group.workers), 0) + workers.native + (workers.agent || 0))
+				: Math.max(2, Math.ceil((workers as { small: number }).small / 2) +
+					(workers as { standard: number }).standard +
+					workers.native +
+					(2 * (workers as { large: number }).large) +
+					(workers.agent || 0));
 
 			const seats = developers + Math.ceil(operators / 2);
 
@@ -156,11 +158,12 @@ export function QuoteForm({
 	const rawComputeUnits = plan === 'cloud_ee'
 		? (workers as { workerGroups: Array<{ workers: number; memoryGB: number }> }).workerGroups.reduce(
 			(sum, group) => sum + (group.memoryGB/2 * group.workers), 0
-		  ) + workers.native
-		: Math.ceil((workers as { small: number; standard: number; large: number }).small / 2) + 
-		  (workers as { small: number; standard: number; large: number }).standard + 
-		  workers.native + 
-		  (2 * (workers as { small: number; standard: number; large: number }).large);
+		  ) + workers.native + (workers.agent || 0)
+		: Math.ceil((workers as { small: number; standard: number; large: number }).small / 2) +
+		  (workers as { small: number; standard: number; large: number }).standard +
+		  workers.native +
+		  (2 * (workers as { small: number; standard: number; large: number }).large) +
+		  (workers.agent || 0);
 
 	const computeUnits = Math.max(2, rawComputeUnits);
 	const isProWithTooManyUnits = selectedOption === 'Pro' && computeUnits > 10;
@@ -272,13 +275,26 @@ export function QuoteForm({
 
 						{/* Show native workers for both plans */}
 						{workers.native > 0 && (
-							<DetailRow 
+							<DetailRow
 								key="Native workers"
 								label="Native workers"
 								isSubItem
 								calculation={{
 									left: workers.native * 8,
 									right: `${workers.native} CU`
+								}}
+							/>
+						)}
+
+						{/* Show agent workers for both plans */}
+						{workers.agent && workers.agent > 0 && (
+							<DetailRow
+								key="Agent workers"
+								label="Agent workers"
+								isSubItem
+								calculation={{
+									left: plan === 'cloud_ee' ? workers.agent * 2 : workers.agent,
+									right: `${workers.agent} CU`
 								}}
 							/>
 						)}
