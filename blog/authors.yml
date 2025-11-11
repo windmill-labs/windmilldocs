@@ -60,7 +60,7 @@ hugocasa:
   name: Hugo Casademont
   title: Founding Engineer
   url: https://github.com/hugocasa
-  image_url: https://github.com/hugocasa.png
+  image_url: '/contributors/hugo_casademont.png'
 sindresvendby:
   name: Sindre Svendby
   title: Software Engineer at Kahoot!
