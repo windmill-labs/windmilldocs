@@ -44,17 +44,25 @@ This post explores what AI agent steps enable for Windmill users, then dives int
 
 ### Tool integration
 
-Any Windmill [script](/docs/getting_started/scripts_quickstart) becomes a tool the AI agent can invoke. Write your tools in any of the 10+ languages Windmill supports—Python, TypeScript, Go, Rust, PHP, Bash, SQL, and more. The agent examines each tool's schema, understands its capabilities, and reasons about which tools to use based on the user's request. You can also use tools from the [Windmill Hub](https://hub.windmill.dev).
+Any Windmill [script](/docs/getting_started/scripts_quickstart) becomes a tool the AI agent can invoke. Write your tools in any of the 10+ languages Windmill supports—Python, TypeScript, Go, Rust, PHP, Bash, SQL, and more. You can also use tools from the [Windmill Hub](https://hub.windmill.dev).
+
+Because every Windmill script already defines its inputs through a JSON schema, they naturally become tool definitions that AI agents can understand. The agent examines each tool's schema, understands its capabilities and required parameters, then reasons about which tools to use based on the user's request. No separate tool registration or documentation needed—the schema that defines how a script works is the same schema that tells the agent what the tool does.
 
 ![Script tools](./script_tool.png "Define your tool in any language")
 
-### Conversational workflows
+**MCP integration**: Through [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro) support, agents can also connect to external MCP servers: file system browsers, database interfaces, API integrations, and custom business logic servers. This extends the agent beyond Windmill's internal capabilities to any MCP-compatible service.
 
-Enable Chat Mode in your [flow](/docs/flows/flow_editor), and Windmill transforms your workflow into a conversational experience. Instead of traditional form inputs, users interact through natural conversation.
+![MCP tool](./mcp.png "Connect to MCP servers")
 
-This works through two key mechanisms. Conversation memory keeps context across the entire interaction, the agent remembers earlier messages and builds on previous exchanges. Configure how much history to maintain, and the agent will recall relevant information throughout the conversation, understanding the broader context of what you're trying to accomplish rather than treating each message in isolation.
+### Triggering AI agent workflows
 
-Streaming makes the agent's work transparent. As the agent calls tools, processes results, and formulates responses, users can see real-time updates showing exactly what's happening. This visibility is particularly useful for complex workflows where the agent might call multiple tools sequentially, you can follow along rather than staring at a loading spinner.
+AI agent workflows can be triggered through multiple mechanisms. Use [webhooks](/docs/core_concepts/webhooks) or [HTTP endpoints](/docs/core_concepts/http_routing) to invoke agents programmatically from external systems. These triggers support both streaming and non-streaming modes, allowing you to choose whether to receive the agent's response incrementally or wait for the complete result.
+
+**Conversational workflows**: For interactive use cases, enable Chat Mode in your [flow](/docs/flows/flow_editor), and Windmill transforms your workflow into a conversational experience directly in the UI. Instead of traditional form inputs, users interact through natural conversation.
+
+This works through two key mechanisms. Conversation memory keeps context across the entire interaction—the agent remembers earlier messages and builds on previous exchanges. Configure how much history to maintain, and the agent will recall relevant information throughout the conversation, understanding the broader context of what you're trying to accomplish rather than treating each message in isolation.
+
+Streaming makes the agent's work transparent. As the agent calls tools, processes results, and formulates responses, users can see real-time updates showing exactly what's happening. This visibility is particularly useful for complex workflows where the agent might call multiple tools sequentially—you can follow along rather than staring at a loading spinner.
 
 The result is a workflow that feels truly conversational: the agent maintains context like a human would, and users can see its reasoning unfold in real-time.
 
@@ -80,7 +88,7 @@ The result is a workflow that feels truly conversational: the agent maintains co
 
 ### Multi-provider support and configuration
 
-Configure your AI agent with any AI provider: [OpenAI](https://openai.com/), [Anthropic](https://www.anthropic.com/), [Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview), [Mistral](https://mistral.ai/), [Google AI](https://ai.google.dev/models/gemini), [Groq](https://groq.com/), [Together AI](https://together.ai/), [OpenRouter](https://openrouter.ai/), or any custom or local endpoint you operate.
+Configure your AI agent with any [AI provider](/docs/core_concepts/ai_generation#models): OpenAI, Anthropic, Azure OpenAI, Mistral, Google AI, Groq, Together AI, OpenRouter, or any custom or local endpoint you operate.
 
 Fine-tune your agent's behavior with configuration options: set system prompts to guide how the agent approaches tasks, adjust temperature to control creativity versus consistency, and set maximum output tokens to manage costs.
 
@@ -91,10 +99,6 @@ Fine-tune your agent's behavior with configuration options: set system prompts t
 **Image support**: AI agent steps support images as both input and output. Provide images for the agent to analyze, or have the agent generate images in response to your request. Generated images are automatically stored in your workspace's S3-compatible [object storage](/docs/core_concepts/object_storage_in_windmill), making them immediately available for subsequent workflow steps.
 
 ![Image output](./image_output.png "Generate images seamlessly")
-
-**MCP integration**: Through [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro) support, agents can connect to external MCP servers: file system browsers, database interfaces, API integrations, and custom business logic servers. This extends the agent beyond Windmill's internal capabilities to any MCP-compatible service.
-
-![MCP tool](./mcp.png "Connect to MCP servers")
 
 ## Technical challenges
 
