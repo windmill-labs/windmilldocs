@@ -1,0 +1,149 @@
+---
+slug: ai-agents
+authors: [farhadgoulamabasse, hugocasa]
+tags: ['ai', 'windmill', 'agents']
+description: 'Implementing AI agent steps in Windmill flows: architecture decisions, multi-provider structured output handling, and MCP protocol compliance challenges.'
+title: 'AI agent steps in Windmill flows'
+image: './thumbnail.png'
+---
+
+import chatModeVideo from './chat_mode.mp4';
+import demoVideo from './demo.mp4';
+
+# AI agent steps in Windmill flows
+
+The rise of large language models has created a new paradigm for workflow automation: instead of predefining every branch and decision in your [workflows](/docs/flows/flow_editor), you can let an AI agent reason about which tools to use and orchestrate them dynamically based on context.
+
+[AI agent steps](/docs/core_concepts/ai_agents) in Windmill bring this capability to your workflows. Define the tools available, a Windmill [script](/docs/getting_started/scripts_quickstart) or any tools exposed by an MCP server. Then let the agent decide which to call, when to call them, and how to combine their results. The agent becomes a flexible orchestrator that adapts to each request rather than following a rigid script.
+
+This post explores how AI agent steps make sense in the specific context of Windmill, then dives into two technical challenges we solved: making structured output work consistently across different AI providers, and maintaining MCP protocol compliance as the ecosystem matures.
+
+<!--truncate-->
+
+<iframe
+    style={{ aspectRatio: '16/9', marginBottom: '1.25rem' }}
+    src="https://www.youtube.com/embed/8MSeZnaaCnQ?enablejsapi=1&rel=0&vq=hd1080"
+    title="YouTube video player"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-lg object-cover w-full dark:border-gray-800 my-6"
+    id="aiAgentsDemo"
+></iframe>
+
+## What AI agent steps bring to Windmill
+
+<video
+    controls
+    muted
+    loop
+    playsInline
+    className="w-full rounded-lg border-2 dark:border-gray-800 my-4"
+        onLoadedMetadata={(e) => {
+        e.currentTarget.playbackRate = 1.5;
+    }}
+    onPlay={(e) => {
+        e.currentTarget.playbackRate = 1.5;
+    }}
+
+>
+    <source src={demoVideo} />
+    Your browser does not support the video tag.
+    <a href={demoVideo}>Download the video</a>.
+</video>
+
+### Tool integration
+
+To sum up roughly, [workflows](/docs/flows/flow_editor) in Windmill are state machines represented as DAGs (Directed Acyclic Graphs) to compose scripts together. With AI agent steps, any Windmill [script](/docs/getting_started/scripts_quickstart) becomes a tool the AI agent can invoke. Write your tools in any of the 20+ [languages](//docs/getting_started/scripts_quickstart) Windmill supports - Python, TypeScript, Go, Rust, PHP, Bash, SQL, and more. You can also use tools from the [Windmill Hub](https://hub.windmill.dev).
+
+Because every Windmill script already defines its inputs through a [JSON schema](/docs/core_concepts/json_schema_and_parsing), they naturally become tool definitions that AI agents can understand. The agent examines each tool's schema, understands its capabilities and required parameters, then reasons about which tools to use based on the user's request. No separate tool registration or documentation needed - the schema that defines how a script works is the same schema that tells the agent what the tool does.
+
+![Script tools](./script_tool.png "Define your tool in any language")
+
+**MCP integration**: Through [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro) support, agents can also connect to external MCP servers: file system browsers, database interfaces, API integrations, and custom business logic servers. This extends the agent beyond Windmill's internal capabilities to any MCP-compatible service.
+
+![MCP tool](./mcp.png "Connect to MCP servers")
+
+### Triggering AI agent workflows
+
+AI agent workflows can be [triggered](/docs/getting_started/triggers) through multiple mechanisms. Use [webhooks](/docs/core_concepts/webhooks) or [HTTP endpoints](/docs/core_concepts/http_routing) to invoke agents programmatically from external systems. These triggers support both streaming and non-streaming modes, allowing you to choose whether to receive the agent's response incrementally or wait for the complete result.
+
+**Conversational workflows**: For interactive use cases, enable [Chat Mode](/docs/core_concepts/ai_agents#chat-mode) in your [flow](/docs/flows/flow_editor), and Windmill transforms your workflow into a conversational experience directly in the UI. Instead of traditional form inputs, users interact through natural conversation.
+
+This works through two key mechanisms. Conversation memory keeps context across the entire interaction - the agent remembers earlier messages and builds on previous exchanges. Configure how much history to maintain, and the agent will recall relevant information throughout the conversation, understanding the broader context of what you're trying to accomplish rather than treating each message in isolation.
+
+Streaming makes the agent's work transparent. As the agent calls tools, processes results, and formulates responses, users can see real-time updates showing exactly what's happening. This visibility is particularly useful for complex workflows where the agent might call multiple tools sequentially - you can follow along rather than staring at a loading spinner.
+
+The result is a workflow that feels truly conversational: the agent maintains context like a human would, and users can see its reasoning unfold in real-time.
+
+<video
+    controls
+    muted
+    loop
+    playsInline
+    className="w-full rounded-lg border-2 dark:border-gray-800 my-4"
+        onLoadedMetadata={(e) => {
+        e.currentTarget.playbackRate = 1.5;
+    }}
+    onPlay={(e) => {
+        e.currentTarget.playbackRate = 1.5;
+    }}
+
+>
+    <source src={chatModeVideo} />
+    Your browser does not support the video tag.
+    <a href={chatModeVideo}>Download the video</a>.
+</video>
+
+### Multi-provider support and configuration
+
+Configure your AI agent with any [AI provider](/docs/core_concepts/ai_generation#models): [OpenAI](https://platform.openai.com/docs/models), [Anthropic](https://docs.anthropic.com/en/docs/about-claude/models/all-models), [Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models), [Mistral](https://mistral.ai/technology/#models), [Google AI](https://ai.google.dev/models/gemini), [Groq](https://console.groq.com/docs/models), [Together AI](https://docs.together.ai/docs/serverless-models), [OpenRouter](https://openrouter.ai/models), or any custom or local endpoint you operate.
+
+Fine-tune your agent's behavior with configuration options: set system prompts to guide how the agent approaches tasks, adjust temperature to control creativity versus consistency, and set maximum output tokens to manage costs.
+
+You can find the full documentation [here](/docs/core_concepts/ai_agents).
+
+### Additional capabilities
+
+**Structured output**: Conversational text is useful, but sometimes you need data in a specific format that downstream systems can consume reliably. With [JSON schema](/docs/core_concepts/ai_agents#output_schema-json-schema) validation, you can ensure the AI's response conforms to a precise structure, returning a standardized object rather than free-form text.
+
+**Image support**: AI agent steps support [images](/docs/core_concepts/ai_agents#user_images-optional) as both input and output. Provide images for the agent to analyze, or have the agent generate images in response to your request. Generated images are automatically stored in your workspace's S3-compatible [object storage](/docs/core_concepts/object_storage_in_windmill), making them immediately available for subsequent workflow steps.
+
+![Image output](./image_output.png "Generate images seamlessly")
+
+## Technical challenges
+
+Building AI agent steps meant solving real technical challenges. Two stand out: making [structured output](#structured-output-across-providers) work consistently across providers with different capabilities, and maintaining [MCP protocol compliance](#mcp-protocol-compliance) in a maturing ecosystem.
+
+### Structured output across providers
+
+Supporting multiple AI providers reveals an ongoing challenge: many providers claim OpenAI compatibility, but real-world differences require effort to handle. Structured output illustrates this well.
+
+Most providers support structured output through a response_format parameter. You specify a JSON schema, and the model ensures its response conforms to that structure. This works straightforwardly for OpenAI, Mistral, Google AI, and several other providers.
+
+Anthropic's models don't support response_format. Rather than limiting functionality for Anthropic users, we implemented a [workaround](https://github.com/windmill-labs/windmill/pull/6515): define a special tool where the tool's input schema matches the desired output structure. The agent calls this tool as its final action, and the tool's arguments become the structured response.
+
+From the user's perspective, structured output works uniformly across all providers. The implementation differs behind the scenes, but the interface remains consistent. This approach lets us support providers with different capabilities while maintaining a unified experience.
+
+### MCP protocol compliance
+
+Windmill uses the official [rmcp](https://github.com/modelcontextprotocol/rust-sdk) Rust crate for MCP support. This is a well-engineered implementation that strictly follows the MCP protocol specification, exactly as it should.
+
+However, MCP is still a young protocol. As the ecosystem develops, we've encountered servers that don't implement the specification precisely. These aren't malicious implementations, they're often early versions or experimental servers where the authors interpreted certain edge cases differently than the spec intended.
+
+The types of issues that arise typically involve:
+
+- Incorrect HTTP status codes in error responses
+- Deviations in how servers signal unsupported features
+- Inconsistent handling of optional protocol elements
+- Subtle differences in message format expectations
+
+When Windmill connects to a non-compliant server, the strict protocol implementation in rmcp correctly rejects the connection rather than trying to work around the deviation.
+This is a bet on the ecosystem's long-term health. By maintaining strict compliance, we provide clear error messages about what's wrong and create incentives for servers to fix protocol issues. As the MCP ecosystem matures, these compatibility problems should hopefully diminish.
+
+## A natural fit for workflow orchestration
+
+AI agent steps in Windmill aren't a separate system grafted onto the platform, they're a natural extension of what Windmill already does well. By building on Windmill's existing [workflow engine](/docs/flows/flow_editor), multi-language support, and schema-first design, we created a feature that feels native because it truly is.
+
+The result is a system where AI agents orchestrate workflows the same way humans do: by calling tools, processing results, and making decisions based on context. The tools happen to be Windmill [scripts](/docs/getting_started/scripts_quickstart) in any language. The execution happens through the same job queue that runs every other workflow. The storage uses the same [S3 integration](/docs/core_concepts/object_storage_in_windmill) that handles all large artifacts.
+
+As the AI ecosystem evolves, Windmill's AI agent steps will evolve with it. Not because we're constantly rebuilding, but because we built on solid foundations from the start. If you want to help us build features like this, [we're hiring](/careers).
