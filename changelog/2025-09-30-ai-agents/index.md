@@ -3,7 +3,7 @@ slug: ai-agents
 version: v1.550.0
 title: AI Agents
 tags: ['AI Agents', 'Windmill AI', 'Flow editor', 'Streaming', 'Tools']
-video: /videos/ai_agent_step.mp4
+video: https://www.youtube.com/watch?v=8MSeZnaaCnQ
 description: Integrate AI agents directly into your Windmill flows with comprehensive support for all major AI providers, multimodal capabilities, streaming responses, tool integration, and structured outputs. AI agents can process text and images, call Windmill scripts as tools, stream responses in real-time, and output structured data following JSON schemas.
 features:
   [
