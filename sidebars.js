@@ -1010,6 +1010,7 @@ const sidebars = {
 				},
 				'advanced/browser_automation/index',
 				'advanced/docker/index',
+				'advanced/security_isolation/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',

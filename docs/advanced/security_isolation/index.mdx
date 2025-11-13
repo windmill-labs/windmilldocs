@@ -8,13 +8,14 @@ Windmill workers execute user-provided code in various languages. To protect the
 
 1. **PID Namespace Isolation** - Process memory and environment protection (disabled by default, requires configuration)
 2. **NSJAIL Sandboxing** - Filesystem, network, and resource isolation (optional, requires special image)
-3. **Worker Groups** - Physical separation of workers for different workloads
+3. **Agent Workers** - Workers without direct database access, communicating via the API
+4. **Worker Groups** - Logical separation of workers that can be used to run workers on separate clusters with different network/resource access
 
 ## Why Isolation Matters
 
 Without proper isolation, user scripts could:
-- Access parent worker process memory to extract `DATABASE_URL` and other credentials
-- Read environment variables from parent processes via `/proc/$pid/environ`
+- Access parent worker process memory to extract credentials and secrets
+- Read environment variables from parent processes
 - Interfere with other jobs running on the same worker
 - Access files outside their job directory
 - Make unrestricted network connections
@@ -22,9 +23,9 @@ Without proper isolation, user scripts could:
 
 :::warning Important Security Notice
 
-**Job isolation is disabled by default** in Windmill. Both NSJAIL and PID namespace isolation must be manually configured. Without isolation, malicious scripts can access sensitive data like `DATABASE_URL` and other environment variables from the worker process.
+**Job isolation is disabled by default** in Windmill. Both NSJAIL and PID namespace isolation must be manually configured. Without isolation, scripts can access sensitive data from the worker process memory and environment variables.
 
-**For production deployments, you must enable at least one isolation method** (PID namespace or NSJAIL) to protect your infrastructure. See the [Recommended Configurations](#recommended-configurations) section below.
+**For production deployments, you should enable at least one isolation method** (PID namespace or NSJAIL) to protect your infrastructure. See the [Recommended Configurations](#recommended-configurations) section below.
 
 :::
 
@@ -43,7 +44,6 @@ Without proper isolation, user scripts could:
 NSJAIL is **disabled by default** because:
 - The default Windmill images do not include the nsjail binary
 - It requires using a special `-nsjail` tagged image
-- PID namespace isolation provides basic security out-of-the-box
 
 ### Enabling NSJAIL
 
@@ -68,11 +68,21 @@ To use NSJAIL sandboxing, you need both:
 - You need resource limits per job (CPU, memory)
 - You're running untrusted code and need defense-in-depth
 
+### NSJAIL Configuration
+
+NSJAIL behavior is controlled by configuration files for each language. You can view the default configurations:
+
+- [Python configuration](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-worker/nsjail/run.python3.config.proto)
+- [Deno configuration](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-worker/nsjail/run.deno.config.proto)
+- [Bash configuration](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-worker/nsjail/run.bash.config.proto)
+- [All language configs](https://github.com/windmill-labs/windmill/tree/main/backend/windmill-worker/nsjail)
+
+These configurations control resource limits, mount points, network isolation, and other security settings. The configs are embedded into the Windmill binary at compile time.
+
 **Without NSJAIL (default):**
 - Jobs have full filesystem access under the worker's user permissions
 - Jobs can read any files the worker can read
 - You can still enable PID namespace isolation separately for process/memory protection (see below)
-- **Both NSJAIL and PID isolation are disabled by default** - you must explicitly enable at least one for security
 
 ## PID Namespace Isolation
 
@@ -84,22 +94,9 @@ PID (Process ID) namespace isolation creates a separate process namespace for ea
 - Accessing parent environment variables via `/proc/$pid/environ`
 - Accessing parent file descriptors via `/proc/$pid/fd`
 
-### The Attack Scenario
+### Why PID Isolation Matters
 
-Without PID isolation, a malicious job can extract credentials:
-
-```bash
-# Find the windmill worker process
-windmill_pid=$(ps aux | grep windmill | grep -v grep | awk '{print $2}' | head -1)
-
-# Extract DATABASE_URL from environment
-cat /proc/$windmill_pid/environ | tr '\0' '\n' | grep DATABASE_URL
-
-# Or extract from process memory
-dd if=/proc/$windmill_pid/mem bs=4096 skip=$offset count=1000 | strings | grep DATABASE_URL
-```
-
-With PID isolation, the job runs in its own namespace and cannot see the parent process.
+With PID isolation, the job runs in its own namespace and cannot see the parent worker process, preventing access to the worker's memory and environment variables.
 
 ### Enabling PID Namespace Isolation
 
@@ -116,7 +113,7 @@ To enable PID namespace isolation, you need to:
      privileged: true
    ```
 
-**Important**: PID isolation is **disabled by default** in the main docker-compose.yml (both settings are commented out). You must manually uncomment these settings to enable it. The `local_docker/docker-compose.yml` file shows an example with isolation enabled.
+**Important**: PID isolation is **disabled by default** in the main docker-compose.yml (both settings are commented out). You must manually uncomment these settings to enable it.
 
 #### Step-by-Step Enablement
 
@@ -202,7 +199,7 @@ Flags: --user --map-root-user --pid --fork --mount-proc
 Solutions:
 • Check if user namespaces are enabled: 'sysctl kernel.unprivileged_userns_clone'
 • For Docker: Requires 'privileged: true' in docker-compose for --mount-proc flag
-• For Kubernetes: Requires 'privileged: true' in securityContext for --mount-proc flag
+• For Kubernetes/Helm: Requires 'privileged: true' in securityContext for --mount-proc flag
 • Try different flags via UNSHARE_ISOLATION_FLAGS env var (remove --mount-proc for unprivileged)
 • Alternative: Use NSJAIL instead
 • Disable: Set ENABLE_UNSHARE_PID=false
@@ -219,7 +216,22 @@ Solutions:
 | Docker Desktop (Linux) | ✅ Yes | Works in Linux containers with privileged mode |
 | Docker Desktop (Windows) | ⚠️ No | Use agent workers without direct DB access |
 | Docker Desktop (macOS) | ⚠️ No | Set `ENABLE_UNSHARE_PID=false` for macOS workers |
-| Kubernetes | ✅ Yes | Requires privileged: true in securityContext |
+| Kubernetes / Helm | ✅ Yes | Requires privileged: true in securityContext |
+
+## Agent Workers
+
+Another approach to isolation is using [agent workers](/docs/core_concepts/agent_workers). Agent workers:
+- Do not have direct database access
+- Communicate with the Windmill server only via the API
+- Cannot access database credentials or other workers' data
+- Provide network-level isolation from sensitive infrastructure
+
+This approach is particularly useful when:
+- You want to run workers in untrusted environments
+- You need workers in different network zones without database access
+- You want an additional layer of security beyond process isolation
+
+Agent workers can be combined with PID namespace isolation or NSJAIL for defense-in-depth.
 
 ## Isolation Comparison
 
@@ -231,10 +243,6 @@ Solutions:
 | Process visibility | ✅ Hidden | ✅ Hidden | ❌ Visible |
 | Environment protection | ✅ Yes | ✅ Yes | ❌ No |
 | Resource limits | ✅ Yes | ❌ No | ❌ No |
-| Performance overhead | ~5-10ms | ~1-2ms | None |
-| Setup complexity | High (requires special image) | Medium (requires privileged mode) | None |
-| Windows support | ❌ No | ❌ No | ✅ Yes |
-| Enabled by default | ❌ No | ❌ No | ✅ Yes |
 
 ### Isolation Hierarchy
 
@@ -274,15 +282,14 @@ Provides comprehensive isolation including filesystem, network, and resource lim
 
 ## Security Best Practices
 
-1. **Enable isolation before production** - Isolation is **disabled by default**. You must manually enable either NSJAIL or PID isolation before deploying to production
+1. **Enable isolation before production** - Isolation is **disabled by default**. You should manually enable either NSJAIL or PID isolation before deploying to production
 2. **Use PID isolation at minimum** - At a minimum, enable PID namespace isolation with `ENABLE_UNSHARE_PID=true` and `privileged: true`
 3. **Consider NSJAIL for untrusted code** - Use NSJAIL if you run code from untrusted sources or need filesystem isolation
-4. **Test your isolation** - Verify isolation is working by checking worker logs for "NSJAIL sandboxing available" or "PID isolation enabled" messages
-5. **Monitor worker status** - Use the workers page to verify isolation status of all workers
-6. **Rotate credentials if disabled** - If you ever disable isolation, rotate `DATABASE_URL` and other secrets immediately
-7. **Use worker groups** - Separate untrusted workloads onto dedicated workers with stricter isolation
-8. **Keep systems updated** - Ensure kernel and util-linux are up to date
-9. **Review user permissions** - Limit who can create scripts in your Windmill instance
+4. **Consider agent workers** - For sensitive environments, use [agent workers](/docs/core_concepts/agent_workers) that don't have direct database access and communicate only via the API
+5. **Test your isolation** - Verify isolation is working by checking worker logs for isolation status messages
+6. **Use worker groups** - Separate untrusted workloads onto dedicated workers with stricter isolation, or run workers on separate clusters with different network/resource access
+7. **Keep systems updated** - Ensure kernel and util-linux are up to date
+8. **Review user permissions** - Limit who can create scripts in your Windmill instance
 
 ## Troubleshooting
 
@@ -323,7 +330,7 @@ windmill_worker:
 ```
 Note: Without `--mount-proc`, jobs may still be able to see host processes in /proc.
 
-### Kubernetes: unshare fails
+### Kubernetes/Helm: unshare fails
 
 **Cause**: The `--mount-proc` flag requires privileged mode.
 
@@ -339,6 +346,8 @@ env:
   - name: ENABLE_UNSHARE_PID
     value: "true"
 ```
+
+For Helm deployments, set the appropriate values to enable privileged mode and the environment variable.
 
 ### Windows workers fail to start
 
@@ -357,7 +366,7 @@ env:
 
 ## Related Documentation
 
-- [Worker Groups](/docs/core_concepts/worker_groups) - Physical worker separation
+- [Worker Groups](/docs/core_concepts/worker_groups) - Logical worker separation
 - [Self-Hosting](/docs/advanced/self_host) - Deployment configuration
 - [Environment Variables](/docs/core_concepts/environment_variables) - All worker configuration options
 - [Docker](/docs/advanced/docker) - Container-based execution
