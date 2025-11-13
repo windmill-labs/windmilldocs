@@ -466,6 +466,44 @@ Only tags for jobs that have been delayed by more than 3 seconds in the last 14 
 
 ![Queue Metrics](./queue_metrics_alert.png 'Queue Metrics Alert')
 
+## Process isolation and security
+
+Windmill workers provide multiple layers of process isolation to protect your infrastructure from potentially malicious or buggy code execution.
+
+### Isolation mechanisms
+
+Windmill supports two primary isolation mechanisms that can be used independently or together:
+
+1. **PID namespace isolation** (enabled by default in docker-compose) - Protects process memory and environment variables
+2. **NSJAIL sandboxing** (optional, requires special image) - Provides filesystem, network, and resource isolation
+
+### Environment variables
+
+Configure worker isolation through these environment variables:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ENABLE_UNSHARE_PID` | `false` (true in docker-compose) | Enable PID namespace isolation using Linux unshare |
+| `DISABLE_NSJAIL` | `true` | Enable NSJAIL sandboxing (requires `-nsjail` image, set to `false` to enable) |
+| `UNSHARE_ISOLATION_FLAGS` | `--user --map-root-user --pid --fork --mount-proc` | Customize unshare isolation flags |
+
+### Default configuration
+
+The official docker-compose enables PID namespace isolation by default:
+
+```yaml
+windmill_worker:
+  environment:
+    - DATABASE_URL=${DATABASE_URL}
+    - MODE=worker
+    - WORKER_GROUP=default
+    - ENABLE_UNSHARE_PID=true # Enabled by default
+```
+
+PID namespace isolation prevents jobs from accessing parent process memory and environment variables, protecting sensitive credentials like `DATABASE_URL`.
+
+For complete documentation on security isolation, see the [Security and Process Isolation](/docs/advanced/security_isolation) guide.
+
 ## Workers and compute units
 
 Even though Windmill's architecture relies on workers, Windmill's [pricing](/pricing) is based on compute units. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory counts as 2 compute units. On self-hosted plans, any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). Each worker can run up to ~26M jobs per month (at 100ms per job).

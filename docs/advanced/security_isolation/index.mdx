@@ -1,0 +1,363 @@
+# Security and Process Isolation
+
+Windmill provides multiple layers of process isolation to protect your infrastructure from potentially malicious or buggy code execution. This page covers the isolation mechanisms available and how to configure them.
+
+## Overview
+
+Windmill workers execute user-provided code in various languages. To protect the worker process and the underlying infrastructure, Windmill implements multiple isolation strategies:
+
+1. **PID Namespace Isolation** - Process memory and environment protection (disabled by default, requires configuration)
+2. **NSJAIL Sandboxing** - Filesystem, network, and resource isolation (optional, requires special image)
+3. **Worker Groups** - Physical separation of workers for different workloads
+
+## Why Isolation Matters
+
+Without proper isolation, user scripts could:
+- Access parent worker process memory to extract `DATABASE_URL` and other credentials
+- Read environment variables from parent processes via `/proc/$pid/environ`
+- Interfere with other jobs running on the same worker
+- Access files outside their job directory
+- Make unrestricted network connections
+- Consume unlimited system resources
+
+:::warning Important Security Notice
+
+**Job isolation is disabled by default** in Windmill. Both NSJAIL and PID namespace isolation must be manually configured. Without isolation, malicious scripts can access sensitive data like `DATABASE_URL` and other environment variables from the worker process.
+
+**For production deployments, you must enable at least one isolation method** (PID namespace or NSJAIL) to protect your infrastructure. See the [Recommended Configurations](#recommended-configurations) section below.
+
+:::
+
+## NSJAIL Sandboxing
+
+### What is NSJAIL?
+
+[NSJAIL](https://github.com/google/nsjail) is a process isolation tool from Google that provides:
+- **Filesystem isolation** - Jobs can only access their job directory and explicitly mounted paths
+- **Network restrictions** - Optional network isolation
+- **Resource limits** - CPU, memory, and process limits
+- **User namespace** - Jobs run as unprivileged users even when worker runs as root
+
+### When is NSJAIL Used?
+
+NSJAIL is **disabled by default** because:
+- The default Windmill images do not include the nsjail binary
+- It requires using a special `-nsjail` tagged image
+- PID namespace isolation provides basic security out-of-the-box
+
+### Enabling NSJAIL
+
+To use NSJAIL sandboxing, you need both:
+
+1. **Use the nsjail image** - Switch to an image with nsjail pre-installed:
+   ```yaml
+   # In docker-compose.yml or your deployment config
+   image: ghcr.io/windmill-labs/windmill-ee-nsjail
+   # or for community edition
+   image: ghcr.io/windmill-labs/windmill-nsjail
+   ```
+
+2. **Enable NSJAIL** - Set the environment variable:
+   ```bash
+   DISABLE_NSJAIL=false
+   ```
+
+**When to enable NSJAIL:**
+- You need filesystem isolation beyond PID namespaces
+- You want to restrict network access from jobs
+- You need resource limits per job (CPU, memory)
+- You're running untrusted code and need defense-in-depth
+
+**Without NSJAIL (default):**
+- Jobs have full filesystem access under the worker's user permissions
+- Jobs can read any files the worker can read
+- You can still enable PID namespace isolation separately for process/memory protection (see below)
+- **Both NSJAIL and PID isolation are disabled by default** - you must explicitly enable at least one for security
+
+## PID Namespace Isolation
+
+### What is PID Namespace Isolation?
+
+PID (Process ID) namespace isolation creates a separate process namespace for each job using Linux's `unshare` command. This prevents jobs from:
+- Seeing parent worker processes in `ps` output
+- Reading parent process memory via `/proc/$pid/mem`
+- Accessing parent environment variables via `/proc/$pid/environ`
+- Accessing parent file descriptors via `/proc/$pid/fd`
+
+### The Attack Scenario
+
+Without PID isolation, a malicious job can extract credentials:
+
+```bash
+# Find the windmill worker process
+windmill_pid=$(ps aux | grep windmill | grep -v grep | awk '{print $2}' | head -1)
+
+# Extract DATABASE_URL from environment
+cat /proc/$windmill_pid/environ | tr '\0' '\n' | grep DATABASE_URL
+
+# Or extract from process memory
+dd if=/proc/$windmill_pid/mem bs=4096 skip=$offset count=1000 | strings | grep DATABASE_URL
+```
+
+With PID isolation, the job runs in its own namespace and cannot see the parent process.
+
+### Enabling PID Namespace Isolation
+
+To enable PID namespace isolation, you need to:
+
+1. **Set the environment variable** on your worker:
+   ```bash
+   ENABLE_UNSHARE_PID=true
+   ```
+
+2. **Enable privileged mode** in docker-compose.yml (required for the default `--mount-proc` flag):
+   ```yaml
+   windmill_worker:
+     privileged: true
+   ```
+
+**Important**: PID isolation is **disabled by default** in the main docker-compose.yml (both settings are commented out). You must manually uncomment these settings to enable it. The `local_docker/docker-compose.yml` file shows an example with isolation enabled.
+
+#### Step-by-Step Enablement
+
+In your `docker-compose.yml`, find the worker service and uncomment these lines:
+
+```yaml
+windmill_worker:
+  image: ${WM_IMAGE}
+  # ... other settings ...
+
+  # Uncomment these two lines:
+  # privileged: true              # <- Uncomment this
+  environment:
+    - DATABASE_URL=${DATABASE_URL}
+    - MODE=worker
+    - WORKER_GROUP=default
+    # - ENABLE_UNSHARE_PID=true    # <- Uncomment this
+```
+
+After uncommenting:
+```yaml
+windmill_worker:
+  image: ${WM_IMAGE}
+  privileged: true              # Now enabled
+  environment:
+    - DATABASE_URL=${DATABASE_URL}
+    - MODE=worker
+    - WORKER_GROUP=default
+    - ENABLE_UNSHARE_PID=true    # Now enabled
+```
+
+### Requirements
+
+- **Linux only** - Not supported on Windows or macOS
+- **util-linux package** - Provides the `unshare` command (usually pre-installed)
+- **Privileged mode** - Required in Docker for the default `--mount-proc` flag
+- **User namespaces** - Must be enabled in kernel (check with `sysctl kernel.unprivileged_userns_clone` on Debian/Ubuntu)
+
+### Configuration
+
+#### Default Isolation Flags
+
+By default, PID isolation uses these flags:
+
+```bash
+UNSHARE_ISOLATION_FLAGS="--user --map-root-user --pid --fork --mount-proc"
+```
+
+**Important**: While `--user --map-root-user` enables unprivileged user namespaces, the `--mount-proc` flag **requires `privileged: true` in Docker**. This is necessary to provide an isolated /proc filesystem.
+
+What each flag does:
+- `--user --map-root-user` - Creates user namespace and maps current user to root inside it
+- `--pid --fork` - Creates isolated PID namespace
+- `--mount-proc` - Mounts isolated /proc filesystem (requires privileged mode in Docker)
+
+#### Custom Flags
+
+You can customize the isolation flags:
+
+```bash
+# More restrictive: add network isolation (still requires privileged mode)
+UNSHARE_ISOLATION_FLAGS="--user --map-root-user --pid --fork --mount-proc --net"
+
+# Truly unprivileged: without --mount-proc (no privileged mode needed)
+# Note: Less isolated /proc - jobs can still see host processes in /proc
+UNSHARE_ISOLATION_FLAGS="--user --map-root-user --pid --fork"
+
+# Alternative: Skip user namespace (requires privileged mode)
+UNSHARE_ISOLATION_FLAGS="--pid --fork --mount-proc"
+```
+
+**Recommendation**: Use the default flags with `privileged: true` for best security. Only use truly unprivileged mode if you cannot enable privileged mode and understand the security tradeoffs.
+
+### Failure Behavior
+
+If `ENABLE_UNSHARE_PID=true` but unshare is unavailable or fails, **the worker will panic at startup** with a detailed error message:
+
+```
+ENABLE_UNSHARE_PID is set but unshare test failed.
+Error: unshare: Operation not permitted
+Flags: --user --map-root-user --pid --fork --mount-proc
+
+Solutions:
+• Check if user namespaces are enabled: 'sysctl kernel.unprivileged_userns_clone'
+• For Docker: Requires 'privileged: true' in docker-compose for --mount-proc flag
+• For Kubernetes: Requires 'privileged: true' in securityContext for --mount-proc flag
+• Try different flags via UNSHARE_ISOLATION_FLAGS env var (remove --mount-proc for unprivileged)
+• Alternative: Use NSJAIL instead
+• Disable: Set ENABLE_UNSHARE_PID=false
+```
+
+**Note**: This fail-fast behavior only occurs when `ENABLE_UNSHARE_PID=true`. If unset or false (the default), the worker starts normally without isolation.
+
+### Platform Support
+
+| Platform | Supported | Notes |
+|----------|-----------|-------|
+| Linux (docker-compose) | ✅ Yes | Requires manual configuration (disabled by default) |
+| Linux (bare metal) | ✅ Yes | Requires util-linux package |
+| Docker Desktop (Linux) | ✅ Yes | Works in Linux containers with privileged mode |
+| Docker Desktop (Windows) | ⚠️ No | Use agent workers without direct DB access |
+| Docker Desktop (macOS) | ⚠️ No | Set `ENABLE_UNSHARE_PID=false` for macOS workers |
+| Kubernetes | ✅ Yes | Requires privileged: true in securityContext |
+
+## Isolation Comparison
+
+| Feature | NSJAIL | PID Namespace | None |
+|---------|--------|---------------|------|
+| Filesystem isolation | ✅ Full | ❌ No | ❌ No |
+| Network isolation | ⚠️ Optional | ❌ No | ❌ No |
+| Memory protection | ✅ Yes | ✅ Yes | ❌ No |
+| Process visibility | ✅ Hidden | ✅ Hidden | ❌ Visible |
+| Environment protection | ✅ Yes | ✅ Yes | ❌ No |
+| Resource limits | ✅ Yes | ❌ No | ❌ No |
+| Performance overhead | ~5-10ms | ~1-2ms | None |
+| Setup complexity | High (requires special image) | Medium (requires privileged mode) | None |
+| Windows support | ❌ No | ❌ No | ✅ Yes |
+| Enabled by default | ❌ No | ❌ No | ✅ Yes |
+
+### Isolation Hierarchy
+
+When multiple isolation methods are available, Windmill uses them in this priority order:
+
+1. **NSJAIL** (if nsjail binary available and `DISABLE_NSJAIL=false`) - Provides comprehensive isolation
+2. **PID Namespace** (if `ENABLE_UNSHARE_PID=true` and unshare available) - Provides process isolation
+3. **None** (if neither enabled or available) - No isolation
+
+**Important**: NSJAIL and PID namespace isolation are **not used simultaneously**. If NSJAIL is available and enabled, it takes precedence and PID namespace isolation is not used.
+
+## Recommended Configurations
+
+### PID namespace isolation (recommended for production)
+
+To enable PID namespace isolation, add to your docker-compose.yml:
+
+```yaml
+windmill_worker:
+  privileged: true
+  environment:
+    - ENABLE_UNSHARE_PID=true
+```
+
+**Why enable this**: Protects worker credentials from being accessed by jobs through process memory and environment variables. This is a critical security feature for production deployments.
+
+### NSJAIL sandboxing (maximum security)
+
+```yaml
+# Use the nsjail image
+image: ghcr.io/windmill-labs/windmill-ee-nsjail
+environment:
+  - DISABLE_NSJAIL=false
+```
+
+Provides comprehensive isolation including filesystem, network, and resource limits.
+
+## Security Best Practices
+
+1. **Enable isolation before production** - Isolation is **disabled by default**. You must manually enable either NSJAIL or PID isolation before deploying to production
+2. **Use PID isolation at minimum** - At a minimum, enable PID namespace isolation with `ENABLE_UNSHARE_PID=true` and `privileged: true`
+3. **Consider NSJAIL for untrusted code** - Use NSJAIL if you run code from untrusted sources or need filesystem isolation
+4. **Test your isolation** - Verify isolation is working by checking worker logs for "NSJAIL sandboxing available" or "PID isolation enabled" messages
+5. **Monitor worker status** - Use the workers page to verify isolation status of all workers
+6. **Rotate credentials if disabled** - If you ever disable isolation, rotate `DATABASE_URL` and other secrets immediately
+7. **Use worker groups** - Separate untrusted workloads onto dedicated workers with stricter isolation
+8. **Keep systems updated** - Ensure kernel and util-linux are up to date
+9. **Review user permissions** - Limit who can create scripts in your Windmill instance
+
+## Troubleshooting
+
+### Worker fails to start with "unshare: Operation not permitted"
+
+**Cause**: User namespaces are disabled in the kernel.
+
+**Solution**:
+```bash
+# Check if user namespaces are enabled
+sysctl kernel.unprivileged_userns_clone
+
+# Enable if disabled (requires root)
+sysctl -w kernel.unprivileged_userns_clone=1
+
+# Make permanent (add to /etc/sysctl.conf)
+echo "kernel.unprivileged_userns_clone=1" >> /etc/sysctl.conf
+```
+
+### Docker container: "unshare: unshare failed: Operation not permitted"
+
+**Cause**: The `--mount-proc` flag requires privileged mode in Docker.
+
+**Solution**: Enable privileged mode in docker-compose.yml:
+```yaml
+windmill_worker:
+  privileged: true
+  environment:
+    - ENABLE_UNSHARE_PID=true
+```
+
+**Alternative**: If you cannot use privileged mode, remove `--mount-proc` from the flags (less secure):
+```yaml
+windmill_worker:
+  environment:
+    - ENABLE_UNSHARE_PID=true
+    - UNSHARE_ISOLATION_FLAGS=--user --map-root-user --pid --fork
+```
+Note: Without `--mount-proc`, jobs may still be able to see host processes in /proc.
+
+### Kubernetes: unshare fails
+
+**Cause**: The `--mount-proc` flag requires privileged mode.
+
+**Solution**: Enable privileged mode in pod spec:
+```yaml
+securityContext:
+  privileged: true
+```
+
+And set the environment variable:
+```yaml
+env:
+  - name: ENABLE_UNSHARE_PID
+    value: "true"
+```
+
+### Windows workers fail to start
+
+**Cause**: PID isolation is Linux-only.
+
+**Solution**: Set `ENABLE_UNSHARE_PID=false` for Windows workers.
+
+### Jobs fail with "Cannot allocate memory"
+
+**Cause**: Insufficient resources for isolation overhead.
+
+**Solution**:
+- Increase worker memory limits
+- Reduce number of concurrent jobs
+- Use `DISABLE_NSJAIL=true` and rely on PID isolation only
+
+## Related Documentation
+
+- [Worker Groups](/docs/core_concepts/worker_groups) - Physical worker separation
+- [Self-Hosting](/docs/advanced/self_host) - Deployment configuration
+- [Environment Variables](/docs/core_concepts/environment_variables) - All worker configuration options
+- [Docker](/docs/advanced/docker) - Container-based execution
