@@ -92,7 +92,7 @@ inventory:
 
 # Additional inventories available as script arguments
 additional_inventories:
-  - "gitrepo/hosts/inventory.ini"
+  - "delegate_git_repository/hosts/inventory.ini"
 
 # File resources will be written in the relative \`target\` location before
 # running the playbook
@@ -280,16 +280,16 @@ You can also declare additional inventories that will be made available as scrip
 additional_inventories:
   - name: "Extra inventories"
     options:
-      - "gitrepo/hosts/inventory1.ini"
-      - "gitrepo/hosts/inventory2.ini"
-      - "gitrepo/hosts/inventory3.ini"
+      - "delegate_git_repository/hosts/inventory1.ini"
+      - "delegate_git_repository/hosts/inventory2.ini"
+      - "delegate_git_repository/hosts/inventory3.ini"
 ```
 
 They can also be defined statically to always be passed in for this script:
 
 ```yaml
 additional_inventories:
-  - "gitrepo/hosts/permanent_inventory.ini"
+  - "delegate_git_repository/hosts/permanent_inventory.ini"
 ```
 
 Note that this only declares the inventory, but you still need to make it available by either having it in a git repo or using [file resources](#other-non-inventory-file-resources). Otherwise ansible will fail saying it couldn't find your inventory.
