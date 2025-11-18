@@ -50,7 +50,7 @@ On the docker-compose, it is enough to uncomment the volume mount of the Windmil
 
 In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`.
 
-## Docker-in-Docker sidecar container (Recommended)
+## Docker-in-Docker sidecar container (recommended)
 
 One possibility to use the docker daemon with k8s with containerd is to run a docker daemon in the same pod using "Docker-in-Docker" ( dind) Using the official image `docker:stable-dind`:
 
@@ -105,7 +105,7 @@ Here an example of a a worker group setup with a dind side-container to be adapt
 
 This method is not recommended because it skips Windmill's native docker runtime and simpl execute as a normal bash script.
 
-### Remote docker deamon (not recommended)
+### Remote docker daemon (not recommended)
 
 ```bash
 #!/bin/bash
