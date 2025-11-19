@@ -47,7 +47,7 @@ Assign a maximum number of branches run in parallel to control huge for-loops.
 ### Squash
 
 If set to `true`, all iterations will be run on the same worker.
-In addition, for supported languages ([TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)), a single runner per step will be used for the entire loop, eliminating cold starts between iterations.
+In addition, for supported languages ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)), a single runner per step will be used for the entire loop, eliminating cold starts between iterations.
 We use the same logic as for [Dedicated workers](../core_concepts/25_dedicated_workers/index.mdx), but the worker is only "dedicated" to the flow steps for the duration of the loop.
 
 ## Test an iteration
