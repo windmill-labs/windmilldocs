@@ -120,7 +120,6 @@ const sidebars = {
 								'misc/guides/sequin/index',
 								'misc/guides/snowflake_app_with_user_roles/index',
 								'misc/guides/otel/index',
-								'misc/guides/aws_bedrock/index',
 								'misc/guides/aws_marketplace/index'
 							]
 						}
