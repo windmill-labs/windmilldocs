@@ -1,5 +1,6 @@
 ---
 slug: aws-bedrock
+version: v1.579.0
 title: AWS Bedrock support for Windmill AI
 tags: ['AI', 'AI Chat', 'AI agents']
 description: AWS Bedrock is now natively supported as an AI provider in Windmill.
