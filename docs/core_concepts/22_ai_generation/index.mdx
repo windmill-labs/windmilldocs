@@ -235,11 +235,10 @@ Windmill AI supports:
 - Groq's [models](https://console.groq.com/docs/models)
 - OpenRouter's [models](https://openrouter.ai/models)
 - Together AI's [models](https://docs.together.ai/docs/serverless-models)
+- AWS Bedrock's [models](https://aws.amazon.com/bedrock/)
+  - Required configuration: AWS region and API key
+  - For detailed setup instructions, see the [AWS Bedrock guide](/docs/misc/9_guides/aws_bedrock/index.mdx)
 - Custom AI: base URL and API key of any AI provider that is OpenAI API-compatible
   - For Ollama and other local models, select "Custom AI" and provide your Ollama server URL (e.g., `http://localhost:11434/v1` for local Ollama or your custom endpoint)
 
 If you'd like to use a model that isn't in the default dropdown list, you can use any model supported by a provider (like `gpt-4o-2024-05-13` or `claude-3-7-sonnet-20250219`) by simply typing the model name in the model input field and pressing enter.
-
-### AWS Bedrock
-
-For models hosted on AWS Bedrock, you can use the `Custom AI` provider and follow the instructions in the [Windmill AI using AWS Bedrock](/docs/misc/9_guides/aws_bedrock/index.mdx) guide.
