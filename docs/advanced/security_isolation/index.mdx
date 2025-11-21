@@ -1,4 +1,4 @@
-# Security and Process Isolation
+# Security and process isolation
 
 Windmill provides multiple layers of process isolation to protect your infrastructure from potentially malicious or buggy code execution. This page covers the isolation mechanisms available and how to configure them.
 
@@ -11,7 +11,7 @@ Windmill workers execute user-provided code in various languages. To protect the
 3. **Agent Workers** - Workers without direct database access, communicating via the API
 4. **Worker Groups** - Logical separation of workers that can be used to run workers on separate clusters with different network/resource access
 
-## Why Isolation Matters
+## Why isolation matters
 
 Without proper isolation, user scripts could:
 - Access parent worker process memory to extract credentials and secrets
@@ -29,7 +29,7 @@ Without proper isolation, user scripts could:
 
 :::
 
-## NSJAIL Sandboxing
+## NSJAIL sandboxing
 
 ### What is NSJAIL?
 
@@ -39,7 +39,7 @@ Without proper isolation, user scripts could:
 - **Resource limits** - CPU, memory, and process limits
 - **User namespace** - Jobs run as unprivileged users even when worker runs as root
 
-### When is NSJAIL Used?
+### When is NSJAIL used?
 
 NSJAIL is **disabled by default** because:
 - The default Windmill images do not include the nsjail binary
@@ -68,7 +68,7 @@ To use NSJAIL sandboxing, you need both:
 - You need resource limits per job (CPU, memory)
 - You're running untrusted code and need defense-in-depth
 
-### NSJAIL Configuration
+### NSJAIL configuration
 
 NSJAIL behavior is controlled by configuration files for each language. You can view the default configurations:
 
@@ -84,9 +84,9 @@ These configurations control resource limits, mount points, network isolation, a
 - Jobs can read any files the worker can read
 - You can still enable PID namespace isolation separately for process/memory protection (see below)
 
-## PID Namespace Isolation
+## PID namespace isolation
 
-### What is PID Namespace Isolation?
+### What is PID namespace isolation?
 
 PID (Process ID) namespace isolation creates a separate process namespace for each job using Linux's `unshare` command. This prevents jobs from:
 - Seeing parent worker processes in `ps` output
@@ -94,11 +94,11 @@ PID (Process ID) namespace isolation creates a separate process namespace for ea
 - Accessing parent environment variables via `/proc/$pid/environ`
 - Accessing parent file descriptors via `/proc/$pid/fd`
 
-### Why PID Isolation Matters
+### Why PID isolation matters
 
 With PID isolation, the job runs in its own namespace and cannot see the parent worker process, preventing access to the worker's memory and environment variables.
 
-### Enabling PID Namespace Isolation
+### Enabling PID namespace isolation
 
 To enable PID namespace isolation, you need to:
 
@@ -115,7 +115,7 @@ To enable PID namespace isolation, you need to:
 
 **Important**: PID isolation is **disabled by default** in the main docker-compose.yml (both settings are commented out). You must manually uncomment these settings to enable it.
 
-#### Step-by-Step Enablement
+#### Step-by-step enablement
 
 In your `docker-compose.yml`, find the worker service and uncomment these lines:
 
@@ -154,7 +154,7 @@ windmill_worker:
 
 ### Configuration
 
-#### Default Isolation Flags
+#### Default isolation flags
 
 By default, PID isolation uses these flags:
 
@@ -169,7 +169,7 @@ What each flag does:
 - `--pid --fork` - Creates isolated PID namespace
 - `--mount-proc` - Mounts isolated /proc filesystem (requires privileged mode in Docker)
 
-#### Custom Flags
+#### Custom flags
 
 You can customize the isolation flags:
 
@@ -187,7 +187,7 @@ UNSHARE_ISOLATION_FLAGS="--pid --fork --mount-proc"
 
 **Recommendation**: Use the default flags with `privileged: true` for best security. Only use truly unprivileged mode if you cannot enable privileged mode and understand the security tradeoffs.
 
-### Failure Behavior
+### Failure behavior
 
 If `ENABLE_UNSHARE_PID=true` but unshare is unavailable or fails, **the worker will panic at startup** with a detailed error message:
 
@@ -207,7 +207,7 @@ Solutions:
 
 **Note**: This fail-fast behavior only occurs when `ENABLE_UNSHARE_PID=true`. If unset or false (the default), the worker starts normally without isolation.
 
-### Platform Support
+### Platform support
 
 | Platform | Supported | Notes |
 |----------|-----------|-------|
@@ -218,7 +218,7 @@ Solutions:
 | Docker Desktop (macOS) | ⚠️ No | Set `ENABLE_UNSHARE_PID=false` for macOS workers |
 | Kubernetes / Helm | ✅ Yes | Requires privileged: true in securityContext |
 
-## Agent Workers
+## Agent workers
 
 Another approach to isolation is using [agent workers](/docs/core_concepts/agent_workers). Agent workers:
 - Do not have direct database access
@@ -233,7 +233,7 @@ This approach is particularly useful when:
 
 Agent workers can be combined with PID namespace isolation or NSJAIL for defense-in-depth.
 
-## Isolation Comparison
+## Isolation comparison
 
 | Feature | NSJAIL | PID Namespace | None |
 |---------|--------|---------------|------|
@@ -244,7 +244,7 @@ Agent workers can be combined with PID namespace isolation or NSJAIL for defense
 | Environment protection | ✅ Yes | ✅ Yes | ❌ No |
 | Resource limits | ✅ Yes | ❌ No | ❌ No |
 
-### Isolation Hierarchy
+### Isolation hierarchy
 
 When multiple isolation methods are available, Windmill uses them in this priority order:
 
@@ -254,7 +254,7 @@ When multiple isolation methods are available, Windmill uses them in this priori
 
 **Important**: NSJAIL and PID namespace isolation are **not used simultaneously**. If NSJAIL is available and enabled, it takes precedence and PID namespace isolation is not used.
 
-## Recommended Configurations
+## Recommended configurations
 
 ### PID namespace isolation (recommended for production)
 
@@ -280,7 +280,7 @@ environment:
 
 Provides comprehensive isolation including filesystem, network, and resource limits.
 
-## Security Best Practices
+## Security best practices
 
 1. **Enable isolation before production** - Isolation is **disabled by default**. You should manually enable either NSJAIL or PID isolation before deploying to production
 2. **Use PID isolation at minimum** - At a minimum, enable PID namespace isolation with `ENABLE_UNSHARE_PID=true` and `privileged: true`
@@ -364,7 +364,7 @@ For Helm deployments, set the appropriate values to enable privileged mode and t
 - Reduce number of concurrent jobs
 - Use `DISABLE_NSJAIL=true` and rely on PID isolation only
 
-## Related Documentation
+## Related documentation
 
 - [Worker Groups](/docs/core_concepts/worker_groups) - Logical worker separation
 - [Self-Hosting](/docs/advanced/self_host) - Deployment configuration

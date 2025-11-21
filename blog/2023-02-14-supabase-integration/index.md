@@ -30,7 +30,7 @@ You can hook into three table events: `INSERT`, `UPDATE`, and `DELETE`. All even
 We will leverage [Windmill Webhooks](/docs/core_concepts/webhooks) that allow triggering
 Windmill Scripts and Flows via `HTTP POST` requests.
 
-## Create Windmill Script
+## Create Windmill script
 
 In order to be able to receive the events from Supabase we need to create a
 [Script](/docs/getting_started/scripts_quickstart) that will be triggered by the Supabase webhook. Let's create a simple one, that will just return the event payload.
