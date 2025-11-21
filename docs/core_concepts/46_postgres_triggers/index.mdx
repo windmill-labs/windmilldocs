@@ -60,7 +60,7 @@ You have two options to configure this setting. Both options require a restart o
 
 3. Save the file and restart your Postgres instance for the changes to take effect.
 
-### Verifying Logical Replication
+### Verifying logical replication
 
 You can verify that logical replication is enabled by running the following query:
 
@@ -106,7 +106,7 @@ The `max_replication_slots` setting determines how many **replication slots** ca
 
 - **Impact on Trigger Creation**: You can only create as many triggers as there are replication slots available. So if `max_replication_slots` is set to 10, you will be able to create a maximum of 10 triggers. If you need more triggers, you will need to increase the `max_replication_slots` value.
 
-### Summary of Limits
+### Summary of limits
 
 - **Active triggers**: The number of active triggers you can have is limited by `max_wal_senders`. If you set `max_wal_senders` to 10, only 10 active triggers can be running simultaneously.
   
@@ -114,7 +114,7 @@ The `max_replication_slots` setting determines how many **replication slots** ca
 
 ---
 
-### Final Considerations
+### Final considerations
 
 When configuring these settings, make sure to account for the number of active triggers and replication slots needed for your application. If you expect to have many triggers or high replication activity, you may need to increase both `max_wal_senders` and `max_replication_slots`.
 ## How to use

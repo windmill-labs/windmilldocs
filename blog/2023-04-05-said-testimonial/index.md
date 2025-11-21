@@ -56,11 +56,11 @@ What you need to know is that all those workflows are **fully automated** and **
 
 Now you have the context. I would like to highlight a few reasons why Windmill has replaced all my pre-existing automation tools.
 
-### User Interface
+### User interface
 
 While AWS Lambda lets you write scripts in a traditional way, Windmill lets you write and design them with a beautiful graph-based interface. This makes the process of designing flows for complex projects quicker and more error free because you can **visualize the logic** while building them.
 
-### Approval Steps
+### Approval steps
 
 I was amazed by its “[flow approval](/docs/flows/flow_approval)” function that allows you to set up an approval flow. That feature led me to streamline some of my processes and is now an **integral part of my operations**. I no longer need to do the laborious tasks of accessing a system, validate the transaction, data patch, and rerun a script. All I need now is to receive an approval request email in real time, review on the go, hit approve/reject, and my flow will resume/abandon.
 
@@ -68,7 +68,7 @@ I was amazed by its “[flow approval](/docs/flows/flow_approval)” function th
 
 Like Retool, you can design your admin console and [connect it to your database](/docs/integrations/integrations_on_windmill). **Windmill allows you to connect to your existing scripts and flows** that you have already designed inside Windmill i.e. you can reuse them, which saves a lot of time.
 
-### Clear Visualization
+### Clear visualization
 
 Its job runs panel is intuitive. Each job [run’s audit is shown graphically](/docs/getting_started/flows_quickstart). You can **track the progress visually in real-time** when a transaction is triggered. It is easy to tell the exact flow your logic traversed in each run, making AWS CloudWatch logging look basic in comparison.
 
