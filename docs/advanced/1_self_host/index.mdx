@@ -211,6 +211,28 @@ More details at:
 	/>
 </div>
 
+### Security considerations
+
+The official Windmill docker-compose enables PID namespace isolation by default:
+
+- **PID namespace isolation** (`ENABLE_UNSHARE_PID=true`) prevents jobs from accessing parent worker process memory and environment variables
+
+For additional security, you can enable NSJAIL sandboxing:
+
+- **NSJAIL sandboxing** - Provides filesystem and resource isolation (requires using a `-nsjail` tagged image and setting `DISABLE_NSJAIL=false`)
+
+#### Windows workers
+
+If you're running Windows workers, PID namespace isolation is Linux-only. Set `ENABLE_UNSHARE_PID=false` for Windows worker services:
+
+```yaml
+windmill_worker_windows:
+  environment:
+    - ENABLE_UNSHARE_PID=false
+```
+
+For complete security documentation, see [Security and Process Isolation](/docs/advanced/security_isolation).
+
 ### Configuring domain and reverse proxy
 
 To deploy Windmill to the `windmill.example.com` domain, make sure to set "Base Url" correctly in the [Instance settings](../18_instance_settings/index.mdx#base-url).
