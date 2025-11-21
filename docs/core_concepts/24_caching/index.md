@@ -6,7 +6,7 @@ When you configure caching, Windmill stores the result in a cache for the durati
 
 This feature can significantly improve the performance of your scripts & flows, especially for steps that are computationally demanding or dependent on external resources, such as APIs or databases.
 
-## Cache Scripts
+## Cache scripts
 
 Caching a script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
 
@@ -26,7 +26,7 @@ You can enable caching for a script directly in the script Settings. Here's how 
 
 In the above example, the result of step the script will be cached for 180 seconds (4 minutes). If `u/henri/slow_function___base_11` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
 
-## Cache Flows
+## Cache flows
 
 Caching a flow means caching the results of that flow for a certain duration. If the flow is triggered with the same flow inputs during the given duration, it will return the cached result.
 
@@ -45,7 +45,7 @@ You can enable caching for a flow directly in the flow settings. Here's how you 
 
 In the above example, the result of step the flow will be cached for 60 seconds. If `u/henri/example_flow_quickstart_no_slack` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
 
-## Cache Flow Steps
+## Cache flow steps
 
 Caching a flow step means caching the results of that step for a certain duration. If the step is triggered with the same inputs during the given duration, it will return the cached result.
 

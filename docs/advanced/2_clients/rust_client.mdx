@@ -27,7 +27,7 @@ cargo add wmill
 
 ## Usage
 
-### Initialize Client
+### Initialize client
 
 ```rust
 use wmill::Windmill;
@@ -117,7 +117,7 @@ let status = wm.get_job_status(&job_id).await?; // Running/Waiting/Completed
 let result = wm.get_result(&job_id).await?;
 ```
 
-### State Management
+### State management
 
 ```rust
 // Get typed state
@@ -133,7 +133,7 @@ let raw_state = wm.get_state_any().await?;
 wm.set_state(Some(serde_json::json!({"counter": 42}))).await?;
 ```
 
-### Progress Tracking
+### Progress tracking
 
 ```rust
 // Set job progress

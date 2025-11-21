@@ -123,7 +123,7 @@ the new script on Windmill Hub.
 
 ![Submit Scripts](./submit-script.png.webp)
 
-## Trigger Script
+## Trigger script
 
 Trigger scripts are scripts whose purpose is to pull data from an external
 source and return all new items since last run. They are generally used in flows
