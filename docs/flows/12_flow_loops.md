@@ -42,7 +42,13 @@ Iif set to `true`, all iterations will be run in parallel.
 
 Assign a maximum number of branches run in parallel to control huge for-loops.
 
-![For loop step](../assets/flows/flow_for_loop.png.webp "For loop step")
+![For loop step](../assets/flows/flow_for_loop.png.webp 'For loop step')
+
+### Squash
+
+If set to `true`, all iterations will be run on the same worker.
+In addition, for supported languages ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)), a single runner per step will be used for the entire loop, eliminating cold starts between iterations.
+We use the same logic as for [Dedicated workers](../core_concepts/25_dedicated_workers/index.mdx), but the worker is only "dedicated" to the flow steps for the duration of the loop.
 
 ## Test an iteration
 
@@ -55,12 +61,11 @@ You can get a [test](../core_concepts/23_instant_preview/index.mdx) of the curre
 	description="Test an iteration"
 />
 
-
 ## Iterate on steps
 
 Steps within the flow can use both the iteration index and value. For example with iterator expression `["Paris", "Lausanne", "Lille"]`, for iteration index "1", "Lausanne" is the value.
 
-![Iter value & index](../assets/flows/iter_value_index.png.webp "Iter value & index")
+![Iter value & index](../assets/flows/iter_value_index.png.webp 'Iter value & index')
 
 When a flow has been run or tested, you can inspect the details (arguments, logs, results) of each iteration directly from the graph. The forloop detail page lists every iteration status, even if you have a thousand one without having to load them all.
 

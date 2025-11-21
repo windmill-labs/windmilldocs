@@ -50,3 +50,10 @@ Each [run](../5_monitor_past_and_future_runs/index.mdx) will have a Worker group
 		href="/docs/core_concepts/worker_groups"
 	/>
 </div>
+
+## Dedicated workers for flows
+
+Dedicated workers can also be assigned to a flow. In that case, the dedicated worker will start one runner for each flow step that supports it ([TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)), eliminating cold start between each execution.
+Other steps will be run on the same worker but without any optimization.
+
+To enable it, the process is the same as for scripts, but the "Dedicated Workers" option for that flow has to be enabled in the [flow Settings](../../flows/3_editor_components.mdx#settings).
