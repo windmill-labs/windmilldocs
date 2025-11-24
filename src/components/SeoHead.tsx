@@ -5,7 +5,7 @@ export default function SeoHead() {
     const title = "Windmill | Open-source developer platform and workflow engine";
     const description = "Turn scripts into auto-generated UIs, APIs and cron jobs. Compose them as workflows or data pipelines. Build complex, data-intensive apps with ease. Write and deploy software 10x faster, and run it with the highest reliability and observability on the fastest self-hostable job orchestrator";
     const url = "https://www.windmill.dev/";
-    const image = "https://foskey51.github.io/test_ogp/og_image.png";
+    const image = "https://www.windmill.dev/img/og_preview.png";
 
     return (
         <Head>
