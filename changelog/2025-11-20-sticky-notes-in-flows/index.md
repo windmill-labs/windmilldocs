@@ -13,3 +13,7 @@ features:
   ]
 ---
 
+Sticky notes enable you to add documentation and comments directly to your flow canvas. Create free notes for general documentation or group notes to annotate specific workflow sections.
+
+[Learn more about sticky notes →](/docs/flows/sticky_notes)
+

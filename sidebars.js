@@ -746,7 +746,8 @@ const sidebars = {
 						'flows/early_return',
 						'flows/flow_approval',
 						'flows/sleep',
-						'flows/step_mocking'
+						'flows/step_mocking',
+						'flows/sticky_notes'
 					],
 					collapsed: true
 				},
