@@ -2,6 +2,12 @@ import DocCard from '@site/src/components/DocCard';
 
 # Run Docker containers
 
+:::info Worker security
+
+Windmill workers in the official docker-compose have `ENABLE_UNSHARE_PID=true` enabled by default for process isolation. This protects worker credentials from being accessed by jobs. See [Security and Process Isolation](/docs/advanced/security_isolation) for details.
+
+:::
+
 ## Using Windmill native docker support (recommended)
 
 Windmill has a native docker support if the `# docker` annotation is used in a bash script. It will assume a a docker socket is mounted like in the example above and will take over management of the container as soon as the script ends, assuming that the container was ran with the `$WM_JOB_ID` as name.
@@ -44,7 +50,7 @@ On the docker-compose, it is enough to uncomment the volume mount of the Windmil
 
 In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`.
 
-## Docker-in-Docker sidecar container (Recommended)
+## Docker-in-Docker sidecar container (recommended)
 
 One possibility to use the docker daemon with k8s with containerd is to run a docker daemon in the same pod using "Docker-in-Docker" ( dind) Using the official image `docker:stable-dind`:
 
@@ -99,7 +105,7 @@ Here an example of a a worker group setup with a dind side-container to be adapt
 
 This method is not recommended because it skips Windmill's native docker runtime and simpl execute as a normal bash script.
 
-### Remote docker deamon (not recommended)
+### Remote docker daemon (not recommended)
 
 ```bash
 #!/bin/bash
