@@ -20,7 +20,7 @@ For all details on Version control in Windmill, see [Version control](../../adva
 
 :::
 
-This video shows how to set up a Git repository for a workspace (Git sync - workspace mode).
+This video shows how to set up a Git repository for a workspace (Git sync - sync mode).
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -34,7 +34,7 @@ This video shows how to set up a Git repository for a workspace (Git sync - work
 
 <br />
 
-## Git sync - Workspace mode
+## Git sync - Sync mode
 
 All scripts, flows and apps located in the workspace will be pushed to the Git repository. You can filter Git sync on [path](../../core_concepts/16_roles_and_permissions/index.mdx#path) so that only the scripts, flows and apps with a matching path will be pushed to the Git repository. By default, everything in [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be synced (with rule `f/**`).
 
@@ -93,13 +93,13 @@ You now have your Windmill workspace on a GitHub repository.
 ![Git sync Setup](./git_sync_setup.png 'Git sync Setup')
 
 If you chose Option A (empty repository), use the "Initialize Git repository" operation to automatically:
+
 - Create the `wmill.yaml` configuration file with your filter settings
 - Push the entire workspace content to the Git repository
 
 If the repository already contains a `wmill.yaml` file, the settings will be automatically imported and applied to your workspace configuration.
 
 **Configuration settings**: Git sync filter settings are pulled from the [`wmill.yaml`](../3_cli/sync.mdx#wmillyaml) file in your repository. Once the connection is saved, you can update settings by changing `wmill.yaml` and pulling the settings via the corresponding button.
-
 
 ![Git sync Settings](./settings_pull.png 'Git sync Settings Pull')
 
@@ -108,17 +108,21 @@ If the repository already contains a `wmill.yaml` file, the settings will be aut
 If your repo requires signed commits, you can set up GPG on your Windmill instance.
 
 1. Generate a GPG key pair:
+
 ```
 gpg --full-generate-key
 ```
 
 2. Add the key to your GithHub account:
+
 ```
 gpg --armor --export <key_id>
 ```
+
 Go to your GitHub account settings => "SSH and GPG keys" and add the GPG public key.
 
 3. Add the private key to your Windmill instance:
+
 ```
 gpg --armor --export-keys <key_id>
 ```
@@ -130,11 +134,13 @@ In the Windmill workspace "Git Sync" settings, edit the "GPG key" field with the
 :::caution Key ID and Email
 
 Make sure to double check that the email address associated with the key is the same as the one you use to commit to the repo. Furthermore, double check that the key id is the same as the one you see in the "GPG key" field on your GitHub account.
+
 <br />
-All commits will now be signed and commited as the user matching the email address associated with the key.
-:::
+All commits will now be signed and commited as the user matching the email address associated with the
+key. :::
 
 #### Azure DevOps with Service Principal setup
+
 In Microsoft Entra ID, create an application and a secret (also known as Service Principal - an identity used by applications to access Azure resources).
 Create an `azure` resource on your Windmill instance with the application's `client_id`, `client_secret` and `tenant_id`.
 On Azure DevOps, add the application to the DevOps organization with the appropriate permissions.
@@ -162,13 +168,14 @@ On top of the filter path [above](#path-filters), you can include only certain t
 By default everything is synced.
 
 You can filter on:
+
 - **Scripts** - Individual scripts
 - **Flows** - Workflow definitions
 - **Apps** - Application definitions
 - **Folders** - Folder structure
 - **Resources** - Resource instances
 - **Variables** - Workspace variables
-	- **Include secrets** - Option to include secret variables
+  - **Include secrets** - Option to include secret variables
 - **Schedules** - Scheduled job definitions
 - **Resource types**
 - **Users** - User definitions
@@ -186,14 +193,17 @@ The changes will be deployed to all the repositories set in the Git sync setting
 You can choose between two sync modes for each repository:
 
 #### Sync mode (default)
+
 Changes are committed directly to the branch specified in the [git_repository](../../integrations/git_repository.mdx) resource. This is the standard mode for simple workspace synchronization.
 
 When combined with [branch-specific items](../3_cli/branch-specific-items.mdx), different workspaces can sync to different branches while maintaining environment-specific configurations (e.g., production workspace syncs to `prod` branch, development workspace syncs to `dev` branch).
 
 #### Promotion mode
+
 Windmill will create branches per deployed object based on its path, prefixed with 'wm_deploy/'. This enables advanced deployment workflows with pull requests and code review processes.
 
 When promotion mode is enabled, you can choose to:
+
 - **Create one branch per deployed object** (default)
 - **Group deployed objects by folder**: Create a branch per folder containing objects being deployed instead
 
