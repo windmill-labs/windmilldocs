@@ -41,7 +41,6 @@ const faqs = [
 				<br />- Businesses with less than 10 employees and $250k revenues
 				<br />- Startups at seed stage <br />
 				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.<br />
-				If Windmill is used as teaching material, it can be provided for free upon request to sales@windmill.dev<br/>
 				Reach out to contact@windmill.dev to inquiry about exceptions.
 			</span>
 		)
