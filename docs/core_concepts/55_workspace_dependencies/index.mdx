@@ -1,0 +1,311 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Workspace dependencies
+
+Workspace dependencies allow you to manage dependencies centrally at the workspace level. Create shared dependency files that multiple scripts can reference, giving you control over dependency resolution and enabling consistent environments across your workspace.
+
+![Workspace dependencies overview](./workspace-dependencies.png)
+
+## Quick start
+
+1. **Create dependency files** in workspace settings under `/dependencies`
+2. **Reference them in scripts** using annotations like `# requirements: myfile`
+3. **Choose your mode**: explicit control or hybrid with import inference
+
+## Dependency files location
+
+All dependency files are stored under `/dependencies` in your workspace:
+
+```
+/dependencies/
+├── ml.requirements.in          # Named Python dependencies
+├── api.package.json            # Named TypeScript dependencies  
+├── web.composer.json           # Named PHP dependencies
+├── requirements.in             # Python default (requirements mode)
+├── extra.requirements.in       # Python default (extra mode)
+└── package.json                # TypeScript default
+```
+
+**Naming rules**:
+- Named files: `<name>.<extension>` (e.g., `ml.requirements.in`)
+- Unnamed defaults: `<extension>` or `extra.<extension>`
+- Cannot use `default` as a filename
+- One unnamed default per language (either standard OR `extra.` form)
+
+## Using dependency files in scripts
+
+### Requirements mode (explicit dependencies)
+
+Disables [import inference](../../advanced/6_imports/index.mdx), uses only specified files:
+
+```python
+# requirements: ml, api
+
+import pandas as pd
+import requests
+
+def main():
+    return "Uses only ml.requirements.in and api.requirements.in"
+```
+
+```typescript
+// package_json: frontend, shared
+
+import axios from 'axios';
+import lodash from 'lodash';
+
+export async function main() {
+    return "Uses only frontend.package.json and shared.package.json";
+}
+```
+
+### Extra mode (hybrid with inference)
+
+Adds workspace dependencies to automatically [inferred imports](../../advanced/6_imports/index.mdx):
+
+```python
+# extra_requirements: ml
+
+import pandas as pd    # Auto-inferred
+import numpy as np     # From ml.requirements.in
+
+def main():
+    return "Combines inference + workspace dependencies";
+```
+
+### Including workspace defaults
+
+Use `default` token to include unnamed default files:
+
+```python
+# requirements: default, ml
+# Includes /dependencies/requirements.in + ml.requirements.in
+```
+
+```typescript
+// package_json: default, api
+// Includes /dependencies/package.json + api.package.json
+```
+
+## Supported languages and features
+
+| Language | Syntax | Extra implicit | Manual implicit | Manual explicit | Extra explicit | 
+|----------|--------|----------------|-----------------|-----------------|----------------|
+| Python   | `# (extra_)requirements:` | ❌ | ✅ | one external or less or inline | inline only | 
+| TypeScript (Bun) | `// (extra_)package_json:` | ❌ | ✅ | one external or less | ❌ |
+| PHP      | `// (extra_)composer_json:` | ❌ | ✅ | one external or less | ❌ |
+| Go       | `// (extra_)go_mod:` | ❌ | ❌ | ❌ | ❌ |
+
+Note: Go support not yet available. Extra requirements mode (`#extra_requirements:`, etc.) is planned for future releases.
+
+## Setting up workspace dependencies
+
+Requires workspace admin permissions.
+
+1. Go to workspace settings → Dependencies
+2. Create new dependency files or upload existing ones
+3. Choose standard or `extra.` defaults for each language
+
+<!-- Image placeholder: Workspace dependencies settings interface -->
+
+### Creating dependency files
+
+**Python example** (`ml.requirements.in`):
+```txt
+pandas>=1.5.0
+numpy>=1.21.0
+scikit-learn==1.1.2
+matplotlib>=3.5.0
+```
+
+**TypeScript example** (`api.package.json`):
+```json
+{
+  "dependencies": {
+    "axios": "^0.27.2",
+    "lodash": "^4.17.21",
+    "windmill-client": "^1.147.3"
+  }
+}
+```
+
+**PHP example** (`web.composer.json`):
+```json
+{
+  "require": {
+    "guzzlehttp/guzzle": "^7.4",
+    "monolog/monolog": "^2.8"
+  }
+}
+```
+
+### Setting workspace defaults
+
+Choose default behavior for scripts without annotations:
+
+**Requirements mode default**: Creates `/dependencies/requirements.in`
+- Scripts without annotations use this file only
+- Import inference disabled by default
+
+**Extra mode default**: Creates `/dependencies/extra.requirements.in`  
+- Scripts without annotations get these dependencies + inference
+- Hybrid mode by default
+
+<!-- Image placeholder: Default dependency file selection -->
+
+## Advanced usage
+
+### Mixing workspace and inline dependencies
+
+```python
+# requirements: ml, api
+# custom-package==1.0.0
+# another-dep>=2.0
+
+import pandas as pd
+
+def main():
+    return "Uses workspace files + inline requirements"
+```
+
+### Multiple dependency files
+
+```python
+# requirements: base, ml, data-processing
+
+def main():
+    return "Combines multiple workspace dependency files"
+```
+
+### Opting out of defaults
+
+```python
+# disable_requirements
+# Script ignores workspace defaults
+
+import pandas as pd  # Must be available in environment
+
+def main():
+    return "No workspace dependencies"
+```
+
+### Empty dependencies
+
+```python
+# empty_requirements  
+# Script has no external dependencies
+
+def main():
+    return "No dependencies at all"
+```
+
+<!-- Image placeholder: Script editor showing dependency annotations -->
+
+## CLI usage
+
+### Sync dependency files
+```bash
+# Pull all workspace content including dependencies
+wmill sync pull
+
+# Push dependency changes
+wmill sync push
+```
+
+### Generate lockfiles
+```bash
+# Create lockfile using workspace dependencies
+wmill script generate-metadata my_script.py
+```
+
+### Manage dependencies
+```bash
+# List available dependency files
+wmill dependencies list
+
+# View dependency file content
+wmill dependencies show ml.requirements.in
+```
+
+## Versioning and deployment
+
+- Dependency files are versioned like scripts
+- Lockfiles record specific dependency file versions
+- Updating dependency files triggers redeployment of dependent scripts
+- Git sync includes dependency file changes
+
+## Common patterns
+
+### Team-based dependencies
+```
+/dependencies/
+├── frontend.package.json      # Frontend team deps
+├── backend.package.json       # Backend team deps
+├── data.requirements.in       # Data team deps
+└── shared.requirements.in     # Common dependencies
+```
+
+### Environment-based
+```
+/dependencies/
+├── prod.requirements.in       # Production-ready versions
+├── dev.requirements.in        # Development dependencies
+└── test.requirements.in       # Testing utilities
+```
+
+### Feature-based
+```
+/dependencies/
+├── ml.requirements.in         # Machine learning
+├── api.requirements.in        # API integrations
+├── ui.package.json           # UI components
+└── data.requirements.in       # Data processing
+```
+
+## Troubleshooting
+
+### Missing dependencies
+- Check annotation syntax: `# requirements: filename`
+- Verify file exists in workspace `/dependencies`
+- Ensure file contains required packages
+
+### Annotation conflicts
+- Use either `# requirements:` OR `# extra_requirements:`, not both
+- `# requirements:` takes precedence if both present
+
+### Default file issues
+- Cannot have both standard and `extra.` defaults for same language
+- Choose one: `/dependencies/requirements.in` OR `/dependencies/extra.requirements.in`
+
+### CLI problems
+- Upgrade to latest Windmill CLI
+- Ensure admin permissions for dependency management
+- Check dependency file format validity
+
+### Import errors
+- Requirements mode disables import inference
+- Add missing packages to dependency files
+- Consider switching to extra mode if you want inference + workspace deps
+
+For debugging, generate and inspect lockfiles:
+```bash
+wmill script generate-metadata script_path
+cat script_path.lock
+```
+
+:::info
+Workspace dependencies replace the previous "raw requirements" system. See [migration guide](./migration.mdx) if upgrading from the old system.
+:::
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+  <DocCard
+    title="Migration guide"
+    description="Migrate from the previous dependency system to workspace dependencies."
+    href="/docs/core_concepts/workspace_dependencies/migration"
+  />
+  <DocCard
+    title="Dependency management overview" 
+    description="Understanding Windmill's dependency resolution and import system."
+    href="/docs/advanced/imports"
+  />
+</div>

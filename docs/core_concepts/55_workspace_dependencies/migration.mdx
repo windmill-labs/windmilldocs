@@ -1,0 +1,68 @@
+# Migration guide
+
+This guide helps you migrate from the previous "raw requirements" system to workspace dependencies. See the [main workspace dependencies guide](./index.mdx) for feature details.
+
+## Migration steps
+
+### 1. Resolve conflicts
+
+If you have a `/dependencies` folder at the workspace root, rename it. The workspace root `/dependencies` path is reserved for the new system.
+
+Note: Folders like `/f/dependencies` or `/u/username/dependencies` are not affected.
+
+### 2. Move dependency files
+
+Move all your requirements.txt, package.json, composer.json files to the workspace `/dependencies` directory:
+
+- `requirements.txt` → `/dependencies/<name>.requirements.in`
+- `package.json` → `/dependencies/<name>.package.json`
+- `composer.json` → `/dependencies/<name>.composer.json`
+
+Choose descriptive names like `ml.requirements.in` or `api.package.json`.
+
+### 3. Update scripts
+
+Add annotations to scripts that should use workspace dependencies:
+
+```python
+# requirements: ml
+```
+
+```typescript
+// package_json: api
+```
+
+```php
+// composer_json: web
+```
+
+### 4. Set defaults (optional)
+
+Create unnamed default files to set workspace-wide behavior:
+
+- `/dependencies/requirements.in` - Requirements mode default
+- `/dependencies/extra.requirements.in` - Extra mode default
+
+Choose one form per language.
+
+### 5. Update CLI
+
+Upgrade to the latest Windmill CLI version that supports workspace dependencies.
+
+### 6. Test
+
+Generate lockfiles and test your scripts:
+
+```bash
+wmill script generate-metadata script_path
+wmill script run script_path
+```
+
+## Troubleshooting
+
+- **Scripts fail**: Check that dependency files contain all required packages
+- **CLI errors**: Ensure you have the latest CLI version
+- **Permission errors**: Workspace admin permissions required for dependency management
+- **Missing dependencies**: Add missing packages to workspace dependency files
+
+For detailed feature information, see the [workspace dependencies guide](./index.mdx).
