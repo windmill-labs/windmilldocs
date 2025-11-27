@@ -89,12 +89,12 @@ Use `default` token to include unnamed default files:
 
 ## Supported languages and features
 
-| Language | Syntax | Multiple external workspace dependencies | Extra inline | Manual inline | Extra implicit (unnamed) | Manual implicit (unnamed) | Inline and external at same time | Manual explicit | Extra explicit | 
-|----------|--------|------------------------------------------|--------------|---------------|--------------------------|---------------------------|----------------------------------|-----------------|----------------|
-| Python   | `# (extra_)requirements:` | ❌ | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ❌ |
-| TypeScript (Bun) | `// (extra_)package_json:` | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ❌ |
-| PHP      | `// (extra_)composer_json:` | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ❌ |
-| Go       | `// (extra_)go_mod:` | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Language | Syntax | Extra implicit | Manual implicit | Manual explicit | Extra explicit | 
+|----------|--------|----------------|-----------------|-----------------|----------------|
+| Python   | `# (extra_)requirements:` | ❌ | ✅ | one external or less or inline | inline only | 
+| TypeScript (Bun) | `// (extra_)package_json:` | ❌ | ✅ | one external or less | ❌ |
+| PHP      | `// (extra_)composer_json:` | ❌ | ✅ | one external or less | ❌ |
+| Go       | `// (extra_)go_mod:` | ❌ | ❌ | ❌ | ❌ |
 
 Note: Go support not yet available. Extra requirements mode (`#extra_requirements:`, etc.) is planned for future releases.
 
