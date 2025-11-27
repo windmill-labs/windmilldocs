@@ -11,5 +11,5 @@ features:
     'Group notes that anchor around a group of nodes to explain sections or logical blocks.',
     'Drag and position notes freely to annotate your workflow.'
   ]
+docs: /docs/flows/sticky_notes
 ---
-
