@@ -286,18 +286,18 @@ export function QuoteForm({
 							/>
 						)}
 
-						{/* Show agent workers for both plans */}
-						{workers.agent && workers.agent > 0 && (
-							<DetailRow
-								key="Agent workers"
-								label="Agent workers"
-								isSubItem
-								calculation={{
-									left: plan === 'cloud_ee' ? workers.agent * 2 : workers.agent,
-									right: `${workers.agent} CU`
-								}}
-							/>
-						)}
+					{/* Show agent workers for both plans */}
+					{(workers.agent ?? 0) > 0 && (
+						<DetailRow
+							key="Agent workers"
+							label="Agent workers"
+							isSubItem
+							calculation={{
+								left: plan === 'cloud_ee' ? workers.agent * 2 : workers.agent,
+								right: `${workers.agent} CU`
+							}}
+						/>
+					)}
 
 						{plan === 'selfhosted_ee' && (selectedOption === 'Nonprofit' || selectedOption === 'Pro') && (
 							<label className="flex flex-col">
