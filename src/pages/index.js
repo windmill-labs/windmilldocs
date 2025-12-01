@@ -5,7 +5,6 @@ import IntegrationsList from '../landing/IntegrationsList';
 import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
-import Head from '@docusaurus/Head';
 import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
@@ -16,6 +15,7 @@ import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
 import TutorialSection from '../landing/TutorialSection';
 import MobileTutorialSection from '../landing/MobileTutorialSection';
+import SeoHead from '../components/SeoHead';
 
 function HomepageHeader() {
 	return (
@@ -49,15 +49,7 @@ export default function Home() {
 	return (
 		<LayoutProvider>
 			<main>
-				<Head>
-					<title>Windmill | Open-source developer platform and workflow engine</title>
-					<meta name="title" content="Open-source developer platform and workflow engine" />
-					<meta
-						name="description"
-						content="Turn scripts into auto-generated UIs, APIs and cron jobs. Compose them as workflows or data pipelines. Build complex, data-intensive apps with ease. Write and deploy software 10x faster, and run it with the highest reliability and observability on the fastest self-hostable job orchestrator"
-					/>
-					<link rel="icon" href="/img/logo.svg" />
-				</Head>
+				<SeoHead />
 				<HomepageHeader />
 			</main>
 		</LayoutProvider>
