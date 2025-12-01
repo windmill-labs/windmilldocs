@@ -56,6 +56,10 @@ const config = {
 					{
 						to: '/docs/core_concepts/webhooks#custom-response-code',
 						from: '/docs/script_editor/custom_response_code'
+					},
+					{
+						to: '/terms-2025-12-01',
+						from: '/terms'
 					}
 				]
 			}
