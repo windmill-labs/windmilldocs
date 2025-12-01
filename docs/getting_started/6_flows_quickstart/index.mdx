@@ -72,7 +72,7 @@ On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/
 	/>
 </div>
 
-### Shared Directory
+### Shared directory
 
 Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/within_windmill.mdx#shared-directory).
 
@@ -93,7 +93,7 @@ Get more details on the [Persistent storage & databases dedicated page](../../co
 	/>
 </div>
 
-### Worker Group
+### Worker group
 
 When a [worker group](../../core_concepts/9_worker_groups/index.mdx) is defined at the flow level, any steps inside the flow will run on that worker group, regardless of the steps' worker group. If no worker group is defined, the flow controls will be executed by the default worker group 'flow' and the steps will be executed in their respective worker group.
 
@@ -137,6 +137,10 @@ On the left of the editor, you'll find a graphical view of the flow. From there 
 
 ![Flow editor menu](./flow_editor_menu.png.webp)
 
+:::tip Pro tips
+Keep your flows organized and documented with [sticky notes](../../flows/24_sticky_notes.mdx)! Add free notes anywhere on the canvas for comments and TODOs, or create group notes to explain complex workflow sections to your team.
+:::
+
 There are four kinds of scripts: [Action](../../flows/3_editor_components.mdx#flow-actions), [Trigger](../../flows/10_flow_trigger.mdx), [Approval](../../flows/11_flow_approval.mdx) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want. Action is the default script type.
 
 Each script can be called from Workspace or [Hub](https://hub.windmill.dev/), you can also decide to write them inline.
@@ -167,15 +171,15 @@ Your flow can be deepened with [additional features](../../flows/1_flow_editor.m
 While loops execute a sequence of code indefinitely until the user cancels or a step set to [Early stop](../../flows/2_early_stop.md) stops.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/while_early_stop.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/while_early_stop.mp4"
 />
 
-<br/>
+<br />
 
 <div className="grid grid-cols-2 gap-6 mb-4">
-<DocCard
+	<DocCard
 		color="teal"
 		title="While loops"
 		description="While loops execute a sequence of code indefinitely until the user cancels or a step set to Early stop stops."

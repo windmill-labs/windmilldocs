@@ -18,7 +18,7 @@ For all details on Deployments to prod in Windmill, see [Deploy to prod](../12_d
 
 > See section [Setup the full Git workflow](#setup-the-full-git-workflow) for the detailed setup steps.
 
-<br/>
+<br />
 
 The integration with git works in three-folds:
 
@@ -30,17 +30,17 @@ You can also trigger a webhook and push the changes to Windmill using [this Wind
 
 :::
 
-2. [Git sync](../11_git_sync/index.mdx) (Workspace mode): Windmill automatically committing to a git repository upon any deployment to a workspace, this works using the CLI doing `wmill sync pull` ([Cloud and Enterprise Self-Hosted](/pricing)). Having it commit back to Windmill has 2 benefits:
+2. [Git sync](../11_git_sync/index.mdx) (Sync mode): Windmill automatically committing to a git repository upon any deployment to a workspace, this works using the CLI doing `wmill sync pull` ([Cloud and Enterprise Self-Hosted](/pricing)). Having it commit back to Windmill has 2 benefits:
 
-    - It ensures that any automatically created metadata files are wrote-back (in case you pushed a script without its metadata for instance).
-    - It ensures that any modification done in the UI is kept in sync with the git repository and guarantees a bi-sync between the repo and the UI.
+   - It ensures that any automatically created metadata files are wrote-back (in case you pushed a script without its metadata for instance).
+   - It ensures that any modification done in the UI is kept in sync with the git repository and guarantees a bi-sync between the repo and the UI.
 
 3. [Git sync](../11_git_sync/index.mdx) (Promotion mode): Windmill automatically creates a branch specific to that item (and whose name is derived from that item) that targets the branch set in the git sync settings, upon any change to any items, be it from the UI or from git ([Cloud and Enterprise Self-Hosted](/pricing)). This should be coupled with a GitHub action that automatically create a PR when a branch is created. This PR can then be reviewed and merged. Upon being merged to the prod branch, a GitHub action as described in 1. would then deploy it to the prod branch.
 
 Once everything is set up, the process is as follows:
 
 - Users iterate and make their changes in the "staging" Windmill workspace UI or in the git staging branch directly.
-- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI or through the GitHub action that deploys to staging upon any change), Windmill automatically sync it back to the repo on the "staging" branch (Git sync - Workspace mode) and also create a branch that targets prod and keep it in sync with any new changes (Git sync - Promotion mode)
+- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI or through the GitHub action that deploys to staging upon any change), Windmill automatically sync it back to the repo on the "staging" branch (Git sync - sync mode) and also create a branch that targets prod and keep it in sync with any new changes (Git sync - Promotion mode)
 - On every new branch created, PRs are automatically created via a GitHub Action. Approved GitHub users can review and merge those PRs.
 - Every time a PR is merged, another GitHub Action automatically deploys the change to a "production" Windmill workspace.
 
@@ -84,7 +84,7 @@ The video below shows a simplified setup, see the steps below it for the full se
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 :::warning
 If you are not using the [Enterprise Edition](/pricing) (EE) version of Windmill, you can still follow the parts of this guide that do not involve Git sync.
@@ -151,6 +151,7 @@ Test deploy to prod workspace:
    - `push-on-merge-to-forks.yaml`: This does the same as `push-on-merge.yaml` but for all [Workspace Forks](../20_workspace_forks/index.mdx), enabling the full power of the feature.
 
 On top of `WMILL_TOKEN`, 2 other variables need to be set in the GitHub action workflow file:
+
 - `WMILL_WORKSPACE`: the name of the workspace
 - `WMILL_URL`: the base URL of the Windmill instance (e.g. https://app.windmill.dev/)
 
@@ -165,14 +166,14 @@ on:
       - wm-fork/**
 
 env:
-  TARGET_BRANCH: main
+TARGET_BRANCH: main
 
 jobs:
-  submit_pull_requests:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
+submit_pull_requests:
+runs-on: ubuntu-latest
+permissions:
+contents: read
+pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
@@ -185,7 +186,8 @@ jobs:
           --body "PR created by Github action '${{ github.workflow }}'"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
+
+````
 </TabItem>
 <TabItem value="push-on-merge.yaml" label="push-on-merge.yaml" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 ```yaml
@@ -233,7 +235,8 @@ jobs:
         run: |
           npm install -g windmill-cli@1.393.3
           wmill sync push --yes --skip-variables --skip-secrets --skip-resources --workspace ${{ env.WMILL_WORKSPACE }} --token ${{ secrets.WMILL_TOKEN }} --base-url ${{ env.WMILL_URL }}
-```
+````
+
 </TabItem>
 <TabItem value="push-on-merge-to-forks.yaml" label="push-on-merge-to-forks.yaml" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 ```yaml
@@ -248,15 +251,14 @@ on:
     #   - wm/**
 
 env:
-  WMILL_URL: https://app.windmill.dev/
+WMILL_URL: https://app.windmill.dev/
 
 jobs:
-  sync:
-    environment: windmill
-    runs-on: "ubuntu-latest"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+sync:
+environment: windmill
+runs-on: "ubuntu-latest"
+steps: - name: Checkout
+uses: actions/checkout@v3
 
       - uses: actions/setup-node@v4
         with:
@@ -287,7 +289,8 @@ jobs:
         run: |
           npm install -g windmill-cli@1.393.3
           wmill sync push --yes --skip-variables --skip-secrets --skip-resources --workspace ${{ steps.workspace.outputs.workspace }} --token ${{ secrets.WMILL_TOKEN }} --base-url ${{ env.WMILL_URL }}
-```
+
+````
 </TabItem>
 </Tabs>
 
@@ -317,9 +320,10 @@ This is the recommended approach for most cases:
 includes:
   - "f/team1_folder/**"  # Team 1's folder
   - "f/team2_folder/**"  # Team 2's folder
-```
+````
 
 This setup ensures that:
+
 - Each team works in their own isolated space.
 - Changes from different teams won't overlap.
 - Teams can have the same initial code in their respective folders.
@@ -328,6 +332,7 @@ This setup ensures that:
 ### Option 2: Separate workspaces
 
 Alternatively, you can create separate workspaces for each team. This approach:
+
 - Provides complete isolation between teams.
 - Allows teams to have their own deployment workflows.
 - May require more maintenance overhead.
@@ -336,6 +341,7 @@ Alternatively, you can create separate workspaces for each team. This approach:
 ### Managing changes and pull requests
 
 When using the [promotion mode](../11_git_sync/index.mdx#git-sync---promotion-mode-deploy-to-prod-using-a-git-workflow) in Git sync:
+
 - Changes to the same item will be grouped into a single PR.
 - Different items will create separate PRs.
 - You can use the [group per folder](../11_git_sync/index.mdx#group-deployed-objects-by-folder) option to group changes by folder instead of by item.

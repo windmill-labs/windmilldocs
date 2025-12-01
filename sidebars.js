@@ -120,7 +120,6 @@ const sidebars = {
 								'misc/guides/sequin/index',
 								'misc/guides/snowflake_app_with_user_roles/index',
 								'misc/guides/otel/index',
-								'misc/guides/aws_bedrock/index',
 								'misc/guides/aws_marketplace/index'
 							]
 						}
@@ -388,6 +387,7 @@ const sidebars = {
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
 				'core_concepts/ai_agents/index',
+				'core_concepts/workspace_dependencies/index',
 				'core_concepts/workspace_settings/index',
 				{
 					type: 'category',
@@ -747,7 +747,8 @@ const sidebars = {
 						'flows/early_return',
 						'flows/flow_approval',
 						'flows/sleep',
-						'flows/step_mocking'
+						'flows/step_mocking',
+						'flows/sticky_notes'
 					],
 					collapsed: true
 				},
@@ -1010,6 +1011,7 @@ const sidebars = {
 				},
 				'advanced/browser_automation/index',
 				'advanced/docker/index',
+				'advanced/security_isolation/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
