@@ -8,13 +8,12 @@ Workspace dependencies allow you to manage dependencies centrally at the workspa
 
 ## Quick start
 
-1. **Create dependency files** in workspace settings under `/dependencies`
+1. **Create dependency files** in workspace settings under `Dependencies`
 2. **Reference them in scripts** using annotations like `# requirements: myfile`
-3. **Choose your mode**: explicit control or hybrid with import inference
 
 ## Dependency files location
 
-All dependency files are stored under `/dependencies` in your workspace:
+Locally all dependency files are stored under `/dependencies` in your workspace:
 
 ```
 /dependencies/
@@ -39,38 +38,24 @@ All dependency files are stored under `/dependencies` in your workspace:
 Disables [import inference](../../advanced/6_imports/index.mdx), uses only specified files:
 
 ```python
-# requirements: ml, api
+# requirements: ml
 
 import pandas as pd
 import requests
 
 def main():
-    return "Uses only ml.requirements.in and api.requirements.in"
+    return "Uses only ml.requirements.in"
 ```
 
 ```typescript
-// package_json: frontend, shared
+// package_json: frontend
 
 import axios from 'axios';
 import lodash from 'lodash';
 
 export async function main() {
-    return "Uses only frontend.package.json and shared.package.json";
+    return "Uses only frontend.package.json";
 }
-```
-
-### Extra mode (hybrid with inference)
-
-Adds workspace dependencies to automatically [inferred imports](../../advanced/6_imports/index.mdx):
-
-```python
-# extra_requirements: ml
-
-import pandas as pd    # Auto-inferred
-import numpy as np     # From ml.requirements.in
-
-def main():
-    return "Combines inference + workspace dependencies";
 ```
 
 ### Including workspace defaults
@@ -78,13 +63,13 @@ def main():
 Use `default` token to include unnamed default files:
 
 ```python
-# requirements: default, ml
-# Includes /dependencies/requirements.in + ml.requirements.in
+# requirements: default
+# Includes /dependencies/requirements.in
 ```
 
 ```typescript
-// package_json: default, api
-// Includes /dependencies/package.json + api.package.json
+// package_json: default
+// Includes /dependencies/package.json
 ```
 
 ## Supported languages and features
@@ -103,10 +88,7 @@ Note: Go support not yet available. Extra requirements mode (`#extra_requirement
 Requires workspace admin permissions.
 
 1. Go to workspace settings → Dependencies
-2. Create new dependency files or upload existing ones
-3. Choose standard or `extra.` defaults for each language
-
-<!-- Image placeholder: Workspace dependencies settings interface -->
+2. Create new dependencies files
 
 ### Creating dependency files
 
@@ -147,40 +129,15 @@ Choose default behavior for scripts without annotations:
 - Scripts without annotations use this file only
 - Import inference disabled by default
 
-**Extra mode default**: Creates `/dependencies/extra.requirements.in`  
-- Scripts without annotations get these dependencies + inference
-- Hybrid mode by default
-
-<!-- Image placeholder: Default dependency file selection -->
+:::important
+Creation of workspace defaults will redeploy all existing runnables for given language!
+:::
 
 ## Advanced usage
-
-### Mixing workspace and inline dependencies
-
-```python
-# requirements: ml, api
-# custom-package==1.0.0
-# another-dep>=2.0
-
-import pandas as pd
-
-def main():
-    return "Uses workspace files + inline requirements"
-```
-
-### Multiple dependency files
-
-```python
-# requirements: base, ml, data-processing
-
-def main():
-    return "Combines multiple workspace dependency files"
-```
-
 ### Opting out of defaults
 
 ```python
-# disable_requirements
+# requirements:
 # Script ignores workspace defaults
 
 import pandas as pd  # Must be available in environment
@@ -188,18 +145,6 @@ import pandas as pd  # Must be available in environment
 def main():
     return "No workspace dependencies"
 ```
-
-### Empty dependencies
-
-```python
-# empty_requirements  
-# Script has no external dependencies
-
-def main():
-    return "No dependencies at all"
-```
-
-<!-- Image placeholder: Script editor showing dependency annotations -->
 
 ## CLI usage
 
@@ -221,10 +166,10 @@ wmill script generate-metadata my_script.py
 ### Manage dependencies
 ```bash
 # List available dependency files
-wmill dependencies list
+ls dependencies
 
 # View dependency file content
-wmill dependencies show ml.requirements.in
+cat dependencies/frontend.package.json
 ```
 
 ## Versioning and deployment
@@ -232,7 +177,6 @@ wmill dependencies show ml.requirements.in
 - Dependency files are versioned like scripts
 - Lockfiles record specific dependency file versions
 - Updating dependency files triggers redeployment of dependent scripts
-- Git sync includes dependency file changes
 
 ## Common patterns
 
@@ -272,10 +216,6 @@ wmill dependencies show ml.requirements.in
 ### Annotation conflicts
 - Use either `# requirements:` OR `# extra_requirements:`, not both
 - `# requirements:` takes precedence if both present
-
-### Default file issues
-- Cannot have both standard and `extra.` defaults for same language
-- Choose one: `/dependencies/requirements.in` OR `/dependencies/extra.requirements.in`
 
 ### CLI problems
 - Upgrade to latest Windmill CLI
