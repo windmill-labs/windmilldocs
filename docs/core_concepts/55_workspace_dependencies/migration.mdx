@@ -41,9 +41,13 @@ Add annotations to scripts that should use workspace dependencies:
 Create unnamed default files to set workspace-wide behavior:
 
 - `/dependencies/requirements.in` - Requirements mode default
-- `/dependencies/extra.requirements.in` - Extra mode default
 
+This will be referenced by all scripts unless explicitly told otherwise.
 Choose one form per language.
+
+:::important
+Creation of workspace defaults will redeploy all existing runnables for given language!
+:::
 
 ### 5. Update CLI
 
