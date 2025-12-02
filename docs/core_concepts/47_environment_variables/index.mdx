@@ -76,7 +76,9 @@ credentials to interact with the platform.
 | WM_STATE_PATH_NEW | u/user/flow_path/c_henri | State resource path unique to a script and its trigger (legacy) |
 | WM_FLOW_STEP_ID | c | The node id in a flow (like 'a', 'b', or 'f') |
 | WM_OBJECT_PATH | u_user_flow_path/u_user_flow_path/c/17[...]196dd | Script or flow step execution unique path, useful for storing results in an external service |
-| WM_OIDC_JWT | eyJh[...]ciOiJIUzI1NiIsInR5 | OIDC JWT token (EE only) |
+| WM_WORKER_GROUP | default | Name of the worker group the job is running on |
+| WM_RUNNABLE_ID | 1712845957812678132 | Hash of the script. Useful as cache key for cache that should be runnable specific. |
+| WM_END_USER_EMAIL | demo@windmill.dev | Email of the end user that executed the current script. Only available when triggered from an app. |
 
 ### Custom contextual variables
 
