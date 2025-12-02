@@ -1,0 +1,370 @@
+# Enterprise onboarding
+
+import DocCard from '@site/src/components/DocCard';
+
+Welcome to [Windmill Enterprise Edition](/pricing). This guide provides essential setup information and best practices for new enterprise customers.
+
+## Getting started
+
+### Docker images
+
+Switch your Docker images from `windmill` to `windmill-ee` for both servers and workers to enable Enterprise features.
+
+```bash
+# Example docker-compose.yml
+image: ghcr.io/windmill-labs/windmill-ee:latest
+```
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self-host Windmill"
+		description="Deploy Windmill on your own infrastructure with Docker or Kubernetes."
+		href="/docs/advanced/self_host"
+	/>
+</div>
+
+### License key
+
+Your license key is valid for 35 days and auto-renews daily as long as your subscription is active. You can use the same license key across multiple instances (production, staging, development).
+
+Mark non-production instances appropriately in [Instance Settings](../../advanced/18_instance_settings/index.mdx) so their compute usage isn't counted toward your subscription limits. For dev instances, you can also generate a development license key from the [Customer Portal](#customer-portal).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Instance settings"
+		description="Configure instance-wide settings including license management and telemetry."
+		href="/docs/advanced/instance_settings"
+	/>
+</div>
+
+## Security & compliance
+
+Windmill is SOC 2 Type II compliant. You can download the SOC 2 report from the Customer Portal (bottom left menu) once your subscription is active.
+
+We prioritize security vulnerabilities and address them promptly. For scanning your own environment, set up container scanning in your CI/CD pipeline.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Security isolation"
+		description="Learn about Windmill's security architecture and isolation mechanisms."
+		href="/docs/advanced/security_isolation"
+	/>
+</div>
+
+### Authentication
+
+Configure [SSO](../2_setup_oauth/index.mdx)/[SAML](../14_saml_and_scim/index.md) for user management and authentication. Windmill supports multiple identity providers including Google, Microsoft, Okta, GitHub, GitLab, and custom SAML providers.
+
+SAML includes group synchronization capabilities to automatically manage user permissions based on your identity provider groups.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Setup OAuth and SSO"
+		description="Configure Single Sign-On for Google, Microsoft, Okta, GitHub, GitLab and more."
+		href="/docs/misc/setup_oauth"
+	/>
+	<DocCard
+		title="Authentication"
+		description="Configure authentication methods and user access controls."
+		href="/docs/core_concepts/authentification"
+	/>
+	<DocCard
+		title="SAML and SCIM"
+		description="Enterprise SSO with SAML 2.0 and automated user provisioning with SCIM."
+		href="/docs/misc/saml_and_scim"
+	/>
+</div>
+
+### Audit logs
+
+Windmill provides comprehensive [audit logs](../../core_concepts/14_audit_logs/index.mdx) for every operation with side-effects. Track user actions, filter by date, username, action type, and operation.
+
+On Enterprise plans, audit logs are retained with unlimited duration. Logs are stored in Postgres and optionally in object storage for long-term archival.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Audit logs"
+		description="Track and monitor all operations and user actions in your Windmill instance."
+		href="/docs/core_concepts/audit_logs"
+	/>
+</div>
+
+## Infrastructure & operations
+
+### Object storage
+
+#### Workspace object storage
+
+[Connect your workspace to S3](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage), Azure Blob Storage, or Google Cloud Storage to enable users to read and write files without direct credential access. Windmill automatically tracks data flows through the Assets feature.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Object storage in Windmill"
+		description="Configure workspace and instance object storage for S3, Azure Blob, or GCS."
+		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
+	/>
+	<DocCard
+		title="Large data files"
+		description="Handle large files with S3 integration in scripts and flows."
+		href="/docs/core_concepts/persistent_storage/large_data_files"
+	/>
+</div>
+
+#### Instance object storage
+
+Configure [dedicated S3 storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) for large-scale log management and distributed dependency caching across all workers. This significantly improves cold start performance by sharing dependency caches across your worker pool.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Object storage in Windmill"
+		description="Configure workspace and instance object storage for S3, Azure Blob, or GCS."
+		href="/docs/core_concepts/object_storage_in_windmill#instance-object-storage"
+	/>
+    <DocCard
+		title="S3/Azure for Python/Go cache"
+		description="Enable distributed dependency caching backed by object storage."
+		href="/docs/misc/s3_cache"
+	/>
+</div>
+
+### Workers and scaling
+
+#### Worker configuration
+
+[Workers](../../core_concepts/9_worker_groups/index.mdx) execute one job at a time to use full resources efficiently. Each worker can execute up to 26 million jobs per month if each job lasts 100ms.
+
+Configure [worker groups](../../core_concepts/9_worker_groups/index.mdx) to assign specific jobs to workers with different specifications (GPU, high memory, etc.). Set init scripts and periodic scripts for custom worker configurations.
+
+Make sure your worker setup [complies with your subscription limits](../7_plans_details/index.mdx#setup-and-compute-units).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workers and worker groups"
+		description="Configure and manage worker pools for job execution."
+		href="/docs/core_concepts/worker_groups"
+	/>
+	<DocCard
+		title="Worker group management UI"
+		description="Manage worker groups, tags, and configurations from the UI."
+		href="/docs/misc/worker_group_management_ui"
+	/>
+	<DocCard
+		title="Dedicated workers"
+		description="Assign workers to specific scripts for high-throughput scenarios."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+	<DocCard
+		title="Set up and compute units"
+		description="Understand Windmill's pricing plans and compute unit calculations."
+		href="/docs/misc/plans_details#setup-and-compute-units"
+	/>
+</div>
+
+#### Autoscaling
+
+Configure [autoscaling](../../core_concepts/42_autoscaling/index.mdx) to automatically adjust the number of workers based on workload. Set minimum and maximum workers, and integrate with Kubernetes, ECS, or custom orchestrators.
+
+With autoscaling, worker uptime is measured with minute-level granularity - 10 workers at 2GB for 1/10th of the month costs the same as 1 worker for the full month.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Autoscaling"
+		description="Automatically scale workers based on workload demands."
+		href="/docs/core_concepts/autoscaling"
+	/>
+</div>
+
+### Private registries and dependencies
+
+#### Private npm and PyPI packages
+
+Configure custom registries for private dependencies. Set environment variables on workers to use private npm registries or PyPI repositories.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in Python"
+		description="Configure private PyPI repositories and manage Python dependencies."
+		href="/docs/advanced/dependencies_in_python"
+	/>
+	<DocCard
+		title="Dependencies in TypeScript"
+		description="Configure private npm registries and manage TypeScript dependencies."
+		href="/docs/advanced/dependencies_in_typescript"
+	/>
+	<DocCard
+		title="Workspace dependencies"
+		description="Manage dependencies centrally at the workspace level."
+		href="/docs/core_concepts/workspace_dependencies"
+	/>
+</div>
+
+#### Docker registry
+
+Use private Docker registries for custom Docker-based scripts and worker images.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Docker"
+		description="Run Docker containers in Windmill for custom environments."
+		href="/docs/advanced/docker"
+	/>
+</div>
+
+### Air-gapped environments
+
+For environments without internet access, we provide extended license keys (e.g., 2-month validity) with manual renewal.
+
+Share telemetry manually on a regular basis (typically monthly). The telemetry endpoint is: `http://stats.windmill.dev/`
+
+Contact us to arrange air-gapped deployment and extended license keys.
+
+### Performance benchmarks
+
+Windmill is designed for high performance and scale. Each [worker](../../core_concepts/9_worker_groups/index.mdx) executes one job at a time using full CPU and memory resources.
+
+Actual capacity depends on your job complexity, number, and duration. Workers are extremely efficient for short-running jobs.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Benchmarks"
+		description="Performance benchmarks comparing Windmill to other workflow engines."
+		href="/docs/misc/benchmarks/competitors"
+	/>
+</div>
+
+## Development workflow
+
+### Version control with Git sync
+
+[Git sync](../../advanced/11_git_sync/index.mdx) allows your workspace to synchronize with a Git repository for version control of scripts, flows, and apps. This is one of the most commonly requested features for enterprise customers.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Git sync"
+		description="Automatically commit and push workspace changes to your Git repository."
+		href="/docs/advanced/git_sync"
+	/>
+	<DocCard
+		title="Deploy to prod"
+		description="Use Git workflow to deploy from staging to production."
+		href="/docs/advanced/deploy_to_prod"
+	/>
+</div>
+
+### Common setup recommendations
+
+We strongly recommend configuring these features for production deployments:
+
+1. **SSO/SAML** - Centralized user authentication and management
+2. **Workspace object storage** - S3 or Azure Blob integration for large data files
+3. **Instance object storage** - Distributed dependency caching and large-scale log management
+4. **[Git sync](../../advanced/11_git_sync/index.mdx)** - Version control for scripts, flows, and apps
+5. **[Worker groups](../../core_concepts/9_worker_groups/index.mdx)** - Dedicated workers for different workload types
+6. **[Autoscaling](../../core_concepts/42_autoscaling/index.mdx)** - Automatic worker scaling based on demand
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Core concepts"
+		description="Explore all Windmill core concepts and features."
+		href="/docs/core_concepts"
+	/>
+</div>
+
+## Billing
+
+### Compute units
+
+A [Compute Unit](../7_plans_details/index.mdx#setup-and-compute-units) (CU) = 2 worker-GB-month.
+
+- Standard worker (2GB memory) = 1 CU
+- Large workers (>2GB memory) = 2 CU (capped on self-hosted)
+- 8 native workers = 1 CU
+
+**Minimum recommended setup:** 3 CUs (2 standard workers at 2GB each + 8 native workers)
+
+You can adjust your subscription anytime via the Customer Portal with prorated billing.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Plans & pricing"
+		description="Understand Windmill's pricing plans and compute unit calculations."
+		href="/docs/misc/plans_details"
+	/>
+</div>
+
+### Telemetry and usage tracking
+
+Windmill uses lightweight telemetry to automatically track usage:
+
+- **Seats:** Active users in the last 30 days across all instances
+- **Compute Units:** Memory allocated to production workers
+
+The telemetry endpoint is `stats.windmill.dev`. Mark dev/staging instances as "Non-prod" in [Instance Settings](../../advanced/18_instance_settings/index.mdx) so they don't count toward compute usage.
+
+You can manually send usage from [Instance settings](../../advanced/18_instance_settings/index.mdx) > Telemetry > "Send usage".
+
+### License key management
+
+If usage exceeds your subscription terms, we'll notify you and provide 35 days to adjust before the key stops auto-renewing. You have three options:
+
+1. Clarify if telemetry is inaccurate
+2. Adjust your usage
+3. Upgrade your subscription
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Instance settings"
+		description="Configure telemetry and license key settings."
+		href="/docs/advanced/instance_settings"
+	/>
+</div>
+
+### Customer Portal
+
+Access [portal.windmill.dev](https://portal.windmill.dev) to:
+
+- Monitor usage and compute units
+- Update subscriptions with prorated billing
+- Manage invoices and payment methods
+- Download SOC 2 report
+- Adjust seats and compute units
+- Grant portal access to team members via 'Contact emails'
+
+## Support & communication
+
+Enterprise customers get access to dedicated support channels via Slack or Discord. Our team provides 24/7 support with a [3-hour SLA response time](../12_support_and_sla/index.mdx) and direct engineer assistance.
+
+If it hasn't been set up yet, you can request access to the dedicated Slack or Discord channel by contacting us at [contact@windmill.dev](mailto:contact@windmill.dev).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Support & SLA"
+		description="Learn about technical support, issue prioritization, and service level agreements."
+		href="/docs/misc/support_and_sla"
+	/>
+</div>
+
+### Getting help
+
+If you have questions or need assistance:
+
+- **Dedicated channel:** Your private Slack or Discord channel
+- **Email:** contact@windmill.dev
+- **Book a call:** upon request
+- **Documentation:** Search our comprehensive docs for guides and references
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Getting help"
+		description="Learn how to get support and find answers to your questions."
+		href="/docs/misc/getting_help"
+	/>
+</div>
+
+We're here to ensure your success with Windmill. Don't hesitate to reach out with questions, feedback, or feature requests.
+
+### Design partner opportunities
+
+As an Enterprise customer, you're a design partner for our roadmap. We value your feedback on features, use cases, and product direction.
+
+Share your requirements and suggestions via your dedicated support channel or directly with our team.

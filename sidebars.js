@@ -1027,6 +1027,7 @@ const sidebars = {
 			label: 'Enterprise Features',
 			items: [
 				'misc/plans_details/index',
+				'misc/enterprise_onboarding/index',
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
 				'misc/worker_group_management_ui/index',
