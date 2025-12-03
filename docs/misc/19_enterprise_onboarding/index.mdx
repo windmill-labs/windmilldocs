@@ -6,13 +6,22 @@ Welcome to [Windmill Enterprise Edition](/pricing). This guide provides essentia
 
 ## Getting started
 
-### Docker images
+### Container images
 
-Switch your Docker images from `windmill` to `windmill-ee` for both servers and workers to enable Enterprise features.
+Switch your container images from `windmill` to `windmill-ee` for both servers and workers to enable Enterprise features.
+
+For Docker Compose deployments:
 
 ```bash
 # Example docker-compose.yml
 image: ghcr.io/windmill-labs/windmill-ee:latest
+```
+
+For Kubernetes deployments (recommended for serious deployments), this is done automatically when you enable enterprise in your Helm chart values.yaml:
+
+```yaml
+enterprise:
+  enabled: true
 ```
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -127,6 +136,29 @@ Configure [dedicated S3 storage](../../core_concepts/38_object_storage_in_windmi
 	/>
 </div>
 
+### DuckLake + DuckDB for ETL
+
+[Ducklake](../../core_concepts/53_ducklake/index.mdx) allows you to store massive amounts of data in S3 and query it efficiently using DuckDB with natural SQL language. This is ideal for ETL workloads, data analytics, and large-scale data processing.
+
+With Ducklake, you can:
+- Store data lakes in S3 with efficient columnar format
+- Query data directly from S3 using DuckDB
+- Build data pipelines and transformations with SQL
+- Integrate with Windmill's workflow orchestration for complex ETL jobs
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Ducklake"
+		description="Store massive amounts of data in S3 and query it efficiently with DuckDB."
+		href="/docs/core_concepts/ducklake"
+	/>
+	<DocCard
+		title="Data pipelines"
+		description="Build and orchestrate data pipelines with Windmill."
+		href="/docs/core_concepts/data_pipelines"
+	/>
+</div>
+
 ### Workers and scaling
 
 #### Worker configuration
@@ -195,18 +227,6 @@ Configure custom registries for private dependencies. Set environment variables 
 		title="Workspace dependencies"
 		description="Manage dependencies centrally at the workspace level."
 		href="/docs/core_concepts/workspace_dependencies"
-	/>
-</div>
-
-#### Docker registry
-
-Use private Docker registries for custom Docker-based scripts and worker images.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Docker"
-		description="Run Docker containers in Windmill for custom environments."
-		href="/docs/advanced/docker"
 	/>
 </div>
 
