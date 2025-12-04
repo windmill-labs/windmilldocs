@@ -1,6 +1,6 @@
-# Enterprise onboarding
-
 import DocCard from '@site/src/components/DocCard';
+
+# Enterprise onboarding
 
 Welcome to [Windmill Enterprise Edition](/pricing). This guide provides essential setup information and best practices for new enterprise customers.
 
@@ -66,6 +66,8 @@ Configure [SSO](../2_setup_oauth/index.mdx)/[SAML](../14_saml_and_scim/index.md)
 
 SAML includes group synchronization capabilities to automatically manage user permissions based on your identity provider groups.
 
+**Note:** Windmill Pro is limited to a maximum of 10 users with SSO.
+
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Setup OAuth and SSO"
@@ -89,6 +91,8 @@ SAML includes group synchronization capabilities to automatically manage user pe
 Windmill provides comprehensive [audit logs](../../core_concepts/14_audit_logs/index.mdx) for every operation with side-effects. Track user actions, filter by date, username, action type, and operation.
 
 On Enterprise plans, audit logs are retained with unlimited duration. Logs are stored in Postgres and optionally in object storage for long-term archival.
+
+**Note:** Audit logs are not available in Windmill Pro.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -127,6 +131,8 @@ On Enterprise plans, audit logs are retained with unlimited duration. Logs are s
 #### Instance object storage
 
 Configure [dedicated S3 storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) for large-scale log management and distributed dependency caching across all workers. This significantly improves cold start performance by sharing dependency caches across your worker pool.
+
+**Note:** Distributed dependency cache backed by S3 is not available in Windmill Pro.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -314,6 +320,8 @@ A [Compute Unit](../7_plans_details/index.mdx#setup-and-compute-units) (CU) = 2 
 
 **Minimum recommended setup:** 3 CUs (2 standard workers at 2GB each + 8 native workers)
 
+**Note:** Windmill Pro is limited to a maximum of 10 Compute Units.
+
 You can adjust your subscription anytime via the [Customer Portal](#customer-portal) with prorated billing.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -391,6 +399,8 @@ Our [license terms](https://www.windmill.dev/terms) are available for self-hoste
 Enterprise customers get access to dedicated support channels via Slack or Discord. Our team provides 24/7 support with a [3-hour SLA response time](../12_support_and_sla/index.mdx) and direct engineer assistance.
 
 If it hasn't been set up yet, you can request access to the dedicated Slack or Discord channel by contacting us at [contact@windmill.dev](mailto:contact@windmill.dev).
+
+**Note:** Windmill Pro customers receive support via email with a 48-hour response time. Dedicated Slack or Discord channels are not available for Pro plans.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
