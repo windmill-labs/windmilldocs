@@ -153,7 +153,7 @@ Resource types in Windmill are associated with JSON Schemas. A resource type def
 
 ## Advanced settings
 
-main function's arguments can be given advanced settings that will affect the inputs' [auto-generated UI](../6_auto_generated_uis/index.mdx) and JSON Schema.
+Main function's arguments can be given advanced settings that will affect the inputs' [auto-generated UI](../6_auto_generated_uis/index.mdx) and JSON Schema.
 
 Here is an example on how to define a [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) list as an enum of strings using the `Generated UI` menu.
 
@@ -176,20 +176,21 @@ Each argument has the following settings:
 
 Below is the list of advanced settings for each type of field:
 
-| Type    | Advanced Configuration                                                                                                                                                                                                                                                         |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Integer | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                        |
-| Number  | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                        |
-| String  | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex) |
-| Boolean | No advanced configuration for this type.                                                                                                                                                                                                                                       |
-| Object  | Advanced settings are [Resource types](../3_resources_and_types/index.mdx).                                                                                                                                                                                                    |
-| Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes                                                                                                                                      |
-| Any     | No advanced configuration for this type.                                                                                                                                                                                                                                       |
+| Type     | Advanced Configuration                                                                                                                                                                                                                                                         |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Integer  | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                        |
+| Number   | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                        |
+| String   | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex) |
+| Boolean  | No advanced configuration for this type.                                                                                                                                                                                                                                       |
+| Resource | [Resource type](../3_resources_and_types/index.mdx).                                                                                                                                                                                                                           |
+| Object   | Object properties, or a Template (path to a [`json_schema` resource](../3_resources_and_types/index.mdx#json-schema-resources)) that contains a JSON schema with the properties.                                                                                                                                                   |
+| Array    | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes                                                                                                                                      |
+| Any      | No advanced configuration for this type.                                                                                                                                                                                                                                       |
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Generated UI"
-		description="main function's arguments can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
+		description="Main function's arguments can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
 		href="/docs/script_editor/customize_ui"
 	/>
 </div>
@@ -323,9 +324,7 @@ async function category(department: string) {
 			{ value: 'backend', label: 'Backend' }
 		];
 	}
-	return [
-		{ value: 'general', label: 'General' }
-	];
+	return [{ value: 'general', label: 'General' }];
 }
 ```
 
@@ -379,7 +378,7 @@ You can implement custom filtering and sorting logic within your function. In th
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	controls
-		src="/videos/dynamic_select_flow.mp4"
+	src="/videos/dynamic_select_flow.mp4"
 />
 
 ## Backend schema validation
