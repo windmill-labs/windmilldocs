@@ -28,9 +28,9 @@ Here are the different options available in the toolbar:
 - **Previous/Next**: undo actions.
 - **[Path](../core_concepts/16_roles_and_permissions/index.mdx#path)**: define the permissions of the flow.
 - **`⋮` menu**:
-	- **Deployment History**: view the [deployment](../core_concepts/0_draft_and_deploy/index.mdx#deployment-history) history of the flow.
-	- **Export**: view the flow as JSON or YAML.
-	- **Edit in YAML**: edit the flow in YAML.
+  - **Deployment History**: view the [deployment](../core_concepts/0_draft_and_deploy/index.mdx#deployment-history) history of the flow.
+  - **Export**: view the flow as JSON or YAML.
+  - **Edit in YAML**: edit the flow in YAML.
 - **Tutorial button**: follow the tutorials, reset them or skip them.
 - **Diff**: view the diff between the current and the last [version](../core_concepts/0_draft_and_deploy/index.mdx) of the flow.
 - **AI Builder**: [build flow with AI](./17_ai_flows.mdx).
@@ -46,13 +46,14 @@ Here are the different options available in the toolbar:
 
 The flow can be exported as JSON or YAML. The export will include the flow metadata, settings, and steps.
 
-![Flow Export](../misc/1_share_on_hub/export_flow.png.webp "Flow Export")
+![Flow Export](../misc/1_share_on_hub/export_flow.png.webp 'Flow Export')
 
 ### Edit in YAML
 
 You can edit directly the yaml of flows within the flow editor.
 
 In particular, you can:
+
 - Edit flow metadata.
 - Edit steps ids.
 - Edit steps features.
@@ -69,6 +70,7 @@ In particular, you can:
 The tutorial button allows you to follow the tutorials, reset them or skip them.
 
 The current tutorials on the Flow editor are:
+
 - Simple flow tutorial
 - [For loops](./12_flow_loops.md) tutorial
 - [Branch one](./13_flow_branches.md#branch-one) tutorial
@@ -117,13 +119,13 @@ The owner can be either a user, or a group of users ([folder](../core_concepts/8
 
 This is where you can give instructions to users on how to run your Flow. It supports markdown.
 
-![Flow Metadata](../assets/flows/flow_settings_metadata.png "Flow Metadata")
+![Flow Metadata](../assets/flows/flow_settings_metadata.png 'Flow Metadata')
 
-![Flow Metadata Markdown](../assets/flows/flow_settings_metadata_markdown.png "Flow Metadata Markdown")
+![Flow Metadata Markdown](../assets/flows/flow_settings_metadata_markdown.png 'Flow Metadata Markdown')
 
 ### Advanced
 
-![Flow Advanced](../assets/flows/flow_advanced_settings.png "Flow Advanced")
+![Flow Advanced](../assets/flows/flow_advanced_settings.png 'Flow Advanced')
 
 The advanced section allows to configure the following:
 
@@ -164,7 +166,7 @@ The advanced section allows to configure the following:
 
 Flows can be triggered manually or in reaction to external events.
 
-![Flow triggers](../assets/flows/flow_triggers.png "Flow triggers")
+![Flow triggers](../assets/flows/flow_triggers.png 'Flow triggers')
 
 See [Triggering flows](../getting_started/8_triggers/index.mdx) for more details.
 
@@ -242,15 +244,16 @@ main function's arguments can be given advanced settings that will affect the in
 
 Below is the list of all available advanced settings for each argument type:
 
-| Type    | Advanced Configuration                                                                                                                    |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Integer | Min and Max. Currency. Currency locale.                                                                                                   |
-| Number  | Min and Max. Currency. Currency locale.                                                                                                                              |
-| String  | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../core_concepts/2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex)                 |
-| Boolean | No advanced configuration for this type.                                                                                                  |
-| Object  | Advanced settings are [Resource types](../core_concepts/3_resources_and_types/index.mdx).                                                 |
-| Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
-| Any     | No advanced configuration for this type.                                                                                          |
+| Type     | Advanced Configuration                                                                                                                                                                                                                                                                       |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Integer  | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                                      |
+| Number   | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                                      |
+| String   | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../core_concepts/2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex) |
+| Boolean  | No advanced configuration for this type.                                                                                                                                                                                                                                                     |
+| Resource | [Resource type](../core_concepts/3_resources_and_types/index.mdx).                                                                                                                                                                                                                           |
+| Object   | Object properties, or a Template (path to a [`json_schema` resource](../core_concepts/3_resources_and_types/index.mdx#json-schema-resources)) that contains a JSON schema with the properties.                                                                                                                                                                 |
+| Array    | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes                                                                                                                                                    |
+| Any      | No advanced configuration for this type.                                                                                                                                                                                                                                                     |
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
