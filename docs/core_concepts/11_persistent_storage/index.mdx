@@ -10,7 +10,7 @@ In the context of Windmill, the stakes are: **where to effectively store and man
 
 :::info TLDR
 
-When it comes to storing data manipulated by Windmill, it is recommended to only store Windmill-specific elements ([resources](../3_resources_and_types/index.mdx), [variables](../2_variables_and_secrets/index.mdx) etc.). To store data, it is recommended to use external storage service providers that can be accessed from Windmill.
+You can store Windmill-specific elements with [resources](../3_resources_and_types/index.mdx), [variables](../2_variables_and_secrets/index.mdx) etc. To store data, it is recommended to use data tables, or external storage service providers that can be accessed from Windmill.
 
 <br />
 
@@ -20,15 +20,45 @@ This present document gives a list of trusted services to use alongside Windmill
 
 <br />
 
-There are 4 kinds of persistent storage in Windmill:
+There are 5 kinds of persistent storage in Windmill:
 
-1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
+1. [Data tables](#data-tables) for out-of-the-box relational data storage.
 
-2. [Object storage for large data](#large-data-s3-r2-minio-azure-blob-google-cloud-storage) such as S3.
+2. [Ducklakes](#ducklake) for data lakehouse storage.
 
-3. [Big structured SQL data](#structured-sql-data-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
+3. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
 
-4. [NoSQL and document database](#nosql--document-databases-mongodb-key-value-stores) such as MongoDB and Key-Value stores.
+4. [Object storage for large data](#large-data-s3-r2-minio-azure-blob-google-cloud-storage) such as S3.
+
+5. [Big structured SQL data](#structured-sql-data-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
+
+6. [NoSQL and document database](#nosql--document-databases-mongodb-key-value-stores) such as MongoDB and Key-Value stores.
+
+## Data tables
+
+You can setup data tables directly within Windmill to store relational data, without needing to connect an external database.
+All details at:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Data tables"
+		description="Near-zero setup relational database."
+		href="/docs/core_concepts/persistent_storage/data_tables"
+	/>
+</div>
+
+## Ducklake
+
+Ducklake allows you to store massive amounts of data in parquet files on S3 while querying it with natural SQL syntax.
+Windmill offers first-class Ducklake integration to store large datasets in a data lakehouse format.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Ducklake"
+		description="Data lakehouse storage for massive datasets."
+		href="/docs/core_concepts/persistent_storage/ducklake"
+	/>
+</div>
 
 ## You already have your own database
 
@@ -38,11 +68,9 @@ If your service provider is already part of [our list of integrations](../../int
 
 If your service provider is not already integrated with Windmill, you can create a [new resource type](../../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type) to establish the connection (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
 
-## Within Windmill: not recommended
+## Within Windmill: not recommended\*\*\*\*
 
-Windmill is not designed to store heavy data that extends beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
-
-Instead, Windmill is very convenient to use alongside data storage providers to manipulate big amounts of data.
+For each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location. Windmill is very convenient to use alongside data storage providers to manipulate big amounts of data.
 
 There are however internal methods to persist data between executions of jobs.
 
@@ -62,7 +90,7 @@ On heavier data objects & unstructured data storage, [Amazon S3](https://aws.ama
 
 Windmill comes with a [native integration with S3, Azure Blob, and Google Cloud Storage](./large_data_files.mdx), making them the recommended storage for large objects like files and binary data.
 
-![Workspace object storage Infographic](./s3_infographics.png "Workspace object storage Infographic")
+![Workspace object storage Infographic](./s3_infographics.png 'Workspace object storage Infographic')
 
 All details at:
 
