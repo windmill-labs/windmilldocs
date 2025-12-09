@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Generated UI
 
-main function's arguments can be given advanced settings that will affect the inputs' [auto-generated UI](../core_concepts/6_auto_generated_uis/index.mdx) and [JSON Schema](../core_concepts/13_json_schema_and_parsing/index.mdx).
+Main function's arguments can be given advanced settings that will affect the inputs' [auto-generated UI](../core_concepts/6_auto_generated_uis/index.mdx) and [JSON Schema](../core_concepts/13_json_schema_and_parsing/index.mdx).
 
 From the script's [Settings](./settings.mdx), pick "Generated UI" tab.
 
@@ -18,6 +18,7 @@ Here is an example on how to define a [Python](../getting_started/0_scripts_quic
 <br />
 
 Each argument has the following settings:
+
 - **Name**: the name of the argument (defined in the main Function).
 - **Type**: the type of the argument (defined in the main Function): Integer, Number, String, Boolean, Array, Object, or Any.
 - **Description**: the description of the argument.
@@ -27,15 +28,16 @@ Each argument has the following settings:
 
 Below is the list of advanced settings for each type of field:
 
-| Type    | Advanced Configuration                                                                                                                    |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Integer | Min and Max. Currency. Currency locale.                                                                                                   |
-| Number  | Min and Max. Currency. Currency locale.                                                                                                                              |
-| String  | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../core_concepts/2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex)                 |
-| Boolean | No advanced configuration for this type.                                                                                                  |
-| Object  | Advanced settings are [Resource types](../core_concepts/3_resources_and_types/index.mdx).                                                 |
-| Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
-| Any     | No advanced configuration for this type.                                                                                                  |
+| Type     | Advanced Configuration                                                                                                                                                                                                                                                                       |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Integer  | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                                      |
+| Number   | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                                      |
+| String   | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../core_concepts/2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex) |
+| Boolean  | No advanced configuration for this type.                                                                                                                                                                                                                                                     |
+| Resource | No advanced configuration for this type.                                                                                                                                                                                                                                                     |
+| Object   | Object properties, or a Template (path to a [`json_schema` resource](../core_concepts/3_resources_and_types/index.mdx#json-schema-resources)) that contains a JSON schema with the properties.                                                                                                                                                                 |
+| Array    | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes                                                                                                                                                    |
+| Any      | No advanced configuration for this type.                                                                                                                                                                                                                                                     |
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

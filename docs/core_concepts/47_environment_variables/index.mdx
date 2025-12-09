@@ -52,6 +52,7 @@ You can use them in a Script by clicking on "+Context Var":
 | INVALIDATE_ALL_SESSIONS_ON_LOGOUT | false          | All sessions will be invalidated on logout if set to true (default false) 																								                          | Server                |
 | RUN_UPDATE_CA_CERTIFICATE_AT_START | false | If true, runs CA certificate update command at startup before other initialization | All |
 | RUN_UPDATE_CA_CERTIFICATE_PATH | /usr/sbin/update-ca-certificates | Path to the CA certificate update command/script to run when RUN_UPDATE_CA_CERTIFICATE_AT_START is true | All |
+| OIDC_TOKEN_EXPIRY_SECS | 48 * 60 * 60 | The default expiry time in seconds for OIDC tokens. The default is 48 hours. | All |
 
 ## Contextual variables
 
