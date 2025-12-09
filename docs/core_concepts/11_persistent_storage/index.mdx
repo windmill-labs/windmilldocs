@@ -10,7 +10,8 @@ In the context of Windmill, the stakes are: **where to effectively store and man
 
 :::info TLDR
 
-You can store Windmill-specific elements with [resources](../3_resources_and_types/index.mdx), [variables](../2_variables_and_secrets/index.mdx) etc. To store data, it is recommended to use data tables, or external storage service providers that can be accessed from Windmill.
+We recommend using **data tables** to store relational data, and **ducklakes** to store massive datasets.
+Alternatively, you can connect your own database or S3 storage as a [resource](../3_resources_and_types/index.mdx).
 
 <br />
 
@@ -68,9 +69,7 @@ If your service provider is already part of [our list of integrations](../../int
 
 If your service provider is not already integrated with Windmill, you can create a [new resource type](../../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type) to establish the connection (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
 
-## Within Windmill: not recommended\*\*\*\*
-
-For each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location. Windmill is very convenient to use alongside data storage providers to manipulate big amounts of data.
+## Within Windmill: not recommended
 
 There are however internal methods to persist data between executions of jobs.
 
@@ -79,7 +78,7 @@ All details at:
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Within Windmill: not recommended"
-		description="Windmill is not designed to store heavy data that extends beyond the execution of a script or flow. There are however internal methods to persist data between executions of jobs."
+		description="Internal methods to persist data between executions of jobs."
 		href="/docs/core_concepts/persistent_storage/within_windmill"
 	/>
 </div>

@@ -6,12 +6,6 @@ import TabItem from '@theme/TabItem';
 
 This page is part of our section on [Persistent storage & databases](./index.mdx) which covers where to effectively store and manage the data manipulated by Windmill. Check that page for more options on data storage.
 
-Windmill is not designed to store heavy data that extends beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
-
-Instead, Windmill is very convenient to use alongside data storage providers to manipulate big amounts of data.
-
-There are however internal methods to persist data between executions of jobs.
-
 ## States and resources
 
 Within Windmill, you can use [States](../3_resources_and_types/index.mdx#states) and [Resources](../3_resources_and_types/index.mdx) as a way to store a transient state - that can be represented as small JSON.
@@ -108,12 +102,11 @@ It's a powerful escape hatch when [passing data as output/input](../../flows/16_
 <TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
-import * as wmill from "windmill-client@1.297.0"
+import * as wmill from 'windmill-client@1.297.0';
 
 export async function main(x: string) {
-  await wmill.setFlowUserState("FOO", 42)
-  return await wmill.getFlowUserState("FOO")
-
+	await wmill.setFlowUserState('FOO', 42);
+	return await wmill.getFlowUserState('FOO');
 }
 ```
 
@@ -139,7 +132,7 @@ def main(x: str):
 	src="/videos/flow_state.mp4"
 />
 
-<br/>
+<br />
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -182,12 +175,14 @@ For heavier ETL processes or sharing data between steps in a flow, Windmill prov
 
 :::caution
 Although Shared Directories are recommended for persisting states within a flow, it's important to note that:
+
 - All steps are executed on the same worker
 - The data stored in the Shared Directory is strictly ephemeral to the flow execution
 - The contents are not preserved across [suspends](../../flows/11_flow_approval.mdx) and [sleeps](../../flows/15_sleep.md)
-:::
+  :::
 
 To enable the Shared Directory:
+
 1. Open the `Settings` menu in the Windmill interface
 2. Go to the `Shared Directory` section
 3. Toggle on the option for `Shared Directory on './shared'`
@@ -195,6 +190,7 @@ To enable the Shared Directory:
 ![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png.webp)
 
 Once enabled, steps can read and write files to the `./shared` folder to pass data between them. This is particularly useful for:
+
 - Handling larger datasets that would be impractical to pass as step inputs/outputs
 - Temporary storage of intermediate processing results
 - Sharing files between steps in an ETL pipeline
