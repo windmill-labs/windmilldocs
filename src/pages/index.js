@@ -10,6 +10,7 @@ import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
+import BackedByInvestors from '../landing/BackedByInvestors';
 import HeroImage from '../landing/HeroImage';
 import TextImageSections from '../landing/TextImageSections';
 import TestimonialsSection from '../landing/TestimonialsSection';
@@ -27,6 +28,7 @@ function HomepageHeader() {
 			<Hero />
 			<HeroImage imageSrc="/img/landing_page_V2/heroimage.png" imageAlt="Windmill IDE" />
 			<LogoClouds />
+			<BackedByInvestors />
 			<TextImageSections />
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
