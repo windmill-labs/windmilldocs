@@ -31,7 +31,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://www.pave.com/',
 		linkedIn: 'https://www.linkedin.com/in/lewisjellis/',
-		text: `At Pave, we self-host Windmill Enterprise Edition to run 100+ scripts and 15+ crons. Our Windmill deployment interacts with half a dozen data stores to power all kinds of business-critical tasks and automations across several teams. It enables our engineering org to move quickly while keeping things secure and avoiding infrastructure sprawl. We expect to continue moving more workloads into Windmill over time, simplifying our systems in the process.<br/><br/>The Windmill team are also great partners to work with - incredibly responsive, and have developed new capabilities to support our usage patterns, enabling our Windmill scripts to more seamlessly tie into the rest of our codebase.`
+		text: `At Pave, we self-host Windmill Enterprise Edition to run 100+ scripts and 15+ crons. Our Windmill deployment interacts with half a dozen data stores to power all kinds of business-critical tasks and automations across several teams. It enables our engineering org to move quickly while keeping things secure and avoiding infrastructure sprawl. `
 	},
 	{
 		author: {
@@ -59,7 +59,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://www.investing.com',
 		linkedIn: 'https://www.linkedin.com/in/yonatan-adest/',
-		text: `At Investing.com, we use Windmill to orchestrate our AI workflows. The quick setup through Docker Compose and intuitive UI allowed us to get started immediately. We leverage Windmill for various automation tasks including content processing pipelines, automated stock analysis report generation, and ETL processes. The excellent support response time (15-30 minutes) and comprehensive logging capabilities make it an integral part of our infrastructure.`
+		text: `At Investing.com, we use Windmill to orchestrate our AI workflows. The quick setup through Docker Compose and intuitive UI allowed us to get started immediately. We leverage Windmill for various automation tasks including content processing pipelines, automated stock analysis report generation, and ETL processes.`
 	},
 	{
 		author: {
@@ -73,7 +73,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://www.qovery.com',
 		linkedIn: '/blog/qovery-case-study',
-		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. They made it simple to build, schedule, and monitor script & flows. The platform offers a clear DX for code editing, permission management and error handling.`
+		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. The platform offers a clear DX for code editing, permission management and error handling.`
 	},
 	{
 		author: {
