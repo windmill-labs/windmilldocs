@@ -1,0 +1,141 @@
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Data Tables
+
+This page is part of our section on [Persistent storage & databases](./index.mdx) which covers where to effectively store and manage the data manipulated by Windmill. Check that page for more options on data storage.
+
+Windmill **Data Tables** let you store and query relational data with **near-zero setup** using databases managed automatically by Windmill. They provide a simple, safe, workspace-scoped way to leverage SQL inside your workflows without exposing credentials.
+
+---
+
+## Getting started
+
+Go to `workspace settings` -> `Data Tables` and configure a Data Table :
+
+![Data Table settings](./datatable_images/datatable_settings_1.png 'Data Table settings')
+
+Superadmins can use a [Custom Instance Database](/docs/core_concepts/custom_instance_database) and get started with no setup.
+
+## Usage
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="Typescript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import * as wmill from 'windmill-client';
+
+export async function main(user_id: string) {
+	// let sql = wmill.datatable('named_datatable');
+	let sql = wmill.datatable();
+
+	// This string interpolation syntax is safe
+	// and is transformed into a parameterized query
+	let friend = await sql`SELECT * FROM friend WHERE id = ${user_id}`.fetchOne();
+	// let allFriends = await sql`INSERT INTO friend VALUES ('John', 21)`.fetch();
+
+	return friend;
+}
+```
+
+</TabItem>
+
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+
+def main(user_id: str):
+    # db = wmill.datatable('named_datatable')
+    db = wmill.datatable()
+
+    # Postgres scripts use positional arguments
+    friend = db.query('SELECT * FROM friend WHERE id = $1', user_id).fetch_one()
+    # all_friends = db.query('SELECT * FROM friend').fetch()
+
+    return friend
+```
+
+</TabItem>
+
+<TabItem value="duckdb" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```sql
+-- $user_id (bigint)
+
+-- ATTACH 'datatable://named_datatable' AS dt;
+ATTACH 'datatable' AS dt;
+USE dt;
+
+SELECT * FROM friend WHERE id = $user_id;
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+### Assets integration
+
+Data tables are **assets** in Windmill.
+When you reference a data table in a script, Windmill automatically parses the code and detects them.
+You can then click on it and explore the data table in the Database Explorer.
+
+![Data Table asset](./datatable_images/datatable_asset.png 'Data Table asset')
+
+Windmill auto detects if the data table was used in Read (SELECT ... FROM) or Write mode (UPDATE, DELETE ...).
+Assets are displayed as asset nodes in flows, making it easy to visualize data dependencies between scripts.
+
+![Data Table asset flow](./datatable_images/datatable_asset_flow.png 'Data Table asset flow')
+
+---
+
+### Workspace-Scoped
+
+Data tables are scoped to a **workspace**. All members of the workspace can access its data tables. Credentials are managed internally by Windmill and are **never exposed** to users.
+
+### Special Data Table: `main`
+
+The data table named **`main`** is the _default_ data table. Scripts can access it without specifying its name.
+
+Example:
+
+```python
+# Uses the 'main' data table implicitly
+wmill.datatable()
+```
+
+---
+
+## Database Types
+
+Windmill currently supports two backend database types for Data Tables:
+
+### 1. Custom Instance Database
+
+- Uses the **Windmill instance database**.
+- Zero-setup, one-click provisioning.
+- Requires **superadmin** to configure.
+- Although the database exists at the _instance level_, it is only accessible to workspaces that define a data table pointing to it.
+- See [Custom Instance Database](/docs/core_concepts/custom_instance_database) for more details.
+
+### 2. Postgres Resource
+
+- Attach a **workspace Postgres resource** to the data table.
+- Ideal when you want full control over database hosting, but still benefit from Windmill's credential management and workspace scoping.
+
+---
+
+## Permissions
+
+Currently, Windmill does **not** enforce database-level permissions in data tables.
+
+- Any workspace member can execute **full CRUD** operations.
+- Table/row-level permissions may be introduced in a later version.
+
+Windmill ensures secure access by handling database credentials internally.
+
+---
+
+## Summary

@@ -344,6 +344,16 @@ const sidebars = {
 					items: [
 						{
 							type: 'doc',
+							id: 'core_concepts/persistent_storage/data_tables',
+							label: 'Data Tables'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/ducklake',
+							label: 'Ducklake'
+						},
+						{
+							type: 'doc',
 							id: 'core_concepts/persistent_storage/within_windmill',
 							label: 'Within Windmill (not recommended)'
 						},
@@ -365,8 +375,8 @@ const sidebars = {
 					]
 				},
 				'core_concepts/object_storage_in_windmill/index',
+				'core_concepts/custom_instance_database/index',
 				'core_concepts/data_pipelines/index',
-				'core_concepts/ducklake/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',

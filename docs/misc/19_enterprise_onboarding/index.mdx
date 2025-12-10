@@ -140,7 +140,7 @@ Configure [dedicated S3 storage](../../core_concepts/38_object_storage_in_windmi
 		description="Configure workspace and instance object storage for S3, Azure Blob, or GCS."
 		href="/docs/core_concepts/object_storage_in_windmill#instance-object-storage"
 	/>
-    <DocCard
+	<DocCard
 		title="S3/Azure for Python/Go cache"
 		description="Enable distributed dependency caching backed by object storage."
 		href="/docs/misc/s3_cache"
@@ -149,9 +149,10 @@ Configure [dedicated S3 storage](../../core_concepts/38_object_storage_in_windmi
 
 ### DuckLake + DuckDB for ETL
 
-[Ducklake](../../core_concepts/53_ducklake/index.mdx) allows you to store massive amounts of data in S3 and query it efficiently using DuckDB with natural SQL language. This is ideal for ETL workloads, data analytics, and large-scale data processing.
+[Ducklake](../../core_concepts/11_persistent_storage/ducklake.mdx) allows you to store massive amounts of data in S3 and query it efficiently using DuckDB with natural SQL language. This is ideal for ETL workloads, data analytics, and large-scale data processing.
 
 With Ducklake, you can:
+
 - Store data lakes in S3 with efficient columnar format
 - Query data directly from S3 using DuckDB
 - Build data pipelines and transformations with SQL
@@ -339,6 +340,7 @@ A Seat is a user who is active on the platform. A regular user counts as one Sea
 ### Telemetry and usage tracking
 
 On self-hosted instances, Windmill does not deal with any customer data. Just some lightweight telemetry is collected:
+
 - version of the instances
 - instance base URL
 - job usage (language, total duration, count)

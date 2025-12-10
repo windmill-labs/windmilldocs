@@ -10,5 +10,5 @@ features:
   - Datalakes are assets and can be explored like any database
   - Use a ducklake in DuckDB with the `ATTACH 'ducklake://name' AS dl` syntax
   - "`ATTACH 'ducklake' AS dl` shorthand for the main ducklake"
-docs: /docs/core_concepts/ducklake
+docs: /docs/core_concepts/persistent_storage/ducklake
 ---
