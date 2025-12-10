@@ -34,7 +34,7 @@ In the Instance settings UI, pass the SAML Metadata URL (or content) containing 
 
 ![Okta Metadata URL](./okta2.png.webp)
 
-### Microsoft Azure
+### Microsoft Entra (Azure)
 
 In the Azure portal, go to "Enterprise Applications" and create a new one of type "Non-gallery".
 
@@ -52,9 +52,24 @@ Edit the configuration to set the Entity ID to `windmill` and the ACS url to `<i
 
 ![Azure SAML](azure-saml-configure_2.png)
 
+#### Configuring the NameID claim
+
+For SAML authentication to work correctly with Entra, you need to configure the primary NameIdentifier claim. In the "Attributes & Claims" section of your SAML configuration:
+
+1. Click on the NameIdentifier claim to edit it
+2. Set the following values:
+   - **Name identifier format**: Email address
+   - **Source attribute**: `user.mail`
+
+![Entra NameID claim configuration](azure-entra-nameid-claim.png)
+
+#### Configuring Windmill with the metadata URL
+
+Once the SAML configuration is complete in Entra, copy the App Federation Metadata URL from the SAML Certificates section:
+
 ![Azure SAML metadata](azure_saml_metadata.png)
 
-Copy the App Federation Metadata URL and paste it in the Instance settings UI.
+Paste this URL in the Windmill Instance settings UI.
 
 ![Instance settings UI](instance_settings.png)
 
@@ -92,9 +107,9 @@ muted
 src="/videos/okta_scim.mp4"
 />
 
-### Microsoft Azure
+### Microsoft Entra (Azure)
 
-Create an application from the "Enterprise Applications" menu (see [Configuring SAML with Microsoft Azure](#microsoft-azure)). Once the application is created, in the application's page go to "Provisioning" on the left menu, and click on the "Get started" button.
+Create an application from the "Enterprise Applications" menu (see [Configuring SAML with Microsoft Entra](#microsoft-entra-azure)). Once the application is created, in the application's page go to "Provisioning" on the left menu, and click on the "Get started" button.
 
 ![Azure SCIM](azure-scim-new_application.png)
 
