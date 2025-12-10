@@ -5,7 +5,7 @@ export default function TextImageSections() {
 	return (
 		<>
 			<TextImageSection
-				title="Full stack internal tools"
+				title="Develop internal tools"
 				description="Workflow engine for backend, raw app builder for frontend. Integrate with your existing infrastructure."
 				imageSrc="/img/landing_page_V2/1.png"
 				imageAlt="Code to production"
@@ -19,7 +19,7 @@ export default function TextImageSections() {
 				imagePosition="left"
 			/>
 			<TextImageSection
-				title="Monitor all your executions"
+				title="Monitor executions"
 				description="Logs, metrics, alerts, and more. All in one place."
 				imageSrc="/img/landing_page_V2/3.png"
 				imageAlt="Third section"

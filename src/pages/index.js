@@ -34,9 +34,7 @@ function HomepageHeader() {
 
 			<TestimonialsSection />
 			<CorePrinciple />
-			<LandingSection bgClass="py-0">
-				<CallToAction />
-			</LandingSection>
+			<CallToAction />
 			<Footer />
 		</>
 	);
