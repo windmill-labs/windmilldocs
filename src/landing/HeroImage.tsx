@@ -7,7 +7,7 @@ interface HeroImageProps {
 
 export default function HeroImage({ imageSrc, imageAlt = '' }: HeroImageProps) {
 	return (
-		<div className="w-full overflow-hidden">
+		<div className="w-full overflow-hidden py-8 sm:py-8">
 			<div className="mx-auto max-w-7xl px-2 lg:px-8">
 				<div className="relative w-full" style={{ aspectRatio: '16/9' }}>
 					<img
