@@ -68,7 +68,7 @@ export default function Footer() {
 			<div className="mx-auto max-w-7xl px-6  pt-16 sm:pt-24 lg:px-8 lg:pt-32 flex flex-col gap-16 pb-16">
 				<div className="grid grid-cols-2 md:grid-cols-6 gap-8">
 					{navigation.map((section) => (
-						<div className="">
+						<div key={section.title} className="">
 							<div className=" font-medium leading-6 text-gray-900 dark:text-gray-100">
 								{section.title}
 							</div>
@@ -98,7 +98,7 @@ export default function Footer() {
 						<a
 							href="https://trust.windmill.dev"
 							alt="Trust center"
-							class="flex justify-center items-center"
+							className="flex justify-center items-center"
 						>
 							<img
 								className="h-10"
