@@ -21,7 +21,7 @@ export default function TextImageSection({
 	return (
 		<div className="py-8 sm:py-8">
 			<div className="mx-auto max-w-7xl px-2 lg:px-8">
-				<div className="card card--large card--feature grid-cursor col-span-full row-span-full gap-y-0 max-lg:grid-rows-subgrid rounded-md bg-gray-50 dark:bg-gray-900 p-8 lg:p-12">
+				<div className="rounded-md bg-gray-50 dark:bg-gray-900 p-8 lg:p-12 shadow-sm">
 					<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center rounded-md">
 						{/* Text Section - 1/3 */}
 						<div

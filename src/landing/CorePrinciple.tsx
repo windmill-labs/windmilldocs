@@ -31,25 +31,25 @@ function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imag
 
 	return (
 		<div
-			className="flex flex-col h-full rounded-lg bg-gray-800/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-700/50 group"
+			className="flex flex-col h-full rounded-lg bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-200 dark:border-gray-700/50 group"
 			onMouseOver={() => {
 				if (lottieData) play();
 			}}
 		>
-			<h3 className="text-xl font-bold text-white mb-3">{title}</h3>
-			<p className="text-gray-400 dark:text-gray-300 mb-4 flex-grow text-base leading-relaxed">
+			<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{title}</h3>
+			<p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow text-base leading-relaxed">
 				{description}
 			</p>
 			<a
 				href={actionUrl || '#'}
-				className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-4"
+				className="text-sm text-blue-600 dark:text-blue-400 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-4 hover:text-blue-700 dark:hover:text-blue-300"
 				target={actionUrl && actionUrl.startsWith('http') ? '_blank' : undefined}
 				rel={actionUrl && actionUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
 			>
 				{actionLink}
 				<ArrowRight size={24} />
 			</a>
-			<div className="mt-auto bg-gray-700/80 dark:bg-gray-700/80 rounded-md p-4 min-h-[220px] flex items-center justify-center overflow-hidden">
+			<div className="mt-auto bg-gray-100 dark:bg-gray-700/80 rounded-md p-4 min-h-[220px] flex items-center justify-center overflow-hidden">
 				{lottieData ? (
 					<div className="w-full h-full flex items-center justify-center rounded-md">
 						{View}
@@ -69,14 +69,14 @@ function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imag
 
 export default function CorePrinciple() {
 	return (
-		<LandingSection bgClass="bg-gray-900 dark:bg-gray-950 py-16">
+		<LandingSection bgClass="bg-gray-50 dark:bg-gray-900 py-16">
 			<div className="w-full">
 				<div className="mb-12 text-left">
-					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
+					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-600">
 						3 core principles
 					</h1>
 					<p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl"></p>
-					<span className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">
+					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
 						Built for developers who need control, flexibility, and scale.
 					</span>
 				</div>
