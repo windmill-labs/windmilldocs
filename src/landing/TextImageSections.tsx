@@ -6,22 +6,22 @@ export default function TextImageSections() {
 		<>
 			<TextImageSection
 				title="Code to production in minutes"
-				description="Run long-running heavy background jobs, script with complex dependencies, endpoints with high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the auto-generated UI and monitor them easily."
-				imageSrc="/img/flow_ui.png"
+				description="Run long-running heavy background jobs, script with complex dependencies."
+				imageSrc="/img/landing_page_V2/1.png"
 				imageAlt="Code to production"
 				imagePosition="right"
 			/>
 			<TextImageSection
 				title="Second Section Title"
-				description="This is the description for the second section. It demonstrates how the component works with the image on the left side."
-				imageSrc="/homescreen-app.png"
+				description="Run long-running heavy background jobs, script with complex dependencies"
+				imageSrc="/img/landing_page_V2/2.png"
 				imageAlt="Second section"
 				imagePosition="left"
 			/>
 			<TextImageSection
 				title="Third Section Title"
-				description="This is the description for the third section. It demonstrates how the component works with the image on the right side again."
-				imageSrc="/homescreen-app.png"
+				description="Run long-running heavy background jobs, script with complex dependencies"
+				imageSrc="/img/landing_page_V2/3.png"
 				imageAlt="Third section"
 				imagePosition="right"
 			/>

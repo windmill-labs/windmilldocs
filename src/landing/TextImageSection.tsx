@@ -19,10 +19,10 @@ export default function TextImageSection({
 	const isImageLeft = imagePosition === 'left';
 
 	return (
-		<div className="py-24 sm:py-32">
-			<div className="mx-auto max-w-7xl px-4 lg:px-8">
-				<div className="card card--large card--feature grid-cursor col-span-full row-span-full gap-y-0 max-lg:grid-rows-subgrid rounded-lg bg-gray-50 dark:bg-gray-900 p-8 lg:p-12">
-					<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+		<div className="py-8 sm:py-8">
+			<div className="mx-auto max-w-7xl px-2 lg:px-8">
+				<div className="card card--large card--feature grid-cursor col-span-full row-span-full gap-y-0 max-lg:grid-rows-subgrid rounded-md bg-gray-50 dark:bg-gray-900 p-8 lg:p-12">
+					<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center rounded-md">
 						{/* Text Section - 1/3 */}
 						<div
 							className={classNames(
@@ -30,7 +30,7 @@ export default function TextImageSection({
 								isImageLeft && 'lg:order-2'
 							)}
 						>
-							<h2 className="text-4xl sm:text-5xl font-normal tracking-tight leading-tight mb-4 text-gray-900 dark:text-white">
+							<h2 className="text-4xl sm:text-3xl font-normal tracking-tight leading-tight mb-4 text-gray-900 dark:text-white">
 								{title}
 							</h2>
 							<p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
