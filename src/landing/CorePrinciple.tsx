@@ -1,19 +1,41 @@
 import React from 'react';
 import LandingSection from './LandingSection';
 import { ArrowRight } from 'lucide-react';
+import { useLottie } from 'lottie-react';
+// @ts-ignore
+import devfriendly from '/illustrations/devfriendly.json';
+// @ts-ignore
+import deployAtScale from '/illustrations/deploy_at_scale.json';
+// @ts-ignore
+import polyGlott from '/illustrations/polyglot.json';
 
 interface FeatureCardProps {
 	title: string;
 	description: string;
 	actionLink: string;
 	actionUrl?: string;
-	imageSrc: string;
+	imageSrc?: string;
 	imageAlt?: string;
+	lottieData?: unknown;
 }
 
-function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imageAlt = '' }: FeatureCardProps) {
+function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imageAlt = '', lottieData }: FeatureCardProps) {
+	const lottieOptions = lottieData
+		? {
+				animationData: lottieData,
+				loop: true,
+				autoplay: false
+		  }
+		: null;
+	const { View, play } = lottieOptions ? useLottie(lottieOptions) : { View: null, play: () => {} };
+
 	return (
-		<div className="flex flex-col h-full rounded-lg bg-gray-800/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-700/50 group">
+		<div
+			className="flex flex-col h-full rounded-lg bg-gray-800/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-700/50 group"
+			onMouseOver={() => {
+				if (lottieData) play();
+			}}
+		>
 			<h3 className="text-xl font-bold text-white mb-3">{title}</h3>
 			<p className="text-gray-400 dark:text-gray-300 mb-4 flex-grow text-base leading-relaxed">
 				{description}
@@ -28,12 +50,18 @@ function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imag
 				<ArrowRight size={24} />
 			</a>
 			<div className="mt-auto bg-gray-700/80 dark:bg-gray-700/80 rounded-md p-4 min-h-[220px] flex items-center justify-center overflow-hidden">
-				<img
-					src={imageSrc}
-					alt={imageAlt}
-					className="w-full h-auto object-contain rounded-md"
-					loading="lazy"
-				/>
+				{lottieData ? (
+					<div className="w-full h-full flex items-center justify-center rounded-md">
+						{View}
+					</div>
+				) : (
+					<img
+						src={imageSrc}
+						alt={imageAlt}
+						className="w-full h-auto object-contain rounded-md"
+						loading="lazy"
+					/>
+				)}
 			</div>
 		</div>
 	);
@@ -58,24 +86,21 @@ export default function CorePrinciple() {
 						description="Deploy Windmill on your infrastructure with full control over your data and security. Perfect for regulated industries and teams that need self-hosting."
 						actionLink="Learn more"
 						actionUrl="https://github.com/windmill-labs/"
-						imageSrc="/img/landing_page_V2/frontier-open-source.png"
-						imageAlt="Open source deployment"
+						lottieData={polyGlott}
 					/>
 					<FeatureCard
 						title="Developer Experience"
 						description="Work like developers do: Git sync, pull requests, code reviews, and CI/CD. Use Python, TypeScript, or any of 20+ languages. Not just automation, but real software development."
 						actionLink="Explore features"
 						actionUrl="https://www.windmill.dev/docs/advanced/local_development"
-						imageSrc="/img/landing_page_V2/frontier-developer-experience.png"
-						imageAlt="Developer experience features"
+						lottieData={devfriendly}
 					/>
 					<FeatureCard
 						title="Scalability"
 						description="Running thousands of jobs daily? Windmill handles millions of executions with sub-second cold starts and automatic scaling. Built for production at any scale."
 						actionLink="See performance"
 						actionUrl="https://www.windmill.dev/docs/misc/benchmarks/competitors"
-						imageSrc="/img/landing_page_V2/frontier-scalability.png"
-						imageAlt="Scalability and performance"
+						lottieData={deployAtScale}
 					/>
 				</div>
 			</div>
