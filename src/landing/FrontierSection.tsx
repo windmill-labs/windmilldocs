@@ -1,0 +1,82 @@
+import React from 'react';
+import LandingSection from './LandingSection';
+import { ArrowRight } from 'lucide-react';
+
+interface FeatureCardProps {
+	title: string;
+	description: string;
+	actionLink: string;
+	actionUrl?: string;
+	imageSrc: string;
+	imageAlt?: string;
+}
+
+function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imageAlt = '' }: FeatureCardProps) {
+	return (
+		<div className="flex flex-col h-full rounded-lg bg-gray-800/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-700/50 group">
+			<h3 className="text-xl font-bold text-white mb-3">{title}</h3>
+			<p className="text-gray-400 dark:text-gray-300 mb-4 flex-grow text-base leading-relaxed">
+				{description}
+			</p>
+			<a
+				href={actionUrl || '#'}
+				className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-4"
+			>
+				{actionLink}
+				<ArrowRight size={24} />
+			</a>
+			<div className="mt-auto bg-gray-700/80 dark:bg-gray-700/80 rounded-md p-4 min-h-[220px] flex items-center justify-center overflow-hidden">
+				<img
+					src={imageSrc}
+					alt={imageAlt}
+					className="w-full h-auto object-contain rounded-md"
+					loading="lazy"
+				/>
+			</div>
+		</div>
+	);
+}
+
+export default function CorePrinciple() {
+	return (
+		<LandingSection bgClass="bg-gray-900 dark:bg-gray-950 py-16">
+			<div className="w-full">
+				<div className="mb-12 text-left">
+					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
+						3 core principles
+					</h1>
+					<p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl"></p>
+					<span className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">
+						Built for developers who need control, flexibility, and scale.
+					</span>
+				</div>
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+					<FeatureCard
+						title="Open source"
+						description="Deploy Windmill on your infrastructure with full control over your data and security. Perfect for regulated industries and teams that need self-hosting."
+						actionLink="Learn more"
+						actionUrl="#"
+						imageSrc="/img/landing_page_V2/frontier-open-source.png"
+						imageAlt="Open source deployment"
+					/>
+					<FeatureCard
+						title="Developer Experience"
+						description="Work like developers do: Git sync, pull requests, code reviews, and CI/CD. Use Python, TypeScript, or any of 20+ languages. Not just automation, but real software development."
+						actionLink="Explore features"
+						actionUrl="#"
+						imageSrc="/img/landing_page_V2/frontier-developer-experience.png"
+						imageAlt="Developer experience features"
+					/>
+					<FeatureCard
+						title="Scalability"
+						description="Running thousands of jobs daily? Windmill handles millions of executions with sub-second cold starts and automatic scaling. Built for production at any scale."
+						actionLink="See performance"
+						actionUrl="#"
+						imageSrc="/img/landing_page_V2/frontier-scalability.png"
+						imageAlt="Scalability and performance"
+					/>
+				</div>
+			</div>
+		</LandingSection>
+	);
+}

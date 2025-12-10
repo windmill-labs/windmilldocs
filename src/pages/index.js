@@ -13,6 +13,7 @@ import LogoClouds from '../landing/LogoClouds';
 import HeroImage from '../landing/HeroImage';
 import TextImageSections from '../landing/TextImageSections';
 import TestimonialsSection from '../landing/TestimonialsSection';
+import CorePrinciple from '../landing/CorePrinciple';
 import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
@@ -31,8 +32,8 @@ function HomepageHeader() {
 				<MobileTutorialSection />
 			</div>
 
-			<EntrepriseFeatures />
 			<TestimonialsSection />
+			<CorePrinciple />
 			<LandingSection bgClass="py-0">
 				<CallToAction />
 			</LandingSection>
