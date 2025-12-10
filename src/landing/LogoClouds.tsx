@@ -53,10 +53,10 @@ export default function LogoClouds() {
 	return (
 		<div className="py-24 sm:py-32">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
-				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900/60">
+				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900/60 dark:text-gray-400">
 					Trusted by 3,000+ organizations, including:
 				</h2>
-				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-8 sm:max-w-xl sm:grid-cols-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
+				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-4 sm:max-w-xl sm:grid-cols-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
 					{logos.map((logo) => (
 						<a
 							key={logo.name}
@@ -65,13 +65,21 @@ export default function LogoClouds() {
 							title={String(logo.name)}
 							className={classNames(
 								'flex items-center justify-center',
-								logo.name === 'Nocd' && 'mt-[-8px]'
+								'bg-gray-50 dark:bg-gray-900',
+								'rounded-lg',
+								'h-24 w-full',
+								'transition-all duration-200',
+								'hover:bg-gray-100 dark:hover:bg-gray-800',
+								'border border-transparent',
+								'hover:border-gray-300 dark:hover:border-gray-700'
 							)}
 						>
 							<img
 								className={classNames(
-									'w-full h-auto max-w-[150px] max-h-[75px] object-contain',
-									'grayscale transition-all hover:grayscale-0'
+									'max-w-[120px] max-h-[50px] w-auto h-auto object-contain',
+									colorMode === 'dark' && 'filter brightness-0 invert opacity-90',
+									'hover:opacity-100',
+									'transition-opacity duration-200'
 								)}
 								src={colorMode === 'light' ? logo.light : logo.dark}
 								alt={logo.name}

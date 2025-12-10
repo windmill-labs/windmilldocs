@@ -10,6 +10,7 @@ import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
+import TextImageSections from '../landing/TextImageSections';
 import TestimonialsSection from '../landing/TestimonialsSection';
 import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
@@ -23,18 +24,11 @@ function HomepageHeader() {
 			<LandingHeader />
 			<Hero />
 			<LogoClouds />
-			<HeroExample />
-			<div className="hidden sm:block">
-				<TutorialSection subIndex={undefined} />
-			</div>
+			<TextImageSections />
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
 			</div>
 
-			<ScriptLightSection />
-			<FlowLightSection />
-			<AppLightSection />
-			<IntegrationsList />
 			<EntrepriseFeatures />
 			<TestimonialsSection />
 			<LandingSection bgClass="py-0">
