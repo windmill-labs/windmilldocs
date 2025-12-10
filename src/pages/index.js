@@ -19,7 +19,6 @@ import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
 import TutorialSection from '../landing/TutorialSection';
-import MobileTutorialSection from '../landing/MobileTutorialSection';
 
 function HomepageHeader() {
 	return (
@@ -30,9 +29,6 @@ function HomepageHeader() {
 			<LogoClouds />
 			<BackedByInvestors />
 			<TextImageSections />
-			<div className="block sm:hidden">
-				<MobileTutorialSection />
-			</div>
 
 			<TestimonialsSection />
 			<CorePrinciple />
