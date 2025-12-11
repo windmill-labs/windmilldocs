@@ -52,15 +52,19 @@ export default function Hero() {
 						</a>.
 					</div>
 					<div className="mt-8 flex flex-col gap-3">
-						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span className="text-blue-500">Open-source and easy to self-host</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
 							<span>Full flexibility of code</span>
 						</div>
-						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Managed deployment</span>
+							<span>Managed workers</span>
 						</div>
-						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
 							<span>Built-in observability</span>
 						</div>
