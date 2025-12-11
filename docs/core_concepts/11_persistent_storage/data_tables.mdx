@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Data Tables
+# Data tables
 
 This page is part of our section on [Persistent storage & databases](./index.mdx) which covers where to effectively store and manage the data manipulated by Windmill. Check that page for more options on data storage.
 
@@ -91,11 +91,11 @@ Assets are displayed as asset nodes in flows, making it easy to visualize data d
 
 ---
 
-### Workspace-Scoped
+### Workspace-scoped
 
 Data tables are scoped to a **workspace**. All members of the workspace can access its data tables. Credentials are managed internally by Windmill and are **never exposed** to users.
 
-### Special Data Table: `main`
+### Special data table: `main`
 
 The data table named **`main`** is the _default_ data table. Scripts can access it without specifying its name.
 
@@ -108,11 +108,11 @@ wmill.datatable()
 
 ---
 
-## Database Types
+## Database types
 
 Windmill currently supports two backend database types for Data Tables:
 
-### 1. Custom Instance Database
+### 1. Custom instance database
 
 - Uses the **Windmill instance database**.
 - Zero-setup, one-click provisioning.
@@ -120,7 +120,7 @@ Windmill currently supports two backend database types for Data Tables:
 - Although the database exists at the _instance level_, it is only accessible to workspaces that define a data table pointing to it.
 - See [Custom Instance Database](/docs/core_concepts/custom_instance_database) for more details.
 
-### 2. Postgres Resource
+### 2. Postgres resource
 
 - Attach a **workspace Postgres resource** to the data table.
 - Ideal when you want full control over database hosting, but still benefit from Windmill's credential management and workspace scoping.
