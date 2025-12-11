@@ -25,7 +25,7 @@ function CaseStudyCard({ caseStudy }) {
 					<img
 						src={caseStudy.logo}
 						alt={`${caseStudy.company} logo`}
-						className="h-12 max-w-[200px] object-contain filter brightness-0 invert dark:brightness-0 dark:invert"
+						className="h-12 max-w-[200px] object-contain"
 					/>
 				</div>
 			</div>
