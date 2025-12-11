@@ -15,17 +15,17 @@ function CaseStudyCard({ caseStudy }) {
 			className="group flex flex-col h-full rounded-2xl bg-gray-900 dark:bg-gray-950 border border-gray-800 dark:border-gray-700 overflow-hidden hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl !no-underline"
 		>
 			{/* Top section with logo and case study label */}
-			<div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-900 dark:to-gray-950">
+			<div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-900 dark:to-gray-950 min-h-[200px] flex flex-col">
 				<div className="flex items-start justify-between mb-4">
 					<span className="text-xs font-semibold uppercase tracking-wider text-blue-400 dark:text-blue-500">
 						Case Study
 					</span>
 				</div>
-				<div className="flex items-center justify-center mb-4 w-full">
+				<div className="flex items-center justify-center w-full flex-1 min-h-[120px]">
 					<img
 						src={caseStudy.logo}
 						alt={`${caseStudy.company} logo`}
-						className="h-25 w-full object-contain"
+						className="h-28 w-full object-contain"
 					/>
 				</div>
 			</div>
@@ -82,7 +82,7 @@ export default function CaseStudiesPage() {
 							</div>
 
 							{/* Case studies grid */}
-							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
 								{caseStudies.map((caseStudy) => (
 									<CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
 								))}
