@@ -21,7 +21,7 @@ export default function PantherLabsCaseStudyPage() {
 				<>
 					<RadialBlur />
 					<div className="pt-32 max-w-full">
-						<div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
+						<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 							{/* Back button */}
 							<Link
 								to="/case-studies"
@@ -31,50 +31,99 @@ export default function PantherLabsCaseStudyPage() {
 								Back to Case Studies
 							</Link>
 
-							{/* Header section */}
-							<div className="mb-12">
-								<div className="mb-6">
-									<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
-										Case Study
-									</span>
-								</div>
-								<div className="mb-6">
-									<img
-										src="/images/brands/panther-labs.svg"
-										alt="Panther Labs logo"
-										className="h-16 max-w-[250px] object-contain filter brightness-0 invert dark:brightness-0 dark:invert"
-									/>
-								</div>
-								<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
-									How Panther Labs escaped vendor lock-in and built a platform-agnostic architecture with Windmill
-								</h1>
-								<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
-									When Airplane.dev shut down, Panther Labs had 30 days to migrate their entire internal operations platform. They chose Windmill for its open-source foundation and platform-agnostic architecture, achieving true portability while maintaining production reliability for mission-critical cybersecurity operations.
-								</p>
-								<div className="flex items-center gap-4 flex-wrap">
-									<span className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-										Cybersecurity & Platform Operations
-									</span>
-									<div className="flex items-center gap-3">
-										<img
-											src="/contributors/bj_maldonado.jpeg"
-											alt="BJ Maldonado"
-											className="w-10 h-10 rounded-full border-2 border-blue-500 object-cover"
-										/>
-										<div>
-											<p className="text-sm font-medium text-gray-900 dark:text-white">
-												BJ Maldonado
-											</p>
-											<p className="text-xs text-gray-500 dark:text-gray-400">
-												Platform Manager
-											</p>
+							{/* Two-column layout */}
+							<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+								{/* Left column - Company information */}
+								<div className="lg:col-span-1">
+									<div className="sticky top-32">
+										<div className="mb-6">
+											<img
+												src="/images/brands/panther-labs.png"
+												alt="Panther Labs logo"
+												className="h-16 max-w-[200px] object-contain dark:opacity-100 mb-6"
+											/>
+										</div>
+										<div className="space-y-6">
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													Industry
+												</div>
+												<div className="text-sm text-gray-900 dark:text-white">
+													Cybersecurity
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													Company Size
+												</div>
+												<div className="text-sm text-gray-900 dark:text-white">
+													50-200
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													What they do
+												</div>
+												<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+													Modern cybersecurity SIEM (Security Information and Event Management) platform that helps security teams detect threats at scale.
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													Website
+												</div>
+												<a
+													href="https://panther.com"
+													target="_blank"
+													rel="noopener noreferrer"
+													className="text-sm text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline"
+												>
+													panther.com
+												</a>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 
-							{/* Content sections */}
-							<div className="space-y-12 prose prose-lg dark:prose-invert max-w-none">
+								{/* Right column - Main content */}
+								<div className="lg:col-span-2">
+									{/* Header section */}
+									<div className="mb-12">
+										<div className="mb-6">
+											<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
+												Case Study
+											</span>
+										</div>
+										<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
+											How Panther Labs escaped vendor lock-in and built a platform-agnostic architecture with Windmill
+										</h1>
+										<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
+											When Airplane.dev shut down, Panther Labs had 30 days to migrate their entire internal operations platform. They chose Windmill for its open-source foundation and platform-agnostic architecture, achieving true portability while maintaining production reliability for mission-critical cybersecurity operations.
+										</p>
+										<div className="flex items-center gap-4 flex-wrap">
+											<span className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+												Cybersecurity & Platform Operations
+											</span>
+											<div className="flex items-center gap-3">
+												<img
+													src="/contributors/bj_maldonado.jpeg"
+													alt="BJ Maldonado"
+													className="w-10 h-10 rounded-full border-2 border-blue-500 object-cover"
+												/>
+												<div>
+													<p className="text-sm font-medium text-gray-900 dark:text-white">
+														BJ Maldonado
+													</p>
+													<p className="text-xs text-gray-500 dark:text-gray-400">
+														Platform Manager
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									{/* Content sections */}
+									<div className="space-y-12">
 								<section>
 									<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
 									<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -87,7 +136,7 @@ export default function PantherLabsCaseStudyPage() {
 									<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 										When Airplane.dev was acquired and announced it would shut down, Panther Labs had just 30 days to migrate their entire internal operations platform—or face operational paralysis. All their core processes would stop working: customer provisioning, AWS account management, deployment pipelines, and alerting.
 									</p>
-									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6 bg-gray-50 dark:bg-gray-800 rounded-r-lg">
+									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 										<p className="text-gray-700 dark:text-gray-300 italic mb-2">
 											"We were fully embedded into this platform. Everything was fine. We weren't looking to migrate. They got aqua-killed... we had to migrate to a new platform in 30 days."
 										</p>
@@ -104,7 +153,7 @@ export default function PantherLabsCaseStudyPage() {
 										<li>Production reliability - For mission-critical internal operations</li>
 										<li>True portability - Ability to migrate without rewriting everything</li>
 									</ul>
-									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6 bg-gray-50 dark:bg-gray-800 rounded-r-lg">
+									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 										<p className="text-gray-700 dark:text-gray-300 italic mb-2">
 											"We got bit once before... determined not to get bit again by the sun setting of a startup platform."
 										</p>
@@ -120,9 +169,9 @@ export default function PantherLabsCaseStudyPage() {
 										A senior engineer discovered Windmill through a Hacker News article about Airplane migrations. Panther chose it for four critical capabilities:
 									</p>
 									
-									<div className="space-y-6">
-										<div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+									<div className="space-y-8">
+										<div>
+											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
 												Open Source Foundation
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -130,14 +179,14 @@ export default function PantherLabsCaseStudyPage() {
 											</p>
 										</div>
 
-										<div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+										<div>
+											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
 												Platform-Agnostic Architecture
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 												Instead of embedding business logic in the workflow platform, Panther built a separate Python library containing all their core logic. Windmill workflows simply orchestrate by calling functions from this library—acting as an execution layer, not a code repository.
 											</p>
-											<div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 my-4 overflow-x-auto">
+											<div className="bg-gray-900 dark:bg-gray-950 rounded p-4 my-4 overflow-x-auto">
 												<pre className="text-sm text-gray-300 dark:text-gray-400">
 													<code>{`# Business logic lives in a separate library
 
@@ -152,7 +201,7 @@ def main(customer_email: str, aws_account_id: str):
     return result`}</code>
 												</pre>
 											</div>
-											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4 bg-gray-100 dark:bg-gray-700 rounded-r-lg">
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4">
 												<p className="text-gray-700 dark:text-gray-300 italic text-sm">
 													"Put the bulk of the business logic inside of a third-party library... just have the platform executors pulling down this library... gives us flexibility to just move our stuff around."
 												</p>
@@ -165,8 +214,8 @@ def main(customer_email: str, aws_account_id: str):
 											</p>
 										</div>
 
-										<div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+										<div>
+											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
 												Developer-First Features
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -177,8 +226,8 @@ def main(customer_email: str, aws_account_id: str):
 											</p>
 										</div>
 
-										<div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+										<div>
+											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
 												Self-Hosted Deployment
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -199,7 +248,7 @@ def main(customer_email: str, aws_account_id: str):
 										<li>Monitoring and alerting: 90% of all Slack alerts generated through Windmill workflows</li>
 										<li>Self-service operations: Graphical apps for non-technical team members to manage complex configurations</li>
 									</ul>
-									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6 bg-gray-50 dark:bg-gray-800 rounded-r-lg">
+									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 										<p className="text-gray-700 dark:text-gray-300 italic mb-2">
 											"Windmill ranks among the most stable components of our infrastructure."
 										</p>
@@ -210,7 +259,7 @@ def main(customer_email: str, aws_account_id: str):
 									<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 										Windmill has proven rock-solid for Panther's operations. Most importantly, Panther is no longer at risk from vendor decisions. Their business logic is portable, tested, and version-controlled. They've achieved true platform independence while maintaining the developer experience and reliability they need for mission-critical operations.
 									</p>
-									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6 bg-gray-50 dark:bg-gray-800 rounded-r-lg">
+									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 										<p className="text-gray-700 dark:text-gray-300 italic mb-2">
 											"This gives us flexibility to just move our stuff around... determined not to get bit again."
 										</p>
@@ -219,6 +268,15 @@ def main(customer_email: str, aws_account_id: str):
 										</cite>
 									</blockquote>
 								</section>
+
+								<section>
+									<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Conclusion</h2>
+									<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+										Panther Labs transformed a crisis into an opportunity by building a platform-agnostic architecture on Windmill. By keeping their business logic in a separate Python library and using Windmill as an orchestration layer, they've protected themselves from future vendor lock-in while gaining the production reliability and developer-first capabilities they need to run their internal operations. Today, with 90% of their platform running on Windmill, they've proven that the right architecture choices—combined with the right tooling—can turn a forced migration into a strategic advantage.
+									</p>
+								</section>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
