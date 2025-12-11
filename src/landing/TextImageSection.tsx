@@ -83,8 +83,10 @@ export default function TextImageSection({
 									<SvgComponent className="scaled-svg" style={{ width: '90%', height: '90%' }} />
 								</div>
 							) : ChartComponent ? (
-								<div className="w-full">
-									<ChartComponent />
+								<div className="w-full overflow-x-auto -mx-4 sm:mx-0">
+									<div className="px-4 sm:px-0">
+										<ChartComponent />
+									</div>
 								</div>
 							) : lottieData && LottieView ? (
 								<div className="rounded-lg overflow-hidden h-full w-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
