@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
 import HomescreenSvg from '../../static/homescreen.svg';
 import Link from '@docusaurus/Link';
 
 export default function Hero() {
+	const words = ['internal tools', 'apps', 'jobs', 'API', 'workflows'];
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [isVisible, setIsVisible] = useState(true);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setIsVisible(false);
+			setTimeout(() => {
+				setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+				setIsVisible(true);
+			}, 300); // Half of transition duration
+		}, 2200); // Change word every 3 seconds
+
+		return () => clearInterval(interval);
+	}, []);
+
 	return (
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
 			<RadialBlur />
@@ -15,18 +31,43 @@ export default function Hero() {
 						<GithubStarCount />
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
-						Open-source <span className="text-blue-500 dark:text-blue-450">developer</span> platform and workflow engine
+						Build, deploy and monitor{' '}
+						<span 
+							className="inline-block text-blue-500 dark:text-blue-450 transition-all duration-500 ease-in-out"
+							style={{
+								opacity: isVisible ? 1 : 0,
+								transform: isVisible ? 'translateY(0)' : 'translateY(-10px)'
+							}}
+						>
+							{words[currentIndex]}
+						</span>
+						<br />
+						at any scale
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						Turn scripts into auto-generated UIs, APIs and cron jobs. <br />
-						Compose them as workflows or data pipelines. <br />
-						Build complex, data-intensive apps with ease.
-						<br /><br />
 						Write and deploy software 10x faster, and run it with the highest reliability and
 						observability on the{' '}
 						<a className="underline decoration-1 underline-offset-2 text-slate-700 hover:text-slate-900 dark:text-slate-300 hover:text-slate-500" href="/docs/misc/benchmarks/competitors">
 							fastest self-hostable job orchestrator
 						</a>.
+					</div>
+					<div className="mt-8 flex flex-col gap-3">
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">Open-source</span> and easy to self-host</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span>Full flexibility of code</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span>Managed workers</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span>Built-in observability</span>
+						</div>
 					</div>
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
