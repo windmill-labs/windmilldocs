@@ -1028,6 +1028,7 @@ const sidebars = {
 				'advanced/clients/python_client',
 				'advanced/clients/rust_client',
 				'advanced/explicit_progress/index',
+				'advanced/scaling/index',
 				'misc/share_on_hub/index'
 			]
 		},
