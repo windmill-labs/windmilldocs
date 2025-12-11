@@ -22,7 +22,7 @@ export default function TextImageSections() {
 			<TextImageSection
 				title="Full visibility across all executions"
 				description="Track every job, workflow, and script execution with complete logs. See inputs, outputs, errors, and performance metrics in real-time. Built-in observability with alerts and dashboards—no external monitoring tools needed."
-				imageSrc="/illustrations/11.png"
+				imageSrc="/illustrations/11bis.png"
 				imageAlt="Third section"
 				imagePosition="right"
 			/>
