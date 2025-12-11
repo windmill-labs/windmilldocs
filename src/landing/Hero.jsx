@@ -16,7 +16,7 @@ export default function Hero() {
 				setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
 				setIsVisible(true);
 			}, 300); // Half of transition duration
-		}, 3000); // Change word every 3 seconds
+		}, 2200); // Change word every 3 seconds
 
 		return () => clearInterval(interval);
 	}, []);
