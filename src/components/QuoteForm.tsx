@@ -114,7 +114,7 @@ export function QuoteForm({
 
 			// API request
 			const response = await fetch(
-				`https://app.windmill.dev/api/w/windmill-labs/jobs/run_wait_result/f/f/bd/public/quote_and_crm?token=YTt4ylut571bcKX9k3d0WxWmSdS0qi20`, // script-only token, harmless
+				`https://app.windmill.dev/api/w/windmill-prod/jobs/run_wait_result/f/f/bd/public/quote_and_crm?token=SIpYHUZ9BGM4nosKhqNXR3deKUIwAR1G`, // script-only token, harmless
 				{
 					method: 'POST',
 					headers: {
