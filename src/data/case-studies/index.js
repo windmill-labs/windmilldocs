@@ -1,9 +1,5 @@
-import { photoroomCaseStudy } from './photoroom';
-import { investingCaseStudy } from './investing';
-import { qoveryCaseStudy } from './qovery';
+import { pantherLabsCaseStudy } from './panther-labs';
 
 export const caseStudies = [
-	photoroomCaseStudy,
-	investingCaseStudy,
-	qoveryCaseStudy
+	pantherLabsCaseStudy
 ];
