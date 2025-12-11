@@ -122,12 +122,14 @@ export default function Example() {
 		</div>
           <div className="flex items-center border-t dark:border-gray-800 border-gray-200 px-6 py-4 gap-4 mt-auto">
             {testimonial.author.profile_picture ? (
-              <a href={testimonial.linkedIn ? testimonial.linkedIn : "#"} target="_blank" rel="noopener noreferrer">
-                <img
-                  src={testimonial.author.profile_picture}
-                  alt={testimonial.author.name}
-                  className="w-12 h-12 rounded-full border-2 border-blue-500 flex-shrink-0 object-cover"
-                />
+              <a href={testimonial.linkedIn ? testimonial.linkedIn : "#"} target="_blank" rel="noopener noreferrer" className="flex-shrink-0">
+                <div className="w-12 h-12 rounded-full border-2 border-blue-500 overflow-hidden aspect-square">
+                  <img
+                    src={testimonial.author.profile_picture}
+                    alt={testimonial.author.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </a>
             ) : null}
             {testimonial.linkedIn ? (

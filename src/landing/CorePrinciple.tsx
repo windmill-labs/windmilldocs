@@ -89,7 +89,7 @@ export default function CorePrinciple() {
 						lottieData={polyGlott}
 					/>
 					<FeatureCard
-						title="Developer Experience"
+						title="Developer experience"
 						description="Work like developers do: Git sync, pull requests, code reviews, and CI/CD. Use Python, TypeScript, or any of 20+ languages. Not just automation, but real software development."
 						actionLink="Explore features"
 						actionUrl="https://www.windmill.dev/docs/advanced/local_development"
@@ -97,7 +97,7 @@ export default function CorePrinciple() {
 					/>
 					<FeatureCard
 						title="Scalability"
-						description="Running thousands of jobs daily? Windmill handles millions of executions with sub-second cold starts and automatic scaling. Built for production at any scale."
+						description="Windmill handles millions of executions with sub-second cold starts and automatic scaling. Built for production at any scale."
 						actionLink="See performance"
 						actionUrl="https://www.windmill.dev/docs/misc/benchmarks/competitors"
 						lottieData={deployAtScale}
