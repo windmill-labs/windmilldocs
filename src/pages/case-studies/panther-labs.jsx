@@ -38,9 +38,9 @@ export default function PantherLabsCaseStudyPage() {
 									<div className="sticky top-32">
 										<div className="mb-6">
 											<img
-												src="/images/brands/panther-labs.png"
+												src="/images/brands/panther-labs-white.png"
 												alt="Panther Labs logo"
-												className="h-16 max-w-[200px] object-contain dark:opacity-100 mb-6"
+												className="h-24 w-auto object-contain dark:opacity-100 mb-6"
 											/>
 										</div>
 										<div className="space-y-6">

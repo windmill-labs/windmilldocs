@@ -21,11 +21,11 @@ function CaseStudyCard({ caseStudy }) {
 						Case Study
 					</span>
 				</div>
-				<div className="flex items-center mb-4">
+				<div className="flex items-center justify-center mb-4 w-full">
 					<img
 						src={caseStudy.logo}
 						alt={`${caseStudy.company} logo`}
-						className="h-12 max-w-[200px] object-contain"
+						className="h-25 w-full object-contain"
 					/>
 				</div>
 			</div>

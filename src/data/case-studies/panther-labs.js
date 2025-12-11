@@ -1,7 +1,7 @@
 export const pantherLabsCaseStudy = {
 	id: 4,
 	company: 'Panther Labs',
-	logo: '/images/brands/panther-labs.png',
+	logo: '/images/brands/panther-labs-white.png',
 	title: 'How Panther Labs escaped vendor lock-in with Windmill',
 	description: 'When Airplane.dev shut down, Panther Labs had 30 days to migrate their entire operations platform. They chose Windmill for its open-source, platform-agnostic architecture—ensuring they would never face vendor lock-in again.',
 	category: 'Cybersecurity',
