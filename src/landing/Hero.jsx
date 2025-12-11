@@ -5,7 +5,7 @@ import HomescreenSvg from '../../static/homescreen.svg';
 import Link from '@docusaurus/Link';
 
 export default function Hero() {
-	const words = ['internal tools', 'apps', 'background jobs', 'API', 'workflows'];
+	const words = ['internal tools', 'apps', 'jobs', 'API', 'workflows'];
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isVisible, setIsVisible] = useState(true);
 
@@ -45,17 +45,20 @@ export default function Hero() {
 						at any scale
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						For enfineering teams that need the flexibility of an IDE with the convenience of managed deployment and built-in observability.
-						
+						Write and deploy software 10x faster, and run it with the highest reliability and
+						observability on the{' '}
+						<a className="underline decoration-1 underline-offset-2 text-slate-700 hover:text-slate-900 dark:text-slate-300 hover:text-slate-500" href="/docs/misc/benchmarks/competitors">
+							fastest self-hostable job orchestrator
+						</a>.
 					</div>
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
 							<span className="text-green-500 font-bold">✓</span>
-							<span>Full IDE flexibility</span>
+							<span>Full flexibility of code</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
 							<span className="text-green-500 font-bold">✓</span>
-							<span>Enterprise deployment</span>
+							<span>Managed deployment</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
 							<span className="text-green-500 font-bold">✓</span>
