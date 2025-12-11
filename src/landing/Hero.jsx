@@ -54,7 +54,7 @@ export default function Hero() {
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span className="text-blue-500">Open-source and easy to self-host</span>
+							<span><span className="text-blue-500">Open-source</span> and easy to self-host</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
