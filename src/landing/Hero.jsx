@@ -19,6 +19,20 @@ export default function Hero() {
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
 						For engineering teams that need the flexibility of an IDE with the convenience of managed deployment and built-in observability.
 					</div>
+					<div className="mt-8 flex flex-col gap-3">
+						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+							<span className="text-green-500 font-bold">✓</span>
+							<span><strong>Full IDE flexibility</strong> - Build exactly what you need</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+							<span className="text-green-500 font-bold">✓</span>
+							<span><strong>Enterprise deployment</strong> - Ship to production in seconds</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+							<span className="text-green-500 font-bold">✓</span>
+							<span><strong>Built-in observability</strong> - Monitor everything, debug instantly</span>
+						</div>
+					</div>
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
 							href="https://app.windmill.dev/user/login"
