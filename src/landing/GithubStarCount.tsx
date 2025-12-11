@@ -12,7 +12,7 @@ export default function GithubStarCount() {
 			aria-label="Star buttons/github-buttons on GitHub"
 			data-color-scheme={colorMode == 'dark' ? 'dark' : 'light'}
 		>
-			Stars
+			&nbsp;OSS
 		</GitHubButton>
 	);
 }
