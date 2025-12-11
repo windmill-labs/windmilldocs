@@ -186,8 +186,8 @@ export default function PantherLabsCaseStudyPage() {
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 												Instead of embedding business logic in the workflow platform, Panther built a separate Python library containing all their core logic. Windmill workflows simply orchestrate by calling functions from this library—acting as an execution layer, not a code repository.
 											</p>
-											<div className="bg-gray-900 dark:bg-gray-950 rounded p-4 my-4 overflow-x-auto">
-												<pre className="text-sm text-gray-300 dark:text-gray-400">
+											<div className="rounded-lg p-4 my-4 overflow-x-auto">
+												<pre className="text-sm text-gray-700 dark:text-gray-300">
 													<code>{`# Business logic lives in a separate library
 
 from panther_platform import customer_onboarding
