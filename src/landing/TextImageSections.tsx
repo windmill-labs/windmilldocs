@@ -1,5 +1,6 @@
 import React from 'react';
 import TextImageSection from './TextImageSection';
+import HomescreenSvg from '../../static/homescreen.svg';
 
 export default function TextImageSections() {
 	return (
@@ -7,8 +8,7 @@ export default function TextImageSections() {
 			<TextImageSection
 				title="Build internal tools 10x faster with full flexibility"
 				description="Write scripts in 20+ languages and 100+ integrations, chain them with our workflow engine, and build custom frontends. AI-integrated throughout."
-				imageSrc="/img/landing_page_V2/1.png"
-				imageAlt="Code to production"
+				svgComponent={HomescreenSvg}
 				imagePosition="right"
 			/>
 			<TextImageSection

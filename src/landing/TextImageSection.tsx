@@ -4,9 +4,10 @@ import classNames from 'classnames';
 interface TextImageSectionProps {
 	title: string;
 	description: string;
-	imageSrc: string;
+	imageSrc?: string;
 	imageAlt?: string;
 	imagePosition?: 'left' | 'right';
+	svgComponent?: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
 }
 
 export default function TextImageSection({
@@ -14,7 +15,8 @@ export default function TextImageSection({
 	description,
 	imageSrc,
 	imageAlt = '',
-	imagePosition = 'right'
+	imagePosition = 'right',
+	svgComponent: SvgComponent
 }: TextImageSectionProps) {
 	const isImageLeft = imagePosition === 'left';
 
@@ -45,14 +47,20 @@ export default function TextImageSection({
 								isImageLeft && 'lg:order-1'
 							)}
 						>
-							<div className="rounded-lg overflow-hidden">
-								<img
-									src={imageSrc}
-									alt={imageAlt}
-									className="w-full h-auto object-cover"
-									loading="lazy"
-								/>
-							</div>
+							{SvgComponent ? (
+								<div className="flex justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">
+									<SvgComponent className="scaled-svg" style={{ width: '90%', height: '90%' }} />
+								</div>
+							) : (
+								<div className="rounded-lg overflow-hidden">
+									<img
+										src={imageSrc}
+										alt={imageAlt}
+										className="w-full h-auto object-cover"
+										loading="lazy"
+									/>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
