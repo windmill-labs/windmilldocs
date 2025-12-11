@@ -15,18 +15,25 @@ export default function Hero() {
 						<GithubStarCount />
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
-						Open-source <span className="text-blue-500 dark:text-blue-450">developer</span> platform and workflow engine
+						Build, deploy and monitor internal tools any scale
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						Turn scripts into auto-generated UIs, APIs and cron jobs. <br />
-						Compose them as workflows or data pipelines. <br />
-						Build complex, data-intensive apps with ease.
-						<br /><br />
-						Write and deploy software 10x faster, and run it with the highest reliability and
-						observability on the{' '}
-						<a className="underline decoration-1 underline-offset-2 text-slate-700 hover:text-slate-900 dark:text-slate-300 hover:text-slate-500" href="/docs/misc/benchmarks/competitors">
-							fastest self-hostable job orchestrator
-						</a>.
+						For enfineering teams that need the flexibility of an IDE with the convenience of managed deployment and built-in observability.
+						
+					</div>
+					<div className="mt-8 flex flex-col gap-3">
+						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+							<span className="text-green-500 font-bold">✓</span>
+							<span>Full IDE flexibility</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+							<span className="text-green-500 font-bold">✓</span>
+							<span>Enterprise deployment</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-700 dark:text-gray-300">
+							<span className="text-green-500 font-bold">✓</span>
+							<span>Built-in observability</span>
+						</div>
 					</div>
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
