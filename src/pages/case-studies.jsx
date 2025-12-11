@@ -6,51 +6,7 @@ import RadialBlur from '../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
 import { ArrowRight } from 'lucide-react';
-
-const caseStudies = [
-	{
-		id: 1,
-		company: 'Photoroom',
-		logo: '/images/brands/logo-original-light-transparent.png',
-		title: 'Scaling AI Image Processing Workflows with Windmill',
-		description: 'How Photoroom processes millions of image transformations daily using Windmill\'s workflow engine, reducing processing time by 40% and improving reliability.',
-		category: 'AI & Image Processing',
-		author: {
-			name: 'Eliot Andres',
-			role: 'Co-Founder & CTO',
-			image: '/contributors/eliot_andres.jpeg'
-		},
-		link: '/blog/photoroom-case-study'
-	},
-	{
-		id: 2,
-		company: 'Investing.com',
-		logo: '/images/brands/Investing-Light.svg',
-		title: 'Orchestrating AI Workflows for Financial Data Analysis',
-		description: 'Investing.com uses Windmill to orchestrate complex AI workflows for automated stock analysis, content processing pipelines, and ETL processes.',
-		category: 'Financial Services',
-		author: {
-			name: 'Yonathan Adest',
-			role: 'Chief Technology Officer',
-			image: '/contributors/yonathan_adest.jpeg'
-		},
-		link: '/blog/investing-case-study'
-	},
-	{
-		id: 3,
-		company: 'Qovery',
-		logo: '/images/brands/Qovery-light.svg',
-		title: 'Managing Complex Billing Engine with Workflow Orchestration',
-		description: 'Qovery leverages Windmill to manage their entire playground and complex billing engine, covering all ETL and workflow orchestration needs.',
-		category: 'DevOps & Infrastructure',
-		author: {
-			name: 'Romaric Philogène',
-			role: 'Co-Founder & CEO',
-			image: '/contributors/romaric_philogene.webp'
-		},
-		link: '/blog/qovery-case-study'
-	}
-];
+import { caseStudies } from '../data/case-studies';
 
 function CaseStudyCard({ caseStudy }) {
 	return (
