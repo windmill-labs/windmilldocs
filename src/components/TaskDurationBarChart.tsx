@@ -109,8 +109,8 @@ export default function BarChart({
 		}
 	};
 
-	let dt = 0.2;
-	let iter = 1;
+	const dt = 0.2;
+	const iterRef = useRef(1);
 
 	const sums: number[] = [0, 0, 0, 0, 0, 0];
 
@@ -122,10 +122,13 @@ export default function BarChart({
 
 	useEffect(() => {
 		if (isVisible && shouldAnimate) {
+			// Reset iteration counter when animation starts
+			iterRef.current = 1;
+			
 			const interval = setInterval(() => {
 				const chart = ChartJS.getChart('canvas-id');
 				if (chart) {
-					const passedTime = dt * iter; // seconds
+					const passedTime = dt * iterRef.current; // seconds
 
 					const chartData = sums.map((sum) => Math.min(sum, passedTime));
 					chart.data.datasets = [
@@ -148,14 +151,14 @@ export default function BarChart({
 						chart.update();
 						clearInterval(interval);
 					} else {
-						iter += 1;
+						iterRef.current += 1;
 					}
 				}
 			}, 10);
 
 			return () => clearInterval(interval);
 		}
-	}, [isVisible]);
+	}, [isVisible, shouldAnimate]);
 
 	return (
 		<div ref={ref} style={{ position: 'relative', height: '40vh', width: '100%' }}>

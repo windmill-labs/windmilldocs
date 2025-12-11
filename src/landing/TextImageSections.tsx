@@ -14,13 +14,13 @@ export default function TextImageSections() {
 			/>
 			<TextImageSection
 				title="Deploy at scale with industry-leading performance"
-				description="The fastest workflow engine available proven on benchmarks. Auto-scale to thousands of concurrent workers. Process millions of executions with sub-second cold starts and zero infrastructure management."
+				description="Windmill is the fastest workflow engine available proven on benchmarks. Auto-scale to thousands of concurrent workers. Process millions of executions with sub-second cold starts and zero infrastructure management."
 				chartComponent={FlowChart}
 				learnMoreUrl="/docs/misc/benchmarks/competitors"
 				imagePosition="left"
 			/>
 			<TextImageSection
-				title="Full visibility across all executions"
+				title="Monitor  every execution with complete visibility"
 				description="Track every job, workflow, and script execution with complete logs. See inputs, outputs, errors, and performance metrics in real-time. Built-in observability with alerts and dashboards—no external monitoring tools needed."
 				imageSrc="/illustrations/11bis.png"
 				imageAlt="Third section"

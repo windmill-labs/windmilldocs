@@ -54,7 +54,7 @@ export default function FlowChart() {
 			>
 				<div className="grid w-full min-w-0">
 					{chart === 'short' ? (
-						<div className="w-full min-w-0 overflow-x-auto">
+						<div className="w-full min-w-0 overflow-x-auto" key="short-tasks">
 							<div className="min-w-[600px] sm:min-w-0">
 								<BenchmarkVisualization
 									usecase="fibonacci_40_10"
@@ -75,7 +75,7 @@ export default function FlowChart() {
 							</div>
 						</div>
 					) : (
-						<div className="w-full min-w-0 overflow-x-auto">
+						<div className="w-full min-w-0 overflow-x-auto" key="long-tasks">
 							<div className="min-w-[600px] sm:min-w-0">
 								<BenchmarkVisualization
 									usecase="fibonacci_10_33"
