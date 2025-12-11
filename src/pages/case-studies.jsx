@@ -97,17 +97,17 @@ function CaseStudyCard({ caseStudy }) {
 	);
 }
 
-export default function UseCasesPage() {
+export default function CaseStudiesPage() {
 	return (
 		<LayoutProvider>
 			<main className="relative min-h-screen w-full overflow-x-hidden">
 				<LandingHeader />
 				<Head>
-					<title>Use Cases | Windmill</title>
-					<meta name="title" content="Windmill Use Cases" />
+					<title>Case Studies | Windmill</title>
+					<meta name="title" content="Windmill Case Studies" />
 					<meta
 						name="description"
-						content="Discover how Windmill can be used for various use cases and workflows."
+						content="Discover how companies use Windmill to power their products and workflows."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>

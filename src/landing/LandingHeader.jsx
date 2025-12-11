@@ -170,10 +170,10 @@ export default function LandingHeader() {
 							Pricing
 						</Link>
 						<Link
-							to="/use-cases"
+							to="/case-studies"
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300 whitespace-nowrap"
 						>
-							Use Cases
+							Case Studies
 						</Link>
 
 						<a
@@ -326,10 +326,10 @@ export default function LandingHeader() {
 									</a>
 
 									<a
-										href="/use-cases"
+										href="/case-studies"
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
-										Use Cases
+										Case Studies
 									</a>
 
 									<a
