@@ -1,5 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+import { useLottie } from 'lottie-react';
+import { ArrowRight } from 'lucide-react';
+import Link from '@docusaurus/Link';
 
 interface TextImageSectionProps {
 	title: string;
@@ -8,6 +11,11 @@ interface TextImageSectionProps {
 	imageAlt?: string;
 	imagePosition?: 'left' | 'right';
 	svgComponent?: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+	lottieData?: unknown;
+	autoplay?: boolean;
+	loop?: boolean;
+	chartComponent?: React.ComponentType;
+	learnMoreUrl?: string;
 }
 
 export default function TextImageSection({
@@ -16,9 +24,23 @@ export default function TextImageSection({
 	imageSrc,
 	imageAlt = '',
 	imagePosition = 'right',
-	svgComponent: SvgComponent
+	svgComponent: SvgComponent,
+	lottieData,
+	autoplay = false,
+	loop = true,
+	chartComponent: ChartComponent,
+	learnMoreUrl
 }: TextImageSectionProps) {
 	const isImageLeft = imagePosition === 'left';
+
+	const lottieOptions = lottieData
+		? {
+				animationData: lottieData,
+				loop: loop,
+				autoplay: autoplay
+		  }
+		: null;
+	const { View: LottieView } = lottieOptions ? useLottie(lottieOptions) : { View: null };
 
 	return (
 		<div className="py-8 sm:py-8">
@@ -35,9 +57,18 @@ export default function TextImageSection({
 							<h2 className="text-4xl sm:text-3xl font-normal tracking-tight leading-tight mb-4 text-gray-900 dark:text-white">
 								{title}
 							</h2>
-							<p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+							<p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
 								{description}
 							</p>
+							{learnMoreUrl && (
+								<Link
+									to={learnMoreUrl}
+									className="text-sm text-blue-600 dark:text-blue-400 flex flex-row items-center gap-2 hover:text-blue-700 dark:hover:text-blue-300 transition-colors !no-underline"
+								>
+									Learn more
+									<ArrowRight size={20} />
+								</Link>
+							)}
 						</div>
 
 						{/* Image/Embed Section - 2/3 */}
@@ -50,6 +81,14 @@ export default function TextImageSection({
 							{SvgComponent ? (
 								<div className="flex justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">
 									<SvgComponent className="scaled-svg" style={{ width: '90%', height: '90%' }} />
+								</div>
+							) : ChartComponent ? (
+								<div className="w-full">
+									<ChartComponent />
+								</div>
+							) : lottieData && LottieView ? (
+								<div className="rounded-lg overflow-hidden h-full w-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+									<div className="w-full h-full">{LottieView}</div>
 								</div>
 							) : (
 								<div className="rounded-lg overflow-hidden">

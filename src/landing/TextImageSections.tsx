@@ -1,6 +1,7 @@
 import React from 'react';
 import TextImageSection from './TextImageSection';
 import HomescreenSvg from '../../static/homescreen.svg';
+import FlowChart from './FlowChart';
 
 export default function TextImageSections() {
 	return (
@@ -14,8 +15,8 @@ export default function TextImageSections() {
 			<TextImageSection
 				title="Deploy at scale with industry-leading performance"
 				description="The fastest workflow engine available proven on benchmarks. Auto-scale to thousands of concurrent workers. Process millions of executions with sub-second cold starts and zero infrastructure management."
-				imageSrc="/img/landing_page_V2/2.png"
-				imageAlt="Second section"
+				chartComponent={FlowChart}
+				learnMoreUrl="/docs/misc/benchmarks/competitors"
 				imagePosition="left"
 			/>
 			<TextImageSection
