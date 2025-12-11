@@ -190,8 +190,8 @@ export default function CFAInstituteCaseStudyPage() {
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 														Unlike n8n's visual workflows, Windmill enabled the team to write actual Python code with full language features and library support. This was essential for their most critical use case: synthetic monitoring of revenue-generating processes.
 													</p>
-													<div className="bg-gray-900 dark:bg-gray-950 rounded p-4 my-4 overflow-x-auto">
-														<pre className="text-sm text-gray-300 dark:text-gray-400">
+													<div className="rounded-lg p-4 my-4 overflow-x-auto">
+														<pre className="text-sm text-gray-700 dark:text-gray-300">
 															<code>{`# Example CFA Institute synthetic monitoring script
 
 def main(endpoint: str, expected_status: int = 200):
