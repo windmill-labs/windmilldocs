@@ -90,7 +90,7 @@ export default function CorePrinciple() {
 					/>
 					<FeatureCard
 						title="Developer experience"
-						description="Work like developers do: Git sync, pull requests, code reviews, and CI/CD. Use Python, TypeScript, or any of 20+ languages. Not just automation, but real software development."
+						description="Git sync, pull requests, code reviews, and CI/CD. Write in Python, TypeScript, or 20+ languages. Build internal tools like real software—not just automation."
 						actionLink="Explore features"
 						actionUrl="https://www.windmill.dev/docs/advanced/local_development"
 						lottieData={devfriendly}
