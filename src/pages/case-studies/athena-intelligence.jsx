@@ -1,0 +1,275 @@
+import React from 'react';
+import Footer from '../../landing/Footer';
+import LandingHeader from '../../landing/LandingHeader';
+import Head from '@docusaurus/Head';
+import RadialBlur from '../../landing/RadialBlur';
+import LayoutProvider from '@theme/Layout/Provider';
+import Link from '@docusaurus/Link';
+import { ArrowLeft } from 'lucide-react';
+import CompanyLogo from '../../components/case-studies/CompanyLogo';
+
+export default function AthenaIntelligenceCaseStudyPage() {
+	return (
+		<LayoutProvider>
+			<main className="relative min-h-screen w-full overflow-x-hidden">
+				<LandingHeader />
+				<Head>
+					<title>How Athena Intelligence unlocked audit firms and regulated enterprises with self-hostable workflow infrastructure | Windmill Case Studies</title>
+					<meta name="title" content="How Athena Intelligence unlocked audit firms and regulated enterprises with self-hostable workflow infrastructure" />
+					<meta name="description" content="Athena Intelligence builds an AI agent platform for enterprise automation targeting regulated industries. After four years evaluating workflow platforms, they chose Windmill for its self-hostable architecture, enabling deployment in customer Azure environments." />
+					<link rel="icon" href="/img/logo.svg" />
+				</Head>
+				<>
+					<RadialBlur />
+					<div className="pt-32 max-w-full">
+						<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+							{/* Back button */}
+							<Link
+								to="/case-studies"
+								className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
+							>
+								<ArrowLeft className="w-4 h-4" />
+								Back to Case Studies
+							</Link>
+
+							{/* Two-column layout */}
+							<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+								{/* Left column - Company information */}
+								<div className="lg:col-span-1">
+									<div className="sticky top-32">
+										<div className="mb-6">
+											<CompanyLogo
+												lightSrc="/images/brands/athena-light.png"
+												darkSrc="/images/brands/athena-dark.png"
+												alt="Athena Intelligence logo"
+											/>
+										</div>
+										<div className="space-y-6">
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													Industry
+												</div>
+												<div className="text-sm text-gray-900 dark:text-white">
+													Enterprise Software
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													Company Size
+												</div>
+												<div className="text-sm text-gray-900 dark:text-white">
+													10-50
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													What they do
+												</div>
+												<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+													AI agent platform for enterprise automation targeting highly regulated industries including audit firms, financial services, and healthcare.
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													Website
+												</div>
+												<a
+													href="https://www.athenaintel.com"
+													target="_blank"
+													rel="noopener noreferrer"
+													className="text-sm text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline"
+												>
+													athenaintel.com
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								{/* Right column - Main content */}
+								<div className="lg:col-span-2">
+									{/* Header section */}
+									<div className="mb-12">
+										<div className="mb-6">
+											<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
+												Case Study
+											</span>
+										</div>
+										<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
+											How Athena Intelligence unlocked audit firms and regulated enterprises with self-hostable workflow infrastructure
+										</h1>
+										<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
+											Athena Intelligence builds an AI agent platform for enterprise automation targeting regulated industries. After four years evaluating workflow platforms, they chose Windmill for its self-hostable architecture, enabling deployment in customer Azure environments and unlocking access to audit firms, financial services, and healthcare markets.
+										</p>
+									</div>
+
+									{/* Content sections */}
+									<div className="space-y-12">
+										<section>
+											<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+												Athena Intelligence builds an AI agent platform for enterprise automation. The company targets highly regulated industries—audit firms, financial services, healthcare—where compliance requirements mandate private cloud or on-premise deployment. Without deployment flexibility, entire market segments would be inaccessible.
+											</p>
+										</section>
+
+										<section>
+											<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The problem</h2>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+												Brendon Geils, founder of Athena Intelligence, spent four years evaluating workflow orchestration platforms. The blocker was always deployment: could it run in a customer's Azure environment? In an on-premise data center? Embedded into another product?
+											</p>
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+													"I had tested every product on the market. There was not very many products that were willing to be deployed on private clouds, self-hosted, on-prem, embedded."
+												</p>
+												<cite className="text-sm text-gray-500 dark:text-gray-400">
+													— Brendon Geils, Founder
+												</cite>
+											</blockquote>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+												Most workflow companies built SaaS products where multi-tenancy was baked into their business model. Self-hosting was an afterthought. But for Athena, this blocked access to their entire target market. Major audit firms won't route sensitive financial data through third-party SaaS. Healthcare companies face HIPAA requirements. Financial services have data sovereignty policies.
+											</p>
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+													"We would never go with a vendor that wouldn't make that possible in one, two, three years time because it's like putting all your eggs in a basket and then at scale you can actually never deploy that basket into the facilities that we want."
+												</p>
+												<cite className="text-sm text-gray-500 dark:text-gray-400">
+													— Brendon Geils
+												</cite>
+											</blockquote>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+												The workflow engine was foundational—getting it wrong meant either abandoning regulated markets or facing expensive re-architecture later. Hatchet was too unstable. Airflow was too low-level without a UI. Most platforms treated self-hosting as an afterthought with poor documentation.
+											</p>
+										</section>
+
+										<section>
+											<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The solution</h2>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+												Windmill supported cloud, self-hosted, on-premise, and embedded deployments as core capabilities, not afterthoughts. The open-source foundation meant Athena could verify deployment feasibility before committing—critical for enterprise IT reviews.
+											</p>
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+													"Everything worked out of the box. It was easy for me to learn. The technical people on our team took to it really quickly."
+												</p>
+												<cite className="text-sm text-gray-500 dark:text-gray-400">
+													— Brendon Geils
+												</cite>
+											</blockquote>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+												For a platform company, reliability was existential. When infrastructure embedded in a customer-facing product fails, it's Athena's reputation on the line.
+											</p>
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+													"When I wake up at night and I'm like, 'Oh, something's on fire'—it's usually, it's not, it's never a windmill problem. Windmill is probably some of the most stable parts of our business."
+												</p>
+												<cite className="text-sm text-gray-500 dark:text-gray-400">
+													— Brendon Geils
+												</cite>
+											</blockquote>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+												The documentation covered edge cases other platforms hadn't anticipated—network segmentation, identity provider integration, resource constraints. This reduced the deployment friction that kills enterprise deals.
+											</p>
+										</section>
+
+										<section>
+											<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">How it works</h2>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+												When Athena's AI agent encounters a task it can't handle, customers write a custom script. The agent helps write the code, the script is saved in Windmill, and it becomes a new tool the agent invokes automatically.
+											</p>
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+													"Most of our usage is the script capability. We have an agent that uses a bunch of tools and capabilities. Whenever we don't have a tool, we recommend our customers go and build a script. The agent can help them write the code and then the agent uses that script as a new tool."
+												</p>
+												<cite className="text-sm text-gray-500 dark:text-gray-400">
+													— Brendon Geils
+												</cite>
+											</blockquote>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+												For enterprise customers, Windmill runs embedded within Athena's platform in their own infrastructure. An audit firm deploying to Azure sees Athena's AI interface—Windmill is invisible infrastructure underneath, executing scripts within their security perimeter.
+											</p>
+											<div className="rounded-lg p-4 my-4 overflow-x-auto">
+												<pre className="text-sm text-gray-700 dark:text-gray-300">
+													<code>{`# Example: Audit firm writes this compliance check once
+
+# Script runs in their Azure environment with their data
+
+def check_audit_compliance(company_id: str, audit_year: int):
+    records = fetch_financial_records(company_id, audit_year)
+    compliance_score = calculate_compliance(records)
+    return {
+        "score": compliance_score, 
+        "status": "compliant" if compliance_score > 0.95 else "review_needed"
+    }
+
+# AI agent invokes this automatically - data never leaves customer infrastructure`}</code>
+												</pre>
+											</div>
+										</section>
+
+										<section>
+											<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The result</h2>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+												Athena is now deploying to a major audit firm in Azure—the type of regulated enterprise customer that requires private cloud infrastructure and would be inaccessible with a SaaS-only platform.
+											</p>
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+													"We have a very large audit firm that we're deploying to now in Azure. A lot of that is on top of Windmill."
+												</p>
+												<cite className="text-sm text-gray-500 dark:text-gray-400">
+													— Brendon Geils
+												</cite>
+											</blockquote>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+												After nearly a year in production, Windmill serves dozens of customer organizations running 24/7 automation. The infrastructure has proven rock-solid.
+											</p>
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+													"Windmill ranks among the most stable components of our infrastructure for performance, cost, scaling, uptime."
+												</p>
+												<cite className="text-sm text-gray-500 dark:text-gray-400">
+													— Brendon Geils
+												</cite>
+											</blockquote>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+												Deployment flexibility unlocked access to regulated markets:
+											</p>
+											<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4 mb-6">
+												<li>Audit firms requiring private cloud with data residency guarantees</li>
+												<li>Financial services with on-premise mandates for sensitive data processing</li>
+												<li>Healthcare organizations needing HIPAA-compliant infrastructure</li>
+												<li>Government contractors with air-gapped network requirements</li>
+											</ul>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+												Each market has substantial budgets and long-term contracts but is only accessible to vendors whose infrastructure can deploy into their environments.
+											</p>
+										</section>
+
+										<section>
+											<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Why this matters for platform companies</h2>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+												For companies serving regulated industries, deployment flexibility determines market access. Athena spent years searching for a workflow platform that could unlock these markets. Not for more features, but for architectural flexibility that could scale across deployment environments while maintaining production reliability.
+											</p>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+												The lesson for platform companies and ISVs: choose foundational technology based on the markets you want to access three years from now, not just the customers you can sign today.
+											</p>
+										</section>
+
+										<section>
+											<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Conclusion</h2>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+												Athena Intelligence's story reveals a simple truth: for platform companies targeting regulated industries, deployment flexibility isn't a feature—it's market access. SaaS-only tools lock you out of audit firms, financial services, and healthcare. Self-hosting as an afterthought creates deployment friction that kills enterprise deals.
+											</p>
+											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+												Windmill's open-source foundation, production stability, and enterprise-ready documentation solved this. After four years evaluating workflow platforms, Athena found infrastructure they could confidently build on and deploy wherever customers required. Today, they're winning enterprise deals their competitors can't even pursue.
+											</p>
+										</section>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</>
+				<Footer />
+			</main>
+		</LayoutProvider>
+	);
+}
