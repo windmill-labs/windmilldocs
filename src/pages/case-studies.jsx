@@ -27,12 +27,12 @@ function CaseStudyCard({ caseStudy }) {
 	return (
 		<Link
 			to={caseStudy.link}
-			className="group flex flex-col h-full rounded-2xl bg-gray-900 dark:bg-gray-950 border border-gray-800 dark:border-gray-700 overflow-hidden hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl !no-underline"
+			className="group flex flex-col h-full rounded-2xl bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl !no-underline"
 		>
 			{/* Top section with logo and case study label */}
-			<div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-900 dark:to-gray-950 min-h-[200px] flex flex-col">
+			<div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-[200px] flex flex-col">
 				<div className="flex items-start justify-between mb-4">
-					<span className="text-xs font-semibold uppercase tracking-wider text-blue-400 dark:text-blue-500">
+					<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
 						Case Study
 					</span>
 				</div>
@@ -46,19 +46,19 @@ function CaseStudyCard({ caseStudy }) {
 			</div>
 
 			{/* Content section */}
-			<div className="flex-1 px-6 pb-6 flex flex-col">
-				<h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 dark:group-hover:text-blue-500 transition-colors">
+			<div className="flex-1 px-6 pt-6 pb-6 flex flex-col">
+				<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
 					{caseStudy.title}
 				</h3>
-				<p className="text-gray-400 dark:text-gray-300 text-sm mb-4 leading-relaxed flex-1">
+				<p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed flex-1">
 					{caseStudy.description}
 				</p>
 				{/* Bottom section with category and link */}
-				<div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-800 dark:border-gray-700">
+				<div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
 					<span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
 						{caseStudy.category}
 					</span>
-					<span className="text-sm font-medium text-blue-500 dark:text-blue-400 group-hover:text-blue-400 dark:group-hover:text-blue-300 flex items-center gap-1 transition-colors">
+					<span className="text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 flex items-center gap-1 transition-colors">
 						Read the story
 						<ArrowRight className="w-4 h-4" />
 					</span>
