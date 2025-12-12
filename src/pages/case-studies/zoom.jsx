@@ -100,26 +100,6 @@ export default function ZoomCaseStudyPage() {
 										<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
 											Zoom's Global Architecture division supports 400+ solution engineers and 2,000 account managers who demonstrate interconnected products to enterprise customers. They built a centralized demo platform on Windmill, enabling 80+ Global Architects to contribute workflows in multiple languages, all self-hosted on AWS EKS.
 										</p>
-										<div className="flex items-center gap-4 flex-wrap">
-											<span className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-												Enterprise Software & Demo Platform
-											</span>
-											<div className="flex items-center gap-3">
-												<img
-													src="/contributors/frederick_loucks.jpeg"
-													alt="Frederick Loucks"
-													className="w-10 h-10 rounded-full border-2 border-blue-500 object-cover"
-												/>
-												<div>
-													<p className="text-sm font-medium text-gray-900 dark:text-white">
-														Frederick Loucks
-													</p>
-													<p className="text-xs text-gray-500 dark:text-gray-400">
-														Technical Leader, Demo Platform
-													</p>
-												</div>
-											</div>
-										</div>
 									</div>
 
 									{/* Content sections */}

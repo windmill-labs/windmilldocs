@@ -100,26 +100,6 @@ export default function PantherLabsCaseStudyPage() {
 										<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
 											When Airplane.dev shut down, Panther Labs had 30 days to migrate their entire internal operations platform. They chose Windmill for its open-source foundation and platform-agnostic architecture, achieving true portability while maintaining production reliability for mission-critical cybersecurity operations.
 										</p>
-										<div className="flex items-center gap-4 flex-wrap">
-											<span className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-												Cybersecurity & Platform Operations
-											</span>
-											<div className="flex items-center gap-3">
-												<img
-													src="/contributors/bj_maldonado.jpeg"
-													alt="BJ Maldonado"
-													className="w-10 h-10 rounded-full border-2 border-blue-500 object-cover"
-												/>
-												<div>
-													<p className="text-sm font-medium text-gray-900 dark:text-white">
-														BJ Maldonado
-													</p>
-													<p className="text-xs text-gray-500 dark:text-gray-400">
-														Platform Manager
-													</p>
-												</div>
-											</div>
-										</div>
 									</div>
 
 									{/* Content sections */}
