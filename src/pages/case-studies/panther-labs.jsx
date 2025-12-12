@@ -152,7 +152,7 @@ export default function PantherLabsCaseStudyPage() {
 									<div className="space-y-8">
 										<div>
 											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-												Open Source Foundation
+												Open source foundation
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 												Windmill's open source architecture (Apache 2.0 licensed on GitHub) meant Panther could never be locked in again. Even in the worst case, they could fork the codebase and maintain it themselves—something impossible with proprietary platforms like Airplane. The transparency of the codebase also gave them confidence in security and reliability for their cybersecurity operations.
@@ -161,7 +161,7 @@ export default function PantherLabsCaseStudyPage() {
 
 										<div>
 											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-												Platform-Agnostic Architecture
+												Platform-agnostic architecture
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 												Instead of embedding business logic in the workflow platform, Panther built a separate Python library containing all their core logic. Windmill workflows simply orchestrate by calling functions from this library—acting as an execution layer, not a code repository.
@@ -196,7 +196,7 @@ def main(customer_email: str, aws_account_id: str):
 
 										<div>
 											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-												Developer-First Features
+												Developer-first features
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 												Windmill's native support for importing any Python package from PyPI and private repositories made their architecture possible immediately. No limitations, no workarounds—full Python language features with proper dependency management and versioning. Everything-as-code with Git sync gave them proper version control and CI/CD workflows.
@@ -208,7 +208,7 @@ def main(customer_email: str, aws_account_id: str):
 
 										<div>
 											<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-												Self-Hosted Deployment
+												Self-hosted deployment
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 												As a cybersecurity company, Panther needed to self-host on their own AWS infrastructure. Windmill's Enterprise Edition deployed cleanly into their existing environment with SSO integration. With direct support from Windmill's founder Ruben, they completed the migration within the 30-day deadline.

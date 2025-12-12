@@ -153,7 +153,7 @@ export default function ZoomCaseStudyPage() {
 											<div className="space-y-8">
 												<div>
 													<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-														Polyglot Language Support for Varied Technical Backgrounds
+														Polyglot language support for varied technical backgrounds
 													</h3>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 														Zoom's Global Architecture division includes experienced engineers who know PowerShell better than Python because they've been CIS admins or technical sales their whole careers. Windmill's support for Python, TypeScript, Go, Bash, PowerShell, and other languages meant the team could leverage existing scripts with minimal refactoring.
@@ -178,7 +178,7 @@ def main(account_email: str, license_type: str):
 
 												<div>
 													<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-														Advanced Job Scheduling for Realistic Demo Environments
+														Advanced job scheduling for realistic demo environments
 													</h3>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 														Zoom's most innovative use case—"drip hydration"—required sophisticated job scheduling. Unlike databases where you can insert data instantly, Zoom's real-time APIs require sequential message sending with realistic delays to create compelling demos that feel authentic.
@@ -198,7 +198,7 @@ def main(account_email: str, license_type: str):
 
 												<div>
 													<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-														Windmill as Central Orchestration Layer
+														Windmill as central orchestration layer
 													</h3>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 														Windmill sits "at the center of everything" in Zoom's demo platform architecture, self-hosted in AWS EKS. The platform consists of a React front-end portal with Windmill Apps embedded via iframe, allowing rapid feature deployment without front-end code changes.
@@ -218,7 +218,7 @@ def main(account_email: str, license_type: str):
 
 												<div>
 													<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-														Git-Backed Workflows for Team Collaboration
+														Git-backed workflows for team collaboration
 													</h3>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 														With 80+ Global Architects contributing to the platform, version control and rollback capabilities were non-negotiable. Windmill's bidirectional Git sync provides both a system of record and the ability to revert commits when needed—critical for managing contributions from a large, distributed team.
