@@ -114,7 +114,7 @@ export default function PantherLabsCaseStudyPage() {
 								<section>
 									<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Problem</h2>
 									<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-										When Airplane.dev was acquired and announced it would shut down, Panther Labs had just 30 days to migrate their entire internal operations platform—or face operational paralysis. All their core processes would stop working: customer provisioning, AWS account management, deployment pipelines, and alerting.
+										When Airplane.dev was acquired and announced it would shut down, Panther Labs had just 30 days to migrate their entire internal operations platform or face operational paralysis. All their core processes would stop working: customer provisioning, AWS account management, deployment pipelines, and alerting.
 									</p>
 									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 										<p className="text-gray-700 dark:text-gray-300 italic mb-2">
@@ -181,9 +181,9 @@ def main(customer_email: str, aws_account_id: str):
     return result`}</code>
 												</pre>
 											</div>
-											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4">
-												<p className="text-gray-700 dark:text-gray-300 italic text-sm">
-													"Put the bulk of the business logic inside of a third-party library... just have the platform executors pulling down this library... gives us flexibility to just move our stuff around."
+											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+													"We put the bulk of the business logic inside of a third-party library and the platform executors pull down this library. It gives us flexibility to just move our stuff around."
 												</p>
 												<cite className="text-sm text-gray-500 dark:text-gray-400">
 													— BJ Maldonado
@@ -202,7 +202,7 @@ def main(customer_email: str, aws_account_id: str):
 												Windmill's native support for importing any Python package from PyPI and private repositories made their architecture possible immediately. No limitations, no workarounds—full Python language features with proper dependency management and versioning. Everything-as-code with Git sync gave them proper version control and CI/CD workflows.
 											</p>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-												At the same time, Windmill's auto-generated UIs and App Builder meant non-technical team members could still use the platform through graphical interfaces—without requiring the platform team to build custom frontends.
+												At the same time, Windmill's auto-generated UIs and App Builder meant non-technical team members could still use the platform through graphical interfaces, without requiring the platform team to build custom frontends.
 											</p>
 										</div>
 
@@ -211,7 +211,7 @@ def main(customer_email: str, aws_account_id: str):
 												Self-hosted deployment
 											</h3>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-												As a cybersecurity company, Panther needed to self-host on their own AWS infrastructure. Windmill's Enterprise Edition deployed cleanly into their existing environment with SSO integration. With direct support from Windmill's founder Ruben, they completed the migration within the 30-day deadline.
+												As a cybersecurity company, Panther needed to self-host on their own AWS infrastructure. Windmill's Enterprise Edition deployed cleanly into their existing environment with SSO integration. With direct support from Windmill, they completed the migration within the 30-day deadline.
 											</p>
 										</div>
 									</div>
@@ -241,7 +241,7 @@ def main(customer_email: str, aws_account_id: str):
 									</p>
 									<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 										<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-											"This gives us flexibility to just move our stuff around... determined not to get bit again."
+											"This gives us flexibility to just move our stuff around, determined not to get bit again."
 										</p>
 										<cite className="text-sm text-gray-500 dark:text-gray-400">
 											— BJ Maldonado
