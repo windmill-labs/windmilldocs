@@ -201,8 +201,8 @@ def main(endpoint: str, expected_status: int = 200):
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 														Windmill scripts could be deployed immediately without going through CFA Institute's rigid change management process. With Git sync, proper version control, and workspace collaboration features, the entire SRE team could work together seamlessly.
 													</p>
-													<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4">
-														<p className="text-gray-700 dark:text-gray-300 italic text-sm">
+													<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+														<p className="text-gray-700 dark:text-gray-300 italic mb-2">
 															"We were very quickly able to get our scripts out of n8n and transitioned over into Windmill pretty quickly. And then from there our use of Windmill has kind of exploded."
 														</p>
 														<cite className="text-sm text-gray-500 dark:text-gray-400">

@@ -183,8 +183,8 @@ def main(account_email: str, license_type: str):
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 														Zoom's most innovative use case—"drip hydration"—required sophisticated job scheduling. Unlike databases where you can insert data instantly, Zoom's real-time APIs require sequential message sending with realistic delays to create compelling demos that feel authentic.
 													</p>
-													<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4">
-														<p className="text-gray-700 dark:text-gray-300 italic text-sm">
+													<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+														<p className="text-gray-700 dark:text-gray-300 italic mb-2">
 															"We actually use Windmill's job engine to do all that heavy lifting for us. We schedule jobs into Windmill's job engine into the future to handle these drip hydration tasks."
 														</p>
 														<cite className="text-sm text-gray-500 dark:text-gray-400">
@@ -203,8 +203,8 @@ def main(account_email: str, license_type: str):
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 														Windmill sits "at the center of everything" in Zoom's demo platform architecture, self-hosted in AWS EKS. The platform consists of a React front-end portal with Windmill Apps embedded via iframe, allowing rapid feature deployment without front-end code changes.
 													</p>
-													<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4">
-														<p className="text-gray-700 dark:text-gray-300 italic text-sm">
+													<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+														<p className="text-gray-700 dark:text-gray-300 italic mb-2">
 															"We can build things very quickly in Windmill, iterate very quickly, and we can ship them into a nice front end without needing to really modify the front-end code in any way."
 														</p>
 														<cite className="text-sm text-gray-500 dark:text-gray-400">
