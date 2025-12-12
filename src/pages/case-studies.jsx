@@ -18,11 +18,6 @@ function CaseStudyCard({ caseStudy }) {
 	const getLogoPath = () => {
 		if (colorMode === 'light') {
 			// Light mode: use dark logo
-			// Handle special case for CFA Institute (typo in filename)
-			if (caseStudy.logo.includes('cfa-institute-light.png')) {
-				return '/images/brands/cfa-institue-dark.png';
-			}
-			// Replace -light.png with -dark.png for other logos
 			return caseStudy.logo.replace('-light.png', '-dark.png');
 		} else {
 			// Dark mode: use light logo
