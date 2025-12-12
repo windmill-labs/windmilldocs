@@ -6,18 +6,7 @@ import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
 import { ArrowLeft } from 'lucide-react';
-import { useColorMode } from '@docusaurus/theme-common';
-
-function CompanyLogo({ lightSrc, darkSrc, alt }) {
-	const { colorMode } = useColorMode();
-	return (
-		<img
-			src={colorMode === 'light' ? darkSrc : lightSrc}
-			alt={alt}
-			className="h-24 w-auto object-contain mb-6"
-		/>
-	);
-}
+import CompanyLogo from '../../components/case-studies/CompanyLogo';
 
 export default function CFAInstituteCaseStudyPage() {
 	return (
@@ -51,7 +40,7 @@ export default function CFAInstituteCaseStudyPage() {
 										<div className="mb-6">
 											<CompanyLogo
 												lightSrc="/images/brands/cfa-institute-light.png"
-												darkSrc="/images/brands/cfa-institue-dark.png"
+												darkSrc="/images/brands/cfa-institute-dark.png"
 												alt="CFA Institute logo"
 											/>
 										</div>
