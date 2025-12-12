@@ -6,6 +6,18 @@ import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
 import { ArrowLeft } from 'lucide-react';
+import { useColorMode } from '@docusaurus/theme-common';
+
+function CompanyLogo({ lightSrc, darkSrc, alt }) {
+	const { colorMode } = useColorMode();
+	return (
+		<img
+			src={colorMode === 'light' ? darkSrc : lightSrc}
+			alt={alt}
+			className="h-24 w-auto object-contain mb-6"
+		/>
+	);
+}
 
 export default function PantherLabsCaseStudyPage() {
 	return (
@@ -37,10 +49,10 @@ export default function PantherLabsCaseStudyPage() {
 								<div className="lg:col-span-1">
 									<div className="sticky top-32">
 										<div className="mb-6">
-											<img
-												src="/images/brands/panther-labs-white.png"
+											<CompanyLogo
+												lightSrc="/images/brands/panther-light.png"
+												darkSrc="/images/brands/panther-dark.png"
 												alt="Panther Labs logo"
-												className="h-24 w-auto object-contain dark:opacity-100 mb-6"
 											/>
 										</div>
 										<div className="space-y-6">

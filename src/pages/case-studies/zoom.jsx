@@ -6,6 +6,18 @@ import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
 import { ArrowLeft } from 'lucide-react';
+import { useColorMode } from '@docusaurus/theme-common';
+
+function CompanyLogo({ lightSrc, darkSrc, alt }) {
+	const { colorMode } = useColorMode();
+	return (
+		<img
+			src={colorMode === 'light' ? darkSrc : lightSrc}
+			alt={alt}
+			className="h-24 w-auto object-contain mb-6"
+		/>
+	);
+}
 
 export default function ZoomCaseStudyPage() {
 	return (
@@ -37,10 +49,10 @@ export default function ZoomCaseStudyPage() {
 								<div className="lg:col-span-1">
 									<div className="sticky top-32">
 										<div className="mb-6">
-											<img
-												src="/images/brands/zoom-white.png"
+											<CompanyLogo
+												lightSrc="/images/brands/zoom-light.png"
+												darkSrc="/images/brands/zoom-dark.png"
 												alt="Zoom logo"
-												className="h-24 w-auto object-contain dark:opacity-100 mb-6"
 											/>
 										</div>
 										<div className="space-y-6">

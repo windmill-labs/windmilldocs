@@ -7,8 +7,28 @@ import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
 import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '../data/case-studies';
+import { useColorMode } from '@docusaurus/theme-common';
 
 function CaseStudyCard({ caseStudy }) {
+	const { colorMode } = useColorMode();
+	
+	// Derive logo path based on color mode
+	// In light mode, use dark logo (dark on light background)
+	// In dark mode, use light logo (light on dark background)
+	const getLogoPath = () => {
+		if (colorMode === 'light') {
+			// Light mode: use dark logo
+			// Handle special case for CFA Institute (typo in filename)
+			if (caseStudy.logo.includes('cfa-institute-light.png')) {
+				return '/images/brands/cfa-institue-dark.png';
+			}
+			// Replace -light.png with -dark.png for other logos
+			return caseStudy.logo.replace('-light.png', '-dark.png');
+		} else {
+			// Dark mode: use light logo
+			return caseStudy.logo;
+		}
+	};
 	return (
 		<Link
 			to={caseStudy.link}
@@ -23,7 +43,7 @@ function CaseStudyCard({ caseStudy }) {
 				</div>
 				<div className="flex items-center justify-center w-full flex-1 min-h-[120px]">
 					<img
-						src={caseStudy.logo}
+						src={getLogoPath()}
 						alt={`${caseStudy.company} logo`}
 						className="h-28 w-full object-contain"
 					/>
