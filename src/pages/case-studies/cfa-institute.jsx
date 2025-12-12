@@ -118,7 +118,7 @@ export default function CFAInstituteCaseStudyPage() {
 											</p>
 											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-													"Our company has some really kind of rigid requirements around maintenance and kind of a slow deployment process to get those into production. So it was really difficult for us to get a script up and have it quickly deployed and easily maintained by the team."
+													"Our company has some strict requirements around maintenance and deployment process to get those into production. So it was really difficult for us to get a script up and have it quickly deployed and easily maintained by the team."
 												</p>
 												<cite className="text-sm text-gray-500 dark:text-gray-400">
 													— Cam Barts, SR Manager, SRE
@@ -153,19 +153,19 @@ export default function CFAInstituteCaseStudyPage() {
 											<div className="space-y-8">
 												<div>
 													<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-														Discovery Through Open Source Validation
+														Discovery through open source validation
 													</h3>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 														Cam Barts discovered Windmill through alternativeTo.net while searching for open-source alternatives. As a tech lead who regularly explores projects in his home lab, Cam deployed Windmill and tested it for approximately one year before introducing it to CFA Institute in February 2025.
 													</p>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-														This "try before you buy" approach was critical—Cam had already proven Windmill's capabilities in his own environment before advocating for enterprise adoption. His journey illustrates an important adoption pattern: personal exploration in a safe environment, proof of concept for team use cases, and organic advocacy that spreads through demonstrated value.
+														This "try before you buy" approach was critical. Cam had already proven Windmill's capabilities in his own environment before advocating for enterprise adoption. His journey illustrates an important adoption pattern: personal exploration in a safe environment, proof of concept for team use cases, and organic advocacy that spreads through demonstrated value.
 													</p>
 												</div>
 
 												<div>
 													<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-														Real Code with Full Language Features
+														Real code with full language features
 													</h3>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 														Unlike n8n's visual workflows, Windmill enabled the team to write actual Python code with full language features and library support. This was essential for their most critical use case: synthetic monitoring of revenue-generating processes.
@@ -196,7 +196,7 @@ def main(endpoint: str, expected_status: int = 200):
 
 												<div>
 													<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-														Rapid Deployment Without Change Management
+														Rapid deployment without change management
 													</h3>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 														Windmill scripts could be deployed immediately without going through CFA Institute's rigid change management process. With Git sync, proper version control, and workspace collaboration features, the entire SRE team could work together seamlessly.
@@ -213,7 +213,7 @@ def main(endpoint: str, expected_status: int = 200):
 
 												<div>
 													<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-														Enterprise-Wide Integration Platform
+														Enterprise-wide integration platform
 													</h3>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 														Beyond synthetic monitoring, CFA Institute built sophisticated integrations that extended across their organization:
@@ -234,25 +234,17 @@ def main(endpoint: str, expected_status: int = 200):
 												After seven months in production, Windmill usage has "exploded" across CFA Institute's IT organization. What started as a single SRE team pilot has grown into organization-wide demand, with multiple teams actively building and weekly requests for expansion.
 											</p>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-												The platform has proven production-stable for their most critical workloads: 25 synthetic tests running every 5 minutes without failures, platform updates every 2 weeks with zero incidents, and mission-critical monitoring that directly protects revenue-generating processes. The team reports they "feel like we are getting a steal" at $1,850/month for 18 seats and 9 vCPUs, given the breadth of use cases it enables and time saved across multiple teams.
+												The platform has proven production-stable for their most critical workloads: 25 synthetic tests running every 5 minutes without failures, platform updates every 2 weeks with zero incidents, and mission-critical monitoring that directly protects revenue-generating processes.
 											</p>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
 												The transition from n8n required only brief training sessions before the entire team became productive and, ultimately, advocates. Business stakeholders and non-technical teams now have access to sophisticated automation through Grafana dashboards, Teams bot queries, and auto-generated UIs—all powered by real code underneath that developers can iterate on rapidly.
 											</p>
-											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
-												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-													"We needed something that was going to be a lot more robust, something that we could actually write code inside of. Windmill was kind of a natural evolution from n8n."
-												</p>
-												<cite className="text-sm text-gray-500 dark:text-gray-400">
-													— Cam Barts
-												</cite>
-											</blockquote>
 										</section>
 
 										<section>
 											<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Conclusion</h2>
 											<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-												CFA Institute's journey from n8n to Windmill demonstrates how the right platform can transform isolated scripts into an enterprise-wide automation layer. By choosing a developer-first platform that supports real code, Git workflows, and production-grade reliability, they've built mission-critical infrastructure that protects revenue while enabling rapid iteration. Their organic adoption pattern—from home lab validation to team advocacy to organization-wide demand—shows that when developers get the tools they need, advocacy becomes inevitable.
+												CFA Institute's journey from n8n to Windmill demonstrates how the right platform can transform isolated scripts into an enterprise-wide automation layer. By choosing a developer-first platform that supports real code, Git workflows, and production-grade reliability, they've built mission-critical infrastructure that protects revenue while enabling rapid iteration.
 											</p>
 										</section>
 									</div>
