@@ -1,0 +1,260 @@
+import DocCard from '@site/src/components/DocCard';
+import WorkerQueueSimulator from '@site/src/components/WorkerQueueSimulator';
+
+# Scaling workers
+
+Windmill uses a worker queue architecture where workers pull jobs from a shared queue and execute them one at a time. Understanding this pattern is essential for properly sizing your worker pool to meet your business requirements.
+
+## How workers process jobs
+
+Workers are autonomous processes that pull jobs from a queue in order of their scheduled time. Each worker:
+
+- Executes one job at a time using full CPU and memory
+- Pulls the next job as soon as the current one completes
+- Can run up to 26 million jobs per month (at 100ms per job)
+
+This architecture is horizontally scalable: add more workers to increase throughput, remove workers to reduce costs. There is no coordination overhead between workers.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workers and worker groups"
+		description="Learn about Windmill's worker architecture and how to configure worker groups."
+		href="/docs/core_concepts/worker_groups"
+	/>
+	<DocCard
+		title="Architecture"
+		description="Overview of Windmill's technical architecture."
+		href="/docs/misc/architecture"
+	/>
+</div>
+
+## Interactive simulator
+
+Use this simulator to visualize how jobs flow through the queue and understand the relationship between job arrival rate, job duration, and worker count.
+
+<WorkerQueueSimulator />
+
+### Simulator modes
+
+- **Batch**: All jobs are submitted at once, simulating scheduled bulk operations
+- **Continuous**: Jobs arrive at a steady rate, simulating regular workloads
+- **Random**: Jobs arrive at varying intervals, simulating unpredictable traffic
+
+### Key metrics
+
+- **Elapsed time**: Total time from first job to last completion
+- **Jobs/sec**: Actual throughput achieved
+- **Worker occupancy**: Percentage of time each worker spent processing (vs idle)
+
+## Sizing your worker pool
+
+The right number of workers depends on your specific requirements. Consider these factors:
+
+### Job duration and arrival rate
+
+The fundamental relationship is:
+
+```
+Required workers ≥ Job arrival rate × Average job duration
+```
+
+For example, if jobs arrive at 10/second and each takes 2 seconds:
+- Minimum workers needed: 10 × 2 = 20 workers
+
+With fewer workers, jobs will queue up. With more workers, some will be idle.
+
+### Maximum acceptable queue time
+
+If jobs must not wait more than X seconds before starting:
+
+```
+Required workers = (Peak arrival rate × Job duration) + (Peak arrival rate × Max queue time)
+```
+
+**Example**: Peak rate 5 jobs/sec, duration 3s, max wait 2s:
+- Workers needed: (5 × 3) + (5 × 2) = 15 + 10 = 25 workers
+
+This ensures even during peak load, no job waits more than 2 seconds.
+
+### Handling traffic peaks
+
+If your workload has predictable peaks (weekends, end of month, etc.):
+
+1. **Fixed capacity**: Size for peak load, accept idle workers during off-peak
+2. **Autoscaling**: Configure min/max workers to automatically adjust
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Autoscaling"
+		description="Automatically scale workers based on queue depth and occupancy."
+		href="/docs/core_concepts/autoscaling"
+	/>
+</div>
+
+## Practical examples
+
+### Scenario 1: Batch ETL processing
+
+**Requirement**: Process 1,000 daily reports, each taking 30 seconds, complete within 2 hours
+
+- Total processing time: 1,000 × 30s = 30,000 seconds
+- Available time: 2 hours = 7,200 seconds
+- Minimum workers: 30,000 / 7,200 = 4.2 → **5 workers**
+
+With 5 workers, all jobs complete in approximately 100 minutes.
+
+### Scenario 2: Real-time webhook processing
+
+**Requirement**: Handle 100 webhooks/minute during business hours, each taking 5 seconds, max latency 10 seconds
+
+- Arrival rate: 100/60 = 1.67 jobs/second
+- Minimum workers: 1.67 × 5 = 8.3 workers
+- For 10s max latency headroom: **10 workers**
+
+### Scenario 3: Weekend traffic spikes
+
+**Requirement**: Normal load 2 jobs/sec, weekend peaks at 8 jobs/sec, jobs take 1 second each
+
+- Normal load: 2 × 1 = 2 workers minimum
+- Peak load: 8 × 1 = 8 workers minimum
+- **Recommended**: Use autoscaling with min=3, max=10
+
+Configure autoscaling to scale up when queue depth increases and scale down when occupancy drops below 25%.
+
+## Priority queues with worker groups
+
+For mixed workloads where some jobs are more time-sensitive:
+
+1. Create separate [worker groups](../../core_concepts/9_worker_groups/index.mdx) with different tags
+2. Assign high-priority jobs to dedicated workers
+3. Let lower-priority jobs share remaining capacity
+
+**Example configuration**:
+
+- `high-priority` worker group: 5 dedicated workers, handles critical customer-facing operations
+- `default` worker group: 10 workers, handles everything else
+- `low-priority` worker group: 3 workers, handles background analytics
+
+This ensures critical jobs are never blocked by bulk operations.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Worker groups"
+		description="Configure worker groups with different tags for job routing."
+		href="/docs/core_concepts/worker_groups"
+	/>
+	<DocCard
+		title="High priority jobs"
+		description="Set job priorities within a queue."
+		href="/docs/core_concepts/jobs#high-priority-jobs"
+	/>
+</div>
+
+## Monitoring and alerting
+
+Track worker performance to identify scaling needs:
+
+- **Queue metrics**: Monitor delayed jobs per tag and queue wait times
+- **Occupancy rates**: High sustained occupancy (>75%) suggests adding workers
+- **Worker alerts**: Get notified when workers go offline
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Queue metrics"
+		description="Visualize queue depth and delays across worker groups."
+		href="/docs/core_concepts/worker_groups#queue-metrics"
+	/>
+	<DocCard
+		title="Critical alerts"
+		description="Configure alerts for worker failures and queue buildup."
+		href="/docs/core_concepts/critical_alerts"
+	/>
+</div>
+
+## Autoscaling configuration
+
+For dynamic workloads, configure autoscaling to automatically adjust worker count:
+
+| Parameter | Recommended starting value |
+| --- | --- |
+| Min workers | Expected base load / job duration |
+| Max workers | Peak load / job duration × 1.5 |
+| Scale-out trigger | 75% occupancy or jobs waiting > min_workers |
+| Scale-in trigger | Less than 25% occupancy for 5+ minutes |
+| Cooldown | 60-120 seconds between scaling events |
+
+The autoscaling algorithm checks every 30 seconds and considers:
+- Number of jobs waiting in queue
+- Worker occupancy rates over 15s, 5m, and 30m intervals
+- Cooldown periods to prevent thrashing
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Autoscaling"
+		description="Configure automatic worker scaling based on demand."
+		href="/docs/core_concepts/autoscaling"
+	/>
+</div>
+
+## Worker memory sizing
+
+Workers come in different sizes based on memory limits. The right size depends on your job requirements:
+
+| Worker size | Memory | Compute units |
+| --- | --- | --- |
+| Small | 1GB | 0.5 CU |
+| Standard | 2GB | 1 CU |
+| Large | >2GB | 2 CU (self-hosted capped at 2 CU regardless of actual memory) |
+
+### Choosing the right memory limit
+
+Set worker memory based on the **maximum memory any individual job will need**, plus some headroom:
+
+- **Simple API calls, webhooks, light scripts**: 1-2GB is typically sufficient
+- **Data processing, ETL jobs**: May need 4GB+ depending on data volume processed in memory
+- **Large file processing, ML inference**: Consider 8GB+ for memory-intensive operations
+
+If a job exceeds the worker's memory limit, it will be killed by the operating system. Monitor job memory usage and increase worker memory if you see OOM (out of memory) errors.
+
+### Memory vs worker count trade-off
+
+For the same compute budget, you can choose between:
+
+- **More small workers**: Better parallelism for many short jobs
+- **Fewer large workers**: Better for memory-intensive jobs that can't be parallelized
+
+**Example**: 4 CUs can be configured as:
+- 8 small workers (1GB each) - good for high-volume, light jobs
+- 4 standard workers (2GB each) - balanced configuration
+- 2 large workers (4GB each) - good for memory-intensive ETL
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Plans and pricing"
+		description="Understand compute units and how worker memory affects billing."
+		href="/docs/misc/plans_details"
+	/>
+</div>
+
+## Cost optimization
+
+Worker billing is based on usage time with minute granularity:
+
+- 10 workers for 1/10th of the month costs the same as 1 worker for the full month
+- Use autoscaling to minimize idle workers
+- Consider [dedicated workers](../../core_concepts/25_dedicated_workers/index.mdx) for high-throughput single-script scenarios
+
+Mark development and staging instances as "Non-prod" in [instance settings](../18_instance_settings/index.mdx) so they don't count toward your compute limits.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Plans and pricing"
+		description="Understand compute units and pricing."
+		href="/docs/misc/plans_details"
+	/>
+	<DocCard
+		title="Dedicated workers"
+		description="High-throughput execution for single scripts."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+</div>
