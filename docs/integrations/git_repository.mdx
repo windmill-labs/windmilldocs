@@ -34,6 +34,20 @@ Instead of using a long lived personal access token to authenticate with GitHub 
 
 GitHub App is available under [Windmill Enterprise](/pricing).
 
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/github_app_installation.mp4"
+/>
+
+<br />
+
+### Network requirements
+
+The GitHub App feature requires your Windmill instance to communicate with `https://stats.windmill.dev` to obtain GitHub installation tokens. This is the same endpoint used for [telemetry](../advanced/18_instance_settings/index.mdx#telemetry).
+
+If your GitHub organization uses [IP allow lists](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-allowed-ip-addresses-for-your-organization), you will need to whitelist the IP address of `stats.windmill.dev` to allow it to request installation tokens from GitHub on behalf of your Windmill instance. Contact support@windmill.dev to get the current IP address.
+
 As a [Windmill workspace admin](https://www.windmill.dev/docs/core_concepts/roles_and_permissions#admin), you can install the GitHub app to multiple organizations and link them to your Windmill workspaces. Once an app has been installed to a workspace, you can install it to other workspace where you have the admin role.
 
 ![GitHub App](/integrations/visual_elements/github_app_installation.png.webp)
