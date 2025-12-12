@@ -89,10 +89,10 @@ export default function CaseStudiesPage() {
 							{/* Header section */}
 							<div className="text-center mb-16">
 								<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
-									Our customers deliver reliable products
+								    Trusted by teams building world-class internal software 
 								</h1>
 								<p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-									From startups to public companies, our customers chose Windmill to power their products.
+									From startups to public companies, our customers choose Windmill to power their internal platforms and operations at scale.
 								</p>
 							</div>
 
