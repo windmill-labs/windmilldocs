@@ -100,26 +100,6 @@ export default function CFAInstituteCaseStudyPage() {
 										<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
 											CFA Institute's SRE team needed to replace n8n with a platform robust enough for production-critical monitoring. After their SRE manager tested Windmill in his home lab for a year, they migrated in early 2025. Today, Windmill runs 25 synthetic tests every 5 minutes protecting revenue-generating processes, and usage has "exploded" across their IT organization.
 										</p>
-										<div className="flex items-center gap-4 flex-wrap">
-											<span className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-												Financial Services & SRE
-											</span>
-											<div className="flex items-center gap-3">
-												<img
-													src="/contributors/cam_barts.jpeg"
-													alt="Cam Barts"
-													className="w-10 h-10 rounded-full border-2 border-blue-500 object-cover"
-												/>
-												<div>
-													<p className="text-sm font-medium text-gray-900 dark:text-white">
-														Cam Barts
-													</p>
-													<p className="text-xs text-gray-500 dark:text-gray-400">
-														SR Manager, SRE
-													</p>
-												</div>
-											</div>
-										</div>
 									</div>
 
 									{/* Content sections */}
