@@ -3,7 +3,7 @@ export const cfaInstituteCaseStudy = {
 	company: 'CFA Institute',
 	logo: '/images/brands/cfa-institute-light.png',
 	title: 'How CFA Institute migrated from n8n and scaled production-critical monitoring with Windmill',
-	description: "CFA Institute migrated from n8n to Windmill for production-critical monitoring. After a year of home lab testing, they deployed in early 2025. Today, Windmill runs 25 synthetic tests every 5 minutes, and usage has expanded across their entire IT organization.",
+	description: "CFA Institute needed production-critical monitoring at scale. N8N couldn't meet their reliability and performance requirements, prompting their migration to Windmill, where they now run 25 synthetic tests every 5 minutes.",
 	category: 'Financial Services',
 	author: {
 		name: 'Cam Barts',

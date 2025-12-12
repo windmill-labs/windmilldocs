@@ -50,7 +50,7 @@ export default function ZoomCaseStudyPage() {
 													Industry
 												</div>
 												<div className="text-sm text-gray-900 dark:text-white">
-													Communication software
+													Enterprise software
 												</div>
 											</div>
 											<div>
