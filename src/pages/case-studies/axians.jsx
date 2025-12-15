@@ -72,6 +72,21 @@ export default function AxiansCaseStudyPage() {
 											</div>
 											<div>
 												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													What they do on Windmill
+												</div>
+												<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+													<div className="flex flex-wrap gap-2">
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Network automation</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Self-healing automation</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Network deployments</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Invoice workflows</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Multi-tenant automation</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Equipment updates</span>
+													</div>
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
 													Website
 												</div>
 												<a

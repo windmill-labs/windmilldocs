@@ -72,6 +72,22 @@ export default function CFAInstituteCaseStudyPage() {
 											</div>
 											<div>
 												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													What they do on Windmill
+												</div>
+												<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+													<div className="flex flex-wrap gap-2">
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Synthetic monitoring</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Browser automation</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Microsoft Teams Bot</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Grafana data layer</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Jira integrations</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Postmortem searches</span>
+														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Release monitoring</span>
+													</div>
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
 													Website
 												</div>
 												<a
