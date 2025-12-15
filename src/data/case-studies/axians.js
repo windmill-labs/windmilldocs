@@ -10,5 +10,6 @@ export const axiansCaseStudy = {
 		role: 'Product Owner, Automation Team',
 		image: '/contributors/ben_willems.jpeg'
 	},
-	link: '/case-studies/axians'
+	link: '/case-studies/axians',
+	selfHosted: true
 };

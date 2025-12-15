@@ -10,5 +10,6 @@ export const athenaIntelligenceCaseStudy = {
 		role: 'Founder',
 		image: '/contributors/brendon_geils.jpeg'
 	},
-	link: '/case-studies/athena-intelligence'
+	link: '/case-studies/athena-intelligence',
+	selfHosted: true
 };

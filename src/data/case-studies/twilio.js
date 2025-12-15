@@ -10,5 +10,6 @@ export const twilioCaseStudy = {
 		role: 'IT Team Lead',
 		image: '/contributors/nanda_kishore_yadavalli.jpeg'
 	},
-	link: '/case-studies/twilio'
+	link: '/case-studies/twilio',
+	selfHosted: false
 };

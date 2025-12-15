@@ -10,5 +10,6 @@ export const pantherLabsCaseStudy = {
 		role: 'Platform Manager',
 		image: '/contributors/bj_maldonado.jpeg'
 	},
-	link: '/case-studies/panther-labs'
+	link: '/case-studies/panther-labs',
+	selfHosted: true
 };
