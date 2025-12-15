@@ -74,7 +74,16 @@ SELECT * FROM friend WHERE id = $user_id;
 </TabItem>
 </Tabs>
 
----
+We recommend to only have one or a few data tables per workspace, and to use schemas to organize your data.
+
+![Data Table schemas](./datatable_images/datatable_schemas.png 'Data Table schemas')
+
+You can reference schemas normally with the `schema.table` syntax, or set the default search path with this syntax (Python / Typescript) :
+
+```ts
+sql = wmill.datatable(':myschema'); // or 'named_datatable:myschema'
+sql`SELECT * FROM mytable`; // refers to myschema.mytable
+```
 
 ### Assets integration
 
