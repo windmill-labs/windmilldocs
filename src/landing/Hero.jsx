@@ -1,25 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
 import HomescreenSvg from '../../static/homescreen.svg';
 import Link from '@docusaurus/Link';
 
 export default function Hero() {
-	const words = ['internal tools', 'apps', 'jobs', 'API', 'workflows'];
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isVisible, setIsVisible] = useState(true);
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setIsVisible(false);
-			setTimeout(() => {
-				setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
-				setIsVisible(true);
-			}, 300); // Half of transition duration
-		}, 2200); // Change word every 3 seconds
-
-		return () => clearInterval(interval);
-	}, []);
 
 	return (
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
@@ -32,17 +17,10 @@ export default function Hero() {
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
 						Build, deploy and monitor{' '}
-						<span 
-							className="inline-block text-blue-500 dark:text-blue-450 transition-all duration-500 ease-in-out"
-							style={{
-								opacity: isVisible ? 1 : 0,
-								transform: isVisible ? 'translateY(0)' : 'translateY(-10px)'
-							}}
-						>
-							{words[currentIndex]}
-						</span>
-						<br />
-						at any scale
+						<span className="text-blue-500 dark:text-blue-450">
+							internal software
+						</span>{' '}
+						at scale
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
 						Write and deploy software 10x faster, and run it with the highest reliability and
