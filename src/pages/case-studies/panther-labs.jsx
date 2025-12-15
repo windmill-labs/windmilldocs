@@ -108,7 +108,7 @@ export default function PantherLabsCaseStudyPage() {
 								<section>
 									<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
 									<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-										Panther Labs is a modern cybersecurity SIEM (Security Information and Event Management) platform that helps security teams detect threats at scale. Their platform team manages all internal operations—from customer provisioning and AWS account management to infrastructure deployment and alerting systems. As a cybersecurity company handling sensitive data, they require self-hosted solutions on their own AWS infrastructure with full operational control.
+										Panther Labs is a modern cybersecurity SIEM (Security Information and Event Management) platform that helps security teams detect threats at scale. Their platform team manages all internal operations, from customer provisioning and AWS account management to infrastructure deployment and alerting systems. As a cybersecurity company handling sensitive data, they require self-hosted solutions on their own AWS infrastructure with full operational control.
 									</p>
 								</section>
 
