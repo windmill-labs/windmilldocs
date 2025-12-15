@@ -1,0 +1,296 @@
+---
+title: How Twilio scaled workflow automation across technical and non-technical teams
+description: Twilio's internal IT team needed a workflow platform that could serve both technical R&D engineers writing complex automation and non-technical GTM teams requiring business-friendly tools.
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { ArrowLeft } from 'lucide-react';
+import CompanyLogo from '@site/src/components/case-studies/CompanyLogo';
+import { twilioCaseStudy } from '@site/src/data/case-studies/twilio';
+
+export default function TwilioContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<Link
+					to="/case-studies"
+					className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
+				>
+					<ArrowLeft className="w-4 h-4" />
+					Back to Case Studies
+				</Link>
+
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+					<div className="lg:col-span-1">
+						<div className="sticky top-32">
+							<div className="mb-6">
+								<CompanyLogo
+									lightSrc="/images/brands/twilio-light.png"
+									darkSrc="/images/brands/twilio-dark.png"
+									alt="Twilio logo"
+								/>
+							</div>
+							<div className="space-y-6">
+								<div>
+									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+										Industry
+									</div>
+									<div className="text-sm text-gray-900 dark:text-white">
+										Cloud Communications
+									</div>
+								</div>
+								<div>
+									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+										Company Size
+									</div>
+									<div className="text-sm text-gray-900 dark:text-white">
+										5,000+
+									</div>
+								</div>
+								<div>
+									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+										What they do
+									</div>
+									<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+										Global cloud communications platform powering customer engagement for hundreds of thousands of businesses worldwide.
+									</div>
+								</div>
+								<div>
+									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+										What they do on Windmill
+									</div>
+									<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+										<div className="flex flex-wrap gap-2">
+											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Incident management</span>
+											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Slack integration</span>
+											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Task scheduler replacement</span>
+											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">R&D automation</span>
+											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">GTM automation</span>
+											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Workflow automation</span>
+										</div>
+									</div>
+								</div>
+								<div>
+									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+										Deployment
+									</div>
+									<div className="text-sm text-gray-900 dark:text-white">
+										<span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-xs font-medium">
+											{twilioCaseStudy.selfHosted ? 'EE Self-hosted' : 'EE Cloud'}
+										</span>
+									</div>
+								</div>
+								<div>
+									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+										Website
+									</div>
+									<a
+										href="https://www.twilio.com"
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-sm text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline"
+									>
+										twilio.com
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="lg:col-span-2">
+						<div className="mb-12">
+							<div className="mb-6">
+								<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
+									Case Study
+								</span>
+							</div>
+							<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
+								{title}
+							</h1>
+							<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
+								{description}
+							</p>
+						</div>
+
+						<div className="space-y-12">
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+	Twilio is a global cloud communications platform powering customer engagement for hundreds of thousands of businesses. Their internal IT team needed a workflow platform that could serve both technical R&D engineers writing complex automation and non-technical GTM teams requiring business-friendly tools.
+</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The problem: One platform for technical and business teams</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	Twilio's internal IT team faced the classic enterprise automation challenge: their R&D engineers had successfully automated workflows, but their go-to-market teams—sales, marketing, and customer success—couldn't leverage the same platform.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"The feedback from the GTM side is they are not as tech-savvy to write their own code or use AI to make connectors. Out of the box connectors would help them a lot just so that they can get productive very quickly."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Nanda Kishore Yadavalli, IT Team Lead
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	The three-person platform team (Nanda, Sarmad, and William) had proven automation's value by replacing their Windows Task Scheduler infrastructure with cloud-native workflows. R&D engineers loved the code-first approach—writing Python and TypeScript, importing packages, and maintaining everything in Git.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	But GTM teams needed something different: pre-built integrations for Salesforce, DocuSign, Gong, 6sense, LinkedIn, and their other daily tools. They wanted self-service automation without writing code or depending on engineering for every workflow change.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	The requirements were clear:
+</p>
+<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4">
+	<li><strong>For R&D</strong>: Full developer control with real code, not drag-and-drop</li>
+	<li><strong>For GTM</strong>: Pre-built connectors they could use as "stepping stones" to build workflows</li>
+	<li><strong>For everyone</strong>: Production reliability and self-hosted deployment for data security</li>
+	<li><strong>For the platform team</strong>: One system to maintain, not separate tools for each audience</li>
+</ul>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+	Most platforms force a choice: either developer-first tools that business teams can't use, or low-code tools that frustrate engineers. Twilio needed both.
+</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The solution: Proving value through internal competition</h2>
+
+<div className="space-y-8">
+	<div>
+		<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+			From open source testing to production confidence
+		</h3>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+			Nanda discovered Windmill while researching workflow automation platforms. Coming from years of managing Windows Server Task Scheduler across large machine fleets, he immediately saw the productivity potential.
+		</p>
+		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+				"I used to maintain a large fleet of Windows machines where I used to write task scheduler jobs. I saw that Windmill can do this a lot better and I can be more productive."
+			</p>
+			<cite className="text-sm text-gray-500 dark:text-gray-400">
+				— Nanda Kishore Yadavalli
+			</cite>
+		</blockquote>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+			The team tested Windmill's open source version locally in Docker containers for months, building familiarity with the platform before committing to production deployment. This thorough evaluation gave them confidence in the architecture and use cases.
+		</p>
+	</div>
+
+	<div>
+		<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+			Hackathon validation drives leadership buy-in
+		</h3>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+			The breakthrough came through Twilio's annual internal hackathon. In 2024, the team had cautiously tested Windmill in the competition but didn't gain traction. In 2025, they built their hackathon project on production Windmill infrastructure.
+		</p>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+			Their project reached the top 10 out of approximately 1,000 competing teams—objective validation of Windmill's capabilities in a competitive environment.
+		</p>
+		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+				"This year once we got the production version, we saw the potential of it and it went all the way top 10 out of like thousand teams. A lot of leadership sees the value of Windmill which is very good for us."
+			</p>
+			<cite className="text-sm text-gray-500 dark:text-gray-400">
+				— Nanda Kishore Yadavalli
+			</cite>
+		</blockquote>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+			This hackathon success created leadership buy-in that opened doors for organization-wide rollout across departments. What started as a platform team experiment became a strategic initiative backed from the top.
+		</p>
+	</div>
+
+	<div>
+		<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+			Two-tier adoption strategy: Code for developers, Hub for business teams
+		</h3>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+			Windmill's architecture enabled Twilio's dual-audience strategy. R&D engineers write workflows as code in languages they already know—Python, TypeScript, or others—importing any packages they need and maintaining everything in Git with proper version control.
+		</p>
+		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+				"Engineering side likes it."
+			</p>
+			<cite className="text-sm text-gray-500 dark:text-gray-400">
+				— Nanda Kishore Yadavalli
+			</cite>
+		</blockquote>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4 mt-4">
+			For GTM teams, the Hub provides pre-built scripts and integrations. Rather than writing code, they can discover ready-made connectors for their tools, understand how workflows work through examples, and gradually customize as they learn—no developer intervention required for basic automation.
+		</p>
+		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+				"They would be more comfortable if there are like out of the box connectors to the platform tools on their side so that they can quickly use that as a stepping ground and build others as needed."
+			</p>
+			<cite className="text-sm text-gray-500 dark:text-gray-400">
+				— Nanda Kishore Yadavalli
+			</cite>
+		</blockquote>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+			The platform team bridges both worlds: they build sophisticated R&D workflows using code while simultaneously creating reusable components that GTM teams can leverage through the Hub.
+		</p>
+	</div>
+
+	<div>
+		<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+			Self-hosted for security and control
+		</h3>
+		<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+			As a communications platform handling sensitive customer data, Twilio deployed Windmill self-hosted in their own cloud infrastructure. This gives them full control over their execution environment while maintaining flexibility to scale as adoption grows across the organization.
+		</p>
+	</div>
+</div>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The result: Organization-wide platform with leadership backing</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	Windmill now powers workflows across Twilio's IT organization, with proven success in R&D and active expansion into GTM departments. The platform evolved from technical proof-of-concept to organization-wide automation platform backed by leadership support.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	Key workflows in production include incident management with Slack integration and modernized versions of legacy task scheduler jobs. GTM automation continues expanding as new Hub integrations become available for their tool stack.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	The hackathon validation was decisive: from a cautious 2024 experiment to a top-10 finish in 2025, Windmill proved its value in competitive internal testing. This success created the leadership buy-in necessary for organization-wide rollout.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"A lot of leadership sees the value of Windmill which is very good for us."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Nanda Kishore Yadavalli
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+	Throughout deployment, responsive support from Windmill's engineering team ensured blockers got addressed and questions answered quickly—critical for maintaining momentum during expansion.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"You guys have been pretty responsive on anything we asked."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Nanda Kishore Yadavalli
+	</cite>
+</blockquote>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Conclusion</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+	Twilio's deployment demonstrates that scaling workflow automation across an organization requires supporting both technical and business users on the same platform—not separate tools for each audience.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+	Their methodical approach—open source testing, hackathon validation (top 10/1,000 teams), R&D deployment, then GTM expansion—created stakeholders and proof of value at each stage. The hackathon success provided objective validation that drove leadership buy-in for organization-wide rollout.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+	The result: R&D engineers write workflows in Python while GTM teams use pre-built Hub connectors, all managed by a three-person platform team. One system scales across technical skill levels by providing appropriate entry points for each audience without compromising developer capabilities.
+</p>
+</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
