@@ -232,7 +232,7 @@ const pricing = {
 					text: <span>1,000 free executions per month</span>
 				},
 				{
-					text: <span>Google / Microsoft / GitHub / GitLab SSO</span>
+					text: <span>Google / GitHub / GitLab SSO</span>
 				},
 				{
 					text: <span>Unlimited variables/resources/scripts/apps/flows (*except abuse)</span>
