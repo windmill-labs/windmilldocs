@@ -139,11 +139,11 @@ export default function ZoomContent({ title, description }) {
 	Frederick's team was tasked with building a centralized internal demo platform, but the requirements were demanding:
 </p>
 <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-	<li>Complex API Orchestration - Interact with 4 different Zoom API types (public, private web, back-office on-premise, browser automation)</li>
+	<li><Link to="https://www.windmill.dev/docs/advanced/self_host" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Complex API orchestration</Link> - Interact with 4 different Zoom API types (public, private web, back-office on-premise, browser automation)</li>
 	<li>Polyglot Language Support - Support Python, TypeScript, PowerShell, Bash, and Ansible for varied technical backgrounds</li>
 	<li>Robust Job Scheduling - Handle time-delayed tasks to create realistic content delivery</li>
-	<li>Self-Hosted on Kubernetes - Complete control in their AWS EKS environment</li>
-	<li>Everything-as-Code - Git-backed workflows with proper version control</li>
+	<li><Link to="https://www.windmill.dev/docs/advanced/self_host" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Self-host</Link> on Kubernetes - Complete control in their AWS EKS environment</li>
+	<li>Everything-as-Code - workflows with proper <Link to="https://www.windmill.dev/docs/advanced/self_host" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">version control</Link></li>
 </ul>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
@@ -209,7 +209,7 @@ def main(account_email: str, license_type: str):
 			Windmill as central orchestration layer
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-			Windmill sits "at the center of everything" in Zoom's demo platform architecture, self-hosted in AWS EKS. The platform consists of a React front-end portal with Windmill Apps embedded via iframe, allowing rapid feature deployment without front-end code changes.
+			Windmill sits "at the center of everything" in Zoom's demo platform architecture self-hosted in AWS EKS. The platform consists of a React front-end portal with Windmill Apps embedded via iframe, allowing rapid feature deployment without front-end code changes.
 		</p>
 		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 			<p className="text-gray-700 dark:text-gray-300 italic mb-2">

@@ -156,9 +156,9 @@ export default function AthenaIntelligenceContent({ title, description }) {
 
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The solution</h2>
-<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-	Windmill supported cloud, self-hosted, on-premise, and embedded deployments as core capabilities, not afterthoughts. The open-source foundation meant Athena could verify deployment feasibility before committing—critical for enterprise IT reviews.
-</p>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+		Windmill supported cloud, <Link to="https://www.windmill.dev/docs/advanced/self_host" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">self-hosted</Link>, on-premise, and embedded deployments as core capabilities, not afterthoughts. The <a href="https://github.com/windmill-labs/windmill" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">open-source</a> foundation meant Athena could verify deployment feasibility before committing—critical for enterprise IT reviews.
+	</p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
 		"Everything worked out of the box. It was easy for me to learn. The technical people on our team took to it really quickly."
@@ -186,7 +186,7 @@ export default function AthenaIntelligenceContent({ title, description }) {
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">How it works</h2>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-	When Athena's AI agent encounters a task it can't handle, customers write a custom script. The agent helps write the code, the script is saved in Windmill, and it becomes a new tool the agent invokes automatically.
+	When Athena's <Link to="https://www.windmill.dev/docs/core_concepts/ai_agents" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">AI agent</Link> encounters a task it can't handle, customers write a custom script. The agent helps write the code, the script is saved in Windmill, and it becomes a new tool the agent invokes automatically.
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
@@ -199,7 +199,7 @@ export default function AthenaIntelligenceContent({ title, description }) {
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 	For enterprise customers, Windmill runs embedded within Athena's platform in their own infrastructure. An audit firm deploying to Azure sees Athena's AI interface—Windmill is invisible infrastructure underneath, executing scripts within their security perimeter.
 </p>
-<div className="rounded-lg p-4 my-4 overflow-x-auto">
+	<div className="rounded-lg p-4 my-4 overflow-x-auto">
 	<CodeBlock language="python">
 {`# Example: Audit firm writes this compliance check once
 
@@ -216,6 +216,9 @@ def check_audit_compliance(company_id: str, audit_year: int):
 # AI agent invokes this automatically - data never leaves customer infrastructure`}
 	</CodeBlock>
 </div>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+		Athena's customers write custom <a href="https://www.windmill.dev/docs/getting_started/scripts_quickstart/python" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Python</a> scripts that run securely within their own infrastructure.
+	</p>
 </section>
 
 <section>
@@ -268,12 +271,12 @@ def check_audit_compliance(company_id: str, audit_year: int):
 
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Conclusion</h2>
-<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-	Athena Intelligence's story reveals a simple truth: for platform companies targeting regulated industries, deployment flexibility isn't a feature—it's market access. SaaS-only tools lock you out of audit firms, financial services, and healthcare. Self-hosting as an afterthought creates deployment friction that kills enterprise deals.
-</p>
-<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-	Windmill's open-source foundation, production stability, and enterprise-ready documentation solved this. After four years evaluating workflow platforms, Athena found infrastructure they could confidently build on and deploy wherever customers required. Today, they're winning enterprise deals their competitors can't even pursue.
-</p>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+		Athena Intelligence's story reveals a simple truth: for platform companies targeting regulated industries, deployment flexibility isn't a feature—it's market access. SaaS-only tools lock you out of audit firms, financial services, and healthcare. Self-hosting as an afterthought creates deployment friction that kills enterprise deals.
+	</p>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+		Windmill's open-source foundation, production stability, and enterprise-ready documentation solved this. After four years evaluating workflow platforms, Athena found infrastructure they could confidently build on and deploy wherever customers required. Today, they're winning enterprise deals their competitors can't even pursue.
+	</p>
 </section>
 						</div>
 					</div>
