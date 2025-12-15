@@ -5,6 +5,7 @@ import Head from '@docusaurus/Head';
 import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
+import CodeBlock from '@theme/CodeBlock';
 import { ArrowLeft } from 'lucide-react';
 import CompanyLogo from '../../components/case-studies/CompanyLogo';
 
@@ -228,8 +229,8 @@ export default function AxiansCaseStudyPage() {
 														A network engineer managing infrastructure for a major energy supplier needed internet connectivity at 180 substation locations. Previously, each deployment took 4 hours. The engineer taught himself to code and built an Ansible script in Windmill. Deployment now takes 5-10 minutes per location.
 													</p>
 													<div className="rounded-lg p-4 my-4 overflow-x-auto">
-														<pre className="text-sm text-gray-700 dark:text-gray-300">
-															<code>{`# Example: Self-healing network automation
+														<CodeBlock language="python">
+															{`# Example: Self-healing network automation
 
 def remediate_network_issue(device_id: str, issue_type: str):
     status = check_device_health(device_id)
@@ -241,8 +242,8 @@ def remediate_network_issue(device_id: str, issue_type: str):
         schedule_update(device_id)
         notify_team(device_id, "update_scheduled")
     
-    return {"device": device_id, "action": "remediated", "logged": True}`}</code>
-														</pre>
+    return {"device": device_id, "action": "remediated", "logged": True}`}
+														</CodeBlock>
 													</div>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
 														Scripts like this get built by early adopter customers, then shared and adopted by customers onboarding later. The platform's value compounds as adoption grows.

@@ -5,6 +5,7 @@ import Head from '@docusaurus/Head';
 import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
+import CodeBlock from '@theme/CodeBlock';
 import { ArrowLeft } from 'lucide-react';
 import CompanyLogo from '../../components/case-studies/CompanyLogo';
 
@@ -172,8 +173,8 @@ export default function CFAInstituteCaseStudyPage() {
 														Unlike n8n's visual workflows, Windmill enabled the team to write actual Python code with full language features and library support. This was essential for their most critical use case: synthetic monitoring of revenue-generating processes.
 													</p>
 													<div className="rounded-lg p-4 my-4 overflow-x-auto">
-														<pre className="text-sm text-gray-700 dark:text-gray-300">
-															<code>{`# Example CFA Institute synthetic monitoring script
+														<CodeBlock language="python">
+															{`# Example CFA Institute synthetic monitoring script
 
 def main(endpoint: str, expected_status: int = 200):
     # Real Python with full ChromeDriver integration
@@ -187,8 +188,8 @@ def main(endpoint: str, expected_status: int = 200):
         # Complex validation logic here
         return {"status": "success", "timestamp": datetime.now()}
     finally:
-        driver.quit()`}</code>
-														</pre>
+        driver.quit()`}
+														</CodeBlock>
 													</div>
 													<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
 														Today, CFA Institute runs 25 concurrent synthetic tests every 5 minutes—300 executions per hour—using ChromeDriver-based browser automation. These aren't simple uptime checks; they're full user journey simulations that validate every step of their critical revenue processes.
