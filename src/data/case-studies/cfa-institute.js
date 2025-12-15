@@ -10,5 +10,6 @@ export const cfaInstituteCaseStudy = {
 		role: 'SR Manager, SRE',
 		image: '/contributors/cam_barts.jpeg'
 	},
-	link: '/case-studies/cfa-institute'
+	link: '/case-studies/cfa-institute',
+	selfHosted: false
 };

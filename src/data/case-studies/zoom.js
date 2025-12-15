@@ -10,5 +10,6 @@ export const zoomCaseStudy = {
 		role: 'Technical Leader, Demo Platform',
 		image: '/contributors/frederick_loucks.jpeg'
 	},
-	link: '/case-studies/zoom'
+	link: '/case-studies/zoom',
+	selfHosted: true
 };

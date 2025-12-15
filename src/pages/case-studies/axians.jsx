@@ -8,6 +8,7 @@ import Link from '@docusaurus/Link';
 import CodeBlock from '@theme/CodeBlock';
 import { ArrowLeft } from 'lucide-react';
 import CompanyLogo from '../../components/case-studies/CompanyLogo';
+import { axiansCaseStudy } from '../../data/case-studies/axians';
 
 export default function AxiansCaseStudyPage() {
 	return (
@@ -83,6 +84,16 @@ export default function AxiansCaseStudyPage() {
 														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Multi-tenant automation</span>
 														<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Equipment updates</span>
 													</div>
+												</div>
+											</div>
+											<div>
+												<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+													Deployment
+												</div>
+												<div className="text-sm text-gray-900 dark:text-white">
+													<span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-xs font-medium">
+														{axiansCaseStudy.selfHosted ? 'EE Self-hosted' : 'EE Cloud'}
+													</span>
 												</div>
 											</div>
 											<div>
