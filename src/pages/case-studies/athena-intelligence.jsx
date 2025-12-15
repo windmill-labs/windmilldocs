@@ -5,6 +5,7 @@ import Head from '@docusaurus/Head';
 import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
+import CodeBlock from '@theme/CodeBlock';
 import { ArrowLeft } from 'lucide-react';
 import CompanyLogo from '../../components/case-studies/CompanyLogo';
 
@@ -187,8 +188,8 @@ export default function AthenaIntelligenceCaseStudyPage() {
 												For enterprise customers, Windmill runs embedded within Athena's platform in their own infrastructure. An audit firm deploying to Azure sees Athena's AI interface—Windmill is invisible infrastructure underneath, executing scripts within their security perimeter.
 											</p>
 											<div className="rounded-lg p-4 my-4 overflow-x-auto">
-												<pre className="text-sm text-gray-700 dark:text-gray-300">
-													<code>{`# Example: Audit firm writes this compliance check once
+												<CodeBlock language="python">
+													{`# Example: Audit firm writes this compliance check once
 
 # Script runs in their Azure environment with their data
 
@@ -200,8 +201,8 @@ def check_audit_compliance(company_id: str, audit_year: int):
         "status": "compliant" if compliance_score > 0.95 else "review_needed"
     }
 
-# AI agent invokes this automatically - data never leaves customer infrastructure`}</code>
-												</pre>
+# AI agent invokes this automatically - data never leaves customer infrastructure`}
+												</CodeBlock>
 											</div>
 										</section>
 

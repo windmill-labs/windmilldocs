@@ -5,6 +5,7 @@ import Head from '@docusaurus/Head';
 import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
+import CodeBlock from '@theme/CodeBlock';
 import { ArrowLeft } from 'lucide-react';
 import CompanyLogo from '../../components/case-studies/CompanyLogo';
 
@@ -160,8 +161,8 @@ export default function ZoomCaseStudyPage() {
 														Zoom's Global Architecture division includes experienced engineers who know PowerShell better than Python because they've been CIS admins or technical sales their whole careers. Windmill's support for Python, TypeScript, Go, Bash, PowerShell, and other languages meant the team could leverage existing scripts with minimal refactoring.
 													</p>
 													<div className="rounded-lg p-4 my-4 overflow-x-auto">
-														<pre className="text-sm text-gray-700 dark:text-gray-300">
-															<code>{`# Example: Existing internal library wrapped in Windmill
+														<CodeBlock language="python">
+															{`# Example: Existing internal library wrapped in Windmill
 
 from zoom_platform_lib import account_provisioning
 
@@ -172,8 +173,8 @@ def main(account_email: str, license_type: str):
         email=account_email,
         license=license_type
     )
-    return result`}</code>
-														</pre>
+    return result`}
+														</CodeBlock>
 													</div>
 												</div>
 

@@ -5,6 +5,7 @@ import Head from '@docusaurus/Head';
 import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 import Link from '@docusaurus/Link';
+import CodeBlock from '@theme/CodeBlock';
 import { ArrowLeft } from 'lucide-react';
 import CompanyLogo from '../../components/case-studies/CompanyLogo';
 
@@ -168,8 +169,8 @@ export default function PantherLabsCaseStudyPage() {
 												Instead of embedding business logic in the workflow platform, Panther built a separate Python library containing all their core logic. Windmill workflows simply orchestrate by calling functions from this library—acting as an execution layer, not a code repository.
 											</p>
 											<div className="rounded-lg p-4 my-4 overflow-x-auto">
-												<pre className="text-sm text-gray-700 dark:text-gray-300">
-													<code>{`# Business logic lives in a separate library
+												<CodeBlock language="python">
+													{`# Business logic lives in a separate library
 
 from panther_platform import customer_onboarding
 
@@ -179,8 +180,8 @@ def main(customer_email: str, aws_account_id: str):
         email=customer_email,
         account_id=aws_account_id
     )
-    return result`}</code>
-												</pre>
+    return result`}
+												</CodeBlock>
 											</div>
 											<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 												<p className="text-gray-700 dark:text-gray-300 italic mb-2">
