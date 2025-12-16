@@ -181,6 +181,16 @@ const faqs = [
 				. This automatically adjusts the number of workers based on your workload, ensuring you only pay for the compute units you actually need. For example, you could scale down to minimal workers during low-usage periods and automatically scale up during peak times, with compute usage calculated at minute-level granularity.
 				<br />
 				<br />
+				For more details on sizing your worker pool, see the{' '}
+				<Link
+					to="/docs/advanced/scaling"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					scaling workers guide
+				</Link>
+				, which includes an interactive simulator to help visualize job processing and worker requirements.
+				<br />
+				<br />
 				Also, for the Enterprise Edition, the{' '}
 				<a
 					href="https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j"
