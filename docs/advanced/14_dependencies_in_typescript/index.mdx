@@ -8,6 +8,7 @@ Both of these runtimes allow you to include dependencies directly in the script,
 
 There are however methods to have more control on your dependencies:
 
+- Using [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx) for centralized dependency management at the workspace level.
 - Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
 - Overriding dependencies [providing a package.json](#lockfile-per-script-inferred-from-a-packagejson).
 - [Bundling](#bundle-per-script-built-by-cli) per script with CLI, more powerful and local only.
@@ -22,6 +23,11 @@ To learn more about how dependencies from other languages are handled, see [Depe
 ![Dependency management & imports](../6_imports/dependency_management.png 'Dependency management & imports')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace dependencies"
+		description="Manage dependencies centrally at the workspace level for consistent environments."
+		href="/docs/core_concepts/workspace_dependencies"
+	/>
 	<DocCard
 		title="Dependency management & imports"
 		description="Windmill's strength lies in its ability to run scripts without having to manage a package.json directly."
