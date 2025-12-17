@@ -23,12 +23,7 @@ export default function Hero() {
 						at scale
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						Write software 10x faster, and run it with the highest reliability and
-						observability on the{' '}
-						<a className="underline decoration-1 underline-offset-2 text-slate-700 hover:text-slate-900 dark:text-slate-300 hover:text-slate-500" href="/docs/misc/benchmarks/competitors">
-							fastest self-hostable job orchestrator
-						</a>
-						{' '} and workflow engine. 
+						For developers who need real code capabilities without platform engineering overhead.
 					</div>
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
@@ -37,15 +32,15 @@ export default function Hero() {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Full flexibility of code</span>
+							<span>Build internal tools, workflows and data pipelines in one platform</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Managed workers</span>
+							<span>Full flexibility of code with Git-based collaboration</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Built-in observability</span>
+							<span>Auto-scaling infrastructure with deep built-in monitoring</span>
 						</div>
 					</div>
 					<div className="mt-10 flex items-center gap-x-6">
