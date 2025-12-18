@@ -35,8 +35,8 @@ Key features:
 ### Prerequisites
 
 - Being on a self-hosted EE instance
-- [Git sync](../11_git_sync/index.mdx) configured (recommended for full functionality)
-- [CI/CD actions ](../9_deploy_gh_gl/index.mdx#github-actions-setup) to merge back from the git remote to Windmill
+- [Git sync](../11_git_sync/index.mdx) configured (optional, required only for git-based workflows)
+- [CI/CD actions ](../9_deploy_gh_gl/index.mdx#github-actions-setup) to merge back from the git remote to Windmill (only required for git sync workflows)
 
 ### Fork creation
 
@@ -80,7 +80,7 @@ When workspace forks are used with [git sync](../11_git_sync/index.mdx), Windmil
 the parent workspace, and keep track of changes there. External changes to the branch are then synced back to the forked workspace if the appropriate
 CI/CD actions are setup. Once the changes are ready, a PR can be opened to sync back changes to the original workspace.
 
-Workspace forks are designed to be used with git sync, so make sure to have it properly setup and in particular the [CI/CD actions](../9_deploy_gh_gl/index.mdx#github-actions-setup) specific to forks should be set. Make sure to not forget the `push-on-merge-to-forks.yaml` action.
+Workspace forks can be used with git sync for full version control integration. If using git sync, make sure to have it properly setup and in particular the [CI/CD actions](../9_deploy_gh_gl/index.mdx#github-actions-setup) specific to forks should be set. Make sure to not forget the `push-on-merge-to-forks.yaml` action.
 
 ### Fork and branch naming
 
@@ -101,7 +101,28 @@ This naming convention is what enables Windmill to match branches to workspaces 
 
 Once a fork is created, it is automatically setup to deploy to its parent branch. You can deploy any item to the parent branch directly from the UI by clicking it and selecting `Deploy to staging/prod`. Learn more about the [Deployment UI](../../core_concepts/12_staging_prod/index.md).
 
-There is currently no way to update the parent workspace changes back to the fork through the UI, but some features are planned to remediate to this.
+### Merge workspaces from the UI
+
+You can merge changes from a forked workspace back to its parent workspace directly from the UI without requiring git sync. This provides a simpler workflow for teams that don't need full git integration.
+
+To merge a fork:
+
+1. Navigate to the forked workspace
+2. On the home page, a banner will show you the diff with its parent workspace. Click `Review & Deploy Changes`
+3. Review the changes and confirm the merge
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/merge-ui-demo.mp4"
+/>
+
+#### Items behind and conflicts
+
+If it is detected that some of the differences come in fact from the original workspace, these changes will be shown as 'behind'. Before deploying, all behind changes must be updated into the fork and properly tested. When an items has changes that are both ahead and behind, it will be marked as a conflict and will be warned to the user. The user must then review the diff and decide how to edit the item to resolve the conflicting changes. Until deployed or updated however, the item will still be marked as a conflict. For more granular conflict detection and better tracked resolution, you can choose to merge the workspaces through a git workflow instead.
+
+The merge will transfer all selected scripts, flows, apps, resources, and variables from the fork to the parent workspace.
 
 ### Git sync based merging
 
@@ -134,7 +155,3 @@ When git sync is properly setup, the workspace is synchronized with one of the b
 		href="/docs/core_concepts/collaboration"
 	/>
 </div>
-
-<!-- TODO: Add troubleshooting section -->
-<!-- TODO: Add FAQ section -->
-<!-- TODO: Add API reference for programmatic fork management -->

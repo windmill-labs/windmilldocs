@@ -1,0 +1,51 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Collaborating on Windmill
+
+In windmill there are multiple ways to collaborate
+
+## Workspace forks
+
+The easiest and main way of collaborating on windmill is through the use of workspace forks. This feature lets users branch off of a workspace and have an exact copy where they can create new items or make changes, test them, and deploy them to the main workspace once it's all working.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/merge-ui-demo.mp4"
+/>
+
+
+## Git sync
+
+Git sync is a feature that replicates the state of a workspace into a git repository. When properly set-up, changes made to the repository are immediately reflected in the workspace, and vice-versa. This enables local development as well as development in the Web IDE to be tracked and managed by git, and any git-based workflow is possible.
+
+
+### Git sync + Workspace forks
+
+Workspace forks unlock their full potential when git sync is enabled. When a fork is created, a branch with a corresponding name is created, and changes are tracked there.
+
+### Example: feature development workflow
+
+1. **Create fork**: The user forks the `main` workspace into a fork named `wm-fork-new-feature`
+2. **Develop**: User makes changes in the forked workspace -> The changes are reflected in the branch `wm-fork/main/new-feature` of the repo
+3. **Create PR**: A PR is automatically created by the CI from `wm-fork/main/new-feature` -> `main`
+4. **Review & merge**: Team reviews changes before merging to main branch
+5. **Sync back changes**: Changes are automatically synced to the main workspace as soon as the PR is merged.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/fork_workspace_demo.mp4"
+/>
+
+
+## Advanced setup: Cross-instance deployment (promotion)
+
+When you have workspaces in different instances, for example in a setup with a staging instance and a prod instance, you might want to deploy changes from one workspace to the other. One way to do this is through a cross-instance promotion: when changes are made in the first "staging" workspace, a branch with a name corresponding to the item is created in the second workspace's repo. A PR is automatically created through the CI/CD. Changes are reviewed, and once the PR is merged the changes are reflected in the "production" workspace.
+
+**Requirements**:
+- Git sync should be setup on both workspaces, so that they're both syncing changes with their respective repositories.
+
+![Advanced cross-instance deployment (promotion)](../4_local_development/local_development.png 'Promotion')
