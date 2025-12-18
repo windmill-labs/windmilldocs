@@ -941,11 +941,6 @@ const sidebars = {
 						'advanced/git_sync/cli_sync',
 						{
 							type: 'doc',
-							id: 'advanced/workspace_forks/index',
-							label: 'Workspace forks'
-						},
-						{
-							type: 'doc',
 							id: 'core_concepts/versioning/index',
 							label: 'Versioning with UI'
 						}
@@ -961,6 +956,7 @@ const sidebars = {
 					},
 					items: [
 						'core_concepts/draft_and_deploy/index',
+						'advanced/workspace_forks/index',
 						'advanced/deploy_gh_gl/index',
 						'core_concepts/staging_prod/index'
 					],
