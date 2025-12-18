@@ -374,49 +374,16 @@ This enables parallel development workflows where multiple developers can work o
 	/>
 </div>
 
-## Promotion: Cross-instance deployment using a git workflow
+## Promotion workflow: Cross-instance deployment using a git workflow
 
-Promotion mode is an advanced setup leveraging the same tech as git sync for deploying from a workspace to another, even across different instances. Unlike standard git sync which commits directly to a branch, promotion mode creates separate branches per deployment (prefixed with 'wm_deploy/') to enable pull request workflows between staging and production instances.
+One option you will see in the Git Sync settings tab, is to add a Promotion target. This is an advanced setup that leverages the feature to create deployements from one workspace to another.
 
-This setup does not replace git sync, in fact both workspaces should have git sync setup in the first place for it to work. To better understand, let's walk through an example.
-
-- There are two workspaces `staging` and `prod`, setup with git sync to their respective repositories `staging-repo` and `prod-repo`. `staging` is also set to target `prod-repo` for promotion.
-- A user makes a change in the script "f/shared/amazing_script" in workspace "staging".
-- This triggers the promotion, which will create a branch named "wm_deploy/f/shared/amazing_script" on the repository `prod-repo` with the changes.
-- A PR is automatically created through a CI/CD action.
-- The change is reviewed by someone with merge rights to `prod-repo` and merged.
-- Once merged, the git sync setup between `prod` and `prod-repo` ensures the change is reflected in the `prod` workspace. Deployment complete
-
-Note that `prod-repo` and `staging-repo` can be (and often are) the same repo but targetting a different branch.
-
-Here is a diagram to better illustrate the workflow with this setup.
-
-![Cross-instance deployment](../4_local_development/local_development.png 'Deploying to prod')
-
-<br />
-
-### Configuring promotion
-
-1- Setup both workspaces with git sync into their respective repositories
-
-Promotion is configured per repository in Git Sync settings. When enabled, you can choose to:
-
-- **Create one branch per deployed object** (default)
-- **Group deployed objects by folder**: Create a branch per folder containing objects being deployed
-
-You can configure promotion-specific sync behavior using `promotionOverrides` in your [`wmill.yaml`](../3_cli/sync.mdx#wmillyaml) file.
-
-More details at:
+Learn how to setup this promotion workflow:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to prod using a git workflow"
-		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		title="Promotion workflow"
+		description="Windmill integration with Git makes it possible to have a robust git-based deployment workflow"
 		href="/docs/advanced/deploy_gh_gl"
-	/>
-	<DocCard
-		title="Local development"
-		description="Develop locally, push to git and deploy automatically to Windmill."
-		href="/docs/advanced/local_development"
 	/>
 </div>
