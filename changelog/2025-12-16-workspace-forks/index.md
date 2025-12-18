@@ -2,7 +2,7 @@
 slug: workspace-forks
 version: v1.593.0
 title: Workspace forks
-tags: ['Workspaces']
+tags: ['Workspaces', 'Git sync', 'Collaboration']
 description: Create independent copies of workspaces for parallel development workflows, similar to git branches. Merge changes back to parent workspaces directly from the UI or through git sync.
 features:
   [
