@@ -32,7 +32,7 @@ export default function Hero() {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Build internal tools, workflows and data pipelines in one platform</span>
+							<span>Workflows, internal tools and data pipelines in one platform</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
@@ -40,7 +40,14 @@ export default function Hero() {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Auto-scaling infrastructure with deep built-in monitoring</span>
+							<span>Zero-ops infra powered by the{' '}
+								<Link 
+									href="/docs/misc/benchmarks/competitors"
+									className="text-white underline"
+								>
+									fastest job orchestrator and workflow engine
+								</Link>
+							</span>
 						</div>
 					</div>
 					<div className="mt-10 flex items-center gap-x-6">
