@@ -74,12 +74,25 @@ Specifies the type of output the AI should generate:
 #### output_schema (json-schema)
 Define a JSON schema that the AI agent will follow for its response format. This ensures structured, predictable outputs that can be easily processed by subsequent flow steps.
 
-#### messages_context_length (number)
-Specifies the number of previous messages to include as context for the AI agent. This enables the agent to maintain conversation history and remember past interactions. When set, the agent will have access to the specified number of previous messages from the conversation, allowing for more contextual and coherent responses across multiple interactions.
+#### memory (auto | manual)
+Manages the conversation memory for the AI agent:
+- `auto`: Windmill automatically handles the memory, maintaining up to the specified number of last messages
+- `manual`: User provides the message history directly in the required format
 
-##### Using messages_context_length with webhooks
+##### Message format
+When using manual memory mode, each message must follow the OpenAI message format:
+```json
+{
+  "role": "string",
+  "content": "string | null",  // optional
+  "tool_calls": [/* array of tool calls */], // optional
+  "tool_call_id": "string | null" // optional
+}
+```
 
-When using `messages_context_length` via webhook, you must include a `memory_id` query parameter in your request. The `memory_id` must be a 32-character UUID that uniquely identifies the conversation context. This allows the AI agent to maintain message history across webhook calls.
+##### Using memory with webhooks
+
+When using `memory` via webhook with auto mode, you must include a `memory_id` query parameter in your request. The `memory_id` must be a 32-character UUID that uniquely identifies the conversation context. This allows the AI agent to maintain message history across webhook calls.
 
 Example webhook URL:
 ```
@@ -176,11 +189,11 @@ To enable chat mode for a flow:
 - **Conversational interface**: The flow runs in a chat-like UI where users can send messages and receive responses in a familiar messaging format
 - **Multiple conversations**: Users can maintain multiple different conversation threads within the same flow
 - **Conversation history**: Each conversation maintains its own history, allowing users to scroll back through previous messages
-- **Persistent context**: When using the `messages_context_length` parameter, the AI agent can remember and reference previous messages in the conversation
+- **Persistent context**: When using the `memory` parameter, the AI agent can remember and reference previous messages in the conversation
 
 ### Recommended configuration
 
-For optimal chat mode experience, we recommend placing an AI agent step at the end of your flow with both `streaming` and `messages_context_length` enabled. This configuration:
+For optimal chat mode experience, we recommend placing an AI agent step at the end of your flow with both `streaming` and `memory` (set to auto mode) enabled. This configuration:
 - Enables real-time response streaming for a more interactive chat experience
 - Maintains conversation context across multiple messages
 
