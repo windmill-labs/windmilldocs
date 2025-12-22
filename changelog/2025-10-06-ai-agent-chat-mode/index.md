@@ -9,7 +9,7 @@ features:
   [
     'Chat mode toggle on flow inputs that transforms the flow interface into a chat UI.',
     'Support for multiple different conversations within the chat interface.',
-    'New memory configuration option for AI agents with auto and manual modes to manage conversation history.',
+    'New messages_context_length configuration option for AI agents to remember past conversations.',
     'Persistent conversation history across flow executions for continuous interactions.'
   ]
 docs: /docs/core_concepts/ai_agents
