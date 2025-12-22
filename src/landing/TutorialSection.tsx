@@ -22,31 +22,31 @@ export default function TutorialSection() {
 	}, []);
 	const features = [
 		{
-			title: 'Build',
-			description: 'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI, sync them with Git. Iterate quickly with our VS Code extension. From LSP support to AI code generation, Windmill provides a powerful IDE for your scripts.',
+			title: 'Code-first development',
+			description: 'Write logic in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Build complex orchestrations and custom UIs with full code flexibility, avoiding the constraints of rigid low-code platforms.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
 			lottieData: devfriendly,
 			mt: 'mt-24'
 		},
 		{
-			title: 'Review',
-			description: 'Use the built-in diff viewer, GitHub PRs or GitLab MRs to review changes.',
+			title: 'Team collaboration with Git',
+			description: 'Sync projects with GitHub or GitLab and manage versions via Pull Requests. Use the built-in diff viewer to prevent regressions and maintain a strict audit trail of every change.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
 			image: '/illustrations/diff.png',
 			imageAlt: 'Review'
 		},
 		{
-			title: 'Deploy at scale',
-			description: 'Deploy with ease on our infrastructure or your own infrastructure, on bare VMs with docker-compose, ecs, or large Kubernetes clusters with up to 1000 workers and even remote agents.',
+			title: 'Optimized for scalability',
+			description: 'Powered by a lightweight Rust executor, Windmill minimizes latency and resource overhead. Scale from a single Docker container to Kubernetes clusters with 1,000+ workers to handle high throughput effortlessly.',
 			icon: Server,
 			href: '/docs/misc/benchmarks/competitors',
 			useBenchmark: true
 		},
 		{
-			title: 'Monitor',
-			description: 'Keep track of your scripts, flows, and apps with detailed logs and metrics.',
+			title: 'Built-on observability',
+			description: 'Track every run with real-time logs and structured metrics. Spot bottlenecks instantly on the visual timeline and debug failures with full execution context.',
 			icon: Activity,
 			image: '/illustrations/11.png',
 			imageAlt: 'Monitor'
@@ -61,7 +61,6 @@ export default function TutorialSection() {
 
 	const FeatureCard = ({ feature, index }) => {
 		const { colorMode } = useColorMode();
-		const Icon = feature.icon;
 		const ContentWrapper = feature.href ? 'a' : 'div';
 		const wrapperProps = feature.href
 			? {
@@ -80,8 +79,7 @@ export default function TutorialSection() {
 					className={`dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8 ${feature.mt || ''}`}
 				>
 					<ContentWrapper {...wrapperProps}>
-						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
-							<Icon size={20} />
+						<div className="font-medium text-3xl mb-4 group-hover:ml-2 transition-all">
 							{feature.title}
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
@@ -121,8 +119,8 @@ export default function TutorialSection() {
 									<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
 										40 lightweight tasks
 									</span>
-					</div>
-								<div
+						</div>
+						<div
 									className={classNames(
 										colorMode === 'dark' ? 'bg-black' : 'bg-gray-50',
 										'w-full p-8 bg-opacity-40 rounded-xl benchmark-chart-container'
