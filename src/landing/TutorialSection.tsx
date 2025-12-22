@@ -59,10 +59,10 @@ export default function TutorialSection() {
 					href: feature.href,
 					target: '_blank',
 					className:
-						'col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer'
+						'col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center'
 				}
 			: {
-					className: 'col-span-2 group text-black dark:text-white cursor-pointer'
+					className: 'col-span-2 group text-black dark:text-white cursor-pointer flex flex-col justify-center'
 				};
 
 		return (
