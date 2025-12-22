@@ -69,7 +69,7 @@ export default function Hero() {
 							Self-host in 3 mins <span aria-hidden="true">→</span>
 						</Link>
 					</div>
-					<div className="w-full font-medium text-slate-400 text-left mt-16 flex-container">
+					<div className="w-full font-medium text-slate-400 text-left mt-8 sm:mt-8 mb-8 sm:mb-0 flex-container">
 						Backed by
 						<a
 							href="https://www.ycombinator.com/companies/windmill"
