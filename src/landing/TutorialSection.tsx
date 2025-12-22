@@ -41,7 +41,7 @@ export default function TutorialSection() {
 			title: 'Deploy at scale',
 			description: 'Deploy with ease on our infrastructure or your own infrastructure, on bare VMs with docker-compose, ecs, or large Kubernetes clusters with up to 1000 workers and even remote agents.',
 			icon: Server,
-			href: '/docs/advanced/deploy_to_prod',
+			href: '/docs/misc/benchmarks/competitors',
 			useBenchmark: true
 		},
 		{
