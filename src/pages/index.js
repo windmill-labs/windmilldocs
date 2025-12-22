@@ -31,8 +31,6 @@ function HomepageHeader() {
 				<MobileTutorialSection />
 			</div>
 
-			<ScriptLightSection />
-			<FlowLightSection />
 			<AppLightSection />
 			<IntegrationsList />
 			<EntrepriseFeatures />
