@@ -12,7 +12,6 @@ import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
 import TestimonialsSection from '../landing/TestimonialsSection';
 import ScriptLightSection from '../landing/ScriptLightSection';
-import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
 import TutorialSection from '../landing/TutorialSection';
 import MobileTutorialSection from '../landing/MobileTutorialSection';
@@ -33,7 +32,6 @@ function HomepageHeader() {
 
 			<ScriptLightSection />
 			<FlowLightSection />
-			<AppLightSection />
 			<IntegrationsList />
 			<EntrepriseFeatures />
 			<TestimonialsSection />
