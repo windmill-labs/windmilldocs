@@ -69,6 +69,50 @@ export default function Hero() {
 							Self-host in 3 mins <span aria-hidden="true">→</span>
 						</Link>
 					</div>
+					<div className="w-full font-medium text-slate-400 text-left mt-16 flex-container">
+						Backed by
+						<a
+							href="https://www.ycombinator.com/companies/windmill"
+							target="_blank"
+							title="Y-Combinator"
+						>
+							<img 
+								src="/images/brands/yc_grey.svg"
+								alt="Y Combinator logo"
+								width="137"
+								height="32"
+								className="logo"
+							/>
+						</a>
+						<a
+							href="https://www.gradient.com/"
+							target="_blank"
+							title="Gradient Ventures"
+						>
+							<img 
+								src="/images/brands/gradient.svg"
+								alt="Gradient Ventures logo"
+								width="160"
+								height="40"
+								className="logo"
+							/>
+						</a>
+						<a
+							href="https://www.bvp.com/"
+							target="_blank"
+							title="Bessemer Venture Partners"
+							className="ml-4 -mt-1"
+						>
+							<img 
+								src="/images/brands/bessemer.png"
+								alt="Bessemer Venture Partners logo"
+								width="90"
+								height="27"
+								className="logo"
+								style={{ filter: 'grayscale(100%) brightness(2)' }}
+							/>
+						</a>
+					</div>
 				</div>
 				<div>
 					<div className="flex  justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">
