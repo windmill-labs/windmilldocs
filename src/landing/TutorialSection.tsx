@@ -8,6 +8,8 @@ import {
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
 import deployAtScale from '/illustrations/deploy_at_scale.json';
+// @ts-ignore
+import devfriendly from '/illustrations/devfriendly.json';
 import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 
 export default function TutorialSection() {
@@ -17,8 +19,7 @@ export default function TutorialSection() {
 			description: 'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI, sync them with Git. Iterate quickly with our VS Code extension. From LSP support to AI code generation, Windmill provides a powerful IDE for your scripts.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
-			image: '/illustrations/diff.png',
-			imageAlt: 'Build',
+			lottieData: devfriendly,
 			mt: 'mt-24'
 		},
 		{
