@@ -29,7 +29,7 @@ function HomepageHeader() {
 			</div>
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
-			</div>
+			</div>*/
 
 			<AppLightSection />
 			<IntegrationsList />
