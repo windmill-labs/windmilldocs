@@ -26,7 +26,7 @@ export default function TutorialSection() {
 	}, []);
 	const features = [
 		{
-			title: 'Workflows engine for developers',
+			title: 'Workflow engine for developers',
 			description: 'Write logic in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Build complex orchestrations and custom UIs with full code flexibility, avoiding the constraints of rigid low-code platforms.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',

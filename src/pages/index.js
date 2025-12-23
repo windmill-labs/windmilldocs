@@ -23,15 +23,14 @@ function HomepageHeader() {
 			<LandingHeader />
 			<Hero />
 			<LogoClouds />
-			<HeroExample />
+			{/* HeroExample /> */}
 			<div className="hidden sm:block">
 				<TutorialSection subIndex={undefined} />
 			</div>
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
-			</div>*/
+			</div>
 
-			<AppLightSection />
 			<IntegrationsList />
 			<EntrepriseFeatures />
 			<TestimonialsSection />
