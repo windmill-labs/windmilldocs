@@ -8,6 +8,10 @@ import devfriendly from '/illustrations/devfriendly.json';
 import deployAtScale from '/illustrations/deploy_at_scale.json';
 // @ts-ignore
 import polyGlott from '/illustrations/polyglot.json';
+// @ts-ignore
+import smartIde from '/illustrations/smart_ide.json';
+// @ts-ignore
+import secrets from '/illustrations/secrets.json';
 
 interface FeatureCardProps {
 	title: string;
@@ -89,18 +93,18 @@ export default function CorePrinciple() {
 						lottieData={polyGlott}
 					/>
 					<FeatureCard
-						title="Code-first philosophy"
-						description="Every workflow, automation, and app is built on real code—not low-code abstractions. Write in any language, use your existing tools, and maintain full flexibility without hitting platform limits."
+						title="Best developer experience"
+						description="Combine the flexibility of standard code with the speed of zero-overhead development. We abstract away the complexity of infrastructure and scaling, so you can focus purely on business logic—not the plumbing."
 						actionLink="Read our philosophy"
 						actionUrl="https://www.windmill.dev/docs/misc/note_of_intent"
-						lottieData={devfriendly}
+						lottieData={smartIde}
 					/>
 					<FeatureCard
-						title="Production-ready by design"
-						description="Built for reliability, performance, and scale from day one. Handle millions of executions with sub-second latency. Enterprise-grade infrastructure that grows with you."
-						actionLink="See benchmarks"
-						actionUrl="https://www.windmill.dev/docs/misc/benchmarks/competitors"
-						lottieData={deployAtScale}
+						title="Enterprise-grade security"
+						description="Designed for the strictest compliance requirements. From granular RBAC, SSO, and Secret Management to comprehensive Audit Logs. Deploy comfortably in regulated industries with horizontal scaling and air-gapped support."
+						actionLink="Explore enterprise features"
+						actionUrl="https://www.windmill.dev/docs/misc/enterprise_onboarding"
+						lottieData={secrets}
 					/>
 				</div>
 			</div>
