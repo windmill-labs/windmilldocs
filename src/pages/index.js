@@ -30,10 +30,9 @@ function HomepageHeader() {
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
 			</div>
-
-			<IntegrationsList />
-			<EntrepriseFeatures />
 			<TestimonialsSection />
+			{/* <IntegrationsList /> */}
+			{/* <EntrepriseFeatures /> */}
 			<LandingSection bgClass="py-0">
 				<CallToAction />
 			</LandingSection>

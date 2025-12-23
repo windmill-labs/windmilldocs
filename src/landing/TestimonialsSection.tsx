@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LandingSection from './LandingSection';
 import { useColorMode } from '@docusaurus/theme-common';
+import { ArrowRight } from 'lucide-react';
 
 const clientTestimonials = [
 	{
@@ -15,6 +16,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://photoroom.com',
 		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
+		caseStudyHref: 'https://www.linkedin.com/in/eliotandres/',
 		text: `Windmill quickly became crucial at Photoroom. We self-hosted Windmill Enterprise Edition to run a large number of internal scripts and business-critical automations. Windmill made chatops and iterations over scripts incredibly easy. It proved very reliable for running and monitoring workloads at scale. On top of that, their support is incredibly fast.`
 	},
 	{
@@ -29,6 +31,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://www.pave.com/',
 		linkedIn: 'https://www.linkedin.com/in/lewisjellis/',
+		caseStudyHref: '',
 		text: `At Pave, we self-host Windmill Enterprise Edition to run 100+ scripts and 15+ crons. Our Windmill deployment interacts with half a dozen data stores to power all kinds of business-critical tasks and automations across several teams. It enables our engineering org to move quickly while keeping things secure and avoiding infrastructure sprawl. `
 	},
 	{
@@ -43,7 +46,8 @@ const clientTestimonials = [
 		},
 		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
 		company_url: 'https://bloomcredit.io',
-		linkedIn: 'https://www.linkedin.com/in/mikeesler/'
+		linkedIn: 'https://www.linkedin.com/in/mikeesler/',
+		caseStudyHref: ''
 	},
 	{
 		author: {
@@ -57,6 +61,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://www.investing.com',
 		linkedIn: 'https://www.linkedin.com/in/yonatan-adest/',
+		caseStudyHref: '',
 		text: `At Investing.com, we use Windmill to orchestrate our AI workflows. The quick setup through Docker Compose and intuitive UI allowed us to get started immediately. We leverage Windmill for various automation tasks including content processing pipelines, automated stock analysis report generation, and ETL processes.`
 	},
 	{
@@ -71,6 +76,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://www.qovery.com',
 		linkedIn: '/blog/qovery-case-study',
+		caseStudyHref: '/blog/qovery-case-study',
 		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. The platform offers a clear DX for code editing, permission management and error handling.`
 	},
 	{
@@ -85,9 +91,10 @@ const clientTestimonials = [
 		},
 		company_url: 'https://motimateapp.com',
 		linkedIn: '/blog/kahoot-case-study',
+		caseStudyHref: '/blog/kahoot-case-study',
 		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
 	},
-	{
+	/*{
 		author: {
 			name: 'Ben Packer',
 			company: 'United Auto Workers',
@@ -99,9 +106,10 @@ const clientTestimonials = [
 		},
 		company_url: 'https://uaw.org/',
 		linkedIn: 'https://www.linkedin.com/in/benpaulryanpacker/',
+		caseStudyHref: '',
 		text: `I've used Retool, Argo, Airflow, etc., and nothing comes close to Windmill. It's coherent and expertly designed for developers to interface with non-technical staff. It lets our small team move super fast and cover a huge surface area in a way that's maintainable, observable, and debuggable.`
 	},
-	{
+	/*{
 		author: {
 			name: 'Rudo Kemper',
 			company: 'Conservation Metrics',
@@ -112,8 +120,9 @@ const clientTestimonials = [
 		},
 		company_url: 'https://conservationmetrics.com/',
 		linkedIn: '/blog/conservation-metrics-case-study',
+		caseStudyHref: '/blog/conservation-metrics-case-study',
 		text: `Windmill is invaluable for our end users, the indigenous communities. As simple as it is to deploy and scale, it saves them hours of work and provides near-instantaneous data access that previously took months of manual work.`
-	}
+	}*/
 ];
 
 export default function Example() {
@@ -144,6 +153,17 @@ export default function Example() {
 			<div className="max-h-44 overflow-hidden">
 				<p dangerouslySetInnerHTML={{ __html: testimonial.text }} />
 			</div>
+			{testimonial.caseStudyHref && testimonial.caseStudyHref !== '' && (
+				<div className="mt-4 flex justify-end">
+					<a
+						href={testimonial.caseStudyHref}
+						className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+					>
+						Case study
+						<ArrowRight size={16} />
+					</a>
+				</div>
+			)}
 		</div>
           <div className="flex items-center border-t dark:border-gray-800 border-gray-200 px-6 py-4 gap-4 mt-auto">
             {testimonial.author.profile_picture ? (
@@ -163,9 +183,7 @@ export default function Example() {
                   {testimonial.author.name}
                 </p>
                 <div className="text-sm dark:text-gray-50 text-gray-500">
-                  {[testimonial.author.position, testimonial.author.company]
-                    .filter(Boolean)
-                    .join(' @ ')}
+                  {testimonial.author.position}
                 </div>
               </a>
             ) : (
