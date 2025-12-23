@@ -11,6 +11,7 @@ import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
 import TestimonialsSection from '../landing/TestimonialsSection';
+import CorePrinciple from '../landing/CorePrinciple';
 import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
@@ -30,6 +31,7 @@ function HomepageHeader() {
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
 			</div>
+			<CorePrinciple />
 			<TestimonialsSection />
 			{/* <IntegrationsList /> */}
 			{/* <EntrepriseFeatures /> */}
