@@ -10,6 +10,8 @@ import {
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
 import devfriendly from '/illustrations/devfriendly.json';
+// @ts-ignore
+import performance from '/illustrations/performance.json';
 import { BenchmarkVisualization } from '../components/BenchmarkVisualization';
 import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 import { useColorMode } from '@docusaurus/theme-common';
@@ -190,7 +192,7 @@ export default function TutorialSection() {
 	const accordionFeatures = features.map((feature) => {
 		let type = 'image';
 		if (feature.useBenchmark) {
-			type = 'benchmark';
+			type = 'lottie';
 		} else if (feature.lottieData) {
 			type = 'lottie';
 		}
@@ -199,7 +201,7 @@ export default function TutorialSection() {
 			title: feature.title,
 			description: feature.description,
 			href: feature.href,
-			lottieData: feature.lottieData,
+			lottieData: feature.useBenchmark ? performance : feature.lottieData,
 			image: feature.image,
 			imageAlt: feature.imageAlt,
 			type: type
@@ -215,87 +217,6 @@ export default function TutorialSection() {
 
 		if (activeFeature.type === 'lottie') {
 			return <Lottie lottieData={activeFeature.lottieData} autoplay loop />;
-		} else if (activeFeature.type === 'benchmark') {
-			return (
-				<div className="flex flex-col w-full gap-4">
-					<div className="flex flex-row gap-2 items-center transition-all">
-						<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
-							10 long running tasks
-						</span>
-						<Switch
-							checked={chart === 'short'}
-							title="Switch between short and long running tasks"
-							onChange={() => {
-								setChart(chart === 'long' ? 'short' : 'long');
-							}}
-							className={`${
-								chart === 'short'
-									? 'bg-blue-500 dark:bg-blue-900'
-									: 'bg-gray-200 dark:bg-gray-800'
-							}
-							relative inline-flex h-[24px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-						>
-							<span
-								aria-hidden="true"
-								className={`${chart === 'short' ? 'translate-x-6' : 'translate-x-0'}
-								pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white  shadow-lg ring-0 transition duration-200 ease-in-out`}
-							/>
-						</Switch>
-						<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
-							40 lightweight tasks
-						</span>
-					</div>
-					<div
-						className={classNames(
-							colorMode === 'dark' ? 'bg-black' : 'bg-gray-50',
-							'w-full p-8 bg-opacity-40 rounded-xl benchmark-chart-container'
-						)}
-						data-theme={colorMode}
-					>
-						<div className="grid">
-							{chart === 'short' ? (
-								<div>
-									<BenchmarkVisualization
-										usecase="fibonacci_40_10"
-										language="python"
-										engines={[
-											'airflow',
-											'kestra',
-											'prefect',
-											'temporal',
-											'windmill',
-											'windmill_dedicated'
-										]}
-										workers={1}
-										title="40 lightweight tasks comparison (animation time speed 20x)"
-										maintainAspectRatio={false}
-										shouldAnimate={true}
-									/>
-								</div>
-							) : (
-								<div>
-									<BenchmarkVisualization
-										usecase="fibonacci_10_33"
-										language="python"
-										engines={[
-											'airflow',
-											'kestra',
-											'prefect',
-											'temporal',
-											'windmill',
-											'windmill_dedicated'
-										]}
-										workers={1}
-										title="10 long running tasks comparison (animation time speed 20x)"
-										maintainAspectRatio={false}
-										shouldAnimate={true}
-									/>
-								</div>
-							)}
-						</div>
-					</div>
-				</div>
-			);
 		} else {
 			return (
 				<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
