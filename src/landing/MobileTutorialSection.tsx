@@ -1,194 +1,207 @@
-import React, { useEffect } from 'react';
-import AnimationCarousel from './animations/AnimationCarousel';
-
-import { Activity, GitCompareArrows, Server, ArrowRight } from 'lucide-react';
-
+import React from 'react';
+import {
+	Activity,
+	GitCompareArrows,
+	Server,
+	ArrowRight
+} from 'lucide-react';
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
-import deployAtScale from '/illustrations/deploy_at_scale.json';
+import devfriendly from '/illustrations/devfriendly.json';
+import { BenchmarkVisualization } from '../components/BenchmarkVisualization';
 import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
-import Window from './animations/Window';
-import { twMerge } from 'tailwind-merge';
+import { useColorMode } from '@docusaurus/theme-common';
+import classNames from 'classnames';
+import { Switch } from '@headlessui/react';
 
 export default function TutorialSection() {
-	const containerRef = React.useRef<HTMLDivElement>(null);
+	const [chart, setChart] = React.useState<'short' | 'long'>('short');
 
-	const [currentIndex, setCurrentIndex] = React.useState(0);
+	const { colorMode } = useColorMode();
+
+	const ArrowSeparator = () => (
+		<div className="h-20 w-full flex justify-center my-2 py-2">
+			<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
+		</div>
+	);
 
 	return (
-		<>
-			<div
-				className="flex flex-col relative max-w-7xl px-4 lg:px-8 mx-auto w-full"
-				ref={containerRef}
-			>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl">
-					<div className="flex flex-col justify-between items-center">
-						<div className="font-light text-2xl mb-4 max-w-2xl">
-							{'Develop and iterate with instant feedback'}
-						</div>
-						<div className="flex flex-row items-start my-2 gap-2 w-full">
-							<div
-								onClick={() => setCurrentIndex(0)}
-								className={twMerge(
-									'cursor-pointer px-2 py-1 border-b-2  hover:bg-opacity-50 ',
-									currentIndex === 0 ? ' border-blue-600' : 'border-blue-800'
-								)}
-							>
-								Scripts
-							</div>
-							<div
-								onClick={() => setCurrentIndex(1)}
-								className={twMerge(
-									'cursor-pointer px-2 py-1 border-b-2  hover:bg-opacity-50 ',
-									currentIndex === 1 ? ' border-emerald-600' : 'border-emerald-800'
-								)}
-							>
-								Flows
-							</div>
-							<div
-								onClick={() => setCurrentIndex(2)}
-								className={twMerge(
-									'cursor-pointer px-2 py-1 border-b-2  hover:bg-opacity-50 ',
-									currentIndex === 2 ? ' border-orange-600' : 'border-orange-800'
-								)}
-							>
-								Apps
-							</div>
-						</div>
-
-						{currentIndex === 0 && (
-							<div className="flex flex-row items-start ">
-								<div className="bg-gradient-to-br from-blue-200 to-sky-400 dark:from-blue-700 dark:to-sky-600 w-full rounded-lg p-2 shadow-inner overflow-hidden h-full">
-									<Window
-										shouldRender={true}
-										name="Scripts | Windmill"
-										icon="/third_party_logos/firefox.svg"
-										className="h-min"
-									>
-										<img src="/images/script_example.png" alt="Scripts" />
-									</Window>
-								</div>
-							</div>
-						)}
-						{currentIndex === 1 && (
-							<div className="flex flex-row items-start ">
-								<div className="bg-gradient-to-br from-emerald-200 to-emerald-400 dark:from-emerald-500 dark:to-emerald-600 w-full rounded-lg p-2 shadow-inner overflow-hidden ">
-									<Window
-										shouldRender={true}
-										name="Flows | Windmill"
-										icon="/third_party_logos/firefox.svg"
-										className="h-min"
-									>
-										<img src="/images/flow_example.png" alt="Flows" />
-									</Window>
-								</div>
-							</div>
-						)}
-						{currentIndex === 2 && (
-							<div className="flex flex-row items-start ">
-								<div className="bg-gradient-to-br from-orange-200 to-orange-400 dark:from-orange-700 dark:to-orange-600 w-full rounded-lg p-2 shadow-inner overflow-hidden ">
-									<Window
-										shouldRender={true}
-										name="Apps | Windmill"
-										icon="/third_party_logos/firefox.svg"
-										className="h-min"
-									>
-										<img src="/images/app_example.png" alt="Apps" />
-									</Window>
-								</div>
-							</div>
-						)}
-
-						<div className="text-opacity-50 text-sm">Animation available on desktop</div>
-					</div>
-				</div>
-				<div className="h-20 w-full flex justify-center my-2 py-2">
-					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
-				</div>
-			</div>
+		<div className="flex flex-col">
 			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
+				{/* Code-first development */}
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
 					<a
 						href="/docs/core_concepts/draft_and_deploy#diff-viewer"
 						target="_blank"
-						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer "
+						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center"
 					>
-						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2 ">
-							<GitCompareArrows size={20} />
-							Review
+						<div className="font-medium text-xl mb-4 group-hover:ml-2 transition-all">
+							Code-first development
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{'Use the built-in diff viewer, GitHub PRs or GitLab MRs to review changes.'}
+							Write logic in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Build complex orchestrations and custom UIs with full code flexibility, avoiding the constraints of rigid low-code platforms.
 						</div>
-						<div
-							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
-						>
+						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
 							Learn more
 							<ArrowRight size={24} />
 						</div>
 					</a>
 					<div className="col-span-3">
-						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-							<img src={'/illustrations/diff.png'} alt={'Review'} />
-						</div>
+						<Lottie lottieData={devfriendly} autoplay loop />
 					</div>
 				</div>
-				<div className="h-20 w-full flex justify-center my-2 py-2">
-					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
-				</div>
+				<ArrowSeparator />
 
+				{/* Team collaboration with Git */}
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
 					<a
-						href="/docs/advanced/deploy_to_prod"
+						href="/docs/core_concepts/draft_and_deploy#diff-viewer"
 						target="_blank"
-						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer"
+						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center"
 					>
-						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
-							<Server size={20} />
-							Deploy at scale
+						<div className="font-medium text-xl mb-4 group-hover:ml-2 transition-all">
+							Team collaboration with Git
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{
-								'Deploy with ease on our infrastructure or your own infrastructure, on bare VMs with docker-compose, ecs, or large Kubernetes clusters with up to 1000 workers and even remote agents.'
-							}
+							Sync projects with GitHub or GitLab and manage versions via Pull Requests. Use the built-in diff viewer to prevent regressions and maintain a strict audit trail of every change.
 						</div>
-						<div
-							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
-						>
-							Learn more
-							<ArrowRight size={24} />
-						</div>
-					</a>
-					<div className="col-span-3">
-						<Lottie lottieData={deployAtScale} autoplay loop />
-					</div>
-				</div>
-				<div className="h-20 w-full flex justify-center my-2 py-2">
-					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
-				</div>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
-					<a className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer">
-						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
-							<Activity size={20} />
-							Monitor
-						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{'Keep track of your scripts, flows, and apps with detailed logs and metrics.'}
-						</div>
-						<div
-							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
-						>
+						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
 							Learn more
 							<ArrowRight size={24} />
 						</div>
 					</a>
 					<div className="col-span-3">
 						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-							<img src={'/illustrations/11.png'} alt={'Review'} />
+							<img src="/illustrations/diff.png" alt="Review" />
+						</div>
+					</div>
+				</div>
+				<ArrowSeparator />
+
+				{/* Optimized for scalability */}
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
+					<a
+						href="/docs/misc/benchmarks/competitors"
+						target="_blank"
+						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center"
+					>
+						<div className="font-medium text-xl mb-4 group-hover:ml-2 transition-all">
+							Optimized for scalability
+						</div>
+						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
+							Powered by a lightweight Rust executor, Windmill minimizes latency and resource overhead. Scale from a single Docker container to Kubernetes clusters with 1,000+ workers to handle high throughput effortlessly.
+						</div>
+						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
+							Learn more
+							<ArrowRight size={24} />
+						</div>
+					</a>
+					<div className="col-span-3">
+						<div className="flex flex-col w-full gap-4">
+							<div className="flex flex-row gap-2 items-center transition-all">
+								<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+									10 long running tasks
+								</span>
+								<Switch
+									checked={chart === 'short'}
+									title="Switch between short and long running tasks"
+									onChange={() => {
+										setChart(chart === 'long' ? 'short' : 'long');
+									}}
+									className={`${
+										chart === 'short'
+											? 'bg-blue-500 dark:bg-blue-900'
+											: 'bg-gray-200 dark:bg-gray-800'
+									}
+									relative inline-flex h-[24px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+								>
+									<span
+										aria-hidden="true"
+										className={`${chart === 'short' ? 'translate-x-6' : 'translate-x-0'}
+										pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white  shadow-lg ring-0 transition duration-200 ease-in-out`}
+									/>
+								</Switch>
+								<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+									40 lightweight tasks
+								</span>
+							</div>
+							<div
+								className={classNames(
+									colorMode === 'dark' ? 'bg-black' : 'bg-gray-50',
+									'w-full p-4 md:p-8 bg-opacity-40 rounded-xl benchmark-chart-container overflow-x-auto'
+								)}
+								data-theme={colorMode}
+							>
+								<div className="grid min-w-0">
+									{chart === 'short' ? (
+										<div>
+											<BenchmarkVisualization
+												usecase="fibonacci_40_10"
+												language="python"
+												engines={[
+													'airflow',
+													'kestra',
+													'prefect',
+													'temporal',
+													'windmill',
+													'windmill_dedicated'
+												]}
+												workers={1}
+												title="40 lightweight tasks comparison (animation time speed 20x)"
+												maintainAspectRatio={false}
+												shouldAnimate={true}
+											/>
+										</div>
+									) : (
+										<div>
+											<BenchmarkVisualization
+												usecase="fibonacci_10_33"
+												language="python"
+												engines={[
+													'airflow',
+													'kestra',
+													'prefect',
+													'temporal',
+													'windmill',
+													'windmill_dedicated'
+												]}
+												workers={1}
+												title="10 long running tasks comparison (animation time speed 20x)"
+												maintainAspectRatio={false}
+												shouldAnimate={true}
+											/>
+										</div>
+									)}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<ArrowSeparator />
+
+				{/* Built-on observability */}
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
+					<div className="col-span-2 group text-black dark:text-white cursor-pointer flex flex-col justify-center">
+						<div className="font-medium text-xl mb-4 group-hover:ml-2 transition-all">
+							Built-on observability
+						</div>
+						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
+							Track every run with real-time logs and structured metrics. Spot bottlenecks instantly on the visual timeline and debug failures with full execution context.
+						</div>
+						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
+							Learn more
+							<ArrowRight size={24} />
+						</div>
+					</div>
+					<div className="col-span-3">
+						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
+							<img src="/illustrations/11.png" alt="Monitor" />
 						</div>
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
+
+
