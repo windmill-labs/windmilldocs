@@ -26,31 +26,31 @@ export default function TutorialSection() {
 	}, []);
 	const features = [
 		{
-			title: 'Workflow engine for developers',
-			description: 'Write logic in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Build complex orchestrations and custom UIs with full code flexibility, avoiding the constraints of rigid low-code platforms.',
+			title: 'Code-first workflow builder',
+			description: 'Write logic in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Construct complex workflows and custom UIs with full code flexibility, bypassing the limits of rigid low-code platforms.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
 			lottieData: devfriendly,
 			mt: 'mt-24'
 		},
 		{
-			title: 'Collaborate with Git',
-			description: 'Sync projects with GitHub or GitLab and manage versions via Pull Requests. Use the built-in diff viewer to prevent regressions and maintain a strict audit trail of every change.',
+			title: 'Git-based collaboration',
+			description: 'Sync projects with GitHub or GitLab for seamless team collaboration. Manage versions via Pull Requests and use the built-in diff viewer to prevent regressions and maintain a strict audit trail of every change.',
 			icon: GitCompareArrows,
 			href: '/docs/advanced/git_sync',
 			image: '/illustrations/diff.png',
 			imageAlt: 'Review'
 		},
 		{
-			title: 'Deploy at scale',
-			description: 'Powered by a lightweight Rust executor, Windmill minimizes latency and resource overhead. Scale from a single Docker container to Kubernetes clusters with 1,000+ workers to handle high throughput effortlessly.',
+			title: 'Rust-powered orchestration',
+			description: 'Eliminate infrastructure overhead with a lightweight executor that minimizes cold starts and latency. Scale from a single Docker container to Kubernetes clusters with 1,000+ workers to handle high throughput effortlessly.',
 			icon: Server,
 			href: '/docs/misc/benchmarks/competitors',
 			useBenchmark: true
 		},
 		{
-			title: 'Monitor with highest precision',
-			description: 'Track every run with real-time logs and structured metrics. Spot bottlenecks instantly on the visual timeline and debug failures with full execution context.',
+			title: 'Built-in observability',
+			description: 'Track every run with real-time logs and structured metrics. Spot bottlenecks instantly on the visual timeline and debug failures with full execution context and error reporting.',
 			icon: Activity,
 			href: '/docs/core_concepts/monitor_past_and_future_runs',
 			image: '/illustrations/11.png',
