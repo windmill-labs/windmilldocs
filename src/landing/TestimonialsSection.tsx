@@ -149,12 +149,12 @@ export default function Example() {
         id={testimonial.author.anchor}
       >
         <div className="flex flex-col h-full rounded-md bg-gray-50 dark:bg-gray-900 text-sm leading-6 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shadow-sm">
-		<div className="dark:text-gray-50 text-gray-900 p-6 text-md leading-6 flex-grow overflow-hidden">
+		<div className="dark:text-gray-50 text-gray-900 p-6 text-md leading-6 flex-grow overflow-hidden relative pb-20">
 			<div className="max-h-44 overflow-hidden">
 				<p dangerouslySetInnerHTML={{ __html: testimonial.text }} />
 			</div>
 			{testimonial.caseStudyHref && testimonial.caseStudyHref !== '' && (
-				<div className="mt-4 flex justify-end">
+				<div className="absolute bottom-6 right-6">
 					<a
 						href={testimonial.caseStudyHref}
 						className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
