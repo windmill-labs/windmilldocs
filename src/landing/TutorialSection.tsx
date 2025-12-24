@@ -627,7 +627,7 @@ export default function TutorialSection({ subIndex, children }) {
 			<ScrollContext.Provider value={mockMotionValue}>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
 					<div className="flex flex-row justify-between items-center mb-4">
-						<div className="font-light text-4xl max-w-2xl">
+						<div className="font-medium text-3xl mb-4 max-w-2xl">
 							Develop and iterate with instant feedback
 						</div>
 					</div>
