@@ -245,37 +245,37 @@ export default function TutorialSection({ subIndex, children }) {
 	const features = [
 		{
 			title: 'Connect your existing infrastructure',
-			description: 'Connect with 100+ integrations including databases, APIs, cloud services, KAFKA, Duckdb...',
+			description: 'Databases (PostgreSQL, MySQL, Snowflake, DuckDB), cloud platforms (AWS, Azure, GCP), message queues (Kafka, SQS, NATS), and 100+ APIs including Slack, GitHub, Stripe, and OpenAI.',
 			icon: GitCompareArrows,
 			href: '/docs/integrations',
 			lottieData: thirdparty,
 			mt: 'mt-24'
 		},
 		{
-			title: 'Develop with instant feedback',
-			description: 'Write scripts in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Orchestrate them with into flows with our workflow engine, and generate custom frontend with AI.',
+			title: 'Develop and iterate with instant feedback',
+			description: 'Write logic in 20+ languages (Python, TS, Go, Bash) and connect scripts into flows with our high-performance workflow engine. Generate production-ready UIs with AI and iterate instantly with live previews and execution.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
 			lottieData: devfriendly,
 		},
 		{
-			title: 'Collaborate with Git',
-			description: 'Sync projects with GitHub or GitLab for seamless team collaboration. Manage versions via Pull Requests and use the built-in diff viewer to prevent regressions and maintain a strict audit trail of every change.',
+			title: 'Review with bi-directional Git sync',
+			description: 'Git-based collaboration bi-directionally sync scripts, flows, and apps with Git for version control and collaboration. Develop locally, push changes, and use the built-in diff viewer to maintain a strict audit trail of every change.',
 			icon: GitCompareArrows,
 			href: '/docs/advanced/git_sync',
 			image: '/illustrations/diff.png',
 			imageAlt: 'Review'
 		},
 		{
-			title: 'Better title about deploy at Scale -> See how powerful it is',
-			description: 'Eliminate infrastructure overhead with a lightweight executor that minimizes cold starts and latency. Scale from a single Docker container to Kubernetes clusters with 1,000+ workers to handle high throughput effortlessly.',
+			title: 'Deploy at scale with confidence',
+			description: 'Scale horizontally with autonomous workers capable of processing 1,000+ jobs per second with linear scaling. Use autoscaling to adjust capacity based on demand or isolate critical workloads with dedicated worker groups on Kubernetes and Docker.',
 			icon: Server,
 			href: '/docs/misc/benchmarks/competitors',
 			useBenchmark: true
 		},
 		{
-			title: 'Built-in observability & better Runs page animation',
-			description: 'Track every run with real-time logs and structured metrics. Spot bottlenecks instantly on the visual timeline and debug failures with full execution context and error reporting.',
+			title: 'Monitor with full-stack observability',
+			description: 'Monitor every execution with real-time logs, inputs, and outputs. Set automated alerts via Slack or Email for job failures and worker thresholds, or export system metrics to OpenTelemetry and Prometheus to maintain full visibility across your stack.',
 			icon: Activity,
 			href: '/docs/core_concepts/monitor_past_and_future_runs',
 			image: '/illustrations/11.png',
@@ -401,7 +401,7 @@ export default function TutorialSection({ subIndex, children }) {
 						</div>
 						</div>
 						) : feature.lottieData ? (
-							<Lottie lottieData={feature.lottieData} autoplay loop={false} />
+							<Lottie lottieData={feature.lottieData} autoplay loop={true} />
 						) : (
 						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
 								<img src={feature.image} alt={feature.imageAlt || feature.title} />
