@@ -630,98 +630,98 @@ export default function TutorialSection({ subIndex, children }) {
 						<div className="font-medium text-3xl mb-4 max-w-2xl">
 							Develop and iterate with instant feedback
 						</div>
+						<div className="flex items-center gap-2">
+							<button
+								onClick={() => setIsPlaying(!isPlaying)}
+								className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+								title={isPlaying ? 'Pause' : 'Play'}
+							>
+								{isPlaying ? <Pause size={20} /> : <Play size={20} />}
+							</button>
+							<button
+								onClick={() => {
+									// Go to previous step
+									if (activeSection === 'scripts') {
+										if (currentStepIndex > 0) {
+											const prevStep = scriptSteps[currentStepIndex - 1];
+											jumpToStep(prevStep, 'scripts');
+										}
+									} else if (activeSection === 'flows') {
+										if (currentStepIndex > 0) {
+											const prevStep = flowSteps[currentStepIndex - 1];
+											jumpToStep(prevStep, 'flows');
+										} else {
+											const lastScriptStep = scriptSteps[scriptSteps.length - 1];
+											jumpToStep(lastScriptStep, 'scripts');
+										}
+									} else {
+										// apps
+										if (currentStepIndex > 0) {
+											const prevStep = appSteps[currentStepIndex - 1];
+											jumpToStep(prevStep, 'apps');
+										} else {
+											const lastFlowStep = flowSteps[flowSteps.length - 1];
+											jumpToStep(lastFlowStep, 'flows');
+										}
+									}
+								}}
+								className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+								disabled={
+									activeSection === 'scripts' && currentStepIndex === 0
+								}
+								title="Previous step (←)"
+							>
+								<ChevronLeft size={20} />
+							</button>
+							<button
+								onClick={() => {
+									// Go to next step
+									if (activeSection === 'scripts') {
+										if (currentStepIndex < scriptSteps.length - 1) {
+											const nextStep = scriptSteps[currentStepIndex + 1];
+											jumpToStep(nextStep, 'scripts');
+										} else {
+											const firstFlowStep = flowSteps[0];
+											jumpToStep(firstFlowStep, 'flows');
+										}
+									} else if (activeSection === 'flows') {
+										if (currentStepIndex < flowSteps.length - 1) {
+											const nextStep = flowSteps[currentStepIndex + 1];
+											jumpToStep(nextStep, 'flows');
+										} else {
+											const firstAppStep = appSteps[0];
+											jumpToStep(firstAppStep, 'apps');
+										}
+									} else {
+										// apps
+										if (currentStepIndex < appSteps.length - 1) {
+											const nextStep = appSteps[currentStepIndex + 1];
+											jumpToStep(nextStep, 'apps');
+										}
+									}
+								}}
+								className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+								disabled={
+									activeSection === 'apps' && currentStepIndex === appSteps.length - 1
+								}
+								title="Next step (→)"
+							>
+								<ChevronRight size={20} />
+							</button>
+							<button
+								onClick={() => {
+									// Restart animation from the beginning
+									jumpToStep(0, 'scripts');
+								}}
+								className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+								title="Restart animation"
+							>
+								<RotateCcw size={20} />
+							</button>
+						</div>
 					</div>
 					<div className="w-full">
 						<div className="mb-4 flex flex-col gap-4">
-							<div className="flex items-center gap-2">
-								<button
-									onClick={() => setIsPlaying(!isPlaying)}
-									className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-									title={isPlaying ? 'Pause' : 'Play'}
-								>
-									{isPlaying ? <Pause size={20} /> : <Play size={20} />}
-								</button>
-								<button
-									onClick={() => {
-										// Go to previous step
-										if (activeSection === 'scripts') {
-											if (currentStepIndex > 0) {
-												const prevStep = scriptSteps[currentStepIndex - 1];
-												jumpToStep(prevStep, 'scripts');
-											}
-										} else if (activeSection === 'flows') {
-											if (currentStepIndex > 0) {
-												const prevStep = flowSteps[currentStepIndex - 1];
-												jumpToStep(prevStep, 'flows');
-											} else {
-												const lastScriptStep = scriptSteps[scriptSteps.length - 1];
-												jumpToStep(lastScriptStep, 'scripts');
-											}
-										} else {
-											// apps
-											if (currentStepIndex > 0) {
-												const prevStep = appSteps[currentStepIndex - 1];
-												jumpToStep(prevStep, 'apps');
-											} else {
-												const lastFlowStep = flowSteps[flowSteps.length - 1];
-												jumpToStep(lastFlowStep, 'flows');
-											}
-										}
-									}}
-									className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-									disabled={
-										activeSection === 'scripts' && currentStepIndex === 0
-									}
-									title="Previous step (←)"
-								>
-									<ChevronLeft size={20} />
-								</button>
-								<button
-									onClick={() => {
-										// Go to next step
-										if (activeSection === 'scripts') {
-											if (currentStepIndex < scriptSteps.length - 1) {
-												const nextStep = scriptSteps[currentStepIndex + 1];
-												jumpToStep(nextStep, 'scripts');
-											} else {
-												const firstFlowStep = flowSteps[0];
-												jumpToStep(firstFlowStep, 'flows');
-											}
-										} else if (activeSection === 'flows') {
-											if (currentStepIndex < flowSteps.length - 1) {
-												const nextStep = flowSteps[currentStepIndex + 1];
-												jumpToStep(nextStep, 'flows');
-											} else {
-												const firstAppStep = appSteps[0];
-												jumpToStep(firstAppStep, 'apps');
-											}
-										} else {
-											// apps
-											if (currentStepIndex < appSteps.length - 1) {
-												const nextStep = appSteps[currentStepIndex + 1];
-												jumpToStep(nextStep, 'apps');
-											}
-										}
-									}}
-									className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-									disabled={
-										activeSection === 'apps' && currentStepIndex === appSteps.length - 1
-									}
-									title="Next step (→)"
-								>
-									<ChevronRight size={20} />
-								</button>
-								<button
-									onClick={() => {
-										// Restart animation from the beginning
-										jumpToStep(0, 'scripts');
-									}}
-									className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-									title="Restart animation"
-								>
-									<RotateCcw size={20} />
-								</button>
-							</div>
 							{/* Scripts, Flows, and Apps Progress Bars */}
 							<div className="grid grid-cols-3 gap-4">
 								{/* Scripts Progress Bar */}
@@ -812,14 +812,14 @@ export default function TutorialSection({ subIndex, children }) {
 			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col mb-24">
 				{features.map((feature, index) => {
 					// Replace the second feature (index 1) with the animation section
-					if (index === 1) {
-						return (
-							<React.Fragment key="animation-section">
-								<AnimationSection />
-								{index < features.length - 1 && <ArrowSeparator />}
-							</React.Fragment>
-						);
-					}
+					// if (index === 1) {
+					// 	return (
+					// 		<React.Fragment key="animation-section">
+					// 			<AnimationSection />
+					// 			{index < features.length - 1 && <ArrowSeparator />}
+					// 		</React.Fragment>
+					// 	);
+					// }
 					
 					return (
 						<React.Fragment key={feature.title}>
