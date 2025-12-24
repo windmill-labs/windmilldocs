@@ -3,15 +3,15 @@ import {
 	Activity,
 	GitCompareArrows,
 	Server,
-	ArrowRight,
-	Plus,
-	Minus
+	ArrowRight
 } from 'lucide-react';
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
 import devfriendly from '/illustrations/devfriendly.json';
 // @ts-ignore
 import performance from '/illustrations/performance.json';
+// @ts-ignore
+import thirdparty from '/illustrations/thirdparty.json';
 import { BenchmarkVisualization } from '../components/BenchmarkVisualization';
 import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 import { useColorMode } from '@docusaurus/theme-common';
@@ -24,17 +24,25 @@ export default function TutorialSection() {
 	useEffect(() => {
 		setChart('short');
 	}, []);
+
 	const features = [
 		{
-			title: 'Code-first workflow builder',
-			description: 'Write logic in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Construct complex workflows and custom UIs with full code flexibility, bypassing the limits of rigid low-code platforms.',
+			title: 'Connect your existing infrastructure',
+			description: 'Connect with 100+ integrations including databases, APIs, cloud services, KAFKA, Duckdb...',
 			icon: GitCompareArrows,
-			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
-			lottieData: devfriendly,
+			href: '/docs/integrations',
+			lottieData: thirdparty,
 			mt: 'mt-24'
 		},
 		{
-			title: 'Git-based collaboration',
+			title: 'Develop with instant feedback',
+			description: 'Write scripts in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Orchestrate them with into flows with our workflow engine, and generate custom frontend with AI.',
+			icon: GitCompareArrows,
+			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
+			lottieData: devfriendly,
+		},
+		{
+			title: 'Collaborate with Git',
 			description: 'Sync projects with GitHub or GitLab for seamless team collaboration. Manage versions via Pull Requests and use the built-in diff viewer to prevent regressions and maintain a strict audit trail of every change.',
 			icon: GitCompareArrows,
 			href: '/docs/advanced/git_sync',
@@ -42,14 +50,14 @@ export default function TutorialSection() {
 			imageAlt: 'Review'
 		},
 		{
-			title: 'Rust-powered orchestration',
+			title: 'Better title about deploy at Scale -> See how powerful it is',
 			description: 'Eliminate infrastructure overhead with a lightweight executor that minimizes cold starts and latency. Scale from a single Docker container to Kubernetes clusters with 1,000+ workers to handle high throughput effortlessly.',
 			icon: Server,
 			href: '/docs/misc/benchmarks/competitors',
 			useBenchmark: true
 		},
 		{
-			title: 'Built-in observability',
+			title: 'Built-in observability & better Runs page animation',
 			description: 'Track every run with real-time logs and structured metrics. Spot bottlenecks instantly on the visual timeline and debug failures with full execution context and error reporting.',
 			icon: Activity,
 			href: '/docs/core_concepts/monitor_past_and_future_runs',
@@ -176,7 +184,7 @@ export default function TutorialSection() {
 						</div>
 						</div>
 						) : feature.lottieData ? (
-							<Lottie lottieData={feature.lottieData} autoplay loop />
+							<Lottie lottieData={feature.lottieData} autoplay loop={false} />
 						) : (
 						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
 								<img src={feature.image} alt={feature.imageAlt || feature.title} />
@@ -189,126 +197,16 @@ export default function TutorialSection() {
 		);
 	};
 
-	const accordionFeatures = features.map((feature) => {
-		let type = 'image';
-		if (feature.useBenchmark) {
-			type = 'lottie';
-		} else if (feature.lottieData) {
-			type = 'lottie';
-		}
-
-		return {
-			title: feature.title,
-			description: feature.description,
-			href: feature.href,
-			lottieData: feature.useBenchmark ? performance : feature.lottieData,
-			image: feature.image,
-			imageAlt: feature.imageAlt,
-			type: type
-		};
-	});
-
-	const [activeFeatureIndex, setActiveFeatureIndex] = React.useState(0);
-	const [openIndex, setOpenIndex] = React.useState<number | null>(0);
-	const { colorMode } = useColorMode();
-
-	const renderActiveFeatureVisual = () => {
-		const activeFeature = accordionFeatures[activeFeatureIndex];
-
-		if (activeFeature.type === 'lottie') {
-			return <Lottie lottieData={activeFeature.lottieData} autoplay loop />;
-		} else {
-			return (
-				<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-					<img src={activeFeature.image} alt={activeFeature.imageAlt || activeFeature.title} />
-				</div>
-			);
-		}
-	};
 
 	return (
 		<div className="flex flex-col">
 			{/* FeatureCard Section - Commented out */}
-			{/* <div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
+			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col mb-24">
 				{features.map((feature, index) => (
 					<FeatureCard key={feature.title} feature={feature} index={index} />
 				))}
-			</div> */}
-
-			{/* Accordion Component */}
-			<div className="max-w-7xl px-4 lg:px-8 mx-auto mt-24 mb-24">
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl min-h-[600px]">
-					<div className="text-3xl font-bold mb-8 px-4 text-black dark:text-white whitespace-nowrap">
-						The product
-					</div>
-					<div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-8 items-center">
-						{/* Left side - Accordion */}
-						<div className="flex flex-col">
-						<div className="space-y-2">
-							{accordionFeatures.map((feature, index) => {
-								const isOpen = openIndex === index;
-								const isFirst = index === 0;
-								const isLast = index === accordionFeatures.length - 1;
-								const canClose = !isFirst && !isLast;
-								
-								return (
-									<div key={feature.title} className="border-b border-gray-200 dark:border-gray-700 last:border-b-0">
-										<button
-											onClick={() => {
-												if (isOpen) {
-													// Prevent closing if this is the only open dropdown
-													// This ensures at least one dropdown is always open
-													return;
-												} else {
-													setOpenIndex(index);
-													setActiveFeatureIndex(index);
-												}
-											}}
-											className="flex w-full items-center justify-between text-left py-4 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-										>
-											<span className="text-xl font-semibold text-black dark:text-white">
-												{feature.title}
-											</span>
-											<span className="ml-4 flex h-6 items-center">
-												{isOpen ? (
-													<Minus className="h-5 w-5 text-gray-600 dark:text-gray-400" aria-hidden="true" />
-												) : (
-													<Plus className="h-5 w-5 text-gray-600 dark:text-gray-400" aria-hidden="true" />
-												)}
-											</span>
-										</button>
-										{isOpen && (
-											<div className="px-4 pb-4">
-												<p className="text-md text-gray-700 dark:text-gray-300 mb-4">
-													{feature.description}
-												</p>
-												{feature.href && (
-													<a
-														href={feature.href}
-														target="_blank"
-														className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 hover:gap-3 transition-all"
-													>
-														Learn more
-														<ArrowRight size={20} />
-													</a>
-												)}
-											</div>
-										)}
-									</div>
-								);
-							})}
-						</div>
-					</div>
-
-						{/* Right side - Animation */}
-						<div className="flex items-center justify-center w-full">
-							<div className="w-full">
-								{renderActiveFeatureVisual()}
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
+
 		</div>
 	);
 }
