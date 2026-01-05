@@ -13,6 +13,7 @@ import {
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
 import devfriendly from '/illustrations/devfriendly.json';
+import CombinedAnimation from './CombinedAnimation';
 // @ts-ignore
 import performance from '/illustrations/performance.json';
 // @ts-ignore
@@ -244,23 +245,16 @@ export default function TutorialSection({ subIndex, children }) {
 
 	const features = [
 		{
-			title: 'Connect your existing infrastructure',
-			description: 'Databases (PostgreSQL, MySQL, Snowflake, DuckDB), cloud platforms (AWS, Azure, GCP), message queues (Kafka, SQS, NATS), and 100+ APIs including Slack, GitHub, Stripe, and OpenAI.',
-			icon: GitCompareArrows,
-			href: '/docs/integrations',
-			lottieData: thirdparty,
-			mt: 'mt-24'
-		},
-		{
-			title: 'Develop and iterate with instant feedback',
-			description: 'Write logic in 20+ languages (Python, TS, Go, Bash) and connect scripts into flows with our high-performance workflow engine. Generate production-ready UIs with AI and iterate instantly with live previews and execution.',
+			title: 'Develop and iterare with instant feedback',
+			description: 'Write scripts in 20+ languages (Python, TS, Go, Bash) and orchestrate them into flows with our high-performance workflow engine. Generate production-ready app frontends with AI and iterate instantly with live previews and execution.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
 			lottieData: devfriendly,
+			mt: 'mt-24'
 		},
 		{
 			title: 'Review with bi-directional Git sync',
-			description: 'Git-based collaboration bi-directionally sync scripts, flows, and apps with Git for version control and collaboration. Develop locally, push changes, and use the built-in diff viewer to maintain a strict audit trail of every change.',
+			description: 'Bi-directionally sync scripts, flows, and apps with Git for seamless version control and team collaboration. Develop locally, push changes, and use the built-in diff viewer to maintain a strict audit trail of every change.',
 			icon: GitCompareArrows,
 			href: '/docs/advanced/git_sync',
 			image: '/illustrations/diff.png',
@@ -271,7 +265,8 @@ export default function TutorialSection({ subIndex, children }) {
 			description: 'Scale horizontally with autonomous workers capable of processing 1,000+ jobs per second with linear scaling. Use autoscaling to adjust capacity based on demand or isolate critical workloads with dedicated worker groups on Kubernetes and Docker.',
 			icon: Server,
 			href: '/docs/misc/benchmarks/competitors',
-			useBenchmark: true
+			useBenchmark: true,
+			actionText: 'See benchmarks'
 		},
 		{
 			title: 'Monitor with full-stack observability',
@@ -316,7 +311,7 @@ export default function TutorialSection({ subIndex, children }) {
 							{feature.description}
 						</div>
 						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
-							Learn more
+							{feature.actionText || 'Learn more'}
 							<ArrowRight size={24} />
 						</div>
 					</ContentWrapper>
@@ -400,6 +395,8 @@ export default function TutorialSection({ subIndex, children }) {
 						</div>
 						</div>
 						</div>
+						) : feature.title === 'Develop and iterare with instant feedback' ? (
+							<CombinedAnimation />
 						) : feature.lottieData ? (
 							<Lottie lottieData={feature.lottieData} autoplay loop={true} />
 						) : (

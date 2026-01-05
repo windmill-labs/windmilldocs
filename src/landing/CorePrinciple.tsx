@@ -18,6 +18,8 @@ import polyGlott from '/illustrations/polyglot.json';
 import smartIde from '/illustrations/smart_ide.json';
 // @ts-ignore
 import secrets from '/illustrations/secrets.json';
+// @ts-ignore
+import thirdparty from '/illustrations/thirdparty.json';
 
 // Wrapper component to provide ScrollContext for ScriptAnimation with controls
 function ScriptAnimationWrapper({ children }: { children: React.ReactNode }) {
@@ -473,11 +475,11 @@ function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imag
 
 export default function CorePrinciple() {
 	return (
-		<LandingSection bgClass="bg-gray-50 dark:bg-gray-900 py-16">
+		<LandingSection bgClass="py-16">
 			<div className="w-full">
 				<div className="mb-12 text-left">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-600">
-						3 core principles
+						Our core principles
 					</h1>
 					<p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl"></p>
 					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
@@ -488,8 +490,8 @@ export default function CorePrinciple() {
 					{/* Top row - Full width card */}
 					<div className="w-full">
 						<FeatureCard
-							title="Developer Experience"
-							description="Combine the flexibility of standard code with the speed of zero-overhead development. We abstract away the complexity of infrastructure and scaling, so you can focus purely on business logic—not the plumbing."
+							title="Provide the best developer experience"
+							description="Windmill give developers the tools they love without the platform engineering overhead: full LSP support, AI assistance, Git sync, CLI and VS Code extension. When you write a script, it instantly becomes a REST endpoint, scheduled job, or auto-generated UI. No deployment pipelines, no infrastructure management. Dependencies install automatically, execution is instant, real-time feedback as you build."
 							actionLink="Read our philosophy"
 							actionUrl="https://www.windmill.dev/docs/misc/note_of_intent"
 							fullWidth={true}
@@ -500,14 +502,21 @@ export default function CorePrinciple() {
 							}
 						/>
 					</div>
-					{/* Bottom row - 2 cards */}
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+					{/* Bottom row - 3 cards */}
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
 						<FeatureCard
 							title="Avoid vendor lock-in"
 							description="Open source and self-hostable. Your code, your data, your infrastructure. Deploy anywhere—cloud, on-premises, or air-gapped. Full control without proprietary constraints."
 							actionLink="View on GitHub"
 							actionUrl="https://github.com/windmill-labs/"
 							lottieData={polyGlott}
+						/>
+						<FeatureCard
+							title="Seamless enterprise integration"
+							description="Connect seamlessly to your infrastructure: databases (PostgreSQL, MySQL, Snowflake), cloud platforms (AWS, Azure, GCP), message queues (Kafka, SQS, NATS), and 100+ APIs. Interact with your existing codebase and workflows without friction."
+							actionLink="Explore integrations"
+							actionUrl="https://www.windmill.dev/docs/integrations"
+							lottieData={thirdparty}
 						/>
 						<FeatureCard
 							title="Enterprise-grade security"
