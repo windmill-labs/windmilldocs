@@ -245,12 +245,11 @@ export default function TutorialSection({ subIndex, children }) {
 
 	const features = [
 		{
-			title: 'Develop and iterare with instant feedback',
-			description: 'Write scripts in 20+ languages (Python, TS, Go, Bash) and orchestrate them into flows with our high-performance workflow engine. Generate production-ready app frontends with AI and iterate instantly with live previews and execution.',
+			title: 'Build production ready workflows',
+			description: 'Orchestrate scalable workflows in 20+ languages and let AI instantly transform them into production-ready frontends.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
-			lottieData: devfriendly,
-			mt: 'mt-24'
+			lottieData: devfriendly
 		},
 		{
 			title: 'Review with bi-directional Git sync',
@@ -310,7 +309,7 @@ export default function TutorialSection({ subIndex, children }) {
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
 							{feature.description}
 						</div>
-						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
+						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-0">
 							{feature.actionText || 'Learn more'}
 							<ArrowRight size={24} />
 						</div>
@@ -395,8 +394,17 @@ export default function TutorialSection({ subIndex, children }) {
 						</div>
 						</div>
 						</div>
-						) : feature.title === 'Develop and iterare with instant feedback' ? (
-							<CombinedAnimation />
+						) : feature.title === 'Build production ready workflows' ? (
+							<>
+								{/* Mobile: Show devfriendly lottie */}
+								<div className="md:hidden">
+									<Lottie lottieData={devfriendly} autoplay loop={true} />
+								</div>
+								{/* Desktop: Show CombinedAnimation */}
+								<div className="hidden md:block">
+									<CombinedAnimation />
+								</div>
+							</>
 						) : feature.lottieData ? (
 							<Lottie lottieData={feature.lottieData} autoplay loop={true} />
 						) : (

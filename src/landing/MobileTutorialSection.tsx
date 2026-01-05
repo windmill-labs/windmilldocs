@@ -11,6 +11,7 @@ import devfriendly from '/illustrations/devfriendly.json';
 // @ts-ignore
 import performance from '/illustrations/performance.json';
 import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
+import CombinedAnimation from './CombinedAnimation';
 
 export default function TutorialSection() {
 
@@ -23,7 +24,7 @@ export default function TutorialSection() {
 	return (
 		<div className="flex flex-col">
 			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
-				{/* Code-first development */}
+				{/* Develop and iterate with instant feedback */}
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
 					<a
 						href="/docs/core_concepts/draft_and_deploy#diff-viewer"
@@ -31,10 +32,10 @@ export default function TutorialSection() {
 						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center"
 					>
 						<div className="font-medium text-xl mb-4 group-hover:ml-2 transition-all">
-							Code-first development
+							Build production ready workflows
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							Write logic in 20+ languages (Python, TS, Go, Bash) using your local IDE or our web editor. Build complex orchestrations and custom UIs with full code flexibility, avoiding the constraints of rigid low-code platforms.
+							Orchestrate scalable workflows in 20+ languages and let AI instantly transform them into production-ready frontends.
 						</div>
 						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
 							Learn more
@@ -42,7 +43,7 @@ export default function TutorialSection() {
 						</div>
 					</a>
 					<div className="col-span-3">
-						<Lottie lottieData={devfriendly} autoplay loop />
+						<CombinedAnimation />
 					</div>
 				</div>
 				<ArrowSeparator />

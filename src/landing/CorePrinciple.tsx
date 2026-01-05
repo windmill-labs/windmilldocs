@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import LandingSection from './LandingSection';
 import { ArrowRight, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import { useLottie } from 'lottie-react';
+import { Lottie } from './LightFeatureCard';
 import { useMotionValue } from 'framer-motion';
 import ScriptAnimation from './ScriptAnimation';
 import FlowAnimation from './FlowAnimation';
@@ -496,9 +497,20 @@ export default function CorePrinciple() {
 							actionUrl="https://www.windmill.dev/docs/misc/note_of_intent"
 							fullWidth={true}
 							animationComponent={
-								<ScriptAnimationWrapper>
-									<div />
-								</ScriptAnimationWrapper>
+								<>
+									{/* Mobile: Show devfriendly lottie */}
+									<div className="md:hidden mt-auto">
+										<div className="bg-gray-100 dark:bg-gray-700/80 rounded-md p-4 min-h-[220px] flex items-center justify-center overflow-hidden">
+											<Lottie lottieData={devfriendly} autoplay loop />
+										</div>
+									</div>
+									{/* Desktop: Show animation */}
+									<div className="hidden md:block">
+										<ScriptAnimationWrapper>
+											<div />
+										</ScriptAnimationWrapper>
+									</div>
+								</>
 							}
 						/>
 					</div>
