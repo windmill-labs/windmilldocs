@@ -284,7 +284,7 @@ export default function TutorialSection({ subIndex, children }) {
 							</div>
 	);
 
-	const FeatureCard = ({ feature, index }) => {
+	const FeatureCard = ({ feature, index, totalFeatures }) => {
 		const { colorMode } = useColorMode();
 		const ContentWrapper = feature.href ? 'a' : 'div';
 		const isProductionUse = feature.title === 'Build for production';
@@ -308,7 +308,7 @@ export default function TutorialSection({ subIndex, children }) {
 				<div
 					className={`dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl ${
 						isProductionUse ? 'flex flex-col gap-6' : 'grid grid-cols-1 md:grid-cols-5 gap-8'
-					} ${feature.mt || ''}`}
+					} ${feature.mt || ''} ${index < totalFeatures - 1 ? 'mb-8' : ''}`}
 				>
 					<ContentWrapper {...wrapperProps}>
 						<div className="font-medium text-3xl mb-4 group-hover:ml-2 transition-all">
@@ -431,7 +431,6 @@ export default function TutorialSection({ subIndex, children }) {
 						)}
 					</div>
 				</div>
-				{index < features.length - 1 && <ArrowSeparator />}
 			</>
 		);
 	};
@@ -845,7 +844,7 @@ export default function TutorialSection({ subIndex, children }) {
 					
 					return (
 						<React.Fragment key={feature.title}>
-							<FeatureCard feature={feature} index={index} />
+							<FeatureCard feature={feature} index={index} totalFeatures={features.length} />
 						</React.Fragment>
 					);
 				})}
