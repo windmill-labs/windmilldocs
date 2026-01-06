@@ -287,27 +287,34 @@ export default function TutorialSection({ subIndex, children }) {
 	const FeatureCard = ({ feature, index }) => {
 		const { colorMode } = useColorMode();
 		const ContentWrapper = feature.href ? 'a' : 'div';
+		const isProductionUse = feature.title === 'Build for production use';
+		
 		const wrapperProps = feature.href
 			? {
 					href: feature.href,
 					target: '_blank',
-					className:
-						'col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center'
+					className: isProductionUse
+						? 'group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer'
+						: 'col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center'
 				}
 			: {
-					className: 'col-span-2 group text-black dark:text-white cursor-pointer flex flex-col justify-center'
+					className: isProductionUse
+						? 'group text-black dark:text-white cursor-pointer'
+						: 'col-span-2 group text-black dark:text-white cursor-pointer flex flex-col justify-center'
 				};
 
 		return (
 			<>
 				<div
-					className={`dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8 ${feature.mt || ''}`}
+					className={`dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl ${
+						isProductionUse ? 'flex flex-col gap-6' : 'grid grid-cols-1 md:grid-cols-5 gap-8'
+					} ${feature.mt || ''}`}
 				>
 					<ContentWrapper {...wrapperProps}>
 						<div className="font-medium text-3xl mb-4 group-hover:ml-2 transition-all">
 							{feature.title}
 						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
+						<div className={`text-md mb-4 group-hover:ml-2 transition-all ${isProductionUse ? '' : 'max-w-sm'}`}>
 							{feature.description}
 						</div>
 						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-0">
@@ -315,7 +322,7 @@ export default function TutorialSection({ subIndex, children }) {
 							<ArrowRight size={24} />
 						</div>
 					</ContentWrapper>
-					<div className="col-span-3">
+					<div className={isProductionUse ? 'w-full' : 'col-span-3'}>
 						{feature.useBenchmark ? (
 							<div className="flex flex-col w-full gap-4">
 								<div className="flex flex-row gap-2 items-center transition-all">
@@ -397,7 +404,7 @@ export default function TutorialSection({ subIndex, children }) {
 						</div>
 						) : feature.title === 'Build for production use' ? (
 							<video
-								className="rounded-lg overflow-hidden h-full w-full object-cover"
+								className="rounded-lg overflow-hidden w-full object-cover"
 								autoPlay
 								loop
 								muted
