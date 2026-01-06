@@ -245,15 +245,15 @@ export default function TutorialSection({ subIndex, children }) {
 
 	const features = [
 		{
-			title: 'Build production ready workflows',
-			description: 'Orchestrate scalable workflows in 20+ languages and let AI instantly transform them into production-ready frontends.',
+			title: 'Build for production use',
+			description: 'Build mission-critical internal tools and data pipelines that integrates directly with your existing stack and resources.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
 			lottieData: devfriendly
 		},
 		{
-			title: 'Review with bi-directional Git sync',
-			description: 'Bi-directionally sync scripts, flows, and apps with Git for seamless version control and team collaboration. Develop locally, push changes, and use the built-in diff viewer to maintain a strict audit trail of every change.',
+			title: 'Collaborate with Git',
+			description: 'Develop locally, sync changes bi-directionally, and maintain a strict audit trail with built-in diff viewing.',
 			icon: GitCompareArrows,
 			href: '/docs/advanced/git_sync',
 			image: '/illustrations/diff.png',
@@ -261,18 +261,19 @@ export default function TutorialSection({ subIndex, children }) {
 		},
 		{
 			title: 'Deploy at scale with confidence',
-			description: 'Scale horizontally with autonomous workers capable of processing 1,000+ jobs per second with linear scaling. Use autoscaling to adjust capacity based on demand or isolate critical workloads with dedicated worker groups on Kubernetes and Docker.',
+			description: 'Process 1,000+ jobs per second with linear horizontal scaling. Auto-scale capacity on demand or isolate critical workloads using dedicated worker groups on Kubernetes and Docker.',
 			icon: Server,
 			href: '/docs/misc/benchmarks/competitors',
 			useBenchmark: true,
 			actionText: 'See benchmarks'
 		},
 		{
-			title: 'Monitor with full-stack observability',
-			description: 'Monitor every execution with real-time logs, inputs, and outputs. Set automated alerts via Slack or Email for job failures and worker thresholds, or export system metrics to OpenTelemetry and Prometheus to maintain full visibility across your stack.',
+			title: 'Monitor at job granularity',
+			description: 'Track every job execution with real-time logs and I/O. Get instant Slack or email alerts for failures, or export metrics to OpenTelemetry and Prometheus to monitor your entire stack.',
 			icon: Activity,
 			href: '/docs/core_concepts/monitor_past_and_future_runs',
-			image: '/illustrations/11.png',
+			video: '/videos/your-observability-video.mp4', // Replace with your actual video filename
+			image: '/illustrations/11.png', // Fallback image
 			imageAlt: 'Monitor'
 		}
 	];
@@ -394,19 +395,28 @@ export default function TutorialSection({ subIndex, children }) {
 						</div>
 						</div>
 						</div>
-						) : feature.title === 'Build production ready workflows' ? (
-							<>
-								{/* Mobile: Show devfriendly lottie */}
-								<div className="md:hidden">
-									<Lottie lottieData={devfriendly} autoplay loop={true} />
-								</div>
-								{/* Desktop: Show CombinedAnimation */}
-								<div className="hidden md:block">
-									<CombinedAnimation />
-								</div>
-							</>
+						) : feature.title === 'Build for production use' ? (
+							<video
+								className="rounded-lg overflow-hidden h-full w-full object-cover"
+								autoPlay
+								loop
+								muted
+								playsInline
+							>
+								<source src="/videos/productintro.mp4" type="video/mp4" />
+							</video>
 						) : feature.lottieData ? (
 							<Lottie lottieData={feature.lottieData} autoplay loop={true} />
+						) : feature.video ? (
+							<video
+								className="rounded-lg overflow-hidden h-full w-full object-cover"
+								autoPlay
+								loop
+								muted
+								playsInline
+							>
+								<source src={feature.video} type="video/mp4" />
+							</video>
 						) : (
 						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
 								<img src={feature.image} alt={feature.imageAlt || feature.title} />

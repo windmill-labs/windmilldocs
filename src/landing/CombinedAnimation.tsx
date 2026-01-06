@@ -9,19 +9,22 @@ export default function CombinedAnimation() {
 			id: 'script', 
 			src: '/illustrations/animscripts.png', 
 			alt: 'VS Code editor with test panel and execution results',
-			label: 'Scripts' 
+			label: 'Scripts',
+			subtitle: 'Write scripts in 20+ languages (Python, TS, Go, Bash...)'
 		},
 		{ 
 			id: 'flow', 
 			src: '/illustrations/animflows.png', 
 			alt: 'Flow diagram with execution logs and performance metrics',
-			label: 'Flows' 
+			label: 'Flows',
+			subtitle: 'Orchestrate scripts into scalable workflows'
 		},
 		{ 
 			id: 'app', 
 			src: '/illustrations/animapps.png', 
 			alt: 'App builder with button, table, and code editor',
-			label: 'Apps' 
+			label: 'Apps',
+			subtitle: 'Generate production-ready frontends with AI'
 		}
 	];
 
@@ -59,7 +62,26 @@ export default function CombinedAnimation() {
 	};
 
 	return (
-		<div className="relative w-full overflow-hidden rounded-lg">
+		<div className="relative w-full overflow-hidden rounded-lg px-0">
+			{/* Title and Subtitle - Hidden on mobile, visible on desktop */}
+			<div className="hidden md:block text-center">
+				<AnimatePresence mode="wait">
+					<motion.div
+						key={currentIndex}
+						initial={{ opacity: 0, y: -10 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: 10 }}
+						transition={{ duration: 0.3 }}
+					>
+						<div className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">
+							{images[currentIndex].label}
+						</div>
+						<div className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">
+							{images[currentIndex].subtitle}
+						</div>
+					</motion.div>
+				</AnimatePresence>
+			</div>
 			{/* Image container */}
 			<div className="relative w-full min-h-[250px] md:min-h-[400px]">
 				<AnimatePresence mode="wait" custom={direction}>
