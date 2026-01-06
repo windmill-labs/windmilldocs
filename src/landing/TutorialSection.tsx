@@ -245,7 +245,7 @@ export default function TutorialSection({ subIndex, children }) {
 
 	const features = [
 		{
-			title: 'Build for production use',
+			title: 'Build for production',
 			description: 'Build mission-critical internal tools and data pipelines that integrates directly with your existing stack and resources.',
 			icon: GitCompareArrows,
 			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
@@ -287,7 +287,7 @@ export default function TutorialSection({ subIndex, children }) {
 	const FeatureCard = ({ feature, index }) => {
 		const { colorMode } = useColorMode();
 		const ContentWrapper = feature.href ? 'a' : 'div';
-		const isProductionUse = feature.title === 'Build for production use';
+		const isProductionUse = feature.title === 'Build for production';
 		
 		const wrapperProps = feature.href
 			? {
@@ -402,7 +402,7 @@ export default function TutorialSection({ subIndex, children }) {
 						</div>
 						</div>
 						</div>
-						) : feature.title === 'Build for production use' ? (
+						) : feature.title === 'Build for production' ? (
 							<video
 								className="rounded-lg overflow-hidden w-full object-cover"
 								autoPlay
