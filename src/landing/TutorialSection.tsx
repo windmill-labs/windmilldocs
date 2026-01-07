@@ -284,6 +284,119 @@ export default function TutorialSection({ subIndex, children }) {
 							</div>
 	);
 
+	const ProductionTabs = () => {
+		const [selectedTab, setSelectedTab] = useState('backend');
+		const [progress, setProgress] = useState(0);
+		const videoRef = useRef<HTMLVideoElement>(null);
+
+		const tabs = [
+			{ id: 'backend', label: 'Backend', video: '/videos/backendvideo.mp4' },
+			{ id: 'frontend', label: 'Frontend', video: '/videos/frontendvideo.mp4' },
+			{ id: 'datatables', label: 'Database', video: '/videos/databasevideo.mp4' }
+		];
+
+		const currentTab = tabs.find(tab => tab.id === selectedTab) || tabs[0];
+
+		// Track video progress using timeupdate event
+		useEffect(() => {
+			const video = videoRef.current;
+			if (!video) return;
+
+			const handleTimeUpdate = () => {
+				if (video.duration > 0) {
+					setProgress((video.currentTime / video.duration) * 100);
+				}
+			};
+
+			const handleSeeked = () => {
+				// When video loops, it seeks back to 0
+				if (video.currentTime < 0.1) {
+					setProgress(0);
+				}
+			};
+
+			video.addEventListener('timeupdate', handleTimeUpdate);
+			video.addEventListener('seeked', handleSeeked);
+
+			return () => {
+				video.removeEventListener('timeupdate', handleTimeUpdate);
+				video.removeEventListener('seeked', handleSeeked);
+			};
+		}, [selectedTab]);
+
+		// Reset progress when tab changes
+		useEffect(() => {
+			setProgress(0);
+		}, [selectedTab]);
+
+		const circumference = 2 * Math.PI * 16;
+
+		return (
+			<div className="w-full">
+				{/* Tab buttons */}
+				<div className="flex w-full mb-4 border-b border-gray-200 dark:border-gray-700">
+					{tabs.map((tab) => (
+						<button
+							key={tab.id}
+							onClick={() => setSelectedTab(tab.id)}
+							className={`flex-1 px-4 py-2 font-medium text-sm transition-colors border-b-2 text-center ${
+								selectedTab === tab.id
+									? 'border-blue-500 text-blue-600 dark:text-blue-400'
+									: 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+							}`}
+						>
+							{tab.label}
+						</button>
+					))}
+				</div>
+				{/* Video */}
+				<div className="relative">
+					<video
+						ref={videoRef}
+						key={selectedTab}
+						className="rounded-lg overflow-hidden w-full object-cover"
+						autoPlay
+						loop
+						muted
+						playsInline
+					>
+						<source src={currentTab.video} type="video/mp4" />
+					</video>
+					{/* Circular progress indicator */}
+					<div className="absolute bottom-3 right-3">
+						<svg className="w-10 h-10" viewBox="0 0 36 36">
+							{/* Background circle */}
+							<circle
+								cx="18"
+								cy="18"
+								r="16"
+								fill="none"
+								stroke="rgba(255, 255, 255, 0.3)"
+								strokeWidth="2"
+							/>
+							{/* Progress circle */}
+							<circle
+								cx="18"
+								cy="18"
+								r="16"
+								fill="none"
+								stroke="rgba(59, 130, 246, 0.9)"
+								strokeWidth="2"
+								strokeDasharray={circumference}
+								strokeDashoffset={circumference - (progress / 100) * circumference}
+								strokeLinecap="round"
+								style={{
+									transform: 'rotate(-90deg)',
+									transformOrigin: '50% 50%'
+								}}
+							/>
+						</svg>
+					</div>
+				</div>
+			</div>
+		);
+	};
+
 	const FeatureCard = ({ feature, index, totalFeatures }) => {
 		const { colorMode } = useColorMode();
 		const ContentWrapper = feature.href ? 'a' : 'div';
@@ -403,15 +516,7 @@ export default function TutorialSection({ subIndex, children }) {
 						</div>
 						</div>
 						) : feature.title === 'Build for production' ? (
-							<video
-								className="rounded-lg overflow-hidden w-full object-cover"
-								autoPlay
-								loop
-								muted
-								playsInline
-							>
-								<source src="/videos/productintro.mp4" type="video/mp4" />
-							</video>
+							<ProductionTabs />
 						) : feature.lottieData ? (
 							<Lottie lottieData={feature.lottieData} autoplay loop={true} />
 						) : feature.video ? (
@@ -421,6 +526,7 @@ export default function TutorialSection({ subIndex, children }) {
 								loop
 								muted
 								playsInline
+								preload="metadata"
 							>
 								<source src={feature.video} type="video/mp4" />
 							</video>
