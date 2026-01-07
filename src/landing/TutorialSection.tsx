@@ -269,7 +269,7 @@ export default function TutorialSection({ subIndex, children }) {
 		},
 		{
 			title: 'Monitor with ease and depth',
-			description: 'Track every job execution with real-time logs and I/O. Get instant Slack or email alerts for failures, or export metrics to OpenTelemetry and Prometheus to monitor your entire stack.',
+			description: 'Monitor jobs with real-time logs and built-in error handling to catch failures early. Seamlessly integrate with OTel and Prometheus for full-stack observability, or get instant visibility via Slack and email alerts.',
 			icon: Activity,
 			href: '/docs/core_concepts/monitor_past_and_future_runs',
 			video: '/videos/your-observability-video.mp4', // Replace with your actual video filename

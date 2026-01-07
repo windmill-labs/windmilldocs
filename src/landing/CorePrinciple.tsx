@@ -425,17 +425,10 @@ function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imag
 		? {
 				animationData: lottieData,
 				loop: true,
-				autoplay: false
+				autoplay: true
 		  }
 		: null;
 	const { View, play } = lottieOptions ? useLottie(lottieOptions) : { View: null, play: () => {} };
-
-	// Auto-play the integrations Lottie (thirdparty) on mount
-	useEffect(() => {
-		if (lottieData === thirdparty && play) {
-			play();
-		}
-	}, [lottieData, play]);
 
 	return (
 		<div
@@ -496,7 +489,7 @@ export default function CorePrinciple() {
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
 					<FeatureCard
-						title="Provide the best developer experience"
+						title="Developer experience first"
 						description="Windmill give developers the tools they love without the platform engineering overhead: full LSP support, AI assistance, Git sync, CLI and VS Code extension."
 						actionLink="Read our philosophy"
 						actionUrl="https://www.windmill.dev/docs/misc/note_of_intent"
