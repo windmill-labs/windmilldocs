@@ -487,57 +487,35 @@ export default function CorePrinciple() {
 						The foundational beliefs that guide how we build Windmill.
 					</span>
 				</div>
-				<div className="flex flex-col gap-6 lg:gap-8">
-					{/* Top row - Full width card */}
-					<div className="w-full">
-						<FeatureCard
-							title="Provide the best developer experience"
-							description="Windmill give developers the tools they love without the platform engineering overhead: full LSP support, AI assistance, Git sync, CLI and VS Code extension. When you write a script, it instantly becomes a REST endpoint, scheduled job, or auto-generated UI. No deployment pipelines, no infrastructure management. Dependencies install automatically, execution is instant, real-time feedback as you build."
-							actionLink="Read our philosophy"
-							actionUrl="https://www.windmill.dev/docs/misc/note_of_intent"
-							fullWidth={true}
-							animationComponent={
-								<>
-									{/* Mobile: Show devfriendly lottie */}
-									<div className="md:hidden mt-auto">
-										<div className="bg-gray-100 dark:bg-gray-700/80 rounded-md p-4 min-h-[220px] flex items-center justify-center overflow-hidden">
-											<Lottie lottieData={devfriendly} autoplay loop />
-										</div>
-									</div>
-									{/* Desktop: Show animation */}
-									<div className="hidden md:block">
-										<ScriptAnimationWrapper>
-											<div />
-										</ScriptAnimationWrapper>
-									</div>
-								</>
-							}
-						/>
-					</div>
-					{/* Bottom row - 3 cards */}
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-						<FeatureCard
-							title="Avoid vendor lock-in"
-							description="Open source and self-hostable. Your code, your data, your infrastructure. Deploy anywhere—cloud, on-premises, or air-gapped. Full control without proprietary constraints."
-							actionLink="View on GitHub"
-							actionUrl="https://github.com/windmill-labs/"
-							lottieData={polyGlott}
-						/>
-						<FeatureCard
-							title="Seamless enterprise integration"
-							description="Connect seamlessly to your infrastructure: databases (PostgreSQL, MySQL, Snowflake), cloud platforms (AWS, Azure, GCP), message queues (Kafka, SQS, NATS), and 100+ APIs. Interact with your existing codebase and workflows without friction."
-							actionLink="Explore integrations"
-							actionUrl="https://www.windmill.dev/docs/integrations"
-							lottieData={thirdparty}
-						/>
-						<FeatureCard
-							title="Enterprise-grade security"
-							description="Designed for the strictest compliance requirements. From granular RBAC, SSO, and Secret Management to comprehensive Audit Logs. Deploy comfortably in regulated industries with horizontal scaling and air-gapped support."
-							actionLink="Explore enterprise features"
-							actionUrl="https://www.windmill.dev/docs/misc/enterprise_onboarding"
-							lottieData={secrets}
-						/>
-					</div>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+					<FeatureCard
+						title="Provide the best developer experience"
+						description="Windmill give developers the tools they love without the platform engineering overhead: full LSP support, AI assistance, Git sync, CLI and VS Code extension."
+						actionLink="Read our philosophy"
+						actionUrl="https://www.windmill.dev/docs/misc/note_of_intent"
+						lottieData={devfriendly}
+					/>
+					<FeatureCard
+						title="Avoid vendor lock-in"
+						description="Open source and self-hostable. Your code, your data, your infrastructure. Deploy anywhere—cloud, on-premises, or air-gapped. Full control without proprietary constraints."
+						actionLink="View on GitHub"
+						actionUrl="https://github.com/windmill-labs/"
+						lottieData={polyGlott}
+					/>
+					<FeatureCard
+						title="Seamless enterprise integration"
+						description="Connect seamlessly to your infrastructure: databases (PostgreSQL, MySQL, Snowflake), cloud platforms (AWS, Azure, GCP), message queues (Kafka, SQS, NATS), and 100+ APIs. Interact with your existing codebase and workflows without friction."
+						actionLink="Explore integrations"
+						actionUrl="https://www.windmill.dev/docs/integrations"
+						lottieData={thirdparty}
+					/>
+					<FeatureCard
+						title="Enterprise-grade security"
+						description="Designed for the strictest compliance requirements. From granular RBAC, SSO, and Secret Management to comprehensive Audit Logs. Deploy comfortably in regulated industries with horizontal scaling and air-gapped support."
+						actionLink="Explore enterprise features"
+						actionUrl="https://www.windmill.dev/docs/misc/enterprise_onboarding"
+						lottieData={secrets}
+					/>
 				</div>
 			</div>
 		</LandingSection>

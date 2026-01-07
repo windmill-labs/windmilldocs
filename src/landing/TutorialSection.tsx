@@ -268,7 +268,7 @@ export default function TutorialSection({ subIndex, children }) {
 			actionText: 'See benchmarks'
 		},
 		{
-			title: 'Monitor at job granularity',
+			title: 'Monitor with ease and depth',
 			description: 'Track every job execution with real-time logs and I/O. Get instant Slack or email alerts for failures, or export metrics to OpenTelemetry and Prometheus to monitor your entire stack.',
 			icon: Activity,
 			href: '/docs/core_concepts/monitor_past_and_future_runs',

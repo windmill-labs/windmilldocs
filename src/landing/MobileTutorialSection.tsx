@@ -261,7 +261,7 @@ export default function TutorialSection() {
 						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center"
 					>
 						<div className="font-medium text-xl mb-4 group-hover:ml-2 transition-all">
-							Monitor at job granularity
+							Monitor with ease and depth
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
 							Track every job execution with real-time logs and I/O. Get instant Slack or email alerts for failures, or export metrics to OpenTelemetry and Prometheus to monitor your entire stack.
