@@ -430,6 +430,13 @@ function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imag
 		: null;
 	const { View, play } = lottieOptions ? useLottie(lottieOptions) : { View: null, play: () => {} };
 
+	// Auto-play the integrations Lottie (thirdparty) on mount
+	useEffect(() => {
+		if (lottieData === thirdparty && play) {
+			play();
+		}
+	}, [lottieData, play]);
+
 	return (
 		<div
 			className={`flex flex-col h-full rounded-lg bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-200 dark:border-gray-700/50 group ${fullWidth ? 'w-full' : ''}`}
