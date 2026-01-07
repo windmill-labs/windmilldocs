@@ -290,8 +290,8 @@ export default function TutorialSection({ subIndex, children }) {
 		const videoRef = useRef<HTMLVideoElement>(null);
 
 		const tabs = [
-			{ id: 'backend', label: 'Backend', description: 'Write scripts in 20+ languages and orchestrate them into workflows.', video: '/videos/backendvideo.mp4' },
-			{ id: 'frontend', label: 'Frontend', description: 'Connect your workflows to production-ready frontends with full code flexibility.', video: '/videos/frontendvideo.mp4' },
+			{ id: 'backend', label: 'Backend', description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into workflows.', video: '/videos/backendvideo.mp4' },
+			{ id: 'frontend', label: 'Frontend', description: 'Connect your workflows to production-ready frontends with full code flexibility and AI assistance.', video: '/videos/frontendvideo.mp4' },
 			{ id: 'datatables', label: 'Database', description: 'Store and query data with built-in PostgreSQL tables, Ducklake, DuckDB and S3 integrations.', video: '/videos/databasevideo.mp4' }
 		];
 
