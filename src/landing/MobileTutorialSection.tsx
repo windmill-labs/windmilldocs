@@ -31,7 +31,7 @@ export default function TutorialSection() {
 			{
 				id: 'storage',
 				label: 'Storage',
-				video: '/videos/productintro.mp4'
+				video: '/videos/databasevideo.mp4'
 			}
 		];
 
@@ -272,9 +272,16 @@ export default function TutorialSection() {
 						</div>
 					</a>
 					<div className="col-span-3">
-						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-							<img src="/illustrations/11.png" alt="Monitor" />
-						</div>
+						<video
+							className="rounded-lg overflow-hidden h-full w-full object-cover"
+							autoPlay
+							loop
+							muted
+							playsInline
+							preload="metadata"
+						>
+							<source src="/videos/your-observability-video.mp4" type="video/mp4" />
+						</video>
 					</div>
 				</div>
 			</div>
