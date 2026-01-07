@@ -290,9 +290,9 @@ export default function TutorialSection({ subIndex, children }) {
 		const videoRef = useRef<HTMLVideoElement>(null);
 
 		const tabs = [
-			{ id: 'backend', label: 'Backend', video: '/videos/backendvideo.mp4' },
-			{ id: 'frontend', label: 'Frontend', video: '/videos/frontendvideo.mp4' },
-			{ id: 'datatables', label: 'Database', video: '/videos/databasevideo.mp4' }
+			{ id: 'backend', label: 'Backend', description: 'Write scripts in 20+ languages and orchestrate them into workflows.', video: '/videos/backendvideo.mp4' },
+			{ id: 'frontend', label: 'Frontend', description: 'Connect your workflows to production-ready frontends with full code flexibility.', video: '/videos/frontendvideo.mp4' },
+			{ id: 'datatables', label: 'Database', description: 'Store and query data with built-in PostgreSQL tables, Ducklake, DuckDB and S3 integrations.', video: '/videos/databasevideo.mp4' }
 		];
 
 		const currentTab = tabs.find(tab => tab.id === selectedTab) || tabs[0];
@@ -349,6 +349,10 @@ export default function TutorialSection({ subIndex, children }) {
 						</button>
 					))}
 				</div>
+				{/* Description */}
+				<p className="text-gray-600 dark:text-gray-400 mb-4">
+					{currentTab.description}
+				</p>
 				{/* Video */}
 				<div className="relative">
 					<video
