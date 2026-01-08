@@ -293,7 +293,7 @@ export default function TutorialSection({ subIndex, children }) {
 
 		const tabs = [
 			{ id: 'backend', label: 'Scripts & Flows', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into powerfuls flows.', video: '/videos/backendvideo.mp4' },
-			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your workflows to production-ready frontends with full code flexibility and AI assistance.', video: '/videos/frontendvideo.mp4' },
+			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility and AI assistance.', video: '/videos/frontendvideo.mp4' },
 			{ id: 'datatables', label: 'Data', icon: Database, description: 'Store and query data with built-in PostgreSQL tables, Ducklake, DuckDB and S3 integrations.', video: '/videos/databasevideo.mp4' }
 		];
 
