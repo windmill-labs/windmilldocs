@@ -22,20 +22,23 @@ export default function TutorialSection() {
 		const tabs = [
 			{
 				id: 'backend',
-				label: 'Backend',
+				label: 'Scripts & Flows',
 				icon: Server,
+				description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into powerfuls flows.',
 				video: '/videos/backendvideo.mp4'
 			},
 			{
 				id: 'frontend',
-				label: 'Frontend',
+				label: 'Apps',
 				icon: Monitor,
+				description: 'Connect your scripts and flows to production-ready frontends with full code flexibility and AI assistance.',
 				video: '/videos/frontendvideo.mp4'
 			},
 			{
 				id: 'storage',
-				label: 'Storage',
+				label: 'Data',
 				icon: Database,
+				description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.',
 				video: '/videos/databasevideo.mp4'
 			}
 		];
@@ -138,6 +141,10 @@ export default function TutorialSection() {
 						</button>
 					))}
 				</div>
+				{/* Description */}
+				<p className="text-gray-900 dark:text-white mb-4">
+					{currentTab.description}
+				</p>
 				{/* Video */}
 				<div className="relative">
 					<video
