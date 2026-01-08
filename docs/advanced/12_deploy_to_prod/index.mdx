@@ -2,37 +2,34 @@ import DocCard from '@site/src/components/DocCard';
 
 # Deploy to prod
 
-To deploy to prod, 3 options are possible.
-
-[Draft and deploy](#option-1-draft-and-deploy---single-workspace) is the simplest method. It is meant to be used in a single workspace.
-
-[Git integration](#option-2-deploy-to-prod-using-a-git-workflow---multi-workspace-recommended) is clearly the superior, most powerful method but it is more complex. Usually, to deploy to prod you would want absolutely to have the normal CI flow that goes through one review which is something that is built-in with GitHub/GitLab. Also you may want to put some CI checks there.
-
-However, in a setting where you have dev/staging/prod, you could use the [UI to deploy to staging from dev](#option-3-deploy-to-prod-using-the-ui-only---multi-workspace), and then use git between staging and prod to tighten down prod.
+When working on Windmill, you will quickly be looking for ways to iterate on and test your scripts, flows, and apps all the while having a working version running. The following section explains the different methods available in Windmill to have a production environement and deploy to it.
 
 ## Option 1. Draft and deploy - Single workspace
 
 A simple setup in which deploying to prod means deploying items that have been iterated on in the UI as Drafts.
 Deployments in Windmill are commonly done from the same workspace using the [Draft and deploy](../../core_concepts/0_draft_and_deploy/index.mdx) buttons.
 
-## Option 2. Deploy to prod using a git workflow - Multi workspace (recommended)
+## Option 2. Workspace forks - Multi workspace (recommended)
 
-The integration can be used to push from git, and receive changes done from the UI in a bi-directional way.
-You can also use a separate dev and staging branch and repo and have Windmill create automatically branches and Pull Request upon any changes deployed to staging/dev.
+[Windmill workspaces](../20_workspace_forks/index.mdx) can be forked, creating a new copy of the workspace at that point in time. The forked workspace can be iterated on, tested, and once changes are ready, merged back to the original workspace, thus deploying the new versions of the scripts, flows, or apps. The workflow will be familiar to anyone who has used branches in version control tools such as git. The analogy can be further reinforced if [Git Sync](../11_git_sync/index.mdx) is setup: Windmill will autmatically create branches for each of the forks, and merging can be controlled direclty through git.
 
-This process can be used in particular for [local development](../4_local_development/index.mdx) with a solid setup:
+## Option 3. Promotion workflow: deploying through git - Multi workspace (possible cross-instance)
 
-![Local development Setup](../4_local_development/local_development.png 'Local development Setup')
+This is a more complex but very reliable setup that leverages [Git Sync](../11_git_sync/index.mdx) to deploy from one workspace to another through git. When changes are done to the Staging workspace, they are pushed to a branch in the Prod repo. Once merge to the main branch of the Prod repo, the Prod workspace is updated with the changes.
+
+This workflow lets you review all the changes on a PR before merging and deploying. It also has the advantage, unlike the other options here, to work across separate windmill instances.
+
+![Promotion workflow](../4_local_development/local_development.png 'Promotion workflow')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to prod using a git workflow"
+		title="Deploy to prod using the Promotion workflow"
 		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
 		href="/docs/advanced/deploy_gh_gl"
 	/>
 </div>
 
-## Option 3. Deploy to prod using the UI only - Multi workspace
+## Option 4. Deploy to prod using the UI only - Multi workspace
 
 From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace.
 
