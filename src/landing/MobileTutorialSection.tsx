@@ -197,7 +197,7 @@ export default function TutorialSection() {
 				{/* Build for production */}
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl flex flex-col gap-6 mb-8">
 					<a
-						href="/docs/core_concepts/draft_and_deploy#diff-viewer"
+						href="/docs/intro"
 						target="_blank"
 						className="group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer"
 					>

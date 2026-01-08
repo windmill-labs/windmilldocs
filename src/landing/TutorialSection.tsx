@@ -250,7 +250,7 @@ export default function TutorialSection({ subIndex, children }) {
 			title: 'Build for production',
 			description: 'Build mission-critical internal tools and data pipelines that integrates directly with your existing stack and resources.',
 			icon: GitCompareArrows,
-			href: '/docs/core_concepts/draft_and_deploy#diff-viewer',
+			href: '/docs/intro',
 			lottieData: devfriendly
 		},
 		{
