@@ -3,7 +3,9 @@ import {
 	Activity,
 	GitCompareArrows,
 	Server,
-	ArrowRight
+	ArrowRight,
+	Monitor,
+	Database
 } from 'lucide-react';
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
@@ -21,16 +23,19 @@ export default function TutorialSection() {
 			{
 				id: 'backend',
 				label: 'Backend',
+				icon: Server,
 				video: '/videos/backendvideo.mp4'
 			},
 			{
 				id: 'frontend',
 				label: 'Frontend',
+				icon: Monitor,
 				video: '/videos/frontendvideo.mp4'
 			},
 			{
 				id: 'storage',
 				label: 'Storage',
+				icon: Database,
 				video: '/videos/databasevideo.mp4'
 			}
 		];
@@ -123,10 +128,10 @@ export default function TutorialSection() {
 						<button
 							key={tab.id}
 							onClick={() => setSelectedTab(tab.id)}
-							className={`flex-1 px-4 py-2 font-medium text-sm transition-colors border-b-2 text-center ${
+							className={`flex-1 px-4 py-2 font-medium text-sm transition-colors border-b-2 text-center text-gray-900 dark:text-white ${
 								selectedTab === tab.id
-									? 'border-blue-500 text-blue-600 dark:text-blue-400'
-									: 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+									? 'border-blue-500'
+									: 'border-transparent hover:text-gray-700 dark:hover:text-white/80'
 							}`}
 						>
 							{tab.label}

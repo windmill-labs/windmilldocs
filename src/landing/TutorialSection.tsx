@@ -8,7 +8,9 @@ import {
 	ChevronLeft,
 	RotateCcw,
 	Play,
-	Pause
+	Pause,
+	Monitor,
+	Database
 } from 'lucide-react';
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
@@ -290,9 +292,9 @@ export default function TutorialSection({ subIndex, children }) {
 		const videoRef = useRef<HTMLVideoElement>(null);
 
 		const tabs = [
-			{ id: 'backend', label: 'Backend', description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into workflows.', video: '/videos/backendvideo.mp4' },
-			{ id: 'frontend', label: 'Frontend', description: 'Connect your workflows to production-ready frontends with full code flexibility and AI assistance.', video: '/videos/frontendvideo.mp4' },
-			{ id: 'datatables', label: 'Database', description: 'Store and query data with built-in PostgreSQL tables, Ducklake, DuckDB and S3 integrations.', video: '/videos/databasevideo.mp4' }
+			{ id: 'backend', label: 'Scripts & Flows', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into powerfuls flows.', video: '/videos/backendvideo.mp4' },
+			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your workflows to production-ready frontends with full code flexibility and AI assistance.', video: '/videos/frontendvideo.mp4' },
+			{ id: 'datatables', label: 'Data', icon: Database, description: 'Store and query data with built-in PostgreSQL tables, Ducklake, DuckDB and S3 integrations.', video: '/videos/databasevideo.mp4' }
 		];
 
 		const currentTab = tabs.find(tab => tab.id === selectedTab) || tabs[0];
@@ -339,10 +341,10 @@ export default function TutorialSection({ subIndex, children }) {
 						<button
 							key={tab.id}
 							onClick={() => setSelectedTab(tab.id)}
-							className={`flex-1 px-4 py-2 font-medium text-sm transition-colors border-b-2 text-center ${
+							className={`flex-1 px-4 py-2 font-medium text-sm transition-colors border-b-2 text-center text-gray-900 dark:text-white ${
 								selectedTab === tab.id
-									? 'border-blue-500 text-blue-600 dark:text-blue-400'
-									: 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+									? 'border-blue-500'
+									: 'border-transparent hover:text-gray-700 dark:hover:text-white/80'
 							}`}
 						>
 							{tab.label}
@@ -350,7 +352,7 @@ export default function TutorialSection({ subIndex, children }) {
 					))}
 				</div>
 				{/* Description */}
-				<p className="text-gray-600 dark:text-gray-400 mb-4">
+				<p className="text-gray-900 dark:text-white mb-4">
 					{currentTab.description}
 				</p>
 				{/* Video */}
