@@ -16,6 +16,8 @@ export default function TutorialSection() {
 		const [duration, setDuration] = useState(0);
 		const videoRef = useRef<HTMLVideoElement>(null);
 		const progressBarRef = useRef<HTMLDivElement>(null);
+		const containerRef = useRef<HTMLDivElement>(null);
+		const [hasBeenVisible, setHasBeenVisible] = useState(false);
 
 		const tabs = [
 			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/scriptsvideo.mp4' },
@@ -25,6 +27,38 @@ export default function TutorialSection() {
 		];
 
 		const currentTab = tabs.find(tab => tab.id === selectedTab) || tabs[0];
+
+		// Detect when component is visible in viewport (80% threshold)
+		useEffect(() => {
+			const container = containerRef.current;
+			if (!container) return;
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					if (entries[0].isIntersecting && !hasBeenVisible) {
+						setHasBeenVisible(true);
+					}
+				},
+				{ threshold: 0.8 }
+			);
+
+			observer.observe(container);
+			return () => observer.disconnect();
+		}, [hasBeenVisible]);
+
+		// Play video: Scripts tab plays when visible, others play when tab is clicked
+		useEffect(() => {
+			const video = videoRef.current;
+			if (!video) return;
+
+			if (selectedTab === 'scripts') {
+				if (hasBeenVisible) {
+					video.play();
+				}
+			} else {
+				video.play();
+			}
+		}, [selectedTab, hasBeenVisible]);
 
 		// Track video progress
 		useEffect(() => {
@@ -46,9 +80,6 @@ export default function TutorialSection() {
 			video.addEventListener('play', handlePlay);
 			video.addEventListener('pause', handlePause);
 			video.addEventListener('loadedmetadata', handleLoadedMetadata);
-
-			// Autoplay on mount
-			video.play();
 
 			return () => {
 				video.removeEventListener('timeupdate', handleTimeUpdate);
@@ -93,7 +124,7 @@ export default function TutorialSection() {
 		const currentTime = duration > 0 ? (progress / 100) * duration : 0;
 
 		return (
-			<div className="w-full">
+			<div className="w-full" ref={containerRef}>
 				{/* Tab buttons */}
 				<div className="flex w-full mb-4 border-b border-gray-200 dark:border-gray-700">
 					{tabs.map((tab) => (

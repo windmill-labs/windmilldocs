@@ -129,7 +129,7 @@ export default function Example() {
 	const { colorMode } = useColorMode();
 
 	return (
-		<LandingSection bgClass="">
+		<LandingSection bgClass="pb-8">
 			<div>
 				<div className="mx-auto text-left">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
@@ -141,7 +141,7 @@ export default function Example() {
 					</span>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {clientTestimonials.map((testimonial, index) => (
       <div
         key={testimonial.author.name + index}
