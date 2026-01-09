@@ -289,7 +289,10 @@ export default function TutorialSection({ subIndex, children }) {
 	const ProductionTabs = () => {
 		const [selectedTab, setSelectedTab] = useState('scripts');
 		const [progress, setProgress] = useState(0);
+		const [isPlaying, setIsPlaying] = useState(false);
+		const [duration, setDuration] = useState(0);
 		const videoRef = useRef<HTMLVideoElement>(null);
+		const progressBarRef = useRef<HTMLDivElement>(null);
 
 		const tabs = [
 			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/scriptsvideo.mp4' },
@@ -345,31 +348,63 @@ export default function TutorialSection({ subIndex, children }) {
 			const handleTimeUpdate = () => {
 				if (video.duration > 0) {
 					setProgress((video.currentTime / video.duration) * 100);
+					setDuration(video.duration);
 				}
 			};
 
-			const handleSeeked = () => {
-				// When video loops, it seeks back to 0
-				if (video.currentTime < 0.1) {
-					setProgress(0);
-				}
+			const handlePlay = () => setIsPlaying(true);
+			const handlePause = () => setIsPlaying(false);
+
+			const handleLoadedMetadata = () => {
+				setDuration(video.duration);
 			};
 
 			video.addEventListener('timeupdate', handleTimeUpdate);
-			video.addEventListener('seeked', handleSeeked);
+			video.addEventListener('play', handlePlay);
+			video.addEventListener('pause', handlePause);
+			video.addEventListener('loadedmetadata', handleLoadedMetadata);
 
 			return () => {
 				video.removeEventListener('timeupdate', handleTimeUpdate);
-				video.removeEventListener('seeked', handleSeeked);
+				video.removeEventListener('play', handlePlay);
+				video.removeEventListener('pause', handlePause);
+				video.removeEventListener('loadedmetadata', handleLoadedMetadata);
 			};
 		}, [selectedTab]);
 
 		// Reset progress when tab changes
 		useEffect(() => {
 			setProgress(0);
+			setIsPlaying(false);
 		}, [selectedTab]);
 
-		const circumference = 2 * Math.PI * 16;
+		const togglePlayPause = () => {
+			const video = videoRef.current;
+			if (!video) return;
+			if (video.paused) {
+				video.play();
+			} else {
+				video.pause();
+			}
+		};
+
+		const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
+			const video = videoRef.current;
+			const progressBar = progressBarRef.current;
+			if (!video || !progressBar) return;
+
+			const rect = progressBar.getBoundingClientRect();
+			const clickPosition = (e.clientX - rect.left) / rect.width;
+			video.currentTime = clickPosition * video.duration;
+		};
+
+		const formatTime = (seconds: number) => {
+			const mins = Math.floor(seconds / 60);
+			const secs = Math.floor(seconds % 60);
+			return `${mins}:${secs.toString().padStart(2, '0')}`;
+		};
+
+		const currentTime = duration > 0 ? (progress / 100) * duration : 0;
 
 		return (
 			<div className="w-full" ref={containerRef}>
@@ -394,21 +429,20 @@ export default function TutorialSection({ subIndex, children }) {
 					{currentTab.description}
 				</p>
 				{/* Video */}
-				<div className="relative">
+				<div className="relative group/video rounded-lg overflow-hidden">
 					<video
 						ref={videoRef}
 						key={selectedTab}
-						className="rounded-lg overflow-hidden w-full object-cover"
+						className="w-full object-cover"
 						loop
 						muted
 						playsInline
 					>
 						<source src={currentTab.video} type="video/mp4" />
 					</video>
-					{/* Circular progress indicator */}
-					<div className="absolute bottom-3 right-3">
-						<svg className="w-10 h-10" viewBox="0 0 36 36">
-							{/* Background circle */}
+					{/* Circular progress indicator - always visible */}
+					<div className="absolute bottom-3 right-3 group-hover/video:opacity-0 transition-opacity">
+						<svg className="w-8 h-8" viewBox="0 0 36 36">
 							<circle
 								cx="18"
 								cy="18"
@@ -417,7 +451,6 @@ export default function TutorialSection({ subIndex, children }) {
 								stroke="rgba(255, 255, 255, 0.3)"
 								strokeWidth="2"
 							/>
-							{/* Progress circle */}
 							<circle
 								cx="18"
 								cy="18"
@@ -425,15 +458,35 @@ export default function TutorialSection({ subIndex, children }) {
 								fill="none"
 								stroke="rgba(59, 130, 246, 0.9)"
 								strokeWidth="2"
-								strokeDasharray={circumference}
-								strokeDashoffset={circumference - (progress / 100) * circumference}
+								strokeDasharray={2 * Math.PI * 16}
+								strokeDashoffset={2 * Math.PI * 16 * (1 - progress / 100)}
 								strokeLinecap="round"
-								style={{
-									transform: 'rotate(-90deg)',
-									transformOrigin: '50% 50%'
-								}}
+								style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
 							/>
 						</svg>
+					</div>
+					{/* Control bar - appears on hover */}
+					<div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-black/50 backdrop-blur-sm px-3 py-2 opacity-0 group-hover/video:opacity-100 transition-opacity">
+						<button
+							onClick={togglePlayPause}
+							className="text-white/80 hover:text-white transition-colors"
+							title={isPlaying ? 'Pause' : 'Play'}
+						>
+							{isPlaying ? <Pause size={16} /> : <Play size={16} />}
+						</button>
+						<div
+							ref={progressBarRef}
+							onClick={handleProgressBarClick}
+							className="flex-1 h-1 bg-white/30 rounded-full cursor-pointer"
+						>
+							<div
+								className="h-full bg-white/90 rounded-full"
+								style={{ width: `${progress}%` }}
+							/>
+						</div>
+						<span className="text-white/70 text-xs font-mono">
+							{formatTime(currentTime)} / {formatTime(duration)}
+						</span>
 					</div>
 				</div>
 			</div>
