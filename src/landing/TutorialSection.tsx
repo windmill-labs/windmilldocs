@@ -287,18 +287,55 @@ export default function TutorialSection({ subIndex, children }) {
 	);
 
 	const ProductionTabs = () => {
-		const [selectedTab, setSelectedTab] = useState('backend');
+		const [selectedTab, setSelectedTab] = useState('scripts');
 		const [progress, setProgress] = useState(0);
 		const videoRef = useRef<HTMLVideoElement>(null);
 
 		const tabs = [
-			{ id: 'backend', label: 'Flows', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go, Bash, Ruby, Java...) and orchestrate them into powerfuls flows.', video: '/videos/backendvideo.mp4' },
-			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Scripts can also be used standalone, with full langage support, auto-generated UI and managed dependencies.', video: '/videos/scriptsvideo.mp4' },
-			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility and AI assistance.', video: '/videos/frontendvideo.mp4' },
+			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/scriptsvideo.mp4' },
+			{ id: 'backend', label: 'Flows', icon: Server, description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/backendvideo.mp4' },
+			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility, AI assistance and built-in datatables.', video: '/videos/frontendvideo.mp4' },
 			{ id: 'datatables', label: 'Data', icon: Database, description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.', video: '/videos/databasevideo.mp4' }
 		];
 
 		const currentTab = tabs.find(tab => tab.id === selectedTab) || tabs[0];
+
+		const containerRef = useRef<HTMLDivElement>(null);
+		const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
+		// Detect when component is visible in viewport (for Flows tab autoplay)
+		useEffect(() => {
+			const container = containerRef.current;
+			if (!container) return;
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					if (entries[0].isIntersecting && !hasBeenVisible) {
+						setHasBeenVisible(true);
+					}
+				},
+				{ threshold: 0.8 }
+			);
+
+			observer.observe(container);
+			return () => observer.disconnect();
+		}, [hasBeenVisible]);
+
+		// Play video: Flows plays when visible, others play when tab is clicked
+		useEffect(() => {
+			const video = videoRef.current;
+			if (!video) return;
+
+			if (selectedTab === 'scripts') {
+				// Scripts tab: play when component becomes visible
+				if (hasBeenVisible) {
+					video.play();
+				}
+			} else {
+				// Other tabs: play immediately when selected
+				video.play();
+			}
+		}, [selectedTab, hasBeenVisible]);
 
 		// Track video progress using timeupdate event
 		useEffect(() => {
@@ -335,7 +372,7 @@ export default function TutorialSection({ subIndex, children }) {
 		const circumference = 2 * Math.PI * 16;
 
 		return (
-			<div className="w-full">
+			<div className="w-full" ref={containerRef}>
 				{/* Tab buttons */}
 				<div className="flex w-full mb-4 border-b border-gray-200 dark:border-gray-700">
 					{tabs.map((tab) => (
@@ -362,7 +399,6 @@ export default function TutorialSection({ subIndex, children }) {
 						ref={videoRef}
 						key={selectedTab}
 						className="rounded-lg overflow-hidden w-full object-cover"
-						autoPlay
 						loop
 						muted
 						playsInline

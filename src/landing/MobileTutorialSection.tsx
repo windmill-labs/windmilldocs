@@ -13,7 +13,7 @@ import performance from '/illustrations/performance.json';
 
 export default function TutorialSection() {
 	const ProductionTabs = () => {
-		const [selectedTab, setSelectedTab] = useState('backend');
+		const [selectedTab, setSelectedTab] = useState('scripts');
 		const [currentTime, setCurrentTime] = useState(0);
 		const [duration, setDuration] = useState(0);
 		const [isResetting, setIsResetting] = useState(false);
@@ -21,28 +21,28 @@ export default function TutorialSection() {
 
 		const tabs = [
 			{
-				id: 'backend',
-				label: 'Flows',
-				icon: Server,
-				description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into powerfuls flows.',
-				video: '/videos/backendvideo.mp4'
-			},
-			{
 				id: 'scripts',
 				label: 'Scripts',
 				icon: Server,
-				description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into powerfuls flows.',
+				description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.',
+				video: '/videos/scriptsvideo.mp4'
+			},
+			{
+				id: 'backend',
+				label: 'Flows',
+				icon: Server,
+				description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.',
 				video: '/videos/backendvideo.mp4'
 			},
 			{
 				id: 'frontend',
 				label: 'Apps',
 				icon: Monitor,
-				description: 'Connect your scripts and flows to production-ready frontends with full code flexibility and AI assistance.',
+				description: 'Connect your scripts and flows to production-ready frontends with full code flexibility, AI assistance and built-in datatables.',
 				video: '/videos/frontendvideo.mp4'
 			},
 			{
-				id: 'storage',
+				id: 'datatables',
 				label: 'Data',
 				icon: Database,
 				description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.',
