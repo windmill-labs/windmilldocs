@@ -292,7 +292,8 @@ export default function TutorialSection({ subIndex, children }) {
 		const videoRef = useRef<HTMLVideoElement>(null);
 
 		const tabs = [
-			{ id: 'backend', label: 'Scripts & Flows', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into powerfuls flows.', video: '/videos/backendvideo.mp4' },
+			{ id: 'backend', label: 'Flows', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go, Bash, Ruby, Java...) and orchestrate them into powerfuls flows.', video: '/videos/backendvideo.mp4' },
+			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Scripts can also be used standalone, with full langage support, auto-generated UI and managed dependencies.', video: '/videos/scriptsvideo.mp4' },
 			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility and AI assistance.', video: '/videos/frontendvideo.mp4' },
 			{ id: 'datatables', label: 'Data', icon: Database, description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.', video: '/videos/databasevideo.mp4' }
 		];

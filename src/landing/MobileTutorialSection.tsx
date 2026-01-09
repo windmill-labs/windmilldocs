@@ -22,7 +22,14 @@ export default function TutorialSection() {
 		const tabs = [
 			{
 				id: 'backend',
-				label: 'Scripts & Flows',
+				label: 'Flows',
+				icon: Server,
+				description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into powerfuls flows.',
+				video: '/videos/backendvideo.mp4'
+			},
+			{
+				id: 'scripts',
+				label: 'Scripts',
 				icon: Server,
 				description: 'Write scripts in 20+ languages (Python, TS, Go, Bash...) and orchestrate them into powerfuls flows.',
 				video: '/videos/backendvideo.mp4'
