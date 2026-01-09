@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useLottie } from 'lottie-react';
 import { ArrowRight, CircleIcon, LucideIcon } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
@@ -126,15 +126,39 @@ export default function LightFeatureCard({
 }
 
 export function Lottie({ lottieData, autoplay = true, loop = false }) {
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
 	const options = {
 		animationData: lottieData,
 		loop: loop,
-		autoplay: autoplay
+		autoplay: false // Don't autoplay immediately, wait for visibility
 	};
 
 	const { View, play } = useLottie(options);
+
+	// Start animation when 80% visible
+	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting && !hasBeenVisible) {
+					setHasBeenVisible(true);
+					play();
+				}
+			},
+			{ threshold: 0.8 }
+		);
+
+		observer.observe(container);
+		return () => observer.disconnect();
+	}, [hasBeenVisible, play]);
+
 	return (
 		<div
+			ref={containerRef}
 			className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end"
 			onMouseOver={() => {
 				play();

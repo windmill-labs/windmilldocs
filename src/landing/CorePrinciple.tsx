@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import LandingSection from './LandingSection';
 import { ArrowRight } from 'lucide-react';
 import { useLottie } from 'lottie-react';
 // @ts-ignore
-import devfriendly from '/illustrations/devfriendly.json';
+import performance from '/illustrations/performance.json';
 // @ts-ignore
 import polyGlott from '/illustrations/polyglot.json';
 // @ts-ignore
@@ -24,17 +24,41 @@ interface FeatureCardProps {
 }
 
 function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imageAlt = '', lottieData, fullWidth = false, animationComponent }: FeatureCardProps) {
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
 	const lottieOptions = lottieData
 		? {
 				animationData: lottieData,
 				loop: true,
-				autoplay: true
+				autoplay: false // Don't autoplay immediately, wait for visibility
 		  }
 		: null;
 	const { View, play } = lottieOptions ? useLottie(lottieOptions) : { View: null, play: () => {} };
 
+	// Start animation when 80% visible
+	useEffect(() => {
+		if (!lottieData) return;
+		const container = containerRef.current;
+		if (!container) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting && !hasBeenVisible) {
+					setHasBeenVisible(true);
+					play();
+				}
+			},
+			{ threshold: 0.8 }
+		);
+
+		observer.observe(container);
+		return () => observer.disconnect();
+	}, [hasBeenVisible, play, lottieData]);
+
 	return (
 		<div
+			ref={containerRef}
 			className={`flex flex-col h-full rounded-lg bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-200 dark:border-gray-700/50 group ${fullWidth ? 'w-full' : ''}`}
 			onMouseOver={() => {
 				if (lottieData) play();
@@ -92,18 +116,18 @@ export default function CorePrinciple() {
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
 					<FeatureCard
-						title="Developer experience first"
-						description="Windmill give developers the tools they love without the platform engineering overhead: full LSP support, AI assistance, Git sync, CLI and VS Code extension."
-						actionLink="Read our philosophy"
-						actionUrl="https://www.windmill.dev/docs/misc/note_of_intent"
-						lottieData={devfriendly}
-					/>
-					<FeatureCard
 						title="Avoid vendor lock-in"
 						description="Open source and self-hostable. Your code, your data, your infrastructure. Deploy anywhere—cloud, on-premises, or air-gapped. Full control without proprietary constraints."
 						actionLink="View on GitHub"
 						actionUrl="https://github.com/windmill-labs/"
 						lottieData={polyGlott}
+					/>
+					<FeatureCard
+						title="Design for enterprise scale"
+						description="Process 1,000+ jobs per second with sub-20ms overhead—the fastest in the industry. Auto-scale capacity on demand or isolate critical workloads using dedicated worker groups on Kubernetes and Docker."
+						actionLink="See benchmarks"
+						actionUrl="https://www.windmill.dev/docs/misc/benchmarks/competitors"
+						lottieData={performance}
 					/>
 					<FeatureCard
 						title="Seamless enterprise integration"

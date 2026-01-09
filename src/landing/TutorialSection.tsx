@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-	Activity,
 	GitCompareArrows,
 	Server,
 	ArrowRight,
@@ -16,8 +15,6 @@ import { Lottie } from './LightFeatureCard';
 // @ts-ignore
 import devfriendly from '/illustrations/devfriendly.json';
 import CombinedAnimation from './CombinedAnimation';
-// @ts-ignore
-import performance from '/illustrations/performance.json';
 // @ts-ignore
 import thirdparty from '/illustrations/thirdparty.json';
 import { BenchmarkVisualization } from '../components/BenchmarkVisualization';
@@ -252,31 +249,6 @@ export default function TutorialSection({ subIndex, children }) {
 			icon: GitCompareArrows,
 			href: '/docs/intro',
 			lottieData: devfriendly
-		},
-		{
-			title: 'Collaborate with Git',
-			description: 'Develop locally, sync changes bi-directionally, and maintain a strict audit trail with built-in diff viewing.',
-			icon: GitCompareArrows,
-			href: '/docs/advanced/git_sync',
-			image: '/illustrations/diff.png',
-			imageAlt: 'Review'
-		},
-		{
-			title: 'Deploy at scale with confidence',
-			description: 'Process 1,000+ jobs per second with linear horizontal scaling. Auto-scale capacity on demand or isolate critical workloads using dedicated worker groups on Kubernetes and Docker.',
-			icon: Server,
-			href: '/docs/misc/benchmarks/competitors',
-			useBenchmark: true,
-			actionText: 'See benchmarks'
-		},
-		{
-			title: 'Monitor with ease and depth',
-			description: 'Monitor jobs with real-time logs and built-in error handling to catch failures early. Seamlessly integrate with OTel and Prometheus for full-stack observability, or get instant visibility via Slack and email alerts.',
-			icon: Activity,
-			href: '/docs/core_concepts/monitor_past_and_future_runs',
-			video: '/videos/your-observability-video.mp4', // Replace with your actual video filename
-			image: '/illustrations/11.png', // Fallback image
-			imageAlt: 'Monitor'
 		}
 	];
 

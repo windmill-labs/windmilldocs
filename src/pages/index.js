@@ -17,6 +17,7 @@ import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
 import TutorialSection from '../landing/TutorialSection';
 import MobileTutorialSection from '../landing/MobileTutorialSection';
+import DeveloperExperienceSection from '../landing/DeveloperExperienceSection';
 
 function HomepageHeader() {
 	return (
@@ -31,6 +32,7 @@ function HomepageHeader() {
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
 			</div>
+			<DeveloperExperienceSection />
 			<CorePrinciple />
 			<TestimonialsSection />
 			{/* <IntegrationsList /> */}
