@@ -89,7 +89,7 @@ export default function DeveloperExperienceSection() {
 			<div className="w-full">
 				<div className="mb-12 text-left">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-600">
-						Made for developers, deployed across the whole organization
+						Made for developers, used across the whole organization
 					</h1>
 					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
 					We make it easy for developers to build internal software and deploy it across their whole organization with no overhead.

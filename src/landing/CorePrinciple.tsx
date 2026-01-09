@@ -124,7 +124,7 @@ export default function CorePrinciple() {
 					/>
 					<FeatureCard
 						title="Design for enterprise scale"
-						description="Process 1,000+ jobs per second with sub-20ms overhead—the fastest in the industry. Auto-scale capacity on demand or isolate critical workloads using dedicated worker groups on Kubernetes and Docker."
+						description="We engineer Windmill as the fastest orchestrator in the industry to ensure your most demanding workloads never bottleneck. Auto-scale on demand or isolate critical tasks with dedicated worker groups on Kubernetes and Docker."
 						actionLink="See benchmarks"
 						actionUrl="https://www.windmill.dev/docs/misc/benchmarks/competitors"
 						lottieData={performance}
