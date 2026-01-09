@@ -440,7 +440,7 @@ export default function TutorialSection({ subIndex, children }) {
 					>
 						<source src={currentTab.video} type="video/mp4" />
 					</video>
-					{/* Circular progress indicator - always visible */}
+					{/* Circular progress indicator */}
 					<div className="absolute bottom-3 right-3 group-hover/video:opacity-0 transition-opacity">
 						<svg className="w-8 h-8" viewBox="0 0 36 36">
 							<circle

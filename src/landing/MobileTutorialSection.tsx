@@ -5,7 +5,9 @@ import {
 	Server,
 	ArrowRight,
 	Monitor,
-	Database
+	Database,
+	Play,
+	Pause
 } from 'lucide-react';
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
@@ -14,121 +16,86 @@ import performance from '/illustrations/performance.json';
 export default function TutorialSection() {
 	const ProductionTabs = () => {
 		const [selectedTab, setSelectedTab] = useState('scripts');
-		const [currentTime, setCurrentTime] = useState(0);
+		const [progress, setProgress] = useState(0);
+		const [isPlaying, setIsPlaying] = useState(false);
 		const [duration, setDuration] = useState(0);
-		const [isResetting, setIsResetting] = useState(false);
 		const videoRef = useRef<HTMLVideoElement>(null);
+		const progressBarRef = useRef<HTMLDivElement>(null);
 
 		const tabs = [
-			{
-				id: 'scripts',
-				label: 'Scripts',
-				icon: Server,
-				description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.',
-				video: '/videos/scriptsvideo.mp4'
-			},
-			{
-				id: 'backend',
-				label: 'Flows',
-				icon: Server,
-				description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.',
-				video: '/videos/backendvideo.mp4'
-			},
-			{
-				id: 'frontend',
-				label: 'Apps',
-				icon: Monitor,
-				description: 'Connect your scripts and flows to production-ready frontends with full code flexibility, AI assistance and built-in datatables.',
-				video: '/videos/frontendvideo.mp4'
-			},
-			{
-				id: 'datatables',
-				label: 'Data',
-				icon: Database,
-				description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.',
-				video: '/videos/databasevideo.mp4'
-			}
+			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/scriptsvideo.mp4' },
+			{ id: 'backend', label: 'Flows', icon: Server, description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/backendvideo.mp4' },
+			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility, AI assistance and built-in datatables.', video: '/videos/frontendvideo.mp4' },
+			{ id: 'datatables', label: 'Data', icon: Database, description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.', video: '/videos/databasevideo.mp4' }
 		];
 
 		const currentTab = tabs.find(tab => tab.id === selectedTab) || tabs[0];
 
-		// Reset progress when tab changes
-		useEffect(() => {
-			setCurrentTime(0);
-			setDuration(0);
-		}, [selectedTab]);
-
-		// Handle video time updates with smooth animation
+		// Track video progress
 		useEffect(() => {
 			const video = videoRef.current;
 			if (!video) return;
 
-			const handleLoadedMetadata = () => {
-				setDuration(video.duration);
-			};
-
-			video.addEventListener('loadedmetadata', handleLoadedMetadata);
-
-			// Track previous time to detect loops
-			let previousTime = 0;
-
-			// Use requestAnimationFrame for smooth progress updates
-			let animationFrameId: number;
-			const updateProgress = () => {
-				if (video && !video.paused && !video.ended) {
-					const currentTime = video.currentTime;
-					
-					// Detect loop: if currentTime is less than previous time (and not just starting), it looped
-					if (currentTime < previousTime && previousTime > 0.5) {
-						// Video looped - reset instantly without transition
-						setIsResetting(true);
-						setCurrentTime(0);
-						previousTime = 0;
-						// Re-enable transition after a brief moment
-						setTimeout(() => setIsResetting(false), 50);
-					} else {
-						setCurrentTime(currentTime);
-						previousTime = currentTime;
-					}
-					
-					animationFrameId = requestAnimationFrame(updateProgress);
+			const handleTimeUpdate = () => {
+				if (video.duration > 0) {
+					setProgress((video.currentTime / video.duration) * 100);
+					setDuration(video.duration);
 				}
 			};
 
-			// Start the animation loop when video is playing
-			const handlePlay = () => {
-				previousTime = video.currentTime;
-				updateProgress();
-			};
+			const handlePlay = () => setIsPlaying(true);
+			const handlePause = () => setIsPlaying(false);
+			const handleLoadedMetadata = () => setDuration(video.duration);
 
-			const handlePause = () => {
-				if (animationFrameId) {
-					cancelAnimationFrame(animationFrameId);
-				}
-			};
-
+			video.addEventListener('timeupdate', handleTimeUpdate);
 			video.addEventListener('play', handlePlay);
 			video.addEventListener('pause', handlePause);
-			video.addEventListener('ended', handlePause);
+			video.addEventListener('loadedmetadata', handleLoadedMetadata);
 
-			// Start immediately if video is already playing
-			if (!video.paused && !video.ended) {
-				previousTime = video.currentTime;
-				updateProgress();
-			}
+			// Autoplay on mount
+			video.play();
 
 			return () => {
-				video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+				video.removeEventListener('timeupdate', handleTimeUpdate);
 				video.removeEventListener('play', handlePlay);
 				video.removeEventListener('pause', handlePause);
-				video.removeEventListener('ended', handlePause);
-				if (animationFrameId) {
-					cancelAnimationFrame(animationFrameId);
-				}
+				video.removeEventListener('loadedmetadata', handleLoadedMetadata);
 			};
 		}, [selectedTab]);
 
-		const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+		// Reset progress when tab changes
+		useEffect(() => {
+			setProgress(0);
+			setIsPlaying(false);
+		}, [selectedTab]);
+
+		const togglePlayPause = () => {
+			const video = videoRef.current;
+			if (!video) return;
+			if (video.paused) {
+				video.play();
+			} else {
+				video.pause();
+			}
+		};
+
+		const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
+			const video = videoRef.current;
+			const progressBar = progressBarRef.current;
+			if (!video || !progressBar) return;
+
+			const rect = progressBar.getBoundingClientRect();
+			const clickPosition = (e.clientX - rect.left) / rect.width;
+			video.currentTime = clickPosition * video.duration;
+		};
+
+		const formatTime = (seconds: number) => {
+			const mins = Math.floor(seconds / 60);
+			const secs = Math.floor(seconds % 60);
+			return `${mins}:${secs.toString().padStart(2, '0')}`;
+		};
+
+		const currentTime = duration > 0 ? (progress / 100) * duration : 0;
 
 		return (
 			<div className="w-full">
@@ -153,23 +120,20 @@ export default function TutorialSection() {
 					{currentTab.description}
 				</p>
 				{/* Video */}
-				<div className="relative">
+				<div className="relative group/video rounded-lg overflow-hidden">
 					<video
 						ref={videoRef}
 						key={selectedTab}
-						className="rounded-lg overflow-hidden w-full object-cover"
-						autoPlay
+						className="w-full object-cover"
 						loop
 						muted
 						playsInline
-						preload="metadata"
 					>
 						<source src={currentTab.video} type="video/mp4" />
 					</video>
 					{/* Circular progress indicator */}
-					<div className="absolute bottom-3 right-3">
-						<svg className="w-10 h-10 transform -rotate-90" viewBox="0 0 36 36">
-							{/* Background circle */}
+					<div className="absolute bottom-3 right-3 group-hover/video:opacity-0 transition-opacity">
+						<svg className="w-8 h-8" viewBox="0 0 36 36">
 							<circle
 								cx="18"
 								cy="18"
@@ -178,7 +142,6 @@ export default function TutorialSection() {
 								stroke="rgba(255, 255, 255, 0.3)"
 								strokeWidth="2"
 							/>
-							{/* Progress circle */}
 							<circle
 								cx="18"
 								cy="18"
@@ -186,12 +149,35 @@ export default function TutorialSection() {
 								fill="none"
 								stroke="rgba(59, 130, 246, 0.9)"
 								strokeWidth="2"
-								strokeDasharray={`${2 * Math.PI * 16}`}
-								strokeDashoffset={`${2 * Math.PI * 16 * (1 - progress / 100)}`}
+								strokeDasharray={2 * Math.PI * 16}
+								strokeDashoffset={2 * Math.PI * 16 * (1 - progress / 100)}
 								strokeLinecap="round"
-								className={isResetting ? '' : 'transition-all duration-150'}
+								style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
 							/>
 						</svg>
+					</div>
+					{/* Control bar - appears on hover */}
+					<div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-black/50 backdrop-blur-sm px-3 py-2 opacity-0 group-hover/video:opacity-100 transition-opacity">
+						<button
+							onClick={togglePlayPause}
+							className="text-white/80 hover:text-white transition-colors"
+							title={isPlaying ? 'Pause' : 'Play'}
+						>
+							{isPlaying ? <Pause size={16} /> : <Play size={16} />}
+						</button>
+						<div
+							ref={progressBarRef}
+							onClick={handleProgressBarClick}
+							className="flex-1 h-1 bg-white/30 rounded-full cursor-pointer"
+						>
+							<div
+								className="h-full bg-white/90 rounded-full"
+								style={{ width: `${progress}%` }}
+							/>
+						</div>
+						<span className="text-white/70 text-xs font-mono">
+							{formatTime(currentTime)} / {formatTime(duration)}
+						</span>
 					</div>
 				</div>
 			</div>
