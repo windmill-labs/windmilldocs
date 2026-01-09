@@ -131,7 +131,7 @@ export default function AppAnimation({ active, only }) {
 		variant5: {
 			top: 360,
 			left: 300,
-			text: 'Build complex apps with our 50+ atomic components, and add code only when needed.',
+			//text: 'Build complex apps with our 50+ atomic components, and add code only when needed.',
 			displayArrow: false
 		}
 	};
