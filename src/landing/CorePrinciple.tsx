@@ -133,7 +133,7 @@ export default function CorePrinciple() {
 						title="Seamless enterprise integration"
 						description="Connect seamlessly to your infrastructure: databases (PostgreSQL, MySQL, Snowflake), cloud platforms (AWS, Azure, GCP), message queues (Kafka, SQS, NATS), and 100+ APIs. Interact with your existing codebase and workflows without friction."
 						actionLink="Explore integrations"
-						actionUrl="https://www.windmill.dev/docs/integrations"
+						actionUrl="https://www.windmill.dev/docs/integrations/integrations_on_windmill"
 						lottieData={thirdparty}
 					/>
 					<FeatureCard
