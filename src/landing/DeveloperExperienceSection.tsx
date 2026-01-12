@@ -71,7 +71,7 @@ function FeatureCard({ title, description, href, actionText = 'Learn more', imag
 						playsInline
 						preload="metadata"
 					>
-						<source src={video} type="video/mp4" />
+						<source src={video} type="video/webm" />
 					</video>
 				) : image ? (
 					<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
@@ -114,7 +114,7 @@ export default function DeveloperExperienceSection() {
 						title="Monitor with ease and depth"
 						description="Track every job execution with real-time logs and I/O. Get instant Slack or email alerts for failures, or export metrics to OpenTelemetry and Prometheus."
 						href="/docs/core_concepts/monitor_past_and_future_runs"
-						video="/videos/your-observability-video.mp4"
+						video="/videos/your-observability-video.webm"
 					/>
 				</div>
 			</div>
