@@ -82,9 +82,9 @@ function BenchmarkCard() {
 	return (
 		<div className="flex flex-col rounded-lg bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-200 dark:border-gray-700/50 group">
 			<div className="mb-4">
-				<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Performance at enterprise scale</h3>
+				<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Best performance at any scale</h3>
 				<p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
-					We engineer Windmill as the fastest orchestrator in the industry to ensure your most demanding workloads never bottleneck. Auto-scale on demand or isolate critical tasks with dedicated worker groups on Kubernetes and Docker.
+					We engineered Windmill to be the fastest orchestrator in the industry, ensuring your most demanding workloads never bottleneck. From a single-node VPS to 1,000-node K8s clusters, auto-scale on demand or isolate critical tasks with dedicated worker groups on Kubernetes and Docker.
 				</p>
 				<a
 					href="https://www.windmill.dev/docs/misc/benchmarks/competitors"
