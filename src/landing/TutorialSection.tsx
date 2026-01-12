@@ -263,7 +263,7 @@ export default function TutorialSection({ subIndex, children }) {
 		const [progress, setProgress] = useState(0);
 		const [isPlaying, setIsPlaying] = useState(false);
 		const [duration, setDuration] = useState(0);
-		const videoRef = useRef<HTMLVideoElement>(null);
+		const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
 		const progressBarRef = useRef<HTMLDivElement>(null);
 
 		const tabs = [
@@ -273,10 +273,10 @@ export default function TutorialSection({ subIndex, children }) {
 			{ id: 'datatables', label: 'Data', icon: Database, description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.', video: '/videos/scriptsvideo.webm' }
 		];
 
-		const currentTab = tabs.find(tab => tab.id === selectedTab) || tabs[0];
-
 		const containerRef = useRef<HTMLDivElement>(null);
 		const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
+		const getCurrentVideo = () => videoRefs.current[selectedTab];
 
 		// Detect when component is visible in viewport (for Flows tab autoplay)
 		useEffect(() => {
@@ -296,25 +296,31 @@ export default function TutorialSection({ subIndex, children }) {
 			return () => observer.disconnect();
 		}, [hasBeenVisible]);
 
-		// Play video: Flows plays when visible, others play when tab is clicked
+		// Play/pause videos when tab changes
 		useEffect(() => {
-			const video = videoRef.current;
+			// Pause all videos first
+			Object.values(videoRefs.current).forEach(video => {
+				if (video) video.pause();
+			});
+
+			const video = getCurrentVideo();
 			if (!video) return;
 
+			// Reset to beginning and play
+			video.currentTime = 0;
+
 			if (selectedTab === 'scripts') {
-				// Scripts tab: play when component becomes visible
 				if (hasBeenVisible) {
 					video.play();
 				}
 			} else {
-				// Other tabs: play immediately when selected
 				video.play();
 			}
 		}, [selectedTab, hasBeenVisible]);
 
 		// Track video progress using timeupdate event
 		useEffect(() => {
-			const video = videoRef.current;
+			const video = getCurrentVideo();
 			if (!video) return;
 
 			const handleTimeUpdate = () => {
@@ -351,7 +357,7 @@ export default function TutorialSection({ subIndex, children }) {
 		}, [selectedTab]);
 
 		const togglePlayPause = () => {
-			const video = videoRef.current;
+			const video = getCurrentVideo();
 			if (!video) return;
 			if (video.paused) {
 				video.play();
@@ -361,7 +367,7 @@ export default function TutorialSection({ subIndex, children }) {
 		};
 
 		const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
-			const video = videoRef.current;
+			const video = getCurrentVideo();
 			const progressBar = progressBarRef.current;
 			if (!video || !progressBar) return;
 
@@ -396,70 +402,83 @@ export default function TutorialSection({ subIndex, children }) {
 						</button>
 					))}
 				</div>
-				{/* Description */}
-				<p className="text-gray-900 dark:text-white mb-4">
-					{currentTab.description}
-				</p>
-				{/* Video */}
-				<div className="relative group/video rounded-lg overflow-hidden">
-					<video
-						ref={videoRef}
-						key={selectedTab}
-						className="w-full object-cover"
-						loop
-						muted
-						playsInline
-					>
-						<source src={currentTab.video} type="video/webm" />
-					</video>
-					{/* Circular progress indicator */}
-					<div className="absolute bottom-3 right-3 group-hover/video:opacity-0 transition-opacity">
-						<svg className="w-8 h-8" viewBox="0 0 36 36">
-							<circle
-								cx="18"
-								cy="18"
-								r="16"
-								fill="none"
-								stroke="rgba(255, 255, 255, 0.3)"
-								strokeWidth="2"
-							/>
-							<circle
-								cx="18"
-								cy="18"
-								r="16"
-								fill="none"
-								stroke="rgba(59, 130, 246, 0.9)"
-								strokeWidth="2"
-								strokeDasharray={2 * Math.PI * 16}
-								strokeDashoffset={2 * Math.PI * 16 * (1 - progress / 100)}
-								strokeLinecap="round"
-								style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
-							/>
-						</svg>
-					</div>
-					{/* Control bar - appears on hover */}
-					<div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-black/50 backdrop-blur-sm px-3 py-2 opacity-0 group-hover/video:opacity-100 transition-opacity">
-						<button
-							onClick={togglePlayPause}
-							className="text-white/80 hover:text-white transition-colors"
-							title={isPlaying ? 'Pause' : 'Play'}
-						>
-							{isPlaying ? <Pause size={16} /> : <Play size={16} />}
-						</button>
+				{/* Tab content container */}
+				<div id="tab-content" className="relative">
+					{tabs.map((tab) => (
 						<div
-							ref={progressBarRef}
-							onClick={handleProgressBarClick}
-							className="flex-1 h-1 bg-white/30 rounded-full cursor-pointer"
+							key={tab.id}
+							className={selectedTab === tab.id ? 'block' : 'hidden'}
 						>
-							<div
-								className="h-full bg-white/90 rounded-full"
-								style={{ width: `${progress}%` }}
-							/>
+							{/* Description */}
+							<p className="text-gray-900 dark:text-white mb-4">
+								{tab.description}
+							</p>
+							{/* Video */}
+							<div className="relative group/video rounded-lg overflow-hidden">
+								<video
+									ref={(el) => { videoRefs.current[tab.id] = el; }}
+									className="w-full object-cover"
+									loop
+									muted
+									playsInline
+								>
+									<source src={tab.video} type="video/webm" />
+								</video>
+								{/* Circular progress indicator - only show for active tab */}
+								{selectedTab === tab.id && (
+									<div className="absolute bottom-3 right-3 group-hover/video:opacity-0 transition-opacity">
+										<svg className="w-8 h-8" viewBox="0 0 36 36">
+											<circle
+												cx="18"
+												cy="18"
+												r="16"
+												fill="none"
+												stroke="rgba(255, 255, 255, 0.3)"
+												strokeWidth="2"
+											/>
+											<circle
+												cx="18"
+												cy="18"
+												r="16"
+												fill="none"
+												stroke="rgba(59, 130, 246, 0.9)"
+												strokeWidth="2"
+												strokeDasharray={2 * Math.PI * 16}
+												strokeDashoffset={2 * Math.PI * 16 * (1 - progress / 100)}
+												strokeLinecap="round"
+												style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
+											/>
+										</svg>
+									</div>
+								)}
+								{/* Control bar - appears on hover, only for active tab */}
+								{selectedTab === tab.id && (
+									<div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-black/50 backdrop-blur-sm px-3 py-2 opacity-0 group-hover/video:opacity-100 transition-opacity">
+										<button
+											onClick={togglePlayPause}
+											className="text-white/80 hover:text-white transition-colors"
+											title={isPlaying ? 'Pause' : 'Play'}
+										>
+											{isPlaying ? <Pause size={16} /> : <Play size={16} />}
+										</button>
+										<div
+											ref={progressBarRef}
+											onClick={handleProgressBarClick}
+											className="flex-1 h-1 bg-white/30 rounded-full cursor-pointer"
+										>
+											<div
+												className="h-full bg-white/90 rounded-full"
+												style={{ width: `${progress}%` }}
+											/>
+										</div>
+										<span className="text-white/70 text-xs font-mono">
+											{formatTime(currentTime)} / {formatTime(duration)}
+										</span>
+									</div>
+								)}
+							</div>
 						</div>
-						<span className="text-white/70 text-xs font-mono">
-							{formatTime(currentTime)} / {formatTime(duration)}
-						</span>
-					</div>
+					))}
 				</div>
 			</div>
 		);
