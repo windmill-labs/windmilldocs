@@ -1,10 +1,34 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useLottie } from 'lottie-react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import { ArrowRight, CircleIcon, LucideIcon } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 import FlowChart from './FlowChart';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { light } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+// Client-only Lottie component
+function LottiePlayer({ animationData, loop, autoplay, onPlay }: {
+	animationData: unknown;
+	loop: boolean;
+	autoplay: boolean;
+	onPlay?: (playFn: () => void) => void;
+}) {
+	const { useLottie } = require('lottie-react');
+	const { View, play } = useLottie({
+		animationData,
+		loop,
+		autoplay
+	});
+
+	useEffect(() => {
+		if (onPlay) {
+			onPlay(play);
+		}
+	}, [play, onPlay]);
+
+	return View;
+}
+
 type FeatureCardProps = {
 	feature: { title: string; description: string; images: string[] };
 	animationDelay: number;
@@ -38,14 +62,9 @@ export default function LightFeatureCard({
 	vertical = false,
 	code = undefined
 }: FeatureCardProps) {
-	const options = {
-		animationData: lottieData,
-		loop: loop,
-		autoplay: autoplay
-	};
 	const span = !vertical ? 'col-span-2' : 'col-span-2 md:col-span-1';
+	const playRef = useRef<(() => void) | null>(null);
 
-	const { View, play } = useLottie(options);
 	return (
 		<a
 			className={twMerge(
@@ -53,7 +72,7 @@ export default function LightFeatureCard({
 				spanOverride ?? (vertical ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2')
 			)}
 			onMouseOver={() => {
-				play();
+				playRef.current?.();
 			}}
 			href={url}
 			target="_blank"
@@ -101,7 +120,16 @@ export default function LightFeatureCard({
 									: 'bg-blue-200 dark:bg-blue-800'
 							)}
 						>
-							{View}
+							<BrowserOnly fallback={<div className="h-full w-full" />}>
+								{() => (
+									<LottiePlayer
+										animationData={lottieData}
+										loop={loop}
+										autoplay={autoplay}
+										onPlay={(play) => { playRef.current = play; }}
+									/>
+								)}
+							</BrowserOnly>
 						</div>
 					) : defaultImage ? (
 						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
@@ -125,19 +153,18 @@ export default function LightFeatureCard({
 	);
 }
 
-export function Lottie({ lottieData, autoplay = true, loop = false }) {
+// Client-only Lottie with visibility detection
+function LottieWithVisibility({ lottieData, autoplay, loop }: { lottieData: unknown; autoplay: boolean; loop: boolean }) {
+	const { useLottie } = require('lottie-react');
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [hasBeenVisible, setHasBeenVisible] = useState(false);
 
-	const options = {
+	const { View, play } = useLottie({
 		animationData: lottieData,
-		loop: loop,
-		autoplay: false // Don't autoplay immediately, wait for visibility
-	};
+		loop,
+		autoplay: false
+	});
 
-	const { View, play } = useLottie(options);
-
-	// Start animation when 80% visible
 	useEffect(() => {
 		const container = containerRef.current;
 		if (!container) return;
@@ -160,11 +187,17 @@ export function Lottie({ lottieData, autoplay = true, loop = false }) {
 		<div
 			ref={containerRef}
 			className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end"
-			onMouseOver={() => {
-				play();
-			}}
+			onMouseOver={() => play()}
 		>
 			{View}
 		</div>
+	);
+}
+
+export function Lottie({ lottieData, autoplay = true, loop = false }) {
+	return (
+		<BrowserOnly fallback={<div className="rounded-lg h-full w-full" />}>
+			{() => <LottieWithVisibility lottieData={lottieData} autoplay={autoplay} loop={loop} />}
+		</BrowserOnly>
 	);
 }

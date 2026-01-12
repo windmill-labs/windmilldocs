@@ -19,6 +19,7 @@ export default function CardSection({ features, colors, title, description, defa
 			<div
 				className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full"
 				onMouseMove={(e) => {
+					if (typeof document === 'undefined') return;
 					const mouseMoveHandler = (e: MouseEvent) => {
 						// @ts-ignore
 						for (const card of document.getElementsByClassName('card')) {

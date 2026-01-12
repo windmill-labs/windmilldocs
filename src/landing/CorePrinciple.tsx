@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import LandingSection from './LandingSection';
 import { ArrowRight } from 'lucide-react';
-import { useLottie } from 'lottie-react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 // @ts-ignore
 import performance from '/illustrations/performance.json';
 // @ts-ignore
@@ -10,6 +10,26 @@ import polyGlott from '/illustrations/polyglot.json';
 import secrets from '/illustrations/secrets.json';
 // @ts-ignore
 import thirdparty from '/illustrations/thirdparty.json';
+
+// Client-only component that renders a static frame of a Lottie animation
+function StaticLottie({ animationData }: { animationData: unknown }) {
+	const { useLottie } = require('lottie-react');
+	const { View, goToAndStop, getDuration } = useLottie({
+		animationData,
+		loop: false,
+		autoplay: false
+	});
+
+	React.useEffect(() => {
+		// Go to 95% of the animation
+		const totalFrames = getDuration(true);
+		if (totalFrames > 0) {
+			goToAndStop(Math.floor(totalFrames * 0.90), true);
+		}
+	}, [goToAndStop, getDuration]);
+
+	return View;
+}
 
 interface FeatureCardProps {
 	title: string;
@@ -24,45 +44,9 @@ interface FeatureCardProps {
 }
 
 function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imageAlt = '', lottieData, fullWidth = false, animationComponent }: FeatureCardProps) {
-	const containerRef = useRef<HTMLDivElement>(null);
-	const [hasBeenVisible, setHasBeenVisible] = useState(false);
-
-	const lottieOptions = lottieData
-		? {
-				animationData: lottieData,
-				loop: true,
-				autoplay: false // Don't autoplay immediately, wait for visibility
-		  }
-		: null;
-	const { View, play } = lottieOptions ? useLottie(lottieOptions) : { View: null, play: () => {} };
-
-	// Start animation when 80% visible
-	useEffect(() => {
-		if (!lottieData) return;
-		const container = containerRef.current;
-		if (!container) return;
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0].isIntersecting && !hasBeenVisible) {
-					setHasBeenVisible(true);
-					play();
-				}
-			},
-			{ threshold: 0.8 }
-		);
-
-		observer.observe(container);
-		return () => observer.disconnect();
-	}, [hasBeenVisible, play, lottieData]);
-
 	return (
 		<div
-			ref={containerRef}
 			className={`flex flex-col h-full rounded-lg bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-200 dark:border-gray-700/50 group ${fullWidth ? 'w-full' : ''}`}
-			onMouseOver={() => {
-				if (lottieData) play();
-			}}
 		>
 			<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{title}</h3>
 			<p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow text-base leading-relaxed">
@@ -82,10 +66,12 @@ function FeatureCard({ title, description, actionLink, actionUrl, imageSrc, imag
 					{animationComponent}
 				</div>
 			) : (
-				<div className={`mt-auto bg-gray-100 dark:bg-gray-700/80 rounded-md p-4 ${lottieData ? 'min-h-[220px]' : 'min-h-[220px]'} flex items-center justify-center overflow-hidden`}>
+				<div className={`mt-auto bg-gray-100 dark:bg-gray-700/80 rounded-md p-4 min-h-[220px] flex items-center justify-center overflow-hidden`}>
 					{lottieData ? (
 						<div className="w-full h-full flex items-center justify-center rounded-md">
-							{View}
+							<BrowserOnly fallback={<div className="w-full h-full" />}>
+								{() => <StaticLottie animationData={lottieData} />}
+							</BrowserOnly>
 						</div>
 					) : (
 						<img
