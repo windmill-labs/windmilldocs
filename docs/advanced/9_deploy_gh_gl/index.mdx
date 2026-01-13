@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Promotion workflow (cross-instance)
+# Git Promotion workflow (cross-instance compatible)
 
 :::info Deploy to prod in Windmill
 
@@ -10,7 +10,7 @@ For all details on Deployments to prod in Windmill, see [Deploy to prod](../12_d
 
 :::
 
-Promotion workflow is an advanced setup leveraging the same tech as [Git Sync](../11_git_sync/index.mdx) for deploying from a workspace to another, even across different instances.
+Git Promotion is an advanced setup leveraging the same tech as [Git Sync](../11_git_sync/index.mdx) for deploying from a workspace to another, even across different instances.
 
 Let's walk through an example to better understand it.
 
@@ -25,7 +25,7 @@ Note that `prod-repo` and `staging-repo` can be (and often are) the same repo bu
 
 Here is a diagram to better illustrate the workflow with this setup.
 
-![Promotion Workflow](../4_local_development/local_development.png 'Promotion Workflow')
+![Git Promotion](/images/git_promotion.png 'Git Promotion')
 
 > See section [Setup the full Git workflow](#setup-the-full-git-workflow) for the detailed setup steps.
 
@@ -84,7 +84,7 @@ On top of the CI/CD [actions you already setup during the Git Sync configuration
 <Tabs className="unique-tabs">
 <TabItem value="open-pr-on-promotion-commit.yaml" label="open-pr-on-commit.yaml" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 ```yaml
-name: "Promotion: Deploy from staging to prod"
+name: "Git Promotion: Deploy from staging to prod"
 on:
   push:
     branches:

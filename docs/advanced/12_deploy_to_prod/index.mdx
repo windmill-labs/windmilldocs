@@ -13,17 +13,17 @@ Deployments in Windmill are commonly done from the same workspace using the [Dra
 
 [Windmill workspaces](../20_workspace_forks/index.mdx) can be forked, creating a new copy of the workspace at that point in time. The forked workspace can be iterated on, tested, and once changes are ready, merged back to the original workspace, thus deploying the new versions of the scripts, flows, or apps. The workflow will be familiar to anyone who has used branches in version control tools such as git. The analogy can be further reinforced if [Git Sync](../11_git_sync/index.mdx) is setup: Windmill will autmatically create branches for each of the forks, and merging can be controlled direclty through git.
 
-## Option 3. Promotion workflow: deploying through git - Multi workspace (possible cross-instance)
+## Option 3. Git Promotion workflow: deploying through git - Multi workspace (possible cross-instance)
 
 This is a more complex but very reliable setup that leverages [Git Sync](../11_git_sync/index.mdx) to deploy from one workspace to another through git. When changes are done to the Staging workspace, they are pushed to a branch in the Prod repo. Once merge to the main branch of the Prod repo, the Prod workspace is updated with the changes.
 
 This workflow lets you review all the changes on a PR before merging and deploying. It also has the advantage, unlike the other options here, to work across separate windmill instances.
 
-![Promotion workflow](../4_local_development/local_development.png 'Promotion workflow')
+![Git Promotion](/images/git_promotion.png 'Git Promotion')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to prod using the Promotion workflow"
+		title="Deploy to prod using the Git Promotion workflow"
 		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
 		href="/docs/advanced/deploy_gh_gl"
 	/>
