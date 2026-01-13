@@ -1,31 +1,32 @@
 # Job debouncing
 
-Job debouncing prevents redundant job executions by canceling pending jobs with identical characteristics when new ones are submitted within a specified time window. This feature helps optimize resource usage and prevents unnecessary duplicate computations.
+When job debouncing is enabled, started jobs are scheduled for a specified future time. If another job with the same debounce key is queued within this duration, it will "debounce" the previous job by canceling it.
 
-Job debouncing is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) only.
+Job debouncing is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) only feature.
 
-Debouncing can be set from the Settings menu. When jobs with matching characteristics are submitted within the debounce window, pending jobs are automatically canceled in favor of the newest one.
+It is available for scripts and flows and can be set from the Settings menu. It also operates globally and involves several configuration fields:
 
-The Job debouncing operates globally and across flow runs. It involves two key parameters:
+## Configuration fields
 
-## Debounce delay in seconds
+### Debounce delay in seconds
 
-Set in seconds, the time window defines the period during which duplicate jobs are canceled. When a new job arrives within this window with matching characteristics, any pending jobs are canceled.
+The time window in seconds for debouncing. If not set, the job will not debounce existing jobs and will not be cancelled by any other job.
 
-## Custom debounce key
+### Custom debounce key
 
-This parameter is optional. Debounce keys are global, you can have them be workspace specific using the variable `$workspace`. You can also use an argument's value using `$args[name_of_arg]`.
+Optional field to create debounce keys that are not bound to path and arguments. If not set, the default debounce key is used, which is composed of workspace ID, runnable path, and argument values passed to it.
 
-## Dependency jobs
+Debouncing keys are global, you can have them be workspace specific using the variable `$workspace`. You can also use an argument's value using `$args[name_of_arg]`.
 
-For dependency jobs, debouncing is enabled by default. This prevents redundant dependency computations when multiple jobs require the same dependencies.
+### Max total debouncing time
 
-## Job debouncing in Script & Flows
+How long (in seconds) a job can be debounced by the same key. If exceeded, new jobs with the same key will not debounce existing jobs and let them execute, while still scheduling themselves for future execution.
 
-### Job debouncing of a script
+### Max total debounces amount
 
-[Job debouncing of a script](../../script_editor/settings.mdx#debouncing) can be set from the [Settings](../../script_editor/settings.mdx) menu. Pick "Runtime" and then "Debouncing" and define a time window and optionally a custom debounce key.
+Same as previous one, but counts debounces instead of time.
 
-### Job debouncing of a flow
+### Debounce args to accumulate
 
-From the Flow Settings Advanced menu, pick "Debouncing" and define a time window and optionally a custom debounce key.
+This field allows you to consolidate arguments across debounced jobs. If one of your main function arguments takes an array of any type, you can specify this argument in this parameter. This will exclude it from the default debounce key and when the job executes, it will concatenate all values of the specified argument from previous jobs related to this debouncing period.
+
