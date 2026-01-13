@@ -140,7 +140,7 @@ wmill gitsync-settings pull --promotion main
 wmill gitsync-settings push --promotion production
 ```
 
-When using the `--promotion` flag, the command will use `promotionOverrides` instead of regular `overrides` from the specified branch in your `wmill.yaml`. This should be used when your git sync connection is configured in [promotion mode](../11_git_sync/index.mdx#promotion-mode).
+When using the `--promotion` flag, the command will use `promotionOverrides` instead of regular `overrides` from the specified branch in your `wmill.yaml`. This should be used for [Git Promotion](../9_deploy_gh_gl/index.mdx) connections.
 
 ## Differences from sync command
 
