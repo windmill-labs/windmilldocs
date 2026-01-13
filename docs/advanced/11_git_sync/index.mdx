@@ -329,6 +329,22 @@ You can filter on:
 - **Workspace settings** - Global workspace configuration
 - **Encryption key** - Workspace encryption key
 
+## Workspace forks integration
+
+Git sync automatically creates corresponding git branches for [workspace forks](../20_workspace_forks/index.mdx). When you fork a workspace with git sync enabled, Windmill creates a branch with the naming pattern `wm-fork/<parent-branch>/<fork-name>` and keeps it synchronized with the forked workspace.
+
+This enables parallel development workflows where multiple developers can work on separate workspace forks, each with its own git branch, and merge changes back to the parent workspace either through the UI or via pull requests.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace forks"
+		description="Create workspace forks for parallel development workflows"
+		href="/docs/advanced/workspace_forks"
+	/>
+</div>
+
+![Workspace Forks and Git Sync](/images/workspace_forks.png)
+
 ## Adding secondary sync repositories
 
 You can add secondary sync repositories if you need to. Just go to Git sync settings, press `+ Add secondary sync repo` and follow the same instructions as for the first one. Note that having multiple bidirectional repositories is not currently supported, secondary repositories can only act as read-only copies of the workspace.
@@ -360,25 +376,11 @@ The frontend will detect existing `wmill.yaml` files and merge settings appropri
 
 You can exclude specific types per repository, overriding the global workspace filters.
 
-## Workspace forks integration
-
-Git sync automatically creates corresponding git branches for [workspace forks](../20_workspace_forks/index.mdx). When you fork a workspace with git sync enabled, Windmill creates a branch with the naming pattern `wm-fork/<parent-branch>/<fork-name>` and keeps it synchronized with the forked workspace.
-
-This enables parallel development workflows where multiple developers can work on separate workspace forks, each with its own git branch, and merge changes back to the parent workspace either through the UI or via pull requests.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Workspace forks"
-		description="Create workspace forks for parallel development workflows"
-		href="/docs/advanced/workspace_forks"
-	/>
-</div>
-
-## Promotion workflow: Cross-instance deployment using a git workflow
+## Git Promotion workflow: Cross-instance deployment using a git workflow
 
 One option you will see in the Git Sync settings tab, is to add a Git Promotion target. This is an advanced setup that leverages the feature to create deployements from one workspace to another.
 
-Learn how to setup this promotion workflow:
+Learn how to setup Git Promotion:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
