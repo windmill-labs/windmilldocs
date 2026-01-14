@@ -45,7 +45,7 @@ wmill script bootstrap [--summary <summary>] [--description <description>] <path
 | Argument   | Description                                                                                                                                                                              |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `path`     | The path of the script to be created.                                                                                                                                                    |
-| `language` | The language of the new script. It should be one of `deno`, `python3`, `bun`, `bash`, `go`, `nativets`, `postgresql`, `mysql`, `bigquery`, `snowflake`, `mysql`, `graphql`, `powershell` |
+| `language` | The language of the new script. It should be one of `ansible`, `bash`, `bigquery`, `bun`, `csharp`, `deno`, `duckdb`, `go`, `graphql`, `java`, `mysql`, `mssql`, `nativets`, `nu`, `oracledb`, `php`, `postgresql`, `powershell`, `python3`, `ruby`, `rust`, `snowflake` |
 
 ### Examples
 
