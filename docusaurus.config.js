@@ -15,7 +15,7 @@ const config = {
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'throw',
 	trailingSlash: false,
-	favicon: 'img/docs_logo.svg',
+	favicon: 'img/favicon.ico',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
 
