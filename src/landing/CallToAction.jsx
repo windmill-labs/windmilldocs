@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
+import BookDemoModal from '../components/BookDemoModal';
 
 export default function CallToAction({ color }) {
 	const { colorMode } = useColorMode();
+	const [bookDemoOpen, setBookDemoOpen] = useState(false);
 
 	const colorMap = {
 		blue: {
@@ -41,14 +43,12 @@ export default function CallToAction({ color }) {
 						>
 							Get started for free
 						</a>
-						<a
-							href="https://www.windmill.dev/book-demo"
-							data-analytics='"schedule-demo"'
-							onClick={() => window.plausible('schedule-demo')}
-							className="text-base font-semibold leading-7 text-white !no-underline dark:text-gray-900"
+						<button
+							onClick={() => setBookDemoOpen(true)}
+							className="text-base font-semibold leading-7 text-white !no-underline dark:text-gray-900 cursor-pointer bg-transparent border-none"
 						>
 							Schedule a demo <span aria-hidden="true">→</span>
-						</a>
+						</button>
 					</div>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -79,6 +79,7 @@ export default function CallToAction({ color }) {
 					</svg>
 				</div>
 			</div>
+			<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
 		</div>
 	);
 }
