@@ -10,48 +10,25 @@ Windmill has [its own integrated development environment](../../code_editor/inde
 
 To simply create and edit scripts and flows locally, you can directly go to the [Develop Locally](#develop-locally) section.
 
-For a more complex setup involving Git, you can go to the [Local development Recommended Setup](#local-development-recommended-setup).
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/sxNW_6J4RG8"
-	title="Local development quickstart"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
-
-## Local development recommended setup
-
-Local development involves two components:
-
-1. Being able to create and edit Windmill scripts and flow from your favorite IDE.
-2. Deploy them to Windmill and at the same time [version](../13_version_control/index.mdx) them in a Git repository.
-
-In addition to the core functionalities just mentioned, some might want to add the concept of [deployment](../12_deploy_to_prod/index.mdx). This encompasses having a staging and production Windmill environment, and being able to deploy from Staging to Production.
-
-The diagram below illustrates the full process. We're going to explain it quickly, and in the following sections we will decompose it.
-
-![Local development](./local_development.png)
-
-It works as follows:
-
-- 2 different workspaces exist in Windmill: one for Staging and one for Prod, and a Git repository that has been set to sync the Windmill Staging workspace.
-- Some developers work from their favorite IDE. They can create new Windmill scripts and flows, edit existing ones, and push them to the Staging repository. Some developers can work directly in Windmill's web IDE. All of this happens in the Staging workspace.
-- Every time a script or a flow is deployed in the Staging workspace, Windmill will automatically commit the change to the Git repository using [Git sync](../11_git_sync/index.mdx). It can either commit directly to a specific (i.e. `staging`) branch, or open PRs to this branch (one PR per script/flow).
-- Within the Git repository, every time the `staging` branch is merged into the production branch (i.e. `main`), all the changes are pushed at once the Windmill Production workspace.
-
-To summarize, developers operate only in Windmill Staging workspace. Windmill Production workspace is updated only by the CI when the Git staging branch is merged into the production branch.
-
-Now let's deep dive into the first part. We will first explain how developers can set up their local environment to be able to create and edit Windmill script from their IDE, then we will see how to sync Windmill workspaces to a Git repository.
-
-The second part is well covered in:
-
+Usually however, you will need for a robust setup to enable collaboration and compatibility with version control tools like git. The recommended approach for this is to use [Workspace Forks](../20_workspace_forks/index.mdx) and [Git Sync](../11_git_sync/index.mdx).
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to prod using a git workflow"
-		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		title="Workspace forks"
+		description="Create workspace forks for parallel development workflows"
+		href="/docs/advanced/workspace_forks"
+	/>
+	<DocCard
+		title="Git sync"
+		description="Automatically commit and push workspace changes to your Git repository."
+		href="/docs/advanced/git_sync"
+	/>
+</div>
+
+Another advanced workflow that doesn't use workspace forks is explained here:
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Git Promotion workflow"
+		description="Windmill integration with Git makes it possible to have a robust git-based deployment workflow"
 		href="/docs/advanced/deploy_gh_gl"
 	/>
 </div>
