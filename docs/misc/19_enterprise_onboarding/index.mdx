@@ -403,6 +403,31 @@ Access [portal.windmill.dev](https://portal.windmill.dev) to:
 - Create private issues and feature requests and follow their status
 - Grant portal access to team members via 'Contact emails'
 
+### Cloud configuration management
+
+For Cloud EE customers, you can view and request changes to your worker groups configuration directly from the [Customer Portal](https://portal.windmill.dev).
+
+![Worker groups configuration](./cloud_worker_groups_config.png 'Worker groups configuration')
+
+The configuration panel shows:
+
+- **Compute units usage**: Your current usage vs. subscription limit (e.g., "4 / 10 CU")
+- **Worker groups**: Your Kubernetes worker groups configuration in YAML format
+- **Last deployed**: Timestamp of the most recent deployment
+
+#### Requesting configuration changes
+
+To modify your worker groups configuration:
+
+1. Edit the YAML configuration in the editor
+2. Click **Show diff** to review your changes
+3. Click **Request change** to submit
+4. Choose when to apply:
+   - **ASAP**: Changes are applied as soon as the Windmill team approves
+   - **Scheduled**: Pick a specific date/time for the changes to take effect
+
+Once submitted, the Windmill team reviews your request. After approval, changes are deployed to your instance and you'll receive a notification via your preferred contact method (Slack, Discord, or email).
+
 ### License terms
 
 Our [license terms](https://www.windmill.dev/terms) are available for self-hosted instances. By using the license key, you agree to the terms in effect at the time of first use. We will notify you if any significant changes are made to the terms. [Contact us](#getting-help) if you have questions or requests regarding the license terms.
