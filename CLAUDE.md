@@ -43,6 +43,8 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 - Quickstart guides should be concise and focused on immediate results
 - Link to related documentation using relative paths
 - If a new page is added, make sure it appears in sidebars.js and check if its worth adding to core_concepts/index.mdx
+- Major features shall have a dedicated changelog page and directory, like [this](./changelog/2025-08-19-kubernetes-native-autoscaling/index.md).
+- Major features shall be referenced in the [features list](./src/components/pricing/FeatureList.js).
 
 ## Cross-referencing
 

@@ -4,6 +4,20 @@ import DocCard from '@site/src/components/DocCard';
 
 Welcome to [Windmill Enterprise Edition](/pricing). This guide provides essential setup information and best practices for new enterprise customers.
 
+For new users, you might want to get a tour of Windmill first:
+
+<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '2rem' }}>
+  <iframe
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+    src="https://www.youtube.com/embed/videoseries?list=PLITtG6lMX-nIqgIxF3UlGOXLcS4kf0exq"
+    title="Windmill Enterprise Onboarding Playlist"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+  />
+</div>
+
 ## Getting started
 
 ### Container images
@@ -388,6 +402,31 @@ Access [portal.windmill.dev](https://portal.windmill.dev) to:
 - Adjust Seats and Compute Units
 - Create private issues and feature requests and follow their status
 - Grant portal access to team members via 'Contact emails'
+
+### Cloud configuration management
+
+For Cloud EE customers, you can view and request changes to your [worker groups configuration](../../core_concepts/9_worker_groups/index.mdx) directly from the [Customer Portal](https://portal.windmill.dev).
+
+![Worker groups configuration](./cloud_worker_groups_config.png 'Worker groups configuration')
+
+The configuration panel shows:
+
+- **Compute units usage**: Your [current usage vs. subscription limit](../7_plans_details/index.mdx#setup-and-compute-units) (e.g., "4 / 10 CU")
+- **Worker groups**: Your Kubernetes worker groups configuration in YAML format
+- **Last deployed**: Timestamp of the most recent deployment
+
+#### Requesting configuration changes
+
+To modify your worker groups configuration:
+
+1. Edit the YAML configuration in the editor
+2. Click **Show diff** to review your changes
+3. Click **Request change** to submit
+4. Choose when to apply:
+   - **ASAP**: Changes are applied as soon as the Windmill team approves
+   - **Scheduled**: Pick a specific date/time for the changes to take effect
+
+Once submitted, the Windmill team reviews your request. After approval, changes are deployed to your instance and you'll receive a notification via your preferred contact method (Slack, Discord, or email).
 
 ### License terms
 
