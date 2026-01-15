@@ -51,7 +51,7 @@ export default function LogoClouds() {
 	];
 
 	return (
-		<div className="py-8 sm:py-12">
+		<div className="pt-4 pb-12 sm:pt-6 sm:pb-16 md:pb-24">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
 				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900/60">
 					Trusted by 3,000+ organizations, including:

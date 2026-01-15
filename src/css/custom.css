@@ -597,3 +597,18 @@ div.testimonials a:hover .wm-name {
 video:fullscreen {
 	object-fit: contain !important; 
 }
+
+/* Improve readability of BenchmarkVisualization chart text */
+.benchmark-chart-container canvas {
+	filter: brightness(1.2) contrast(1.1);
+}
+
+.benchmark-chart-container[data-theme="dark"] {
+	--chart-text-color: #ffffff;
+	--chart-axis-color: #e5e7eb;
+}
+
+.benchmark-chart-container[data-theme="light"] {
+	--chart-text-color: #1f2937;
+	--chart-axis-color: #4b5563;
+}

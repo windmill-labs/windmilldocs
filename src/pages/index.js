@@ -11,11 +11,14 @@ import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
 import TestimonialsSection from '../landing/TestimonialsSection';
+import CorePrinciple from '../landing/CorePrinciple';
 import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
 import TutorialSection from '../landing/TutorialSection';
+
 import MobileTutorialSection from '../landing/MobileTutorialSection';
+import DeveloperExperienceSection from '../landing/DeveloperExperienceSection';
 
 function HomepageHeader() {
 	return (
@@ -23,20 +26,18 @@ function HomepageHeader() {
 			<LandingHeader />
 			<Hero />
 			<LogoClouds />
-			<HeroExample />
 			<div className="hidden sm:block">
 				<TutorialSection subIndex={undefined} />
 			</div>
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
 			</div>
-
-			<ScriptLightSection />
-			<FlowLightSection />
-			<AppLightSection />
-			<IntegrationsList />
-			<EntrepriseFeatures />
+			<DeveloperExperienceSection />
+			<CorePrinciple />
 			<TestimonialsSection />
+			<HeroExample />
+			{/* <IntegrationsList /> */}
+			{/* <EntrepriseFeatures /> */}
 			<LandingSection bgClass="py-0">
 				<CallToAction />
 			</LandingSection>

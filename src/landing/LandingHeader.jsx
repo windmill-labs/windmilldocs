@@ -100,6 +100,7 @@ export default function LandingHeader() {
 					</Link>
 					
 					<Popover.Group as="nav" className="hidden space-x-8 lg:space-x-10 md:flex min-w-0 grow">
+						{/* Products dropdown - temporarily hidden while improving sections
 						<Popover className="relative">
 							{({ open }) => (
 								<>
@@ -154,6 +155,7 @@ export default function LandingHeader() {
 								</>
 							)}
 						</Popover>
+						*/}
 						<Link
 							to="/docs/intro"
 							onClick={() => window.plausible?.('read-docs')}
@@ -343,7 +345,7 @@ export default function LandingHeader() {
 									))}
 								</div>
 
-								{/* Show Products dropdown items on mobile */}
+								{/* Show Products dropdown items on mobile - temporarily hidden while improving sections
 								<div className="md:hidden mt-4">
 									<div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
 										Products
@@ -360,6 +362,7 @@ export default function LandingHeader() {
 										))}
 									</div>
 								</div>
+								*/}
 
 								{/* Show social icons only on xl screens (xl:hidden) */}
 								<div className="lg:hidden mt-6 flex justify-center items-center space-x-4 mb-4">
