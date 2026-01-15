@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
+import BookDemoModal from '../components/BookDemoModal';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
@@ -73,6 +74,7 @@ export default function LandingHeader() {
 	const { colorMode, setColorMode } = useColorMode();
 
 	const [hoverLogo, setHoverLogo] = React.useState(false);
+	const [bookDemoOpen, setBookDemoOpen] = useState(false);
 
 	return (
 		<div className="w-full fixed z-[1000]  bg-white dark:bg-gray-950 shadow-sm">
@@ -253,14 +255,12 @@ export default function LandingHeader() {
 							<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
 						</a>
 
-						<a
-							href="https://www.windmill.dev/book-demo"
-							data-analytics='"schedule-demo"'
-							onClick={() => window.plausible('schedule-demo')}
-							className="hidden xl:inline-flex ml-4 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
+						<button
+							onClick={() => setBookDemoOpen(true)}
+							className="hidden xl:inline-flex ml-4 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all cursor-pointer"
 						>
 							Book a demo
-						</a>
+						</button>
 
 						<a
 							href="https://app.windmill.dev/user/login"
@@ -390,14 +390,12 @@ export default function LandingHeader() {
 								<div className="mt-6">
 									{/* Book a demo - hidden on xl screens, visible on 2xl+ */}
 									<div className="lg:block xl:hidden">
-										<a
-											href="https://www.windmill.dev/book-demo"
-											data-analytics='"schedule-demo"'
-											onClick={() => window.plausible('schedule-demo')}
-											className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium !text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 mb-4"
+										<button
+											onClick={() => setBookDemoOpen(true)}
+											className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium !text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 mb-4 cursor-pointer"
 										>
 											Book a demo
-										</a>
+										</button>
 									</div>
 									
 									{/* Windmill cloud - hidden on xl screens, visible on 2xl+ */}
@@ -419,6 +417,7 @@ export default function LandingHeader() {
 				</Transition>
 			</Popover>
 			{/* <Banner /> */}
+			<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
 		</div>
 	);
 }
