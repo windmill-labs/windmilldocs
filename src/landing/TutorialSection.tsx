@@ -258,6 +258,31 @@ export default function TutorialSection({ subIndex, children }) {
 							</div>
 	);
 
+	// Subtitle configuration for each video
+	// Each subtitle has: time (seconds), text, duration (how long to show in seconds)
+	const videoSubtitles: Record<string, { time: number; text: string; duration: number }[]> = {
+		scripts: [
+			{ time: 0.0, text: 'Write scripts in 20+ languages (Python, TS, Go, Java...)', duration: 2 },
+			{ time: 3.5, text: 'Import your libraries into your script', duration: 2 },
+			{ time: 10.5, text: 'Auto-generated UI from your script  parameters', duration: 2.5 },
+			//{ time: 15.0, text: 'Connect your script to your ressources', duration: 2.5 },
+			//{ time: 21.5, text: 'Deploy your script to your workspace', duration: 2.5 },
+			{ time: 29.5, text: 'Trigger your script from a webhook, schedule, CLI, Slack, emails and more', duration: 2.5 },
+		],
+		backend: [
+			{ time: 0.0, text: 'Orchestrate your scripts into powerful flows', duration: 2 },
+			{ time: 8.0, text: 'Connect data between scripts', duration: 2 },
+			{ time: 17.0, text: 'Improve your flow with AI', duration: 2 },
+		],
+		frontend: [
+			{ time: 0.0, text: 'Generate frontend with full code flexibility', duration: 2 },
+			{ time: 26.0, text: 'Update your code with instant preview', duration: 2 },
+			{ time: 32.0, text: 'Connect backend runnables including existing scripts and flows', duration: 3 },
+			//{ time: 40.0, text: 'Deploy your app to your workspace', duration: 2 },
+		],
+		datatables: [],
+	};
+
 	const ProductionTabs = () => {
 		const [selectedTab, setSelectedTab] = useState('scripts');
 		const [progress, setProgress] = useState(0);
@@ -266,10 +291,15 @@ export default function TutorialSection({ subIndex, children }) {
 		const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
 		const progressBarRef = useRef<HTMLDivElement>(null);
 
+		// Subtitle state
+		const [currentSubtitle, setCurrentSubtitle] = useState<string | null>(null);
+		const shownSubtitlesRef = useRef<Set<string>>(new Set());
+		const subtitleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
 		const tabs = [
-			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/scriptslanding.webm' },
+			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts.webm' },
 			{ id: 'backend', label: 'Flows', icon: Server, description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/flowslanding.webm' },
-			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility, AI assistance and built-in datatables.', video: '/videos/appslanding.webm' },
+			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility, AI assistance and built-in datatables.', video: '/videos/landingapps.webm' },
 			{ id: 'datatables', label: 'Data', icon: Database, description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.', video: '/videos/scriptsvideo.webm' }
 		];
 
@@ -318,7 +348,7 @@ export default function TutorialSection({ subIndex, children }) {
 			}
 		}, [selectedTab, hasBeenVisible]);
 
-		// Track video progress using timeupdate event
+		// Track video progress and handle subtitle detection
 		useEffect(() => {
 			const video = getCurrentVideo();
 			if (!video) return;
@@ -327,6 +357,39 @@ export default function TutorialSection({ subIndex, children }) {
 				if (video.duration > 0) {
 					setProgress((video.currentTime / video.duration) * 100);
 					setDuration(video.duration);
+
+					// Check for subtitle triggers
+					const subtitles = videoSubtitles[selectedTab] || [];
+					const currentTime = video.currentTime;
+
+					for (const subtitle of subtitles) {
+						const subtitleKey = `${selectedTab}-${subtitle.time}`;
+						// Check if we're within 0.2s of the subtitle timestamp and haven't shown it yet
+						if (
+							Math.abs(currentTime - subtitle.time) < 0.2 &&
+							!shownSubtitlesRef.current.has(subtitleKey)
+						) {
+							// Mark as shown
+							shownSubtitlesRef.current.add(subtitleKey);
+
+							// Pause video and show subtitle
+							video.pause();
+							setCurrentSubtitle(subtitle.text);
+
+							// Clear any existing timeout
+							if (subtitleTimeoutRef.current) {
+								clearTimeout(subtitleTimeoutRef.current);
+							}
+
+							// Resume after duration
+							subtitleTimeoutRef.current = setTimeout(() => {
+								setCurrentSubtitle(null);
+								video.play();
+							}, subtitle.duration * 1000);
+
+							break; // Only trigger one subtitle at a time
+						}
+					}
 				}
 			};
 
@@ -350,11 +413,25 @@ export default function TutorialSection({ subIndex, children }) {
 			};
 		}, [selectedTab]);
 
-		// Reset progress when tab changes
+		// Reset progress and subtitles when tab changes
 		useEffect(() => {
 			setProgress(0);
 			setIsPlaying(false);
+			setCurrentSubtitle(null);
+			shownSubtitlesRef.current.clear();
+			if (subtitleTimeoutRef.current) {
+				clearTimeout(subtitleTimeoutRef.current);
+			}
 		}, [selectedTab]);
+
+		// Cleanup timeout on unmount
+		useEffect(() => {
+			return () => {
+				if (subtitleTimeoutRef.current) {
+					clearTimeout(subtitleTimeoutRef.current);
+				}
+			};
+		}, []);
 
 		const togglePlayPause = () => {
 			const video = getCurrentVideo();
@@ -383,6 +460,17 @@ export default function TutorialSection({ subIndex, children }) {
 		};
 
 		const currentTime = duration > 0 ? (progress / 100) * duration : 0;
+
+		const skipSubtitle = () => {
+			const video = getCurrentVideo();
+			if (subtitleTimeoutRef.current) {
+				clearTimeout(subtitleTimeoutRef.current);
+			}
+			setCurrentSubtitle(null);
+			if (video) {
+				video.play();
+			}
+		};
 
 		return (
 			<div className="w-full" ref={containerRef}>
@@ -424,6 +512,17 @@ export default function TutorialSection({ subIndex, children }) {
 								>
 									<source src={tab.video} type="video/webm" />
 								</video>
+								{/* Subtitle overlay */}
+								{selectedTab === tab.id && currentSubtitle && (
+									<div
+										className="absolute inset-0 flex items-center justify-center bg-gray-900/80 backdrop-blur-[2px] transition-opacity duration-300 cursor-pointer"
+										onClick={skipSubtitle}
+									>
+										<div className="text-white px-6 py-4 max-w-md text-center">
+											<p className="text-lg font-medium">{currentSubtitle}</p>
+										</div>
+									</div>
+								)}
 								{/* Circular progress indicator - only show for active tab */}
 								{selectedTab === tab.id && (
 									<div className="absolute bottom-3 right-3 group-hover/video:opacity-0 transition-opacity">
