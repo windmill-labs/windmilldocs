@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LandingSection from './LandingSection';
 import { ArrowRight } from 'lucide-react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { BenchmarkVisualization } from '../components/BenchmarkVisualization';
-import { useColorMode } from '@docusaurus/theme-common';
-import classNames from 'classnames';
-import { Switch } from '@headlessui/react';
 // @ts-ignore
 import polyGlott from '/illustrations/polyglot.json';
 // @ts-ignore
@@ -70,100 +66,6 @@ function FeatureCard({ title, description, actionLink, actionUrl, lottieData }: 
 	);
 }
 
-function BenchmarkCard() {
-	const { colorMode } = useColorMode();
-	const [chart, setChart] = useState<'short' | 'long' | undefined>(undefined);
-
-	// Initialize chart after mount to trigger animation
-	React.useEffect(() => {
-		setChart('short');
-	}, []);
-
-	return (
-		<div className="flex flex-col rounded-lg bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm p-6 shadow-lg border border-gray-200 dark:border-gray-700/50 group">
-			<div className="mb-4">
-				<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Best performance at any scale</h3>
-				<p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
-					We engineered Windmill to be the fastest orchestrator in the industry, ensuring your most demanding workloads never bottleneck. From a single-node VPS to 1,000-node K8s clusters, auto-scale on demand or isolate critical tasks with dedicated worker groups on Kubernetes and Docker.
-				</p>
-				<a
-					href="https://www.windmill.dev/docs/misc/benchmarks/competitors"
-					className="text-sm text-blue-600 dark:text-blue-400 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mt-4 hover:text-blue-700 dark:hover:text-blue-300"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					See benchmarks
-					<ArrowRight size={24} />
-				</a>
-			</div>
-			<div className="flex flex-row gap-2 items-center justify-end mb-4">
-				<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
-					10 long tasks
-				</span>
-				<Switch
-					checked={chart === 'short'}
-					title="Switch between short and long running tasks"
-					onChange={() => setChart(chart === 'long' ? 'short' : 'long')}
-					className={`${
-						chart === 'short'
-							? 'bg-blue-500 dark:bg-blue-900'
-							: 'bg-gray-200 dark:bg-gray-800'
-					} relative inline-flex h-[24px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
-				>
-					<span
-						aria-hidden="true"
-						className={`${chart === 'short' ? 'translate-x-6' : 'translate-x-0'} pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
-					/>
-				</Switch>
-				<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
-					40 lightweight tasks
-				</span>
-			</div>
-			<div
-				className={classNames(
-					colorMode === 'dark' ? 'bg-black' : 'bg-gray-100',
-					'w-full p-4 md:p-8 bg-opacity-40 rounded-xl benchmark-chart-container'
-				)}
-				data-theme={colorMode}
-			>
-				<BrowserOnly fallback={<div className="h-64" />}>
-					{() => (
-						<div className="grid">
-							{chart === 'short' ? (
-								<div key="short">
-									<BenchmarkVisualization
-										usecase="fibonacci_40_10"
-										language="python"
-										engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
-										workers={1}
-										title="40 lightweight tasks comparison"
-										maintainAspectRatio={false}
-										shouldAnimate={true}
-									/>
-								</div>
-							) : chart === 'long' ? (
-								<div key="long">
-									<BenchmarkVisualization
-										usecase="fibonacci_10_33"
-										language="python"
-										engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
-										workers={1}
-										title="10 long running tasks comparison"
-										maintainAspectRatio={false}
-										shouldAnimate={true}
-									/>
-								</div>
-							) : (
-								<div className="h-64" />
-							)}
-						</div>
-					)}
-				</BrowserOnly>
-			</div>
-		</div>
-	);
-}
-
 export default function CorePrinciple() {
 	return (
 		<LandingSection bgClass="py-16">
@@ -175,11 +77,6 @@ export default function CorePrinciple() {
 					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
 						The foundational beliefs that guide how we build Windmill.
 					</span>
-				</div>
-
-				{/* Full-width benchmark card */}
-				<div className="mb-6 lg:mb-8">
-					<BenchmarkCard />
 				</div>
 
 				{/* 3 cards in a row */}

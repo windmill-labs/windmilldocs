@@ -2,6 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import LandingSection from './LandingSection';
 import { Lottie } from './LightFeatureCard';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import { BenchmarkVisualization } from '../components/BenchmarkVisualization';
+import { useColorMode } from '@docusaurus/theme-common';
+import classNames from 'classnames';
+import { Switch } from '@headlessui/react';
 
 interface FeatureCardProps {
 	title: string;
@@ -81,6 +86,100 @@ function FeatureCard({ title, description, href, actionText = 'Learn more', imag
 	);
 }
 
+function BenchmarkCard() {
+	const { colorMode } = useColorMode();
+	const [chart, setChart] = useState<'short' | 'long' | undefined>(undefined);
+
+	// Initialize chart after mount to trigger animation
+	React.useEffect(() => {
+		setChart('short');
+	}, []);
+
+	return (
+		<div className="dark:bg-gray-900 bg-gray-50 w-full p-6 rounded-xl">
+			<div className="mb-4">
+				<h3 className="text-xl font-medium text-gray-900 dark:text-white mb-4">Run at any scale with best performance</h3>
+				<p className="text-md text-gray-600 dark:text-gray-300 mb-4">
+					We engineered Windmill to be the fastest orchestrator in the industry, ensuring your most demanding workloads never bottleneck. From a single-node VPS to 1,000-node K8s clusters, auto-scale on demand or isolate critical tasks with dedicated worker groups on Kubernetes and Docker.
+				</p>
+				<a
+					href="https://www.windmill.dev/docs/misc/benchmarks/competitors"
+					className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 hover:ml-2 transition-all"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					See benchmarks
+					<ArrowRight size={20} />
+				</a>
+			</div>
+			<div className="flex flex-row gap-2 items-center justify-end mb-4">
+				<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+					10 long tasks
+				</span>
+				<Switch
+					checked={chart === 'short'}
+					title="Switch between short and long running tasks"
+					onChange={() => setChart(chart === 'long' ? 'short' : 'long')}
+					className={`${
+						chart === 'short'
+							? 'bg-blue-500 dark:bg-blue-900'
+							: 'bg-gray-200 dark:bg-gray-800'
+					} relative inline-flex h-[24px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+				>
+					<span
+						aria-hidden="true"
+						className={`${chart === 'short' ? 'translate-x-6' : 'translate-x-0'} pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+					/>
+				</Switch>
+				<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+					40 lightweight tasks
+				</span>
+			</div>
+			<div
+				className={classNames(
+					colorMode === 'dark' ? 'bg-black' : 'bg-gray-100',
+					'w-full p-4 md:p-8 bg-opacity-40 rounded-xl benchmark-chart-container'
+				)}
+				data-theme={colorMode}
+			>
+				<BrowserOnly fallback={<div className="h-64" />}>
+					{() => (
+						<div className="grid">
+							{chart === 'short' ? (
+								<div key="short">
+									<BenchmarkVisualization
+										usecase="fibonacci_40_10"
+										language="python"
+										engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
+										workers={1}
+										title="40 lightweight tasks comparison"
+										maintainAspectRatio={false}
+										shouldAnimate={true}
+									/>
+								</div>
+							) : chart === 'long' ? (
+								<div key="long">
+									<BenchmarkVisualization
+										usecase="fibonacci_10_33"
+										language="python"
+										engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
+										workers={1}
+										title="10 long running tasks comparison"
+										maintainAspectRatio={false}
+										shouldAnimate={true}
+									/>
+								</div>
+							) : (
+								<div className="h-64" />
+							)}
+						</div>
+					)}
+				</BrowserOnly>
+			</div>
+		</div>
+	);
+}
+
 export default function DeveloperExperienceSection() {
 	return (
 		<LandingSection bgClass="py-16">
@@ -89,7 +188,7 @@ export default function DeveloperExperienceSection() {
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-600">
 						Made for developers, used across the whole organization
 					</h1>
-					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
+					<span className="text-lg text-gray-700 dark:text-gray-200">
 					We make it easy for developers to build internal software and deploy it across their whole organization with no overhead.
 					</span>
 				</div>
@@ -101,6 +200,7 @@ export default function DeveloperExperienceSection() {
 						image="/illustrations/diff.png"
 						imageAlt="Git integration"
 					/>
+					<BenchmarkCard />
 					<FeatureCard
 						title="Monitor with ease and depth"
 						description="Track every job execution with real-time logs and I/O. Get instant Slack or email alerts for failures, or export metrics to OpenTelemetry and Prometheus."

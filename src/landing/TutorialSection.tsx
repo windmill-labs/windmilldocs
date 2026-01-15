@@ -251,8 +251,8 @@ export default function TutorialSection({ subIndex, children }) {
 			lottieData: devfriendly
 		},
 		{
-			title: 'Develop locally',
-			description: 'Develop in our cloud editor or locally via our CLI and VS Code extension. Leverage AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync pipelines across staging and production.',
+			title: 'Full local dev experience',
+			description: 'Use Windmill locally via our CLI and VS Code extension. Leverage AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync pipelines across staging and production.',
 			href: '/docs/advanced/local_development',
 			actionText: 'Set up local dev',
 			lottieData: devfriendly
