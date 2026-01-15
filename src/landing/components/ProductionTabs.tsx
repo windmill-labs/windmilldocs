@@ -14,6 +14,7 @@ export interface TabConfig {
 	icon: keyof typeof iconMap;
 	description: string;
 	video: string;
+	youtubeUrl?: string;
 }
 
 export interface SubtitleConfig {
@@ -30,9 +31,9 @@ export interface ProductionTabsProps {
 
 // Default tabs configuration
 export const defaultTabs: TabConfig[] = [
-	{ id: 'scripts', label: 'Scripts', icon: 'Server', description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm' },
-	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm' },
-	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm' },
+	{ id: 'scripts', label: 'Scripts', icon: 'Server', description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=QRf8C8qF7CY' },
+	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=yE-eDNWTj3g' },
+	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=CNtRLDXbfOE' },
 ];
 
 // Default subtitles configuration
@@ -349,6 +350,26 @@ export default function ProductionTabs({
 								</div>
 							)}
 						</div>
+						{/* YouTube CTA */}
+						{tab.youtubeUrl && (
+							<div className="flex justify-end mt-3">
+								<a
+									href={tab.youtubeUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 transition-colors group/yt"
+								>
+									<svg
+										className="w-5 h-5 text-red-600 dark:text-red-500"
+										viewBox="0 0 24 24"
+										fill="currentColor"
+									>
+										<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+									</svg>
+									<span className="group-hover/yt:underline">Learn more about {tab.label.toLowerCase()}</span>
+								</a>
+							</div>
+						)}
 					</div>
 				))}
 			</div>
