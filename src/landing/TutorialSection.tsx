@@ -262,25 +262,30 @@ export default function TutorialSection({ subIndex, children }) {
 	// Each subtitle has: time (seconds), text, duration (how long to show in seconds)
 	const videoSubtitles: Record<string, { time: number; text: string; duration: number }[]> = {
 		scripts: [
-			{ time: 0.0, text: 'Write scripts in 20+ languages (Python, TS, Go, Java...)', duration: 2 },
-			{ time: 3.5, text: 'Import your libraries into your script', duration: 2 },
-			{ time: 10.5, text: 'Auto-generated UI from your script  parameters', duration: 2.5 },
-			//{ time: 15.0, text: 'Connect your script to your ressources', duration: 2.5 },
+			{ time: 0.0, text: 'Write scripts in 20+ languages (Python, TS, Go, Java, Rust, SQL, Bash, Powershell, Ruby...)', duration: 3 },
+			{ time: 3.5, text: 'Use any import into your script (even private)', duration: 2 },
+			{ time: 10.5, text: 'Auto-generated UI from your script parameters', duration: 2.5 },
+			{ time: 16.0, text: 'Live logs and instant test results', duration: 2.5 },
 			//{ time: 21.5, text: 'Deploy your script to your workspace', duration: 2.5 },
-			{ time: 29.5, text: 'Trigger your script from a webhook, schedule, CLI, Slack, emails and more', duration: 2.5 },
+			{ time: 30.0, text: 'Trigger your script from a webhook, schedule, CLI, Slack, emails and more', duration: 2.5 },
 		],
-		backend: [
-			{ time: 0.0, text: 'Orchestrate your scripts into powerful flows', duration: 2 },
-			{ time: 8.0, text: 'Connect data between scripts', duration: 2 },
-			{ time: 17.0, text: 'Improve your flow with AI', duration: 2 },
+		flows: [
+			{ time: 0.0, text: 'Connect your scripts into high-performance flows', duration: 2 },
+			{ time: 8.0, text: 'Easily connect steps using expressions', duration: 2 },
+			{ time: 17.0, text: 'Use AI to build your flow', duration: 2 },
 		],
-		frontend: [
-			{ time: 0.0, text: 'Generate frontend with full code flexibility', duration: 2 },
+		apps: [
+			{ time: 0.0, text: 'Use full code and any framework to buld your frontend', duration: 2 },
+			{ time: 3.0, text: 'Code by hand or with AI', duration: 2 },
 			{ time: 26.0, text: 'Update your code with instant preview', duration: 2 },
 			{ time: 32.0, text: 'Connect backend runnables including existing scripts and flows', duration: 3 },
 			//{ time: 40.0, text: 'Deploy your app to your workspace', duration: 2 },
 		],
-		datatables: [],
+		data: [
+			{ time: 0.0, text: 'Use the Database Manager to interact with your data', duration: 2.5 },
+			{ time: 6.0, text: 'Query your data in any SQL language', duration: 2 },
+			//{ time: 13.0, text: 'See more : integrate with DuckDB and S3 to manage Parquet and Blob data within a lakehouse architecture.', duration: 4 },
+		],
 	};
 
 	const ProductionTabs = () => {
@@ -297,10 +302,9 @@ export default function TutorialSection({ subIndex, children }) {
 		const subtitleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 		const tabs = [
-			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts.webm' },
-			{ id: 'backend', label: 'Flows', icon: Server, description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/flowslanding.webm' },
-			{ id: 'frontend', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility, AI assistance and built-in datatables.', video: '/videos/landingapps.webm' },
-			{ id: 'datatables', label: 'Data', icon: Database, description: 'Store and query data with built-in PostgreSQL datatables, Ducklake, DuckDB and S3 integrations.', video: '/videos/scriptsvideo.webm' }
+			{ id: 'scripts', label: 'Scripts', icon: Server, description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm' },
+			{ id: 'flows', label: 'Flows', icon: Server, description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm' },
+			{ id: 'apps', label: 'Apps', icon: Monitor, description: 'Connect your scripts and flows to production-ready frontends with full code flexibility, AI assistance and built-in datatables.', video: '/videos/landingapps-ui.webm' }
 		];
 
 		const containerRef = useRef<HTMLDivElement>(null);
