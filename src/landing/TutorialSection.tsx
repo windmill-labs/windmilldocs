@@ -249,6 +249,13 @@ export default function TutorialSection({ subIndex, children }) {
 			icon: GitCompareArrows,
 			href: '/docs/intro',
 			lottieData: devfriendly
+		},
+		{
+			title: 'Develop locally',
+			description: 'Develop in our cloud editor or locally via our CLI and VS Code extension. Leverage AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync pipelines across staging and production.',
+			href: '/docs/advanced/local_development',
+			actionText: 'Set up local dev',
+			lottieData: devfriendly
 		}
 	];
 
@@ -613,18 +620,20 @@ export default function TutorialSection({ subIndex, children }) {
 						isProductionUse ? 'flex flex-col gap-6' : 'grid grid-cols-1 md:grid-cols-5 gap-8'
 					} ${feature.mt || ''} ${index < totalFeatures - 1 ? 'mb-8' : ''}`}
 				>
-					<ContentWrapper {...wrapperProps}>
-						<div className="font-medium text-3xl mb-4 group-hover:ml-2 transition-all">
-							{feature.title}
-						</div>
-						<div className={`text-md mb-4 group-hover:ml-2 transition-all ${isProductionUse ? '' : 'max-w-sm'}`}>
-							{feature.description}
-						</div>
-						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-0">
-							{feature.actionText || 'Learn more'}
-							<ArrowRight size={24} />
-						</div>
-					</ContentWrapper>
+					{!isProductionUse && (
+						<ContentWrapper {...wrapperProps}>
+							<div className="font-medium text-3xl mb-4 group-hover:ml-2 transition-all">
+								{feature.title}
+							</div>
+							<div className={`text-md mb-4 group-hover:ml-2 transition-all max-w-sm`}>
+								{feature.description}
+							</div>
+							<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-0">
+								{feature.actionText || 'Learn more'}
+								<ArrowRight size={24} />
+							</div>
+						</ContentWrapper>
+					)}
 					<div className={isProductionUse ? 'w-full' : 'col-span-3'}>
 						{feature.useBenchmark ? (
 							<div className="flex flex-col w-full gap-4">
@@ -1127,6 +1136,15 @@ export default function TutorialSection({ subIndex, children }) {
 		<div className="flex flex-col" ref={containerRef}>
 			{/* FeatureCard Section */}
 			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col mb-24">
+				{/* Section Header */}
+				<div className="w-full mb-12 text-left">
+					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-600">
+						Build for production
+					</h1>
+					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
+						Build mission-critical internal tools and data pipelines that integrate directly with your existing stack and resources.
+					</span>
+				</div>
 				{features.map((feature, index) => {
 					// Replace the second feature (index 1) with the animation section
 					// if (index === 1) {

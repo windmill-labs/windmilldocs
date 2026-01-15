@@ -2,8 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import LandingSection from './LandingSection';
 import { Lottie } from './LightFeatureCard';
-// @ts-ignore
-import devfriendly from '/illustrations/devfriendly.json';
 
 interface FeatureCardProps {
 	title: string;
@@ -96,13 +94,6 @@ export default function DeveloperExperienceSection() {
 					</span>
 				</div>
 				<div className="flex flex-col gap-6">
-					<FeatureCard
-						title="Develop locally"
-						description="Develop in our cloud editor or locally via our CLI and VS Code extension. Leverage AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync pipelines across staging and production."
-						href="/docs/advanced/local_development"
-						actionText="Set up local dev"
-						lottieData={devfriendly}
-					/>
 					<FeatureCard
 						title="Collaborate with full Git flexibility"
 						description="Enable parallel teamwork with workspace forks that sync to Git branches. Review changes with built-in diffs and maintain a strict audit trail before merging to production."
