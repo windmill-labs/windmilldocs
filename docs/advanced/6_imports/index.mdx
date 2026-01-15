@@ -8,11 +8,11 @@ When a script is deployed through its UI, Windmill generates a lockfile to ensur
 
 On the [enterprise edition](/pricing), Windmill's caches can be configured to sync their cache with a central S3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
 
-![Dependency management & imports](./dependency_management.png "Dependency management & imports")
+For centralized dependency management at the workspace level, see [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx).
 
 ## Lockfile per script inferred from imports (Standard)
 
-In Windmill, you can run scripts without having to [manage a package.json](../14_dependencies_in_typescript/index.mdx#lockfile-per-script-inferred-from-a-packagejson) / [requirements.txt](../15_dependencies_in_python/index.mdx#lockfile-per-script-inferred-from-a-requirementstxt) directly. This is achieved by automatically parsing the imports and resolving the dependencies. This method works for all languages in Windmill.
+In Windmill, you can run scripts without having to manage dependency files directly. This is achieved by automatically parsing the imports and resolving the dependencies. This method works for all languages in Windmill. For more control, you can use [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx) for centralized dependency management.
 
 When using Bun or Deno as the runtime for TypeScript in Windmill, dependencies are resolved directly from the script imports and their imports when using [sharing common logic](../5_sharing_common_logic/index.mdx). The TypeScript runtime Bun ensures 100% compatibility with Node.js without requiring any code modifications.
 
@@ -55,7 +55,7 @@ You can get those 3 files for each script by pulling your workspace with command
 
 Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
 
-Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either the [package.json (if present)](../14_dependencies_in_typescript/index.mdx#lockfile-per-script-inferred-from-a-packagejson) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx) (if configured) or automatically resolving from the script's imports, and from the output of those jobs, create the lockfiles.
 When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
 
 <div className="grid grid-cols-2 gap-6 mb-4">

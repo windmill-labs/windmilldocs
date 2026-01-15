@@ -10,7 +10,6 @@ There are however methods to have more control on your dependencies:
 
 - Using [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx) for centralized dependency management at the workspace level.
 - Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
-- Overriding dependencies [providing a package.json](#lockfile-per-script-inferred-from-a-packagejson).
 - [Bundling](#bundle-per-script-built-by-cli) per script with CLI, more powerful and local only.
 
 Moreover, there are other tricks, compatible with the methodologies mentioned above:
@@ -20,7 +19,6 @@ Moreover, there are other tricks, compatible with the methodologies mentioned ab
 
 To learn more about how dependencies from other languages are handled, see [Dependency management & imports](../../advanced/6_imports/index.mdx).
 
-![Dependency management & imports](../6_imports/dependency_management.png 'Dependency management & imports')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -42,7 +40,7 @@ To learn more about how dependencies from other languages are handled, see [Depe
 
 ## Lockfile per script inferred from imports (Standard)
 
-In Windmill, you can run scripts without having to [manage a package.json](#lockfile-per-script-inferred-from-a-packagejson) directly. This is achieved by automatically parsing the imports and resolving the dependencies.
+In Windmill, you can run scripts without having to manage dependency files directly. This is achieved by automatically parsing the imports and resolving the dependencies. For more control, you can use [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx).
 
 When using Bun as the runtime for TypeScript in Windmill, dependencies are resolved directly from the script imports and their imports when using [sharing common logic](../5_sharing_common_logic/index.mdx). The TypeScript runtime Bun ensures 100% compatibility with Node.js without requiring any code modifications.
 
@@ -92,7 +90,7 @@ You can get those 3 files for each script by pulling your workspace with command
 
 Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
 
-Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either the [package.json (if present)](#lockfile-per-script-inferred-from-a-packagejson) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx) (if configured) or automatically resolving from the script's imports, and from the output of those jobs, create the lockfiles.
 When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -105,68 +103,6 @@ When a lockfile is present alongside a script at time of deployment by the CLI, 
 		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
-	/>
-</div>
-
-## Lockfile per script inferred from a package.json
-
-Although Windmill can [automatically resolve imports](#lockfile-per-script-inferred-from-imports-standard). It is possible to override the dependencies by providing a `package.json` file in the same directory as the script as you would do in a standard Node.js project, building and maintaining a package.json to declare dependencies.
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/T8jMjpNvC2g"
-	title="Override Inferred Dependencies with Custom Dependency Files"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
-
-<br />
-
-When doing [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), if a package.json is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
-
-You can write those package.json manually or through a standar `npm install <X>`.
-
-Several package.json files can therefore coexist, each having authority over the scripts closest to it:
-
-```
-└── windmill_folder/
-    ├── package.json
-    ├── f/foo/
-    │   ├── package.json
-    │   ├── script1.ts
-    │   ├── # script1.ts will use the dependencies from windmill_folder/f/foo/package.json
-    │   └── /bar/
-    │       ├── package.json
-    │       ├── script2.ts
-    │       └── # script2.ts will use the dependencies from windmill_folder/f/foo/bar/package.json
-    └── f/baz/
-        ├── script3.ts
-        └── # script3.ts will use the dependencies from windmill_folder/package.json
-```
-
-The Windmill [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx) has a toggle "Infer lockfile" / "Use current lockfile".
-
-With this toggle, you can choose to use the metadata lockfile (derived from package.json after `wmill script generate-metadata`) instead of inferring them directly from the script.
-
-![Toggle Lockfile](../../cli_local_dev/1_vscode-extension/toggle_lockfile.png 'Toggle Lockfile')
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Local development"
-		description="Develop locally, push to git and deploy automatically to Windmill."
-		href="/docs/advanced/local_development"
-	/>
-	<DocCard
-		title="Command-line interface (CLI)"
-		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
-		href="/docs/advanced/cli"
-	/>
-	<DocCard
-		title="VS Code extension"
-		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
-		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
 
