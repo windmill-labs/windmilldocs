@@ -116,8 +116,10 @@ UNSHARE_ISOLATION_FLAGS="--user --map-root-user --pid --fork --mount-proc"
 What each flag does:
 
 - `--user --map-root-user` - Creates user namespace and maps current user to root inside it
-- `--pid --fork` - Creates isolated PID namespace
+- `--pid --fork` - Creates isolated PID namespace (both flags required together)
 - `--mount-proc` - Mounts isolated /proc filesystem (requires privileged mode in Docker)
+
+**Note**: The `--fork` flag is required when using `--pid`. Custom configurations must include `--fork` for PID namespace isolation to work correctly.
 
 #### Custom flags
 
@@ -136,6 +138,22 @@ UNSHARE_ISOLATION_FLAGS="--pid --fork --mount-proc"
 ```
 
 **Recommendation**: Use the default flags with `privileged: true` for best security. Only use truly unprivileged mode if you cannot enable privileged mode and understand the security tradeoffs.
+
+#### Tini for signal handling
+
+When PID namespace isolation is enabled and tini is available, Windmill uses [tini](https://github.com/krallin/tini) as PID 1 inside the namespace. Tini properly handles signal forwarding, which ensures:
+
+- OOM-killed processes return exit code 137 (128 + SIGKILL) instead of ambiguous errors
+- Zombie processes are properly reaped
+- Signals are correctly forwarded to child processes
+
+Tini is included in the official Windmill Docker images. If tini is not available, Windmill falls back to running without it (with a warning about potentially incorrect OOM exit codes).
+
+You can customize the tini path:
+
+```bash
+UNSHARE_TINI_PATH=/custom/path/to/tini
+```
 
 ### Failure behavior
 
