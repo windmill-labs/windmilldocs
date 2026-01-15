@@ -36,7 +36,7 @@ export default function MobileTutorialSection() {
 						target="_blank"
 						className="group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer"
 					>
-						<div className="font-medium text-xl mb-4 group-hover:ml-2 transition-all">
+						<div className="font-medium text-2xl mb-4 group-hover:ml-2 transition-all">
 							Full local dev experience
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all">

@@ -291,7 +291,7 @@ export default function TutorialSection({ subIndex, children }) {
 				>
 					{!isProductionUse && (
 						<ContentWrapper {...wrapperProps}>
-							<div className="font-medium text-3xl mb-4 group-hover:ml-2 transition-all">
+							<div className="font-medium text-2xl mb-4 group-hover:ml-2 transition-all">
 								{feature.title}
 							</div>
 							<div className={`text-md mb-4 group-hover:ml-2 transition-all max-w-sm`}>
