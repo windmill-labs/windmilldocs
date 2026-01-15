@@ -844,7 +844,7 @@ export default function TutorialSection({ subIndex, children }) {
 				{/* Section Header */}
 				<div className="w-full mb-12 text-left">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-600">
-						Build
+						Build for production
 					</h1>
 					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
 						Build mission-critical internal tools and data pipelines that integrate directly with

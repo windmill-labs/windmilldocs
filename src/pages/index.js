@@ -16,6 +16,7 @@ import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
 import TutorialSection from '../landing/TutorialSection';
+
 import MobileTutorialSection from '../landing/MobileTutorialSection';
 import DeveloperExperienceSection from '../landing/DeveloperExperienceSection';
 
@@ -25,7 +26,6 @@ function HomepageHeader() {
 			<LandingHeader />
 			<Hero />
 			<LogoClouds />
-			{/* HeroExample /> */}
 			<div className="hidden sm:block">
 				<TutorialSection subIndex={undefined} />
 			</div>
@@ -35,6 +35,7 @@ function HomepageHeader() {
 			<DeveloperExperienceSection />
 			<CorePrinciple />
 			<TestimonialsSection />
+			<HeroExample />
 			{/* <IntegrationsList /> */}
 			{/* <EntrepriseFeatures /> */}
 			<LandingSection bgClass="py-0">
