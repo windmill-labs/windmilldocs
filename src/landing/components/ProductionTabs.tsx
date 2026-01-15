@@ -43,7 +43,7 @@ export const defaultSubtitles: Record<string, SubtitleConfig[]> = {
         { time: 3.5, text: 'Import any package including your private repositories', duration: 2 },
         { time: 10.5, text: 'Auto-generate UIs from your script parameters', duration: 2.5 },
         { time: 16.0, text: 'Real-time logs and instant test results', duration: 2.5 },
-        { time: 30.0, text: 'Trigger via Webhooks, Schedule, CLI, Slack, Email and more.', duration: 2.5 },
+        { time: 30.0, text: 'Trigger via webhooks, schedule, CLI, Slack, email and more', duration: 2.5 },
     ],
     flows: [
         { time: 0.0, text: 'Orchestrate scripts into high-performance workflows', duration: 2.5 },
