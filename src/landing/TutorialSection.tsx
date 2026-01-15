@@ -848,7 +848,8 @@ export default function TutorialSection({ subIndex, children }) {
 					</h1>
 					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
 						Build mission-critical internal tools and data pipelines that integrate directly with
-						your existing stack and resources.
+						your existing stack and resources using code with a powerful WebIDE or locally using our
+						CLI and your favorite editor and AI agent.
 					</span>
 				</div>
 				{features.map((feature, index) => {
