@@ -6,9 +6,9 @@ In Windmill [standard mode](#lockfile-per-script-inferred-from-imports-standard)
 From the import lines, Windmill automatically handles the resolution and caching of the script dependencies to ensure fast and consistent execution (this is standard mode).
 
 There are however methods to have more control on your dependencies:
+- Using [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx) for centralized dependency management at the workspace level.
 - Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
 - Using [PEP-723 inline script metadata](#pep-723-inline-script-metadata) for standardized dependency specification.
-- Overriding dependencies [providing a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt).
 
 Moreover, there are other tricks, compatible with the methodologies mentioned above:
 - [Sharing common logic with Relative Imports](#sharing-common-logic-with-relative-imports).
@@ -18,9 +18,13 @@ Moreover, there are other tricks, compatible with the methodologies mentioned ab
 
 To learn more about how dependencies from other languages are handled, see [Dependency management & imports](../../advanced/6_imports/index.mdx).
 
-![Dependency management & imports](../6_imports/dependency_management.png "Dependency management & imports")
 
 <div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace dependencies"
+		description="Manage dependencies centrally at the workspace level for consistent environments."
+		href="/docs/core_concepts/workspace_dependencies"
+	/>
 	<DocCard
 		title="Dependency management & imports"
 		description="Windmill's strength lies in its ability to run scripts without having to manage a requirements.txt directly."
@@ -35,7 +39,7 @@ To learn more about how dependencies from other languages are handled, see [Depe
 
 ## Lockfile per script inferred from imports (Standard)
 
-In Windmill, you can run scripts without having to [manage a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt) directly. This is achieved by automatically parsing the top-level imports and resolving the dependencies. For automatic dependency installation, Windmill will only consider these top-level imports.
+In Windmill, you can run scripts without having to manage a requirements.txt directly. This is achieved by automatically parsing the top-level imports and resolving the dependencies. For automatic dependency installation, Windmill will only consider these top-level imports.
 
 In Python, the top-level imports are automatically parsed on saving of the script and a list of imports is generated. For automatic dependency installation, Windmill will only consider these top-level imports.
 
@@ -74,7 +78,7 @@ You can get those 3 files for each script by pulling your workspace with command
 
 Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
 
-Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either the [requirements.txt (if present)](#lockfile-per-script-inferred-from-a-requirementstxt) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
 When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -87,63 +91,6 @@ When a lockfile is present alongside a script at time of deployment by the CLI, 
 		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
-	/>
-</div>
-
-## Lockfile per script inferred from a requirements.txt
-
-Although Windmill can [automatically resolve imports](#lockfile-per-script-inferred-from-imports-standard). It is possible to override the dependencies by providing a `requirements.txt` file in the same directory as the script as you would do in a standard Python project, building and maintaining a requirements.txt to declare dependencies.
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/T8jMjpNvC2g"
-	title="Override Inferred Dependencies with Custom Dependency Files"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
-
-<br/>
-
-When doing [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), if a requirements.txt is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
-
-You can write those requirements.txt manually or through a standard `pip install package_name`.
-
-Several requirements.txt files can therefore coexist, each having authority over the scripts closest to it:
-
-```
-└── windmill_folder/
-    ├── requirements.txt
-    ├── f/foo/
-    │   ├── requirements.txt
-    │   ├── script1.py
-    │   ├── # script1.py will use the dependencies from windmill_folder/f/foo/requirements.txt
-    │   └── /bar/
-    │       ├── requirements.txt
-    │       ├── script2.py
-    │       └── # script2.py will use the dependencies from windmill_folder/f/foo/bar/requirements.txt
-    └── f/baz/
-        ├── script3.py
-        └── # script3.py will use the dependencies from windmill_folder/requirements.txt
-```
-
-The Windmill [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx) has a toggle "Infer lockfile" / "Use current lockfile".
-
-With this toggle, you can choose to use the metadata lockfile (derived from requirements.txt after `wmill script generate-metadata`) instead of inferring them directly from the script.
-
-![Toggle Lockfile](../../cli_local_dev/1_vscode-extension/toggle_lockfile.png 'Toggle Lockfile')
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Local development"
-		description="Develop locally, push to git and deploy automatically to Windmill."
-		href="/docs/advanced/local_development"
-	/>
-  <DocCard
-		title="Command-line interface (CLI)"
-		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
-		href="/docs/advanced/cli"
 	/>
 	<DocCard
 		title="VS Code extension"

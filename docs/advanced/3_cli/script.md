@@ -85,21 +85,7 @@ Note that you can explicitly exclude (or include) specific files or folders to b
 wmill flow generate-locks
 ```
 
-### package.json & requirements.txt
-
-When doing `wmill script generate-metadata`, if a `package.json` or `requirements.txt` is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
-
-Below is a video on how to override Windmill inferred dependencies by [providing custom package.json](../14_dependencies_in_typescript/index.mdx#lockfile-per-script-inferred-from-a-packagejson) or requirements.txt.
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/T8jMjpNvC2g"
-	title="Override Inferred Dependencies with Custom Dependency Files"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
+For centralized dependency management, see [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx).
 
 ### Arguments
 
