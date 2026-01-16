@@ -78,7 +78,18 @@ export default function ProductionTabs({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [hasBeenVisible, setHasBeenVisible] = useState(false);
 
+	// Lazy loading state - track which tabs have been visited
+	const [visitedTabs, setVisitedTabs] = useState<Set<string>>(new Set([tabs[0]?.id || 'scripts']));
+	// Loading state per video
+	const [loadingState, setLoadingState] = useState<Record<string, { loading: boolean; progress: number }>>({});
+
 	const getCurrentVideo = () => videoRefs.current[selectedTab];
+
+	// Mark tab as visited when selected
+	const handleTabSelect = (tabId: string) => {
+		setSelectedTab(tabId);
+		setVisitedTabs(prev => new Set([...prev, tabId]));
+	};
 
 	// Detect when component is visible in viewport
 	useEffect(() => {
@@ -97,6 +108,78 @@ export default function ProductionTabs({
 		observer.observe(container);
 		return () => observer.disconnect();
 	}, [hasBeenVisible]);
+
+	// Track video loading progress
+	useEffect(() => {
+		const video = videoRefs.current[selectedTab];
+		if (!video || !visitedTabs.has(selectedTab)) return;
+
+		const handleLoadStart = () => {
+			setLoadingState(prev => ({
+				...prev,
+				[selectedTab]: { loading: true, progress: 0 }
+			}));
+		};
+
+		const handleProgress = () => {
+			if (video.buffered.length > 0 && video.duration > 0) {
+				const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+				const progressPercent = (bufferedEnd / video.duration) * 100;
+				setLoadingState(prev => ({
+					...prev,
+					[selectedTab]: { loading: progressPercent < 100, progress: progressPercent }
+				}));
+			}
+		};
+
+		const handleCanPlayThrough = () => {
+			setLoadingState(prev => ({
+				...prev,
+				[selectedTab]: { loading: false, progress: 100 }
+			}));
+		};
+
+		const handleWaiting = () => {
+			setLoadingState(prev => ({
+				...prev,
+				[selectedTab]: { ...prev[selectedTab], loading: true }
+			}));
+		};
+
+		const handlePlaying = () => {
+			setLoadingState(prev => ({
+				...prev,
+				[selectedTab]: { ...prev[selectedTab], loading: false }
+			}));
+		};
+
+		video.addEventListener('loadstart', handleLoadStart);
+		video.addEventListener('progress', handleProgress);
+		video.addEventListener('canplaythrough', handleCanPlayThrough);
+		video.addEventListener('waiting', handleWaiting);
+		video.addEventListener('playing', handlePlaying);
+
+		// Check initial state
+		if (video.readyState >= 4) {
+			setLoadingState(prev => ({
+				...prev,
+				[selectedTab]: { loading: false, progress: 100 }
+			}));
+		} else if (video.readyState < 3) {
+			setLoadingState(prev => ({
+				...prev,
+				[selectedTab]: { loading: true, progress: 0 }
+			}));
+		}
+
+		return () => {
+			video.removeEventListener('loadstart', handleLoadStart);
+			video.removeEventListener('progress', handleProgress);
+			video.removeEventListener('canplaythrough', handleCanPlayThrough);
+			video.removeEventListener('waiting', handleWaiting);
+			video.removeEventListener('playing', handlePlaying);
+		};
+	}, [selectedTab, visitedTabs]);
 
 	// Play/pause videos when tab changes
 	useEffect(() => {
@@ -253,7 +336,7 @@ export default function ProductionTabs({
 				{tabs.map((tab) => (
 					<button
 						key={tab.id}
-						onClick={() => setSelectedTab(tab.id)}
+						onClick={() => handleTabSelect(tab.id)}
 						className={`flex-1 px-4 py-2 font-medium text-sm transition-colors border-b-2 text-center text-gray-900 dark:text-white ${
 							selectedTab === tab.id
 								? 'border-blue-500'
@@ -276,18 +359,57 @@ export default function ProductionTabs({
 							{tab.description}
 						</p>
 						{/* Video */}
-						<div className="relative group/video rounded-lg overflow-hidden">
-							<video
-								ref={(el) => { videoRefs.current[tab.id] = el; }}
-								className="w-full object-cover"
-								loop
-								muted
-								playsInline
-							>
-								<source src={tab.video} type="video/webm" />
-							</video>
+						<div className="relative group/video rounded-lg overflow-hidden bg-gray-900">
+							{visitedTabs.has(tab.id) ? (
+								<video
+									ref={(el) => { videoRefs.current[tab.id] = el; }}
+									className="w-full object-cover"
+									loop
+									muted
+									playsInline
+									preload="auto"
+								>
+									<source src={tab.video} type="video/webm" />
+								</video>
+							) : (
+								<div className="w-full aspect-video" />
+							)}
+							{/* Loading overlay with progress */}
+							{selectedTab === tab.id && loadingState[tab.id]?.loading && (
+								<div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900/90 backdrop-blur-sm">
+									<div className="w-16 h-16 mb-4 relative">
+										<svg className="w-full h-full" viewBox="0 0 50 50">
+											<circle
+												cx="25"
+												cy="25"
+												r="20"
+												fill="none"
+												stroke="rgba(255, 255, 255, 0.2)"
+												strokeWidth="4"
+											/>
+											<circle
+												cx="25"
+												cy="25"
+												r="20"
+												fill="none"
+												stroke="rgba(59, 130, 246, 0.9)"
+												strokeWidth="4"
+												strokeDasharray={2 * Math.PI * 20}
+												strokeDashoffset={2 * Math.PI * 20 * (1 - (loadingState[tab.id]?.progress || 0) / 100)}
+												strokeLinecap="round"
+												className="transition-all duration-300"
+												style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
+											/>
+										</svg>
+										<span className="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
+											{Math.round(loadingState[tab.id]?.progress || 0)}%
+										</span>
+									</div>
+									<p className="text-white/70 text-sm">Loading video...</p>
+								</div>
+							)}
 							{/* Subtitle overlay */}
-							{enableSubtitles && selectedTab === tab.id && currentSubtitle && (
+							{enableSubtitles && selectedTab === tab.id && currentSubtitle && !loadingState[tab.id]?.loading && (
 								<div
 									className="absolute inset-0 flex items-center justify-center bg-gray-900/80 backdrop-blur-[2px] transition-opacity duration-300 cursor-pointer"
 									onClick={skipSubtitle}
