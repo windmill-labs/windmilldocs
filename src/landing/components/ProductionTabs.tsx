@@ -375,7 +375,7 @@ export default function ProductionTabs({
 								<div className="w-full aspect-video" />
 							)}
 							{/* Loading overlay with progress */}
-							{selectedTab === tab.id && loadingState[tab.id]?.loading && (
+							{selectedTab === tab.id && loadingState[tab.id]?.loading && !isPlaying && (
 								<div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900/90 backdrop-blur-sm">
 									<div className="w-16 h-16 mb-4 relative">
 										<svg className="w-full h-full" viewBox="0 0 50 50">
