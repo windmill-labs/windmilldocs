@@ -14,6 +14,7 @@ export interface TabConfig {
 	icon: keyof typeof iconMap;
 	description: string;
 	video: string;
+	localDevVideo: string;
 	youtubeUrl?: string;
 }
 
@@ -26,17 +27,18 @@ export interface SubtitleConfig {
 export interface ProductionTabsProps {
 	tabs: TabConfig[];
 	subtitles?: Record<string, SubtitleConfig[]>;
+	localDevSubtitles?: Record<string, SubtitleConfig[]>;
 	enableSubtitles?: boolean;
 }
 
 // Default tabs configuration
 export const defaultTabs: TabConfig[] = [
-	{ id: 'scripts', label: 'Scripts', icon: 'Server', description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=QRf8C8qF7CY' },
-	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=yE-eDNWTj3g' },
-	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=CNtRLDXbfOE' },
+	{ id: 'scripts', label: 'Scripts', icon: 'Server', description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm', localDevVideo: '/videos/landingscripts-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=QRf8C8qF7CY' },
+	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm', localDevVideo: '/videos/landingflows-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=yE-eDNWTj3g' },
+	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm', localDevVideo: '/videos/landingapps-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=CNtRLDXbfOE' },
 ];
 
-// Default subtitles configuration
+// Default subtitles configuration for Windmill UI videos
 export const defaultSubtitles: Record<string, SubtitleConfig[]> = {
 	scripts: [
         { time: 0.0, text: 'Code in 20+ languages (Python, TS, Go, Rust, Java, SQL, Bash, Ruby...)', duration: 3 },
@@ -58,21 +60,48 @@ export const defaultSubtitles: Record<string, SubtitleConfig[]> = {
     ]
 };
 
+// Default subtitles configuration for Local Dev videos
+export const defaultLocalDevSubtitles: Record<string, SubtitleConfig[]> = {
+	scripts: [
+		{ time: 0.0, text: 'Pull scripts from your workspace via the Windmill CLI', duration: 3 },
+        { time: 12.0, text: 'Auto-generate script UIs with the VS Code extension', duration: 2.5 },
+        { time: 19.0, text: 'Edit code in your local editor with instant sync', duration: 2.5 },
+        { time: 26.0, text: 'Test locally with immediate feedback loops', duration: 2.5 },
+        { time: 31.0, text: 'Refine your logic with your favorite AI agent', duration: 2.5 },
+        { time: 51.0, text: 'Push changes back to your workspace', duration: 2.5 },
+        { time: 57.0, text: 'Deployment complete. Changes are live in the Windmill UI', duration: 2.5 },
+    ],
+    flows: [
+        { time: 0.0, text: 'Define flows as YAML files in your repository', duration: 2.5 },
+        { time: 5.0, text: 'Reference scripts by path for clean organization', duration: 2.5 },
+        { time: 10.0, text: 'Version control your entire workflow', duration: 2 },
+    ],
+    apps: [
+        { time: 0.0, text: 'Build app frontends with any framework', duration: 2.5 },
+        { time: 5.0, text: 'Use React, Vue, Svelte or vanilla JS', duration: 2.5 },
+        { time: 10.0, text: 'Connect to Windmill scripts and flows as backend', duration: 2.5 },
+    ]
+};
+
+export type VideoMode = 'ui' | 'localDev';
+
 export default function ProductionTabs({
 	tabs = defaultTabs,
 	subtitles = defaultSubtitles,
+	localDevSubtitles = defaultLocalDevSubtitles,
 	enableSubtitles = true,
 }: ProductionTabsProps) {
 	const [selectedTab, setSelectedTab] = useState(tabs[0]?.id || 'scripts');
 	const [progress, setProgress] = useState(0);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [duration, setDuration] = useState(0);
+	const [videoMode, setVideoMode] = useState<VideoMode>('ui');
 	const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
 	const progressBarRef = useRef<HTMLDivElement>(null);
 
 	// Subtitle state
 	const [currentSubtitle, setCurrentSubtitle] = useState<string | null>(null);
-	const shownSubtitlesRef = useRef<Set<string>>(new Set());
+	const lastSubtitleTimeRef = useRef<number>(-1);
 	const subtitleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -83,7 +112,8 @@ export default function ProductionTabs({
 	// Loading state per video
 	const [loadingState, setLoadingState] = useState<Record<string, { loading: boolean; progress: number }>>({});
 
-	const getCurrentVideo = () => videoRefs.current[selectedTab];
+	const getVideoKey = (tabId: string) => `${tabId}-${videoMode}`;
+	const getCurrentVideo = () => videoRefs.current[getVideoKey(selectedTab)];
 
 	// Mark tab as visited when selected
 	const handleTabSelect = (tabId: string) => {
@@ -111,13 +141,14 @@ export default function ProductionTabs({
 
 	// Track video loading progress
 	useEffect(() => {
-		const video = videoRefs.current[selectedTab];
+		const videoKey = getVideoKey(selectedTab);
+		const video = videoRefs.current[videoKey];
 		if (!video || !visitedTabs.has(selectedTab)) return;
 
 		const handleLoadStart = () => {
 			setLoadingState(prev => ({
 				...prev,
-				[selectedTab]: { loading: true, progress: 0 }
+				[videoKey]: { loading: true, progress: 0 }
 			}));
 		};
 
@@ -127,7 +158,7 @@ export default function ProductionTabs({
 				const progressPercent = (bufferedEnd / video.duration) * 100;
 				setLoadingState(prev => ({
 					...prev,
-					[selectedTab]: { loading: progressPercent < 100, progress: progressPercent }
+					[videoKey]: { loading: progressPercent < 100, progress: progressPercent }
 				}));
 			}
 		};
@@ -135,21 +166,21 @@ export default function ProductionTabs({
 		const handleCanPlayThrough = () => {
 			setLoadingState(prev => ({
 				...prev,
-				[selectedTab]: { loading: false, progress: 100 }
+				[videoKey]: { loading: false, progress: 100 }
 			}));
 		};
 
 		const handleWaiting = () => {
 			setLoadingState(prev => ({
 				...prev,
-				[selectedTab]: { ...prev[selectedTab], loading: true }
+				[videoKey]: { ...prev[videoKey], loading: true }
 			}));
 		};
 
 		const handlePlaying = () => {
 			setLoadingState(prev => ({
 				...prev,
-				[selectedTab]: { ...prev[selectedTab], loading: false }
+				[videoKey]: { ...prev[videoKey], loading: false }
 			}));
 		};
 
@@ -163,12 +194,12 @@ export default function ProductionTabs({
 		if (video.readyState >= 4) {
 			setLoadingState(prev => ({
 				...prev,
-				[selectedTab]: { loading: false, progress: 100 }
+				[videoKey]: { loading: false, progress: 100 }
 			}));
 		} else if (video.readyState < 3) {
 			setLoadingState(prev => ({
 				...prev,
-				[selectedTab]: { loading: true, progress: 0 }
+				[videoKey]: { loading: true, progress: 0 }
 			}));
 		}
 
@@ -179,9 +210,9 @@ export default function ProductionTabs({
 			video.removeEventListener('waiting', handleWaiting);
 			video.removeEventListener('playing', handlePlaying);
 		};
-	}, [selectedTab, visitedTabs]);
+	}, [selectedTab, visitedTabs, videoMode]);
 
-	// Play/pause videos when tab changes
+	// Play/pause videos when tab or video mode changes
 	useEffect(() => {
 		// Pause all videos first
 		Object.values(videoRefs.current).forEach(video => {
@@ -201,7 +232,7 @@ export default function ProductionTabs({
 		} else {
 			video.play();
 		}
-	}, [selectedTab, hasBeenVisible, tabs]);
+	}, [selectedTab, hasBeenVisible, tabs, videoMode]);
 
 	// Track video progress and handle subtitle detection
 	useEffect(() => {
@@ -214,19 +245,25 @@ export default function ProductionTabs({
 				setDuration(video.duration);
 
 				// Check for subtitle triggers (only if enabled)
-				if (enableSubtitles) {
-					const tabSubtitles = subtitles[selectedTab] || [];
+				if (enableSubtitles && !currentSubtitle) {
+					const activeSubtitles = videoMode === 'ui' ? subtitles : localDevSubtitles;
+					const tabSubtitles = activeSubtitles[selectedTab] || [];
 					const currentTime = video.currentTime;
 
+					// Reset tracking if video looped (currentTime went backwards significantly)
+					if (currentTime < lastSubtitleTimeRef.current - 1) {
+						lastSubtitleTimeRef.current = -1;
+					}
+
 					for (const subtitle of tabSubtitles) {
-						const subtitleKey = `${selectedTab}-${subtitle.time}`;
-						// Check if we're within 0.2s of the subtitle timestamp and haven't shown it yet
+						// Check if we're within 0.2s of the subtitle timestamp
+						// and this subtitle time is after the last one we triggered
 						if (
 							Math.abs(currentTime - subtitle.time) < 0.2 &&
-							!shownSubtitlesRef.current.has(subtitleKey)
+							subtitle.time > lastSubtitleTimeRef.current
 						) {
-							// Mark as shown
-							shownSubtitlesRef.current.add(subtitleKey);
+							// Mark this subtitle time as triggered
+							lastSubtitleTimeRef.current = subtitle.time;
 
 							// Pause video and show subtitle
 							video.pause();
@@ -268,18 +305,30 @@ export default function ProductionTabs({
 			video.removeEventListener('pause', handlePause);
 			video.removeEventListener('loadedmetadata', handleLoadedMetadata);
 		};
-	}, [selectedTab, enableSubtitles, subtitles]);
+	}, [selectedTab, enableSubtitles, subtitles, localDevSubtitles, videoMode]);
 
 	// Reset progress and subtitles when tab changes
 	useEffect(() => {
 		setProgress(0);
 		setIsPlaying(false);
 		setCurrentSubtitle(null);
-		shownSubtitlesRef.current.clear();
+		lastSubtitleTimeRef.current = -1;
 		if (subtitleTimeoutRef.current) {
 			clearTimeout(subtitleTimeoutRef.current);
 		}
 	}, [selectedTab]);
+
+	// Reset and replay when video mode changes
+	useEffect(() => {
+		setProgress(0);
+		setIsPlaying(false);
+		setCurrentSubtitle(null);
+		lastSubtitleTimeRef.current = -1;
+		setLoadingState({});
+		if (subtitleTimeoutRef.current) {
+			clearTimeout(subtitleTimeoutRef.current);
+		}
+	}, [videoMode]);
 
 	// Cleanup timeout on unmount
 	useEffect(() => {
@@ -329,8 +378,41 @@ export default function ProductionTabs({
 		}
 	};
 
+	const getVideoSrc = (tab: TabConfig) => {
+		return videoMode === 'ui' ? tab.video : tab.localDevVideo;
+	};
+
+	const getCurrentSubtitles = () => {
+		return videoMode === 'ui' ? subtitles : localDevSubtitles;
+	};
+
 	return (
 		<div className="w-full" ref={containerRef}>
+			{/* Video mode switch */}
+			<div className="flex justify-end mb-4">
+				<div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+					<button
+						onClick={() => setVideoMode('ui')}
+						className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+							videoMode === 'ui'
+								? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+								: 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+						}`}
+					>
+						Windmill UI
+					</button>
+					<button
+						onClick={() => setVideoMode('localDev')}
+						className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+							videoMode === 'localDev'
+								? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+								: 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+						}`}
+					>
+						Local Dev
+					</button>
+				</div>
+			</div>
 			{/* Tab buttons */}
 			<div className="flex w-full mb-4 border-b border-gray-200 dark:border-gray-700">
 				{tabs.map((tab) => (
@@ -362,20 +444,21 @@ export default function ProductionTabs({
 						<div className="relative group/video rounded-lg overflow-hidden bg-gray-900">
 							{visitedTabs.has(tab.id) ? (
 								<video
-									ref={(el) => { videoRefs.current[tab.id] = el; }}
+									key={`${tab.id}-${videoMode}`}
+									ref={(el) => { videoRefs.current[`${tab.id}-${videoMode}`] = el; }}
 									className="w-full object-cover"
 									loop
 									muted
 									playsInline
 									preload="auto"
 								>
-									<source src={tab.video} type="video/webm" />
+									<source src={getVideoSrc(tab)} type="video/webm" />
 								</video>
 							) : (
 								<div className="w-full aspect-video" />
 							)}
 							{/* Loading overlay with progress */}
-							{selectedTab === tab.id && loadingState[tab.id]?.loading && !isPlaying && (
+							{selectedTab === tab.id && loadingState[getVideoKey(tab.id)]?.loading && !isPlaying && (
 								<div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900/90 backdrop-blur-sm">
 									<div className="w-16 h-16 mb-4 relative">
 										<svg className="w-full h-full" viewBox="0 0 50 50">
@@ -395,21 +478,21 @@ export default function ProductionTabs({
 												stroke="rgba(59, 130, 246, 0.9)"
 												strokeWidth="4"
 												strokeDasharray={2 * Math.PI * 20}
-												strokeDashoffset={2 * Math.PI * 20 * (1 - (loadingState[tab.id]?.progress || 0) / 100)}
+												strokeDashoffset={2 * Math.PI * 20 * (1 - (loadingState[getVideoKey(tab.id)]?.progress || 0) / 100)}
 												strokeLinecap="round"
 												className="transition-all duration-300"
 												style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
 											/>
 										</svg>
 										<span className="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-											{Math.round(loadingState[tab.id]?.progress || 0)}%
+											{Math.round(loadingState[getVideoKey(tab.id)]?.progress || 0)}%
 										</span>
 									</div>
 									<p className="text-white/70 text-sm">Loading video...</p>
 								</div>
 							)}
 							{/* Subtitle overlay */}
-							{enableSubtitles && selectedTab === tab.id && currentSubtitle && !loadingState[tab.id]?.loading && (
+							{enableSubtitles && selectedTab === tab.id && currentSubtitle && !loadingState[getVideoKey(tab.id)]?.loading && (
 								<div
 									className="absolute inset-0 flex items-center justify-center bg-gray-900/80 backdrop-blur-[2px] transition-opacity duration-300 cursor-pointer"
 									onClick={skipSubtitle}
