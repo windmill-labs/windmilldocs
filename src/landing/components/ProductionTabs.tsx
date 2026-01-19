@@ -41,7 +41,7 @@ export const defaultTabs: TabConfig[] = [
 // Default subtitles configuration for Windmill UI videos
 export const defaultSubtitles: Record<string, SubtitleConfig[]> = {
 	scripts: [
-        { time: 0.0, text: 'Code in 20+ languages (Python, TS, Go, Rust, Java, SQL, Bash, Ruby...)', duration: 3 },
+        { time: 0.5, text: 'Code in 20+ languages (Python, TS, Go, Rust, Java, SQL, Bash, Ruby...)', duration: 3 },
         { time: 3.5, text: 'Import any package including your private repositories', duration: 2 },
         { time: 10.5, text: 'Auto-generate UIs from your script parameters', duration: 2.5 },
         { time: 16.0, text: 'Real-time logs and instant test results', duration: 2.5 },
@@ -63,7 +63,7 @@ export const defaultSubtitles: Record<string, SubtitleConfig[]> = {
 // Default subtitles configuration for Local Dev videos
 export const defaultLocalDevSubtitles: Record<string, SubtitleConfig[]> = {
 	scripts: [
-		{ time: 0.0, text: 'Pull scripts from your workspace via the Windmill CLI', duration: 3 },
+		{ time: 0.5, text: 'Pull scripts from your workspace via the Windmill CLI', duration: 3 },
         { time: 12.0, text: 'Auto-generate script UIs with the VS Code extension', duration: 2.5 },
         { time: 19.0, text: 'Edit code in your local editor with instant sync', duration: 2.5 },
         { time: 26.0, text: 'Test locally with immediate feedback loops', duration: 2.5 },
@@ -102,6 +102,7 @@ export default function ProductionTabs({
 	// Subtitle state
 	const [currentSubtitle, setCurrentSubtitle] = useState<string | null>(null);
 	const lastSubtitleTimeRef = useRef<number>(-1);
+	const isShowingSubtitleRef = useRef<boolean>(false);
 	const subtitleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -239,13 +240,17 @@ export default function ProductionTabs({
 		const video = getCurrentVideo();
 		if (!video) return;
 
+		// Reset subtitle tracking when this effect runs (on tab/mode change)
+		lastSubtitleTimeRef.current = -1;
+		isShowingSubtitleRef.current = false;
+
 		const handleTimeUpdate = () => {
 			if (video.duration > 0) {
 				setProgress((video.currentTime / video.duration) * 100);
 				setDuration(video.duration);
 
-				// Check for subtitle triggers (only if enabled)
-				if (enableSubtitles && !currentSubtitle) {
+				// Check for subtitle triggers (only if enabled and no subtitle currently showing)
+				if (enableSubtitles && !isShowingSubtitleRef.current) {
 					const activeSubtitles = videoMode === 'ui' ? subtitles : localDevSubtitles;
 					const tabSubtitles = activeSubtitles[selectedTab] || [];
 					const currentTime = video.currentTime;
@@ -264,6 +269,7 @@ export default function ProductionTabs({
 						) {
 							// Mark this subtitle time as triggered
 							lastSubtitleTimeRef.current = subtitle.time;
+							isShowingSubtitleRef.current = true;
 
 							// Pause video and show subtitle
 							video.pause();
@@ -277,6 +283,7 @@ export default function ProductionTabs({
 							// Resume after duration
 							subtitleTimeoutRef.current = setTimeout(() => {
 								setCurrentSubtitle(null);
+								isShowingSubtitleRef.current = false;
 								video.play();
 							}, subtitle.duration * 1000);
 
@@ -313,6 +320,7 @@ export default function ProductionTabs({
 		setIsPlaying(false);
 		setCurrentSubtitle(null);
 		lastSubtitleTimeRef.current = -1;
+		isShowingSubtitleRef.current = false;
 		if (subtitleTimeoutRef.current) {
 			clearTimeout(subtitleTimeoutRef.current);
 		}
@@ -324,6 +332,7 @@ export default function ProductionTabs({
 		setIsPlaying(false);
 		setCurrentSubtitle(null);
 		lastSubtitleTimeRef.current = -1;
+		isShowingSubtitleRef.current = false;
 		setLoadingState({});
 		if (subtitleTimeoutRef.current) {
 			clearTimeout(subtitleTimeoutRef.current);
@@ -373,6 +382,7 @@ export default function ProductionTabs({
 			clearTimeout(subtitleTimeoutRef.current);
 		}
 		setCurrentSubtitle(null);
+		isShowingSubtitleRef.current = false;
 		if (video) {
 			video.play();
 		}
