@@ -45,7 +45,7 @@ wmill script bootstrap [--summary <summary>] [--description <description>] <path
 | Argument   | Description                                                                                                                                                                              |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `path`     | The path of the script to be created.                                                                                                                                                    |
-| `language` | The language of the new script. It should be one of `deno`, `python3`, `bun`, `bash`, `go`, `nativets`, `postgresql`, `mysql`, `bigquery`, `snowflake`, `mysql`, `graphql`, `powershell` |
+| `language` | The language of the new script. It should be one of `ansible`, `bash`, `bigquery`, `bun`, `csharp`, `deno`, `duckdb`, `go`, `graphql`, `java`, `mysql`, `mssql`, `nativets`, `nu`, `oracledb`, `php`, `postgresql`, `powershell`, `python3`, `ruby`, `rust`, `snowflake` |
 
 ### Examples
 
@@ -85,21 +85,7 @@ Note that you can explicitly exclude (or include) specific files or folders to b
 wmill flow generate-locks
 ```
 
-### package.json & requirements.txt
-
-When doing `wmill script generate-metadata`, if a `package.json` or `requirements.txt` is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
-
-Below is a video on how to override Windmill inferred dependencies by [providing custom package.json](../14_dependencies_in_typescript/index.mdx#lockfile-per-script-inferred-from-a-packagejson) or requirements.txt.
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/T8jMjpNvC2g"
-	title="Override Inferred Dependencies with Custom Dependency Files"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
+For centralized dependency management, see [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx).
 
 ### Arguments
 

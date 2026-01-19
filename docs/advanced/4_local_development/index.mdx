@@ -168,13 +168,7 @@ Locally, the lockfile is respected. It "wins" over the dependencies pinned via t
 
 Locally, flows and apps are stored in a folder ending with `.flow` and `.app` respectively. They include a `flow.yaml` and `app.yaml` file respectively, and the 3 files mentioned [above](#editing-and-creating-scripts-locally) for each inline script they contain.
 
-### Package.json & requirements.txt
-
-If you have a `package.json` or `requirements.txt` file in the same or parent directory as your script, the `wmill script generate-metadata` command will automatically include the dependencies in the metadata file.
-
-The lockfile for a file generated with generated-metadata will be overriden by the closest package.json from a parent or current folder if there is one.
-
-![Generate Metadata Path](./generate_metadata_path.png 'Generate Metadata Path')
+For centralized dependency management, see [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx).
 
 But what if you want to create a new script from scratch? It's also easy, just create a file with the correct extension (or run `wmill script bootstrap <path> <language>`), and simply run `generate-metadata` command to generate the metadata file. The name of the file and its location in the folder will become the script path in Windmill.
 
