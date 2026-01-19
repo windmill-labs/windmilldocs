@@ -101,6 +101,7 @@ wmill sync pull [options]
 | `--include-settings`   | None          | Include syncing workspace settings.                                                                                                                                                                                  |
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                                    |
 | `--skip-branch-validation` | None      | Skip git branch validation and prompts. Useful for temporary feature branches that don't need to be added to wmill.yaml.                                                                                             |
+| `--branch`             | `<branch>`    | Override the current Git branch. Useful for working outside a Git repository or testing branch-specific configurations.                                                                                              |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Overrides `wmill.yaml` includes. Patterns can include `*` (any string until '/') and `**` (any string). |
 | `-e, --excludes`       | `<patterns>`  | Comma-separated patterns to specify which files to NOT take into account. Overrides `wmill.yaml` excludes.                                                                                                           |
 | `--extra-includes`     | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy.                  |
@@ -136,6 +137,7 @@ wmill sync push [options]
 | `--include-settings`   | None          | Include syncing workspace settings.                                                                                                                                                                 |
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                   |
 | `--skip-branch-validation` | None      | Skip git branch validation and prompts. Useful for temporary feature branches that don't need to be added to wmill.yaml.                                                                            |
+| `--branch`             | `<branch>`    | Override the current Git branch. Useful for working outside a Git repository or testing branch-specific configurations.                                                                             |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Patterns can include `*` (any string until '/') and `**` (any string).                 |
 | `-e, --excludes`       | `<patterns>`  | Comma-separated patterns to specify which files to NOT take into account.                                                                                                                           |
 | `--extra-includes`     | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy. |
@@ -225,6 +227,9 @@ gitBranches:
       - "u/alex/config/**"
     variables:
       - "u/alex/database_*"
+    folders:
+      - "f/env_*"
+    settings: true
 ```
 
 ### Configuration resolution priority
@@ -298,6 +303,9 @@ export interface SyncOptions {
     commonSpecificItems?: {
       variables?: string[];
       resources?: string[];
+      triggers?: string[];
+      folders?: string[];
+      settings?: boolean;
     };
     [branchName: string]: SyncOptions & {
       overrides?: Partial<SyncOptions>;
@@ -307,6 +315,9 @@ export interface SyncOptions {
       specificItems?: {
         variables?: string[];
         resources?: string[];
+        triggers?: string[];
+        folders?: string[];
+        settings?: boolean;
       };
     }
   };
