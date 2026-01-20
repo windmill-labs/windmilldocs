@@ -34,7 +34,7 @@ export interface ProductionTabsProps {
 // Default tabs configuration
 export const defaultTabs: TabConfig[] = [
 	{ id: 'scripts', label: 'Scripts', icon: 'Server', description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm', localDevVideo: '/videos/landingscripts-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=QRf8C8qF7CY' },
-	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm', localDevVideo: '/videos/landingflows-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=yE-eDNWTj3g' },
+	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm', localDevVideo: '/videos/landingflows-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=yE-eDNWTj3g' },
 	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm', localDevVideo: '/videos/landingapps-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=CNtRLDXbfOE' },
 ];
 
@@ -67,14 +67,19 @@ export const defaultLocalDevSubtitles: Record<string, SubtitleConfig[]> = {
         { time: 12.0, text: 'Auto-generate script UIs with the VS Code extension', duration: 2.5 },
         { time: 19.0, text: 'Edit code in your local editor with instant sync', duration: 2.5 },
         { time: 26.0, text: 'Test locally with immediate feedback loops', duration: 2.5 },
-        { time: 31.0, text: 'Refine your logic with your favorite AI agent', duration: 2.5 },
+        { time: 31.0, text: 'Refine your logic with your favorite AI assistant', duration: 2.5 },
         { time: 51.0, text: 'Push changes back to your workspace', duration: 2.5 },
         { time: 57.0, text: 'Deployment complete. Changes are live in the Windmill UI', duration: 2.5 },
     ],
-    flows: [
-        { time: 0.0, text: 'Define flows as YAML files in your repository', duration: 2.5 },
-        { time: 5.0, text: 'Reference scripts by path for clean organization', duration: 2.5 },
-        { time: 10.0, text: 'Version control your entire workflow', duration: 2 },
+	flows: [
+        { time: 0.5, text: 'Draft your flow using your favorite AI assistant', duration: 2.5 },
+        { time: 10.0, text: 'Windmill generates a YAML definition for your flow', duration: 2.5 },
+        { time: 17.0, text: 'The VS Code extension renders an instant flow preview', duration: 2.5 },
+        { time: 24.0, text: 'Test your flow with full observability and tracing', duration: 2.5 },
+        { time: 33.5, text: 'Add new steps directly from the visual preview', duration: 2.5 },
+        { time: 39.0, text: 'Bidirectional sync between your YAML and the preview', duration: 2.5 },
+        { time: 45.0, text: 'Push your flow to the workspace via the CLI', duration: 2.5 },
+        { time: 53.0, text: 'Deployment complete. Run your flow live in the UI', duration: 2.5 },
     ],
     apps: [
         { time: 0.0, text: 'Build app frontends with any framework', duration: 2.5 },
@@ -399,7 +404,7 @@ export default function ProductionTabs({
 	return (
 		<div className="w-full" ref={containerRef}>
 			{/* Video mode switch */}
-			<div className="flex justify-end mb-4">
+			<div className="flex justify-center mb-4">
 				<div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
 					<button
 						onClick={() => setVideoMode('ui')}
