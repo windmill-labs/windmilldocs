@@ -455,7 +455,11 @@ The first time a dependency is seen by a worker, if it is not cached locally, th
 
 ## S3 Proxy
 
-Windmill provides an endpoint that exposes workspace storages via the S3 protocol. It is used by DuckDB scripts when accessing S3, but you can use it yourself with any S3 Client:
+Windmill provides an endpoint that exposes workspace storages via the S3 protocol while hiding the resource credentials and handling advanced permissions:
+
+`http://{base_url}/api/w/{workspaceId}/s3_proxy`
+
+It is used by DuckDB scripts when accessing S3, but you can use it yourself with any S3 Client:
 
 ```ts
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
