@@ -48,7 +48,7 @@ The default rules enforce that users can only access files in S3 in paths that t
 
 For example, user `alice` can access files in the path `u/alice/**/*` and files shared with her in `g/group1/**/*` if she is part of `group1`. If she has read-only access to `folder1`, and she tries to access the s3 object at path, `f/folder1/file.csv`, she will only be able to read the file, not write or delete it.
 
-These rules are enforced when accessing data with the Windmill client (e.g in Typescript or Python), or from the Windmill S3 Proxy (used by DuckDB scripts).
+These rules are enforced when accessing data with the Windmill client (e.g in Typescript or Python), or from the Windmill [S3 Proxy](#s3-proxy) (used by DuckDB scripts).
 
 ![Advanced S3 permissions](./advanced_permissions.jpg 'Advanced S3 permissions')
 
@@ -452,6 +452,50 @@ The first time a dependency is seen by a worker, if it is not cached locally, th
 		href="/docs/core_concepts/service_logs"
 	/>
 </div>
+
+## S3 Proxy
+
+Windmill provides an endpoint that exposes workspace storages via the S3 protocol. It is used by DuckDB scripts when accessing S3, but you can use it yourself with any S3 Client:
+
+```ts
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+
+export async function main() {
+	const base_url = process.env['WM_BASE_URL'];
+	const workspaceId = process.env['WM_WORKSPACE'];
+
+	const tokenParts = process.env['WM_TOKEN'].split('.');
+	// JWT header and payload constitute the access key ID
+	const accessKeyId = `${tokenParts[0]}.${tokenParts[1]}`;
+	// JWT signature is the secret key
+	const secretAccessKey = tokenParts[2];
+
+	try {
+		const s3Client = new S3Client({
+			region: 'us-east-1', // Any region
+			endpoint: `${base_url}/api/w/${workspaceId}/s3_proxy`,
+			credentials: { accessKeyId, secretAccessKey }
+		});
+
+		const putObjectCommand = new PutObjectCommand({
+			Bucket: '_default_', // Secondary workspace storage name or _default_
+			Key: 'hello-world.txt',
+			Body: 'Hello world!',
+			ContentType: 'text/plain'
+		});
+
+		await s3Client.send(putObjectCommand);
+		return 's3:///hello-world.txt';
+	} catch (error: any) {
+		const errorMsg = error.$response?.body ?? error.message;
+		return { success: false, error: errorMsg };
+	}
+}
+```
+
+The proxy uses the Windmill JWT token for authentication.
+If your storage is of type S3, this proxy simply redirects the request as-is to the true S3 endpoint.
+For Azure Blob Storage, we have a lightweight translation layer that converts S3 requests to the Azure Blob protocol but we do not recommend relying on it.
 
 ## Streaming large SQL query results to S3 (Enterprise feature)
 
