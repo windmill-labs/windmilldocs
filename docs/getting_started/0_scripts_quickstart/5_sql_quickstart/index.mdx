@@ -147,16 +147,16 @@ Fill out the form with the information of your MS SQL instance and "Test connect
 
 ![Paste in Resource Values](./fill_mssql.png.webp)
 
-| Property   | Type   | Description              | Default | Required | Where to Find                                                                                                                                                                                                                                               |
-| ---------- | ------ | ------------------------ | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| host       | string | Instance host            |         | true     | Your hosting provider's control panel or in your server's MS SQL configuration file                                                                                                                                                                         |
-| port       | number | Instance port            |         | false    | Your hosting provider's control panel or in your server's MS SQL configuration file                                                                                                                                                                         |
-| user       | string | Username                 |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting                                                                                                                                                                      |
-| dbname     | string | Database name            |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting                                                                                                                                                                      |
-| password   | string | User's password          |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting                                                                                                                                                                      |
-| aad_token  | object | OAuth token AD           |         | true     | Either username/password or aad_token should be provided. Requires OAuth setup in Windmill                                                                                                                                                                  |
-| trust_cert | bool   | Trust server certificate | true    | false    | If true, the server certificate will be trusted even if it is not signed by a trusted authority                                                                                                                                                             |
-| ca_cert    | string | CA certificate           |         | false    | CA certificate to verify the server certificate. [More information on MS SQL certificates](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-security?view=sql-server-ver16#encrypt-connections-to-sql-server-linux-containers) |
+| Property  | Type   | Description              | Default | Required | Where to Find                                                                                   |
+| --------- | ------ | ------------------------ | ------- | -------- | ----------------------------------------------------------------------------------------------- |
+| host      | string | Instance host            |         | true     | Your hosting provider's control panel or in your server's MS SQL configuration file             |
+| port      | number | Instance port            |         | false    | Your hosting provider's control panel or in your server's MS SQL configuration file             |
+| user      | string | Username                 |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
+| dbname    | string | Database name            |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
+| password  | string | User's password          |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
+| aad_token | object | OAuth token AD           |         | true     | Either username/password or aad_token should be provided. Requires OAuth setup in Windmill      |
+| trust_cert| bool   | Trust server certificate | true    | false    | If true, the server certificate will be trusted even if it is not signed by a trusted authority |
+| ca_cert   | string | CA certificate           |         | false    | CA certificate to verify the server certificate. [More information on MS SQL certificates](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-security?view=sql-server-ver16#encrypt-connections-to-sql-server-linux-containers) |
 
 To specify the application intent for read-only requests, add `-- ApplicationIntent=ReadOnly` to the script.
 
@@ -304,7 +304,6 @@ Find the value named 'endpoint' it should look like this:
 ```
 default-workgroup.475893240789.us-east-1.redshift-serverless.amazonaws.com:5439/dev
 ```
-
 From there you can deduce your host, port and database name:
 
 - host: default-workgroup.475893240789.us-east-1.redshift-serverless.amazonaws.com
@@ -326,11 +325,11 @@ Head to the [Resources](../../../core_concepts/3_resources_and_types/index.mdx) 
 
 ![Select Oracle Resource Type](./select_oracle.png)
 
-| Property | Type   | Description     | Required |
-| -------- | ------ | --------------- | -------- |
-| database | string | Database name   | true     |
-| user     | string | Username        | true     |
-| password | string | User's password | true     |
+| Property  | Type   | Description     | Required |
+| --------- | ------ | --------------- | -------- |
+| database  | string | Database name   | true     |
+| user      | string | Username        | true     |
+| password  | string | User's password | true     |
 
 Here's a step-by-step guide on where to find each detail.
 
@@ -378,7 +377,7 @@ Database resource can be specified from the UI or directly within script with a 
 	src="/videos/pin_database.mp4"
 />
 
-<br />
+<br/>
 
 You can then write your prepared statement.
 
@@ -408,7 +407,7 @@ Database resource can be specified from the UI or directly within script with a 
 	src="/videos/pin_database.mp4"
 />
 
-<br />
+<br/>
 You can then write your prepared statement.
 
 ![Mysql statement](./mysql_statement.png.webp)
@@ -433,7 +432,7 @@ Database resource can be specified from the UI or directly within script with a 
 	src="/videos/pin_database.mp4"
 />
 
-<br />
+<br/>
 You can then write your prepared statement.
 
 ![Mysql statement](./mssql_statement.png.webp)
@@ -459,7 +458,7 @@ Database resource can be specified from the UI or directly within script with a 
 	src="/videos/pin_database.mp4"
 />
 
-<br />
+<br/>
 You can then write your prepared statement.
 
 <video
@@ -488,7 +487,7 @@ Database resource can be specified from the UI or directly within script with a 
 	src="/videos/pin_database.mp4"
 />
 
-<br />
+<br/>
 You can then write your prepared statement.
 
 ![Snowflake statement](./snowflake_statement.png.webp)
@@ -525,18 +524,15 @@ UPDATE demo SET col2 = :name3 WHERE col2 = :name2;
 ### DuckDB
 
 DuckDB arguments need to be passed in the given format:
-
 ```sql
 -- $name1 (text) = default arg
 -- $name2 (int)
 INSERT INTO demo VALUES ($name1, $name2)
 ```
-
-"name1", "name2" being the names of the arguments, and "default arg" the optional default value.
+"name1", "name2" being the names of the arguments, and "default arg" the optional default value.  
 
 You can pass a file on S3 as an argument of type s3object. This will substitute it with the correct 's3:///...' path at runtime.
 You can then query this file using the standard read_csv/read_parquet/read_json functions :
-
 ```sql
 -- $file (s3object)
 SELECT * FROM read_parquet($file)
@@ -545,19 +541,16 @@ SELECT * FROM read_parquet($file)
 Alternatively, you can reference files on the workspace directly using s3:// notation.
 
 For primary workspace storage:
-
 ```sql
 SELECT * FROM read_parquet('s3:///path/to/file.parquet')
 ```
 
 For secondary storage:
-
 ```sql
 SELECT * FROM read_parquet('s3://<secondary_storage>/path/to/file.parquet')
 ```
 
 This notation also works with glob patterns:
-
 ```sql
 SELECT * FROM read_parquet('s3:///myfiles/*.parquet')
 ```
@@ -565,11 +558,11 @@ SELECT * FROM read_parquet('s3:///myfiles/*.parquet')
 The s3:// notation now uses the Windmill [S3 Proxy](../../core_concepts/object_storage_in_windmill#s3-proxy) by default.
 
 You can also attach to other database resources (BigQuery, PostgreSQL and MySQL). We use the official and community DuckDB extensions under the hood :
-
 ```sql
 ATTACH '$res:u/demo/amazed_postgresql' AS db (TYPE postgres);
 SELECT * FROM db.public.friends;
 ```
+
 
 Database resource can be specified from the UI or directly within the script with a line `-- database resource_path`.
 
@@ -579,7 +572,7 @@ Database resource can be specified from the UI or directly within the script wit
 	src="/videos/pin_database.mp4"
 />
 
-<br />
+<br/>
 You can then write your prepared statement.
 
 ## Result collection
@@ -620,6 +613,7 @@ SELECT * FROM my_table;
 -- ]
 --
 ```
+
 
 ## Contextual variables
 
@@ -662,6 +656,7 @@ SELECT name, calories FROM %%table_name%% WHERE calories > daily_minimum_calorie
 
 Keep in mind that this means users of this script can try this query against all existant and non-existant tables of the database.
 
+
 ### Unsafe interpolation on a REST script
 
 A more convenient but less secure option is to execute raw queries with a TypeScript, Deno or Python client. You can for instance do string interpolation to make the name of the table a parameter of your script: `SELECT * FROM ${table}`. However this is dangerous since the string is directly interpolated and this open the door for [SQL injections](https://en.wikipedia.org/wiki/SQL_injection). Use with care and only in trusted environment.
@@ -678,44 +673,44 @@ import { Client } from 'pg';
 
 // Define the resource type as specified
 type Postgresql = {
-	host: string;
-	port: number;
-	user: string;
-	dbname: string;
-	sslmode: string;
-	password: string;
-	root_certificate_pem: string;
-};
+  host: string,
+  port: number,
+  user: string,
+  dbname: string,
+  sslmode: string,
+  password: string,
+  root_certificate_pem: string
+}
 
 // The main function that will execute a query on a Postgresql database
 export async function main(query = 'SELECT * FROM demo', pg_resource: Postgresql) {
-	// Initialize the PostgreSQL client with SSL configuration disabled for strict certificate validation
-	const client = new Client({
-		host: pg_resource.host,
-		port: pg_resource.port,
-		user: pg_resource.user,
-		password: pg_resource.password,
-		database: pg_resource.dbname,
-		ssl: pg_resource.ssl
-	});
+  // Initialize the PostgreSQL client with SSL configuration disabled for strict certificate validation
+  const client = new Client({
+    host: pg_resource.host,
+    port: pg_resource.port,
+    user: pg_resource.user,
+    password: pg_resource.password,
+    database: pg_resource.dbname,
+    ssl: pg_resource.ssl,
+  });
 
-	try {
-		// Connect to the database
-		await client.connect();
+  try {
+    // Connect to the database
+    await client.connect();
 
-		// Execute the query
-		const res = await client.query(query);
+    // Execute the query
+    const res = await client.query(query);
 
-		// Close the connection
-		await client.end();
+    // Close the connection
+    await client.end();
 
-		// Return the query result
-		return res.rows;
-	} catch (error) {
-		console.error('Database query failed:', error);
-		// Rethrow the error to handle it outside or log it appropriately
-		throw error;
-	}
+    // Return the query result
+    return res.rows;
+  } catch (error) {
+    console.error('Database query failed:', error);
+    // Rethrow the error to handle it outside or log it appropriately
+    throw error;
+  }
 }
 ```
 
@@ -726,36 +721,38 @@ View script on [Windmill Hub](https://hub.windmill.dev/scripts/postgresql/7105/e
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import { type Sql } from 'https://deno.land/x/windmill@v1.88.1/mod.ts';
+import {
+  type Sql,
+} from "https://deno.land/x/windmill@v1.88.1/mod.ts";
 
-import { Client } from 'https://deno.land/x/postgres@v0.17.0/mod.ts';
+import { Client } from "https://deno.land/x/postgres@v0.17.0/mod.ts"
 
 type Postgresql = {
-	host: string;
-	port: number;
-	user: string;
-	dbname: string;
-	sslmode: string;
-	password: string;
+  host: string;
+  port: number;
+  user: string;
+  dbname: string;
+  sslmode: string;
+  password: string;
 };
-export async function main(db: Postgresql, query: Sql = 'SELECT * FROM demo;') {
-	if (!query) {
-		throw Error('Query must not be empty.');
-	}
-	const { rows } = await pgClient(db).queryObject(query);
-	return rows;
+export async function main(db: Postgresql, query: Sql = "SELECT * FROM demo;") {
+  if (!query) {
+    throw Error("Query must not be empty.");
+  }
+  const { rows } = await pgClient(db).queryObject(query);
+  return rows;
 }
 
 export function pgClient(db: any) {
-	let db2 = {
-		...db,
-		hostname: db.host,
-		database: db.dbname,
-		tls: {
-			enabled: false
-		}
-	};
-	return new Client(db2);
+  let db2 = {
+    ...db,
+    hostname: db.host,
+    database: db.dbname,
+    tls: {
+        enabled: false,
+    },
+  }
+  return new Client(db2)
 }
 ```
 
@@ -836,48 +833,48 @@ import { createConnection } from 'mysql';
 
 // Define the Mysql resource type as specified
 type Mysql = {
-	ssl: boolean;
-	host: string;
-	port: number;
-	user: string;
-	database: string;
-	password: string;
-};
+  ssl: boolean,
+  host: string,
+  port: number,
+  user: string,
+  database: string,
+  password: string
+}
 
 // The main function that will execute a query on a Mysql resource
 export async function main(mysqlResource: Mysql, query: string): Promise<any> {
-	// Create a promise to handle the MySQL connection and query execution
-	return new Promise((resolve, reject) => {
-		// Create a connection to the MySQL database using the resource credentials
-		const connection = createConnection({
-			host: mysqlResource.host,
-			port: mysqlResource.port,
-			user: mysqlResource.user,
-			password: mysqlResource.password,
-			database: mysqlResource.database,
-			ssl: mysqlResource.ssl
-		});
+  // Create a promise to handle the MySQL connection and query execution
+  return new Promise((resolve, reject) => {
+    // Create a connection to the MySQL database using the resource credentials
+    const connection = createConnection({
+      host: mysqlResource.host,
+      port: mysqlResource.port,
+      user: mysqlResource.user,
+      password: mysqlResource.password,
+      database: mysqlResource.database,
+      ssl: mysqlResource.ssl
+    });
 
-		// Connect to the MySQL database
-		connection.connect((err) => {
-			if (err) {
-				reject(err);
-				return;
-			}
+    // Connect to the MySQL database
+    connection.connect(err => {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-			// Execute the query provided as a parameter
-			connection.query(query, (error, results) => {
-				// Close the connection after the query execution
-				connection.end();
+      // Execute the query provided as a parameter
+      connection.query(query, (error, results) => {
+        // Close the connection after the query execution
+        connection.end();
 
-				if (error) {
-					reject(error);
-				} else {
-					resolve(results);
-				}
-			});
-		});
-	});
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  });
 }
 ```
 
@@ -888,49 +885,54 @@ View script on [Windmill Hub](https://hub.windmill.dev/scripts/mysql/7108/execut
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import { createPool as createMysqlPool } from 'npm:mysql2/promise';
+import { createPool as createMysqlPool } from "npm:mysql2/promise";
 
 // Define the MySQL resource type as specified
 type Mysql = {
-	ssl: boolean;
-	host: string;
-	port: number;
-	user: string;
-	database: string;
-	password: string;
-};
+  ssl: boolean,
+  host: string,
+  port: number,
+  user: string,
+  database: string,
+  password: string
+
+}
 
 // The main function that executes a query on a MySQL database
-export async function main(mysqlResource: Mysql, query: string): Promise<any> {
-	// Adjust the SSL configuration based on the mysqlResource.ssl value
-	const sslConfig = mysqlResource.ssl ? { rejectUnauthorized: true } : false;
+export async function main(
+  mysqlResource: Mysql,
+  query: string,
+): Promise<any> {
+  // Adjust the SSL configuration based on the mysqlResource.ssl value
+  const sslConfig = mysqlResource.ssl ? { rejectUnauthorized: true } : false;
 
-	// Create a new connection pool using the provided MySQL resource
-	const pool = createMysqlPool({
-		host: mysqlResource.host,
-		user: mysqlResource.user,
-		database: mysqlResource.database,
-		password: mysqlResource.password,
-		port: mysqlResource.port,
-		// Use the adjusted SSL configuration
-		ssl: sslConfig,
-		waitForConnections: true,
-		connectionLimit: 10,
-		queueLimit: 0
-	});
+  // Create a new connection pool using the provided MySQL resource
+  const pool = createMysqlPool({
+    host: mysqlResource.host,
+    user: mysqlResource.user,
+    database: mysqlResource.database,
+    password: mysqlResource.password,
+    port: mysqlResource.port,
+    // Use the adjusted SSL configuration
+    ssl: sslConfig,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+  });
 
-	try {
-		// Get a connection from the pool and execute the query
-		const [rows] = await pool.query(query);
-		return rows;
-	} catch (error) {
-		// If an error occurs, throw it to be handled by the caller
-		throw new Error(`Failed to execute query: ${error}`);
-	} finally {
-		// Always close the pool after the operation is complete
-		await pool.end();
-	}
+  try {
+    // Get a connection from the pool and execute the query
+    const [rows] = await pool.query(query);
+    return rows;
+  } catch (error) {
+    // If an error occurs, throw it to be handled by the caller
+    throw new Error(`Failed to execute query: ${error}`);
+  } finally {
+    // Always close the pool after the operation is complete
+    await pool.end();
+  }
 }
+
 ```
 
 View script on [Windmill Hub](https://hub.windmill.dev/scripts/mysql/7107/execute-arbitrary-query-mysql).
@@ -1062,7 +1064,7 @@ In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhoo
 
 From Windmill [App editor](../../../apps/0_app_editor/index.mdx), you can also use the [Database studio](../../../apps/4_app_configuration_settings/database_studio.mdx) component to visualize and manage your databases (PostgreSQL / MySQL / MS SQL / Snowflake / BigQuery are all supported).
 
-![Database studio](../../../assets/apps/4_app_component_library/db_studio.png 'Database studio')
+![Database studio](../../../assets/apps/4_app_component_library/db_studio.png "Database studio")
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -1074,10 +1076,9 @@ From Windmill [App editor](../../../apps/0_app_editor/index.mdx), you can also u
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br />
+<br/>
 
 The Database studio component allows you to:
-
 - Display the content of a table.
 - Edit the content of a table by directly editing the cells (only when the cell is editable).
 - Add a new row.
