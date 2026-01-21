@@ -136,7 +136,7 @@ The algorithm is as follows:
 Every 30s, for every worker group autoscaling configuration:
 
 1. It checks if the current number of workers (`count`) is within the allowed range (between `min_workers` and `max_workers`). If not, it adjusts the number to fit within this range.
-2. If there are more than (`full_scale_jobs_waiting` OR `max_workers` if not defined) jobs , it will increase the number of workers up to `max_workers` if there are less (otherwise if workers already above or equal taret, do nothing), that's a "full scale-out". Note that full-scale out events are not subject to the cooldown period since they are meant to handle sudden spike.
+2. If there are more than (`full_scale_jobs_waiting` OR `max_workers` if not defined) jobs , it will increase the number of workers up to `max_workers` if there are less (otherwise if workers already above or equal target, do nothing), that's a "full scale-out". Note that full-scale out events are not subject to the cooldown period since they are meant to handle sudden spike.
 3. The function looks at the last autoscaling event (`last_event`) to see if it's too soon to make another change (this is called a cooldown period, defined by `full_scale_cooldown_seconds` for full scale out events or `cooldown_seconds` for normal events).
 4. If there are enough jobs waiting in the queue (more than `inc_scale_jobs_waiting`), it will increase the number of workers by an `inc_num_workers` (default: (max_workers - min_workers) / 5), that's an "incremental scale-out".
 

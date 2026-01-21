@@ -143,7 +143,7 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/postgres_triggers',
+				link: '/docs/core_concepts/postgres_triggers'
 			},
 			{
 				name: 'WebSocket triggers',
@@ -154,7 +154,7 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/websocket_triggers',
+				link: '/docs/core_concepts/websocket_triggers'
 			},
 			{
 				name: 'Postgres triggers',
@@ -189,7 +189,7 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/kafka_triggers',
+				link: '/docs/core_concepts/kafka_triggers'
 			},
 			{
 				name: 'NATS triggers',
@@ -200,7 +200,7 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/nats_triggers',
+				link: '/docs/core_concepts/nats_triggers'
 			},
 			{
 				name: 'SQS triggers',
@@ -211,7 +211,7 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/sqs_triggers',
+				link: '/docs/core_concepts/sqs_triggers'
 			},
 			{
 				name: 'GCP triggers',
@@ -222,7 +222,7 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/gcp_triggers',
+				link: '/docs/core_concepts/gcp_triggers'
 			},
 			{
 				name: 'Private Hub',
@@ -582,7 +582,7 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/critical_alerts',
+				link: '/docs/core_concepts/critical_alerts'
 			},
 			{
 				name: 'Script-specific workers (dedicated) / High throughput',
@@ -624,7 +624,7 @@ export const sections = [
 				tooltip: 'Self-hosted only'
 			},
 			{
-				name: 'Restart deployed flows from any node',
+				name: 'Restart deployed flows from any node and version',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,

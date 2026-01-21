@@ -720,7 +720,6 @@ const sidebars = {
 						'script_editor/script_kinds',
 						'script_editor/customize_ui',
 						'script_editor/concurrency_limit',
-						'script_editor/job_debouncing',
 						'script_editor/perpetual_scripts',
 						'script_editor/custom_environment_variables',
 						'script_editor/multiplayer',
@@ -748,7 +747,6 @@ const sidebars = {
 						'flows/flow_trigger',
 						'flows/retries',
 						'flows/concurrency_limit',
-						'flows/job_debouncing',
 						'flows/custom_timeout',
 						'flows/priority',
 						'flows/lifetime',
@@ -941,11 +939,6 @@ const sidebars = {
 						'advanced/git_sync/cli_sync',
 						{
 							type: 'doc',
-							id: 'advanced/workspace_forks/index',
-							label: 'Workspace forks'
-						},
-						{
-							type: 'doc',
 							id: 'core_concepts/versioning/index',
 							label: 'Versioning with UI'
 						}
@@ -961,6 +954,7 @@ const sidebars = {
 					},
 					items: [
 						'core_concepts/draft_and_deploy/index',
+						'advanced/workspace_forks/index',
 						'advanced/deploy_gh_gl/index',
 						'core_concepts/staging_prod/index'
 					],

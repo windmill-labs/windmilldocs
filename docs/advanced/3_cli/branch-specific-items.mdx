@@ -29,6 +29,9 @@ gitBranches:
         - "u/alex/production/**"
       triggers:
         - "u/alex/prod_kafka_*"
+      folders:
+        - "f/prod_config"
+      settings: true
 
   dev:
     specificItems:
@@ -38,6 +41,9 @@ gitBranches:
         - "u/alex/development/**"
       triggers:
         - "u/alex/dev_kafka_*"
+      folders:
+        - "f/dev_config"
+      settings: true
 ```
 
 ### Common specific items
@@ -56,6 +62,9 @@ gitBranches:
     triggers:
       - "u/alex/kafka_*"
       - "f/streaming/**"
+    folders:
+      - "f/env_*"
+    settings: true
 ```
 
 ### Pattern matching
@@ -91,12 +100,20 @@ When syncing branch-specific items, paths are transformed as follows:
 - Local: `u/alex/database.main.resource.yaml` (on main branch)
 - Windmill workspace: `u/alex/orders.kafka_trigger.yaml`
 - Local: `u/alex/orders.main.kafka_trigger.yaml` (on main branch)
+- Windmill workspace: `f/env_staging/folder.meta.yaml`
+- Local: `f/env_staging/folder.main.meta.yaml` (on main branch)
+- Windmill workspace: `settings.yaml`
+- Local: `settings.main.yaml` (on main branch)
 
 **Push operation** (local → Windmill workspace):
 - Local: `u/alex/database.dev.resource.yaml` (on dev branch)
 - Windmill workspace: `u/alex/database.resource.yaml`
 - Local: `u/alex/orders.dev.kafka_trigger.yaml` (on dev branch)
 - Windmill workspace: `u/alex/orders.kafka_trigger.yaml`
+- Local: `f/env_staging/folder.dev.meta.yaml` (on dev branch)
+- Windmill workspace: `f/env_staging/folder.meta.yaml`
+- Local: `settings.dev.yaml` (on dev branch)
+- Windmill workspace: `settings.yaml`
 
 ### Resource files
 
@@ -115,6 +132,8 @@ These file types support branch-specific transformation:
 - **Variables**: `*.variable.yaml`
 - **Resources**: `*.resource.yaml` and resource files (`*.resource.file.*`)
 - **Triggers**: `*.kafka_trigger.yaml`, `*.http_trigger.yaml`, `*.websocket_trigger.yaml`, `*.nats_trigger.yaml`, `*.postgres_trigger.yaml`, `*.mqtt_trigger.yaml`, `*.sqs_trigger.yaml`, `*.gcp_trigger.yaml`
+- **Folders**: `folder.meta.yaml` files within folder directories
+- **Settings**: `settings.yaml` (workspace settings file)
 
 ## Usage examples
 
@@ -139,6 +158,9 @@ gitBranches:
         - "u/alex/env_*"
       triggers:
         - "u/alex/kafka_*"
+      folders:
+        - "f/env_*"
+      settings: true
     overrides:
       skipSecrets: false
 
@@ -150,6 +172,9 @@ gitBranches:
         - "u/alex/env_*"
       triggers:
         - "u/alex/kafka_*"
+      folders:
+        - "f/env_*"
+      settings: true
     overrides:
       skipSecrets: true
 ```
@@ -185,6 +210,26 @@ vim u/alex/kafka_orders.dev.kafka_trigger.yaml
 # Push changes - only affects dev workspace
 wmill sync push
 ```
+
+### Branch override
+
+You can override the current Git branch using the `--branch` flag. This is useful when:
+- Working outside a Git repository
+- Testing branch-specific configurations without switching branches
+- Running sync operations in CI/CD environments where the Git branch may not be detected correctly
+
+```bash
+# Pull using main branch configuration, regardless of current Git branch
+wmill sync pull --branch main
+
+# Push using staging branch settings
+wmill sync push --branch staging
+```
+
+When using `--branch`, the CLI:
+- Uses the specified branch's configuration from `wmill.yaml`
+- Applies branch-specific item transformations for that branch
+- Skips branch validation prompts automatically
 
 ## Best practices
 

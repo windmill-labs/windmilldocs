@@ -1,25 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
 import HomescreenSvg from '../../static/homescreen.svg';
 import Link from '@docusaurus/Link';
 
 export default function Hero() {
-	const words = ['internal tools', 'apps', 'jobs', 'API', 'workflows'];
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isVisible, setIsVisible] = useState(true);
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setIsVisible(false);
-			setTimeout(() => {
-				setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
-				setIsVisible(true);
-			}, 300); // Half of transition duration
-		}, 2200); // Change word every 3 seconds
-
-		return () => clearInterval(interval);
-	}, []);
 
 	return (
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
@@ -32,24 +17,13 @@ export default function Hero() {
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
 						Build, deploy and monitor{' '}
-						<span 
-							className="inline-block text-blue-500 dark:text-blue-450 transition-all duration-500 ease-in-out"
-							style={{
-								opacity: isVisible ? 1 : 0,
-								transform: isVisible ? 'translateY(0)' : 'translateY(-10px)'
-							}}
-						>
-							{words[currentIndex]}
-						</span>
-						<br />
-						at any scale
+						<span className="text-blue-500 dark:text-blue-450">
+							internal software
+						</span>{' '}
+						at scale
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						Write and deploy software 10x faster, and run it with the highest reliability and
-						observability on the{' '}
-						<a className="underline decoration-1 underline-offset-2 text-slate-700 hover:text-slate-900 dark:text-slate-300 hover:text-slate-500" href="/docs/misc/benchmarks/competitors">
-							fastest self-hostable job orchestrator
-						</a>.
+						For developers who need real code capabilities without platform engineering overhead.
 					</div>
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
@@ -58,15 +32,22 @@ export default function Hero() {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Full flexibility of code</span>
+							<span>Workflows, internal tools and data pipelines in one platform</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Managed workers</span>
+							<span>Full flexibility of code with Git-based collaboration</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Built-in observability</span>
+							<span>Zero-ops infra powered by the{' '}
+								<Link 
+									href="/docs/misc/benchmarks/competitors"
+									className="text-white underline"
+								>
+									fastest job orchestrator and workflow engine
+								</Link>
+							</span>
 						</div>
 					</div>
 					<div className="mt-10 flex items-center gap-x-6">
@@ -88,7 +69,7 @@ export default function Hero() {
 							Self-host in 3 mins <span aria-hidden="true">→</span>
 						</Link>
 					</div>
-					<div className="w-full font-medium text-slate-400 text-left mt-16 flex-container">
+					<div className="w-full font-medium text-slate-400 text-left mt-8 sm:mt-8 mb-8 sm:mb-0 flex-container">
 						Backed by
 						<a
 							href="https://www.ycombinator.com/companies/windmill"
