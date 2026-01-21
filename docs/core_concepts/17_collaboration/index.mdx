@@ -63,11 +63,58 @@ Workspaces in Windmill enable a dev/staging/prod workflow directly from the web 
 	/>
 </div>
 
+### Cross-instance deployment (promotion)
+
+When you have workspaces in different instances (for example, a staging instance and a prod instance), cross-instance promotion is one way to deploy changes from one workspace to the other. When changes are made in the first workspace, a branch with a name corresponding to the item is created in the second workspace's repo. A PR is automatically created through the CI/CD. Changes are reviewed, and once the PR is merged the changes are reflected in the production workspace.
+
+**Requirements**: Git sync must be set up on both workspaces, so that they're both syncing changes with their respective repositories.
+
 :::info Enterprise Feature
 
 This feature is [Cloud plans & Enterprise Self-Hosted](/pricing) only.
 
 :::
+
+## Workspace forks
+
+Workspace forks let users branch off of a workspace and have an exact copy where they can create new items or make changes, test them, and deploy them to the main workspace once it's all working.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/merge-ui-demo.mp4"
+/>
+
+<br />
+
+### Workspace forks with git sync
+
+Workspace forks unlock their full potential when git sync is enabled. When a fork is created, a branch with a corresponding name is created, and changes are tracked there.
+
+**Example feature development workflow:**
+
+1. **Create fork**: The user forks the `main` workspace into a fork named `wm-fork-new-feature`
+2. **Develop**: User makes changes in the forked workspace -> The changes are reflected in the branch `wm-fork/main/new-feature` of the repo
+3. **Create PR**: A PR is automatically created by the CI from `wm-fork/main/new-feature` -> `main`
+4. **Review & merge**: Team reviews changes before merging to main branch
+5. **Sync back changes**: Changes are automatically synced to the main workspace as soon as the PR is merged
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/fork_workspace_demo.mp4"
+/>
+
+<br />
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace forks"
+		description="Create independent copies of workspaces for parallel development workflows."
+		href="/docs/advanced/workspace_forks"
+	/>
+</div>
+
 
 ## Multiplayer editing
 
@@ -97,7 +144,9 @@ This feature is [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 ## Git integration
 
-Windmill supports 2-way sync from any source control (hence github and gitlab, but also any other source control) leveraging our [CLI](../../advanced/3_cli/index.mdx) and CI actions. The CLI can pull a workspace locally (of all the items one has permission on, if admin, it will be the entire workspace) and push local changes to the remote. The CLI has an internal state stored in .wmill which can detect conflicts when changes have been made both locally and on the remote.
+Windmill supports 2-way sync from any source control (github, gitlab, or any other source control) leveraging our [CLI](../../advanced/3_cli/index.mdx) and CI actions. The CLI can pull a workspace locally (of all the items one has permission on, if admin, it will be the entire workspace) and push local changes to the remote. The CLI has an internal state stored in .wmill which can detect conflicts when changes have been made both locally and on the remote.
+
+Git sync works seamlessly with workspace forks - when a fork is created, a corresponding branch is automatically created in your repository, enabling git-based review workflows as described in the workspace forks section above.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}

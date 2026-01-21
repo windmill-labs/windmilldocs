@@ -1,36 +1,39 @@
-import React, { useEffect } from 'react';
-import ScriptAnimation from './ScriptAnimation';
-import AnimationCarousel from './animations/AnimationCarousel';
-import FlowAnimation from './FlowAnimation';
-import AppAnimation from './AppAnimation';
+import React from 'react';
 import {
-	Activity,
 	GitCompareArrows,
-	Server,
 	ArrowRight,
 	ChevronRight,
 	ChevronLeft,
-	SkipForward,
 	RotateCcw,
-	Play
+	Play,
+	Pause
 } from 'lucide-react';
-import SmoothScroll from './animations/SmoothScroll';
-import ProgressBars from './animations/ProgressBars';
+import ProductionTabs, { defaultTabs, defaultSubtitles } from './components/ProductionTabs';
 import { Lottie } from './LightFeatureCard';
 // @ts-ignore
-import deployAtScale from '/illustrations/deploy_at_scale.json';
-import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
-import { twMerge } from 'tailwind-merge';
+import devfriendly from '/illustrations/devfriendly.json';
+import CombinedAnimation from './CombinedAnimation';
 // @ts-ignore
-import BrowserOnly from '@docusaurus/BrowserOnly';
+import thirdparty from '/illustrations/thirdparty.json';
+import { BenchmarkVisualization } from '../components/BenchmarkVisualization';
+import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
+import { useColorMode } from '@docusaurus/theme-common';
+import classNames from 'classnames';
+import { Switch } from '@headlessui/react';
+import ScriptAnimation from './ScriptAnimation';
+import FlowAnimation from './FlowAnimation';
+import AppAnimation from './AppAnimation';
+import ProgressBars from './animations/ProgressBars';
+import AnimationCarousel from './animations/AnimationCarousel';
+import ScrollContext from './animations/ScrollContext';
+import { useMotionValue } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
+import { scriptScrollCount, flowScrollCount, appScrollCount } from './animations/useAnimateScroll';
 
 export default function TutorialSection({ subIndex, children }) {
+	const [chart, setChart] = React.useState<'short' | 'long'>(undefined);
 	const [step, setStep] = React.useState(subIndex || 0);
 	const containerRef = React.useRef<HTMLDivElement>(null);
-	const [animationEnabled, setAnimationEnabled] = React.useState(
-		// enabled on desktop, disabled on mobile
-		typeof window !== 'undefined' ? window.innerWidth > 768 : false
-	);
 
 	const oneStep = subIndex !== undefined;
 	const maxHeight = oneStep ? 5000 : 15000;
@@ -40,7 +43,7 @@ export default function TutorialSection({ subIndex, children }) {
 			key: 'scripts',
 			content: (
 				<div className="flex flex-row items-start">
-					<ScriptAnimation active={step === 0 || oneStep} />
+					<ScriptAnimation active={true} />
 				</div>
 			)
 		},
@@ -48,7 +51,7 @@ export default function TutorialSection({ subIndex, children }) {
 			key: 'flows',
 			content: (
 				<div className="flex flex-row items-start">
-					<FlowAnimation active={step === 1 || oneStep} only={oneStep} />
+					<FlowAnimation active={true} only={oneStep} />
 				</div>
 			)
 		},
@@ -56,7 +59,7 @@ export default function TutorialSection({ subIndex, children }) {
 			key: 'apps',
 			content: (
 				<div className=" flex flex-row items-start">
-					<AppAnimation active={step === 2 || oneStep} only={oneStep} />
+					<AppAnimation active={true} only={oneStep} />
 				</div>
 			)
 		}
@@ -169,8 +172,6 @@ export default function TutorialSection({ subIndex, children }) {
 				return;
 			}
 
-			console.log(px, section);
-
 			smoothScrollToPreviousStep(top, {
 				total: px,
 				steps: section.steps
@@ -235,221 +236,639 @@ export default function TutorialSection({ subIndex, children }) {
 		};
 	}, [step, px]);
 
+	useEffect(() => {
+		setChart('short');
+	}, []);
+
+	const features = [
+		{
+			title: 'Build for production',
+			description:
+				'Build mission-critical internal tools and data pipelines that integrates directly with your existing stack and resources.',
+			icon: GitCompareArrows,
+			href: '/docs/intro',
+			lottieData: devfriendly
+		},
+		{
+			title: 'Full local dev experience',
+			description:
+				'Use Windmill locally via our CLI and VS Code extension. Leverage AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync pipelines across staging and production.',
+			href: '/docs/advanced/local_development',
+			actionText: 'Set up local dev',
+			lottieData: devfriendly,
+			youtubeUrl: 'https://www.youtube.com/watch?v=sxNW_6J4RG8'
+		}
+	];
+
+	const ArrowSeparator = () => (
+		<div className="h-20 w-full flex justify-center my-2 py-2">
+			<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
+		</div>
+	);
+
+	const FeatureCard = ({ feature, index, totalFeatures }) => {
+		const { colorMode } = useColorMode();
+		const ContentWrapper = feature.href ? 'a' : 'div';
+		const isProductionUse = feature.title === 'Build for production';
+
+		const wrapperProps = feature.href
+			? {
+					href: feature.href,
+					target: '_blank',
+					className: isProductionUse
+						? 'group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer'
+						: 'col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center'
+			  }
+			: {
+					className: isProductionUse
+						? 'group text-black dark:text-white cursor-pointer'
+						: 'col-span-2 group text-black dark:text-white cursor-pointer flex flex-col justify-center'
+			  };
+
+		return (
+			<>
+				<div
+					className={`dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl ${
+						isProductionUse ? 'flex flex-col gap-6' : 'grid grid-cols-1 md:grid-cols-5 gap-8'
+					} ${feature.mt || ''} ${index < totalFeatures - 1 ? 'mb-8' : ''}`}
+				>
+					{!isProductionUse && (
+						<ContentWrapper {...wrapperProps}>
+							<div className="font-medium text-2xl mb-4 group-hover:ml-2 transition-all">
+								{feature.title}
+							</div>
+							<div className={`text-md mb-4 group-hover:ml-2 transition-all max-w-sm`}>
+								{feature.description}
+							</div>
+							<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-0">
+								{feature.actionText || 'Learn more'}
+								<ArrowRight size={24} />
+							</div>
+						</ContentWrapper>
+					)}
+					<div className={isProductionUse ? 'w-full' : 'col-span-3'}>
+						{feature.useBenchmark ? (
+							<div className="flex flex-col w-full gap-4">
+								<div className="flex flex-row gap-2 items-center transition-all">
+									<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+										10 long running tasks
+									</span>
+									<Switch
+										checked={chart === 'short'}
+										title="Switch between short and long running tasks"
+										onChange={() => {
+											setChart(chart === 'long' ? 'short' : 'long');
+										}}
+										className={`${
+											chart === 'short'
+												? 'bg-blue-500 dark:bg-blue-900'
+												: 'bg-gray-200 dark:bg-gray-800'
+										}
+          relative inline-flex h-[24px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+									>
+										<span
+											aria-hidden="true"
+											className={`${chart === 'short' ? 'translate-x-6' : 'translate-x-0'}
+            pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white  shadow-lg ring-0 transition duration-200 ease-in-out`}
+										/>
+									</Switch>
+									<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+										40 lightweight tasks
+									</span>
+								</div>
+								<div
+									className={classNames(
+										colorMode === 'dark' ? 'bg-black' : 'bg-gray-50',
+										'w-full p-8 bg-opacity-40 rounded-xl benchmark-chart-container'
+									)}
+									data-theme={colorMode}
+								>
+									<div className="grid">
+										{chart === 'short' ? (
+											<div>
+												<BenchmarkVisualization
+													usecase="fibonacci_40_10"
+													language="python"
+													engines={[
+														'airflow',
+														'kestra',
+														'prefect',
+														'temporal',
+														'windmill',
+														'windmill_dedicated'
+													]}
+													workers={1}
+													title="40 lightweight tasks comparison (animation time speed 20x)"
+													maintainAspectRatio={false}
+													shouldAnimate={true}
+												/>
+											</div>
+										) : (
+											<div>
+												<BenchmarkVisualization
+													usecase="fibonacci_10_33"
+													language="python"
+													engines={[
+														'airflow',
+														'kestra',
+														'prefect',
+														'temporal',
+														'windmill',
+														'windmill_dedicated'
+													]}
+													workers={1}
+													title="10 long running tasks comparison (animation time speed 20x)"
+													maintainAspectRatio={false}
+													shouldAnimate={true}
+												/>
+											</div>
+										)}
+									</div>
+								</div>
+							</div>
+						) : feature.title === 'Build for production' ? (
+							<ProductionTabs />
+						) : feature.lottieData ? (
+							<div className="flex flex-col">
+								<Lottie lottieData={feature.lottieData} autoplay loop={true} />
+								{feature.youtubeUrl && (
+									<div className="flex justify-end mt-3">
+										<a
+											href={feature.youtubeUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 transition-colors group/yt"
+										>
+											<svg
+												className="w-5 h-5 text-red-600 dark:text-red-500"
+												viewBox="0 0 24 24"
+												fill="currentColor"
+											>
+												<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+											</svg>
+											<span className="group-hover/yt:underline">
+												Learn more about local development
+											</span>
+										</a>
+									</div>
+								)}
+							</div>
+						) : feature.video ? (
+							<video
+								className="rounded-lg overflow-hidden h-full w-full object-cover"
+								autoPlay
+								loop
+								muted
+								playsInline
+								preload="metadata"
+							>
+								<source src={feature.video} type="video/mp4" />
+							</video>
+						) : (
+							<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
+								<img src={feature.image} alt={feature.imageAlt || feature.title} />
+							</div>
+						)}
+					</div>
+				</div>
+			</>
+		);
+	};
+
+	// Animation section component - using the working wrapper from CorePrinciple
+	const AnimationSection = () => {
+		const scrollValue = useMotionValue(0);
+		const previousValueRef = useRef(0);
+		const intervalRef = useRef<NodeJS.Timeout | null>(null);
+		const [step, setStep] = useState(0);
+		const [isPlaying, setIsPlaying] = useState(true);
+
+		// Section-specific speeds
+		const sectionSpeeds = {
+			scripts: 0.5,
+			flows: 0.3,
+			apps: 0.5
+		};
+
+		const handleClick = (newStep: number) => {
+			if (newStep === 0) {
+				previousValueRef.current = scrollValue.get();
+				scrollValue.set(0);
+				setStep(0);
+			}
+		};
+
+		useEffect(() => {
+			if (!isPlaying) return;
+
+			// Auto-advance the animation through Script, Flow, and App sections
+			// Speed multiplier varies by section
+			let progress = scrollValue.get();
+			const totalScroll = scriptScrollCount + flowScrollCount + appScrollCount;
+			const baseIncrement = 50; // Base increment per 100ms
+
+			intervalRef.current = setInterval(() => {
+				// Determine current section and apply appropriate speed
+				let currentSpeed;
+				if (progress < scriptScrollCount) {
+					currentSpeed = sectionSpeeds.scripts;
+				} else if (progress < scriptScrollCount + flowScrollCount) {
+					currentSpeed = sectionSpeeds.flows;
+				} else {
+					currentSpeed = sectionSpeeds.apps;
+				}
+
+				const increment = baseIncrement * currentSpeed;
+				progress += increment;
+				if (progress > totalScroll) {
+					progress = 0; // Reset to loop
+				}
+				previousValueRef.current = scrollValue.get();
+				scrollValue.set(progress);
+			}, 100);
+
+			return () => {
+				if (intervalRef.current) {
+					clearInterval(intervalRef.current);
+				}
+			};
+		}, [scrollValue, isPlaying]);
+
+		// Create a mock MotionValue with onChange method and getPrevious
+		const mockMotionValue = {
+			get: () => scrollValue.get(),
+			getPrevious: () => previousValueRef.current,
+			set: (value: number) => {
+				previousValueRef.current = scrollValue.get();
+				scrollValue.set(value);
+			},
+			onChange: (callback: (latest: number) => void) => {
+				return scrollValue.on('change', callback);
+			}
+		} as any;
+
+		const totalScroll = scriptScrollCount + flowScrollCount + appScrollCount;
+		const scriptSteps = [0, 20, 40, 50, 60, 70, 80];
+		const flowSteps = [0, 5, 30, 50, 60, 70, 90];
+		const appSteps = [0, 10, 15, 30, 45, 60, 72, 90, 99];
+		const [currentProgress, setCurrentProgress] = useState(0);
+		const [activeSection, setActiveSection] = useState<'scripts' | 'flows' | 'apps'>('scripts');
+		const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
+		const jumpToStep = (stepPercent: number, section: 'scripts' | 'flows' | 'apps') => {
+			let targetProgress;
+			if (section === 'scripts') {
+				targetProgress = (stepPercent * scriptScrollCount) / 100;
+			} else if (section === 'flows') {
+				// Flow steps are relative to flowScrollCount, but we need to add scriptScrollCount offset
+				targetProgress = scriptScrollCount + (stepPercent * flowScrollCount) / 100;
+			} else {
+				// App steps are relative to appScrollCount, but we need to add scriptScrollCount + flowScrollCount offset
+				targetProgress = scriptScrollCount + flowScrollCount + (stepPercent * appScrollCount) / 100;
+			}
+			previousValueRef.current = scrollValue.get();
+			scrollValue.set(targetProgress);
+			setIsPlaying(false); // Pause when manually jumping
+		};
+
+		useEffect(() => {
+			const unsubscribe = scrollValue.on('change', (latest) => {
+				setCurrentProgress((latest / totalScroll) * 100);
+				// Determine which section is active and current step
+				if (latest < scriptScrollCount) {
+					setActiveSection('scripts');
+					// Find closest step index
+					const progressPercent = (latest / scriptScrollCount) * 100;
+					const closestIndex = scriptSteps.reduce((prev, curr, index) => {
+						return Math.abs(curr - progressPercent) < Math.abs(scriptSteps[prev] - progressPercent)
+							? index
+							: prev;
+					}, 0);
+					setCurrentStepIndex(closestIndex);
+				} else if (latest < scriptScrollCount + flowScrollCount) {
+					setActiveSection('flows');
+					const flowProgress = latest - scriptScrollCount;
+					const progressPercent = (flowProgress / flowScrollCount) * 100;
+					const closestIndex = flowSteps.reduce((prev, curr, index) => {
+						return Math.abs(curr - progressPercent) < Math.abs(flowSteps[prev] - progressPercent)
+							? index
+							: prev;
+					}, 0);
+					setCurrentStepIndex(closestIndex);
+				} else {
+					setActiveSection('apps');
+					const appProgress = latest - scriptScrollCount - flowScrollCount;
+					const progressPercent = (appProgress / appScrollCount) * 100;
+					const closestIndex = appSteps.reduce((prev, curr, index) => {
+						return Math.abs(curr - progressPercent) < Math.abs(appSteps[prev] - progressPercent)
+							? index
+							: prev;
+					}, 0);
+					setCurrentStepIndex(closestIndex);
+				}
+			});
+			return () => unsubscribe();
+		}, [scrollValue, totalScroll]);
+
+		// Keyboard navigation
+		useEffect(() => {
+			const handleKeyPress = (e: KeyboardEvent) => {
+				if (e.key === 'ArrowLeft') {
+					e.preventDefault();
+					// Go to previous step
+					if (activeSection === 'scripts') {
+						if (currentStepIndex > 0) {
+							const prevStep = scriptSteps[currentStepIndex - 1];
+							jumpToStep(prevStep, 'scripts');
+						}
+					} else if (activeSection === 'flows') {
+						if (currentStepIndex > 0) {
+							const prevStep = flowSteps[currentStepIndex - 1];
+							jumpToStep(prevStep, 'flows');
+						} else {
+							// Go to last step of scripts
+							const lastScriptStep = scriptSteps[scriptSteps.length - 1];
+							jumpToStep(lastScriptStep, 'scripts');
+						}
+					} else {
+						// apps
+						if (currentStepIndex > 0) {
+							const prevStep = appSteps[currentStepIndex - 1];
+							jumpToStep(prevStep, 'apps');
+						} else {
+							// Go to last step of flows
+							const lastFlowStep = flowSteps[flowSteps.length - 1];
+							jumpToStep(lastFlowStep, 'flows');
+						}
+					}
+				} else if (e.key === 'ArrowRight') {
+					e.preventDefault();
+					// Go to next step
+					if (activeSection === 'scripts') {
+						if (currentStepIndex < scriptSteps.length - 1) {
+							const nextStep = scriptSteps[currentStepIndex + 1];
+							jumpToStep(nextStep, 'scripts');
+						} else {
+							// Go to first step of flows
+							const firstFlowStep = flowSteps[0];
+							jumpToStep(firstFlowStep, 'flows');
+						}
+					} else if (activeSection === 'flows') {
+						if (currentStepIndex < flowSteps.length - 1) {
+							const nextStep = flowSteps[currentStepIndex + 1];
+							jumpToStep(nextStep, 'flows');
+						} else {
+							// Go to first step of apps
+							const firstAppStep = appSteps[0];
+							jumpToStep(firstAppStep, 'apps');
+						}
+					} else {
+						// apps
+						if (currentStepIndex < appSteps.length - 1) {
+							const nextStep = appSteps[currentStepIndex + 1];
+							jumpToStep(nextStep, 'apps');
+						}
+					}
+				}
+			};
+
+			window.addEventListener('keydown', handleKeyPress);
+			return () => {
+				window.removeEventListener('keydown', handleKeyPress);
+			};
+		}, [activeSection, currentStepIndex, scriptSteps, flowSteps, appSteps]);
+
+		const scriptProgressPercent = (scriptScrollCount / totalScroll) * 100;
+		const scriptCurrentProgress =
+			activeSection === 'scripts'
+				? (scrollValue.get() / scriptScrollCount) * 100
+				: activeSection === 'flows' || activeSection === 'apps'
+				? 100
+				: 0;
+		const flowCurrentProgress =
+			activeSection === 'flows'
+				? ((scrollValue.get() - scriptScrollCount) / flowScrollCount) * 100
+				: activeSection === 'apps'
+				? 100
+				: 0;
+		const appCurrentProgress =
+			activeSection === 'apps'
+				? ((scrollValue.get() - scriptScrollCount - flowScrollCount) / appScrollCount) * 100
+				: 0;
+
+		return (
+			<ScrollContext.Provider value={mockMotionValue}>
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
+					<div className="flex flex-row justify-between items-center mb-4">
+						<div className="font-medium text-3xl mb-4 max-w-2xl">
+							Develop and iterate with instant feedback
+						</div>
+						<div className="flex items-center gap-2">
+							<button
+								onClick={() => setIsPlaying(!isPlaying)}
+								className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+								title={isPlaying ? 'Pause' : 'Play'}
+							>
+								{isPlaying ? <Pause size={20} /> : <Play size={20} />}
+							</button>
+							<button
+								onClick={() => {
+									// Go to previous step
+									if (activeSection === 'scripts') {
+										if (currentStepIndex > 0) {
+											const prevStep = scriptSteps[currentStepIndex - 1];
+											jumpToStep(prevStep, 'scripts');
+										}
+									} else if (activeSection === 'flows') {
+										if (currentStepIndex > 0) {
+											const prevStep = flowSteps[currentStepIndex - 1];
+											jumpToStep(prevStep, 'flows');
+										} else {
+											const lastScriptStep = scriptSteps[scriptSteps.length - 1];
+											jumpToStep(lastScriptStep, 'scripts');
+										}
+									} else {
+										// apps
+										if (currentStepIndex > 0) {
+											const prevStep = appSteps[currentStepIndex - 1];
+											jumpToStep(prevStep, 'apps');
+										} else {
+											const lastFlowStep = flowSteps[flowSteps.length - 1];
+											jumpToStep(lastFlowStep, 'flows');
+										}
+									}
+								}}
+								className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+								disabled={activeSection === 'scripts' && currentStepIndex === 0}
+								title="Previous step (←)"
+							>
+								<ChevronLeft size={20} />
+							</button>
+							<button
+								onClick={() => {
+									// Go to next step
+									if (activeSection === 'scripts') {
+										if (currentStepIndex < scriptSteps.length - 1) {
+											const nextStep = scriptSteps[currentStepIndex + 1];
+											jumpToStep(nextStep, 'scripts');
+										} else {
+											const firstFlowStep = flowSteps[0];
+											jumpToStep(firstFlowStep, 'flows');
+										}
+									} else if (activeSection === 'flows') {
+										if (currentStepIndex < flowSteps.length - 1) {
+											const nextStep = flowSteps[currentStepIndex + 1];
+											jumpToStep(nextStep, 'flows');
+										} else {
+											const firstAppStep = appSteps[0];
+											jumpToStep(firstAppStep, 'apps');
+										}
+									} else {
+										// apps
+										if (currentStepIndex < appSteps.length - 1) {
+											const nextStep = appSteps[currentStepIndex + 1];
+											jumpToStep(nextStep, 'apps');
+										}
+									}
+								}}
+								className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+								disabled={activeSection === 'apps' && currentStepIndex === appSteps.length - 1}
+								title="Next step (→)"
+							>
+								<ChevronRight size={20} />
+							</button>
+							<button
+								onClick={() => {
+									// Restart animation from the beginning
+									jumpToStep(0, 'scripts');
+								}}
+								className="p-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+								title="Restart animation"
+							>
+								<RotateCcw size={20} />
+							</button>
+						</div>
+					</div>
+					<div className="w-full">
+						<div className="mb-4 flex flex-col gap-4">
+							{/* Scripts, Flows, and Apps Progress Bars */}
+							<div className="grid grid-cols-3 gap-4">
+								{/* Scripts Progress Bar */}
+								<div className="flex flex-col gap-1">
+									<div className="text-sm font-normal text-gray-600 dark:text-gray-400">
+										Scripts
+									</div>
+									<div className="relative w-full h-2 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+										<div
+											className="absolute h-2 bg-blue-600 dark:bg-blue-400 rounded-lg transition-all"
+											style={{
+												width: `${Math.min(scriptCurrentProgress, 100)}%`
+											}}
+										/>
+										{scriptSteps.map((percent) => (
+											<button
+												key={`script-${percent}`}
+												onClick={() => jumpToStep(percent, 'scripts')}
+												className="absolute h-2 w-1 bg-blue-700 dark:bg-blue-500 cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-400 transition-colors z-10"
+												style={{ left: `calc(${percent}% - 2px)` }}
+												title={`Jump to script step ${percent}%`}
+											/>
+										))}
+									</div>
+								</div>
+								{/* Flows Progress Bar */}
+								<div className="flex flex-col gap-1">
+									<div className="text-sm font-normal text-gray-600 dark:text-gray-400">Flows</div>
+									<div className="relative w-full h-2 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+										<div
+											className="absolute h-2 bg-green-600 dark:bg-green-400 rounded-lg transition-all"
+											style={{
+												width: `${Math.min(flowCurrentProgress, 100)}%`
+											}}
+										/>
+										{flowSteps.map((percent) => (
+											<button
+												key={`flow-${percent}`}
+												onClick={() => jumpToStep(percent, 'flows')}
+												className="absolute h-2 w-1 bg-green-700 dark:bg-green-500 cursor-pointer hover:bg-green-800 dark:hover:bg-green-400 transition-colors z-10"
+												style={{ left: `calc(${percent}% - 2px)` }}
+												title={`Jump to flow step ${percent}%`}
+											/>
+										))}
+									</div>
+								</div>
+								{/* Apps Progress Bar */}
+								<div className="flex flex-col gap-1">
+									<div className="text-sm font-normal text-gray-600 dark:text-gray-400">Apps</div>
+									<div className="relative w-full h-2 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+										<div
+											className="absolute h-2 bg-orange-600 dark:bg-orange-400 rounded-lg transition-all"
+											style={{
+												width: `${Math.min(appCurrentProgress, 100)}%`
+											}}
+										/>
+										{appSteps.map((percent) => (
+											<button
+												key={`app-${percent}`}
+												onClick={() => jumpToStep(percent, 'apps')}
+												className="absolute h-2 w-1 bg-orange-700 dark:bg-orange-500 cursor-pointer hover:bg-orange-800 dark:hover:bg-orange-400 transition-colors z-10"
+												style={{ left: `calc(${percent}% - 2px)` }}
+												title={`Jump to app step ${percent}%`}
+											/>
+										))}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="bg-gray-100 dark:bg-gray-700/80 rounded-md p-4 min-h-[550px] flex items-center justify-center overflow-hidden">
+							<div className="relative w-full h-full">
+								{activeSection === 'scripts' ? (
+									<ScriptAnimation active={true} />
+								) : activeSection === 'flows' ? (
+									<FlowAnimation active={true} only={false} />
+								) : (
+									<AppAnimation active={true} only={false} />
+								)}
+							</div>
+						</div>
+					</div>
+				</div>
+			</ScrollContext.Provider>
+		);
+	};
+
 	return (
 		<div className="flex flex-col" ref={containerRef}>
-			<BrowserOnly>
-				{() => (
-					<SmoothScroll
-						onReachEnd={() => {
-							setAnimationEnabled(false);
-						}}
-						animationEnabled={animationEnabled}
-						count={oneStep ? 1 : 3}
-					>
-						<div className="relative">
-							<div className="absolute -top-24 left-0">{children}</div>
-							<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
-								<div className="flex flex-row justify-between items-center">
-									<div className="font-light text-4xl mb-4 max-w-2xl">
-										{subIndex === undefined ? 'Develop and iterate with instant feedback' : ''}
-									</div>
-									<div className="flex flex-row items-center gap-2">
-										{animationEnabled ? (
-											<>
-												<button
-													onClick={() => {
-														containerRef.current.scrollIntoView({ behavior: 'smooth' });
-													}}
-													className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
-												>
-													<RotateCcw size={14} />
-													Restart
-												</button>
-												<button
-													onClick={() => {
-														containerRef.current.scrollIntoView({ behavior: 'instant' });
-
-														const delta = 250;
-
-														window.scrollBy({
-															top: px * 3 + delta,
-															behavior: 'smooth'
-														});
-													}}
-													className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
-												>
-													Skip animation
-													<SkipForward size={14} />
-												</button>
-											</>
-										) : (
-											<button
-												onClick={() => {
-													setAnimationEnabled(true);
-													containerRef.current.scrollIntoView({ behavior: 'smooth' });
-												}}
-												className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
-											>
-												Enable animation
-												<SkipForward size={14} />
-											</button>
-										)}
-									</div>
-								</div>
-
-								<div className="relative">
-									{animationEnabled === false && (
-										<div className="absolute top-0 left-0 w-full h-full flex flex-row items-center justify-center z-50">
-											<div className="text-xl text-gray-900 bg-gray-50 p-8 dark:bg-gray-900 dark:text-white rounded-md flex flex-col gap-2 items-center">
-												Animation disabled
-												<button
-													onClick={() => {
-														setAnimationEnabled(true);
-														containerRef.current.scrollIntoView({ behavior: 'smooth' });
-													}}
-													className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
-												>
-													Enable animation
-													<Play size={14} />
-												</button>
-											</div>
-										</div>
-									)}
-									<div
-										className={twMerge(
-											animationEnabled === false
-												? 'opacity-10 cursor-not-allowed pointer-events-none z-40'
-												: 'opacity-100'
-										)}
-									>
-										<ProgressBars
-											setStep={setStep}
-											handleClick={(i: number) => {
-												containerRef.current.scrollIntoView({ behavior: 'instant' });
-
-												window.scrollBy({
-													top: i * px + 50,
-													behavior: 'instant'
-												});
-											}}
-											subIndex={subIndex}
-										/>
-
-										<AnimationCarousel
-											items={oneStep ? [items[subIndex]] : items}
-											currentIndex={oneStep ? 0 : step}
-										/>
-
-										<div className="flex flex-row items-center justify-end gap-4 mt-8">
-											<div className=" text-md">Scroll or use the arrow keys to navigate</div>
-											<div className="flex flex-row items-center gap-1">
-												<button
-													className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
-													onClick={() => prevStep()}
-												>
-													<ChevronLeft size={20} />
-												</button>
-												<button
-													className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
-													onClick={() => nextStep()}
-												>
-													<ChevronRight size={20} />
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="h-20 w-full flex justify-center my-2 py-2">
-								<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
-							</div>
-						</div>
-					</SmoothScroll>
-				)}
-			</BrowserOnly>
-
-			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8 mt-24">
-					<a
-						href="/docs/core_concepts/draft_and_deploy#diff-viewer"
-						target="_blank"
-						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer "
-					>
-						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2 ">
-							<GitCompareArrows size={20} />
-							Review
-						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{'Use the built-in diff viewer, GitHub PRs or GitLab MRs to review changes.'}
-						</div>
-						<div
-							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
-						>
-							Learn more
-							<ArrowRight size={24} />
-						</div>
-					</a>
-					<div className="col-span-3">
-						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-							<img src={'/illustrations/diff.png'} alt={'Review'} />
-						</div>
-					</div>
+			{/* FeatureCard Section */}
+			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col mb-24">
+				{/* Section Header */}
+				<div className="w-full mb-12 text-left">
+					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-600">
+						Build
+					</h1>
+					<span className="text-lg text-gray-700 max-w-3xl dark:text-gray-200">
+						Build mission-critical internal tools and data pipelines that integrate directly with
+						your existing stack and resources using code with a powerful WebIDE or locally using our
+						CLI and your favorite editor and AI agent.
+					</span>
 				</div>
-				<div className="h-20 w-full flex justify-center my-2 py-2">
-					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
-				</div>
+				{features.map((feature, index) => {
+					// Replace the second feature (index 1) with the animation section
+					// if (index === 1) {
+					// 	return (
+					// 		<React.Fragment key="animation-section">
+					// 			<AnimationSection />
+					// 			{index < features.length - 1 && <ArrowSeparator />}
+					// 		</React.Fragment>
+					// 	);
+					// }
 
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
-					<a
-						href="/docs/advanced/deploy_to_prod"
-						target="_blank"
-						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer"
-					>
-						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
-							<Server size={20} />
-							Deploy at scale
-						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{
-								'Deploy with ease on our infrastructure or your own infrastructure, on bare VMs with docker-compose, ecs, or large Kubernetes clusters with up to 1000 workers and even remote agents.'
-							}
-						</div>
-						<div
-							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
-						>
-							Learn more
-							<ArrowRight size={24} />
-						</div>
-					</a>
-					<div className="col-span-3">
-						<Lottie lottieData={deployAtScale} autoplay loop />
-					</div>
-				</div>
-				<div className="h-20 w-full flex justify-center my-2 py-2">
-					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
-				</div>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
-					<a className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer">
-						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
-							<Activity size={20} />
-							Monitor
-						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{'Keep track of your scripts, flows, and apps with detailed logs and metrics.'}
-						</div>
-						<div
-							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
-						>
-							Learn more
-							<ArrowRight size={24} />
-						</div>
-					</a>
-					<div className="col-span-3">
-						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-							<img src={'/illustrations/11.png'} alt={'Review'} />
-						</div>
-					</div>
-				</div>
+					return (
+						<React.Fragment key={feature.title}>
+							<FeatureCard feature={feature} index={index} totalFeatures={features.length} />
+						</React.Fragment>
+					);
+				})}
 			</div>
 		</div>
 	);
