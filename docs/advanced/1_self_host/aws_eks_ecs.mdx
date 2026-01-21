@@ -104,13 +104,70 @@ Familiar with Terraform? The terraform files are available [here in Windmill's G
    - We advise to use a certificate authority
    - The port can be left to the default: `5432`
 1. Database authentication
-   - Windmill uses Password authentication
+   - Windmill supports both Password authentication and IAM authentication. See [IAM database authentication](#iam-database-authentication) below for details on using IAM auth.
 1. Monitoring
    - Choose whatever you prefer to monitor your database
 1. Additional configuration
    - Initial database name should be set to `windmill`
    - It is advised to enable automated backups
    - Encryption can be set depending on your requirement, same for log export and maintenance.
+
+### IAM database authentication
+
+Windmill Enterprise supports IAM database authentication for RDS, eliminating the need to store database passwords. Windmill uses temporary IAM tokens that are automatically refreshed.
+
+:::info Enterprise feature
+IAM RDS authentication is only available in Windmill Enterprise Edition.
+:::
+
+#### Prerequisites
+
+1. **Enable IAM authentication on your RDS instance**
+   - In RDS Console → Your instance → Modify → Enable "IAM database authentication"
+
+2. **Grant the `rds_iam` role to the postgres user**
+   ```sql
+   GRANT rds_iam TO postgres;
+   ```
+   This tells RDS to accept IAM tokens for authentication. See [AWS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.DBAccounts.html).
+
+3. **Add IAM policy for database access**
+   ```json
+   {
+     "Effect": "Allow",
+     "Action": "rds-db:connect",
+     "Resource": "arn:aws:rds-db:<region>:<account-id>:dbuser:<dbi-resource-id>/postgres"
+   }
+   ```
+   The `<dbi-resource-id>` is found in RDS Console → Configuration → Resource ID (starts with `db-`).
+
+#### Configuration
+
+Set the `DATABASE_URL` with `iamrds` as the password:
+```
+postgresql://postgres:iamrds@<rds-endpoint>:5432/windmill
+```
+
+:::warning
+The port (`:5432`) is required for IAM authentication.
+:::
+
+Set the `AWS_REGION` environment variable:
+```yaml
+env:
+  - name: AWS_REGION
+    value: "eu-west-1"
+```
+
+On EKS, configure [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) to provide AWS credentials to the pods.
+
+#### Troubleshooting
+
+| Error | Solution |
+|-------|----------|
+| `PAM authentication failed` | Check `AWS_REGION` is set and password is exactly `iamrds` |
+| No `iamrds mode detected` log | Ensure you're using `windmill-ee` image |
+| Token generation fails | Verify IRSA setup and `rds-db:connect` IAM policy |
 
 ### Create the ECS cluster
 
