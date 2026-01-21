@@ -76,10 +76,11 @@ export const defaultLocalDevSubtitles: Record<string, SubtitleConfig[]> = {
         { time: 10.0, text: 'Windmill generates a YAML definition for your flow', duration: 2.5 },
         { time: 17.0, text: 'The VS Code extension renders an instant flow preview', duration: 2.5 },
         { time: 24.0, text: 'Test your flow with full observability and tracing', duration: 2.5 },
-        { time: 33.5, text: 'Add new steps directly from the visual preview', duration: 2.5 },
-        { time: 39.0, text: 'Bidirectional sync between your YAML and the preview', duration: 2.5 },
-        { time: 45.0, text: 'Push your flow to the workspace via the CLI', duration: 2.5 },
-        { time: 53.0, text: 'Deployment complete. Run your flow live in the UI', duration: 2.5 },
+		{ time: 33.4, text: 'Each inline script of your flow has its own file you can iterate on', duration: 2.5 },
+        { time: 49.3, text: 'Add new steps directly from the visual preview', duration: 2.5 },
+        { time: 53.5, text: 'Bidirectional sync between your YAML and the preview', duration: 2.5 },
+        { time: 59.5, text: 'Push your flow to the workspace via the CLI', duration: 2.5 },
+        { time: 67.5, text: 'Deployment complete. Run your flow live in the UI', duration: 2.5 },
     ],
     apps: [
         { time: 0.0, text: 'Build app frontends with any framework', duration: 2.5 },
@@ -467,13 +468,16 @@ export default function ProductionTabs({
 									playsInline
 									preload="auto"
 								>
-									<source src={getVideoSrc(tab)} type="video/webm" />
+									<source
+										src={getVideoSrc(tab)}
+										type={getVideoSrc(tab).endsWith('.mov') ? 'video/quicktime' : getVideoSrc(tab).endsWith('.mp4') ? 'video/mp4' : 'video/webm'}
+									/>
 								</video>
 							) : (
 								<div className="w-full aspect-video" />
 							)}
 							{/* Loading overlay with progress */}
-							{selectedTab === tab.id && loadingState[getVideoKey(tab.id)]?.loading && !isPlaying && (
+							{selectedTab === tab.id && loadingState[getVideoKey(tab.id)]?.loading && !isPlaying && !isShowingSubtitleRef.current && (
 								<div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900/90 backdrop-blur-sm">
 									<div className="w-16 h-16 mb-4 relative">
 										<svg className="w-full h-full" viewBox="0 0 50 50">
@@ -507,7 +511,7 @@ export default function ProductionTabs({
 								</div>
 							)}
 							{/* Subtitle overlay */}
-							{enableSubtitles && selectedTab === tab.id && currentSubtitle && !loadingState[getVideoKey(tab.id)]?.loading && (
+							{enableSubtitles && selectedTab === tab.id && currentSubtitle && (
 								<div
 									className="absolute inset-0 flex items-center justify-center bg-gray-900/80 backdrop-blur-[2px] transition-opacity duration-300 cursor-pointer"
 									onClick={skipSubtitle}
