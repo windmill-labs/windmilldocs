@@ -40,7 +40,9 @@ When script tools are configured, the AI agent can decide when and how to use th
 
 ### MCP tools
 
-AI Agents can connect to [MCP (Model Context Protocol)](../51_mcp/index.mdx) servers as tools, enabling access to any tools exposed by MCP-compatible servers. To use MCP tools:
+AI Agents can connect to [MCP (Model Context Protocol)](../51_mcp/index.mdx) servers as tools, enabling access to any tools exposed by MCP-compatible servers.
+
+If the MCP server handles OAuth, you can simply connect using the OAuth URL. Otherwise, you can use MCP tools by following these steps:
 
 1. Create an MCP resource in Windmill with:
    - **Name**: Identifier for the MCP resource
