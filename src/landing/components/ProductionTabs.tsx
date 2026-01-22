@@ -35,7 +35,7 @@ export interface ProductionTabsProps {
 export const defaultTabs: TabConfig[] = [
 	{ id: 'scripts', label: 'Scripts', icon: 'Server', description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm', localDevVideo: '/videos/landingscripts-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=QRf8C8qF7CY' },
 	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm', localDevVideo: '/videos/landingflows-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=yE-eDNWTj3g' },
-	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm', localDevVideo: '/videos/landingapps-ui.webm', youtubeUrl: 'https://www.youtube.com/watch?v=CNtRLDXbfOE' },
+	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm', localDevVideo: '/videos/landingapps-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=CNtRLDXbfOE' },
 ];
 
 // Default subtitles configuration for Windmill UI videos
@@ -83,10 +83,14 @@ export const defaultLocalDevSubtitles: Record<string, SubtitleConfig[]> = {
         { time: 67.5, text: 'Deployment complete. Run your flow live in the UI', duration: 2.5 },
     ],
     apps: [
-        { time: 0.0, text: 'Build app frontends with any framework', duration: 2.5 },
-        { time: 5.0, text: 'Use React, Vue, Svelte or vanilla JS', duration: 2.5 },
-        { time: 10.0, text: 'Connect to Windmill scripts and flows as backend', duration: 2.5 },
-    ]
+        { time: 0.5, text: 'Build full-stack apps using Windmill as your backend', duration: 2.5 },
+        { time: 15.0, text: 'Create backend runnables with total code flexibility', duration: 2.5 },
+        { time: 24.0, text: 'Debug and test runnables via the VS Code extension', duration: 2.5 },
+        { time: 32.0, text: 'Runnables are auto-typed into a global backend object', duration: 2.5 },
+        { time: 42.0, text: 'Call backend logic directly from your frontend with zero boilerplate', duration: 3.5 },
+        { time: 49.0, text: 'Preview and test your full-stack app on a local server', duration: 2.5 },
+        { time: 57.0, text: 'Build complete. Your app is ready to test locally', duration: 2.5 },
+    ],
 };
 
 export type VideoMode = 'ui' | 'localDev';
