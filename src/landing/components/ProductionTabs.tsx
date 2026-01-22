@@ -22,6 +22,7 @@ export interface SubtitleConfig {
 	time: number;
 	text: string;
 	duration: number;
+	type?: 'overlay' | 'inline'; // overlay pauses video, inline shows subtitle without interruption
 }
 
 export interface ProductionTabsProps {
@@ -83,13 +84,16 @@ export const defaultLocalDevSubtitles: Record<string, SubtitleConfig[]> = {
         { time: 67.5, text: 'Deployment complete. Run your flow live in the UI', duration: 2.5 },
     ],
     apps: [
-        { time: 0.5, text: 'Build full-stack apps using Windmill as your backend', duration: 2.5 },
+        { time: 0.5, text: 'Build full-stack apps using your favorite AI assistant', duration: 2.5 },
         { time: 15.0, text: 'Create backend runnables with total code flexibility', duration: 2.5 },
         { time: 24.0, text: 'Debug and test runnables via the VS Code extension', duration: 2.5 },
         { time: 32.0, text: 'Runnables are auto-typed into a global backend object', duration: 2.5 },
         { time: 42.0, text: 'Call backend logic directly from your frontend with zero boilerplate', duration: 3.5 },
         { time: 49.0, text: 'Preview and test your full-stack app on a local server', duration: 2.5 },
-        { time: 57.0, text: 'Build complete. Your app is ready to test locally', duration: 2.5 },
+        { time: 53.0, text: 'Build complete. Your app is ready to test locally', duration: 2.5 },
+		{ time: 55.0, text: 'On mount, triggers the get_failed_payments runnable', duration: 3, type: 'inline' },
+        { time: 58.5, text: 'On click, triggers the generate_email runnable', duration: 3, type: 'inline' },
+		{ time: 65.0, text: 'On click, triggers the send_email runnable', duration: 3, type: 'inline' },
     ],
 };
 
@@ -109,11 +113,16 @@ export default function ProductionTabs({
 	const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
 	const progressBarRef = useRef<HTMLDivElement>(null);
 
-	// Subtitle state
+	// Subtitle state (overlay - pauses video)
 	const [currentSubtitle, setCurrentSubtitle] = useState<string | null>(null);
 	const lastSubtitleTimeRef = useRef<number>(-1);
 	const isShowingSubtitleRef = useRef<boolean>(false);
 	const subtitleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+	// Inline subtitle state (non-interrupting)
+	const [inlineSubtitle, setInlineSubtitle] = useState<string | null>(null);
+	const lastInlineSubtitleTimeRef = useRef<number>(-1);
+	const inlineSubtitleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [hasBeenVisible, setHasBeenVisible] = useState(false);
@@ -259,8 +268,8 @@ export default function ProductionTabs({
 				setProgress((video.currentTime / video.duration) * 100);
 				setDuration(video.duration);
 
-				// Check for subtitle triggers (only if enabled and no subtitle currently showing)
-				if (enableSubtitles && !isShowingSubtitleRef.current) {
+				// Check for subtitle triggers
+				if (enableSubtitles) {
 					const activeSubtitles = videoMode === 'ui' ? subtitles : localDevSubtitles;
 					const tabSubtitles = activeSubtitles[selectedTab] || [];
 					const currentTime = video.currentTime;
@@ -269,35 +278,59 @@ export default function ProductionTabs({
 					if (currentTime < lastSubtitleTimeRef.current - 1) {
 						lastSubtitleTimeRef.current = -1;
 					}
+					if (currentTime < lastInlineSubtitleTimeRef.current - 1) {
+						lastInlineSubtitleTimeRef.current = -1;
+					}
 
 					for (const subtitle of tabSubtitles) {
+						const isInline = subtitle.type === 'inline';
+						const lastTimeRef = isInline ? lastInlineSubtitleTimeRef : lastSubtitleTimeRef;
+
+						// Skip overlay subtitles if one is currently showing
+						if (!isInline && isShowingSubtitleRef.current) continue;
+
 						// Check if we're within 0.2s of the subtitle timestamp
 						// and this subtitle time is after the last one we triggered
 						if (
 							Math.abs(currentTime - subtitle.time) < 0.2 &&
-							subtitle.time > lastSubtitleTimeRef.current
+							subtitle.time > lastTimeRef.current
 						) {
-							// Mark this subtitle time as triggered
-							lastSubtitleTimeRef.current = subtitle.time;
-							isShowingSubtitleRef.current = true;
+							if (isInline) {
+								// Inline subtitle: show without pausing
+								lastInlineSubtitleTimeRef.current = subtitle.time;
+								setInlineSubtitle(subtitle.text);
 
-							// Pause video and show subtitle
-							video.pause();
-							setCurrentSubtitle(subtitle.text);
+								// Clear any existing inline timeout
+								if (inlineSubtitleTimeoutRef.current) {
+									clearTimeout(inlineSubtitleTimeoutRef.current);
+								}
 
-							// Clear any existing timeout
-							if (subtitleTimeoutRef.current) {
-								clearTimeout(subtitleTimeoutRef.current);
+								// Hide after duration
+								inlineSubtitleTimeoutRef.current = setTimeout(() => {
+									setInlineSubtitle(null);
+								}, subtitle.duration * 1000);
+							} else {
+								// Overlay subtitle: pause video and show
+								lastSubtitleTimeRef.current = subtitle.time;
+								isShowingSubtitleRef.current = true;
+
+								video.pause();
+								setCurrentSubtitle(subtitle.text);
+
+								// Clear any existing timeout
+								if (subtitleTimeoutRef.current) {
+									clearTimeout(subtitleTimeoutRef.current);
+								}
+
+								// Resume after duration
+								subtitleTimeoutRef.current = setTimeout(() => {
+									setCurrentSubtitle(null);
+									isShowingSubtitleRef.current = false;
+									video.play();
+								}, subtitle.duration * 1000);
+
+								break; // Only trigger one overlay subtitle at a time
 							}
-
-							// Resume after duration
-							subtitleTimeoutRef.current = setTimeout(() => {
-								setCurrentSubtitle(null);
-								isShowingSubtitleRef.current = false;
-								video.play();
-							}, subtitle.duration * 1000);
-
-							break; // Only trigger one subtitle at a time
 						}
 					}
 				}
@@ -329,10 +362,15 @@ export default function ProductionTabs({
 		setProgress(0);
 		setIsPlaying(false);
 		setCurrentSubtitle(null);
+		setInlineSubtitle(null);
 		lastSubtitleTimeRef.current = -1;
+		lastInlineSubtitleTimeRef.current = -1;
 		isShowingSubtitleRef.current = false;
 		if (subtitleTimeoutRef.current) {
 			clearTimeout(subtitleTimeoutRef.current);
+		}
+		if (inlineSubtitleTimeoutRef.current) {
+			clearTimeout(inlineSubtitleTimeoutRef.current);
 		}
 	}, [selectedTab]);
 
@@ -341,19 +379,27 @@ export default function ProductionTabs({
 		setProgress(0);
 		setIsPlaying(false);
 		setCurrentSubtitle(null);
+		setInlineSubtitle(null);
 		lastSubtitleTimeRef.current = -1;
+		lastInlineSubtitleTimeRef.current = -1;
 		isShowingSubtitleRef.current = false;
 		setLoadingState({});
 		if (subtitleTimeoutRef.current) {
 			clearTimeout(subtitleTimeoutRef.current);
 		}
+		if (inlineSubtitleTimeoutRef.current) {
+			clearTimeout(inlineSubtitleTimeoutRef.current);
+		}
 	}, [videoMode]);
 
-	// Cleanup timeout on unmount
+	// Cleanup timeouts on unmount
 	useEffect(() => {
 		return () => {
 			if (subtitleTimeoutRef.current) {
 				clearTimeout(subtitleTimeoutRef.current);
+			}
+			if (inlineSubtitleTimeoutRef.current) {
+				clearTimeout(inlineSubtitleTimeoutRef.current);
 			}
 		};
 	}, []);
@@ -522,6 +568,14 @@ export default function ProductionTabs({
 								>
 									<div className="text-white px-6 py-4 max-w-md text-center">
 										<p className="text-lg font-medium">{currentSubtitle}</p>
+									</div>
+								</div>
+							)}
+							{/* Inline subtitle - non-interrupting caption at bottom */}
+							{enableSubtitles && selectedTab === tab.id && inlineSubtitle && (
+								<div className="absolute bottom-12 left-0 right-0 flex justify-center pointer-events-none">
+									<div className="bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium animate-fade-in">
+										{inlineSubtitle}
 									</div>
 								</div>
 							)}
