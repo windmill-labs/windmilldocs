@@ -7,7 +7,7 @@ export const cfaInstituteCaseStudy = {
 	category: 'Financial Services',
 	author: {
 		name: 'Cam Barts',
-		role: 'SR Manager, SRE',
+		role: 'Manager, SRE',
 		image: '/contributors/cam_barts.jpeg'
 	},
 	link: '/case-studies/cfa-institute',

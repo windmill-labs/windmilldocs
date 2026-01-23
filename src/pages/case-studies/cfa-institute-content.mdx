@@ -1,6 +1,6 @@
 ---
 title: How CFA Institute migrated from n8n and scaled production-critical monitoring with Windmill
-description: CFA Institute's SRE team needed to replace n8n with a platform robust enough for production-critical monitoring. After their SRE manager tested Windmill in his home lab for a year, they migrated in early 2025. Today, Windmill runs 25 synthetic tests every 5 minutes protecting revenue-generating processes, and usage has "exploded" across their IT organization.
+description: CFA Institute's SRE team needed to replace n8n with a platform robust enough for production-critical monitoring. After their SRE manager tested Windmill internally for a year, they fully migrated in early 2025. Today, Windmill runs 25 synthetic tests every 5 minutes protecting revenue-generating processes, and usage has "exploded" across their IT organization.
 ---
 
 import CodeBlock from '@theme/CodeBlock';
@@ -134,10 +134,10 @@ export default function CFAInstituteContent({ title, description }) {
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-		"Our company has some strict requirements around maintenance and deployment process to get those into production. So it was really difficult for us to get a script up and have it quickly deployed and easily maintained by the team."
+		"Our company has strict requirements around maintenance and deployment processes. We needed a way to get scripts into production quickly while still meeting those compliance standards."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
-		— Cam Barts, SR Manager, SRE
+		— Cam Barts, Manager, SRE
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
@@ -149,7 +149,7 @@ export default function CFAInstituteContent({ title, description }) {
 <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4">
 	<li>Real Programming Capabilities - Complex business logic beyond visual workflows</li>
 	<li>Production Reliability - Mission-critical monitoring that can't fail</li>
-	<li>Rapid Deployment - Bypass enterprise change management for script iterations</li>
+	<li>Streamlined Deployment - Faster path to production while maintaining compliance</li>
 	<li>Team Collaboration - Proper version control and Git workflows</li>
 	<li>Scale - Handle hundreds of executions per hour with complex orchestration</li>
 </ul>
@@ -167,18 +167,6 @@ export default function CFAInstituteContent({ title, description }) {
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Solution</h2>
 
 <div className="space-y-8">
-	<div>
-		<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-			Discovery through open source validation
-		</h3>
-		<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-			Cam Barts discovered Windmill through alternativeTo.net while searching for <a href="https://github.com/windmill-labs/windmill" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">open-source</a> alternatives. As a tech lead who regularly explores projects in his home lab, Cam deployed Windmill and tested it for approximately one year before introducing it to CFA Institute in February 2025.
-		</p>
-		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-			This "try before you buy" approach was critical. Cam had already proven Windmill's capabilities in his own environment before advocating for enterprise adoption. His journey illustrates an important adoption pattern: personal exploration in a safe environment, proof of concept for team use cases, and organic advocacy that spreads through demonstrated value.
-		</p>
-	</div>
-
 	<div>
 		<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
 			Real code with full language features
@@ -209,16 +197,16 @@ def main(endpoint: str, expected_status: int = 200):
 			Today, CFA Institute runs 25 concurrent synthetic tests every 5 minutes—300 executions per hour—using ChromeDriver-based browser automation. These aren't simple uptime checks; they're full user journey simulations that validate every step of their critical revenue processes.
 		</p>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-			Windmill's high <Link to="https://www.windmill.dev/docs/misc/benchmarks/competitors" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">performance</Link> handled this workload with breeze. The platform's optimized execution runtime and efficient job queue management ensure that all 25 concurrent tests execute reliably without bottlenecks, maintaining the 5-minute cadence that protects their revenue-generating processes around the clock.
+			Windmill's high <Link to="https://www.windmill.dev/docs/misc/benchmarks/competitors" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">performance</Link> handled this workload with ease. The platform's optimized execution runtime and efficient job queue management ensure that all 25 concurrent tests execute reliably without bottlenecks, maintaining the 5-minute cadence that protects their revenue-generating processes around the clock.
 		</p>
 	</div>
 
 	<div>
 		<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-			Rapid deployment without change management
+			Streamlined deployment within compliance framework
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-			Windmill scripts could be deployed immediately without going through CFA Institute's strict change management process. With <Link to="https://www.windmill.dev/docs/advanced/git_sync" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Git sync</Link>, proper version control, and workspace collaboration features, the entire SRE team could work together seamlessly.
+			Windmill scripts integrate into CFA Institute's formal change management process through a hot path that accelerates production readiness while maintaining proper controls. With <Link to="https://www.windmill.dev/docs/advanced/git_sync" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Git sync</Link>, proper version control, and workspace collaboration features, the entire SRE team could work together seamlessly within their governance framework.
 		</p>
 		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
