@@ -11,5 +11,7 @@ export const cfaInstituteCaseStudy = {
 		image: '/contributors/cam_barts.jpeg'
 	},
 	link: '/case-studies/cfa-institute',
-	selfHosted: false
+	selfHosted: false,
+	released: true,
+	date: '2026-01-30'
 };

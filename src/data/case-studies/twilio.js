@@ -11,5 +11,7 @@ export const twilioCaseStudy = {
 		image: '/contributors/nanda_kishore_yadavalli.jpeg'
 	},
 	link: '/case-studies/twilio',
-	selfHosted: false
+	selfHosted: false,
+	released: false,
+	date: '2026-02-25'
 };

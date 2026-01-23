@@ -11,5 +11,7 @@ export const pantherLabsCaseStudy = {
 		image: '/contributors/bj_maldonado.jpeg'
 	},
 	link: '/case-studies/panther-labs',
-	selfHosted: true
+	selfHosted: true,
+	released: false,
+	date: '2026-02-15'
 };

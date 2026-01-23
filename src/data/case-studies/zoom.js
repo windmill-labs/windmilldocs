@@ -11,5 +11,7 @@ export const zoomCaseStudy = {
 		image: '/contributors/frederick_loucks.jpeg'
 	},
 	link: '/case-studies/zoom',
-	selfHosted: true
+	selfHosted: true,
+	released: false,
+	date: '2026-02-10'
 };

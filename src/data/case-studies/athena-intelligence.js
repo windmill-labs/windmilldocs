@@ -11,5 +11,7 @@ export const athenaIntelligenceCaseStudy = {
 		image: '/contributors/brendon_geils.jpeg'
 	},
 	link: '/case-studies/athena-intelligence',
-	selfHosted: true
+	selfHosted: true,
+	released: true,
+	date: '2026-01-30'
 };

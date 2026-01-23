@@ -11,5 +11,7 @@ export const axiansCaseStudy = {
 		image: '/contributors/ben_willems.jpeg'
 	},
 	link: '/case-studies/axians',
-	selfHosted: true
+	selfHosted: true,
+	released: false,
+	date: '2026-02-20'
 };

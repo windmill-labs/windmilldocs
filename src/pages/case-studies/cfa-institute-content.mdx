@@ -106,9 +106,12 @@ export default function CFAInstituteContent({ title, description }) {
 
 					<div className="lg:col-span-2">
 						<div className="mb-12">
-							<div className="mb-6">
+							<div className="mb-6 flex items-center justify-between">
 								<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
 									Case Study
+								</span>
+								<span className="text-sm text-gray-500 dark:text-gray-400">
+									{new Date(cfaInstituteCaseStudy.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
 								</span>
 							</div>
 							<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">

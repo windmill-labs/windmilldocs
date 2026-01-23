@@ -98,9 +98,11 @@ export default function CaseStudiesPage() {
 
 							{/* Case studies grid */}
 							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-								{caseStudies.map((caseStudy) => (
-									<CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
-								))}
+								{caseStudies
+									.filter((caseStudy) => caseStudy.released)
+									.map((caseStudy) => (
+										<CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
+									))}
 							</div>
 						</div>
 					</div>
