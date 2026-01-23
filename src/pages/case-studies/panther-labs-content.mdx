@@ -181,7 +181,7 @@ export default function PantherLabsContent({ title, description }) {
 			Open source foundation
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-			Windmill's <a href="https://github.com/windmill-labs/windmill" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">open source</a> architecture (Apache 2.0 licensed on GitHub) meant Panther could never be locked in again. Even in the worst case, they could fork the codebase and maintain it themselves—something impossible with proprietary platforms like Airplane. The transparency of the codebase also gave them confidence in security and reliability for their cybersecurity operations.
+			Windmill's <a href="https://github.com/windmill-labs/windmill" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">open source</a> architecture (Apache 2.0 licensed on GitHub) meant Panther could never be locked in again. Even in the worst case, they could fork the codebase and maintain it themselves, something impossible with proprietary platforms like Airplane. The transparency of the codebase also gave them confidence in security and reliability for their cybersecurity operations.
 		</p>
 	</div>
 
@@ -190,7 +190,7 @@ export default function PantherLabsContent({ title, description }) {
 			Platform-agnostic architecture
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-			Instead of embedding business logic in the workflow platform, Panther built a separate <a href="https://www.windmill.dev/docs/getting_started/scripts_quickstart/python" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Python</a> library containing all their core logic. Windmill workflows simply orchestrate by calling functions from this library—acting as an execution layer, not a code repository.
+			Instead of embedding business logic in the workflow platform, Panther built a separate <a href="https://www.windmill.dev/docs/getting_started/scripts_quickstart/python" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Python</a> library containing all their core logic. Windmill workflows simply orchestrate by calling functions from this library, acting as an execution layer, not a code repository.
 		</p>
 		<div className="rounded-lg p-4 my-4 overflow-x-auto">
 			<CodeBlock language="python">
@@ -216,7 +216,7 @@ def main(customer_email: str, aws_account_id: str):
 			</cite>
 		</blockquote>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-			If they ever need to migrate from Windmill, their business logic stays intact—they only rewrite the thin orchestration layer, not their entire platform.
+			If they ever need to migrate from Windmill, their business logic stays intact. They only rewrite the thin orchestration layer, not their entire platform.
 		</p>
 	</div>
 
@@ -225,7 +225,7 @@ def main(customer_email: str, aws_account_id: str):
 			Developer-first features
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-			Windmill's native support for importing any Python package from PyPI and private repositories made their architecture possible immediately. No limitations, no workarounds—full Python language features with proper dependency management and versioning. Everything-as-code with <Link to="https://www.windmill.dev/docs/advanced/git_sync" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Git sync</Link> gave them proper version control and CI/CD workflows.
+			Windmill's native support for importing any Python package from PyPI and private repositories made their architecture possible immediately. No limitations, no workarounds, just full Python language features with proper dependency management and versioning. Everything-as-code with <Link to="https://www.windmill.dev/docs/advanced/git_sync" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Git sync</Link> gave them proper version control and CI/CD workflows.
 		</p>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
 			At the same time, Windmill's auto-generated UIs and App Builder meant non-technical team members could still use the platform through graphical interfaces, without requiring the platform team to build custom frontends.
@@ -278,7 +278,7 @@ def main(customer_email: str, aws_account_id: str):
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Conclusion</h2>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-	Panther Labs transformed a crisis into an opportunity by building a platform-agnostic architecture on Windmill. By keeping their business logic in a separate Python library and using Windmill as an orchestration layer, they've protected themselves from future vendor lock-in while gaining the production reliability and developer-first capabilities they need to run their internal operations. Today, with 90% of their platform running on Windmill, they've proven that the right architecture choices—combined with the right tooling—can turn a forced migration into a strategic advantage.
+	Panther Labs transformed a crisis into an opportunity by building a platform-agnostic architecture on Windmill. By keeping their business logic in a separate Python library and using Windmill as an orchestration layer, they've protected themselves from future vendor lock-in while gaining the production reliability and developer-first capabilities they need to run their internal operations. Today, with 90% of their platform running on Windmill, they've proven that the right architecture choices, combined with the right tooling, can turn a forced migration into a strategic advantage.
 </p>
 </section>
 						</div>

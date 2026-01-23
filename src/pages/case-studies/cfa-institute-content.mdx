@@ -126,7 +126,7 @@ export default function CFAInstituteContent({ title, description }) {
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
 	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-		<a href="https://www.cfainstitute.org/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">CFA Institute</a> is a global association of investment professionals that sets standards and provides education for the financial services industry, serving hundreds of thousands of investment professionals worldwide. Their SRE team needed to replace <a href="https://n8n.io/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">n8n</a> and scattered AWS Lambda scripts with a platform robust enough to handle production-critical monitoring, complex integrations, and rapid deployment requirements—all while meeting enterprise compliance standards.
+		<a href="https://www.cfainstitute.org/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">CFA Institute</a> is a global association of investment professionals that sets standards and provides education for the financial services industry, serving hundreds of thousands of investment professionals worldwide. Their SRE team needed to replace <a href="https://n8n.io/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">n8n</a> and scattered AWS Lambda scripts with a platform robust enough to handle production-critical monitoring, complex integrations, and rapid deployment requirements, all while meeting enterprise compliance standards.
 	</p>
 </section>
 
@@ -144,7 +144,7 @@ export default function CFAInstituteContent({ title, description }) {
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-	The team had been using a patchwork of solutions—ad hoc scripts deployed as AWS Lambdas or Azure functions, n8n for basic automation workflows, and manual processes that couldn't be quickly automated. While n8n worked for simple automations, the platform hit its limits as their needs grew more complex.
+	The team had been using a patchwork of solutions: ad hoc scripts deployed as AWS Lambdas or Azure functions, n8n for basic automation workflows, and manual processes that couldn't be quickly automated. While n8n worked for simple automations, the platform hit its limits as their needs grew more complex.
 </p>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 	The critical requirements they needed:
@@ -197,7 +197,7 @@ def main(endpoint: str, expected_status: int = 200):
 			</CodeBlock>
 		</div>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-			Today, CFA Institute runs 25 concurrent synthetic tests every 5 minutes—300 executions per hour—using ChromeDriver-based browser automation. These aren't simple uptime checks; they're full user journey simulations that validate every step of their critical revenue processes.
+			Today, CFA Institute runs 25 concurrent synthetic tests every 5 minutes (300 executions per hour) using ChromeDriver-based browser automation. These aren't simple uptime checks; they're full user journey simulations that validate every step of their critical revenue processes.
 		</p>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
 			Windmill's high <Link to="https://www.windmill.dev/docs/misc/benchmarks/competitors" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">performance</Link> handled this workload with ease. The platform's optimized execution runtime and efficient job queue management ensure that all 25 concurrent tests execute reliably without bottlenecks, maintaining the 5-minute cadence that protects their revenue-generating processes around the clock.
@@ -229,7 +229,7 @@ def main(endpoint: str, expected_status: int = 200):
 			Beyond synthetic monitoring, CFA Institute built sophisticated integrations that extended across their organization:
 		</p>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-			<strong>Microsoft Teams Bot</strong> - Built on Windmill's Teams integration, the bot became "the biggest hit with leadership." Available in every channel, it handles postmortem searches, release status queries, and Jira notifications. Development teams use it for release monitoring, DevOps teams track deployment pipelines, and production support searches historical postmortems—all through natural language queries in Teams.
+			<strong>Microsoft Teams Bot</strong> - Built on Windmill's Teams integration, the bot became "the biggest hit with leadership." Available in every channel, it handles postmortem searches, release status queries, and Jira notifications. Development teams use it for release monitoring, DevOps teams track deployment pipelines, and production support searches historical postmortems, all through natural language queries in Teams.
 		</p>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 			<strong>Grafana Data Layer</strong> - Windmill serves as a data processing layer between complex data sources and Grafana. Instead of connecting Grafana directly to sources with limitations (like Jira's 50-ticket pagination limit), Windmill scripts fetch data from multiple sources, perform transformations and merging, apply business logic, and expose clean results via API. Business stakeholders consume integrated data through Grafana dashboards without knowing Windmill powers them behind the scenes.
@@ -247,7 +247,7 @@ def main(endpoint: str, expected_status: int = 200):
 	The platform has proven production-stable for their most critical workloads: 25 synthetic tests running every 5 minutes without failures, platform updates every 2 weeks with zero incidents, and mission-critical monitoring that directly protects revenue-generating processes.
 </p>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-	The transition from n8n required only brief training sessions before the entire team became productive and, ultimately, advocates. Business stakeholders and non-technical teams now have access to sophisticated automation through Grafana dashboards, Teams bot queries, and auto-generated UIs—all powered by real code underneath that developers can iterate on rapidly.
+	The transition from n8n required only brief training sessions before the entire team became productive and, ultimately, advocates. Business stakeholders and non-technical teams now have access to sophisticated automation through Grafana dashboards, Teams bot queries, and auto-generated UIs, all powered by real code underneath that developers can iterate on rapidly.
 </p>
 </section>
 
