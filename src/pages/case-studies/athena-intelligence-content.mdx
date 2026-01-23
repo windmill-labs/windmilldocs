@@ -1,6 +1,6 @@
 ---
-title: How Athena Intelligence unlocked audit firms and regulated enterprises with self-hostable workflow infrastructure
-description: Athena Intelligence builds an AI agent platform for enterprise automation targeting regulated industries. After four years evaluating workflow platforms, they chose Windmill for its self-hostable architecture, enabling deployment in customer Azure environments and unlocking access to audit firms, financial services, and healthcare markets.
+title: How Athena Intelligence gained access to customers in regulated markets
+description: Athena Intelligence builds an AI agent platform for enterprise automation targeting regulated industries. After years evaluating workflow platforms, they chose Windmill for its self-hostable architecture, enabling deployment in customer environments and unlocking access to audit firms, financial services, and healthcare markets.
 ---
 
 import CodeBlock from '@theme/CodeBlock';
@@ -57,7 +57,7 @@ export default function AthenaIntelligenceContent({ title, description }) {
 										What they do
 									</div>
 									<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-										AI agent platform for enterprise automation targeting highly regulated industries including audit firms, financial services, and healthcare.
+										AI agent platform for enterprise automation serving the advisory and consulting industry, financial services, and healthcare.
 									</div>
 								</div>
 								<div>
@@ -129,14 +129,14 @@ export default function AthenaIntelligenceContent({ title, description }) {
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
 	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-		<a href="https://www.athenaintel.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Athena Intelligence</a> builds an AI agent platform for enterprise automation. The company targets highly regulated industries—audit firms, financial services, healthcare—where compliance requirements mandate private cloud or on-premise deployment. Without deployment flexibility, entire market segments would be inaccessible.
+		<a href="https://www.athenaintel.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Athena Intelligence</a> builds an AI agent platform for enterprise automation. The company serves the advisory and consulting industry, along with financial services and healthcare—all sectors with heavy compliance requirements where private cloud or on-premise deployment is often mandatory. Without deployment flexibility, entire market segments would be inaccessible.
 	</p>
 </section>
 
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The problem</h2>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-	Brendon Geils, founder of Athena Intelligence, spent four years evaluating workflow orchestration platforms. The blocker was always deployment: could it run in a customer's Azure environment? In an on-premise data center? Embedded into another product?
+	Brendon Geils, founder of Athena Intelligence, spent years evaluating workflow orchestration platforms. The blocker was always deployment: could it run in a customer's environment? In an on-premise data center? Embedded into another product?
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
@@ -147,7 +147,7 @@ export default function AthenaIntelligenceContent({ title, description }) {
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-	Most workflow companies built SaaS products where multi-tenancy was baked into their business model. Self-hosting was an afterthought. But for Athena, this blocked access to their entire target market. Major audit firms won't route sensitive financial data through third-party SaaS. Healthcare companies face HIPAA requirements. Financial services have data sovereignty policies.
+	Most workflow companies built SaaS products where multi-tenancy was baked into their business model. Self-hosting was an afterthought. But for Athena, this blocked access to their entire target market. Major consulting firms won't route sensitive client data through third-party SaaS. Healthcare companies face HIPAA requirements. Financial services have data sovereignty policies.
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
@@ -180,7 +180,7 @@ export default function AthenaIntelligenceContent({ title, description }) {
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-		"When I wake up at night and I'm like, 'Oh, something's on fire'—it's usually, it's not, it's never a windmill problem. Windmill is probably some of the most stable parts of our business."
+		"When I get woken up at night because something is on fire, it's never due to Windmill. Windmill is actually one of the most stable parts of our business, so we can quickly focus on identifying and fixing the real issue."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
 		— Brendon Geils
@@ -198,26 +198,25 @@ export default function AthenaIntelligenceContent({ title, description }) {
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-		"Most of our usage is the script capability. We have an agent that uses a bunch of tools and capabilities. Whenever we don't have a tool, we recommend our customers go and build a script. The agent can help them write the code and then the agent uses that script as a new tool."
+		"Our primary use case is the script capability. Our agent has a set of built-in tools, but whenever we need something new, customers build a custom script. The agent can help them write the code, and then that script becomes a new tool in the agent's toolkit."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
 		— Brendon Geils
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-	For enterprise customers, Windmill runs embedded within Athena's platform in their own infrastructure. An audit firm deploying to Azure sees Athena's AI interface—Windmill is invisible infrastructure underneath, executing scripts within their security perimeter.
+	For enterprise customers, Windmill runs embedded within Athena's platform in their own infrastructure. Windmill is invisible infrastructure underneath, executing scripts within their security perimeter.
 </p>
 	<div className="rounded-lg p-4 my-4 overflow-x-auto">
 	<CodeBlock language="python">
-{`# Example: Audit firm writes this compliance check once
+{`# Example: Consulting firm writes this compliance check once
+# Script runs in their environment with their data
 
-# Script runs in their Azure environment with their data
-
-def check_audit_compliance(company_id: str, audit_year: int):
-    records = fetch_financial_records(company_id, audit_year)
+def check_compliance(company_id: str, review_year: int):
+    records = fetch_records(company_id, review_year)
     compliance_score = calculate_compliance(records)
     return {
-        "score": compliance_score, 
+        "score": compliance_score,
         "status": "compliant" if compliance_score > 0.95 else "review_needed"
     }
 
@@ -232,16 +231,8 @@ def check_audit_compliance(company_id: str, audit_year: int):
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The result</h2>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-	Athena is now deploying to a major audit firm in Azure—the type of regulated enterprise customer that requires private cloud infrastructure and would be inaccessible with a SaaS-only platform.
+	Athena is now deploying to major regulated enterprise customers that require private cloud infrastructure and would be inaccessible with a SaaS-only platform.
 </p>
-<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
-	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-		"We have a very large audit firm that we're deploying to now in Azure. A lot of that is on top of Windmill."
-	</p>
-	<cite className="text-sm text-gray-500 dark:text-gray-400">
-		— Brendon Geils
-	</cite>
-</blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
 	After nearly a year in production, Windmill serves dozens of customer organizations running 24/7 automation. The infrastructure has proven rock-solid.
 </p>
@@ -257,10 +248,11 @@ def check_audit_compliance(company_id: str, audit_year: int):
 	Deployment flexibility unlocked access to regulated markets:
 </p>
 <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4 mb-6">
-	<li>Audit firms requiring private cloud with data residency guarantees</li>
+	<li>Audit, advisory and consulting firms requiring private cloud with data residency guarantees</li>
 	<li>Financial services with on-premise mandates for sensitive data processing</li>
 	<li>Healthcare organizations needing HIPAA-compliant infrastructure</li>
 	<li>Government contractors with air-gapped network requirements</li>
+	<li>Fortune 500 customers who choose Athena specifically for its compliance and security posture</li>
 </ul>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
 	Each market has substantial budgets and long-term contracts but is only accessible to vendors whose infrastructure can deploy into their environments.
@@ -283,7 +275,7 @@ def check_audit_compliance(company_id: str, audit_year: int):
 		Athena Intelligence's story reveals a simple truth: for platform companies targeting regulated industries, deployment flexibility isn't a feature—it's market access. SaaS-only tools lock you out of audit firms, financial services, and healthcare. Self-hosting as an afterthought creates deployment friction that kills enterprise deals.
 	</p>
 	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-		Windmill's open-source foundation, production stability, and enterprise-ready documentation solved this. After four years evaluating workflow platforms, Athena found infrastructure they could confidently build on and deploy wherever customers required. Today, they're winning enterprise deals their competitors can't even pursue.
+		Windmill's open-source foundation, production stability, and enterprise-ready documentation solved this. After years evaluating workflow platforms, Athena found infrastructure they could confidently build on and deploy wherever customers required. Today, they're winning enterprise deals their competitors can't even pursue.
 	</p>
 </section>
 						</div>
