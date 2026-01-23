@@ -217,7 +217,7 @@ export default function DeveloperExperienceSection() {
 					</h1>
 					<span className="text-lg text-gray-700 dark:text-gray-200">
 						Review, deploy and run on the most scalable and reliable infra with workers managed by
-						Windmill, and all observability, alerting and error handling built-in (+export to OTEL)
+						Windmill, and all observability, alerting and error handling built-in (+ export to OTel).
 					</span>
 				</div>
 				<div className="flex flex-col gap-6">
