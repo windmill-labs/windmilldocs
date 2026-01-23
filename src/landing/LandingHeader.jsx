@@ -160,7 +160,7 @@ export default function LandingHeader() {
 							to="/case-studies"
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300 whitespace-nowrap"
 						>
-							Case Studies
+							Case studies
 						</Link>
 						<Link
 							to="/docs/intro"
@@ -322,7 +322,7 @@ export default function LandingHeader() {
 										href="/case-studies"
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
-										Case Studies
+										Case studies
 									</a>
 
 									<a
