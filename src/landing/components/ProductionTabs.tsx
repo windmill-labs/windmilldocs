@@ -84,7 +84,7 @@ export const defaultLocalDevSubtitles: Record<string, SubtitleConfig[]> = {
         { time: 67.5, text: 'Deployment complete. Run your flow live in the UI', duration: 2.5 },
     ],
     apps: [
-        { time: 0.5, text: 'Build full-stack apps using your favorite AI assistant', duration: 2.5 },
+        //{ time: 0.5, text: 'Build full-stack apps using your favorite AI assistant', duration: 2.5 },
         { time: 15.0, text: 'Create backend runnables with total code flexibility', duration: 2.5 },
         { time: 24.0, text: 'Debug and test runnables via the VS Code extension', duration: 2.5 },
         { time: 32.0, text: 'Runnables are auto-typed into a global backend object', duration: 2.5 },
