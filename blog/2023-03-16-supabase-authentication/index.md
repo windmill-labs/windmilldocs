@@ -14,14 +14,6 @@ directly (**frontend script**).
 
 <!--truncate-->
 
-:::info
-
-One of our clients, [Teracapital][tera] has been using Supabase with Windmill for their
-applications. This example is a simplified version of how they serve protected data to their own
-clients.
-
-:::
-
 <video
 className="border-2 rounded-xl object-cover w-full h-full"
 loop
@@ -597,7 +589,6 @@ navigated to the "Data" tab.
 
 <!-- Links -->
 
-[tera]: https://www.teracapital.com.br/
 [hub]: https://hub.windmill.dev
 [hub-resources]: https://hub.windmill.dev/resources
 [js-template-string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals

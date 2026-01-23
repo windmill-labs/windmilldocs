@@ -6,7 +6,7 @@ Windmill allows you to create MQTT triggers, enabling subscriptions to a specifi
 
 <iframe
     style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/V50Jl4D_RTY"
+    src="https://www.youtube.com/embed/T_ava06lqlc"
     title="MQTT Triggers"
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

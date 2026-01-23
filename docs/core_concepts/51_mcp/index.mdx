@@ -23,6 +23,18 @@ Additionally, MCP provides access to Windmill's API endpoints for basic operatio
 
 ## How to use
 
+### Connect with OAuth
+
+You can quickly connect your MCP client to Windmill by simply adding the following URL to your client configuration:
+
+```
+https://app.windmill.dev/api/mcp/w/<your-workspace-id>/mcp
+```
+
+This OAuth-based approach automatically handles authentication and provides access to all available tools in your workspace.
+
+For more fine-grained usage, you can manually create a token to choose which tools are exposed to the client (see below).
+
 ### Generate your MCP token and URL
 
 1. Navigate to your **account settings** in Windmill.
@@ -33,7 +45,7 @@ Additionally, MCP provides access to Windmill's API endpoints for basic operatio
 Once created, your MCP URL will look like this:
 
 ```
-https://app.windmill.dev/api/mcp/w/<your-workspace-id>/sse?token=<your-token>
+https://app.windmill.dev/api/mcp/w/<your-workspace-id>/mcp?token=<your-token>
 ```
 
 > This token is used to authenticate MCP clients and generate your personal MCP endpoint URL. Save this URL securely. Treat it like an API key—anyone with access can trigger actions in your workspace.
@@ -54,7 +66,7 @@ To connect with Cursor:
 {
   "mcpServers": {
     "windmill-mcp": {
-      "url": "https://app.windmill.dev/api/mcp/w/<your-workspace-id>/sse?token=<your-token>"
+      "url": "https://app.windmill.dev/api/mcp/w/<your-workspace-id>/mcp?token=<your-token>"
     }
   }
 }
