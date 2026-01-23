@@ -1,6 +1,6 @@
 ---
-title: How Axians scales multi-tenant automation from 14 active customers to 150 with Windmill
-description: Axians is a 500-person managed service provider managing network infrastructure for 150 enterprise customers across Europe. They needed scalable automation infrastructure to gradually onboard customers to self-service automation.
+title: How Axians scales multi-tenant automation without the €1M+/year enterprise cost
+description: Axians is a 400-person managed service provider managing network infrastructure for 150 enterprise customers across the world. They needed scalable automation infrastructure to gradually onboard customers to self-service automation.
 ---
 
 import CodeBlock from '@theme/CodeBlock';
@@ -46,7 +46,7 @@ export default function AxiansContent({ title, description }) {
 										Company Size
 									</div>
 									<div className="text-sm text-gray-900 dark:text-white">
-										500
+										400
 									</div>
 								</div>
 								<div>
@@ -54,7 +54,7 @@ export default function AxiansContent({ title, description }) {
 										What they do
 									</div>
 									<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-										Managed service provider in Rotterdam, Netherlands, managing network infrastructure for government agencies, hospitals, schools, and corporations across Europe.
+										Managed service provider based in Rotterdam, Netherlands, managing network infrastructure, cloud, datacenter, and unified communications for government agencies, hospitals, schools, and corporations globally.
 									</div>
 								</div>
 								<div>
@@ -123,7 +123,7 @@ export default function AxiansContent({ title, description }) {
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
 	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-		<a href="https://www.axians.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Axians</a> is a 500-person managed service provider in Rotterdam, Netherlands, managing network infrastructure for 150 enterprise customers across Europe including government agencies, hospitals, schools, and corporations. They needed scalable automation infrastructure to gradually onboard these customers to self-service automation. Today, 14 customers actively use Windmill for network automation, with the remaining customers in the onboarding pipeline. The challenge was finding a platform with the right architecture and economics to support this scaling journey.
+		<a href="https://www.axians.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Axians</a> is a 400-person managed service provider, based in Rotterdam, Netherlands. It manages network infrastructure, cloud, datacenter, and unified communications for 150 enterprise customers globally, including government agencies, hospitals, schools, and corporations. The company needed a scalable and decentralized automation infrastructure to gradually onboard these customers to self-service automation. Today, 14 customer-facing teams actively use Windmill for network automation, with the remaining customers in the onboarding pipeline. The core challenge was finding a platform with the right architecture and economics to support their growth and decentralization journey.
 	</p>
 </section>
 
@@ -134,14 +134,17 @@ export default function AxiansContent({ title, description }) {
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-		"We manage Wi-Fi and LAN networks for our customers like the government, schools, hospitals, large corporations. They say here is my entire network, just fix it for me. Instead of spending €100 an hour for an engineer to do something which can easily be automated, we want to enable our engineers to build scripts for themselves in a managed, secure, and compliant environment."
+		"We manage Software Defined Networking for customers like government agencies, schools, hospitals, and large corporations. They trust us with their entire network infrastructure. We want to enable our engineers to build automation scripts themselves in a managed, secure, and compliant environment—so they can focus on solving complex problems rather than repetitive tasks."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
 		— Ben Willems, Product Owner, Automation Team
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-	The mission: become a data-driven managed service provider by gathering information, transforming it into insights, and automating actions at scale. But the path to scale was the problem—customers would onboard gradually, not all at once. The infrastructure needed to support this growth pattern:
+	The mission: become a data-driven managed service provider by gathering information, transforming it into insights, and acting on those insights with smart automations. The challenge was scaling this approach. As customers onboarded gradually, each brought different processes and requirements. They needed a platform with default automations that could be customized for each customer while remaining centrally orchestrated and scalable.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	The infrastructure needed to support this growth pattern:
 </p>
 <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4">
 	<li>Multi-tenant architecture - Separate isolated environments for each customer</li>
@@ -150,11 +153,16 @@ export default function AxiansContent({ title, description }) {
 	<li>Compliance-ready - ISO and IC certifications require auditing and logging</li>
 </ul>
 	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4 mt-4">
-		Axians evaluated over 10 platforms including <a href="https://kestra.io/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Kestra</a>, <a href="https://www.redhat.com/en" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Ansible Automation Platform</a>, and <a href="https://n8n.io/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">n8n</a>. Ansible Automation Platform was technically solid but economically impossible for gradual scaling: "We would have to pay over a million euros a year to use it and our business case could not cover that."
+		Axians evaluated over 10 platforms including <a href="https://kestra.io/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Kestra</a>, <a href="https://www.redhat.com/en" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Ansible Automation Platform</a>, and <a href="https://n8n.io/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">n8n</a>. Ansible Automation Platform was technically solid but economically impossible for gradual scaling. Device-based licensing meant paying for hundreds to thousands of licenses per customer network, just for the right to run automations. Combined with development costs and platform hosting, the total cost of ownership was prohibitively high with an ROI timeline measured in years, not months.
 	</p>
-<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-	Fixed enterprise licensing meant paying for 150 customers upfront, even if only 14 were actively using it. That economics didn't work.
-</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"The combination of major upfront investment and ongoing operational costs made it financially unsustainable for our business model."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Ben Willems
+	</cite>
+</blockquote>
 </section>
 
 <section>
@@ -169,21 +177,21 @@ export default function AxiansContent({ title, description }) {
 			Multi-tenant architecture that scales with adoption
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-			Windmill's workspace model solved Axians' core challenge: start with early adopters and scale as customers onboard, without massive upfront costs.
+			Windmill's workspace model and remote worker architecture solved Axians' core challenge: start with early adopters, scale as customers onboard, and execute scripts decentrally—all without massive upfront costs.
 		</p>
 		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-				"You have a separate environment just for one customer and you can build all your applications, all your flows in that. We use Windmill Hub Private to share scripts between customers when appropriate."
+				"You have a separate environment just for one customer where you can build all your applications. We use Windmill Hub Private to share scripts between customers when appropriate."
 			</p>
 			<cite className="text-sm text-gray-500 dark:text-gray-400">
 				— Ben Willems
 			</cite>
 		</blockquote>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-			Ben's platform team manages Windmill hosted in Azure. Customer teams—network engineers managing specific client accounts—build and maintain their own automations within their workspaces. The platform team provides infrastructure; the customer teams own their automation scripts.
+			Ben's platform team manages Windmill hosted in Azure Kubernetes Services. Customer teams—network engineers managing specific client accounts—build and maintain their own automations within their workspaces. The platform team provides infrastructure; the customer teams own their automation scripts.
 		</p>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-			This model scales efficiently. Axians doesn't need to hire developers to build automation for every customer. Early adopters build scripts, other teams adopt them, and the automation library grows organically.
+			This model scales efficiently. Axians doesn't need to hire developers to build automation for every customer. Early adopters build scripts, other teams adopt them, and the automation library grows organically. Critically, customer-facing teams understand their clients' specific needs and requirements better than any central team could—reducing alignment overhead and ensuring automations work correctly the first time.
 		</p>
 	</div>
 
@@ -204,7 +212,7 @@ export default function AxiansContent({ title, description }) {
 		</p>
 		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-				"Usually it's the concept of a developer has to build the script and nobody wants to pay the hours. They just want to use the script."
+				"The model is simple: developers build the automation once, and then the whole team benefits. One person's work scales across the entire organization."
 			</p>
 			<cite className="text-sm text-gray-500 dark:text-gray-400">
 				— Ben Willems
@@ -224,7 +232,7 @@ export default function AxiansContent({ title, description }) {
 		</p>
 		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-				"We don't want anyone to run scripts on their own laptop anymore. We want to have in a central orchestration platform which is Windmill. Everything that you do in Windmill is audited, is registered, and logged."
+				"We needed to move away from engineers running scripts on their laptops. With Windmill as our central orchestration platform, everything is audited, registered, and logged—giving us the visibility and compliance we need."
 			</p>
 			<cite className="text-sm text-gray-500 dark:text-gray-400">
 				— Ben Willems
@@ -240,7 +248,7 @@ export default function AxiansContent({ title, description }) {
 			Real-world transformation
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-			A network engineer managing infrastructure for a major energy supplier needed internet connectivity at 180 substation locations. Previously, each deployment took 4 hours. The engineer taught himself to code and built an Ansible script in Windmill. Deployment now takes 5-10 minutes per location.
+			A network engineer managing infrastructure for a major energy supplier needed internet connectivity at 180 substation locations. He built a Windmill script that reduced deployment time from 4 hours to 5-10 minutes per location—while ensuring uniform configuration across all sites and eliminating manual errors.
 		</p>
 		<div className="rounded-lg p-4 my-4 overflow-x-auto">
 			<CodeBlock language="python">
@@ -269,7 +277,7 @@ def remediate_network_issue(device_id: str, issue_type: str):
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The result</h2>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-	Axians started with early adopters and is now scaling across their customer base. Fourteen customers actively automate with Windmill, with the remaining customers onboarding as adoption spreads.
+	Axians started with early adopters and is now scaling across their organization. Fourteen customer-facing teams actively build automations in Windmill, with more internal teams onboarding as adoption spreads.
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
@@ -286,7 +294,7 @@ def remediate_network_issue(device_id: str, issue_type: str):
 			Transformational efficiency at the active customers
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-			For the 14 customers actively using the platform, the results are dramatic. Network deployments that took 4 hours now complete in 5-10 minutes. Self-healing automation restarts failed access points automatically. Network equipment updates happen on schedule. Invoice workflows run end-to-end from quote to payment.
+			For the 14 customer teams actively using the platform, the results are dramatic. Network deployments that took 4 hours now complete in 5-10 minutes. Self-healing automation restarts failed access points automatically. Network equipment updates happen on schedule. Invoice workflows run end-to-end from quote to payment.
 		</p>
 	</div>
 
@@ -295,16 +303,8 @@ def remediate_network_issue(device_id: str, issue_type: str):
 			Economics that enable the scaling journey
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-			Axians avoided the €1 million+ annual cost of enterprise platforms by choosing usage-based pricing. As they scale from 14 to 150 customers, costs grow proportionally rather than in large licensing steps. This makes the business case work.
+			Axians avoided massive upfront costs of enterprise platforms by choosing usage-based pricing. As they scale from 14 to 150 customer teams, costs grow proportionally rather than in large licensing steps. Critically, customer-specific workspaces preserve the ability to tailor automations per client—delivering on their motto of "best of ICT with a human touch" while maintaining economic viability.
 		</p>
-		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
-			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-				"We've asked to add Ansible to the platform and within like two weeks you guys built it. Heads off for the speed on that."
-			</p>
-			<cite className="text-sm text-gray-500 dark:text-gray-400">
-				— Ben Willems
-			</cite>
-		</blockquote>
 	</div>
 
 	<div>
@@ -314,14 +314,6 @@ def remediate_network_issue(device_id: str, issue_type: str):
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 			The platform enables network engineers to solve their own problems. Once early adopters build scripts, other teams adopt them. The automation library grows as more customers onboard.
 		</p>
-		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
-			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-				"Usually it's the concept of a developer has to build the script and nobody wants to pay the hours. They just want to use the script."
-			</p>
-			<cite className="text-sm text-gray-500 dark:text-gray-400">
-				— Ben Willems
-			</cite>
-		</blockquote>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
 			With everything centralized, Axians passes ISO and IC audits without manual documentation. Every automation is logged, every execution traced. As the remaining customers onboard, they inherit this compliance foundation.
 		</p>

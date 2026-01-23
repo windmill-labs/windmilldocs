@@ -3,7 +3,7 @@ export const axiansCaseStudy = {
 	company: 'Axians',
 	logo: '/images/brands/axians-light.png',
 	title: "How Axians scales multi-tenant automation without the €1M+/year enterprise cost",
-	description: "Axians needed to scale multi-tenant automation without the €1M+/year cost of fixed enterprise licensing. Windmill's usage-based pricing enabled scaling from 14 active customers to 150 in the pipeline, while reducing deployments from 4 hours to 10 minutes.",
+	description: "Axians is a 400-person managed service provider managing network infrastructure for 150 enterprise customers globally. They needed scalable automation infrastructure to gradually onboard customers to self-service automation.",
 	category: 'Enterprise Software',
 	author: {
 		name: 'Ben Willems',
