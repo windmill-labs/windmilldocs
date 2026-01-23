@@ -13,5 +13,5 @@ export const cfaInstituteCaseStudy = {
 	link: '/case-studies/cfa-institute',
 	selfHosted: false,
 	released: true,
-	date: '2026-01-30'
+	date: '2026-01-28'
 };

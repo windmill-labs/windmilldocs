@@ -13,5 +13,5 @@ export const athenaIntelligenceCaseStudy = {
 	link: '/case-studies/athena-intelligence',
 	selfHosted: true,
 	released: true,
-	date: '2026-01-30'
+	date: '2026-01-28'
 };

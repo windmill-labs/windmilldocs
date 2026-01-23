@@ -157,6 +157,12 @@ export default function LandingHeader() {
 						</Popover>
 						*/}
 						<Link
+							to="/case-studies"
+							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300 whitespace-nowrap"
+						>
+							Case Studies
+						</Link>
+						<Link
 							to="/docs/intro"
 							onClick={() => window.plausible?.('read-docs')}
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
@@ -168,12 +174,6 @@ export default function LandingHeader() {
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
 						>
 							Pricing
-						</Link>
-						<Link
-							to="/case-studies"
-							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300 whitespace-nowrap"
-						>
-							Case Studies
 						</Link>
 
 						<a
@@ -319,13 +319,6 @@ export default function LandingHeader() {
 								{/* Show navigation items only on mobile (md:hidden) */}
 								<div className="md:hidden grid grid-cols-2 gap-4">
 									<a
-										href="/pricing"
-										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-									>
-										Pricing
-									</a>
-
-									<a
 										href="/case-studies"
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
@@ -338,6 +331,13 @@ export default function LandingHeader() {
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
 										Docs
+									</a>
+
+									<a
+										href="/pricing"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Pricing
 									</a>
 
 									<a
