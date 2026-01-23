@@ -555,7 +555,7 @@ This notation also works with glob patterns:
 SELECT * FROM read_parquet('s3:///myfiles/*.parquet')
 ```
 
-The s3:// notation now uses the Windmill S3 Proxy by default.
+The s3:// notation now uses the Windmill [S3 Proxy](../../core_concepts/object_storage_in_windmill#s3-proxy) by default.
 
 You can also attach to other database resources (BigQuery, PostgreSQL and MySQL). We use the official and community DuckDB extensions under the hood :
 ```sql
