@@ -1,6 +1,6 @@
 ---
 title: How Zoom built their enterprise demo platform with Windmill
-description: Zoom's Global Architecture division built a centralized demo platform on Windmill, enabling 80+ Global Architects to contribute workflows in multiple languages, supporting 400+ solution engineers and 2,000 account managers.
+description: Zoom's Global Architecture organization built a centralized demo platform on Windmill, enabling 60+ Global Architects to contribute workflows in multiple languages, supporting 400+ solutions engineers.
 ---
 
 import CodeBlock from '@theme/CodeBlock';
@@ -123,25 +123,25 @@ export default function ZoomContent({ title, description }) {
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
 	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-		<a href="https://www.zoom.us/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Zoom</a> is a leading enterprise video communications platform offering meetings, phone systems, chat, and contact centers to millions of users globally. Their Global Architecture division supports 400+ solution engineers and 2,000 account managers who demonstrate these interconnected products to enterprise customers. With multiple products that rely on real-time APIs and complex integrations, the team needed a scalable way to create consistent, high-quality demo environments that could showcase Zoom's full capabilities to prospective enterprise buyers.
+		<a href="https://www.zoom.us/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Zoom</a> (NASDAQ:ZM) provides the AI-first, open work platform built for human connection and purposefully designed to move conversations to completion. From entrepreneurs to global enterprises, customers choose Zoom to seamlessly collaborate, communicate, and drive outcomes across meetings, chat, phone, contact center, events, and more — all with the built-in assistance of Zoom AI Companion. Their Global Architecture organization supports 400+ solution engineers who demonstrate these interconnected products to enterprise customers. With multiple products that rely on real-time APIs and complex integrations, the team needed a scalable way to create consistent, high-quality demo environments that could showcase Zoom's full capabilities to prospective enterprise buyers.
 	</p>
 </section>
 
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Problem</h2>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-	Zoom is not a simple product to demonstrate. Unlike tools where you can quickly spin up a sandbox environment, Zoom is a comprehensive platform with meetings, phone systems, chat, contact centers, and dozens of features—all interconnected and dependent on real-time APIs.
+	Unlike tools where you can quickly spin up a sandbox environment, demonstrating a comprehensive, real-time communications platform like Zoom presents unique challenges, as the real-time API requires displaying live messages, calls, and other dynamic elements.
 </p>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-		"Zoom can be a very complicated app to demo. There's a lot of moving parts. It's SaaS, which always makes things a little harder to demonstrate because it's not particularly easy to just build a complete sandbox."
+		"Zoom is an extensive platform with many interconnected components. The challenge is finding the balance between providing a fully-configured and lived-in demo environment that accurately shows Zoom's capabilities to our customers, and keeping those environments isolated from one another, ensuring changes to one demo doesn't disrupt another…all while limiting the amount of toil that goes into crafting these environments."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
 		— Frederick Loucks, Technical Leader, Demo Platform
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-	The traditional approach was unsustainable: every solution engineer built their own demo environment, manually creating accounts and maintaining configurations. This led to inconsistent quality, impossible scaling challenges, and valuable selling time wasted on demo infrastructure instead of closing deals.
+	The traditional approach was unsustainable: every solutions engineer built their own demo environment, manually creating accounts and trying to maintain configurations that would resonate with each customer. This led to inconsistent quality, impossible scaling challenges, and valuable selling time wasted on demo infrastructure instead of closing deals.
 </p>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
 	Frederick's team was tasked with building a centralized internal demo platform, but the requirements were demanding:
@@ -155,7 +155,7 @@ export default function ZoomContent({ title, description }) {
 </ul>
 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-		"We needed something that could help us sit right in the middle of lots of different people needing to contribute, different languages being used, lots of CIS admin languages being used."
+		"A big part of our team's strength is the broad and varied skills we possess as a whole. However, when it comes to building a platform and inviting contribution from everyone, that can be a double-edged sword. With so many different programming and scripting languages at play, we needed something that could bridge all of those skillsets without forcing everyone to learn a new language."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
 		— Frederick Loucks
@@ -172,7 +172,7 @@ export default function ZoomContent({ title, description }) {
 			Polyglot language support for varied technical backgrounds
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-			Zoom's Global Architecture division includes experienced engineers who know PowerShell better than Python because they've been CIS admins or technical sales their whole careers. Windmill's support for Python, TypeScript, Go, Bash, PowerShell, and other languages meant the team could leverage existing scripts with minimal refactoring.
+			Zoom's Global Architecture team includes experienced engineers from a variety of backgrounds, with expertise in a wide range of programming and scripting languages. Windmill's support for Python, TypeScript, Go, Bash, PowerShell, and other languages meant the team could leverage existing scripts with minimal refactoring.
 		</p>
 		<div className="rounded-lg p-4 my-4 overflow-x-auto">
 			<CodeBlock language="python">
@@ -201,14 +201,14 @@ def main(account_email: str, license_type: str):
 		</p>
 		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-				"We actually use Windmill's job engine to do all that heavy lifting for us. We schedule jobs into Windmill's job engine into the future to handle these drip hydration tasks."
+				"We actually use Windmill's job engine to do a lot of the heavy lifting for us. We schedule future jobs into Windmill's job engine to handle some of these drip hydration tasks."
 			</p>
 			<cite className="text-sm text-gray-500 dark:text-gray-400">
 				— Frederick Loucks
 			</cite>
 		</blockquote>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-			When a solution engineer schedules a demo for next Tuesday, they kick off account hydration on Friday. Over the weekend, Windmill's job engine delivers 50+ pieces of content at realistic intervals—chat messages trickle in, voicemails arrive, documents get shared. By Tuesday, the account looks like it's been actively used for weeks.
+			When a solutions engineer schedules a demo for next Tuesday, they kick off account hydration on Friday. Over the weekend, Windmill's job engine delivers fresh content at realistic intervals—chat messages trickle in, voicemails arrive, and documents get shared. By Tuesday, the account looks like it's been actively used for weeks.
 		</p>
 	</div>
 
@@ -217,18 +217,18 @@ def main(account_email: str, license_type: str):
 			Windmill as central orchestration layer
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-			Windmill sits "at the center of everything" in Zoom's demo platform architecture self-hosted in AWS EKS. The platform consists of a React front-end portal with Windmill Apps embedded via iframe, allowing rapid feature deployment without front-end code changes.
+			Windmill sits "at the center of everything" in Zoom's demo platform architecture, self-hosted in AWS EKS. The platform consists of a React front-end portal with Windmill Apps embedded via iFrame, allowing rapid feature deployment without front-end code changes.
 		</p>
 		<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
 			<p className="text-gray-700 dark:text-gray-300 italic mb-2">
-				"We can build things very quickly in Windmill, iterate very quickly, and we can ship them into a nice front end without needing to really modify the front-end code in any way."
+				"We can build things very quickly in Windmill, iterate very quickly, and we can ship them into a nice front end portal without needing to really modify the front-end code in any way."
 			</p>
 			<cite className="text-sm text-gray-500 dark:text-gray-400">
 				— Frederick Loucks
 			</cite>
 		</blockquote>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-			This architecture enables self-service account creation (which took a year to build and "couldn't have been done without Windmill"), realistic account hydration through scheduled job execution, and citizen developer enablement for 80+ Global Architects who can now contribute tools and workflows in their preferred languages.
+			This architecture enables self-service account creation, realistic account hydration through scheduled job execution, and citizen developer enablement for 60+ Global Architects who can now contribute tools and workflows in their preferred languages.
 		</p>
 	</div>
 
@@ -237,7 +237,7 @@ def main(account_email: str, license_type: str):
 			Git-backed workflows for team collaboration
 		</h3>
 		<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-			With 80+ Global Architects contributing to the platform, version control and rollback capabilities were non-negotiable. Windmill's bidirectional Git sync provides both a system of record and the ability to revert commits when needed—critical for managing contributions from a large, distributed team.
+			With 60+ Global Architects contributing to the platform, version control and rollback capabilities were non-negotiable. Windmill's bidirectional Git sync provides both a system of record and the ability to revert commits when needed—critical for managing contributions from a large, distributed team.
 		</p>
 	</div>
 </div>
@@ -246,10 +246,10 @@ def main(account_email: str, license_type: str):
 <section>
 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Result</h2>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-	After over a year in production, Windmill has proven rock-solid for handling mission-critical workflows that support Zoom's entire sales organization. Today, 80+ Global Architects contribute workflows and tools, supporting 400+ solution engineers who use the platform for demos daily and 2,000 account managers with demo capabilities—all self-hosted on AWS EKS with complete infrastructure control.
+	After over a year in production, Windmill has proven rock-solid for handling mission-critical workflows that support Zoom's entire sales organization. Today, 60+ Global Architects contribute workflows and tools, supporting 400+ solution engineers who use the platform for demos daily, all self-hosted on AWS EKS with complete infrastructure control.
 </p>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-	The platform has automated the entire demo lifecycle: account creation and configuration, content hydration and population, API orchestrations across four paradigms, and custom tooling that enables citizen developers to build the tools they need. Zoom's sales organization can now deliver consistent, high-quality demos across 400+ solution engineers, scale demo capabilities without scaling manual effort, and iterate rapidly on new features—directly supporting Zoom's revenue by ensuring every customer interaction showcases the product at its best.
+	The platform has automated the entire demo lifecycle: account creation and configuration, content hydration and population, API orchestrations across four paradigms, and custom tooling that enables citizen developers to build the tools they need. Zoom's sales organization can now deliver consistent, high-quality demos across 400+ solution engineers, scale demo capabilities without manual effort, and iterate rapidly on new features—directly supporting Zoom's revenue by ensuring every customer interaction showcases the product at its best.
 </p>
 </section>
 						</div>
