@@ -136,9 +136,18 @@ export default function Example() {
 						Testimonials
 					</h1>
 					<p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl"></p>
-					<span className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">
-						Entreprise software that developers love.
-					</span>
+					<div className="flex justify-between items-center">
+						<span className="text-lg text-gray-600 dark:text-gray-200">
+							Entreprise software that developers love.
+						</span>
+						<a
+							href="/case-studies"
+							className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 inline-flex items-center gap-1"
+						>
+							Read our case studies
+							<ArrowRight size={16} />
+						</a>
+					</div>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
