@@ -145,12 +145,8 @@ IAM RDS authentication is only available in Windmill Enterprise Edition.
 
 Set the `DATABASE_URL` with `iamrds` as the password:
 ```
-postgresql://postgres:iamrds@<rds-endpoint>:5432/windmill
+postgresql://postgres:iamrds@<rds-endpoint>/windmill
 ```
-
-:::warning
-The port (`:5432`) is required for IAM authentication.
-:::
 
 Set the `AWS_REGION` environment variable:
 ```yaml
@@ -159,7 +155,13 @@ env:
     value: "eu-west-1"
 ```
 
-On EKS, configure [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) to provide AWS credentials to the pods.
+#### Providing AWS credentials
+
+On **EKS**, use either:
+- [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html) (recommended for new setups)
+- [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) (IAM Roles for Service Accounts)
+
+On **ECS**, attach an IAM role with the `rds-db:connect` permission to your task definition.
 
 #### Troubleshooting
 
