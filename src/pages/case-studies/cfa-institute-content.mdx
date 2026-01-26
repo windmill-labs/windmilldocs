@@ -6,7 +6,7 @@ description: CFA Institute's SRE team needed to replace n8n with a platform robu
 import CodeBlock from '@theme/CodeBlock';
 import React from 'react';
 import Link from '@docusaurus/Link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Linkedin, Github } from 'lucide-react';
 import CompanyLogo from '@site/src/components/case-studies/CompanyLogo';
 import { cfaInstituteCaseStudy } from '@site/src/data/case-studies/cfa-institute';
 
@@ -104,8 +104,24 @@ export default function CFAInstituteContent({ title, description }) {
 									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
 										Featuring
 									</div>
-									<div className="text-sm text-gray-900 dark:text-white">
+									<div className="text-sm text-gray-900 dark:text-white inline-flex items-center gap-2">
 										Cam Barts
+										<a
+											href="https://www.linkedin.com/in/cam-barts/"
+											target="_blank"
+											rel="noopener noreferrer"
+											className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300"
+										>
+											<Linkedin className="w-3 h-3" />
+										</a>
+										<a
+											href="https://github.com/cam-barts"
+											target="_blank"
+											rel="noopener noreferrer"
+											className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300"
+										>
+											<Github className="w-3 h-3" />
+										</a>
 									</div>
 									<div className="text-sm text-gray-700 dark:text-gray-300">
 										Manager, SRE at CFA Institute
