@@ -6,8 +6,8 @@ description: CFA Institute's SRE team needed to replace n8n with a platform robu
 import CodeBlock from '@theme/CodeBlock';
 import React from 'react';
 import Link from '@docusaurus/Link';
-import { ArrowLeft, Linkedin, Github } from 'lucide-react';
-import CompanyLogo from '@site/src/components/case-studies/CompanyLogo';
+import { ArrowLeft } from 'lucide-react';
+import CaseStudySidebar from '@site/src/components/case-studies/CaseStudySidebar';
 import { cfaInstituteCaseStudy } from '@site/src/data/case-studies/cfa-institute';
 
 export default function CFAInstituteContent({ title, description }) {
@@ -23,113 +23,26 @@ export default function CFAInstituteContent({ title, description }) {
 				</Link>
 
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-					<div className="lg:col-span-1">
-						<div className="sticky top-32">
-							<div className="mb-6">
-								<CompanyLogo
-									lightSrc="/images/brands/cfa-institute-light.png"
-									darkSrc="/images/brands/cfa-institute-dark.png"
-									alt="CFA Institute logo"
-								/>
-							</div>
-							<div className="space-y-6">
-								<div>
-									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-										Industry
-									</div>
-									<div className="text-sm text-gray-900 dark:text-white">
-										Financial Services
-									</div>
-								</div>
-								<div>
-									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-										Company Size
-									</div>
-									<div className="text-sm text-gray-900 dark:text-white">
-										1000+
-									</div>
-								</div>
-								<div>
-									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-										What they do
-									</div>
-									<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-										Global association of investment professionals that sets standards and provides education for the financial services industry, serving hundreds of thousands of investment professionals worldwide.
-									</div>
-								</div>
-								<div>
-									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-										What they do on Windmill
-									</div>
-									<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-										<div className="flex flex-wrap gap-2">
-											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Synthetic monitoring</span>
-											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Microsoft Teams Bot</span>
-											<span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">Grafana data layer</span>
-										</div>
-									</div>
-								</div>
-								<div>
-									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-										Deployment
-									</div>
-									<div className="text-sm text-gray-900 dark:text-white">
-										<span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-xs font-medium">
-											{cfaInstituteCaseStudy.selfHosted ? 'EE Self-hosted' : 'EE Cloud'}
-										</span>
-									</div>
-								</div>
-								<div>
-									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-										Workers
-									</div>
-									<div className="text-sm text-gray-900 dark:text-white">
-										21
-									</div>
-								</div>
-								<div>
-									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-										Website
-									</div>
-									<a
-										href="https://www.cfainstitute.org"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="text-sm text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline"
-									>
-										cfainstitute.org
-									</a>
-								</div>
-								<div>
-									<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-										Featuring
-									</div>
-									<div className="text-sm text-gray-900 dark:text-white inline-flex items-center gap-2">
-										Cam Barts
-										<a
-											href="https://www.linkedin.com/in/cam-barts/"
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300"
-										>
-											<Linkedin className="w-3 h-3" />
-										</a>
-										<a
-											href="https://github.com/cam-barts"
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300"
-										>
-											<Github className="w-3 h-3" />
-										</a>
-									</div>
-									<div className="text-sm text-gray-700 dark:text-gray-300">
-										Manager, SRE at CFA Institute
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					<CaseStudySidebar
+						logo={{
+							light: "/images/brands/cfa-institute-light.png",
+							dark: "/images/brands/cfa-institute-dark.png",
+							alt: "CFA Institute logo"
+						}}
+						industry="Financial Services"
+						companySize="1000+"
+						description="Global association of investment professionals that sets standards and provides education for the financial services industry, serving hundreds of thousands of investment professionals worldwide."
+						useCases={["Synthetic monitoring", "Microsoft Teams Bot", "Grafana data layer"]}
+						selfHosted={cfaInstituteCaseStudy.selfHosted}
+						workers={21}
+						website={{ url: "https://www.cfainstitute.org", label: "cfainstitute.org" }}
+						featuring={{
+							name: "Cam Barts",
+							role: "Manager, SRE at CFA Institute",
+							linkedin: "https://www.linkedin.com/in/cam-barts/",
+							github: "https://github.com/cam-barts"
+						}}
+					/>
 
 					<div className="lg:col-span-2">
 						<div className="mb-12">
