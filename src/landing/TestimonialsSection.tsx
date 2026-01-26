@@ -16,7 +16,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://photoroom.com',
 		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
-		caseStudyHref: 'https://www.linkedin.com/in/eliotandres/',
+		caseStudyHref: '',
 		text: `Windmill quickly became crucial at Photoroom. We self-hosted Windmill Enterprise Edition to run a large number of internal scripts and business-critical automations. Windmill made chatops and iterations over scripts incredibly easy. It proved very reliable for running and monitoring workloads at scale. On top of that, their support is incredibly fast.`
 	},
 	{
@@ -75,7 +75,7 @@ const clientTestimonials = [
 			profile_picture: '/contributors/romaric_philogene.webp'
 		},
 		company_url: 'https://www.qovery.com',
-		linkedIn: '/blog/qovery-case-study',
+		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
 		caseStudyHref: '/blog/qovery-case-study',
 		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. The platform offers a clear DX for code editing, permission management and error handling.`
 	},
@@ -90,7 +90,7 @@ const clientTestimonials = [
 			profile_picture: '/contributors/sindre_svendby.jpeg'
 		},
 		company_url: 'https://motimateapp.com',
-		linkedIn: '/blog/kahoot-case-study',
+		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
 		caseStudyHref: '/blog/kahoot-case-study',
 		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
 	},
@@ -136,9 +136,18 @@ export default function Example() {
 						Testimonials
 					</h1>
 					<p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl"></p>
-					<span className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">
-						Entreprise software that developers love.
-					</span>
+					<div className="flex justify-between items-center">
+						<span className="text-lg text-gray-600 dark:text-gray-200">
+							Entreprise software that developers love.
+						</span>
+						<a
+							href="/case-studies"
+							className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 inline-flex items-center gap-1"
+						>
+							Read our case studies
+							<ArrowRight size={16} />
+						</a>
+					</div>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
