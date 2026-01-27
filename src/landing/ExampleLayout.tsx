@@ -6,7 +6,7 @@ import LandingHeader from './LandingHeader';
 import Footer from './Footer';
 import RadialBlur from './RadialBlur';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Example } from './examplesData';
 
 interface ExampleLayoutProps {
@@ -156,6 +156,18 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 										<div className="flex-1 text-center">
 											<span className="text-sm text-gray-400">{title}</span>
 										</div>
+										<a
+											href={iframeUrl || '#'}
+											target="_blank"
+											rel="noopener noreferrer"
+											className={`inline-flex items-center gap-1.5 text-xs text-gray-400 transition-colors ${
+												iframeUrl ? 'hover:text-white' : 'cursor-not-allowed'
+											}`}
+											onClick={(e) => !iframeUrl && e.preventDefault()}
+										>
+											Open in new tab
+											<ExternalLink className="w-3.5 h-3.5" />
+										</a>
 									</div>
 
 									{/* Iframe */}
