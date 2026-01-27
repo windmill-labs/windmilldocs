@@ -4,6 +4,7 @@ import Link from '@docusaurus/Link';
 import LayoutProvider from '@theme/Layout/Provider';
 import LandingHeader from './LandingHeader';
 import Footer from './Footer';
+import RadialBlur from './RadialBlur';
 import { motion } from 'framer-motion';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { Example } from './examplesData';
@@ -48,7 +49,7 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 
 	return (
 		<LayoutProvider>
-			<main className="min-h-screen">
+			<main className="relative min-h-screen w-full overflow-x-hidden">
 				<Head>
 					<title>{title} | Examples | Windmill</title>
 					<meta name="title" content={`${title} | Examples | Windmill`} />
@@ -56,8 +57,9 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
 				<LandingHeader />
+				<RadialBlur />
 
-				<div className="pt-20 pb-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
+				<div className="pt-20 pb-8 min-h-screen">
 					<div className="max-w-7xl mx-auto px-4 lg:px-8">
 						{/* Back link */}
 						<motion.div
