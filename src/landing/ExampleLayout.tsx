@@ -6,11 +6,75 @@ import LandingHeader from './LandingHeader';
 import Footer from './Footer';
 import RadialBlur from './RadialBlur';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink, Play, Code, ChevronRight, ChevronDown, FileCode, Folder } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Play, Code, ChevronRight, ChevronDown, FileCode, Folder, Github, Copy, Check } from 'lucide-react';
 import { Example } from './examplesData';
 
 interface ExampleLayoutProps {
 	example: Example;
+}
+
+function GitHubDropdown({ repoUrl }: { repoUrl: string }) {
+	const [isOpen, setIsOpen] = useState(false);
+	const [copied, setCopied] = useState(false);
+	const cloneCommand = `git clone ${repoUrl}.git`;
+
+	const handleCopy = () => {
+		navigator.clipboard.writeText(cloneCommand);
+		setCopied(true);
+		setTimeout(() => {
+			setCopied(false);
+			setIsOpen(false);
+		}, 1500);
+	};
+
+	return (
+		<div className="relative">
+			<button
+				onClick={() => setIsOpen(!isOpen)}
+				className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
+			>
+				<Github className="w-4 h-4" />
+				GitHub
+				<ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+			</button>
+
+			{isOpen && (
+				<>
+					<div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
+					<div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 overflow-hidden">
+						<div className="p-3 border-b border-gray-200 dark:border-gray-700">
+							<p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+								Repository
+							</p>
+						</div>
+						<div className="py-1">
+							<button
+								onClick={handleCopy}
+								className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3 transition-colors"
+							>
+								{copied ? (
+									<Check className="w-4 h-4 text-green-500" />
+								) : (
+									<Copy className="w-4 h-4 text-gray-400" />
+								)}
+								{copied ? 'Copied!' : 'Copy git clone command'}
+							</button>
+							<a
+								href={repoUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3 transition-colors"
+								onClick={() => setIsOpen(false)}
+							>
+								<ExternalLink className="w-4 h-4 text-gray-400" />
+								Open in GitHub
+							</a>
+						</div>
+					</div>
+				</>
+			)}
+		</div>
+	);
 }
 
 interface FileTreeItem {
@@ -213,7 +277,7 @@ function highlightCode(line: string): string {
 
 
 export default function ExampleLayout({ example }: ExampleLayoutProps) {
-	const { title, description, iframeUrl, builtWith } = example;
+	const { title, description, iframeUrl, repoUrl, builtWith } = example;
 	const [activeView, setActiveView] = useState<'app' | 'code'>('app');
 
 	return (
@@ -317,7 +381,7 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 									<div className="flex-1 text-center">
 										<span className="text-sm text-gray-400">{title}</span>
 									</div>
-									{activeView === 'app' && (
+									{activeView === 'app' ? (
 										<a
 											href={iframeUrl || '#'}
 											target="_blank"
@@ -330,7 +394,9 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 											Open in new tab
 											<ExternalLink className="w-3.5 h-3.5" />
 										</a>
-									)}
+									) : repoUrl ? (
+										<GitHubDropdown repoUrl={repoUrl} />
+									) : null}
 								</div>
 
 								{/* Content */}
