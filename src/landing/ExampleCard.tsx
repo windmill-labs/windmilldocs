@@ -1,91 +1,54 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import Link from '@docusaurus/Link';
+import { ArrowRight } from 'lucide-react';
 
 interface ExampleCardProps {
 	title: string;
 	description: string;
 	href: string;
 	thumbnail?: string;
-	color?: 'blue' | 'teal' | 'orange' | 'purple';
 }
 
 export default function ExampleCard({
 	title,
 	description,
 	href,
-	thumbnail,
-	color = 'blue'
+	thumbnail
 }: ExampleCardProps) {
-	const gradients = {
-		blue: 'from-blue-500/20 to-blue-600/20',
-		teal: 'from-teal-500/20 to-teal-600/20',
-		orange: 'from-orange-500/20 to-orange-600/20',
-		purple: 'from-purple-500/20 to-purple-600/20'
-	};
-
-	const borders = {
-		blue: 'hover:border-blue-500',
-		teal: 'hover:border-teal-500',
-		orange: 'hover:border-orange-500',
-		purple: 'hover:border-purple-500'
-	};
-
-	const textGradients = {
-		blue: 'from-blue-600 to-blue-800 dark:from-blue-300 dark:to-blue-500',
-		teal: 'from-teal-600 to-teal-800 dark:from-teal-300 dark:to-teal-500',
-		orange: 'from-orange-600 to-orange-800 dark:from-orange-300 dark:to-orange-500',
-		purple: 'from-purple-600 to-purple-800 dark:from-purple-300 dark:to-purple-500'
-	};
-
 	return (
-		<Link href={href} className="no-underline">
-			<motion.div
-				whileHover={{ y: -4 }}
-				transition={{ duration: 0.2 }}
-				className={`
-					group cursor-pointer rounded-xl border border-gray-200 dark:border-gray-700
-					bg-white dark:bg-gray-800/50 overflow-hidden
-					transition-all duration-300 ${borders[color]}
-					hover:shadow-lg dark:hover:shadow-gray-900/50
-				`}
-			>
-				{/* Thumbnail */}
-				<div
-					className={`
-						h-48 bg-gradient-to-br ${gradients[color]}
-						flex items-center justify-center
-						border-b border-gray-200 dark:border-gray-700
-					`}
-				>
-					{thumbnail ? (
+		<Link
+			to={href}
+			className="group flex flex-col h-full rounded-2xl bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl !no-underline"
+		>
+			{/* Top section with icon */}
+			<div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-[200px] flex flex-col">
+				{thumbnail && (
+					<div className="flex items-center justify-center w-full flex-1 min-h-[120px]">
 						<img
 							src={thumbnail}
 							alt={title}
-							className="w-full h-full object-cover"
+							className="h-28 w-full object-contain"
 						/>
-					) : (
-						<div className="text-gray-400 dark:text-gray-500 text-sm">
-							Preview
-						</div>
-					)}
-				</div>
+					</div>
+				)}
+			</div>
 
-				{/* Content */}
-				<div className="p-5">
-					<h3
-						className={`
-							text-lg font-semibold mb-2
-							text-transparent bg-clip-text bg-gradient-to-br ${textGradients[color]}
-						`}
-					>
-						{title}
-					</h3>
-					<p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-						{description}
-					</p>
+			{/* Content section */}
+			<div className="flex-1 px-6 pt-6 pb-6 flex flex-col">
+				<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+					{title}
+				</h3>
+				<p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed flex-1">
+					{description}
+				</p>
+				{/* Bottom section with link */}
+				<div className="flex items-center justify-end mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
+					<span className="text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 flex items-center gap-1 transition-colors">
+						View example
+						<ArrowRight className="w-4 h-4" />
+					</span>
 				</div>
-			</motion.div>
+			</div>
 		</Link>
 	);
 }

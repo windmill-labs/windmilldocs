@@ -6,19 +6,215 @@ import LandingHeader from './LandingHeader';
 import Footer from './Footer';
 import RadialBlur from './RadialBlur';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink, Play, Code } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Play, Code, ChevronRight, ChevronDown, FileCode, Folder } from 'lucide-react';
 import { Example } from './examplesData';
 
 interface ExampleLayoutProps {
 	example: Example;
 }
 
+interface FileTreeItem {
+	name: string;
+	type: 'file' | 'folder';
+	children?: FileTreeItem[];
+	active?: boolean;
+}
+
+const mockFileTree: FileTreeItem[] = [
+	{
+		name: 'src',
+		type: 'folder',
+		children: [
+			{
+				name: 'components',
+				type: 'folder',
+				children: [
+					{ name: 'ChatInterface.tsx', type: 'file' },
+					{ name: 'MessageList.tsx', type: 'file' },
+					{ name: 'InputArea.tsx', type: 'file' },
+				],
+			},
+			{
+				name: 'hooks',
+				type: 'folder',
+				children: [
+					{ name: 'useAgent.ts', type: 'file', active: true },
+					{ name: 'useMessages.ts', type: 'file' },
+				],
+			},
+			{ name: 'App.tsx', type: 'file' },
+			{ name: 'index.tsx', type: 'file' },
+		],
+	},
+	{
+		name: 'windmill',
+		type: 'folder',
+		children: [
+			{ name: 'agent.flow.yaml', type: 'file' },
+			{ name: 'process_message.ts', type: 'file' },
+			{ name: 'call_llm.ts', type: 'file' },
+		],
+	},
+];
+
+const mockCode = `import { useState, useCallback } from 'react';
+import * as wmill from 'windmill-client';
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+}
+
+export function useAgent() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const sendMessage = useCallback(async (content: string) => {
+    // Add user message
+    const userMessage: Message = {
+      role: 'user',
+      content,
+      timestamp: new Date(),
+    };
+    setMessages(prev => [...prev, userMessage]);
+    setIsLoading(true);
+
+    try {
+      // Call Windmill flow to process the message
+      const result = await wmill.runScript({
+        path: 'f/examples/ai_agent/process_message',
+        args: {
+          message: content,
+          history: messages,
+        },
+      });
+
+      // Add assistant response
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: result.response,
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Failed to process message:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [messages]);
+
+  return { messages, sendMessage, isLoading };
+}`;
+
+function FileTreeNode({ item, depth = 0 }: { item: FileTreeItem; depth?: number }) {
+	const [isOpen, setIsOpen] = useState(true);
+	const isFolder = item.type === 'folder';
+
+	return (
+		<div>
+			<div
+				className={`flex items-center gap-1 py-1 px-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded ${
+					item.active ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'
+				}`}
+				style={{ paddingLeft: `${depth * 12 + 8}px` }}
+				onClick={() => isFolder && setIsOpen(!isOpen)}
+			>
+				{isFolder ? (
+					<>
+						{isOpen ? (
+							<ChevronDown className="w-4 h-4 text-gray-400" />
+						) : (
+							<ChevronRight className="w-4 h-4 text-gray-400" />
+						)}
+						<Folder className="w-4 h-4 text-yellow-500" />
+					</>
+				) : (
+					<>
+						<span className="w-4" />
+						<FileCode className="w-4 h-4 text-blue-500" />
+					</>
+				)}
+				<span className="ml-1">{item.name}</span>
+			</div>
+			{isFolder && isOpen && item.children && (
+				<div>
+					{item.children.map((child, index) => (
+						<FileTreeNode key={index} item={child} depth={depth + 1} />
+					))}
+				</div>
+			)}
+		</div>
+	);
+}
+
+function MockCodeEditor() {
+	return (
+		<div className="flex h-full bg-white dark:bg-gray-900">
+			{/* File tree sidebar */}
+			<div className="w-64 border-r border-gray-200 dark:border-gray-700 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+				<div className="p-3 border-b border-gray-200 dark:border-gray-700">
+					<span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+						Files
+					</span>
+				</div>
+				<div className="py-2">
+					{mockFileTree.map((item, index) => (
+						<FileTreeNode key={index} item={item} />
+					))}
+				</div>
+			</div>
+
+			{/* Code editor */}
+			<div className="flex-1 overflow-auto">
+				{/* File tab */}
+				<div className="flex items-center border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+					<div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700">
+						<FileCode className="w-4 h-4 text-blue-500" />
+						<span className="text-sm text-gray-700 dark:text-gray-300">useAgent.ts</span>
+					</div>
+				</div>
+
+				{/* Code content */}
+				<div className="p-4 font-mono text-sm">
+					<pre className="text-gray-800 dark:text-gray-200 leading-relaxed">
+						<code>
+							{mockCode.split('\n').map((line, index) => (
+								<div key={index} className="flex">
+									<span className="w-8 text-right pr-4 text-gray-400 dark:text-gray-500 select-none">
+										{index + 1}
+									</span>
+									<span
+										dangerouslySetInnerHTML={{
+											__html: highlightCode(line),
+										}}
+									/>
+								</div>
+							))}
+						</code>
+					</pre>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+function highlightCode(line: string): string {
+	return line
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/(import|from|export|function|const|let|var|return|try|catch|finally|async|await|interface|type)/g, '<span class="text-purple-600 dark:text-purple-400">$1</span>')
+		.replace(/('.*?'|".*?"|`.*?`)/g, '<span class="text-green-600 dark:text-green-400">$1</span>')
+		.replace(/\b(true|false|null|undefined|new)\b/g, '<span class="text-orange-600 dark:text-orange-400">$1</span>')
+		.replace(/(\/\/.*$)/g, '<span class="text-gray-400 dark:text-gray-500">$1</span>')
+		.replace(/\b(\d+)\b/g, '<span class="text-blue-600 dark:text-blue-400">$1</span>');
+}
+
 
 export default function ExampleLayout({ example }: ExampleLayoutProps) {
-	const { title, description, iframeUrl, codeUrl, builtWith } = example;
+	const { title, description, iframeUrl, builtWith } = example;
 	const [activeView, setActiveView] = useState<'app' | 'code'>('app');
-
-	const currentUrl = activeView === 'app' ? iframeUrl : codeUrl;
 
 	return (
 		<LayoutProvider>
@@ -121,40 +317,46 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 									<div className="flex-1 text-center">
 										<span className="text-sm text-gray-400">{title}</span>
 									</div>
-									<a
-										href={currentUrl || '#'}
-										target="_blank"
-										rel="noopener noreferrer"
-										className={`inline-flex items-center gap-1.5 text-xs text-gray-400 transition-colors ${
-											currentUrl ? 'hover:text-white' : 'cursor-not-allowed'
-										}`}
-										onClick={(e) => !currentUrl && e.preventDefault()}
-									>
-										Open in new tab
-										<ExternalLink className="w-3.5 h-3.5" />
-									</a>
+									{activeView === 'app' && (
+										<a
+											href={iframeUrl || '#'}
+											target="_blank"
+											rel="noopener noreferrer"
+											className={`inline-flex items-center gap-1.5 text-xs text-gray-400 transition-colors ${
+												iframeUrl ? 'hover:text-white' : 'cursor-not-allowed'
+											}`}
+											onClick={(e) => !iframeUrl && e.preventDefault()}
+										>
+											Open in new tab
+											<ExternalLink className="w-3.5 h-3.5" />
+										</a>
+									)}
 								</div>
 
-								{/* Iframe */}
+								{/* Content */}
 								<div className="relative" style={{ height: '70vh', minHeight: '500px' }}>
-									{currentUrl ? (
-										<iframe
-											src={currentUrl}
-											className="w-full h-full border-0"
-											title={`${title} - ${activeView === 'app' ? 'App' : 'Code'}`}
-											allow="clipboard-read; clipboard-write"
-										/>
-									) : (
-										<div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
-											<div className="text-center">
-												<p className="text-gray-500 dark:text-gray-400 mb-2">
-													{activeView === 'app' ? 'App preview' : 'Code view'} placeholder
-												</p>
-												<p className="text-sm text-gray-400 dark:text-gray-500">
-													{activeView === 'app' ? 'App' : 'Code'} URL will be configured here
-												</p>
+									{activeView === 'app' ? (
+										iframeUrl ? (
+											<iframe
+												src={iframeUrl}
+												className="w-full h-full border-0"
+												title={`${title} - App`}
+												allow="clipboard-read; clipboard-write"
+											/>
+										) : (
+											<div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+												<div className="text-center">
+													<p className="text-gray-500 dark:text-gray-400 mb-2">
+														App preview placeholder
+													</p>
+													<p className="text-sm text-gray-400 dark:text-gray-500">
+														App URL will be configured here
+													</p>
+												</div>
 											</div>
-										</div>
+										)
+									) : (
+										<MockCodeEditor />
 									)}
 								</div>
 							</div>

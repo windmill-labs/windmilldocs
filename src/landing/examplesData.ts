@@ -18,7 +18,7 @@ export const examples: Example[] = [
 			'Build an AI-powered agent that can interact with your data, answer questions, and automate tasks using LLMs.',
 		description:
 			'An AI-powered agent built with Windmill that can interact with your data, answer questions, and automate tasks. This example demonstrates how to combine LLM capabilities with Windmill\'s workflow engine to create intelligent automation.',
-		iframeUrl: '', // Placeholder - replace with actual Windmill app URL
+		iframeUrl: 'https://app.windmill.dev/public/windmill-labs/7f2c4d65a34517558a55a5fec647f390',
 		codeUrl: '', // Placeholder - replace with actual Windmill code editor URL
 		color: 'purple',
 		features: [

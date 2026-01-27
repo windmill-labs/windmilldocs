@@ -44,7 +44,7 @@ export default function ExamplesPage() {
 							</motion.div>
 
 							{/* Examples Grid */}
-							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 								{examples.map((example, index) => (
 									<motion.div
 										key={example.slug}
@@ -57,7 +57,6 @@ export default function ExamplesPage() {
 											title={example.title}
 											description={example.shortDescription}
 											href={`/examples/${example.slug}`}
-											color={example.color}
 										/>
 									</motion.div>
 								))}
