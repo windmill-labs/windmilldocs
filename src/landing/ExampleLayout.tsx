@@ -6,20 +6,46 @@ import LandingHeader from './LandingHeader';
 import Footer from './Footer';
 import { motion } from 'framer-motion';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { Example } from './examplesData';
 
 interface ExampleLayoutProps {
-	title: string;
-	description: string;
-	iframeUrl: string;
-	children?: React.ReactNode;
+	example: Example;
 }
 
-export default function ExampleLayout({
-	title,
-	description,
-	iframeUrl,
-	children
-}: ExampleLayoutProps) {
+function FeaturesList({ features }: { features: string[] }) {
+	return (
+		<div>
+			<h3 className="text-sm font-medium text-gray-900 dark:text-white mb-1">Features</h3>
+			<ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+				{features.map((feature) => (
+					<li key={feature}>{feature}</li>
+				))}
+			</ul>
+		</div>
+	);
+}
+
+function BuiltWithTags({ tags }: { tags: string[] }) {
+	return (
+		<div>
+			<h3 className="text-sm font-medium text-gray-900 dark:text-white mb-1">Built with</h3>
+			<div className="flex flex-wrap gap-2">
+				{tags.map((tag) => (
+					<span
+						key={tag}
+						className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded"
+					>
+						{tag}
+					</span>
+				))}
+			</div>
+		</div>
+	);
+}
+
+export default function ExampleLayout({ example }: ExampleLayoutProps) {
+	const { title, description, iframeUrl, features, builtWith } = example;
+
 	return (
 		<LayoutProvider>
 			<main className="min-h-screen">
@@ -66,7 +92,10 @@ export default function ExampleLayout({
 										{description}
 									</p>
 
-									{children}
+									<div className="space-y-4">
+										<FeaturesList features={features} />
+										<BuiltWithTags tags={builtWith} />
+									</div>
 
 									<div className="mt-6">
 										<Link

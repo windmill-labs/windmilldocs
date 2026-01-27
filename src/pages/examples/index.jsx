@@ -7,38 +7,8 @@ import CallToAction from '../../landing/CallToAction';
 import RadialBlur from '../../landing/RadialBlur';
 import LandingSection from '../../landing/LandingSection';
 import ExampleCard from '../../landing/ExampleCard';
+import { examples } from '../../landing/examplesData';
 import { motion } from 'framer-motion';
-
-const examples = [
-	{
-		title: 'AI Agent',
-		description:
-			'Build an AI-powered agent that can interact with your data, answer questions, and automate tasks using LLMs.',
-		href: '/examples/ai-agent',
-		color: 'purple'
-	},
-	{
-		title: 'Data Pipeline',
-		description:
-			'Create ETL workflows that extract, transform, and load data across multiple sources with scheduling and monitoring.',
-		href: '/examples/data-pipeline',
-		color: 'teal'
-	},
-	{
-		title: 'Payment Dashboard',
-		description:
-			'Track payments, revenue metrics, and financial data with an interactive dashboard connected to your payment provider.',
-		href: '/examples/payment-dashboard',
-		color: 'blue'
-	},
-	{
-		title: 'Customer Support',
-		description:
-			'Manage support tickets, track response times, and monitor customer satisfaction with a unified support interface.',
-		href: '/examples/customer-support',
-		color: 'orange'
-	}
-];
 
 export default function ExamplesPage() {
 	return (
@@ -86,7 +56,7 @@ export default function ExamplesPage() {
 						>
 							{examples.map((example, index) => (
 								<motion.div
-									key={example.title}
+									key={example.slug}
 									initial={{ opacity: 0, y: 20 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -94,8 +64,8 @@ export default function ExamplesPage() {
 								>
 									<ExampleCard
 										title={example.title}
-										description={example.description}
-										href={example.href}
+										description={example.shortDescription}
+										href={`/examples/${example.slug}`}
 										color={example.color}
 									/>
 								</motion.div>
