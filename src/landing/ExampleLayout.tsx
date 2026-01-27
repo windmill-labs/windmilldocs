@@ -6,7 +6,7 @@ import LandingHeader from './LandingHeader';
 import Footer from './Footer';
 import RadialBlur from './RadialBlur';
 import { motion } from 'framer-motion';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeft } from 'lucide-react';
 import { Example } from './examplesData';
 
 interface ExampleLayoutProps {
@@ -59,23 +59,16 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 				<LandingHeader />
 				<RadialBlur />
 
-				<div className="pt-20 pb-8 min-h-screen">
-					<div className="max-w-7xl mx-auto px-4 lg:px-8">
+				<div className="pt-32 min-h-screen">
+					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 						{/* Back link */}
-						<motion.div
-							initial={{ opacity: 0, x: -10 }}
-							animate={{ opacity: 1, x: 0 }}
-							transition={{ duration: 0.3 }}
-							className="mb-6"
+						<Link
+							href="/examples"
+							className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
 						>
-							<Link
-								href="/examples"
-								className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors no-underline"
-							>
-								<ArrowLeftIcon className="w-4 h-4" />
-								Back to examples
-							</Link>
-						</motion.div>
+							<ArrowLeft className="w-4 h-4" />
+							Back to examples
+						</Link>
 
 						{/* Main content */}
 						<div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
