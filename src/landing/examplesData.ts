@@ -4,6 +4,7 @@ export interface Example {
 	description: string;
 	shortDescription: string;
 	iframeUrl: string;
+	codeUrl: string;
 	color: 'blue' | 'teal' | 'orange' | 'purple';
 	features: string[];
 	builtWith: string[];
@@ -18,6 +19,7 @@ export const examples: Example[] = [
 		description:
 			'An AI-powered agent built with Windmill that can interact with your data, answer questions, and automate tasks. This example demonstrates how to combine LLM capabilities with Windmill\'s workflow engine to create intelligent automation.',
 		iframeUrl: '', // Placeholder - replace with actual Windmill app URL
+		codeUrl: '', // Placeholder - replace with actual Windmill code editor URL
 		color: 'purple',
 		features: [
 			'Natural language processing',

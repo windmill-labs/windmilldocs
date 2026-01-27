@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import LayoutProvider from '@theme/Layout/Provider';
@@ -6,7 +6,7 @@ import LandingHeader from './LandingHeader';
 import Footer from './Footer';
 import RadialBlur from './RadialBlur';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Play, Code } from 'lucide-react';
 import { Example } from './examplesData';
 
 interface ExampleLayoutProps {
@@ -15,7 +15,10 @@ interface ExampleLayoutProps {
 
 
 export default function ExampleLayout({ example }: ExampleLayoutProps) {
-	const { title, description, iframeUrl, builtWith } = example;
+	const { title, description, iframeUrl, codeUrl, builtWith } = example;
+	const [activeView, setActiveView] = useState<'app' | 'code'>('app');
+
+	const currentUrl = activeView === 'app' ? iframeUrl : codeUrl;
 
 	return (
 		<LayoutProvider>
@@ -88,17 +91,44 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 										<div className="w-3 h-3 rounded-full bg-yellow-500" />
 										<div className="w-3 h-3 rounded-full bg-green-500" />
 									</div>
+
+									{/* View toggle */}
+									<div className="flex items-center gap-1 bg-gray-800 rounded-lg p-1">
+										<button
+											onClick={() => setActiveView('app')}
+											className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+												activeView === 'app'
+													? 'bg-gray-700 text-white'
+													: 'text-gray-400 hover:text-gray-200'
+											}`}
+										>
+											<Play className="w-3.5 h-3.5" />
+											App
+										</button>
+										<button
+											onClick={() => setActiveView('code')}
+											className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+												activeView === 'code'
+													? 'bg-gray-700 text-white'
+													: 'text-gray-400 hover:text-gray-200'
+											}`}
+										>
+											<Code className="w-3.5 h-3.5" />
+											Code
+										</button>
+									</div>
+
 									<div className="flex-1 text-center">
 										<span className="text-sm text-gray-400">{title}</span>
 									</div>
 									<a
-										href={iframeUrl || '#'}
+										href={currentUrl || '#'}
 										target="_blank"
 										rel="noopener noreferrer"
 										className={`inline-flex items-center gap-1.5 text-xs text-gray-400 transition-colors ${
-											iframeUrl ? 'hover:text-white' : 'cursor-not-allowed'
+											currentUrl ? 'hover:text-white' : 'cursor-not-allowed'
 										}`}
-										onClick={(e) => !iframeUrl && e.preventDefault()}
+										onClick={(e) => !currentUrl && e.preventDefault()}
 									>
 										Open in new tab
 										<ExternalLink className="w-3.5 h-3.5" />
@@ -107,21 +137,21 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 
 								{/* Iframe */}
 								<div className="relative" style={{ height: '70vh', minHeight: '500px' }}>
-									{iframeUrl ? (
+									{currentUrl ? (
 										<iframe
-											src={iframeUrl}
+											src={currentUrl}
 											className="w-full h-full border-0"
-											title={title}
+											title={`${title} - ${activeView === 'app' ? 'App' : 'Code'}`}
 											allow="clipboard-read; clipboard-write"
 										/>
 									) : (
 										<div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
 											<div className="text-center">
 												<p className="text-gray-500 dark:text-gray-400 mb-2">
-													App preview placeholder
+													{activeView === 'app' ? 'App preview' : 'Code view'} placeholder
 												</p>
 												<p className="text-sm text-gray-400 dark:text-gray-500">
-													Iframe URL will be configured here
+													{activeView === 'app' ? 'App' : 'Code'} URL will be configured here
 												</p>
 											</div>
 										</div>
