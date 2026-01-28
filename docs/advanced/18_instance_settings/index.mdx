@@ -408,6 +408,26 @@ When creating a workspace, you have the option to invite automatically everyone 
 
 Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelementry data sent to the collector consists of traces, logs and metrics (coming soon). Follow this [guide](../../misc/9_guides/otel/index.mdx) for an example setup.
 
+### HTTP tracing
+
+HTTP tracing captures HTTP/HTTPS requests made by job scripts as observability spans within the job details UI. Traces are stored and correlated with the job, displaying method, URL, status code, and timing information.
+
+If the [OpenTelemetry](#opentelemetry-otel) external collector is enabled, traces are also sent to that collector and seamlessly integrate with existing spans.
+
+The feature works in two modes:
+- **Auto-instrumentation** for Native TypeScript: uses built-in OpenTelemetry instrumentation to automatically capture `fetch()` requests.
+- **MITM proxy** for other languages (Python, Bun, Deno, Go, Bash, Rust, C#, Nu, Ruby): outgoing HTTP traffic is routed through a tracing proxy that intercepts and records requests.
+
+You can select which language runtimes should have tracing enabled. Toggling this setting restarts workers.
+
+![HTTP traces tab](./http_traces_tab.png)
+
+:::note
+This feature requires `NUM_WORKERS=1` (the default). If you run with `NUM_WORKERS>1`, this feature is not available.
+:::
+
+This setting is only available on [Enterprise Edition](/pricing).
+
 ### Prometheus
 Expose [Prometheus](https://prometheus.io/) metrics for workers and servers on port 8001 at /metrics.
 
