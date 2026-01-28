@@ -143,7 +143,7 @@ export default function Footer() {
 					</div>
 				</div>
 				<p className="text-left text-xs leading-4 tracking-tight text-gray-800 dark:text-gray-200 text-opacity-60 hover:text-opacity-100">
-					&copy; 2025 Windmill Labs, Inc. All rights reserved. 1111B S Governors Ave STE 6013, Dover, DE
+					&copy; 2026 Windmill Labs, Inc. All rights reserved. 1111B S Governors Ave STE 6013, Dover, DE
 					19904, USA
 				</p>
 			</div>
