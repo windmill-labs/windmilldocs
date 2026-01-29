@@ -404,6 +404,17 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				}
+			},
+			{
+				name: 'HTTP tracing',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/instance_settings#http-tracing'
 			}
 		]
 	},

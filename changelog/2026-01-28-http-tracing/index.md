@@ -2,7 +2,7 @@
 slug: http-tracing
 title: HTTP tracing
 version: v1.619.0
-tags: ['ee', 'observability']
+tags: ['Enterprise', 'Observability']
 description: Capture HTTP requests made by job scripts as observability spans
 features:
   - View HTTP request traces (method, URL, status, timing) in the job details UI
