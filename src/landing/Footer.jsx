@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from '@docusaurus/router';
 import { SiDiscord, SiX, SiLinkedin, SiYoutube } from 'react-icons/si';
 import '../css/custom.css';
 
@@ -6,10 +7,10 @@ const navigation = [
 	{
 		title: 'Product',
 		items: [
-			{ name: 'Scripts', href: '/scripts' },
-			{ name: 'Flows', href: '/flows' },
-			{ name: 'Apps', href: '/apps' },
-			{ name: 'Pricing', href: '/pricing' }
+			{ name: 'Pricing', href: '/pricing' },
+			{ name: 'Cloud', href: 'https://app.windmill.dev' },
+			{ name: 'Hub', href: 'https://hub.windmill.dev' },
+			{ name: 'Case studies', href: '/case-studies' }
 		]
 	},
 	{
@@ -27,7 +28,8 @@ const navigation = [
 		items: [
 			{ name: 'Blog', href: '/blog' },
 			{ name: 'Documentation', href: '/docs/intro' },
-			{ name: 'Changelog', href: '/changelog' }
+			{ name: 'Changelog', href: '/changelog' },
+			{ name: 'Roadmap', href: '/roadmap' }
 		],
 		title: 'Resources'
 	},
@@ -59,6 +61,9 @@ const navigation = [
 ];
 
 export default function Footer() {
+	const location = useLocation();
+	const isHomePage = location.pathname === '/';
+
 	return (
 		<footer aria-labelledby="footer-heading" className="bg-gray-50/50 dark:bg-gray-900/50">
 			<h2 id="footer-heading" className="sr-only">
@@ -66,6 +71,57 @@ export default function Footer() {
 			</h2>
 
 			<div className="mx-auto max-w-7xl px-6  pt-16 sm:pt-24 lg:px-8 lg:pt-32 flex flex-col gap-16 pb-16">
+				{isHomePage && (
+					<div className="flex items-center justify-center gap-6 flex-wrap text-slate-400 dark:text-slate-500 font-medium">
+						<span>Backed by</span>
+						<a
+							href="https://www.ycombinator.com/companies/windmill"
+							target="_blank"
+							rel="noopener noreferrer"
+							title="Y-Combinator"
+							className="hover:opacity-80 transition-opacity"
+						>
+							<img
+								src="/images/brands/yc_grey.svg"
+								alt="Y Combinator logo"
+								width="137"
+								height="32"
+								className="logo"
+							/>
+						</a>
+						<a
+							href="https://www.gradient.com/"
+							target="_blank"
+							rel="noopener noreferrer"
+							title="Gradient Ventures"
+							className="hover:opacity-80 transition-opacity"
+						>
+							<img
+								src="/images/brands/gradient.svg"
+								alt="Gradient Ventures logo"
+								width="160"
+								height="40"
+								className="logo"
+							/>
+						</a>
+						<a
+							href="https://www.bvp.com/"
+							target="_blank"
+							rel="noopener noreferrer"
+							title="Bessemer Venture Partners"
+							className="hover:opacity-80 transition-opacity"
+						>
+							<img
+								src="/images/brands/bessemer.png"
+								alt="Bessemer Venture Partners logo"
+								width="90"
+								height="27"
+								className="logo"
+								style={{ filter: 'grayscale(100%) brightness(2)' }}
+							/>
+						</a>
+					</div>
+				)}
 				<div className="grid grid-cols-2 md:grid-cols-6 gap-8">
 					{navigation.map((section) => (
 						<div className="">
