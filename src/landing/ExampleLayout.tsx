@@ -139,7 +139,7 @@ const flowData: Record<string, FlowStep[]> = {
 			],
 		},
 		{ id: 'c', label: 'Generate AI response', type: 'ai', tag: 'call_ai' },
-		{ id: 'output', label: 'Result', type: 'output' },
+		{ id: 'output', label: 'Output (AI response)', type: 'output' },
 	],
 };
 
@@ -742,7 +742,7 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 									href="https://app.windmill.dev/user/login"
 									className="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors no-underline text-sm"
 								>
-									Try Windmill
+									Add to my workspace
 								</Link>
 							</div>
 						</motion.div>
