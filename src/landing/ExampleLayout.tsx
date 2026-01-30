@@ -119,10 +119,10 @@ interface FlowStep {
 
 const flowDescriptions: Record<string, string[]> = {
 	'sendAiMessage': [
-		'// This flow takes the user message as input and passes it to a built-in AI agent',
+		'// This flow takes the user message as input and passes it to a built-in AI agent step',
 		'// When the query is about sales or marketing, the AI agent calls getSalesMetrics or getMarketingActivations to fetch data',
-		'// The AI agent uses this data to return an appropriate answer to the user',
-		'// The sales and marketing scripts will not be called if the user does not ask about these topics',
+		'// Otherwise, these scripts will not be called',
+		'// The AI agent uses this data to return an appropriate answer to the user in the "Result" step',
 	],
 };
 
@@ -140,7 +140,7 @@ const flowData: Record<string, FlowStep[]> = {
 		},
 		{ id: 'c', label: 'Generate AI response', type: 'ai', tag: 'call_ai' },
 		{ id: 'd', label: 'Return response', type: 'return', tag: 'return' },
-		{ id: 'output', label: 'Result (AI response', type: 'output' },
+		{ id: 'output', label: 'Result', type: 'output' },
 	],
 };
 
@@ -823,7 +823,7 @@ export default function ExampleLayout({ example }: ExampleLayoutProps) {
 								</div>
 
 								{/* Content */}
-								<div className="relative" style={{ height: '70vh', minHeight: '500px' }}>
+								<div className="relative" style={{ height: '80vh', minHeight: '600px' }}>
 									{/* App view */}
 									<div className={`absolute inset-0 ${activeView === 'app' ? 'block' : 'hidden'}`}>
 										{iframeUrl ? (
