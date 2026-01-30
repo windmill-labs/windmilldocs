@@ -117,9 +117,18 @@ interface FlowStep {
 	parallel?: FlowStep[];
 }
 
+const flowDescriptions: Record<string, string[]> = {
+	'sendAiMessage': [
+		'// This flow takes the user message as input and passes it to a built-in AI agent',
+		'// When the query is about sales or marketing, the AI agent calls getSalesMetrics or getMarketingActivations to fetch data',
+		'// The AI agent uses this data to return an appropriate answer to the user',
+		'// The sales and marketing scripts will not be called if the user does not ask about these topics',
+	],
+};
+
 const flowData: Record<string, FlowStep[]> = {
 	'sendAiMessage': [
-		{ id: 'input', label: 'Input', type: 'input' },
+		{ id: 'input', label: 'Input (user message)', type: 'input' },
 		{
 			id: 'parallel',
 			label: '',
@@ -131,7 +140,7 @@ const flowData: Record<string, FlowStep[]> = {
 		},
 		{ id: 'c', label: 'Generate AI response', type: 'ai', tag: 'call_ai' },
 		{ id: 'd', label: 'Return response', type: 'return', tag: 'return' },
-		{ id: 'output', label: 'Result', type: 'output' },
+		{ id: 'output', label: 'Result (AI response', type: 'output' },
 	],
 };
 
@@ -555,10 +564,22 @@ function FlowStepBox({ step }: { step: FlowStep }) {
 	);
 }
 
-function FlowViewer({ steps }: { steps: FlowStep[] }) {
+function FlowViewer({ steps, fileName }: { steps: FlowStep[]; fileName: string }) {
+	const description = flowDescriptions[fileName];
+
 	return (
-		<div className="h-full flex items-center justify-center bg-gradient-to-br from-indigo-50/50 to-slate-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
-			<div className="flex flex-col items-center">
+		<div className="h-full flex flex-col bg-gradient-to-br from-indigo-50/50 to-slate-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+			{/* Description */}
+			{description && (
+				<div className="px-6 py-4 bg-white/50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700 font-mono">
+					{description.map((line, i) => (
+						<p key={i} className="text-sm text-gray-500 dark:text-gray-400">{line}</p>
+					))}
+				</div>
+			)}
+			{/* Flow diagram */}
+			<div className="flex-1 flex items-center justify-center">
+				<div className="flex flex-col items-center">
 				{steps.map((step, index) => (
 					<React.Fragment key={step.id}>
 						{/* Parallel steps */}
@@ -577,6 +598,7 @@ function FlowViewer({ steps }: { steps: FlowStep[] }) {
 						)}
 					</React.Fragment>
 				))}
+				</div>
 			</div>
 		</div>
 	);
@@ -620,7 +642,7 @@ function MockCodeEditor() {
 
 				{/* Content - either flow or code */}
 				{isFlow ? (
-					<FlowViewer steps={flowData[selectedFile]} />
+					<FlowViewer steps={flowData[selectedFile]} fileName={selectedFile} />
 				) : (
 					<div className="p-4 font-mono text-sm">
 						<pre className="text-gray-800 dark:text-gray-200 leading-relaxed">
