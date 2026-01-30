@@ -101,11 +101,39 @@ const fileTree: FileTreeItem[] = [
 		name: 'backend',
 		type: 'folder',
 		children: [
+			{ name: 'sendAiMessage', type: 'file' },
 			{ name: 'getMarketingActivations', type: 'file' },
 			{ name: 'getSalesMetrics', type: 'file' },
 		],
 	},
 ];
+
+// Flow data for visual rendering
+interface FlowStep {
+	id: string;
+	label: string;
+	type: 'input' | 'script' | 'ai' | 'return' | 'output';
+	tag?: string;
+	parallel?: FlowStep[];
+}
+
+const flowData: Record<string, FlowStep[]> = {
+	'sendAiMessage': [
+		{ id: 'input', label: 'Input', type: 'input' },
+		{
+			id: 'parallel',
+			label: '',
+			type: 'script',
+			parallel: [
+				{ id: 'a', label: 'sales', type: 'script' },
+				{ id: 'b', label: 'marketing', type: 'script' },
+			],
+		},
+		{ id: 'c', label: 'Generate AI response', type: 'ai', tag: 'call_ai' },
+		{ id: 'd', label: 'Return response', type: 'return', tag: 'return' },
+		{ id: 'output', label: 'Result', type: 'output' },
+	],
+};
 
 const fileContents: Record<string, string> = {
 	'App.tsx': `import React, { useState, useEffect, useRef } from 'react'
@@ -487,9 +515,77 @@ function FileTreeNode({
 	);
 }
 
+function FlowStepBox({ step }: { step: FlowStep }) {
+	if (step.type === 'input' || step.type === 'output') {
+		return (
+			<div className="px-20 py-3 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-lg font-medium">
+				{step.label}
+			</div>
+		);
+	}
+
+	const iconClass = "w-6 h-6 flex-shrink-0";
+	const Icon = step.type === 'ai' ? (
+		<svg className={`${iconClass} text-violet-500`} viewBox="0 0 24 24" fill="currentColor">
+			<path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5A2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5a2.5 2.5 0 0 0 2.5 2.5a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-2.5-2.5z"/>
+		</svg>
+	) : step.type === 'return' ? (
+		<svg className={`${iconClass} text-blue-500`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+			<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+			<polyline points="14 2 14 8 20 8" />
+		</svg>
+	) : (
+		<svg className={`${iconClass} text-blue-500`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+			<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+		</svg>
+	);
+
+	const isParallelScript = step.type === 'script' && !step.tag;
+
+	return (
+		<div className={`flex items-center gap-3 px-5 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm text-lg ${step.type === 'ai' ? 'border-l-4 border-l-violet-400' : ''} ${isParallelScript ? 'w-40 justify-center' : ''}`}>
+			{Icon}
+			<span className="text-gray-700 dark:text-gray-300 whitespace-nowrap">{step.label}</span>
+			{step.tag && (
+				<span className={`ml-2 px-3 py-1 rounded-md text-sm font-medium ${step.type === 'ai' ? 'bg-violet-100 dark:bg-violet-900/50 text-violet-600 dark:text-violet-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
+					{step.tag}
+				</span>
+			)}
+		</div>
+	);
+}
+
+function FlowViewer({ steps }: { steps: FlowStep[] }) {
+	return (
+		<div className="h-full flex items-center justify-center bg-gradient-to-br from-indigo-50/50 to-slate-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+			<div className="flex flex-col items-center">
+				{steps.map((step, index) => (
+					<React.Fragment key={step.id}>
+						{/* Parallel steps */}
+						{step.parallel ? (
+							<div className="flex items-center gap-4">
+								{step.parallel.map((pStep) => (
+									<FlowStepBox key={pStep.id} step={pStep} />
+								))}
+							</div>
+						) : (
+							<FlowStepBox step={step} />
+						)}
+						{/* Connecting line */}
+						{index < steps.length - 1 && (
+							<div className="w-0.5 h-6 bg-gray-300 dark:bg-gray-600" />
+						)}
+					</React.Fragment>
+				))}
+			</div>
+		</div>
+	);
+}
+
 function MockCodeEditor() {
 	const [selectedFile, setSelectedFile] = useState('App.tsx');
 	const code = fileContents[selectedFile] || '';
+	const isFlow = selectedFile in flowData;
 
 	return (
 		<div className="flex h-full bg-white dark:bg-gray-900">
@@ -512,7 +608,7 @@ function MockCodeEditor() {
 				</div>
 			</div>
 
-			{/* Code editor */}
+			{/* Code editor / Flow viewer */}
 			<div className="flex-1 overflow-auto">
 				{/* File tab */}
 				<div className="flex items-center border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
@@ -522,25 +618,29 @@ function MockCodeEditor() {
 					</div>
 				</div>
 
-				{/* Code content */}
-				<div className="p-4 font-mono text-sm">
-					<pre className="text-gray-800 dark:text-gray-200 leading-relaxed">
-						<code>
-							{code.split('\n').map((line, index) => (
-								<div key={index} className="flex">
-									<span className="w-8 text-right pr-4 text-gray-400 dark:text-gray-500 select-none">
-										{index + 1}
-									</span>
-									<span
-										dangerouslySetInnerHTML={{
-											__html: highlightCode(line),
-										}}
-									/>
-								</div>
-							))}
-						</code>
-					</pre>
-				</div>
+				{/* Content - either flow or code */}
+				{isFlow ? (
+					<FlowViewer steps={flowData[selectedFile]} />
+				) : (
+					<div className="p-4 font-mono text-sm">
+						<pre className="text-gray-800 dark:text-gray-200 leading-relaxed">
+							<code>
+								{code.split('\n').map((line, index) => (
+									<div key={index} className="flex">
+										<span className="w-8 text-right pr-4 text-gray-400 dark:text-gray-500 select-none">
+											{index + 1}
+										</span>
+										<span
+											dangerouslySetInnerHTML={{
+												__html: highlightCode(line),
+											}}
+										/>
+									</div>
+								))}
+							</code>
+						</pre>
+					</div>
+				)}
 			</div>
 		</div>
 	);
