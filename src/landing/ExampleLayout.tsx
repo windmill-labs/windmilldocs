@@ -139,7 +139,6 @@ const flowData: Record<string, FlowStep[]> = {
 			],
 		},
 		{ id: 'c', label: 'Generate AI response', type: 'ai', tag: 'call_ai' },
-		{ id: 'd', label: 'Return response', type: 'return', tag: 'return' },
 		{ id: 'output', label: 'Result', type: 'output' },
 	],
 };
@@ -221,14 +220,10 @@ const App = () => {
     setMessages(prev => [...prev, { role: 'user', content: userMessage, timestamp: new Date() }]);
 
     try {
-      const response = await backend.d({
-        session_id: sessionId,
+      const response = await backend.sendAiMessage({
         message: userMessage,
-        system_prompt: SYSTEM_PROMPT
       });
-      const content = typeof response === 'string' ? response : response.content;
-      const toolsUsed = response?.tool_calls as string[] | undefined;
-      setMessages(prev => [...prev, { role: 'assistant', content, timestamp: new Date(), toolsUsed }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: response, timestamp: new Date() }]);
     } catch (e) {
       console.error('Failed to send message:', e);
     }
@@ -632,14 +627,6 @@ function MockCodeEditor() {
 
 			{/* Code editor / Flow viewer */}
 			<div className="flex-1 overflow-auto">
-				{/* File tab */}
-				<div className="flex items-center border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
-					<div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700">
-						<FileCode className="w-4 h-4 text-blue-500" />
-						<span className="text-sm text-gray-700 dark:text-gray-300">{selectedFile}</span>
-					</div>
-				</div>
-
 				{/* Content - either flow or code */}
 				{isFlow ? (
 					<FlowViewer steps={flowData[selectedFile]} fileName={selectedFile} />
