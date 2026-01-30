@@ -322,15 +322,15 @@ function highlightCode(line: string): string {
 
 
 export default function PublicAppLayout({ publicApp }: PublicAppLayoutProps) {
-	const { title, description, iframeUrl, repoUrl, builtWith, codeData } = publicApp;
+	const { title, description, iframeUrl, repoUrl, builtWith, features, codeData } = publicApp;
 	const [activeView, setActiveView] = useState<'app' | 'code'>('app');
 
 	return (
 		<LayoutProvider>
 			<main className="relative min-h-screen w-full overflow-x-hidden">
 				<Head>
-					<title>{title} | Public Apps | Windmill</title>
-					<meta name="title" content={`${title} | Public Apps | Windmill`} />
+					<title>{title} | Apps | Windmill</title>
+					<meta name="title" content={`${title} | Apps | Windmill`} />
 					<meta name="description" content={description} />
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
@@ -341,11 +341,11 @@ export default function PublicAppLayout({ publicApp }: PublicAppLayoutProps) {
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 						{/* Back link */}
 						<Link
-							href="/public-apps"
+							href="/examples"
 							className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
 						>
 							<ArrowLeft className="w-4 h-4" />
-							Back to public apps
+							Back to apps
 						</Link>
 
 						{/* Header section */}
@@ -361,6 +361,19 @@ export default function PublicAppLayout({ publicApp }: PublicAppLayoutProps) {
 							<p className="text-lg text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
 								{description}
 							</p>
+
+							{features && features.length > 0 && (
+								<ul className="grid grid-cols-2 gap-x-6 gap-y-2 mb-6">
+									{features.map((feature) => (
+										<li key={feature} className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+											<svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+											</svg>
+											{feature}
+										</li>
+									))}
+								</ul>
+							)}
 
 							<div className="flex flex-wrap items-center gap-6">
 								<div className="flex flex-wrap gap-2">

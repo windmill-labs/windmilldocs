@@ -20,16 +20,14 @@ export default function PublicAppCard({
 			to={href}
 			className="group flex flex-col h-full rounded-2xl bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl !no-underline"
 		>
-			{/* Top section with icon */}
-			<div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-[200px] flex flex-col">
+			{/* Top section with thumbnail */}
+			<div className="relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-[200px] flex flex-col overflow-hidden">
 				{thumbnail && (
-					<div className="flex items-center justify-center w-full flex-1 min-h-[120px]">
-						<img
-							src={thumbnail}
-							alt={title}
-							className="h-28 w-full object-contain"
-						/>
-					</div>
+					<img
+						src={thumbnail}
+						alt={title}
+						className="w-full h-full object-cover"
+					/>
 				)}
 			</div>
 

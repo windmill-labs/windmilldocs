@@ -12,6 +12,7 @@ export interface PublicApp {
 	color: 'blue' | 'teal' | 'orange' | 'purple';
 	features: string[];
 	builtWith: string[];
+	thumbnail?: string;
 	codeData?: PublicAppCodeData;
 }
 
@@ -28,12 +29,13 @@ export const publicApps: PublicApp[] = [
 		repoUrl: 'https://github.com/windmill-labs/windmill-ai-agent-example',
 		color: 'purple',
 		features: [
-			'Natural language queries',
-			'Real-time data fetching',
-			'Customizable knowledge base',
-			'Extensible with Windmill scripts'
+			'Frontend in React 19',
+			'Windmill flow with built-in AI agent step for backend',
+			'Fully customizable AI agent step (knowledge base, AI provider, tools, ...)',
+			'Windmill scripts as tools for the AI agent to fetch real-time data'
 		],
-		builtWith: ['React', 'OpenAI', 'Windmill']
+		builtWith: ['React', 'AI Agent', 'Flows', 'Scripts'],
+		thumbnail: '/img/public-apps/ai-company-assistant.png'
 	}
 ];
 

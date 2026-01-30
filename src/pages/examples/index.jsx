@@ -15,11 +15,11 @@ export default function PublicAppsPage() {
 			<main className="relative min-h-screen w-full overflow-x-hidden">
 				<LandingHeader />
 				<Head>
-					<title>Public Apps | Windmill</title>
-					<meta name="title" content="Public Apps | Windmill" />
+					<title>Apps | Windmill</title>
+					<meta name="title" content="Apps | Windmill" />
 					<meta
 						name="description"
-						content="Explore interactive public apps built with Windmill. AI agents, data pipelines, dashboards, and more."
+						content="Explore interactive apps built with Windmill. AI agents, data pipelines, dashboards, and more."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
@@ -35,7 +35,7 @@ export default function PublicAppsPage() {
 								className="text-center mb-16"
 							>
 								<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
-									Public apps
+									Apps
 								</h1>
 								<p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
 									Apps built with Windmill's App Builder, Scripts and Flows. Try them, add to your workspace, and customize freely.
@@ -55,7 +55,8 @@ export default function PublicAppsPage() {
 										<PublicAppCard
 											title={publicApp.title}
 											description={publicApp.shortDescription}
-											href={`/public-apps/${publicApp.slug}`}
+											href={`/examples/${publicApp.slug}`}
+											thumbnail={publicApp.thumbnail}
 										/>
 									</motion.div>
 								))}
