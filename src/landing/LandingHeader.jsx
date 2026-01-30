@@ -267,7 +267,7 @@ export default function LandingHeader() {
 							onClick={() => setBookDemoOpen(true)}
 							className="hidden xl:inline-flex ml-4 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all cursor-pointer"
 						>
-							Book a demo
+							Contact us
 						</button>
 
 						<a
@@ -404,13 +404,13 @@ export default function LandingHeader() {
 
 								{/* Show buttons that are hidden on current screen size */}
 								<div className="mt-6">
-									{/* Book a demo - hidden on xl screens, visible on 2xl+ */}
+									{/* Contact us - hidden on xl screens, visible on 2xl+ */}
 									<div className="lg:block xl:hidden">
 										<button
 											onClick={() => setBookDemoOpen(true)}
 											className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium !text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 mb-4 cursor-pointer"
 										>
-											Book a demo
+											Contact us
 										</button>
 									</div>
 									

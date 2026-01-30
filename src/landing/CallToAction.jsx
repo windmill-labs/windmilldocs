@@ -25,7 +25,7 @@ export default function CallToAction() {
                                               onClick={() => setBookDemoOpen(true)}
                                               className="group flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-white bg-transparent border-none cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                                       >
-                                              Schedule a demo
+                                              Contact us
                                               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                                       </button>
                               </div>
