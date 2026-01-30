@@ -5,21 +5,21 @@ import LandingHeader from '../../landing/LandingHeader';
 import Footer from '../../landing/Footer';
 import CallToAction from '../../landing/CallToAction';
 import RadialBlur from '../../landing/RadialBlur';
-import ExampleCard from '../../landing/ExampleCard';
-import { examples } from '../../landing/examplesData';
+import PublicAppCard from '../../landing/PublicAppCard';
+import { publicApps } from '../../landing/publicAppsData';
 import { motion } from 'framer-motion';
 
-export default function ExamplesPage() {
+export default function PublicAppsPage() {
 	return (
 		<LayoutProvider>
 			<main className="relative min-h-screen w-full overflow-x-hidden">
 				<LandingHeader />
 				<Head>
-					<title>Examples | Windmill</title>
-					<meta name="title" content="Examples | Windmill" />
+					<title>Public Apps | Windmill</title>
+					<meta name="title" content="Public Apps | Windmill" />
 					<meta
 						name="description"
-						content="Explore interactive examples built with Windmill. AI agents, data pipelines, dashboards, and more."
+						content="Explore interactive public apps built with Windmill. AI agents, data pipelines, dashboards, and more."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
@@ -35,28 +35,27 @@ export default function ExamplesPage() {
 								className="text-center mb-16"
 							>
 								<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
-									Examples
+									Public apps
 								</h1>
 								<p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-									Interactive applications built with Windmill's Raw App Builder.
-									Explore what you can create with code-first frontends powered by Windmill.
+									Apps built with Windmill's App Builder, Scripts and Flows. Try them, add to your workspace, and customize freely.
 								</p>
 							</motion.div>
 
-							{/* Examples Grid */}
+							{/* Public Apps Grid */}
 							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-								{examples.map((example, index) => (
+								{publicApps.map((publicApp, index) => (
 									<motion.div
-										key={example.slug}
+										key={publicApp.slug}
 										initial={{ opacity: 0, y: 20 }}
 										whileInView={{ opacity: 1, y: 0 }}
 										transition={{ duration: 0.3, delay: index * 0.1 }}
 										viewport={{ once: true }}
 									>
-										<ExampleCard
-											title={example.title}
-											description={example.shortDescription}
-											href={`/examples/${example.slug}`}
+										<PublicAppCard
+											title={publicApp.title}
+											description={publicApp.shortDescription}
+											href={`/public-apps/${publicApp.slug}`}
 										/>
 									</motion.div>
 								))}

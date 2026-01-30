@@ -2,19 +2,19 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 import { ArrowRight } from 'lucide-react';
 
-interface ExampleCardProps {
+interface PublicAppCardProps {
 	title: string;
 	description: string;
 	href: string;
 	thumbnail?: string;
 }
 
-export default function ExampleCard({
+export default function PublicAppCard({
 	title,
 	description,
 	href,
 	thumbnail
-}: ExampleCardProps) {
+}: PublicAppCardProps) {
 	return (
 		<Link
 			to={href}
@@ -44,7 +44,7 @@ export default function ExampleCard({
 				{/* Bottom section with link */}
 				<div className="flex items-center justify-end mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
 					<span className="text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 flex items-center gap-1 transition-colors">
-						View example
+						View app
 						<ArrowRight className="w-4 h-4" />
 					</span>
 				</div>
