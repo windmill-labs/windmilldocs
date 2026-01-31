@@ -5,7 +5,7 @@ import IntegrationsList from '../landing/IntegrationsList';
 import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
-import Head from '@docusaurus/Head';
+import SeoHead from '../components/SeoHead';
 import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
@@ -50,15 +50,7 @@ export default function Home() {
 	return (
 		<LayoutProvider>
 			<main>
-				<Head>
-					<title>Windmill | Build, deploy and monitor internal software at scale</title>
-					<meta name="title" content="Build, deploy and monitor internal software at scale" />
-					<meta
-						name="description"
-						content="For developers who need real code capabilities without platform engineering overhead."
-					/>
-					<link rel="icon" href="/img/logo.svg" />
-				</Head>
+				<SeoHead />
 				<HomepageHeader />
 			</main>
 		</LayoutProvider>
