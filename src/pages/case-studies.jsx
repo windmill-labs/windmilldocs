@@ -13,15 +13,16 @@ function CaseStudyCard({ caseStudy }) {
 	const { colorMode } = useColorMode();
 	
 	// Derive logo path based on color mode
-	// In light mode, use dark logo (dark on light background)
-	// In dark mode, use light logo (light on dark background)
+	// Logo files are named: *-light.svg = black logo for light mode, *-dark.svg = white logo for dark mode
 	const getLogoPath = () => {
 		if (colorMode === 'light') {
-			// Light mode: use dark logo
-			return caseStudy.logo.replace('-light.png', '-dark.png');
-		} else {
-			// Dark mode: use light logo
+			// Light mode: use the light variant (black logo on light background)
 			return caseStudy.logo;
+		} else {
+			// Dark mode: use the dark variant (white logo on dark background)
+			return caseStudy.logo
+				.replace('-light.png', '-dark.png')
+				.replace('-light.svg', '-dark.svg');
 		}
 	};
 	return (
@@ -40,7 +41,7 @@ function CaseStudyCard({ caseStudy }) {
 					<img
 						src={getLogoPath()}
 						alt={`${caseStudy.company} logo`}
-						className="h-28 w-full object-contain"
+						className="h-16 w-full object-contain"
 					/>
 				</div>
 			</div>

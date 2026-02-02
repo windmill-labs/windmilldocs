@@ -5,7 +5,7 @@ export default function CompanyLogo({ lightSrc, darkSrc, alt, className = 'h-24 
 	const { colorMode } = useColorMode();
 	return (
 		<img
-			src={colorMode === 'light' ? darkSrc : lightSrc}
+			src={colorMode === 'light' ? lightSrc : darkSrc}
 			alt={alt}
 			className={className}
 		/>
