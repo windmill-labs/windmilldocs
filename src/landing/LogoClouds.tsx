@@ -54,7 +54,7 @@ export default function LogoClouds() {
 		<div className="pt-4 pb-12 sm:pt-6 sm:pb-16 md:pb-24">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
 				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900/60">
-					Trusted by 4,000+ organizations, including:
+					Trusted by 4,000+ organizations, including 300+ EE customers at scale:
 				</h2>
 				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-8 sm:max-w-xl sm:grid-cols-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
 					{logos.map((logo) => (

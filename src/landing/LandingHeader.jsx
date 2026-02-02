@@ -157,12 +157,6 @@ export default function LandingHeader() {
 						</Popover>
 						*/}
 						<Link
-							to="/case-studies"
-							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300 whitespace-nowrap"
-						>
-							Case studies
-						</Link>
-						<Link
 							to="/docs/intro"
 							onClick={() => window.plausible?.('read-docs')}
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
@@ -182,6 +176,13 @@ export default function LandingHeader() {
 						>
 							Hub
 						</a>
+
+						<Link
+							to="/case-studies"
+							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300 whitespace-nowrap"
+						>
+							Case studies
+						</Link>
 
 						<Popover className="relative">
 							{({ open }) => (
@@ -267,7 +268,7 @@ export default function LandingHeader() {
 							onClick={() => setBookDemoOpen(true)}
 							className="hidden xl:inline-flex ml-4 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all cursor-pointer"
 						>
-							Book a demo
+							Contact us
 						</button>
 
 						<a
@@ -319,13 +320,6 @@ export default function LandingHeader() {
 								{/* Show navigation items only on mobile (md:hidden) */}
 								<div className="md:hidden grid grid-cols-2 gap-4">
 									<a
-										href="/case-studies"
-										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-									>
-										Case studies
-									</a>
-
-									<a
 										href="/docs/intro"
 										onClick={() => window.plausible('read-docs')}
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
@@ -345,6 +339,13 @@ export default function LandingHeader() {
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
 										Hub
+									</a>
+
+									<a
+										href="/case-studies"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Case studies
 									</a>
 
 									{resources.map((resource) => (
@@ -404,13 +405,13 @@ export default function LandingHeader() {
 
 								{/* Show buttons that are hidden on current screen size */}
 								<div className="mt-6">
-									{/* Book a demo - hidden on xl screens, visible on 2xl+ */}
+									{/* Contact us - hidden on xl screens, visible on 2xl+ */}
 									<div className="lg:block xl:hidden">
 										<button
 											onClick={() => setBookDemoOpen(true)}
 											className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium !text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 mb-4 cursor-pointer"
 										>
-											Book a demo
+											Contact us
 										</button>
 									</div>
 									

@@ -734,7 +734,7 @@ export default function Pricing() {
 											Try it for a month
 										</a>
 										<a
-											href="https://app.windmill.dev/a/windmill-prod/windmill-trial"
+											href="https://app.windmill.dev/a/windmill-prod/ee_trial_form"
 											className="hover-section"
 											target="_blank"
 											onClick={(e) => {
@@ -765,9 +765,7 @@ export default function Pricing() {
 											Try it for a month
 										</a>
 										<a
-											href={`https://app.windmill.dev/a/windmill-prod/windmill-trial${
-												selectedOption !== 'Enterprise' ? `?plan=${selectedOption.toLowerCase()}` : ''
-											}`}
+											href="https://app.windmill.dev/a/windmill-prod/ee_trial_form"
 											className="hover-section"
 											target="_blank"
 											onClick={(e) => {
@@ -860,7 +858,7 @@ export default function Pricing() {
 													Try it for a month
 												</a>
 												<a
-													href="https://app.windmill.dev/a/windmill-prod/windmill-trial"
+													href="https://app.windmill.dev/a/windmill-prod/ee_trial_form"
 													className="hover-section"
 													target="_blank"
 													onClick={(e) => {
@@ -897,11 +895,7 @@ export default function Pricing() {
 													Try it for a month
 												</a>
 												<a
-													href={`https://app.windmill.dev/a/windmill-prod/windmill-trial${
-														selectedOption !== 'Enterprise'
-															? `?plan=${selectedOption.toLowerCase()}`
-															: ''
-													}`}
+													href="https://app.windmill.dev/a/windmill-prod/ee_trial_form"
 													className="hover-section"
 													target="_blank"
 													onClick={(e) => {

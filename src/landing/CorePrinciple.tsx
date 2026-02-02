@@ -82,22 +82,22 @@ export default function CorePrinciple() {
 				{/* 3 cards in a row */}
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
 					<FeatureCard
-						title="Avoid vendor lock-in"
-						description="Open source and self-hostable. Your code, your data, your infrastructure. Deploy anywhere—cloud, on-premises, or air-gapped."
+						title="No lock-in"
+						description="Open source and self-hostable. Your code, your data, your infrastructure. Normal code in mainstream languages, no custom or proprietary SDKs. Run it locally, generate it with LLMs, port it anytime."
 						actionLink="View on GitHub"
 						actionUrl="https://github.com/windmill-labs/"
 						lottieData={polyGlott}
 					/>
 					<FeatureCard
-						title="Seamless enterprise integration"
-						description="Connect to databases (PostgreSQL, MySQL, Snowflake), cloud platforms (AWS, Azure, GCP), message queues (Kafka, SQS, NATS), and 100+ APIs."
+						title="Do not reinvent the wheel"
+						description="Focus on what matters: your business logic. Every possible integration and trigger with external systems is already built-in with enterprise-grade reliability. PostgreSQL, Snowflake, Kafka, and 100+ more."
 						actionLink="Explore integrations"
 						actionUrl="https://www.windmill.dev/docs/integrations/integrations_on_windmill"
 						lottieData={thirdparty}
 					/>
 					<FeatureCard
-						title="Enterprise-grade security"
-						description="Granular RBAC, SSO, Secret Management, and comprehensive Audit Logs. Deploy in regulated industries with air-gapped support."
+						title="Security and reliability at scale"
+						description="Granular RBAC, SSO, Secret Management, and comprehensive Audit Logs. Battle-tested reliability at scale in regulated industries with air-gapped support."
 						actionLink="Explore enterprise features"
 						actionUrl="https://www.windmill.dev/docs/misc/enterprise_onboarding"
 						lottieData={secrets}
