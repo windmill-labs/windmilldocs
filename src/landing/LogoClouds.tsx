@@ -8,11 +8,11 @@ export default function LogoClouds() {
 
 	const logos = [
 		{
-			url: 'https://www.kahoot.com/',
+			url: '/blog/kahoot-case-study',
 			dark: '/images/brands/Kahoot_Logo-dark.svg',
 			light: '/images/brands/Kahoot_Logo.svg',
 			name: 'Kahoot',
-			anchor: 'kahoot'
+			internal: true
 		},
 		{
 			url: 'https://www.investing.com/',
@@ -63,11 +63,10 @@ export default function LogoClouds() {
 			name: 'Nocd'
 		},
 		{
-			url: 'https://www.bloomcredit.io/',
+			url: 'https://bloomcredit.io/',
 			dark: '/images/brands/Bloomcredit-Dark.svg',
 			light: '/images/brands/Bloomcredit-Light.svg',
-			name: 'Bloomcredit',
-			anchor: 'bloomcredit'
+			name: 'Bloomcredit'
 		},
 		{
 			url: '/case-studies/athena-intelligence',
