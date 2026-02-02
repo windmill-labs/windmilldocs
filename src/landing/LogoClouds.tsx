@@ -50,8 +50,8 @@ export default function LogoClouds() {
 		},
 		{
 			url: 'https://panther.com/',
-			dark: '/images/brands/panther-light.png',
-			light: '/images/brands/panther-dark.png',
+			dark: '/images/brands/panther-dark.svg',
+			light: '/images/brands/panther-light.svg',
 			name: 'Panther Labs',
 			anchor: 'panther-labs'
 		},
@@ -70,8 +70,8 @@ export default function LogoClouds() {
 		},
 		{
 			url: 'https://www.athenaintel.com/',
-			dark: '/images/brands/athena-light.png',
-			light: '/images/brands/athena-dark.png',
+			dark: '/images/brands/athena-dark.svg',
+			light: '/images/brands/athena-light.svg',
 			name: 'Athena Intelligence',
 			anchor: 'athena-intelligence'
 		}
