@@ -22,17 +22,18 @@ export default function LogoClouds() {
 			anchor: 'investing'
 		},
 		{
-			url: 'https://www.cfainstitute.org/',
+			url: '/case-studies/cfa-institute',
 			dark: '/images/brands/cfa-institute-dark.svg',
 			light: '/images/brands/cfa-institute-light.svg',
 			name: 'CFA Institute',
-			anchor: 'cfa-institute'
+			internal: true
 		},
 		{
-			url: 'https://www.axians.com/',
+			url: '/case-studies/axians',
 			dark: '/images/brands/axians-dark.svg',
 			light: '/images/brands/axians-light.svg',
-			name: 'Axians'
+			name: 'Axians',
+			internal: true
 		},
 		{
 			url: 'https://www.photoroom.com',
@@ -49,11 +50,11 @@ export default function LogoClouds() {
 			anchor: 'pave'
 		},
 		{
-			url: 'https://panther.com/',
+			url: '/case-studies/panther-labs',
 			dark: '/images/brands/panther-dark.svg',
 			light: '/images/brands/panther-light.svg',
 			name: 'Panther Labs',
-			anchor: 'panther-labs'
+			internal: true
 		},
 		{
 			url: 'https://www.treatmyocd.com/',
@@ -69,11 +70,11 @@ export default function LogoClouds() {
 			anchor: 'bloomcredit'
 		},
 		{
-			url: 'https://www.athenaintel.com/',
+			url: '/case-studies/athena-intelligence',
 			dark: '/images/brands/athena-dark.svg',
 			light: '/images/brands/athena-light.svg',
 			name: 'Athena Intelligence',
-			anchor: 'athena-intelligence'
+			internal: true
 		}
 	];
 
@@ -88,7 +89,7 @@ export default function LogoClouds() {
 						<a
 							key={logo.name}
 							href={logo.anchor ? `#${logo.anchor}` : logo.url}
-							target={logo.anchor ? '_self' : '_blank'}
+							target={logo.anchor || logo.internal ? '_self' : '_blank'}
 							title={String(logo.name)}
 							className={classNames(
 								'flex items-center justify-center',
