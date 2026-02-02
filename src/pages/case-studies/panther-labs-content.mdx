@@ -1,0 +1,204 @@
+---
+title: How Panther Labs escaped vendor lock-in and built a platform-agnostic architecture with Windmill
+description: When Airplane.dev shut down, Panther Labs had 30 days to migrate their entire internal operations platform. They chose Windmill for its open-source foundation and platform-agnostic architecture, achieving true portability while maintaining production reliability for mission-critical cybersecurity operations.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { ArrowLeft } from 'lucide-react';
+import CaseStudySidebar from '@site/src/components/case-studies/CaseStudySidebar';
+import { pantherLabsCaseStudy } from '@site/src/data/case-studies/panther-labs';
+
+export default function PantherLabsContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				{/* Back button */}
+				<Link
+					to="/case-studies"
+					className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
+				>
+					<ArrowLeft className="w-4 h-4" />
+					Back to Case studies
+				</Link>
+
+				{/* Two-column layout */}
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+					<CaseStudySidebar
+						logo={{
+							light: "/images/brands/panther-light.png",
+							dark: "/images/brands/panther-dark.png",
+							alt: "Panther Labs logo"
+						}}
+						industry="Cybersecurity"
+						companySize="100-500"
+						description="Modern cybersecurity SIEM platform that helps security teams detect threats at scale."
+						useCases={["Customer provisioning", "AWS account management", "Infrastructure deployment", "Alerting systems"]}
+						selfHosted={pantherLabsCaseStudy.selfHosted}
+						workers={16}
+						website={{ url: "https://panther.com", label: "panther.com" }}
+						featuring={{
+							name: "BJ Maldonado",
+							role: "Platform Manager at Panther Labs",
+							linkedin: "https://www.linkedin.com/in/bjmaldonado/"
+						}}
+					/>
+
+					{/* Right column - Main content */}
+					<div className="lg:col-span-2">
+						{/* Header section */}
+						<div className="mb-12">
+							<div className="mb-6 flex items-center justify-between">
+								<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
+									Case Study
+								</span>
+								<span className="text-sm text-gray-500 dark:text-gray-400">
+									{new Date(pantherLabsCaseStudy.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+								</span>
+							</div>
+							<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
+								{title}
+							</h1>
+							<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
+								{description}
+							</p>
+						</div>
+
+						{/* Content sections */}
+						<div className="space-y-12">
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+		<a href="https://panther.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Panther Labs</a> is a modern cybersecurity SIEM (Security Information and Event Management) platform that helps security teams detect threats at scale. Their platform team manages all internal operations, from customer provisioning and AWS account management to infrastructure deployment and alerting systems. As a cybersecurity company handling sensitive data, they require self-hosted solutions on their own AWS infrastructure with full operational control.
+	</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The problem</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	When <a href="https://blog.boldtech.dev/airplane-dev-alternatives/#:~:text=What%20next%3F-,Airplane.,your%20internal%20tools%20and%20scripts.&text=Airplane.,-dev's%20short%2Dhaul" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Airplane.dev was acquired and announced it would shut down</a>, Panther Labs had just 30 days to migrate their entire internal operations platform or face operational paralysis. All their core processes would stop working: customer provisioning, AWS account management, deployment pipelines, and alerting.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"We were fully embedded into this platform. Everything was fine. We weren't looking to migrate. They got acqui-killed... we had to migrate to a new platform in 30 days."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— BJ Maldonado, Platform Manager
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	But this wasn't just about finding a replacement. Having been burned by vendor lock-in once, Panther was determined not to repeat the mistake. They needed a solution that would give them:
+</p>
+<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4 mb-6">
+	<li><strong>Platform independence</strong> - Keep business logic separate from the execution platform</li>
+	<li><strong>Developer control</strong> - Everything-as-code with proper Git workflows</li>
+	<li><strong>Production reliability</strong> - For mission-critical internal operations</li>
+	<li><strong>True portability</strong> - Ability to migrate without rewriting everything</li>
+</ul>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"We got bit once before... determined not to get bit again by the sun setting of a startup platform."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— BJ Maldonado
+	</cite>
+</blockquote>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The solution</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	A senior engineer discovered Windmill through a Hacker News article about Airplane migrations. Panther chose it for four critical capabilities:
+</p>
+
+<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Open source foundation</h3>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	Windmill's <a href="https://github.com/windmill-labs/windmill" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">open source</a> architecture (Apache 2.0 licensed on GitHub) meant Panther could never be locked in again. Even in the worst case, they could fork the codebase and maintain it themselves—something impossible with proprietary platforms like Airplane. The transparency of the codebase also gave them confidence in security and reliability for their cybersecurity operations.
+</p>
+
+<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Platform-agnostic architecture</h3>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	Instead of embedding business logic in the workflow platform, Panther built a <Link to="/docs/advanced/dependencies_in_python" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">separate Python library</Link> containing all their core logic. Windmill workflows simply orchestrate by calling functions from this library—acting as an execution layer, not a code repository.
+</p>
+<div className="rounded-lg p-4 my-4 overflow-x-auto">
+<CodeBlock language="python">
+{`# Business logic lives in a separate library
+
+from panther_platform import customer_onboarding
+
+def main(customer_email: str, aws_account_id: str):
+    # Windmill just orchestrates
+    result = customer_onboarding.provision_account(
+        email=customer_email,
+        account_id=aws_account_id
+    )
+    return result`}
+</CodeBlock>
+</div>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"We put the bulk of the business logic inside of a third-party library and the platform executors pull down this library. It gives us flexibility to just move our stuff around."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— BJ Maldonado
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	If they ever need to migrate from Windmill, their business logic stays intact—they only rewrite the thin orchestration layer, not their entire platform.
+</p>
+
+<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Developer-first features</h3>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	Windmill's native support for importing any <Link to="/docs/getting_started/scripts_quickstart/python" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Python</Link> package from PyPI and private repositories made their architecture possible immediately. No limitations, no workarounds—full Python language features with proper dependency management and versioning. Everything-as-code with <Link to="/docs/core_concepts/sync_git" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Git sync</Link> gave them proper version control and CI/CD workflows.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	At the same time, Windmill's auto-generated UIs and <Link to="/docs/apps/app_editor" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">App Builder</Link> meant non-technical team members could still use the platform through graphical interfaces, without requiring the platform team to build custom frontends.
+</p>
+
+<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Self-hosted deployment</h3>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	As a cybersecurity company, Panther needed to <Link to="/docs/advanced/self_host" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">self-host</Link> on their own AWS infrastructure. Windmill's Enterprise Edition deployed cleanly into their existing environment with SSO integration. With direct support from Windmill, they completed the migration within the 30-day deadline.
+</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The result</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	Today, 60% of Panther Labs' internal platform and operations runs on Windmill, handling mission-critical operations across their organization:
+</p>
+<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4 mb-6">
+	<li><strong>Customer lifecycle management:</strong> Provisioning, onboarding, configuration, and offboarding workflows</li>
+	<li><strong>Infrastructure operations:</strong> Deployment pipelines, infrastructure management, and automated scaling</li>
+	<li><strong>Monitoring and alerting:</strong> Slack alerts generated through Windmill workflows</li>
+	<li><strong>Self-service operations:</strong> Graphical apps for non-technical team members to manage complex configurations</li>
+</ul>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"Windmill ranks among the most stable components of our infrastructure."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— BJ Maldonado, Platform Manager
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+	Windmill has proven rock-solid for Panther's operations. Most importantly, Panther is no longer at risk from vendor decisions. Their business logic is portable, tested, and version-controlled. They've achieved true platform independence while maintaining the developer experience and reliability they need for mission-critical operations.
+</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Conclusion</h2>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+		Panther Labs transformed a crisis into an opportunity by building a platform-agnostic architecture on Windmill. By keeping their business logic in a <Link to="/docs/advanced/dependencies_in_python" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">separate Python library</Link> and using Windmill as an orchestration layer, they've protected themselves from future vendor lock-in while gaining the production reliability and developer-first capabilities they need to run their internal operations.
+	</p>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+		Today, with 60% of their platform running on Windmill, they've proven that the right architecture choices—combined with the right tooling—can turn a forced migration into a strategic advantage.
+	</p>
+</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
