@@ -36,18 +36,18 @@ const clientTestimonials = [
 	},
 	{
 		author: {
-			name: 'Mike Esler',
-			company: 'Bloom Credit',
-			position: 'Chief Technology Officer',
-			dark: '/images/brands/Bloomcredit-Dark.svg',
-			light: '/images/brands/Bloomcredit-Light.svg',
-			anchor: 'bloomcredit',
-			profile_picture: '/contributors/mike_esler.jpeg'
+			name: 'BJ Maldonado',
+			company: 'Panther Labs',
+			position: 'Platform Manager',
+			dark: '/images/brands/panther-dark.svg',
+			light: '/images/brands/panther-light.svg',
+			anchor: 'panther-labs',
+			profile_picture: '/contributors/bj_maldonado.jpeg'
 		},
-		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
-		company_url: 'https://bloomcredit.io',
-		linkedIn: 'https://www.linkedin.com/in/mikeesler/',
-		caseStudyHref: ''
+		text: `Our platform per se is built entirely upon Windmill. It was one of the few products that allowed us the flexibility of integrating with our own third-party Python library and having a graphical user interface already pre-baked - that was the main selling point of Windmill for us. Today, Windmill ranks among the most stable components of our infrastructure.`,
+		company_url: 'https://panther.com',
+		linkedIn: 'https://www.linkedin.com/in/bjmaldonado/',
+		caseStudyHref: '/case-studies/panther-labs'
 	},
 	{
 		author: {

@@ -1,0 +1,240 @@
+---
+title: How Axians CS - Netherlands scales multi-tenant orchestration with usage-based pricing
+description: Axians CS is a managed service provider with approximately 400 employees, delivering network, cloud, datacenter, and unified communications services to around 150 enterprise customers worldwide. They chose Windmill for its workspace model and usage-based pricing to scale automation across their customer base.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { ArrowLeft } from 'lucide-react';
+import CaseStudySidebar from '@site/src/components/case-studies/CaseStudySidebar';
+import { axiansCaseStudy } from '@site/src/data/case-studies/axians';
+
+export default function AxiansContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				{/* Back button */}
+				<Link
+					to="/case-studies"
+					className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
+				>
+					<ArrowLeft className="w-4 h-4" />
+					Back to Case studies
+				</Link>
+
+				{/* Two-column layout */}
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+					<CaseStudySidebar
+						logo={{
+							light: "/images/brands/axians-light.svg",
+							dark: "/images/brands/axians-dark.svg",
+							alt: "Axians CS logo"
+						}}
+						industry="IT Infrastructure"
+						companySize="400"
+						description="Managed service provider delivering network, cloud, datacenter, and unified communications services to enterprise customers worldwide."
+						useCases={["Multi-tenant orchestration", "Network deployments", "Self-healing automations", "Compliance automation"]}
+						selfHosted={axiansCaseStudy.selfHosted}
+						workers={20}
+						website={{ url: "https://www.axians.com", label: "axians.com" }}
+						featuring={{
+							name: "Ben Willems",
+							role: "Product Owner, Automation Team at Axians CS",
+							linkedin: "https://www.linkedin.com/in/benwillems/"
+						}}
+					/>
+
+					{/* Right column - Main content */}
+					<div className="lg:col-span-2">
+						{/* Header section */}
+						<div className="mb-12">
+							<div className="mb-6 flex items-center justify-between">
+								<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
+									Case Study
+								</span>
+								<span className="text-sm text-gray-500 dark:text-gray-400">
+									{new Date(axiansCaseStudy.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+								</span>
+							</div>
+							<h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
+								{title}
+							</h1>
+							<p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
+								{description}
+							</p>
+						</div>
+
+						{/* Content sections */}
+						<div className="space-y-12">
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+		<a href="https://www.axians.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Axians Communication Solutions</a> is based in Rotterdam, the Netherlands, and operates as a decentralized brand within Vinci Energies. The organization manages complex IT infrastructures for a diverse customer base, including government agencies, hospitals, educational institutions, and large commercial enterprises. These environments are often mission-critical and subject to strict regulatory and compliance requirements.
+	</p>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+		To support customers more effectively and consistently, Axians CS set out to introduce orchestration and automation as a core capability within its managed services portfolio. The objective was not only to automate repetitive operational tasks, but also to enable customer-facing teams to transform operational data into actionable insights—and to act on those insights through orchestrated workflows.
+	</p>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+		Today, multiple customer-facing teams actively use Windmill as the orchestration platform within the broader Axians Intelligence Platform, with many additional customers currently in the onboarding pipeline. A key challenge was finding a platform that could support Axians CS' long-term growth strategy while enabling decentralized execution combined with centralized governance.
+	</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The problem</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	Ben Willems, Product Owner of the Axians CS Automation Team, faced a fundamental scaling challenge: how to provide orchestration and automation capabilities to 150 unique customer environments without incurring massive upfront costs or introducing governance and compliance risks.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	Axians CS operates in environments where customers entrust the organization with their most critical infrastructure. This level of trust requires predictability, transparency, and strict compliance. At the same time, Axians CS wanted to empower its engineers—those closest to the customer—to design, develop, and operate automations themselves.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"We manage network and datacenter environments for customers such as government agencies, schools, hospitals, and large enterprises. These customers entrust Axians CS with mission-critical infrastructure, which requires a high degree of control, transparency, and compliance. To meet these expectations, we want to enable our engineers—who work closest to the customer—to develop automations themselves, within a centrally governed, secure, and auditable platform."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Ben Willems, Product Owner, Automation Team
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	The broader ambition was to evolve into a data-driven MSP: collecting data from managed environments, transforming that data into insights, and acting on those insights through intelligent orchestration. Scaling this model proved complex, as each customer has unique processes, tooling, and requirements—and onboarding occurs gradually rather than in a single, large rollout.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	To support this growth model, Axians CS built the Axians Intelligence Platform, consisting of a central data lake, an agentic AI platform, and an integration hub. While this platform enabled the generation of insights, Axians CS also needed the ability to act on those insights in a controlled and scalable way.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	This required an orchestration platform capable of strict customer isolation, support for multiple languages such as <Link to="/docs/getting_started/scripts_quickstart/python" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Python</Link> and <Link to="/docs/getting_started/scripts_quickstart/ansible" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Ansible</Link>, incremental scaling from early adopters to organization-wide adoption, and compliance with standards such as ISO, ISAE, and <a href="https://trust.windmill.dev/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">SOC 2</a>.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+	Axians CS evaluated more than ten orchestration and automation platforms, including <Link to="/docs/compared_to/kestra" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Kestra</Link>, Ansible Automation Platform, and <Link to="/case-studies/cfa-institute" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">n8n</Link>. While several solutions were technically capable, many relied on rigid, user-based, or device-based licensing models. These models required significant upfront investment and did not align with Axians CS' phased onboarding and usage-based growth strategy.
+</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The solution</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	During proof-of-concept testing, Windmill scored 8.9 out of 10. The deciding factor was its architecture, which enabled Axians CS to scale orchestration gradually while preserving flexibility and control.
+</p>
+
+<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Multi-tenant workspace model</h3>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	Windmill's <Link to="/docs/advanced/cli/workspace-management" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">workspace model</Link> allows Axians CS to create a fully isolated environment per customer, while still enabling controlled sharing of automation components where appropriate. Axians CS deliberately started with customers whose processes were more generalizable and expanded from there as more customer teams onboarded.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"You have a separate environment just for one customer where you can build all your automations and applications. We use Windmill Hub Private to share scripts between customers when appropriate and customize them for customer-specific logic."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Ben Willems
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	The Windmill platform is centrally managed by the Axians CS platform team and hosted on Azure Kubernetes Services. Customer-facing teams—typically network engineers responsible for specific client accounts—build and maintain their own automations within their dedicated workspaces. The platform team provides infrastructure, security, and governance, while customer teams retain ownership of the orchestration logic.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	This model allows Axians CS to respond quickly to customer-specific challenges without introducing a central development bottleneck. Because engineers are embedded in customer teams, they understand customer environments deeply and can translate requirements directly into orchestrated workflows. As a result, the automation library grows organically as early adopters develop use cases that others later reuse and adapt.
+</p>
+
+<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Usage-based pricing that enables scaling</h3>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	A key enabler of this approach is Windmill's <Link to="/pricing" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">usage-based pricing</Link> model. Axians CS can start with a limited number of active customers and expand as adoption increases, without committing to fixed licensing costs upfront.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"The fact that the pricing of Windmill is based on actual usage aligns with the business value created. If adoption is high and many users are active, the cost of these licenses is also justified because more use cases are realized."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Ben Willems
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+	This economic model fundamentally changes how automation-as-a-service can be delivered. Developers build an orchestration once, and its value scales across teams and customers as others adopt it. Early adopters demonstrate value, and additional teams follow, supported by a cost structure that grows proportionally with usage.
+</p>
+
+<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Compliance as a driver for centralization</h3>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	Compliance requirements further reinforced the need for a centralized orchestration platform. Axians CS' ISO, ISAE, and <a href="https://trust.windmill.dev/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">SOC 2</a> certifications require strict auditing, traceability, and logging.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	Previously, engineers often ran scripts locally without consistent registration or guardrails. By adopting Windmill as the central orchestration platform, Axians CS ensured that every execution is logged, every change is traceable, and audit evidence is available by default.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"We needed to move away from engineers running scripts on their laptops without any guardrails or registration. With Windmill as our central orchestration platform, everything is audited, registered, and logged—giving us the visibility and compliance we need."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Ben Willems
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+	Rather than slowing down adoption, compliance became an accelerator, as new customers automatically inherit a compliant foundation from the moment they onboard.
+</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Real-world transformation</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	The impact of this approach is tangible. In one example, a network engineer responsible for a customer needed to deploy internet connectivity across 100+ locations. By orchestrating the deployment through Windmill, the rollout time was reduced from approximately four hours per location to five to ten minutes.
+</p>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	The solution consisted of multiple smaller scripts written in different languages, such as Python and Ansible, orchestrated into a single <Link to="/docs/flows/flow_editor" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">flow</Link>. This provided full visibility into deployment status, improved error handling, and ensured consistent configuration across all locations.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"Back when we did not use Windmill, we had one large script that contained all the logic to deploy a customer. This was prone to errors and had no visibility on the status of the deployment. Now we create smaller scripts and orchestrate them, which gives us much more control over the entire deployment and the codebase behind it."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Ben Willems
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+	Flows like these are initially built by one team for a specific use case and later shared and adopted by other customer teams as they onboard. As adoption grows, the platform's value compounds.
+</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The result</h2>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	Axians CS started with early adopters and is now scaling orchestration across the organization. Many customer-facing teams actively build and operate automations on the platform, with additional teams onboarding as adoption spreads.
+</p>
+<blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6">
+	<p className="text-gray-700 dark:text-gray-300 italic mb-2">
+		"You see that adoption is increasing. Where previously only technical people were thinking in terms of scripts, you now see business stakeholders also pushing for automation."
+	</p>
+	<cite className="text-sm text-gray-500 dark:text-gray-400">
+		— Ben Willems
+	</cite>
+</blockquote>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+	For teams actively using the platform, the results are significant:
+</p>
+<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4 mb-6">
+	<li>Network deployments that once took hours now complete in minutes</li>
+	<li>Self-healing automations resolve incidents automatically</li>
+	<li>Scheduled updates run consistently across customer environments</li>
+	<li>Engineers spend less time on repetitive tasks and more on proactive improvements</li>
+</ul>
+<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+	Because engineers spend less time on repetitive operational tasks, they can focus on preventing incidents and helping customers gain insights from their infrastructure. This enables Axians CS to reduce customer impact proactively and create additional business value.
+</p>
+</section>
+
+<section>
+<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Conclusion</h2>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+		Axians CS demonstrates how managed service providers can scale orchestration and automation across a large and diverse customer base without compromising governance, compliance, or financial sustainability.
+	</p>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+		By adopting a <Link to="/docs/advanced/cli/workspace-management" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">multi-tenant platform</Link> with <Link to="/pricing" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">usage-based pricing</Link>, Axians CS avoided the high upfront costs of traditional enterprise automation platforms. As adoption expands across customer teams, costs scale proportionally, while customer-specific workspaces preserve flexibility and differentiation.
+	</p>
+	<p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+		The key lesson for MSPs is clear: choose platforms that support your growth trajectory and organizational model—not just your current state.
+	</p>
+</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
