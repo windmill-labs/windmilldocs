@@ -8,13 +8,6 @@ export default function LogoClouds() {
 
 	const logos = [
 		{
-			url: 'https://www.photoroom.com',
-			dark: '/images/brands/Photoroom-Dark.svg',
-			light: '/images/brands/Photoroom-Light.svg',
-			name: 'Photoroom',
-			anchor: 'photoroom'
-		},
-		{
 			url: 'https://www.kahoot.com/',
 			dark: '/images/brands/Kahoot_Logo-dark.svg',
 			light: '/images/brands/Kahoot_Logo.svg',
@@ -29,11 +22,24 @@ export default function LogoClouds() {
 			anchor: 'investing'
 		},
 		{
-			url: 'https://www.bloomcredit.io/',
-			dark: '/images/brands/Bloomcredit-Dark.svg',
-			light: '/images/brands/Bloomcredit-Light.svg',
-			name: 'Bloomcredit',
-			anchor: 'bloomcredit'
+			url: 'https://www.cfainstitute.org/',
+			dark: '/images/brands/cfa-institute-dark.svg',
+			light: '/images/brands/cfa-institute-light.svg',
+			name: 'CFA Institute',
+			anchor: 'cfa-institute'
+		},
+		{
+			url: 'https://www.axians.com/',
+			dark: '/images/brands/axians-dark.svg',
+			light: '/images/brands/axians-light.svg',
+			name: 'Axians'
+		},
+		{
+			url: 'https://www.photoroom.com',
+			dark: '/images/brands/Photoroom-Dark.svg',
+			light: '/images/brands/Photoroom-Light.svg',
+			name: 'Photoroom',
+			anchor: 'photoroom'
 		},
 		{
 			url: 'https://www.pave.com/',
@@ -43,10 +49,31 @@ export default function LogoClouds() {
 			anchor: 'pave'
 		},
 		{
+			url: 'https://panther.com/',
+			dark: '/images/brands/panther-light.png',
+			light: '/images/brands/panther-dark.png',
+			name: 'Panther Labs',
+			anchor: 'panther-labs'
+		},
+		{
 			url: 'https://www.treatmyocd.com/',
 			dark: '/images/brands/nocd-logo-dark.svg',
 			light: '/images/brands/nocd-logo.svg',
 			name: 'Nocd'
+		},
+		{
+			url: 'https://www.bloomcredit.io/',
+			dark: '/images/brands/Bloomcredit-Dark.svg',
+			light: '/images/brands/Bloomcredit-Light.svg',
+			name: 'Bloomcredit',
+			anchor: 'bloomcredit'
+		},
+		{
+			url: 'https://www.athenaintel.com/',
+			dark: '/images/brands/athena-light.png',
+			light: '/images/brands/athena-dark.png',
+			name: 'Athena Intelligence',
+			anchor: 'athena-intelligence'
 		}
 	];
 
@@ -56,7 +83,7 @@ export default function LogoClouds() {
 				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900/60">
 					Trusted by 4,000+ organizations, including 300+ EE customers at scale:
 				</h2>
-				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-8 sm:max-w-xl sm:grid-cols-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
+				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-8 sm:max-w-xl sm:grid-cols-4 lg:mx-auto lg:max-w-5xl lg:grid-cols-5">
 					{logos.map((logo) => (
 						<a
 							key={logo.name}
