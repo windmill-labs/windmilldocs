@@ -482,7 +482,7 @@ Windmill workers provide multiple layers of process isolation to protect your in
 Windmill supports two primary isolation mechanisms that can be used independently or together:
 
 1. **PID namespace isolation** (enabled by default in docker-compose) - Protects process memory and environment variables
-2. **NSJAIL sandboxing** (optional, requires special image) - Provides filesystem, network, and resource isolation
+2. **NSJAIL sandboxing** (optional) - Provides filesystem, network, and resource isolation
 
 ### Environment variables
 
@@ -491,7 +491,7 @@ Configure worker isolation through these environment variables:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `ENABLE_UNSHARE_PID` | `false` (true in docker-compose) | Enable PID namespace isolation using Linux unshare |
-| `DISABLE_NSJAIL` | `true` | Enable NSJAIL sandboxing (requires `-nsjail` image, set to `false` to enable) |
+| `DISABLE_NSJAIL` | `true` | Enable NSJAIL sandboxing (set to `false` to enable) |
 | `UNSHARE_ISOLATION_FLAGS` | `--user --map-root-user --pid --fork --mount-proc` | Customize unshare isolation flags |
 
 ### Default configuration
