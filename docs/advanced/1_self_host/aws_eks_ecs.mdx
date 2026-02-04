@@ -9,6 +9,19 @@ import TabItem from '@theme/TabItem';
 ## Windmill on AWS EKS
 Windmill can be deployed on an EKS ([Elastic Kubernetes Service](https://aws.amazon.com/eks/)) cluster. Below are the detailed steps to get a Windmill stack up and running. The number of servers and [workers](../../core_concepts/9_worker_groups/index.mdx), as well as the instance sizes, should be tuned to your own usecases.
 
+:::warning Bottlerocket AMI and PID isolation
+
+If using Bottlerocket AMI for your EKS nodes, PID namespace isolation (`ENABLE_UNSHARE_PID`) and NSJAIL will not work by default. Bottlerocket sets `user.max_user_namespaces=0` which prevents the `unshare` command from creating user namespaces.
+
+**Options**:
+- Use Amazon Linux 2023 or Amazon Linux 2 AMI instead (recommended)
+- Configure a custom launch template to increase `user.max_user_namespaces`
+- Set `disableUnsharePid: true` in Helm values (reduces security)
+
+See [Security and process isolation](/docs/advanced/security_isolation) for more details.
+
+:::
+
 You can either setup your own EKS cluster and RDS instance and deploy Windmill using the [Helm chart](../self_host#helm-chart) or use the Cloudformation template below.
 
 ### Cloudformation
