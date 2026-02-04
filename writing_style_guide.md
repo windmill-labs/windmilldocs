@@ -1,6 +1,6 @@
-# Claude writing style guide
+# Writing style guide
 
-This file contains writing style guidance when creating Windmill documentation. Review this guide before writing new documentation.
+This file contains writing style guidance when creating Windmill documentation. Review this guide before writing documentation.
 
 ## General writing style issues
 
@@ -14,9 +14,10 @@ This file contains writing style guidance when creating Windmill documentation. 
 - Too long and verbose for technical documentation
 - Marketing language like "This intelligent feature" sounds promotional rather than technical
 - Users prefer concise, direct explanations over flowery descriptions
+- No backlinks to other pages of documentation
 
 **Better approach:**
 
 - Keep descriptions short and technical
-- Focus on what the feature does, not how "intelligent" or "smart" it is
-- Use straightforward language: "Windmill can auto-fill script and flow inputs using AI" instead of verbose marketing copy
+- Focus on what the feature does and how to use it, not how "intelligent" or "smart" it is
+- Use straightforward language: "Windmill can auto-fill [script](../script_editor/index.mdx) and [flow](../flows/flow_editor/index.mdx) inputs using AI" instead of verbose marketing copy
