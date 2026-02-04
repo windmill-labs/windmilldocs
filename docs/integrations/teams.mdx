@@ -402,6 +402,30 @@ Instance-wide critical alerts are only visible to users with the [superadmin](..
 	/>
 </div>
 
+## Troubleshooting
+
+### "The bot is not part of the conversation roster" error
+
+This error occurs when Windmill tries to send a message to a Teams channel but the Bot Framework rejects the request. Common causes:
+
+1. **Channel moderation rules**: If the Teams channel has posting restrictions (channel moderation enabled), the bot may not be allowed to post. Check your Teams channel settings and either:
+   - Disable channel moderation
+   - Add the Windmill bot to the list of users allowed to post
+
+2. **Bot not installed in the team**: The Windmill Teams app must be installed in the team where you want to send messages. Verify the app appears in the team's "Apps" section.
+
+3. **Bot ID mismatch** (self-hosted): For self-hosted instances, ensure your Azure AD App Registration client ID matches:
+   - The Microsoft App ID in your Azure Bot Service
+   - The `botId` in your Teams app manifest
+
+### Messages not being delivered
+
+If the bot appears to be connected but messages aren't being delivered, check the service URL region. The default service URL is for the Americas region. If your Teams tenant is in a different region, set the `TEAMS_SERVICE_URL` environment variable:
+   - Americas: `https://smba.trafficmanager.net/amer/` (default)
+   - EMEA: `https://smba.trafficmanager.net/emea/`
+   - APAC: `https://smba.trafficmanager.net/apac/`
+   - US Government (GCC): `https://smba.infra.gcc.teams.microsoft.com/`
+
 <!-- Links -->
 
 [hub-teams]: https://hub.windmill.dev/integrations/teams
