@@ -7,7 +7,7 @@ Windmill provides multiple layers of process isolation to protect your infrastru
 Windmill workers execute user-provided code in various languages. To protect the worker process and the underlying infrastructure, Windmill implements multiple isolation strategies:
 
 1. **PID Namespace Isolation** - Process memory and environment protection (disabled by default, requires configuration)
-2. **NSJAIL Sandboxing** - Filesystem, network, and resource isolation (optional, requires special image)
+2. **NSJAIL Sandboxing** - Filesystem, network, and resource isolation (optional)
 3. **Agent Workers** - Workers without direct database access, communicating via the API
 4. **Worker Groups** - Logical separation of workers that can be used to run workers on separate clusters with different network/resource access
 
@@ -203,7 +203,7 @@ This approach is particularly useful when:
 
 Agent workers can be combined with PID namespace isolation or NSJAIL for defense-in-depth.
 
-## NSJAIL sandboxing (ee only)
+## NSJAIL sandboxing
 
 ### What is NSJAIL?
 
@@ -216,28 +216,15 @@ Agent workers can be combined with PID namespace isolation or NSJAIL for defense
 
 ### When is NSJAIL used?
 
-NSJAIL is **disabled by default** because:
-
-- The default Windmill images do not include the nsjail binary
-- It requires using a special `-nsjail` tagged image
+NSJAIL is **disabled by default**. All Windmill images include the nsjail binary, so no special image is required.
 
 ### Enabling NSJAIL
 
-NSJAIL sandboxing is an EE only feature. If you are on CE, use PID namespace isolation.
+To enable NSJAIL sandboxing, set the environment variable:
 
-To use NSJAIL sandboxing, you need both:
-
-1. **Use the nsjail image** - Switch to an image with nsjail pre-installed:
-
-   ```yaml
-   # In docker-compose.yml or your deployment config
-   image: ghcr.io/windmill-labs/windmill-ee-nsjail
-   ```
-
-2. **Enable NSJAIL** - Set the environment variable:
-   ```bash
-   DISABLE_NSJAIL=false
-   ```
+```bash
+DISABLE_NSJAIL=false
+```
 
 **When to enable NSJAIL:**
 
@@ -302,8 +289,6 @@ windmill_worker:
 ### NSJAIL sandboxing (maximum security)
 
 ```yaml
-# Use the nsjail image
-image: ghcr.io/windmill-labs/windmill-ee-nsjail
 environment:
   - DISABLE_NSJAIL=false
 ```
