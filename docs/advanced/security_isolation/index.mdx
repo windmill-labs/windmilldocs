@@ -386,6 +386,23 @@ For Helm deployments, set the appropriate values to enable privileged mode and t
 - Reduce number of concurrent jobs
 - Use `DISABLE_NSJAIL=true` and rely on PID isolation only
 
+### AWS EKS with Bottlerocket AMI
+
+**Cause**: Bottlerocket AMI sets `user.max_user_namespaces=0` by default, which prevents user namespace creation required for PID isolation and NSJAIL.
+
+**Solutions**:
+
+1. **Switch to a different AMI** (recommended): Use Amazon Linux 2023 or Amazon Linux 2 instead of Bottlerocket for your EKS node groups.
+
+2. **Disable PID isolation**: Set `disableUnsharePid: true` in Helm values (global or per-worker-group). Note: This reduces security isolation.
+
+3. **Configure Bottlerocket kernel parameters**: Use a custom launch template with user data to increase `max_user_namespaces`:
+   ```toml
+   [settings.kernel.sysctl]
+   "user.max_user_namespaces" = "65536"
+   ```
+   See [AWS EKS launch template documentation](https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html) for details.
+
 ## Related documentation
 
 - [Worker Groups](/docs/core_concepts/worker_groups) - Logical worker separation
