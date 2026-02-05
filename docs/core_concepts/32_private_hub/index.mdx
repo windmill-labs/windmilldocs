@@ -28,6 +28,13 @@ If you're using the [Helm chart](https://github.com/windmill-labs/windmill-helm-
 
 If you are interested in having your own Private Hub, please [contact us](mailto:contact@windmill.dev).
 
+## Multiple Windmill instances
+
+A single Private Hub can serve multiple Windmill instances. One instance must be designated as the **main instance** — this is the instance the Hub uses for authentication.
+
+- The Hub must be configured to authenticate against the main instance. The main instance's `COOKIE_DOMAIN` and root domain requirements described above still apply.
+- Additional Windmill instances can connect to the same Private Hub by setting their [hub base URL](../../advanced/18_instance_settings/index.mdx#private-hub-base-url) to the Private Hub URL. No further configuration is required on those instances.
+
 ## Restricting access to your Private Hub
 
 To restrict access to your Private Hub, you need to set the `API_SECRET` environment variable on your Private Hub instance.
