@@ -6,6 +6,46 @@ Kafka triggers is a [self-hosted Enterprise](/pricing) feature.
 
 ![Kafka triggers](./kafka_triggers.png 'Kafka triggers')
 
+## Kafka resource configuration
+
+Before creating a Kafka trigger, you need to set up a Kafka [resource](../3_resources_and_types/index.mdx). Head to the Resources page, click "Add resource" and select `kafka`.
+
+The resource requires:
+- **Brokers**: List of broker hostnames in the format `hostname:port`
+- **Security**: Authentication and encryption settings
+
+### Security options
+
+| Security mode | Description |
+|--------------|-------------|
+| PLAINTEXT | No authentication or encryption. Use only for development. |
+| SASL_PLAINTEXT | Username/password authentication without encryption. Supports PLAIN, SCRAM-SHA-256, SCRAM-SHA-512 mechanisms. |
+| SSL | TLS encryption with optional client certificate authentication. |
+| SASL_SSL | Username/password authentication with TLS encryption. |
+| SASL_GSSAPI | Kerberos (GSSAPI) authentication without encryption. |
+| SASL_SSL_GSSAPI | Kerberos (GSSAPI) authentication with TLS encryption. |
+
+### Kerberos (GSSAPI) authentication
+
+For enterprise environments using Kerberos, select `SASL_GSSAPI` or `SASL_SSL_GSSAPI` security mode.
+
+| Property | Description | Required |
+|----------|-------------|----------|
+| kerberos_service_name | Kerberos principal name of the Kafka broker service (default: `kafka`) | No |
+| kerberos_principal | Client's Kerberos principal (e.g., `user@REALM.COM`) | Yes |
+| keytab_path | Path to keytab file mounted on the worker | No* |
+| keytab_base64 | Base64-encoded keytab content | No* |
+
+*Either `keytab_path` or `keytab_base64` must be provided.
+
+**Using keytab_base64**: Encode your keytab file with `base64 -w0 /path/to/keytab` and paste the result. This is stored securely and written to a temporary file at runtime.
+
+**Using keytab_path**: Mount the keytab file on the worker container and provide the path. This is useful when deploying with Kubernetes secrets or Docker volumes.
+
+:::info Kerberos configuration
+Ensure the worker has access to a valid `/etc/krb5.conf` file with the correct realm configuration. When using SASL_SSL_GSSAPI, you can also provide CA certificates for TLS verification.
+:::
+
 ## How to use
 
 Create a new trigger on the Kafka triggers page.

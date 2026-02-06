@@ -151,16 +151,41 @@ Fill out the form with the information of your MS SQL instance and "Test connect
 | --------- | ------ | ------------------------ | ------- | -------- | ----------------------------------------------------------------------------------------------- |
 | host      | string | Instance host            |         | true     | Your hosting provider's control panel or in your server's MS SQL configuration file             |
 | port      | number | Instance port            |         | false    | Your hosting provider's control panel or in your server's MS SQL configuration file             |
-| user      | string | Username                 |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
+| user      | string | Username                 |         | false    | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
 | dbname    | string | Database name            |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
-| password  | string | User's password          |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
-| aad_token | object | OAuth token AD           |         | true     | Either username/password or aad_token should be provided. Requires OAuth setup in Windmill      |
+| password  | string | User's password          |         | false    | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
+| integrated_auth | bool | Use Windows Integrated Authentication | false | false | Enable to use the worker's Kerberos credentials instead of username/password |
+| aad_token | object | OAuth token AD           |         | false    | Requires OAuth setup in Windmill      |
+| instance_name | string | Named instance      |         | false    | For named SQL Server instances (e.g., `MSSQLSERVER`) |
+| encrypt   | bool   | Enable TLS encryption    | true    | false    | Set to false only for local development |
 | trust_cert| bool   | Trust server certificate | true    | false    | If true, the server certificate will be trusted even if it is not signed by a trusted authority |
 | ca_cert   | string | CA certificate           |         | false    | CA certificate to verify the server certificate. [More information on MS SQL certificates](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-security?view=sql-server-ver16#encrypt-connections-to-sql-server-linux-containers) |
 
+#### Authentication methods
+
+MS SQL Server supports three authentication methods:
+
+1. **Username/Password**: Provide `user` and `password` fields.
+2. **Azure AD (Entra)**: Use the `aad_token` field with OAuth.
+3. **Windows Integrated Authentication (Kerberos)**: Enable `integrated_auth`.
+
+#### Windows Integrated Authentication
+
+For enterprise environments using Active Directory, enable `integrated_auth` to use Kerberos authentication. When enabled, the worker's service account credentials are used instead of username/password.
+
+**Requirements:**
+- The worker must have a valid Kerberos ticket (e.g., via `kinit` or a keytab)
+- The worker must have access to a valid `/etc/krb5.conf` with the correct realm configuration
+- The service account must have permissions on the target database
+
+**Docker/Kubernetes setup:**
+1. Mount a keytab file to the worker container
+2. Configure `/etc/krb5.conf` with your realm settings
+3. Optionally run `kinit` at container startup or use `KRB5_KTNAME` environment variable
+
 To specify the application intent for read-only requests, add `-- ApplicationIntent=ReadOnly` to the script.
 
-:::info
+:::info Azure AD (Entra)
 When using domain credentials via Entra (Azure Active Directory) you need to add the scope `https://database.windows.net//.default` to the [Windmill OAuth instance setting](../../misc/setup_oauth#azure).
 :::
 
