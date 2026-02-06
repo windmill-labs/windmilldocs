@@ -52,7 +52,16 @@ export default function BlogLayout(props) {
 										Watch latest Windmill weekly keynotes
 									</h3>
 									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-4">
-									<li>
+										<li>
+											<a
+												href="https://www.youtube.com/watch?v=2dGd9TdT8xs"
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												Feb 6, 2026
+											</a>
+										</li>
+										<li>
 											<a
 												href="https://www.youtube.com/watch?v=9ytBmhSDXGk"
 												target="_blank"
@@ -60,31 +69,14 @@ export default function BlogLayout(props) {
 											>
 												Jan 30, 2026
 											</a>
-										</li><li>
+										</li>
+										<li>
 											<a
 												href="https://www.youtube.com/watch?v=oUDI4mVuPEs"
 												target="_blank"
 												rel="noopener noreferrer"
 											>
 												Jan 23, 2026
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://www.youtube.com/watch?v=L1tiYaBx50c"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												Jan 16, 2026
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://www.youtube.com/watch?v=L1tiYaBx50c"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												Jan 16, 2026
 											</a>
 										</li>
 									</ul>
