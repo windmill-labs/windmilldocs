@@ -13,5 +13,5 @@ features:
     'Enterprise Edition support for S3 cache by Python version.'
   ]
 video: /videos/annotate_py_version.mp4
-docs: /docs/getting_started/scripts_quickstart/2_python_quickstart#python-version
+docs: /docs/getting_started/scripts_quickstart/python#select-python-version
 ---

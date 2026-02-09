@@ -33,7 +33,7 @@ Our team leverages Windmill for several critical workflows:
 
 ### Environmental monitoring pipeline
 
-Our core environmental monitoring workflow integrates with data provided by the Brazilian research institute [Imazon](https://imazon.org.br/en/) or [Global Forest Watch](https://www.globalforestwatch.org/) to monitor changes in forest cover. When potential illegal activities are detected, our system automatically:
+Our core environmental monitoring workflow integrates with data provided by the Brazilian research institute [Imazon](https://imazon.org.br/?locale=en) or [Global Forest Watch](https://www.globalforestwatch.org/) to monitor changes in forest cover. When potential illegal activities are detected, our system automatically:
 - Processes the alert data (including conversion of GeoTIFF images to JPEG for browsing rendering)
 - Triggers WhatsApp notifications to local communities
 - Posts the alerts to a [CoMapeo](https://www.comapeo.app/) API for offline data collection

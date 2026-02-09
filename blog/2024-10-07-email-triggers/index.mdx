@@ -146,7 +146,7 @@ We have three states:
 - `SmtpState::Data`: The state after the DATA command has been received and the email content is being accumulated.
 - `SmtpState::Quit`: The state after the QUIT command has been received, the connection is closed.
 
-We use `Framed` with `LinesCodec` from the [tokio-util](https://crates.io/crates/tokio-util) crate to split the stream by lines.
+We use `Framed` with `LinesCodec` from the <a href="https://crates.io/crates/tokio-util" rel="nofollow">tokio-util</a> crate to split the stream by lines.
 We use regular expressions to parse the sender and receiver addresses.
 
 For each command, we check if it is valid and respond accordingly.
@@ -330,7 +330,7 @@ async fn handle_unsecured_session(
 }
 ```
 
-The `handle_starttls` function manages the TLS handshake. We use the [native-tls](https://crates.io/crates/native-tls) crate along with [tokio-native-tls](https://crates.io/crates/tokio-native-tls) for this purpose.
+The `handle_starttls` function manages the TLS handshake. We use the <a href="https://crates.io/crates/native-tls" rel="nofollow">native-tls</a> crate along with <a href="https://crates.io/crates/tokio-native-tls" rel="nofollow">tokio-native-tls</a> for this purpose.
 You will need a certificate for the handshake; depending on your use case, you can either use a self-signed certificate or one from a trusted provider.
 
 ```rust
@@ -358,7 +358,7 @@ async fn handle_starttls(
 }
 ```
 
-Here's the code to generate a self-signed certificate using the [openssl](https://crates.io/crates/openssl) crate:
+Here's the code to generate a self-signed certificate using the <a href="https://crates.io/crates/openssl" rel="nofollow">openssl</a> crate:
 
 ```rust
 use openssl::{
