@@ -957,7 +957,8 @@ const sidebars = {
 						'core_concepts/draft_and_deploy/index',
 						'advanced/workspace_forks/index',
 						'advanced/deploy_gh_gl/index',
-						'core_concepts/staging_prod/index'
+						'core_concepts/staging_prod/index',
+						'core_concepts/protection_rulesets/index'
 					],
 					collapsed: false
 				},
