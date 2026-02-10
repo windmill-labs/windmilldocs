@@ -155,7 +155,7 @@ Instance groups can be automatically mapped to workspaces with specific role ass
 - **Manage multiple instance groups** per workspace with different role configurations
 - **Track user origin** to distinguish between manually added users and those added via instance groups
 
-This mapping is configured in the [workspace settings](../../core_concepts/16_roles_and_permissions/index.mdx#workspace) under "User Management" where you can:
+This mapping is configured in the [workspace settings](../../core_concepts/44_workspace_settings/index.mdx) under "User Management" where you can:
 
 1. Select which instance groups should automatically add users to the workspace
 2. Define the role each instance group's members should receive

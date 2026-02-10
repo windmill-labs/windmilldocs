@@ -451,7 +451,8 @@ export default function FAQ() {
 				</h2>
 				<dl className="mt-10 space-y-6 divide-y divide-gray-900/10">
 					{faqs.map((faq) => (
-						<Disclosure as="div" key={faq.question} className="pt-6" id={faq.id}>
+						<div key={faq.question} id={faq.id}>
+						<Disclosure as="div" className="pt-6">
 						{({ open }) => (
 						  <>
 							<dt>
@@ -482,6 +483,7 @@ export default function FAQ() {
 						  </>
 						)}
 					  </Disclosure>
+					  </div>
 					))}
 				</dl>
 			</div>
