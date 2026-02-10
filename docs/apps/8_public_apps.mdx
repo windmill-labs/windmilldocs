@@ -26,6 +26,12 @@ You can also toggle "No login required" and anyone with the secret public URL wi
 	/>
 </div>
 
+## Rate limiting
+
+Users can limit the number of public (anonymous) app executions per minute per server. This is useful to prevent abuse of public apps that don't require login.
+
+The setting is found under workspace settings > Advanced > Apps. Set the value to 0 or leave empty to disable rate limiting. This is a per-server limit, not a global limit.
+
 ## Custom URL
 
 [Cloud and enterprise](/pricing) users can also customize the public URL of their app. The app will be available at `https://mywindmill.com/a/<custom-path>`.
