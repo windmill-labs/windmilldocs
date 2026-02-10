@@ -122,6 +122,16 @@ Editing the flow from the UI immediately modifies the YAML definition
 
 The VS Code extension includes syntax validation for flow.yaml files, making it easier to spot mistakes and ensure your flows are properly formatted before testing or deployment.
 
+This validation is also useful for AI coding assistants that monitor IDE diagnostics, as they can automatically detect and fix flow YAML errors.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local development with AI"
+		description="Use AI coding assistants with Windmill CLI, VS Code extension, and MCP server."
+		href="/docs/misc/guides/local_dev_with_ai"
+	/>
+</div>
+
 ### Infer lockfile or use current lockfile
 
 With this toggle, you can choose to use the metadata lockfile (derived from [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx) after [`wmill script generate-metadata`](../../advanced/3_cli/script.md#re-generating-a-script-metadata-file)) instead of inferring them directly from the script.
