@@ -1,0 +1,110 @@
+---
+title: Local development with AI
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Local development with AI
+
+Windmill provides tools to enhance local development with AI coding assistants like [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [Cursor](https://www.cursor.com): the CLI `init` command for generating AI context files, the [VS Code extension](../../../cli_local_dev/1_vscode-extension/index.mdx)'s YAML linter for flow validation, and the [MCP server](../../../core_concepts/51_mcp/index.mdx) for direct interaction between LLMs and your workspace.
+
+## Prerequisites
+
+- [Windmill CLI](../../../advanced/3_cli/index.mdx) installed (`npm install -g windmill-cli`)
+- A workspace set up locally with `wmill workspace add` and [`wmill sync pull`](../../../advanced/3_cli/sync.mdx)
+- Optionally, VS Code with the [Windmill extension](../../../cli_local_dev/1_vscode-extension/index.mdx) installed
+- An AI coding assistant (Claude Code, Cursor, etc.)
+
+## CLI init command
+
+Running `wmill init` in a synced workspace folder generates context files for AI assistants:
+
+```bash
+cd myworkspace
+wmill init
+```
+
+This creates:
+- An `AGENTS.md` file — a standard context file for AI coding agents
+- Skill files — Skill files for AI coding agents
+
+These files describe the Windmill file structure, how [scripts](../../../script_editor/index.mdx) and [flows](../../../flows/1_flow_editor.mdx) are organized, how to create and edit them, and how to manage resources like [triggers](../../../getting_started/8_triggers/index.mdx) and [schedules](../../../core_concepts/1_scheduling/index.mdx). AI tools that read these files automatically get this context when working in the workspace.
+
+You can safely delete these files if you do not use AI assistants for local development.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-line interface (CLI)"
+		description="Interact with Windmill instances right from your terminal."
+		href="/docs/advanced/3_cli"
+	/>
+</div>
+
+## VS Code extension YAML linter
+
+The Windmill [VS Code extension](../../../cli_local_dev/1_vscode-extension/index.mdx) validates `flow.yaml` files in real time. AI coding assistants that check IDE diagnostics can read these validation errors and auto-correct schema mistakes in flow definitions.
+
+This creates a feedback loop: the AI edits a flow YAML file, the linter catches structural errors immediately, and the AI can fix them without manual intervention.
+
+The extension also allows you to run your scripts and flows locally from the editor.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="VS Code extension"
+		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
+
+## MCP server
+
+Windmill's [MCP server](../../../core_concepts/51_mcp/index.mdx) allows AI tools to interact directly with a Windmill workspace. It supports:
+- Accessing Windmill documentation
+- Executing [scripts](../../../script_editor/index.mdx) and [flows](../../../flows/1_flow_editor.mdx)
+- Creating, updating, listing, and deleting resources ([schedules](../../../core_concepts/1_scheduling/index.mdx), [variables](../../../core_concepts/2_variables_and_secrets/index.mdx), etc.)
+
+To set up the MCP server with Claude Code:
+
+```bash
+claude mcp add --transport http windmill https://app.windmill.dev/api/mcp/w/<your-workspace-id>/mcp?token=<your-token>
+```
+
+To set up with Cursor, add the following to your MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "windmill-mcp": {
+      "url": "https://app.windmill.dev/api/mcp/w/<your-workspace-id>/mcp?token=<your-token>"
+    }
+  }
+}
+```
+
+See the [MCP documentation](../../../core_concepts/51_mcp/index.mdx) for generating your token and full setup instructions.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Windmill MCP"
+		description="Connect LLMs to Windmill using the Model Context Protocol."
+		href="/docs/core_concepts/mcp"
+	/>
+</div>
+
+## Putting it all together
+
+A typical AI-assisted local development workflow:
+
+1. Run `wmill init` in your workspace folder to generate AI context files
+2. Open the workspace in VS Code with the Windmill extension for running scripts and flows locally, and real-time YAML validation
+3. Connect your AI tool to the Windmill MCP server for direct workspace interaction
+4. Start building scripts, flows, and apps with your AI assistant
+5. Push the changes back to the Windmill workspace with `wmill sync push`
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local development"
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
+	/>
+</div>
