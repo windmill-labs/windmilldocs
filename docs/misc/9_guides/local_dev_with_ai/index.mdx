@@ -30,6 +30,47 @@ This creates:
 
 These files describe the Windmill file structure, how [scripts](../../../script_editor/index.mdx) and [flows](../../../flows/1_flow_editor.mdx) are organized, how to create and edit them, and how to manage resources like [triggers](../../../getting_started/8_triggers/index.mdx) and [schedules](../../../core_concepts/1_scheduling/index.mdx). AI tools that read these files automatically get this context when working in the workspace.
 
+This is the expected file tree:
+```
+├── .claude
+│   └── skills
+│       ├── cli-commands
+│       ├── raw-app
+│       ├── resources
+│       ├── schedules
+│       ├── triggers
+│       ├── write-flow
+│       ├── write-script-bash
+│       ├── write-script-bigquery
+│       ├── write-script-bun
+│       ├── write-script-bunnative
+│       ├── write-script-csharp
+│       ├── write-script-deno
+│       ├── write-script-duckdb
+│       ├── write-script-go
+│       ├── write-script-graphql
+│       ├── write-script-java
+│       ├── write-script-mssql
+│       ├── write-script-mysql
+│       ├── write-script-nativets
+│       ├── write-script-php
+│       ├── write-script-postgresql
+│       ├── write-script-powershell
+│       ├── write-script-python3
+│       ├── write-script-rust
+│       └── write-script-snowflake
+├── AGENTS.md
+├── CLAUDE.md
+├── rt.d.ts
+├── wmill-lock.yaml
+└── wmill.yaml
+```
+
+Some examples of prompts you can use to guide the AI:
+- "Write a script that fetches data from my Supabase resource"
+- "Write a mail triage flow using an AI Agent that labels emails as spam, important, or junk, and schedule it to run every day at 9am."
+- "Add 4 HTTP triggers to create, delete, update and list users in my MongoDB resource"
+
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Command-line interface (CLI)"
@@ -60,6 +101,7 @@ Windmill's [MCP server](../../../core_concepts/51_mcp/index.mdx) allows AI tools
 - Accessing Windmill documentation
 - Executing [scripts](../../../script_editor/index.mdx) and [flows](../../../flows/1_flow_editor.mdx)
 - Creating, updating, listing, and deleting resources ([schedules](../../../core_concepts/1_scheduling/index.mdx), [variables](../../../core_concepts/2_variables_and_secrets/index.mdx), etc.)
+- Note that for writing and deploying scripts, flows, and apps, we highly recommend using the CLI along with the AGENTS.md file, for better guidance and syntax validation.
 
 To set up the MCP server with Claude Code:
 
