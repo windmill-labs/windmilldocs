@@ -27,7 +27,7 @@ Here is a diagram to better illustrate the workflow with this setup.
 
 ![Git Promotion](/images/git_promotion.png 'Git Promotion')
 
-> See section [Setup the full Git workflow](#setup-the-full-git-workflow) for the detailed setup steps.
+> See section [Setup the full Git workflow](#setup-the-full-workflow) for the detailed setup steps.
 
 This workflow requires the [Git sync](../11_git_sync/index.mdx) feature, which is is a [Cloud plans and Self-Hosted Enterprise Edition](/pricing)-only feature.
 
@@ -137,7 +137,7 @@ This is the recommended approach for most cases:
 
 1. Keep all teams in the same [workspace](../../core_concepts/44_workspace_settings/index.mdx) but assign each team to different [folders](../../core_concepts/8_groups_and_folders/index.mdx)
 2. Create separate repositories for each team
-3. In each repository's [`wmill.yaml`](../11_git_sync/index.mdx#wmill-yaml), specify the folders that team has ownership of using the `includes` field:
+3. In each repository's [`wmill.yaml`](../11_git_sync/index.mdx#wmillyaml-integration), specify the folders that team has ownership of using the `includes` field:
 
 ```yaml
 includes:
@@ -167,7 +167,7 @@ When using [Git Promotion](../9_deploy_gh_gl/index.mdx):
 
 - Changes to the same item will be grouped into a single PR.
 - Different items will create separate PRs.
-- You can use the [group per folder](../11_git_sync/index.mdx#group-deployed-objects-by-folder) option to group changes by folder instead of by item.
+- You can use the [group per folder](../11_git_sync/index.mdx#git-promotion-workflow-cross-instance-deployment-using-a-git-workflow) option to group changes by folder instead of by item.
 
 :::tip
 When setting up multiple repositories for different teams, ensure that each repository's `wmill.yaml` file correctly specifies the folders the team should have access to. This prevents accidental modifications to another team's code.

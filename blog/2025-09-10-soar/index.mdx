@@ -98,7 +98,7 @@ export function VideoLink({ seconds, children }) {
     post('playVideo');
   };
   return (
-    <a href="#soarDemo" onClick={onClick}>{children}</a>
+    <a href="#" onClick={onClick}>{children}</a>
   );
 }
 
@@ -344,7 +344,7 @@ Windmill takes care of the security plumbing you expect from a platform built fo
 
 Every run and approval is recorded in [audit logs](/docs/core_concepts/audit_logs) and can be exported to your SIEM when needed. Access is managed with [roles and permissions](/docs/core_concepts/roles_and_permissions), so you can control who runs, edits, or approves. (<VideoLink seconds={957}>watch 15:57</VideoLink>) When actions need human review, [flow approvals](/docs/flows/flow_approval) work from the UI, Slack, or Teams, including on mobile. (<VideoLink seconds={1602}>watch 26:42</VideoLink>)
 
-Apps and assets inherit access from [groups and folders](/docs/core_concepts/groups_and_folders), and you can keep changes safe with separate [staging and production](/docs/advanced/git_sync#git-sync---promotion-mode-deploy-to-prod-using-a-git-workflow) environments.
+Apps and assets inherit access from [groups and folders](/docs/core_concepts/groups_and_folders), and you can keep changes safe with separate [staging and production](/docs/advanced/git_sync#git-promotion-workflow-cross-instance-deployment-using-a-git-workflow) environments.
 
 ## Getting Started with Windmill for SOAR
 
