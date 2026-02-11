@@ -1,0 +1,116 @@
+# Windmill
+
+> Windmill is an open-source and self-hostable workflow engine and developer platform to build, deploy and monitor internal software at scale. Build workflows, internal tools, AI agents and automations. Full flexibility of code with 20+ languages, public and private library imports, and a local development experience optimized for AI (Claude Code, Cursor, CLI & VS Code extension). Enterprise-grade integrations with Postgres, Snowflake, Kafka, DuckDB and 50+ services. Enterprise-grade security with SSO, SAML, SCIM and audit logs. Built in Rust, optimized for scale.
+
+Website: https://www.windmill.dev
+Documentation: https://www.windmill.dev/docs
+GitHub: https://github.com/windmill-labs/windmill
+Cloud: https://app.windmill.dev
+Hub: https://hub.windmill.dev
+OpenAPI: https://app.windmill.dev/openapi.html
+
+## Documentation structure
+
+### Getting started
+- Getting started: https://www.windmill.dev/docs/getting_started/how_to_use_windmill
+- Scripts quickstart: https://www.windmill.dev/docs/getting_started/scripts_quickstart
+- Flows quickstart: https://www.windmill.dev/docs/getting_started/flows_quickstart
+- Apps quickstart: https://www.windmill.dev/docs/getting_started/apps_quickstart
+
+### Script languages
+- TypeScript: https://www.windmill.dev/docs/getting_started/scripts_quickstart/typescript_quickstart
+- Python: https://www.windmill.dev/docs/getting_started/scripts_quickstart/python_quickstart
+- Bash / PowerShell / Nu: https://www.windmill.dev/docs/getting_started/scripts_quickstart/bash_quickstart
+- Docker: https://www.windmill.dev/docs/getting_started/scripts_quickstart/docker_quickstart
+- Go: https://www.windmill.dev/docs/getting_started/scripts_quickstart/go_quickstart
+- PHP: https://www.windmill.dev/docs/getting_started/scripts_quickstart/php_quickstart
+- SQL: https://www.windmill.dev/docs/getting_started/scripts_quickstart/sql
+- REST / GraphQL: https://www.windmill.dev/docs/getting_started/scripts_quickstart/rest_grapqhql_quickstart
+- Rust: https://www.windmill.dev/docs/getting_started/scripts_quickstart/rust_quickstart
+- Ansible: https://www.windmill.dev/docs/getting_started/scripts_quickstart/ansible_quickstart
+- C#: https://www.windmill.dev/docs/getting_started/scripts_quickstart/csharp_quickstart
+- Java: https://www.windmill.dev/docs/getting_started/scripts_quickstart/java_quickstart
+- Ruby: https://www.windmill.dev/docs/getting_started/scripts_quickstart/ruby_quickstart
+
+### Core concepts
+- Architecture: https://www.windmill.dev/docs/misc/architecture
+- Auto-generated UIs: https://www.windmill.dev/docs/core_concepts/auto_generated_uis
+- JSON schema and parsing: https://www.windmill.dev/docs/core_concepts/json_schema_and_parsing
+- Dependency management: https://www.windmill.dev/docs/advanced/imports
+- Persistent storage and databases: https://www.windmill.dev/docs/core_concepts/persistent_storage
+- Object storage (S3): https://www.windmill.dev/docs/core_concepts/object_storage_in_windmill
+- Data pipelines: https://www.windmill.dev/docs/core_concepts/data_pipelines
+- Roles and permissions: https://www.windmill.dev/docs/core_concepts/roles_and_permissions
+- Authentication: https://www.windmill.dev/docs/core_concepts/authentification
+- Error handling: https://www.windmill.dev/docs/core_concepts/error_handling
+- Jobs: https://www.windmill.dev/docs/core_concepts/jobs
+- Resources and types: https://www.windmill.dev/docs/core_concepts/resources_and_types
+- Variables and secrets: https://www.windmill.dev/docs/core_concepts/variables_and_secrets
+- Worker groups: https://www.windmill.dev/docs/core_concepts/worker_groups
+- Caching: https://www.windmill.dev/docs/core_concepts/caching
+- AI generation: https://www.windmill.dev/docs/core_concepts/ai_generation
+- AI agents: https://www.windmill.dev/docs/core_concepts/ai_agents
+- Workflows as code: https://www.windmill.dev/docs/core_concepts/workflows_as_code
+
+### Triggers
+- Scheduling (cron): https://www.windmill.dev/docs/core_concepts/scheduling
+- Webhooks: https://www.windmill.dev/docs/core_concepts/webhooks
+- Email triggers: https://www.windmill.dev/docs/advanced/email_triggers
+- MCP: https://www.windmill.dev/docs/core_concepts/mcp
+- HTTP routing: https://www.windmill.dev/docs/core_concepts/http_routing
+- Websockets: https://www.windmill.dev/docs/core_concepts/websocket_triggers
+- Postgres triggers: https://www.windmill.dev/docs/core_concepts/postgres_triggers
+- Kafka triggers: https://www.windmill.dev/docs/core_concepts/kafka_triggers
+- NATS triggers: https://www.windmill.dev/docs/core_concepts/nats_triggers
+- SQS triggers: https://www.windmill.dev/docs/core_concepts/sqs_triggers
+- MQTT triggers: https://www.windmill.dev/docs/core_concepts/mqtt_triggers
+- GCP triggers: https://www.windmill.dev/docs/core_concepts/gcp_triggers
+
+### Editors
+- Script editor: https://www.windmill.dev/docs/script_editor
+- Flow editor: https://www.windmill.dev/docs/flows/flow_editor
+- App editor: https://www.windmill.dev/docs/apps/app_editor
+- Code editor: https://www.windmill.dev/docs/code_editor
+
+### Hosting and deployment
+- Self-host: https://www.windmill.dev/docs/advanced/self_host
+- Version control: https://www.windmill.dev/docs/advanced/version_control
+- Git sync: https://www.windmill.dev/docs/advanced/git_sync
+- Deploy to prod: https://www.windmill.dev/docs/advanced/deploy_to_prod
+- CLI: https://www.windmill.dev/docs/advanced/cli
+- Local development: https://www.windmill.dev/docs/advanced/local_development
+- VS Code extension: https://www.windmill.dev/docs/cli_local_dev/vscode-extension
+- Scaling: https://www.windmill.dev/docs/advanced/scaling
+
+### Enterprise features
+- Plans and pricing: https://www.windmill.dev/docs/misc/plans_details
+- Audit logs: https://www.windmill.dev/docs/core_concepts/audit_logs
+- Autoscaling: https://www.windmill.dev/docs/core_concepts/autoscaling
+- Concurrency limits: https://www.windmill.dev/docs/core_concepts/concurrency_limits
+- OIDC / SSO: https://www.windmill.dev/docs/core_concepts/oidc
+- SAML and SCIM: https://www.windmill.dev/docs/misc/saml_and_scim
+- Dedicated workers: https://www.windmill.dev/docs/core_concepts/dedicated_workers
+- Agent workers: https://www.windmill.dev/docs/core_concepts/agent_workers
+- Multiplayer editing: https://www.windmill.dev/docs/core_concepts/multiplayer
+- White labelling: https://www.windmill.dev/docs/misc/white_labelling
+- Content search: https://www.windmill.dev/docs/core_concepts/content_search
+
+### Case studies
+- CFA Institute: https://www.windmill.dev/case-studies/cfa-institute
+- Athena Intelligence: https://www.windmill.dev/case-studies/athena-intelligence
+- Panther Labs: https://www.windmill.dev/case-studies/panther-labs
+- Axians: https://www.windmill.dev/case-studies/axians
+
+### Comparisons and benchmarks
+- Compared to peers: https://www.windmill.dev/docs/compared_to/peers
+- Compared to Retool: https://www.windmill.dev/docs/compared_to/retool
+- Compared to Prefect: https://www.windmill.dev/docs/compared_to/prefect
+- Compared to Kestra: https://www.windmill.dev/docs/compared_to/kestra
+- Benchmarks: https://www.windmill.dev/docs/misc/benchmarks
+
+## Optional
+
+- Blog: https://www.windmill.dev/blog
+- Changelog: https://www.windmill.dev/changelog
+- Pricing: https://www.windmill.dev/pricing
+- Integrations: https://www.windmill.dev/integrations
