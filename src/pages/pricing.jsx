@@ -6,6 +6,39 @@ import RadialBlur from '../landing/RadialBlur';
 import Pricing from '../components/Pricing';
 import LayoutProvider from '@theme/Layout/Provider';
 
+const softwareApplicationSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'SoftwareApplication',
+	name: 'Windmill',
+	applicationCategory: 'DeveloperApplication',
+	operatingSystem: 'Web',
+	url: 'https://www.windmill.dev',
+	offers: [
+		{
+			'@type': 'Offer',
+			name: 'Community Edition',
+			price: '0',
+			priceCurrency: 'USD'
+		},
+		{
+			'@type': 'Offer',
+			name: 'Team',
+			price: '10',
+			priceCurrency: 'USD',
+			unitText: 'per seat/month'
+		},
+		{
+			'@type': 'Offer',
+			name: 'Enterprise',
+			priceSpecification: {
+				'@type': 'PriceSpecification',
+				priceCurrency: 'USD',
+				description: 'Custom pricing based on seats and compute units'
+			}
+		}
+	]
+};
+
 export default function PricingPage() {
 	return (
 		<LayoutProvider>
@@ -19,6 +52,9 @@ export default function PricingPage() {
 						content="Windmill is free to use. Price of paying offer depends of Self-hosted vs. Cloud, and of features between Team and Enterprise offers. "
 					/>
 					<link rel="icon" href="/img/logo.svg" />
+					<script type="application/ld+json">
+						{JSON.stringify(softwareApplicationSchema)}
+					</script>
 				</Head>
 				<>
 					<RadialBlur />

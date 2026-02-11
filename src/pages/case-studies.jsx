@@ -70,6 +70,19 @@ function CaseStudyCard({ caseStudy }) {
 }
 
 export default function CaseStudiesPage() {
+	const releasedStudies = caseStudies.filter((cs) => cs.released);
+	const itemListSchema = {
+		'@context': 'https://schema.org',
+		'@type': 'ItemList',
+		name: 'Windmill Case Studies',
+		itemListElement: releasedStudies.map((cs, index) => ({
+			'@type': 'ListItem',
+			position: index + 1,
+			name: cs.title,
+			url: `https://www.windmill.dev${cs.link}`
+		}))
+	};
+
 	return (
 		<LayoutProvider>
 			<main className="relative min-h-screen w-full overflow-x-hidden">
@@ -82,6 +95,9 @@ export default function CaseStudiesPage() {
 						content="Discover how companies use Windmill to power their products and workflows."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
+					<script type="application/ld+json">
+						{JSON.stringify(itemListSchema)}
+					</script>
 				</Head>
 				<>
 					<RadialBlur />
@@ -99,9 +115,7 @@ export default function CaseStudiesPage() {
 
 							{/* Case studies grid */}
 							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-								{caseStudies
-									.filter((caseStudy) => caseStudy.released)
-									.map((caseStudy) => (
+								{releasedStudies.map((caseStudy) => (
 										<CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
 									))}
 							</div>

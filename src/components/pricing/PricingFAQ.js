@@ -2,11 +2,13 @@ import React, { useEffect } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Plus, Minus, Link as LinkIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import Head from '@docusaurus/Head';
 
 const faqs = [
 	{
 		id: 'pricing-explained',
 		question: "What is the logic behind Windmill's pricing?",
+		textAnswer: "Windmill's pricing is based on compute units (2 worker-gb-month each) and user seats. Operators count as half a seat. Billing uses minute granularity for auto-scaling. This ensures pricing scales linearly with your usage and team size.",
 		answer: (
 			<span>
 				Windmill's pricing is designed to align with the value we deliver to our customers. Our pricing model reflects the core value of Windmill, which is primarily related to the amount of compute resources used, and the number of users accessing the platform. We've structured our pricing to scale with your usage, ensuring you're paying for the actual value you derive from our platform.
@@ -34,6 +36,7 @@ const faqs = [
 	{
 		id: 'pro-plan',
 		question: 'Which organizations can subscribe to the Pro plan and non-profit EE?',
+		textAnswer: 'The Pro plan is available for individuals, businesses with less than 10 employees and $250k revenues, and seed-stage startups (self-hosted only). Non-profits and universities get 60% off the Enterprise plan.',
 		answer: (
 			<span>
 				The Pro plan is only available in Self-hosted for:
@@ -48,6 +51,7 @@ const faqs = [
 	{
 		id: 'operator',
 		question: 'What is an operator?',
+		textAnswer: 'An operator is a user who can only execute scripts, flows and apps, but not create or edit them. Operators count as half a seat. 1 developer seat or 2 operator seats count as 1 seat for billing.',
 		answer: (
 			<span>
 				An{' '}
@@ -71,6 +75,7 @@ const faqs = [
 	{
 		id: 'execution',
 		question: 'What is an execution?',
+		textAnswer: 'An execution corresponds to a single job whose duration is less than 1 second. Additional seconds of computation count as additional executions. Flow executions are the sum of each step. Jobs run on one vCPU with 2GB memory, and most take less than 200ms.',
 		answer: (
 			<span>
 				The single credit-unit is called a "execution". An execution corresponds to a single{' '}
@@ -99,6 +104,7 @@ const faqs = [
 	{
 		id: 'native-workers',
 		question: 'What are native workers?',
+		textAnswer: 'Native workers are workers in the native worker group, pre-configured to listen to native job tags (query languages). They execute under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.',
 		answer: (
 			<span>
 				Native workers are workers within the{' '}
@@ -115,6 +121,7 @@ const faqs = [
 	{
 		id: 'agent-workers',
 		question: 'What are agent workers?',
+		textAnswer: 'Agent workers are remote computing resources that can execute jobs from anywhere. Each agent worker counts as 1 Compute Unit on self-hosted if not used for compute, and 0.5 Compute Unit on cloud if not used for compute.',
 		answer: (
 			<span>
 				<Link
@@ -130,6 +137,7 @@ const faqs = [
 	{
 		id: 'compute-units',
 		question: 'What are compute units?',
+		textAnswer: 'Compute units measure provisioned compute resources based on worker memory limits. 1 compute unit = 2 worker-gb-month. A standard 2GB worker = 1 CU. On self-hosted, any worker with >2GB memory = 2 CU. Minimum billed per worker is 0.5 CU.',
 		answer: (
 			<span>
 				Compute units are a unit of measure for the amount of compute resources provisioned (not effectively used) for the workers of the production instances, based on their memory limits. A compute unit corresponds to 2 worker-gb-month. For example, a <Link
@@ -150,6 +158,7 @@ const faqs = [
 	{
 		id: 'number-of-compute-units',
 		question: 'How many compute units do I need?',
+		textAnswer: 'It depends on your workload. Each worker executes one job at a time and can handle up to 26M jobs/month at 100ms each. Workers come in small (1GB, 0.5 CU), standard (2GB, 1 CU), and large (>2GB, 2 CU) sizes. Use autoscaling for minute-level granularity billing. A free one-month Enterprise trial helps evaluate your needs.',
 		answer: (
 			<span>
 				The number of <Link
@@ -209,6 +218,7 @@ const faqs = [
 	{
 		id: 'worker-reporting',
 		question: 'How is the use of the number of seats & compute units estimated and reported to Windmill?',
+		textAnswer: 'Compute units are based on worker memory limits in production instances, tracked via lightweight telemetry. Seats are counted as active users (logged in within 30 days) across all instances, with each user counted once. Development/staging instances are not counted for compute units.',
 		answer: (
 			<span>
 				Even though Windmill's{' '}
@@ -273,6 +283,7 @@ const faqs = [
 	{
 		id: 'staging-licensing',
 		question: 'Do I need a separate license for staging/development environments?',
+		textAnswer: 'No, you can use the same license key for both staging and production. Telemetry only reports production instances for compute units. Seats are counted across all instances but each user is only counted once. Mark non-production instances as non-prod in instance settings.',
 		answer: (
 			<span>
 				No, you can use the same license key - and therefore subscription - for both staging and production systems. For Compute Units, our <Link to="/docs/misc/plans_details#usage-checks" className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600">telemetry</Link> only reports production instances, so no additional license is needed. Seats are across all instances (dev, prod), but Windmill only counts once the same user.
@@ -294,6 +305,7 @@ const faqs = [
 	{
 		id: 'payment',
 		question: 'How is payment done?',
+		textAnswer: 'Payment is processed through Stripe and can be made using ACH, bank transfer, Cash App Pay, or credit or debit card. Subscriptions can be made by automatic debit or by invoice.',
 		answer: (
 			<span>
 				Payment is processed through Stripe and can be made using ACH, bank transfer, Cash App Pay, or credit or debit card. Subscriptions can be made by automatic debit or by invoice.
@@ -303,6 +315,7 @@ const faqs = [
 	{
 		id: 'usage-based-billing',
 		question: 'Is Windmill billed based on usage?',
+		textAnswer: 'Only the Teams plan is billed based on actual usage. Enterprise and Pro plans use committed terms for seats and compute units. If usage temporarily exceeds your terms, you get 35 days to address it before your license key expires.',
 		answer: (
 			<span>
 				Only the Teams plan is billed based on actual usage. For Enterprise Edition and Pro plans, you commit to terms that fit within a given range of seats and Compute Units, providing more predictable pricing.
@@ -314,6 +327,7 @@ const faqs = [
 	{
 		id: 'subscription-flexibility',
 		question: 'Can I increase the subscription terms during the subscription period?',
+		textAnswer: 'Yes, on EE and Pro subscriptions you can increase seats and compute units during the subscription period. A prorated amount is billed for the remaining period. For example, increasing seats 10 months into an annual plan means paying for roughly 2/12 of the annual cost for the additional seats.',
 		answer: (
 			<span>
 				On EE & Pro subscriptions (especially annual subscriptions), there is flexibility to increase the number of seats and compute units as needed during the subscription period. A prorated amount will be billed for the additional resources for the remaining period. On an annual subscription, this means you will only pay for the portion of the year that remains after the adjustment. For example, if you increase seats 10 months into the year, you would pay for approximately 2/12 of the annual cost for the additional seats.
@@ -323,6 +337,7 @@ const faqs = [
 	{
 		id: 'portal',
 		question: 'How can I update my subscription?',
+		textAnswer: 'Enterprise and Pro users can access usage information and invoices through the Windmill Customer Portal. You can also enable or disable automatic renewal and automatic debit (for payment by invoice).',
 		answer: (
 			<span>
 				As an Enterprise and Pro user, you will have access to detailed usage information and invoices
@@ -342,6 +357,7 @@ const faqs = [
 	{
 		id: 'sla',
 		question: "What is Windmill's technical support SLA?",
+		textAnswer: "Windmill provides support with different response times based on issue priorities. The support team is available 24/7, with consistent SLA for both cloud and self-hosted deployments. Enterprise customers also get a dedicated Slack or Discord channel.",
 		answer: (
 			<span>
 				We provide{' '}
@@ -359,6 +375,7 @@ const faqs = [
 	{
 		id: 'security',
 		question: "What is Windmill's security level on cloud?",
+		textAnswer: 'Windmill is SOC 2 Type II compliant, and prioritizes addressing vulnerabilities promptly.',
 		answer: (
 			<span>
 				Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.
@@ -368,6 +385,7 @@ const faqs = [
 	{
 		id: 'partnership',
 		question: 'Can I get services and workshops from Windmill or partners?',
+		textAnswer: 'Windmill provides priority support to Enterprise customers, including feature requests, bug resolutions, and use case recommendations. For end-to-end implementation and training, Windmill recommends engaging with certified partners.',
 		answer: (
 			<span>
 				Windmill is a company that develops a product. Our mission is to build the best possible
@@ -404,6 +422,7 @@ const faqs = [
 	{
 		id: 'shutdown',
 		question: 'Could the application keep running if Windmill as a company is shut down?',
+		textAnswer: 'Yes, Windmill will continue to operate as long as the license key remains valid, even without an internet connection. If Windmill shuts down, license keys will be extended indefinitely.',
 		answer: (
 			<span>
 				Yes, Windmill will continue to operate as long as the{' '}
@@ -443,8 +462,26 @@ export default function FAQ() {
 		}
 	}, [location]);
 
+	const faqSchema = {
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: faqs.map((faq) => ({
+			'@type': 'Question',
+			name: faq.question,
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: faq.textAnswer
+			}
+		}))
+	};
+
 	return (
 		<div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
+			<Head>
+				<script type="application/ld+json">
+					{JSON.stringify(faqSchema)}
+				</script>
+			</Head>
 			<div className="mx-auto max-w-4xl divide-y divide-gray-900/10">
 				<h2 className="text-2xl font-bold leading-10 tracking-tight ">
 					Frequently asked questions
