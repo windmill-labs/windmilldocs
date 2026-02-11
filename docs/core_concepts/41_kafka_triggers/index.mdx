@@ -60,6 +60,70 @@ When running the Windmill server as a non-root user (e.g., uid 1000 or 1001), th
 Kafka triggers run on the **server** (`windmill-app` pod), not on workers. When using `keytab_path`, the keytab file and `/etc/krb5.conf` must be mounted on the server pod, not worker pods. When using SASL_SSL_GSSAPI, you can also provide CA certificates for TLS verification.
 :::
 
+#### Example krb5.conf
+
+```ini
+[libdefaults]
+    default_realm = EXAMPLE.COM
+    dns_lookup_realm = false
+    dns_lookup_kdc = false
+    # Recommended for containerized environments - see troubleshooting below
+    dns_canonicalize_hostname = false
+
+[realms]
+    EXAMPLE.COM = {
+        kdc = kdc.example.com
+        admin_server = kdc.example.com
+    }
+
+[domain_realm]
+    .example.com = EXAMPLE.COM
+    example.com = EXAMPLE.COM
+```
+
+#### Docker Compose example
+
+```yaml
+services:
+  windmill_server:
+    image: ghcr.io/windmill-labs/windmill-ee:latest
+    volumes:
+      - ./krb5.conf:/etc/krb5.conf:ro
+```
+
+#### Helm/Kubernetes example
+
+Create a ConfigMap for krb5.conf:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: krb5-config
+data:
+  krb5.conf: |
+    [libdefaults]
+        default_realm = EXAMPLE.COM
+        dns_canonicalize_hostname = false
+    [realms]
+        EXAMPLE.COM = {
+            kdc = kdc.example.com
+        }
+```
+
+Then in your Helm values:
+```yaml
+windmill:
+  app:
+    volumes:
+      - name: krb5-config
+        configMap:
+          name: krb5-config
+    volumeMounts:
+      - name: krb5-config
+        mountPath: /etc/krb5.conf
+        subPath: krb5.conf
+```
+
 :::warning Troubleshooting "Server not found in Kerberos database"
 If you encounter this error, GSSAPI may be constructing the wrong service principal due to DNS canonicalization. GSSAPI performs reverse DNS lookups on the broker IP to determine the hostname for the service principal.
 
