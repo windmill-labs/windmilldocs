@@ -7,7 +7,7 @@ description: AWS Bedrock is now natively supported as an AI provider in Windmill
 features:
   [
     'AWS Bedrock now available as a native AI provider',
-    'Simple configuration with AWS region and API key',
+    'Simple configuration with AWS region and API key or IAM credentials',
     'Access to all Bedrock-supported models'
   ]
 docs: /docs/core_concepts/ai_generation/#models

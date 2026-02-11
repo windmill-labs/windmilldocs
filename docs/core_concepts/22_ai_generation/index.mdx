@@ -236,7 +236,11 @@ Windmill AI supports:
 - OpenRouter's [models](https://openrouter.ai/models)
 - Together AI's [models](https://docs.together.ai/docs/serverless-models)
 - AWS Bedrock's [models](https://aws.amazon.com/bedrock/)
-  - Required configuration: AWS region and long term API key
+  - Required configuration: AWS region and one of the following authentication methods:
+    - API key (bearer token)
+    - IAM credentials (access key ID and secret access key)
+    - IAM credentials with session token (for temporary [AWS STS](https://docs.aws.amazon.com/STS/latest/APIReference/welcome.html) credentials)
+    - Environment credentials fallback (uses `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and optionally `AWS_SESSION_TOKEN` from the worker environment)
 - Custom AI: base URL and API key of any AI provider that is OpenAI API-compatible
   - For Ollama and other local models, select "Custom AI" and provide your Ollama server URL (e.g., `http://localhost:11434/v1` for local Ollama or your custom endpoint)
 
