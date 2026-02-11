@@ -42,6 +42,20 @@ For enterprise environments using Kerberos, select `SASL_GSSAPI` or `SASL_SSL_GS
 
 **Using keytab_path**: Mount the keytab file on the worker container and provide the path. This is useful when deploying with Kubernetes secrets or Docker volumes.
 
+:::warning Non-root workers and keytab permissions
+When running Windmill workers as a non-root user (e.g., uid 1000 or 1001), the keytab file must be readable by that user. Keytab files are typically created with restrictive permissions (600, owner-only). If you see `kinit: Permission denied` errors, either:
+- Use `keytab_base64` instead of `keytab_path` - Windmill writes the keytab with the worker's ownership
+- In Kubernetes, set `defaultMode: 0644` on your Secret volume mount:
+  ```yaml
+  volumes:
+    - name: keytab
+      secret:
+        secretName: kafka-keytab
+        defaultMode: 0644
+  ```
+- In Docker Compose, ensure the keytab file on the host has readable permissions before mounting
+:::
+
 :::info Kerberos configuration
 Ensure the worker has access to a valid `/etc/krb5.conf` file with the correct realm configuration. When using SASL_SSL_GSSAPI, you can also provide CA certificates for TLS verification.
 :::
