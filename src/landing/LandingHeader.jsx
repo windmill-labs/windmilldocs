@@ -101,7 +101,7 @@ const solutionsByIndustry = [
 const solutionsCompare = [
 	{ name: 'vs Retool', href: '/docs/compared_to/retool' },
 	{ name: 'vs Prefect', href: '/docs/compared_to/prefect' },
-	{ name: 'vs Kestra', href: '/docs/compared_to/kestra' },
+	{ name: 'vs Airflow', href: '/docs/compared_to/peers' },
 	{ name: 'All alternatives', href: '/docs/compared_to/peers' },
 ];
 
