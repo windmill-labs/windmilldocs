@@ -1,9 +1,9 @@
 export const axiansCaseStudy = {
 	id: 9,
-	company: 'Axians CS',
+	company: 'Axians',
 	logo: '/images/brands/axians-light.svg',
-	title: 'How Axians CS - Netherlands scales multi-tenant orchestration with usage-based pricing',
-	description: "Axians CS needed to scale automation across 150 enterprise customers without committing to massive upfront licensing costs. Windmill's multi-tenant workspace model with transparent usage-based pricing enabled gradual customer onboarding, with costs growing proportionally as adoption increases.",
+	title: 'How Axians scales multi-tenant orchestration with usage-based pricing',
+	description: "Axians needed to scale automation across 150 enterprise customers without committing to massive upfront licensing costs. Windmill's multi-tenant workspace model with transparent usage-based pricing enabled gradual customer onboarding, with costs growing proportionally as adoption increases.",
 	category: 'IT Infrastructure',
 	author: {
 		name: 'Ben Willems',
