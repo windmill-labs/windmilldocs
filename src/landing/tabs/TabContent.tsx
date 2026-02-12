@@ -33,16 +33,17 @@ export default function TabContent({ data, color }) {
 					<iframe
 						src={data[selectedIndex].video?.videoSrc}
 						allowFullScreen
-						height="460"
-						className="border-2 rounded-xl  dark:border-gray-800"
+						className="border-2 rounded-xl dark:border-gray-800 w-full min-h-[512px] flex-1"
 					/>
 				);
 			} else {
 				return (
 					<video
-						className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+						className="border-2 rounded-xl object-cover w-full min-h-[512px] flex-1 dark:border-gray-800"
 						autoPlay
 						loop
+						muted
+						playsInline
 						src={data[selectedIndex].video?.videoSrc}
 					/>
 				);
