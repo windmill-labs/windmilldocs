@@ -13,7 +13,7 @@ export default function PricingPage() {
 				<Head>
 					<title>Roadmap | Windmill</title>
 					<meta name="title" content="Windmill Roadmap" />
-					<meta name="description" content="Windmill roadmap" />
+					<meta name="description" content="Upcoming features and improvements planned for Windmill. See what's next and track progress on scripts, flows, apps, and infrastructure." />
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
 				<>

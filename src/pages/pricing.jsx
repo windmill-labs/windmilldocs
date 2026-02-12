@@ -50,7 +50,7 @@ export default function PricingPage() {
 					<meta name="title" content="Windmill Pricing" />
 					<meta
 						name="description"
-						content="Windmill is free to use. Price of paying offer depends of Self-hosted vs. Cloud, and of features between Team and Enterprise offers. "
+						content="Windmill pricing based on compute units. Free Community Edition, Team and Enterprise plans available for both cloud and self-hosted deployments."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 					<script type="application/ld+json">

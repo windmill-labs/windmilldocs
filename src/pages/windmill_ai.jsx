@@ -155,10 +155,9 @@ export default function Windmill_AI() {
 				<GlobalContextProvider>
 					<Head>
 						<title>Windmill AI</title>
-						<meta name="Windmill AI" content="Windmill Team." />
 						<meta
 							name="description"
-							content="We are a team commited to open source, with a strong will to improve internal tools for everyone."
+							content="AI-powered code generation, autocomplete, and fixing for Windmill scripts and flows. Build automation faster with AI assistants in the editor."
 						/>
 					</Head>
 					<LandingHeader />
