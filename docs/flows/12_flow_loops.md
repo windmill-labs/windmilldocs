@@ -1,3 +1,7 @@
+---
+description: How do I iterate over a list of items using for loops in Windmill flows?
+---
+
 # For loops
 
 For loops is a special type of steps that allows you to iterate over a list of items, given by an iterator expression.

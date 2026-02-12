@@ -1,3 +1,7 @@
+---
+description: How do I connect MySQL to Windmill? Query and manage MySQL databases from scripts and flows.
+---
+
 # MySQL integration
 
 [MySQL](https://www.mysql.com/) is an open-source relational database management system.

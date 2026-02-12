@@ -1,3 +1,7 @@
+---
+description: How do I configure SAML and SCIM for user authentication in Windmill?
+---
+
 # SAML & SCIM
 
 Setting up SAML and SCIM allows you to authenticate users using your identity provider.

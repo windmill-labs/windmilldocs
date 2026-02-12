@@ -1,3 +1,7 @@
+---
+description: How do I connect SendGrid to Windmill? Send transactional and marketing emails from scripts and flows.
+---
+
 # SendGrid integration
 
 [SendGrid](https://sendgrid.com/) is an email API and delivery service.

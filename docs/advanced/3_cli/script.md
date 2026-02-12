@@ -1,3 +1,7 @@
+---
+description: How do I list and push scripts using the Windmill CLI?
+---
+
 # Scripts
 
 ## Listing scripts

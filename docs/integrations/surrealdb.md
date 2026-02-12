@@ -1,3 +1,7 @@
+---
+description: How do I connect SurrealDB to Windmill? Query and manage SurrealDB databases from scripts and flows.
+---
+
 # SurrealDB integration
 
 [SurrealDB](https://surrealdb.com/) is a cloud-hosted NoSQL database.

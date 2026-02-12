@@ -1,3 +1,7 @@
+---
+description: How do I connect Google Sheets to Windmill? Read and write spreadsheet data from scripts and flows.
+---
+
 # Google Sheets integration
 
 [Google Sheets](https://www.google.com/sheets/about/) is an online spreadsheet application.

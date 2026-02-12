@@ -1,3 +1,7 @@
+---
+description: How do I connect OpenAI to Windmill? Use OpenAI APIs for text generation and AI tasks from scripts and flows.
+---
+
 # OpenAI integration
 
 [OpenAI](https://openai.com/) is an Artificial Inteligence service provider.

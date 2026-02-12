@@ -1,3 +1,7 @@
+---
+description: How do I connect Azure Blob Storage to Windmill? Store and retrieve objects in Azure Blob from scripts and flows.
+---
+
 # Microsoft Azure Blob integration
 
 [Microsoft Azure Blob](https://azure.microsoft.com/products/storage/blobs) is Microsoft's cloud storage service, an alternative to S3.

@@ -1,3 +1,7 @@
+---
+description: How do I import custom React components in Windmill apps? Add your own React components that interact with the rest of the app.
+---
+
 # Import custom React components
 
 Windmill already provides over [sixty components](./4_app_configuration_settings/1_app_component_library.mdx) for its users, accessible with a simple drag-and-drop. For more control and standardization with your existing stack, you might want to import your own components in React.

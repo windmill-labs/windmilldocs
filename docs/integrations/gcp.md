@@ -1,3 +1,7 @@
+---
+description: How do I connect Google Cloud Platform to Windmill? Use GCP services from scripts and flows.
+---
+
 # Google Cloud Platform integration
 
 [GCP](https://cloud.google.com/gcp) is a suite of cloud computing services for building and deploying applications.

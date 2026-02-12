@@ -1,3 +1,7 @@
+---
+description: How do I install the Windmill CLI?
+---
+
 # Installation
 
 <iframe

@@ -1,3 +1,7 @@
+---
+description: How do I connect Toggl to Windmill? Track time and manage Toggl data from scripts and flows.
+---
+
 # Toggl integration
 
 [Toggl](https://toggl.com/) is a time tracking software.

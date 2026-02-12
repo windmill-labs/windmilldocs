@@ -1,3 +1,7 @@
+---
+description: How do I manage folders using the Windmill CLI?
+---
+
 # Folder
 
 ## Listing folders

@@ -1,3 +1,7 @@
+---
+description: How do I connect Neon.tech to Windmill? Use Neon's managed PostgreSQL databases from scripts and flows.
+---
+
 # Neon.tech integration
 
 [Neon.tech](https://neon.tech/) is an open-source cloud database platform that provides fully managed PostgreSQL databases with high availability and scalability.

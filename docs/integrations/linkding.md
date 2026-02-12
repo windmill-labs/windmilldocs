@@ -1,3 +1,7 @@
+---
+description: How do I connect Linkding to Windmill? Manage bookmarks via the Linkding API from scripts and flows.
+---
+
 # Linkding integration
 
 [Linkding](https://github.com/sissbruecker/linkding) is a self-hosted bookmark manager.

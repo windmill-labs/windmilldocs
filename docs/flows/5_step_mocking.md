@@ -1,3 +1,7 @@
+---
+description: How do I mock a flow step or pin a previous result to skip computation in Windmill?
+---
+
 # Step mocking / Pin result
 
 Step mocking and pinning results allows faster iteration while building flows. When a step is mocked or pinned, it will immediately return the specified value without performing any computation.

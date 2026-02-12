@@ -1,3 +1,7 @@
+---
+description: How do I connect Telegram to Windmill? Send messages and automate Telegram bots from scripts and flows.
+---
+
 # Telegram integration
 
 [Telegram](https://telegram.org/) is a cloud-based instant messaging and voice over IP service.

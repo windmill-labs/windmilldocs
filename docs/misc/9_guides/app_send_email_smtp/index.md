@@ -1,3 +1,7 @@
+---
+description: How do I build a Windmill app that sends emails using an SMTP resource?
+---
+
 # Build an App that sends email with SMTP
 
 Watch this video on how building a Windmill [App](../../../apps/0_app_editor/index.mdx) that uses a [SMTP resource](../../../integrations/smtp.md) to send an email [connecting components](../../../apps/2_connecting_components/index.mdx) ([Button](../../../apps/4_app_configuration_settings/button.mdx) & [Text input](../../../apps/4_app_configuration_settings/text_input.mdx)).

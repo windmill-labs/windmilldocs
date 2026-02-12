@@ -1,3 +1,7 @@
+---
+description: How do I connect Google Drive to Windmill? Upload, download and manage files in Google Drive.
+---
+
 # Google Drive integration
 
 [Google Drive](https://drive.google.com/drive/my-drive) is cloud-based storage platform.

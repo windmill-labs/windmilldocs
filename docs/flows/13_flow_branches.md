@@ -1,3 +1,7 @@
+---
+description: How do I use branches to split flow execution based on conditions in Windmill?
+---
+
 # Branches
 
 Branches allow to split the execution of the flow based on a condition.

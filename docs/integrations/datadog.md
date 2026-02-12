@@ -1,3 +1,7 @@
+---
+description: How do I connect Datadog to Windmill? Send metrics and events to Datadog from scripts and flows.
+---
+
 # Datadog integration
 
 [Datadog](https://www.datadoghq.com/) is a monitoring and analytics platform for cloud-scale infrastructure and applications.

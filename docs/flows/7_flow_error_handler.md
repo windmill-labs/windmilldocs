@@ -1,3 +1,7 @@
+---
+description: How do I configure an error handler step to catch and process errors in Windmill flows?
+---
+
 # Error handler
 
 The error handler is a special flow step that is executed when an error occurs in the flow.

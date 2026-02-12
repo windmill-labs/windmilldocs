@@ -1,3 +1,7 @@
+---
+description: How do I cache script and flow results to avoid redundant computations in Windmill?
+---
+
 # Caching
 
 Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds, thereby reducing the need for redundant computations when re-running the same step with identical input.
