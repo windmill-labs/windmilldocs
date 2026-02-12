@@ -1,3 +1,7 @@
+---
+description: How do I manage workspaces using the Windmill CLI?
+---
+
 # Workspace management
 
 Windmill CLI can be used on several workspaces from several instances.

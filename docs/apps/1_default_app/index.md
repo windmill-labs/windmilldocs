@@ -1,3 +1,7 @@
+---
+description: How do I set a default app in Windmill? Redirect operators to a specific app on workspace login.
+---
+
 # Workspace default app
 
 If configured, users who are [operators](../../core_concepts/16_roles_and_permissions/index.mdx) in this workspace will be redirected to this app automatically when logging into this workspace. Workspace default app is a [Cloud plan & Self-Hosted Enterprise](/pricing) feature.

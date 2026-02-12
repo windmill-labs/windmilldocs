@@ -1,3 +1,7 @@
+---
+description: How do I set a custom timeout for a specific step in a Windmill flow?
+---
+
 # Custom timeout for step
 
 For each step can be defined a timeout. If the execution takes longer than the time limit, the execution of the step will be interrupted.

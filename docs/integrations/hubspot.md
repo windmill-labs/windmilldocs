@@ -1,3 +1,7 @@
+---
+description: How do I connect HubSpot to Windmill? Manage contacts, deals and marketing data from scripts and flows.
+---
+
 # HubSpot integration
 
 [HubSpot](https://www.hubspot.com/) is an inbound marketing, sales, and customer service platform.

@@ -1,3 +1,7 @@
+---
+description: How do I connect Discord to Windmill? Send messages and automate Discord webhooks from scripts and flows.
+---
+
 # Discord integration
 
 [Discord](https://discord.com/) is a voice, video, and text communication platform.

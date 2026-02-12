@@ -1,3 +1,7 @@
+---
+description: How do I connect ClickHouse to Windmill? Query and manage ClickHouse databases from scripts and flows.
+---
+
 # ClickHouse integration
 
 [ClickHouse](https://clickhouse.com/) is an open-source column-oriented database management system.

@@ -1,3 +1,7 @@
+---
+description: How do I use SMTP with Windmill? Send emails via SMTP from scripts and flows.
+---
+
 # SMTP integration
 
 [SMTP](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol) (Simple Mail Transfer Protocol) is an internet standard for electronic mail transmission.

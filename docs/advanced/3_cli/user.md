@@ -1,3 +1,7 @@
+---
+description: How do I manage users using the Windmill CLI?
+---
+
 # Users management
 
 ## Adding a user

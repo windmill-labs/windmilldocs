@@ -1,3 +1,7 @@
+---
+description: How do I use the Table component in a Windmill app?
+---
+
 # Table
 
 This is a introduction on how to use the Table component in Windmill.

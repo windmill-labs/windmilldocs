@@ -1,3 +1,7 @@
+---
+description: How do I connect Airtable to Windmill? Manage and organize data in Airtable from scripts and flows.
+---
+
 # Airtable integration
 
 [Airtable](https://www.airtable.com/) is a cloud collaboration platform for organizing and managing data.

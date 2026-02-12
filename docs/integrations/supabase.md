@@ -1,3 +1,7 @@
+---
+description: How do I connect Supabase to Windmill? Query Supabase databases and APIs from scripts, flows and apps.
+---
+
 # Supabase integration
 
 [Supabase](https://supabase.com/) is an open-source Firebase alternative.

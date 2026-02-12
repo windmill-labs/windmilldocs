@@ -1,3 +1,7 @@
+---
+description: What is Windmill's vision for separating business logic from boilerplate?
+---
+
 # Note of intent
 
 All code is not made equal and can be split in 2 categories:

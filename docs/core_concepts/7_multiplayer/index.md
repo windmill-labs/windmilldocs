@@ -1,3 +1,7 @@
+---
+description: How do I use multiplayer to collaboratively edit scripts in real time with team members?
+---
+
 # Multiplayer
 
 The Multiplayer feature allows you to collaborate with team members on scripts simultaneously.

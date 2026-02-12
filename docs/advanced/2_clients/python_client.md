@@ -1,3 +1,7 @@
+---
+description: How do I use the Windmill Python client to interact with resources and run scripts?
+---
+
 # Python client
 
 The Python client library for Windmill provides a convenient way to interact with the Windmill platform using Python. This client provides a set of functions and utilities to access Windmill resources and perform various operations.

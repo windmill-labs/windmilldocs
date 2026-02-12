@@ -1,3 +1,7 @@
+---
+description: How do I connect Redis to Windmill? Use Redis as a cache or message broker from scripts and flows.
+---
+
 # Redis integration
 
 [Redis](https://redis.io/) is an in-memory data structure store used as a database, cache, and message broker.

@@ -1,5 +1,6 @@
 ---
 title: 'Contributor guide'
+description: How do I contribute to the Windmill open-source project?
 ---
 
 # Contributor guide

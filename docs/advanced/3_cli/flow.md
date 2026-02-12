@@ -1,3 +1,7 @@
+---
+description: How do I list and push flows using the Windmill CLI?
+---
+
 # Flows
 
 ## Listing flows

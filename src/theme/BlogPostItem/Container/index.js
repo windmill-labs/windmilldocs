@@ -213,17 +213,50 @@ export default function BlogPostItemContainer({ children, className }) {
 			</>
 		);
 	}
+	const blogPostingSchema = isBlogPostPage
+		? {
+				'@context': 'https://schema.org',
+				'@type': 'BlogPosting',
+				headline: metadata.title,
+				datePublished: metadata.date,
+				description: metadata.description ?? frontMatter.description,
+				...(image && { image: withBaseUrl(image, { absolute: true }) }),
+				author: metadata.authors.map((author) => ({
+					'@type': 'Person',
+					name: author.name,
+					...(author.url && { url: author.url })
+				})),
+				publisher: {
+					'@type': 'Organization',
+					name: 'Windmill',
+					logo: {
+						'@type': 'ImageObject',
+						url: 'https://www.windmill.dev/img/windmill.svg'
+					}
+				},
+				url: `https://www.windmill.dev${metadata.permalink}`
+			}
+		: null;
+
 	return (
-		<article
-			className={clsx(className, {
-				'border p-2 rounded-2xl shadow-md hover:border-blue-400 hover:shadow-lg transition-all !mb-4 dark:border-gray-700 dark:hover:border-blue-400':
-					!isBlogPostPage
-			})}
-			itemProp="blogPost"
-			itemScope
-			itemType="http://schema.org/BlogPosting"
-		>
-			{image && <meta itemProp="image" content={(withBaseUrl(image), { absolute: true })} />}
+		<>
+			{isBlogPostPage && blogPostingSchema && (
+				<Head>
+					<script type="application/ld+json">
+						{JSON.stringify(blogPostingSchema)}
+					</script>
+				</Head>
+			)}
+			<article
+				className={clsx(className, {
+					'border p-2 rounded-2xl shadow-md hover:border-blue-400 hover:shadow-lg transition-all !mb-4 dark:border-gray-700 dark:hover:border-blue-400':
+						!isBlogPostPage
+				})}
+				itemProp="blogPost"
+				itemScope
+				itemType="http://schema.org/BlogPosting"
+			>
+			{image && <meta itemProp="image" content={withBaseUrl(image, { absolute: true })} />}
 			{!isBlogPostPage ? (
 				<Link itemProp="url" to={metadata.permalink} className="!no-underline">
 					<img src={image} className="h-64 w-full rounded-2xl object-cover" />
@@ -269,6 +302,7 @@ export default function BlogPostItemContainer({ children, className }) {
 			) : (
 				children
 			)}
-		</article>
+			</article>
+		</>
 	);
 }

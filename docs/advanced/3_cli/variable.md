@@ -1,3 +1,7 @@
+---
+description: How do I list and manage variables using the Windmill CLI?
+---
+
 # Variables
 
 ## Listing variables

@@ -1,3 +1,7 @@
+---
+description: How do I connect MongoDB to Windmill? Query and manage MongoDB Atlas databases from scripts and flows.
+---
+
 # MongoDB integration
 
 [MongoDB](https://www.mongodb.com/) is a NoSQL document-oriented database.

@@ -1,3 +1,7 @@
+---
+description: How do I debug runs in Windmill apps? Inspect all script and flow runs, including failed ones, from the toolbar.
+---
+
 # Debug runs
 
 On the toolbar, click the Debug runs to open the Debug run drawer.

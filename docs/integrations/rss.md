@@ -1,3 +1,7 @@
+---
+description: How do I use RSS feeds with Windmill? Read and process RSS feeds from scripts and flows.
+---
+
 # RSS integration
 
 [RSS](https://rss.com/) is a web feed that allows users and applications to access updates to websites.

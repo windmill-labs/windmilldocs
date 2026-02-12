@@ -1,3 +1,7 @@
+---
+description: How do I use MQTT with Windmill? Subscribe to MQTT topics and trigger scripts on incoming messages.
+---
+
 # MQTT integration
 
 [MQTT](https://mqtt.org/) (Message Queuing Telemetry Transport) is a lightweight messaging protocol designed for small sensors and mobile devices optimized for low-bandwidth, high-latency, or unreliable networks.

@@ -1,3 +1,7 @@
+---
+description: How do I connect Appwrite to Windmill? Interact with Appwrite backend services from scripts and flows.
+---
+
 # Appwrite integration
 
 [Appwrite](https://appwrite.io/) is an end-to-end backend server for web and mobile apps.

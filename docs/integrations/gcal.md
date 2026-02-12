@@ -1,3 +1,7 @@
+---
+description: How do I connect Google Calendar to Windmill? Manage events and schedules via the Google Calendar API.
+---
+
 # Google Calendar integration
 
 [Google Calendar](https://calendar.google.com/)  is a time-management and scheduling web application.

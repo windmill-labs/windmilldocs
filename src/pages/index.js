@@ -16,9 +16,33 @@ import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
 import TutorialSection from '../landing/TutorialSection';
+import Head from '@docusaurus/Head';
 
 import MobileTutorialSection from '../landing/MobileTutorialSection';
 import DeveloperExperienceSection from '../landing/DeveloperExperienceSection';
+
+const organizationSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: 'Windmill',
+	url: 'https://www.windmill.dev',
+	logo: 'https://www.windmill.dev/img/windmill.svg',
+	description:
+		'Open-source platform to build, deploy and monitor internal tools from scripts. Turn scripts into auto-generated UIs, APIs and cron jobs. Compose them as workflows or data pipelines.',
+	sameAs: [
+		'https://github.com/windmill-labs/windmill',
+		'https://discord.com/invite/V7PM2YHsPB',
+		'https://twitter.com/WindmillDev',
+		'https://www.youtube.com/@windaborern',
+		'https://www.linkedin.com/company/windmill-dev'
+	],
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Dover',
+		addressRegion: 'DE',
+		addressCountry: 'US'
+	}
+};
 
 function HomepageHeader() {
 	return (
@@ -51,6 +75,11 @@ export default function Home() {
 		<LayoutProvider>
 			<main>
 				<SeoHead />
+				<Head>
+					<script type="application/ld+json">
+						{JSON.stringify(organizationSchema)}
+					</script>
+				</Head>
 				<HomepageHeader />
 			</main>
 		</LayoutProvider>

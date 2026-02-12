@@ -1,3 +1,7 @@
+---
+description: How do I connect Nextcloud to Windmill? Manage files on Nextcloud from scripts and flows.
+---
+
 # Nextcloud integration
 
 [Nextcloud](https://nextcloud.com/) is a suite of client-server software for creating and using file hosting services.

@@ -1,3 +1,7 @@
+---
+description: How do I connect Mailchimp to Windmill? Manage email campaigns and audiences from scripts and flows.
+---
+
 # Mailchimp integration
 
 [Mailchimp](https://mailchimp.com/) is an all-in-one marketing platform for small businesses.

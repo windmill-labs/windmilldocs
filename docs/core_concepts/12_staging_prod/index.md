@@ -1,3 +1,7 @@
+---
+description: How do I deploy items from a staging workspace to production using the Windmill UI?
+---
+
 # Deploy to prod using the UI
 
 From a workspace in Windmill, you can deploy a item and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.

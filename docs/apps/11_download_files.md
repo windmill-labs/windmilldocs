@@ -1,3 +1,7 @@
+---
+description: How do I download files in Windmill apps? Use download buttons or transformers with Base64-encoded data URLs.
+---
+
 # Download files in apps
 
 Within your Windmill apps, you might want users to download files. There are two options: the download button, and the transformers. Both involve manipulating data URLs scheme with a Base64 encoded string.

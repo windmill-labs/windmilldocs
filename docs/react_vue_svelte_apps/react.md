@@ -1,3 +1,7 @@
+---
+description: How do I import and deploy a React app in Windmill using the React template?
+---
+
 # React app import
 
 Although Windmill provides a comprehensive [App editor](../getting_started/7_apps_quickstart/index.mdx) to turn scripts and workflows into custom UIs, you might want to import your own Apps in React.

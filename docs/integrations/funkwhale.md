@@ -1,3 +1,7 @@
+---
+description: How do I connect Funkwhale to Windmill? Interact with the Funkwhale music platform API from scripts and flows.
+---
+
 # Funkwhale integration
 
 [Funkwhale](https://funkwhale.audio/) is an open-source music streaming and sharing platform.

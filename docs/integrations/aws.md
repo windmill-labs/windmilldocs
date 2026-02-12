@@ -1,3 +1,7 @@
+---
+description: How do I connect AWS to Windmill? Use AWS services from scripts and flows with access keys or OIDC.
+---
+
 # AWS integration
 
 [AWS](https://aws.amazon.com/) is a cloud computing platform offering various services like computing, storage and databases.

@@ -1,3 +1,7 @@
+---
+description: How do I use job debouncing to cancel redundant jobs and delay execution in Windmill?
+---
+
 # Job debouncing
 
 When job debouncing is enabled, started jobs are scheduled for a specified future time. If another job with the same debounce key is queued within this duration, it will "debounce" the previous job by canceling it.

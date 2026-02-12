@@ -1,3 +1,7 @@
+---
+description: How do I connect PostgreSQL to Windmill? Query and manage Postgres databases from scripts and flows.
+---
+
 # PostgreSQL integration
 
 [PostgreSQL](https://www.postgresql.org/) is an open-source object-relational database management system.

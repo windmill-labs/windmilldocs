@@ -1,3 +1,7 @@
+---
+description: How do I connect Notion to Windmill? Read and update Notion pages and databases from scripts and flows.
+---
+
 # Notion integration
 
 [Notion](https://www.notion.so/) is a productivity and note-taking web application.

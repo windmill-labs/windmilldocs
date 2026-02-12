@@ -1,3 +1,7 @@
+---
+description: How do I use the AgGrid table component in a Windmill app?
+---
+
 # AgGrid table guide
 
 This is a basic introduction on how to use

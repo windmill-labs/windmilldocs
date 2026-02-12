@@ -1,3 +1,7 @@
+---
+description: How do I connect LinkedIn to Windmill? Automate LinkedIn interactions via OAuth from scripts and flows.
+---
+
 # LinkedIn integration
 
 [LinkedIn](https://www.linkedin.com/) is a professional networking and career development platform.

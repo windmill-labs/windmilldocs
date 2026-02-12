@@ -1,3 +1,7 @@
+---
+description: How do I share scripts, flows, apps, and resource types on Windmill Hub?
+---
+
 # Share on Windmill Hub
 
 [Windmill Hub][wm-hub] is the community website of Windmill where you can find

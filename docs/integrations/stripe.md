@@ -1,3 +1,7 @@
+---
+description: How do I connect Stripe to Windmill? Manage payments, subscriptions and invoices from scripts and flows.
+---
+
 # Stripe integration
 
 [Stripe](https://stripe.com/) is a payment processing platform.

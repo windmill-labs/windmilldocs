@@ -1,3 +1,7 @@
+---
+description: How do I connect Upstash to Windmill? Use Upstash serverless Redis from scripts and flows.
+---
+
 # Upstash integration
 
 [Upstash](https://upstash.com/) is a serverless and low-latency Redis-compatible data store for modern applications.

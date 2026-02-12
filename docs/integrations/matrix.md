@@ -1,3 +1,7 @@
+---
+description: How do I connect Matrix to Windmill? Send messages and automate Matrix communication from scripts and flows.
+---
+
 # Matrix integration
 
 [Matrix](https://matrix.org/) is an open standard for decentralized, real-time communication.

@@ -1,3 +1,7 @@
+---
+description: How do I list and push apps using the Windmill CLI?
+---
+
 # Apps
 
 ## Listing apps

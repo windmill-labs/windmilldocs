@@ -1,3 +1,7 @@
+---
+description: How do I list and push resources using the Windmill CLI?
+---
+
 # Resources
 
 ## Listing resources

@@ -1,3 +1,7 @@
+---
+description: How do I connect Mastodon to Windmill? Post and interact with Mastodon from scripts and flows.
+---
+
 # Mastodon integration
 
 [Mastodon](https://mastodon.social/) is an open-source, decentralized social network.

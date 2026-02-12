@@ -1,3 +1,7 @@
+---
+description: How do I connect MS SQL Server to Windmill? Query and manage SQL Server databases from scripts and flows.
+---
+
 # MS SQL integration
 
 [MS SQL](https://www.microsoft.com/sql-server/sql-server-downloads) is a database management system.

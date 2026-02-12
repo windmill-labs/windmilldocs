@@ -1,3 +1,7 @@
+---
+description: How do I connect FaunaDB to Windmill? Query and manage Fauna databases from scripts and flows.
+---
+
 # FaunaDB integration
 
 [FaunaDB](https://fauna.com/) is a serverless, document-oriented database for modern applications.

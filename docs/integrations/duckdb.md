@@ -1,3 +1,7 @@
+---
+description: How do I use DuckDB with Windmill? Run analytical SQL queries on S3, Parquet, CSV and JSON data.
+---
+
 # DuckDB integration
 
 [DuckDB](https://duckdb.org/) is an open-source, in-process SQL OLAP database management system designed for fast analytical query workloads.

@@ -1,3 +1,7 @@
+---
+description: How do I connect Linear to Windmill? Manage issues and projects via the Linear API from scripts and flows.
+---
+
 # Linear integration
 
 [Linear](https://linear.app/) is a project management tool for software development teams.

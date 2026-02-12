@@ -1,3 +1,7 @@
+---
+description: How do I build an e-commerce CRM app in Windmill? Tutorial to create a backoffice app managing products, customers and orders.
+---
+
 # Tutorial: e-commerce CRM app
 
 We will now use the Windmill app builder to build a simple E-commerce backoffice app. It is a simple CRM app that allows you to manage your products, customers and orders of a e-commerce store.
