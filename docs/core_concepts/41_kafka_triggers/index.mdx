@@ -37,17 +37,109 @@ For enterprise environments using Kerberos, select `SASL_GSSAPI` or `SASL_SSL_GS
 |----------|-------------|----------|
 | kerberos_service_name | Kerberos principal name of the Kafka broker service (default: `kafka`) | No |
 | kerberos_principal | Client's Kerberos principal (e.g., `user@REALM.COM`) | Yes |
-| keytab_path | Path to keytab file mounted on the worker | No* |
+| keytab_path | Path to keytab file mounted on the server | No* |
 | keytab_base64 | Base64-encoded keytab content | No* |
 
 *Either `keytab_path` or `keytab_base64` must be provided.
 
 **Using keytab_base64**: Encode your keytab file with `base64 -w0 /path/to/keytab` and paste the result. This is stored securely and written to a temporary file at runtime.
 
-**Using keytab_path**: Mount the keytab file on the worker container and provide the path. This is useful when deploying with Kubernetes secrets or Docker volumes.
+**Using keytab_path**: Mount the keytab file on the server container and provide the path. This is useful when deploying with Kubernetes secrets or Docker volumes.
+
+:::warning Non-root server and keytab permissions
+When running the Windmill server as a non-root user (e.g., uid 1000 or 1001), the keytab file must be readable by that user. Keytab files are typically created with restrictive permissions (600, owner-only). If you see `kinit: Permission denied` errors, either:
+- Use `keytab_base64` instead of `keytab_path` - Windmill writes the keytab with the server's ownership
+- In Kubernetes, set `defaultMode: 0644` on your Secret volume mount:
+  ```yaml
+  volumes:
+    - name: keytab
+      secret:
+        secretName: kafka-keytab
+        defaultMode: 0644
+  ```
+- In Docker Compose, ensure the keytab file on the host has readable permissions before mounting
+:::
 
 :::info Kerberos configuration
-Ensure the worker has access to a valid `/etc/krb5.conf` file with the correct realm configuration. When using SASL_SSL_GSSAPI, you can also provide CA certificates for TLS verification.
+Kafka triggers run on the **server** (`windmill-app` pod), not on workers. When using `keytab_path`, the keytab file and `/etc/krb5.conf` must be mounted on the server pod, not worker pods. When using SASL_SSL_GSSAPI, you can also provide CA certificates for TLS verification.
+:::
+
+#### Example krb5.conf
+
+```ini
+[libdefaults]
+    default_realm = EXAMPLE.COM
+    dns_lookup_realm = false
+    dns_lookup_kdc = false
+    # Recommended for containerized environments - see troubleshooting below
+    dns_canonicalize_hostname = false
+
+[realms]
+    EXAMPLE.COM = {
+        kdc = kdc.example.com
+        admin_server = kdc.example.com
+    }
+
+[domain_realm]
+    .example.com = EXAMPLE.COM
+    example.com = EXAMPLE.COM
+```
+
+#### Docker Compose example
+
+```yaml
+services:
+  windmill_server:
+    image: ghcr.io/windmill-labs/windmill-ee:latest
+    volumes:
+      - ./krb5.conf:/etc/krb5.conf:ro
+```
+
+#### Helm/Kubernetes example
+
+Create a ConfigMap for krb5.conf:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: krb5-config
+data:
+  krb5.conf: |
+    [libdefaults]
+        default_realm = EXAMPLE.COM
+        dns_canonicalize_hostname = false
+    [realms]
+        EXAMPLE.COM = {
+            kdc = kdc.example.com
+        }
+```
+
+Then in your Helm values:
+```yaml
+windmill:
+  app:
+    volumes:
+      - name: krb5-config
+        configMap:
+          name: krb5-config
+    volumeMounts:
+      - name: krb5-config
+        mountPath: /etc/krb5.conf
+        subPath: krb5.conf
+```
+
+:::warning Troubleshooting "Server not found in Kerberos database"
+If you encounter this error, GSSAPI may be constructing the wrong service principal due to DNS canonicalization. GSSAPI performs reverse DNS lookups on the broker IP to determine the hostname for the service principal.
+
+Verify that reverse DNS for your broker IP returns the expected hostname matching your Kerberos SPN. For example, if your SPN is `kafka/kafka.example.com@REALM`, then `host <broker-ip>` should return `kafka.example.com`.
+
+In containerized environments (Docker, Kubernetes) where reverse DNS may return internal container/pod names instead of the expected hostname, add to your krb5.conf:
+```ini
+[libdefaults]
+    dns_canonicalize_hostname = false
+```
+
+This tells GSSAPI to use the hostname as configured in your broker list without reverse DNS canonicalization.
 :::
 
 ## How to use
