@@ -74,3 +74,37 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 - URLs are derived from the file or folder name (e.g. `windmilldocs/docs/core_concepts/20_jobs/index.mdx` will become `https://www.windmill.dev/docs/core_concepts/jobs`)
 - Use descriptive titles that include keywords
 - If a new page is to be created, keep URLs clean and descriptive
+
+## Structured data and descriptions for AEO
+
+### Frontmatter descriptions in .mdx/.md files
+- Every `.mdx` and `.md` file **must** have a `description` field in its frontmatter
+- Descriptions are used as the page meta description, feed into JSON-LD schemas, and are the primary text AI systems and search engines extract
+- Keep descriptions between 120–160 characters for docs/changelog, up to ~300 characters for blog posts and case studies
+- Write descriptions as direct, factual statements — not marketing copy (see `writing_style_guide.md`)
+- **Prefer question-based descriptions** to match how users and AI systems query for information (e.g. "How do I deploy Windmill on Kubernetes?" rather than "Guide to deploying Windmill on Kubernetes")
+- For integration pages, use the pattern: "How do I connect X to Windmill? [What you can do]."
+- For docs pages, use a question that the page answers (e.g. "How do I set up workers in Windmill? Configure worker groups, assign tags, and scale compute.")
+- For changelog entries, summarize the feature in one sentence
+
+### JSON-LD structured data
+Every non-doc page should include a `<script type="application/ld+json">` block inside `<Head>` for search engine and AI extraction. Follow these patterns:
+
+### Blog posts
+- Handled automatically by `src/theme/BlogPostItem/Container/index.js` — no action needed
+
+### Case studies
+- Create a data object in `src/data/case-studies/<name>.js` with `company`, `title`, `description`, `author`, `date`, `link`
+- Pass it as `caseStudyData` prop to `CaseStudyLayout` in the page file
+- Add it to `src/data/case-studies/index.js` so it appears in the ItemList schema on the listing page
+
+### Landing/marketing pages
+- **Product pages** → `SoftwareApplication` schema (see `src/pages/pricing.jsx`)
+- **FAQ sections** → `FAQPage` schema (see `src/components/pricing/PricingFAQ.js`); each question needs a `textAnswer` plain-text field alongside the JSX `answer`
+- **List pages** → `ItemList` schema (see `src/pages/case-studies.jsx`)
+
+### General rules
+- Always include `publisher` with `{ "@type": "Organization", "name": "Windmill", "logo": { "@type": "ImageObject", "url": "https://www.windmill.dev/img/windmill.svg" } }`
+- Use absolute URLs (`https://www.windmill.dev/...`) in all schema fields
+- Keep a plain-text version of any rich/JSX content for schema fields (e.g. `textAnswer` for FAQs)
+- The Organization schema on the homepage (`src/pages/index.js`) is the canonical source for company-level structured data
