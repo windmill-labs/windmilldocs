@@ -75,6 +75,7 @@ export default function CaseStudiesPage() {
 		'@context': 'https://schema.org',
 		'@type': 'ItemList',
 		name: 'Windmill Case Studies',
+		description: 'How companies use Windmill to power production workflows, internal platforms, and automation at scale.',
 		itemListElement: releasedStudies.map((cs, index) => ({
 			'@type': 'ListItem',
 			position: index + 1,

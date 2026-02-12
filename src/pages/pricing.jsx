@@ -10,6 +10,7 @@ const softwareApplicationSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'SoftwareApplication',
 	name: 'Windmill',
+	description: 'How much does Windmill cost? Transparent pricing based on compute units, from free Community Edition to Team and Enterprise plans.',
 	applicationCategory: 'DeveloperApplication',
 	operatingSystem: 'Web',
 	url: 'https://www.windmill.dev',
