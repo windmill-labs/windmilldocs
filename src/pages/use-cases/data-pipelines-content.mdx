@@ -81,7 +81,7 @@ export default function DataPipelinesContent({ title, description }) {
 									animate={{ rotate: 360 }}
 									transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
 								>
-									<img src="/img/windmill.svg" alt="Windmill" className="w-36 h-36" />
+									<img src="/img/windmill.svg" alt="Windmill" className="w-20 h-20" />
 								</motion.div>
 							</div>
 							{/* Rotating orbit */}
@@ -91,14 +91,84 @@ export default function DataPipelinesContent({ title, description }) {
 								animate={{ rotate: 360 }}
 								transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
 							>
+								{/* Lines from center to each logo — aligned with windmill blade tips */}
+								<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+									{[
+										{ angle: -123 },
+										{ angle: -61 },
+										{ angle: -4 },
+										{ angle: 58 },
+										{ angle: 116 },
+										{ angle: 179 },
+									].map((item, i) => {
+										const rad = (item.angle * Math.PI) / 180;
+										const rStart = 40;
+										const rEnd = 180;
+										return (
+											<line
+												key={i}
+												x1={240 + rStart * Math.cos(rad)}
+												y1={240 + rStart * Math.sin(rad)}
+												x2={240 + rEnd * Math.cos(rad)}
+												y2={240 + rEnd * Math.sin(rad)}
+												className="stroke-gray-200 dark:stroke-gray-700/50"
+												strokeWidth={1.5}
+											/>
+										);
+									})}
+									{/* Animated data particles */}
+									{(() => {
+										const angles = [-123, -61, -4, 58, 116, 179];
+										const r = 180;
+										const c = 240;
+										const toXY = (angle) => {
+											const rad = (angle * Math.PI) / 180;
+											return { x: c + r * Math.cos(rad), y: c + r * Math.sin(rad) };
+										};
+										const pos = angles.map(toXY);
+
+										/* 12 balls with varied routes, speeds and delays */
+										const balls = [
+											{ route: [0, 4, 2, 5, 1, 3], duration: 14, delay: 0 },
+											{ route: [3, 1, 5, 0, 4, 2], duration: 17, delay: 1.5 },
+											{ route: [5, 2, 0, 3, 1, 4], duration: 12, delay: 3 },
+											{ route: [1, 5, 3, 2, 0, 4], duration: 16, delay: 4.5 },
+											{ route: [4, 0, 1, 5, 3, 2], duration: 13, delay: 6 },
+											{ route: [2, 3, 4, 1, 5, 0], duration: 18, delay: 7.5 },
+											{ route: [0, 2, 5, 4, 3, 1], duration: 15, delay: 9 },
+											{ route: [5, 1, 3, 0, 2, 4], duration: 11, delay: 10.5 },
+											{ route: [3, 4, 0, 2, 5, 1], duration: 16, delay: 12 },
+											{ route: [1, 0, 4, 5, 2, 3], duration: 13, delay: 13.5 },
+											{ route: [4, 5, 2, 3, 0, 1], duration: 17, delay: 15 },
+											{ route: [2, 1, 5, 4, 3, 0], duration: 14, delay: 16.5 },
+										];
+										return balls.map((b, i) => {
+											const xK = [c];
+											const yK = [c];
+											b.route.forEach((idx) => {
+												xK.push(pos[idx].x, c);
+												yK.push(pos[idx].y, c);
+											});
+											return (
+												<motion.circle
+													key={`dot-${i}`}
+													r={4}
+													className="fill-blue-400 dark:fill-blue-300"
+													style={{ opacity: 0.8 }}
+													animate={{ cx: xK, cy: yK }}
+													transition={{ duration: b.duration, repeat: Infinity, ease: 'linear', delay: b.delay }}
+												/>
+											);
+										});
+									})()}
+								</svg>
 								{[
-									{ src: '/third_party_logos/duckdb.svg', label: 'DuckDB', angle: -90 },
-									{ src: '/third_party_logos/ducklake.svg', label: 'Ducklake', angle: -38 },
-									{ src: '/third_party_logos/s3.svg', label: 'S3', angle: 14 },
-									{ src: '/third_party_logos/postgres.svg', label: 'PostgreSQL', angle: 66 },
-									{ src: '/third_party_logos/snowflake.svg', label: 'Snowflake', angle: 118 },
-									{ src: '/third_party_logos/polars.svg', label: 'Polars', angle: 170 },
-									{ src: '/third_party_logos/bigquery.svg', label: 'BigQuery', angle: 222 },
+									{ src: '/third_party_logos/snowflake.svg', label: 'Snowflake', angle: -123 },
+									{ src: '/third_party_logos/duckdb.svg', label: 'DuckDB', angle: -61 },
+									{ src: '/third_party_logos/ducklake.svg', label: 'Ducklake', angle: -4 },
+									{ src: '/third_party_logos/s3.svg', label: 'S3', angle: 58 },
+									{ src: '/third_party_logos/postgres.svg', label: 'PostgreSQL', angle: 116 },
+									{ src: '/third_party_logos/polars.svg', label: 'Polars', angle: 179 },
 								].map((logo) => {
 									const rad = (logo.angle * Math.PI) / 180;
 									const r = 180;
