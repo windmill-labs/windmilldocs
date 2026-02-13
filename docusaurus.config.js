@@ -107,7 +107,7 @@ const config = {
 				sitemap: {
 					changefreq: 'weekly',
 					priority: 0.5,
-					ignorePatterns: ['/tags/**', '/brand-guidelines/**', '/case-studies/*-content'],
+					ignorePatterns: ['/tags/**', '/brand-guidelines/**', '/case-studies/*-content', '/use-cases/*-content'],
 					filename: 'sitemap.xml'
 				}
 			})

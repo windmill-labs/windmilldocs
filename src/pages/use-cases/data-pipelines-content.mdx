@@ -1,0 +1,349 @@
+---
+title: "How to build data pipelines with Windmill"
+description: "How do I build data pipelines with Windmill? DAG-based ETL with Polars and DuckDB, S3 integration, scheduling and monitoring. No Airflow boilerplate."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, Zap, GitBranch, Clock, FileJson } from 'lucide-react';
+import BarChart from '../../components/BarChart';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+export default function DataPipelinesContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* Hero */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Build production-grade data pipelines
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							For data teams who want reliable ETL with native DuckDB and Ducklake integrations — no Airflow or Spark clusters to manage.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/core_concepts/data_pipelines"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Write pipeline steps in <span className="text-blue-500">Python, TypeScript, SQL, Go, Bash</span> and 15+ languages</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Native integrations with <span className="text-blue-500">DuckDB, Ducklake and Polars</span> with zero config</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Built-in <span className="text-blue-500">S3 / Azure Blob / GCS</span> workspace storage with dataset browsing</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Single-node performance that <span className="text-blue-500">outperforms Spark</span> on most ETL workloads</span>
+							</div>
+						</div>
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<div className="relative w-[480px] h-[480px]">
+							{/* Orbit ring */}
+							<div className="absolute inset-[60px] rounded-full border border-gray-200 dark:border-gray-700/50" />
+							{/* Center Windmill logo */}
+							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+								<motion.div
+									animate={{ rotate: 360 }}
+									transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+								>
+									<img src="/img/windmill.svg" alt="Windmill" className="w-36 h-36" />
+								</motion.div>
+							</div>
+							{/* Rotating orbit */}
+							<motion.div
+								className="absolute inset-0"
+								style={{ transformOrigin: '240px 240px' }}
+								animate={{ rotate: 360 }}
+								transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+							>
+								{[
+									{ src: '/third_party_logos/duckdb.svg', label: 'DuckDB', angle: -90 },
+									{ src: '/third_party_logos/ducklake.svg', label: 'Ducklake', angle: -38 },
+									{ src: '/third_party_logos/s3.svg', label: 'S3', angle: 14 },
+									{ src: '/third_party_logos/postgres.svg', label: 'PostgreSQL', angle: 66 },
+									{ src: '/third_party_logos/snowflake.svg', label: 'Snowflake', angle: 118 },
+									{ src: '/third_party_logos/polars.svg', label: 'Polars', angle: 170 },
+									{ src: '/third_party_logos/bigquery.svg', label: 'BigQuery', angle: 222 },
+								].map((logo) => {
+									const rad = (logo.angle * Math.PI) / 180;
+									const r = 180;
+									const x = 240 + r * Math.cos(rad);
+									const y = 240 + r * Math.sin(rad);
+									return (
+										<div
+											key={logo.label}
+											className="absolute"
+											style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
+										>
+											<motion.div
+												animate={{ rotate: -360 }}
+												transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+											>
+												<div className="flex flex-col items-center gap-1.5">
+													<div className="w-[72px] h-[72px] rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex items-center justify-center p-2.5">
+														<img src={logo.src} alt={logo.label} className="w-full h-full object-contain" />
+													</div>
+													<span className="text-xs font-medium text-gray-500 dark:text-gray-400">{logo.label}</span>
+												</div>
+											</motion.div>
+										</div>
+									);
+								})}
+							</motion.div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* DAG orchestration */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Build pipelines with full code flexibility and DAG visualization
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Each pipeline is a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> — a directed acyclic graph where each step is a script in Python, TypeScript, SQL or any supported language.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+					{[
+						{ icon: GitBranch, title: 'Parallel branches', desc: 'Fan out extraction steps across independent sources and collect results automatically.' },
+						{ icon: Zap, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step — no need to replay the entire pipeline.' },
+						{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.' },
+					].map((item, i) => (
+						<motion.div key={item.title} {...stagger(i * 0.1)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
+								<item.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+							</div>
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+							<p className="text-gray-600 dark:text-gray-300 text-sm">{item.desc}</p>
+						</motion.div>
+					))}
+				</div>
+
+				<motion.div
+					initial={{ opacity: 0, y: 40 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true }}
+					transition={{ duration: 0.6, delay: 0.2 }}
+				>
+					<iframe
+						src="https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed"
+						className="w-full rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 bg-white p-4"
+						style={{ height: '700px' }}
+						frameBorder="0"
+						allow="fullscreen"
+					/>
+				</motion.div>
+			</div>
+
+			{/* Integrations: DuckDB, Ducklake, S3 */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="mb-16">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Native DuckDB, Ducklake and S3 integrations
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							Windmill ships with first-class support for modern OLAP engines and cloud storage. The SDK handles S3 credentials and connection settings automatically — write your query, not your infrastructure.
+						</p>
+					</motion.div>
+
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+						<motion.div {...stagger(0)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="flex items-center gap-3 mb-4">
+								<img src="/third_party_logos/polars.svg" alt="Polars" className="w-8 h-8" />
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Polars</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300">
+								Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.
+							</p>
+						</motion.div>
+
+						<motion.div {...stagger(0.1)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="flex items-center gap-3 mb-4">
+								<img src="/third_party_logos/duckdb.svg" alt="DuckDB" className="w-8 h-8" />
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">DuckDB</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300">
+								Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.
+							</p>
+						</motion.div>
+
+						<motion.div {...stagger(0.2)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="flex items-center gap-3 mb-4">
+								<img src="/third_party_logos/ducklake.svg" alt="Ducklake" className="w-8 h-8" />
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Ducklake</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300">
+								Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.
+							</p>
+						</motion.div>
+					</div>
+
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+						<motion.div {...stagger(0.3)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="flex items-center gap-3 mb-4">
+								<img src="/third_party_logos/s3.svg" alt="S3" className="w-8 h-8" />
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Workspace S3 storage</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300">
+								Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse files and preview Parquet, CSV and JSON content directly from the UI.
+							</p>
+						</motion.div>
+						<motion.div {...stagger(0.4)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+									<FileJson className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Lightweight dataset references</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300">
+								Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.
+							</p>
+						</motion.div>
+					</div>
+
+					<motion.div {...fadeIn} className="mt-12 flex flex-wrap items-center gap-3">
+						<span className="text-gray-500 dark:text-gray-400 text-sm font-medium">And 50+ more:</span>
+						{['PostgreSQL', 'MySQL', 'BigQuery', 'Snowflake', 'Redshift', 'ClickHouse', 'MongoDB', 'REST APIs'].map((source) => (
+							<span key={source} className="px-3 py-1.5 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm">
+								{source}
+							</span>
+						))}
+						<Link
+							to="/docs/integrations/integrations_on_windmill"
+							className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							See all integrations <ArrowRight className="w-3.5 h-3.5" />
+						</Link>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* Performance */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Production-grade performance that replaces Spark
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Polars and DuckDB process data on a single node far faster than distributed frameworks for the vast majority of ETL workloads.
+					</p>
+				</motion.div>
+
+				<motion.div {...fadeIn}>
+					<BarChart
+						title="Duration of the 8 queries ran sequentially (in seconds)"
+						yTitle="duration (in seconds)"
+						labels={['Bench 1G', 'Bench 5G', 'Bench 10G', 'Bench 25G']}
+						rawData={[
+							{
+								label: 'Spark',
+								data: [285, 720, 1170, 2505]
+							},
+							{
+								label: 'Windmill + Polars',
+								data: [42, 183, 370, 0]
+							},
+							{
+								label: 'Windmill + Polars lazy',
+								data: [247, 1246, 2480, 6498]
+							},
+							{
+								label: 'Windmill + DuckDB in memory',
+								data: [61, 260, 560, 2767]
+							}
+						]}
+					/>
+					<p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+						TPC-H benchmark, 8 queries on m4.xlarge (8 vCPUs, 32 GB RAM)
+					</p>
+				</motion.div>
+			</div>
+
+			{/* Triggers & scheduling */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Trigger pipelines from anywhere
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run" from the UI.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+					{['Cron schedules', 'Webhooks', 'Postgres CDC', 'Kafka & SQS'].map((trigger, i) => (
+						<motion.div key={trigger} {...stagger(i * 0.05)} className="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 text-center">
+							<p className="text-gray-900 dark:text-white font-medium text-sm">{trigger}</p>
+						</motion.div>
+					))}
+				</div>
+			</div>
+
+			{/* CTA */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start building data pipelines today</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Get started for free on Windmill Cloud or self-host the open-source version.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/pricing"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							View pricing
+						</Link>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}

@@ -49,37 +49,37 @@ const solutionsByUseCase = [
 	{
 		name: 'Internal tools',
 		description: 'Build admin panels, dashboards and back-office apps.',
-		href: '/docs/apps/app_editor',
+		href: '/use-cases/internal-tools',
 		icon: WrenchScrewdriverIcon,
 	},
 	{
 		name: 'Workflow automation',
 		description: 'Orchestrate multi-step processes across services.',
-		href: '/docs/flows/flow_editor',
+		href: '/use-cases/workflow-automation',
 		icon: ArrowPathIcon,
 	},
 	{
 		name: 'Data pipelines',
 		description: 'ETL, syncs and scheduled data jobs.',
-		href: '/docs/flows/flow_editor',
+		href: '/use-cases/data-pipelines',
 		icon: CircleStackIcon,
 	},
 	{
 		name: 'Scripts & endpoints',
 		description: 'Deploy scripts as APIs or cron jobs instantly.',
-		href: '/docs/script_editor',
+		href: '/use-cases/scripts-and-endpoints',
 		icon: CodeBracketIcon,
 	},
 	{
 		name: 'AI agents',
 		description: 'Build and orchestrate AI agents with tools.',
-		href: '/docs/core_concepts/ai_agents',
+		href: '/use-cases/ai-agents',
 		icon: Bot,
 	},
 	{
 		name: 'Scheduled tasks',
 		description: 'Cron jobs, polling and background processing.',
-		href: '/docs/core_concepts/scheduling',
+		href: '/use-cases/scheduled-tasks',
 		icon: ClockIcon,
 	},
 ];
