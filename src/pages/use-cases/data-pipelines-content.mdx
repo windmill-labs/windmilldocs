@@ -327,6 +327,75 @@ export default function DataPipelinesContent({ title, description }) {
 				</div>
 			</div>
 
+			{/* Local compute — comparison with data warehouses */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						The native DuckDB and Ducklake orchestrator
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Stop paying per-query. Run <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link> and <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link> directly on your <Link to="/docs/core_concepts/workers_and_worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link>.
+					</p>
+				</motion.div>
+
+				<motion.div {...fadeIn} className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
+					<table className="!w-full !text-sm !border-collapse !border-0 !m-0 [&_td]:!border-0 [&_th]:!border-0 [&_tr]:!border-0 [&_thead]:!border-0 [&_tbody]:!border-0">
+						<thead>
+							<tr className="bg-gray-50 dark:bg-gray-900/50">
+								<th className="text-left py-4 px-6 font-medium text-gray-500 dark:text-gray-400 w-1/3"></th>
+								<th className="text-center py-4 px-6 w-1/3">
+									<div className="flex items-center justify-center gap-2">
+										<img src="/img/windmill.svg" alt="Windmill" className="w-6 h-6" />
+										<span className="font-semibold text-gray-900 dark:text-white text-base">Windmill + DuckDB</span>
+										<img src="/third_party_logos/duckdb.svg" alt="DuckDB" className="w-6 h-6" />
+									</div>
+								</th>
+								<th className="text-center py-4 px-6 w-1/3">
+									<div className="flex items-center justify-center gap-2">
+										<img src="/third_party_logos/snowflake.svg" alt="Snowflake" className="w-6 h-6" />
+										<span className="font-semibold text-gray-500 dark:text-gray-400 text-base">Snowflake / BigQuery</span>
+										<img src="/third_party_logos/bigquery.svg" alt="BigQuery" className="w-6 h-6" />
+									</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{[
+								{ label: 'Compute', windmill: 'Local on your workers', warehouse: 'Remote warehouse' },
+								{ label: 'Cost model', windmill: 'Flat — pay for infra only', warehouse: 'Per-query pricing' },
+								{ label: 'Data storage', windmill: 'Your S3 bucket, open formats', warehouse: 'Vendor-managed, proprietary' },
+								{ label: 'No vendor lock-in', windmill: false, warehouse: true },
+								{ label: 'Orchestration', windmill: 'Built-in (flows, retries, schedules)', warehouse: 'Separate tool needed' },
+								{ label: 'Setup', windmill: 'Zero config — auto-connected', warehouse: 'Credentials, drivers, networking' },
+								{ label: 'Data egress fees', windmill: false, warehouse: true },
+							].map((row, i) => (
+								<tr key={row.label} className={i % 2 === 0 ? 'bg-white dark:bg-gray-950' : 'bg-gray-50/50 dark:bg-gray-900/30'}>
+									<td className="py-3.5 px-6 font-medium text-gray-900 dark:text-white">{row.label}</td>
+									<td className="py-3.5 px-6 text-center">
+										{typeof row.windmill === 'boolean' ? (
+											row.windmill
+												? <span className="text-red-500 text-lg">✗</span>
+												: <span className="text-emerald-500 text-lg">✓</span>
+										) : (
+											<span className="text-gray-700 dark:text-gray-200">{row.windmill}</span>
+										)}
+									</td>
+									<td className="py-3.5 px-6 text-center">
+										{typeof row.warehouse === 'boolean' ? (
+											row.warehouse
+												? <span className="text-red-500 text-lg">✗</span>
+												: <span className="text-emerald-500 text-lg">✓</span>
+										) : (
+											<span className="text-gray-500 dark:text-gray-400">{row.warehouse}</span>
+										)}
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</motion.div>
+			</div>
+
 			{/* Performance */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 				<motion.div {...fadeIn} className="mb-12">
