@@ -3,10 +3,10 @@ title: "How to build data pipelines with Windmill"
 description: "How do I build data pipelines with Windmill? DAG-based ETL with Polars and DuckDB, S3 integration, scheduling and monitoring. No Airflow boilerplate."
 ---
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, GitBranch, Clock, FileJson } from 'lucide-react';
+import { ArrowRight, Zap, GitBranch, Clock, FileJson, RotateCcw, Radio } from 'lucide-react';
 import BarChart from '../../components/BarChart';
 
 export const fadeIn = {
@@ -20,6 +20,170 @@ export const stagger = (delay = 0) => ({
 	...fadeIn,
 	transition: { duration: 0.5, delay }
 });
+
+export const benchmarks = [
+	{
+		label: 'Duration',
+		title: 'Duration of the 8 queries ran sequentially (in seconds)',
+		yTitle: 'duration (in seconds)',
+		data: [
+			{ label: 'Spark', data: [285, 720, 1170, 2505] },
+			{ label: 'Windmill + Polars', data: [42, 183, 370, 0] },
+			{ label: 'Windmill + Polars lazy', data: [247, 1246, 2480, 6498] },
+			{ label: 'Windmill + DuckDB in memory', data: [61, 260, 560, 2767] },
+		],
+	},
+	{
+		label: 'Memory',
+		title: 'Memory peak for the 8 queries ran sequentially (in GB)',
+		yTitle: 'Memory peak (in GB)',
+		data: [
+			{ label: 'Spark', data: [7.26, 10.3, 11.7, 20.9] },
+			{ label: 'Windmill + Polars', data: [1.78, 12.2, 24.2, 0] },
+			{ label: 'Windmill + Polars lazy', data: [2.11, 2.42, 10.4, 19.6] },
+			{ label: 'Windmill + DuckDB in memory', data: [2.94, 6.05, 12.3, 25.7] },
+		],
+	},
+];
+
+export function BenchmarkSection() {
+	const [active, setActive] = useState(0);
+	const bench = benchmarks[active];
+	return (
+		<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Production-grade performance that replaces Spark
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Polars and DuckDB process data on a single node far faster than distributed frameworks for the vast majority of ETL workloads.
+					</p>
+				</motion.div>
+
+				<div className="flex items-center gap-1 mb-8 bg-gray-200 dark:bg-gray-800 rounded-lg p-1 w-fit mx-auto">
+					{benchmarks.map((b, i) => (
+						<button
+							key={b.label}
+							onClick={() => setActive(i)}
+							className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+								i === active
+									? 'bg-white dark:bg-gray-950 text-gray-900 dark:text-white shadow-sm'
+									: 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+							}`}
+						>
+							{b.label}
+						</button>
+					))}
+				</div>
+
+				<motion.div
+					key={active}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.25 }}
+				>
+					<BarChart
+						title={bench.title}
+						yTitle={bench.yTitle}
+						labels={['Bench 1G', 'Bench 5G', 'Bench 10G', 'Bench 25G']}
+						rawData={bench.data}
+					/>
+				</motion.div>
+				<p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+					TPC-H benchmark, 8 queries on m4.xlarge (8 vCPUs, 32 GB RAM)
+				</p>
+			</div>
+		</div>
+	);
+}
+
+export const integrations = [
+	{ id: 'duckdb', logo: '/third_party_logos/duckdb.svg', label: 'DuckDB', desc: 'Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.' },
+	{ id: 'ducklake', logo: '/third_party_logos/ducklake.svg', label: 'Ducklake', desc: 'Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.' },
+	{ id: 's3', logo: '/third_party_logos/s3.svg', label: 'Workspace S3', desc: 'Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse and preview Parquet, CSV and JSON directly from the UI.' },
+	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.' },
+	{ id: 'datasets', logo: null, label: 'Dataset references', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.' },
+];
+
+export function IntegrationsSection() {
+	const [active, setActive] = useState(0);
+	const item = integrations[active];
+	return (
+		<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						The native DuckDB and Ducklake orchestrator
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						The only orchestrator with zero-config DuckDB, Ducklake and S3 support. Credentials and connections are handled automatically — just write your query.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 mb-12">
+					{/* Left: clickable list */}
+					<div className="flex flex-col gap-2">
+						{integrations.map((intg, i) => (
+							<button
+								key={intg.id}
+								onClick={() => setActive(i)}
+								className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors border ${
+									i === active
+										? 'bg-blue-600 text-white border-blue-600'
+										: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+								}`}
+							>
+								{intg.logo ? (
+									<img src={intg.logo} alt={intg.label} className="w-6 h-6 flex-shrink-0" />
+								) : (
+									<FileJson className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
+								)}
+								<span className="font-medium text-sm">{intg.label}</span>
+							</button>
+						))}
+					</div>
+
+					{/* Right: selected content */}
+					<motion.div
+						key={active}
+						initial={{ opacity: 0, x: 10 }}
+						animate={{ opacity: 1, x: 0 }}
+						transition={{ duration: 0.25 }}
+						className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 flex flex-col justify-center"
+					>
+						<div className="flex items-center gap-3 mb-4">
+							{item.logo ? (
+								<img src={item.logo} alt={item.label} className="w-10 h-10" />
+							) : (
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<FileJson className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+							)}
+							<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{item.label}</h3>
+						</div>
+						<p className="text-gray-600 dark:text-gray-300 text-lg">{item.desc}</p>
+					</motion.div>
+				</div>
+
+				<motion.div {...fadeIn} className="flex flex-wrap items-center gap-3">
+					<span className="text-gray-500 dark:text-gray-400 text-sm font-medium">And 50+ more:</span>
+					{['PostgreSQL', 'MySQL', 'BigQuery', 'Snowflake', 'Redshift', 'ClickHouse', 'MongoDB', 'REST APIs'].map((source) => (
+						<span key={source} className="px-3 py-1.5 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm">
+							{source}
+						</span>
+					))}
+					<Link
+						to="/docs/integrations/integrations_on_windmill"
+						className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+					>
+						See all integrations <ArrowRight className="w-3.5 h-3.5" />
+					</Link>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
 
 export default function DataPipelinesContent({ title, description }) {
 	return (
@@ -211,11 +375,12 @@ export default function DataPipelinesContent({ title, description }) {
 					</p>
 				</motion.div>
 
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
 					{[
 						{ icon: GitBranch, title: 'Parallel branches', desc: 'Fan out extraction steps across independent sources and collect results automatically.' },
-						{ icon: Zap, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step — no need to replay the entire pipeline.' },
+						{ icon: RotateCcw, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step — no need to replay the entire pipeline.' },
 						{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.' },
+						{ icon: Radio, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".' },
 					].map((item, i) => (
 						<motion.div key={item.title} {...stagger(i * 0.1)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
 							<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
@@ -226,106 +391,10 @@ export default function DataPipelinesContent({ title, description }) {
 						</motion.div>
 					))}
 				</div>
-
-				<motion.div
-					initial={{ opacity: 0, y: 40 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.6, delay: 0.2 }}
-				>
-					<iframe
-						src="https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed"
-						className="w-full rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 bg-white p-4"
-						style={{ height: '700px' }}
-						frameBorder="0"
-						allow="fullscreen"
-					/>
-				</motion.div>
 			</div>
 
-			{/* Integrations: DuckDB, Ducklake, S3 */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-					<motion.div {...fadeIn} className="mb-16">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							The native DuckDB and Ducklake orchestrator
-						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300">
-							The only orchestrator with zero-config DuckDB, Ducklake and S3 support. Credentials and connections are handled automatically — just write your query.
-						</p>
-					</motion.div>
-
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-						<motion.div {...stagger(0)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="flex items-center gap-3 mb-4">
-								<img src="/third_party_logos/polars.svg" alt="Polars" className="w-8 h-8" />
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Polars</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300">
-								Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.
-							</p>
-						</motion.div>
-
-						<motion.div {...stagger(0.1)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="flex items-center gap-3 mb-4">
-								<img src="/third_party_logos/duckdb.svg" alt="DuckDB" className="w-8 h-8" />
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">DuckDB</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300">
-								Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.
-							</p>
-						</motion.div>
-
-						<motion.div {...stagger(0.2)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="flex items-center gap-3 mb-4">
-								<img src="/third_party_logos/ducklake.svg" alt="Ducklake" className="w-8 h-8" />
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Ducklake</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300">
-								Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.
-							</p>
-						</motion.div>
-					</div>
-
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-						<motion.div {...stagger(0.3)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="flex items-center gap-3 mb-4">
-								<img src="/third_party_logos/s3.svg" alt="S3" className="w-8 h-8" />
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Workspace S3 storage</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300">
-								Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse files and preview Parquet, CSV and JSON content directly from the UI.
-							</p>
-						</motion.div>
-						<motion.div {...stagger(0.4)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="flex items-center gap-3 mb-4">
-								<div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
-									<FileJson className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Lightweight dataset references</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300">
-								Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.
-							</p>
-						</motion.div>
-					</div>
-
-					<motion.div {...fadeIn} className="mt-12 flex flex-wrap items-center gap-3">
-						<span className="text-gray-500 dark:text-gray-400 text-sm font-medium">And 50+ more:</span>
-						{['PostgreSQL', 'MySQL', 'BigQuery', 'Snowflake', 'Redshift', 'ClickHouse', 'MongoDB', 'REST APIs'].map((source) => (
-							<span key={source} className="px-3 py-1.5 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm">
-								{source}
-							</span>
-						))}
-						<Link
-							to="/docs/integrations/integrations_on_windmill"
-							className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
-						>
-							See all integrations <ArrowRight className="w-3.5 h-3.5" />
-						</Link>
-					</motion.div>
-				</div>
-			</div>
+			{/* Integrations: interactive 2-column selector */}
+			<IntegrationsSection />
 
 			{/* Local compute — comparison with data warehouses */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
@@ -397,65 +466,7 @@ export default function DataPipelinesContent({ title, description }) {
 			</div>
 
 			{/* Performance */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-				<motion.div {...fadeIn} className="mb-12">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Production-grade performance that replaces Spark
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Polars and DuckDB process data on a single node far faster than distributed frameworks for the vast majority of ETL workloads.
-					</p>
-				</motion.div>
-
-				<motion.div {...fadeIn}>
-					<BarChart
-						title="Duration of the 8 queries ran sequentially (in seconds)"
-						yTitle="duration (in seconds)"
-						labels={['Bench 1G', 'Bench 5G', 'Bench 10G', 'Bench 25G']}
-						rawData={[
-							{
-								label: 'Spark',
-								data: [285, 720, 1170, 2505]
-							},
-							{
-								label: 'Windmill + Polars',
-								data: [42, 183, 370, 0]
-							},
-							{
-								label: 'Windmill + Polars lazy',
-								data: [247, 1246, 2480, 6498]
-							},
-							{
-								label: 'Windmill + DuckDB in memory',
-								data: [61, 260, 560, 2767]
-							}
-						]}
-					/>
-					<p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-						TPC-H benchmark, 8 queries on m4.xlarge (8 vCPUs, 32 GB RAM)
-					</p>
-				</motion.div>
-			</div>
-
-			{/* Triggers & scheduling */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Trigger pipelines from anywhere
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run" from the UI.
-					</p>
-				</motion.div>
-
-				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-					{['Cron schedules', 'Webhooks', 'Postgres CDC', 'Kafka & SQS'].map((trigger, i) => (
-						<motion.div key={trigger} {...stagger(i * 0.05)} className="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 text-center">
-							<p className="text-gray-900 dark:text-white font-medium text-sm">{trigger}</p>
-						</motion.div>
-					))}
-				</div>
-			</div>
+			<BenchmarkSection />
 
 			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
