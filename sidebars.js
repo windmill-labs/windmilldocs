@@ -922,7 +922,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_eks_ecs']
+					items: ['advanced/instance_settings/index', 'core_concepts/infrastructure_as_code/index', 'advanced/self_host/aws_eks_ecs']
 				},
 				{
 					type: 'category',
