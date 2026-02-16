@@ -10,7 +10,7 @@ Full-code apps let you build custom frontends with React or Svelte that connect 
 
 ## How it works
 
-A full-code app is a directory (`.raw_app/` or `__raw_app/`) containing:
+A full-code app is a directory with the `.raw_app` suffix (e.g. `my_app.raw_app/`) or the `__raw_app` suffix (e.g. `my_app__raw_app/`) depending on your [sync settings](#folder-suffix). It contains:
 
 - **Frontend code**: React or Svelte components bundled and served by Windmill
 - **Backend runnables**: scripts in any [supported language](#supported-languages) that run on Windmill workers
@@ -40,11 +40,15 @@ wmill app new
 This scaffolds a project with your chosen framework (React or Svelte), a sample backend runnable, and the necessary configuration. Then start the development server:
 
 ```bash
-cd f/folder/my_app.raw_app
+cd f/folder/my_app.raw_app   # or my_app__raw_app
 wmill app dev .
 ```
 
 See the [CLI workflow](./5_cli_workflow/index.mdx) page for the full setup guide.
+
+### Folder suffix
+
+By default the CLI uses dotted suffixes (`.raw_app`). If your filesystem or tooling hides dotfiles, set `nonDottedPaths: true` in your `wmill.yaml` to use dunder suffixes (`__raw_app`) instead. All examples in this documentation use the default `.raw_app` suffix — substitute `__raw_app` if you enabled non-dotted paths.
 
 ## Supported languages
 

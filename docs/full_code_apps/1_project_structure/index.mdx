@@ -6,13 +6,9 @@ import DocCard from '@site/src/components/DocCard';
 
 # Project structure
 
-A full-code app lives in a `.raw_app/` directory (or `__raw_app/` on systems that hide dotfiles). This page describes the file layout and configuration schema.
+A full-code app lives in a directory with the `.raw_app` suffix (e.g. `my_app.raw_app/`). If your filesystem or tooling hides dotfiles, you can use the `__raw_app` suffix instead (e.g. `my_app__raw_app/`) by setting `nonDottedPaths: true` in `wmill.yaml`.
 
-:::tip
-
-The default folder suffix is `.raw_app` (e.g., `my_app.raw_app/`). If your system hides dotfiles, use the `__raw_app` suffix instead (e.g., `my_app__raw_app/`). Configure this with `wmill sync` settings.
-
-:::
+All examples below use the default `.raw_app` suffix.
 
 ## Directory layout
 
