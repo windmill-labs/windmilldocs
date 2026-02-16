@@ -5,6 +5,8 @@ description: "How do I build data pipelines with Windmill? DAG-based ETL with Po
 
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
+import { Disclosure } from '@headlessui/react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap, GitBranch, Clock, FileJson, RotateCcw, Code, Play, BookOpen, Database } from 'lucide-react';
 import BarChart from '../../components/BarChart';
@@ -287,6 +289,82 @@ export function IntegrationsSection() {
 	);
 }
 
+export const faqs = [
+	{
+		question: 'What languages does Windmill support for data pipelines?',
+		textAnswer: 'Windmill supports Python, TypeScript, SQL, Go, Bash, Rust, PHP, and 15+ other languages. Each pipeline step can use a different language, so you can pick the best tool for each task. For example, Python with Polars for transformations, SQL for DuckDB queries, and TypeScript for API calls.',
+	},
+	{
+		question: 'Can I use Snowflake or BigQuery with Windmill?',
+		textAnswer: 'Yes. Windmill has native integrations for Snowflake, BigQuery, PostgreSQL, MySQL, and 50+ other data sources. You can mix remote warehouse queries with local DuckDB steps in the same pipeline.',
+	},
+	{
+		question: 'How does Windmill compare to Airflow for data pipelines?',
+		textAnswer: 'Windmill replaces Airflow with a simpler developer experience: no DAG-as-code boilerplate, a built-in code editor with AI assistance, native DuckDB and Polars integrations, and a visual flow editor. Pipelines run on lightweight workers instead of a complex Celery/Kubernetes setup.',
+	},
+	{
+		question: 'Do I need to manage infrastructure to run Windmill?',
+		textAnswer: 'No. Windmill Cloud is a fully managed service. Sign up and start building pipelines immediately. You can also self-host the open-source Community Edition on Docker or Kubernetes with a single command.',
+	},
+	{
+		question: 'How does Windmill handle errors in data pipelines?',
+		textAnswer: 'Each pipeline step supports configurable retries with exponential backoff, custom error handler scripts, and automatic notifications. You can restart a failed pipeline from any step without replaying the entire run.',
+	},
+];
+
+export function FAQSection() {
+	const faqSchema = {
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: faqs.map((faq) => ({
+			'@type': 'Question',
+			name: faq.question,
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: faq.textAnswer,
+			},
+		})),
+	};
+
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+			<Head>
+				<script type="application/ld+json">
+					{JSON.stringify(faqSchema)}
+				</script>
+			</Head>
+			<motion.div {...fadeIn} className="mb-12">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					Frequently asked questions
+				</h2>
+			</motion.div>
+			<dl className="mx-auto max-w-4xl space-y-6 divide-y divide-gray-200 dark:divide-gray-700">
+				{faqs.map((faq) => (
+					<Disclosure as="div" key={faq.question} className="pt-6">
+						{({ open }) => (
+							<>
+								<dt>
+									<Disclosure.Button className="flex w-full items-start justify-between text-left text-gray-900 dark:text-white">
+										<span className="text-base font-semibold leading-7">{faq.question}</span>
+										<span className="ml-6 flex h-7 items-center">
+											<svg className={`h-5 w-5 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+												<path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+											</svg>
+										</span>
+									</Disclosure.Button>
+								</dt>
+								<Disclosure.Panel as="dd" className="mt-4 pr-12">
+									<p className="text-base leading-7 text-gray-600 dark:text-gray-300">{faq.textAnswer}</p>
+								</Disclosure.Panel>
+							</>
+						)}
+					</Disclosure>
+				))}
+			</dl>
+		</div>
+	);
+}
+
 export default function DataPipelinesContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
@@ -546,6 +624,9 @@ export default function DataPipelinesContent({ title, description }) {
 
 			{/* Performance */}
 			<BenchmarkSection />
+
+			{/* FAQ */}
+			<FAQSection />
 
 			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">

@@ -2,6 +2,7 @@ import React from 'react';
 import Footer from '../../landing/Footer';
 import LandingHeader from '../../landing/LandingHeader';
 import Head from '@docusaurus/Head';
+import SeoHead from '../SeoHead';
 import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 
@@ -23,13 +24,27 @@ interface UseCaseLayoutProps {
 }
 
 export default function UseCaseLayout({ Content, frontMatter, useCaseData }: UseCaseLayoutProps) {
+	const pageUrl = useCaseData
+		? `https://www.windmill.dev${useCaseData.link}`
+		: 'https://www.windmill.dev';
+
 	const pageSchema = useCaseData
 		? {
 				'@context': 'https://schema.org',
-				'@type': 'WebPage',
+				'@type': 'SoftwareApplication',
 				name: useCaseData.name,
 				headline: useCaseData.headline,
 				description: useCaseData.description,
+				applicationCategory: 'DeveloperApplication',
+				operatingSystem: 'Web',
+				offers: [
+					{
+						'@type': 'Offer',
+						name: 'Community Edition',
+						price: '0',
+						priceCurrency: 'USD'
+					}
+				],
 				publisher: {
 					'@type': 'Organization',
 					name: 'Windmill',
@@ -38,7 +53,7 @@ export default function UseCaseLayout({ Content, frontMatter, useCaseData }: Use
 						url: 'https://www.windmill.dev/img/windmill.svg'
 					}
 				},
-				url: `https://www.windmill.dev${useCaseData.link}`
+				url: pageUrl
 			}
 		: null;
 
@@ -46,17 +61,18 @@ export default function UseCaseLayout({ Content, frontMatter, useCaseData }: Use
 		<LayoutProvider>
 			<main className="relative min-h-screen w-full overflow-x-hidden">
 				<LandingHeader />
-				<Head>
-					<title>{frontMatter.title} | Windmill</title>
-					<meta name="title" content={frontMatter.title} />
-					<meta name="description" content={frontMatter.description} />
-					<link rel="icon" href="/img/logo.svg" />
-					{pageSchema && (
+				<SeoHead
+					title={`${frontMatter.title} | Windmill`}
+					description={frontMatter.description}
+					url={pageUrl}
+				/>
+				{pageSchema && (
+					<Head>
 						<script type="application/ld+json">
 							{JSON.stringify(pageSchema)}
 						</script>
-					)}
-				</Head>
+					</Head>
+				)}
 				<>
 					<RadialBlur />
 					<Content title={frontMatter.title} description={frontMatter.description} />
