@@ -103,7 +103,7 @@ export const integrations = [
 	{ id: 'ducklake', logo: '/third_party_logos/ducklake.svg', label: 'Ducklake', desc: 'Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.', image: '/img/money-pages/ducklake.png', docLink: '/docs/core_concepts/persistent_storage/ducklake' },
 	{ id: 's3', logo: '/third_party_logos/s3.svg', label: 'Workspace S3', desc: 'Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse and preview Parquet, CSV and JSON directly from the UI.', image: '/img/money-pages/s3-integration.png', docLink: '/docs/core_concepts/persistent_storage/large_data_files' },
 	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.', image: '/img/money-pages/polars.png', docLink: '/docs/core_concepts/data_pipelines#windmill-integration-with-polars-and-duckdb-for-data-pipelines' },
-	{ id: 'datasets', logo: null, label: 'Dataset references', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.', image: '/img/money-pages/dataset-ref.png', docLink: '/docs/core_concepts/persistent_storage' },
+	{ id: 'datasets', logo: null, label: 'Assets lineage', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.', image: '/img/money-pages/dataset-ref.png', docLink: '/docs/core_concepts/persistent_storage' },
 ];
 
 {/* TODO: add screenshots for each DAG feature (parallel branches, restart from any step, retries & error handlers, trigger from anywhere) */}
