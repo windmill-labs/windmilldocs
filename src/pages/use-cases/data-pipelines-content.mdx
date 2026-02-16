@@ -99,11 +99,11 @@ export function BenchmarkSection() {
 }
 
 export const integrations = [
-	{ id: 'duckdb', logo: '/third_party_logos/duckdb.svg', label: 'DuckDB', desc: 'Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.', image: '/img/money-pages/duckdb.png' },
-	{ id: 'ducklake', logo: '/third_party_logos/ducklake.svg', label: 'Ducklake', desc: 'Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.', image: '/img/money-pages/ducklake.png' },
-	{ id: 's3', logo: '/third_party_logos/s3.svg', label: 'Workspace S3', desc: 'Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse and preview Parquet, CSV and JSON directly from the UI.', image: '/img/money-pages/s3-integration.png' },
-	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.', image: null },
-	{ id: 'datasets', logo: null, label: 'Dataset references', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.', image: null },
+	{ id: 'duckdb', logo: '/third_party_logos/duckdb.svg', label: 'DuckDB', desc: 'Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.', image: '/img/money-pages/duckdb.png', docLink: '/docs/integrations/duckdb' },
+	{ id: 'ducklake', logo: '/third_party_logos/ducklake.svg', label: 'Ducklake', desc: 'Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.', image: '/img/money-pages/ducklake.png', docLink: '/docs/core_concepts/persistent_storage/ducklake' },
+	{ id: 's3', logo: '/third_party_logos/s3.svg', label: 'Workspace S3', desc: 'Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse and preview Parquet, CSV and JSON directly from the UI.', image: '/img/money-pages/s3-integration.png', docLink: '/docs/core_concepts/persistent_storage/large_data_files' },
+	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.', image: '/img/money-pages/polars.png', docLink: '/docs/core_concepts/data_pipelines#windmill-integration-with-polars-and-duckdb-for-data-pipelines' },
+	{ id: 'datasets', logo: null, label: 'Dataset references', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.', image: '/img/money-pages/dataset-ref.png', docLink: '/docs/core_concepts/persistent_storage' },
 ];
 
 {/* TODO: add screenshots for each DAG feature (parallel branches, restart from any step, retries & error handlers, trigger from anywhere) */}
@@ -255,6 +255,13 @@ export function IntegrationsSection() {
 								<p className="text-gray-600 dark:text-gray-300 text-lg">{intg.desc}</p>
 								{intg.image && (
 									<img src={intg.image} alt={intg.label} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full mt-4" />
+								)}
+								{intg.docLink && (
+									<div className="flex justify-end mt-3">
+										<Link to={intg.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+											<BookOpen className="w-4 h-4" /> Read the docs
+										</Link>
+									</div>
 								)}
 							</div>
 						))}
