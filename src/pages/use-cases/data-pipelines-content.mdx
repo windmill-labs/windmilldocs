@@ -6,7 +6,7 @@ description: "How do I build data pipelines with Windmill? DAG-based ETL with Po
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, GitBranch, Clock, FileJson, RotateCcw, Code, Play, BookOpen } from 'lucide-react';
+import { ArrowRight, Zap, GitBranch, Clock, FileJson, RotateCcw, Code, Play, BookOpen, Database } from 'lucide-react';
 import BarChart from '../../components/BarChart';
 
 export const fadeIn = {
@@ -114,6 +114,7 @@ export const dagFeatures = [
 	{ icon: RotateCcw, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step. No need to replay the entire pipeline.', image: '/img/money-pages/restart-from-step.png', docLink: '/docs/flows/flow_editor' },
 	{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.', image: '/img/money-pages/retries-error-handlers.png', docLink: '/docs/flows/retries' },
 	{ icon: Zap, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".', image: '/img/money-pages/triggers.png', docLink: '/docs/core_concepts/triggers' },
+	{ icon: Database, title: 'Data tables', desc: 'Built-in relational storage with zero setup. Query from Python, TypeScript, SQL or DuckDB. Credentials are managed internally and never exposed.', image: '/img/money-pages/data-tables.png', docLink: '/docs/core_concepts/persistent_storage/data_tables' },
 	{ icon: Play, title: 'Test', desc: 'Try it yourself — run a real data pipeline directly from this page.', image: null, embed: 'https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed' },
 ];
 
@@ -527,6 +528,9 @@ export default function DataPipelinesContent({ title, description }) {
 						</tbody>
 					</table>
 				</motion.div>
+				<p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+					Windmill also orchestrates Snowflake, BigQuery and other warehouses. You can mix local DuckDB steps with remote warehouse queries in the same pipeline.
+				</p>
 			</div>
 
 			{/* Performance */}
