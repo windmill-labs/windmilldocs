@@ -500,6 +500,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/gworkspace',
+							label: 'Google Workspace'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/git_repository',
 							label: 'Git repository'
 						},
