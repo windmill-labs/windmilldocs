@@ -29,13 +29,9 @@ Make your app accessible without authentication by setting `public: true` in `ra
 ```yaml
 summary: "Public dashboard"
 public: true
-policy:
-  execution_mode: anonymous
-  triggerables: {}
-  triggerables_v2: {}
 ```
 
-Public apps are accessible at their app URL without requiring a Windmill login. See [public apps](../../apps/8_public_apps.mdx) for more details.
+Public apps are accessible at their app URL without requiring a Windmill login. The execution policy is auto-generated at deployment time. See [public apps](../../apps/8_public_apps.mdx) for more details.
 
 ## Custom paths
 
@@ -49,16 +45,14 @@ The app will then be accessible at `https://<instance>/apps/custom/my-dashboard`
 
 ## Execution policy
 
-The `policy.execution_mode` field controls how backend runnables are executed:
+The execution policy is auto-generated at deployment time. It controls how backend runnables are executed:
 
 | Mode | Description |
 |------|-------------|
-| `publisher` | Runnables execute as the app owner (the user who deployed the app). Users don't need direct permissions on the underlying scripts. |
+| `publisher` | Runnables execute as the app owner (the user who deployed the app). Users don't need direct permissions on the underlying scripts. This is the default. |
 | `anonymous` | Runnables execute with the permissions of the viewer. Used for public apps or when you want per-user access control. |
 
-### Triggerables
-
-The `triggerables` and `triggerables_v2` fields in the policy are auto-generated when deploying. They map each runnable to its execution configuration. You generally don't need to edit these manually — they are populated during push/deploy.
+The `triggerables` and `triggerables_v2` fields map each runnable to its execution configuration and are populated automatically during push/deploy.
 
 ## Versioning
 

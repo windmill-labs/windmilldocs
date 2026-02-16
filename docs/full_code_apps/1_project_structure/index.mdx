@@ -6,7 +6,13 @@ import DocCard from '@site/src/components/DocCard';
 
 # Project structure
 
-A full-code app lives in a `.raw_app/` directory. This page describes the file layout and configuration schema.
+A full-code app lives in a `.raw_app/` directory (or `__raw_app/` on systems that hide dotfiles). This page describes the file layout and configuration schema.
+
+:::tip
+
+The default folder suffix is `.raw_app` (e.g., `my_app.raw_app/`). If your system hides dotfiles, use the `__raw_app` suffix instead (e.g., `my_app__raw_app/`). Configure this with `wmill sync` settings.
+
+:::
 
 ## Directory layout
 
@@ -42,12 +48,6 @@ custom_path: "my-dashboard"
 # Optional: make the app publicly accessible
 public: false
 
-# Execution policy
-policy:
-  execution_mode: publisher   # "publisher" or "anonymous"
-  triggerables: {}
-  triggerables_v2: {}
-
 # Optional: data table access configuration
 data:
   datatable: "main"           # Datatable name
@@ -57,6 +57,8 @@ data:
   schema: "app1"              # Schema within the datatable
 ```
 
+The execution policy (including `execution_mode`, `triggerables` and `triggerables_v2`) is auto-generated at deployment time and does not need to be specified in `raw_app.yaml`.
+
 ### Fields
 
 | Field | Type | Required | Description |
@@ -64,9 +66,6 @@ data:
 | `summary` | string | Yes | Short description of the app (max 1000 chars) |
 | `custom_path` | string | No | Custom URL path (admin only) |
 | `public` | boolean | No | Whether the app is publicly accessible |
-| `policy.execution_mode` | string | Yes | `"publisher"` (runs as app owner) or `"anonymous"` |
-| `policy.triggerables` | object | Yes | Map of triggerable runnables (auto-generated) |
-| `policy.triggerables_v2` | object | Yes | Map of triggerable runnables v2 (auto-generated) |
 | `data.datatable` | string | No | [Datatable](../../core_concepts/11_persistent_storage/data_tables.mdx) name |
 | `data.tables` | string[] | No | List of table names to whitelist |
 | `data.schema` | string | No | Schema name within the datatable |
