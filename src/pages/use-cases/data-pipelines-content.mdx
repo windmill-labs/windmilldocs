@@ -115,7 +115,7 @@ export const dagFeatures = [
 	{ icon: GitBranch, title: 'Parallel branches', desc: 'Fan out extraction steps across independent sources and collect results automatically.', image: '/img/money-pages/parallel-branches.webp', docLink: '/docs/flows/flow_branches' },
 	{ icon: RotateCcw, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step. No need to replay the entire pipeline.', image: '/img/money-pages/restart-from-step.webp', docLink: '/docs/flows/flow_editor' },
 	{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.', image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/flows/retries' },
-	{ icon: Zap, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".', image: '/img/money-pages/triggers.webp', docLink: '/docs/core_concepts/triggers' },
+	{ icon: Zap, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".', image: '/img/money-pages/triggers.webp', docLink: '/docs/getting_started/triggers' },
 	{ icon: Database, title: 'Data tables', desc: 'Built-in relational storage with zero setup. Query from Python, TypeScript, SQL or DuckDB. Credentials are managed internally and never exposed.', image: '/img/money-pages/data-tables.webp', docLink: '/docs/core_concepts/persistent_storage/data_tables' },
 	{ icon: Play, title: 'Test', desc: 'Try it yourself — run a real data pipeline directly from this page.', image: null, embed: 'https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed' },
 ];
@@ -557,7 +557,7 @@ export default function DataPipelinesContent({ title, description }) {
 						Challenging the status quo of data warehouses
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Stop paying per-query. Run <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link> and <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link> locally on your <Link to="/docs/core_concepts/workers_and_worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link>.
+						Stop paying per-query. Run <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link> and <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link> locally on your <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link>.
 					</p>
 				</motion.div>
 
