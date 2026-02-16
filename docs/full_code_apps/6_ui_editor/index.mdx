@@ -1,0 +1,81 @@
+---
+description: Edit full-code apps directly in the Windmill browser interface.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# UI editor
+
+Full-code apps can be created and edited directly in the Windmill web interface, without using the [CLI](../5_cli_workflow/index.mdx).
+
+## Overview
+
+The in-browser editor provides:
+
+- **File tree**: navigate and manage frontend files
+- **Code editor**: edit frontend and backend code with syntax highlighting
+- **Runnables panel**: create, edit and configure backend runnables from a sidebar
+- **Data table configuration**: whitelist data tables from the UI
+- **Preview**: test your app without deploying
+
+## Creating a full-code app
+
+From your Windmill workspace:
+
+1. Click the dropdown menu next to `+ App`
+2. Select `Import app in React/Vue/Svelte`
+3. Choose your framework or upload an existing project
+
+## Editing frontend files
+
+The file tree on the left shows all frontend files. Click a file to open it in the code editor. You can:
+
+- Create new files and folders
+- Rename and delete files
+- Edit code with syntax highlighting and autocompletion
+
+## Managing backend runnables
+
+The runnables panel on the right lists all backend runnables. From here you can:
+
+- Add new inline scripts in any supported language
+- Reference existing workspace scripts or flows
+- Configure static input fields
+- View and edit runnable code
+
+## Data table configuration
+
+Configure which [data tables](../4_data_tables/index.mdx) your app can access:
+
+1. Open the data configuration panel
+2. Select a datatable from your workspace
+3. Whitelist specific tables
+4. Optionally set a schema name
+
+## Preview and testing
+
+Click the preview button to test your app in the browser. The preview runs your bundled frontend code and connects to Windmill's backend for runnable execution.
+
+## When to use the UI editor vs CLI
+
+| Scenario | Recommended |
+|----------|-------------|
+| Quick edits to an existing app | UI editor |
+| New app from scratch | CLI (`wmill app new`) |
+| Complex frontend with many dependencies | CLI (`wmill app dev`) |
+| Team collaboration with git | CLI + [git sync](../../advanced/11_git_sync/index.mdx) |
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="CLI workflow"
+		description="Scaffold and develop full-code apps from your terminal."
+		href="/docs/full_code_apps/cli_workflow"
+		color="orange"
+	/>
+	<DocCard
+		title="Deployment"
+		description="Deploy your app and configure access."
+		href="/docs/full_code_apps/deployment"
+		color="orange"
+	/>
+</div>

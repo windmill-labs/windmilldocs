@@ -1,0 +1,167 @@
+---
+description: Define backend scripts in any language that run on Windmill workers and are called from your frontend code.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Backend runnables
+
+Backend runnables are scripts that run on Windmill workers and are called from your [frontend code](../3_frontend/index.mdx) via the `wmill.ts` module. They live in the `backend/` folder of your full-code app.
+
+## File structure
+
+Each runnable consists of up to three files in the `backend/` directory:
+
+```
+backend/
+├── get_users.ts            # Code file (required)
+├── get_users.yaml          # Config file (optional)
+├── get_users.lock          # Lock file (auto-generated)
+├── run_query.pg.sql        # SQL runnable (language from extension)
+└── run_query.lock
+```
+
+The runnable ID is derived from the filename: `get_users.ts` → runnable ID `get_users`.
+
+## Code-only runnables (auto-detect)
+
+The simplest way to define a runnable is to place a code file in `backend/`. The language is detected from the file extension and the runnable is treated as an inline script:
+
+```
+backend/get_users.ts        → TypeScript (Bun) inline script, ID: "get_users"
+backend/fetch_data.py       → Python inline script, ID: "fetch_data"
+backend/query.pg.sql        → PostgreSQL inline script, ID: "query"
+```
+
+No `.yaml` file is needed for code-only runnables.
+
+## Explicit YAML config
+
+For more control, create a `.yaml` file alongside the code file:
+
+### Inline scripts
+
+```yaml
+# backend/get_users.yaml
+type: inline
+fields:
+  workspace_id:
+    type: static
+    value: "my_workspace"
+```
+
+The code is in the sibling file (`get_users.ts`, `get_users.py`, etc.).
+
+### Path-based runnables
+
+Reference an existing workspace [script](../../script_editor/index.mdx) or [flow](../../flows/1_flow_editor.mdx):
+
+```yaml
+# backend/process_order.yaml
+type: script
+path: f/production/process_order
+```
+
+```yaml
+# backend/onboarding.yaml
+type: flow
+path: f/flows/user_onboarding
+```
+
+```yaml
+# backend/send_email.yaml
+type: hubscript
+path: hub/123/sendgrid/send_email
+```
+
+### Static fields
+
+You can pre-fill runnable inputs with static values so the frontend doesn't need to pass them:
+
+```yaml
+# backend/get_users.yaml
+type: inline
+fields:
+  limit:
+    type: static
+    value: 100
+  workspace:
+    type: static
+    value: "production"
+```
+
+Field types:
+
+| Type | Description |
+|------|-------------|
+| `static` | A fixed value, set in the YAML |
+| `ctx` | A value from the app context (e.g., user email) |
+| `user` | Provided by the frontend at call time |
+
+## Supported languages
+
+| Language | Extension | Language | Extension |
+|----------|-----------|----------|-----------|
+| TypeScript (Bun) | `.bun.ts` or `.ts` | Python | `.py` |
+| TypeScript (Deno) | `.deno.ts` | Go | `.go` |
+| PostgreSQL | `.pg.sql` | MySQL | `.my.sql` |
+| BigQuery | `.bq.sql` | Snowflake | `.sf.sql` |
+| MS SQL | `.ms.sql` | OracleDB | `.odb.sql` |
+| DuckDB | `.duckdb.sql` | GraphQL | `.gql` |
+| Bash | `.sh` | PowerShell | `.ps1` |
+| PHP | `.php` | Rust | `.rs` |
+| C# | `.cs` | Java | `.java` |
+| Ruby | `.rb` | Nu | `.nu` |
+| Ansible | `.playbook.yml` | | |
+
+Plain `.ts` files default to Bun. Use `.deno.ts` for Deno runtime.
+
+## Lock files
+
+Lock files (`.lock`) pin dependency versions for reproducible builds. Generate them with:
+
+```bash
+wmill app generate-locks
+```
+
+This creates a `.lock` file for each runnable that has dependencies (TypeScript, Python, PHP).
+
+## Example
+
+A TypeScript runnable that queries a database:
+
+```typescript
+// backend/get_users.ts
+import { Client } from "pg";
+
+export async function main(limit: number = 10) {
+  const client = new Client(process.env.DATABASE_URL);
+  await client.connect();
+  const result = await client.query("SELECT * FROM users LIMIT $1", [limit]);
+  await client.end();
+  return result.rows;
+}
+```
+
+Called from the frontend:
+
+```typescript
+import { backend } from "./wmill.ts";
+
+const users = await backend.get_users({ limit: 20 });
+```
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Frontend"
+		description="Call backend runnables from React, Svelte or Vue."
+		href="/docs/full_code_apps/frontend"
+		color="orange"
+	/>
+	<DocCard
+		title="CLI workflow"
+		description="Generate lock files and manage runnables."
+		href="/docs/full_code_apps/cli_workflow"
+		color="orange"
+	/>
+</div>
