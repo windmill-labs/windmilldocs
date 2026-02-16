@@ -5,8 +5,8 @@ description: "How do I build data pipelines with Windmill? DAG-based ETL with Po
 
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
-import { motion } from 'framer-motion';
-import { ArrowRight, Zap, GitBranch, Clock, FileJson, RotateCcw, Radio } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Zap, GitBranch, Clock, FileJson, RotateCcw, Code } from 'lucide-react';
 import BarChart from '../../components/BarChart';
 
 export const fadeIn = {
@@ -105,6 +105,81 @@ export const integrations = [
 	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.' },
 	{ id: 'datasets', logo: null, label: 'Dataset references', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.' },
 ];
+
+{/* TODO: add screenshots for each DAG feature (parallel branches, restart from any step, retries & error handlers, trigger from anywhere) */}
+
+export const dagFeatures = [
+	{ icon: Code, title: '20+ languages', desc: 'Write each pipeline step in the language that fits best. Python, TypeScript, SQL, Go, Bash, Rust, PHP, and 20+ more. Mix and match freely within a single flow.', image: '/img/money-pages/20+languages.png' },
+	{ icon: GitBranch, title: 'Parallel branches', desc: 'Fan out extraction steps across independent sources and collect results automatically.', image: '/img/money-pages/parallel-branches.png' },
+	{ icon: RotateCcw, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step. No need to replay the entire pipeline.', image: '/img/money-pages/restart-from-step.png' },
+	{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.', image: '/img/money-pages/retries-error-handlers.png' },
+	{ icon: Zap, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".', image: '/img/money-pages/triggers.png' },
+];
+
+export function DAGOrchestrationSection() {
+	const [active, setActive] = useState(0);
+	const item = dagFeatures[active];
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+			<motion.div {...fadeIn} className="mb-16">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					Build pipelines with full code flexibility and DAG visualization
+				</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300">
+					Each pipeline is a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> — a directed acyclic graph where each step is a script in Python, TypeScript, SQL or any supported language.
+				</p>
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 mb-12">
+				{/* Left: clickable list */}
+				<div className="flex flex-col gap-2">
+					{dagFeatures.map((feat, i) => (
+						<button
+							key={feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
+							<span className="font-medium text-sm">{feat.title}</span>
+						</button>
+					))}
+				</div>
+
+				{/* Right: selected content */}
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 flex flex-col justify-center overflow-hidden">
+					<AnimatePresence mode="wait">
+						<motion.div
+							key={active}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: 0.15 }}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<item.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{item.title}</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{item.desc}</p>
+							{item.image ? (
+								<img src={item.image} alt={item.title} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+								</div>
+							)}
+						</motion.div>
+					</AnimatePresence>
+				</div>
+			</div>
+		</div>
+	);
+}
 
 export function IntegrationsSection() {
 	const [active, setActive] = useState(0);
@@ -365,33 +440,7 @@ export default function DataPipelinesContent({ title, description }) {
 			</div>
 
 			{/* DAG orchestration */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Build pipelines with full code flexibility and DAG visualization
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Each pipeline is a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> — a directed acyclic graph where each step is a script in Python, TypeScript, SQL or any supported language.
-					</p>
-				</motion.div>
-
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
-					{[
-						{ icon: GitBranch, title: 'Parallel branches', desc: 'Fan out extraction steps across independent sources and collect results automatically.' },
-						{ icon: RotateCcw, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step — no need to replay the entire pipeline.' },
-						{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.' },
-						{ icon: Radio, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".' },
-					].map((item, i) => (
-						<motion.div key={item.title} {...stagger(i * 0.1)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
-								<item.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-							</div>
-							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-							<p className="text-gray-600 dark:text-gray-300 text-sm">{item.desc}</p>
-						</motion.div>
-					))}
-				</div>
-			</div>
+			<DAGOrchestrationSection />
 
 			{/* Integrations: interactive 2-column selector */}
 			<IntegrationsSection />
