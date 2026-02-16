@@ -117,7 +117,7 @@ export function IntegrationsSection() {
 						The native DuckDB and Ducklake orchestrator
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The only orchestrator with zero-config DuckDB, Ducklake and S3 support. Credentials and connections are handled automatically — just write your query.
+						The only orchestrator with zero-config DuckDB, Ducklake and S3 support. Credentials and connections are handled automatically, just write your query.
 					</p>
 				</motion.div>
 
@@ -196,7 +196,7 @@ export default function DataPipelinesContent({ title, description }) {
 							Build production-grade data pipelines
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							For data teams who want reliable ETL with native DuckDB and Ducklake integrations — no Airflow or Spark clusters to manage.
+							For data teams who want reliable ETL with native DuckDB and Ducklake integrations. No Airflow or Spark clusters to manage.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -431,20 +431,20 @@ export default function DataPipelinesContent({ title, description }) {
 						<tbody>
 							{[
 								{ label: 'Compute', windmill: 'Local on your workers', warehouse: 'Remote warehouse' },
-								{ label: 'Cost model', windmill: 'Flat — pay for infra only', warehouse: 'Per-query pricing' },
+								{ label: 'Cost model', windmill: 'Flat, pay for infra only', warehouse: 'Per-query pricing' },
 								{ label: 'Data storage', windmill: 'Your S3 bucket, open formats', warehouse: 'Vendor-managed, proprietary' },
-								{ label: 'No vendor lock-in', windmill: false, warehouse: true },
+								{ label: 'Vendor lock-in', windmill: false, warehouse: true, negative: true },
 								{ label: 'Orchestration', windmill: 'Built-in (flows, retries, schedules)', warehouse: 'Separate tool needed' },
-								{ label: 'Setup', windmill: 'Zero config — auto-connected', warehouse: 'Credentials, drivers, networking' },
-								{ label: 'Data egress fees', windmill: false, warehouse: true },
+								{ label: 'Setup', windmill: 'Zero config, auto-connected', warehouse: 'Credentials, drivers, networking' },
+								{ label: 'Data egress fees', windmill: false, warehouse: true, negative: true },
 							].map((row, i) => (
 								<tr key={row.label} className={i % 2 === 0 ? 'bg-white dark:bg-gray-950' : 'bg-gray-50/50 dark:bg-gray-900/30'}>
 									<td className="py-3.5 px-6 font-medium text-gray-900 dark:text-white">{row.label}</td>
 									<td className="py-3.5 px-6 text-center">
 										{typeof row.windmill === 'boolean' ? (
 											row.windmill
-												? <span className="text-red-500 text-lg">✗</span>
-												: <span className="text-emerald-500 text-lg">✓</span>
+												? <span className={`text-lg ${row.negative ? 'text-red-500' : 'text-emerald-500'}`}>✓</span>
+												: <span className={`text-lg ${row.negative ? 'text-emerald-500' : 'text-red-500'}`}>✗</span>
 										) : (
 											<span className="text-gray-700 dark:text-gray-200">{row.windmill}</span>
 										)}
@@ -452,8 +452,8 @@ export default function DataPipelinesContent({ title, description }) {
 									<td className="py-3.5 px-6 text-center">
 										{typeof row.warehouse === 'boolean' ? (
 											row.warehouse
-												? <span className="text-red-500 text-lg">✗</span>
-												: <span className="text-emerald-500 text-lg">✓</span>
+												? <span className={`text-lg ${row.negative ? 'text-red-500' : 'text-emerald-500'}`}>✓</span>
+												: <span className={`text-lg ${row.negative ? 'text-emerald-500' : 'text-red-500'}`}>✗</span>
 										) : (
 											<span className="text-gray-500 dark:text-gray-400">{row.warehouse}</span>
 										)}
