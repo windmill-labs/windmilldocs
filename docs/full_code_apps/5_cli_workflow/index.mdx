@@ -18,7 +18,7 @@ The interactive wizard prompts for:
 
 1. **Summary**: short description of the app
 2. **Path**: app path (e.g., `f/folder/my_app`)
-3. **Framework**: React 19, React 18, Svelte 5 or Vue 3
+3. **Framework**: React 19, React 18 or Svelte 5
 4. **Data configuration**: optional datatable and schema setup
 
 This creates a `.raw_app/` directory with starter code:
@@ -49,13 +49,10 @@ npm install
 
 ## Start the dev server
 
-```bash
-wmill app dev [path_to_app_folder]
-```
-
-Or from inside the app directory:
+From inside the app directory:
 
 ```bash
+cd f/folder/my_app.raw_app
 wmill app dev .
 ```
 
@@ -78,8 +75,10 @@ wmill app dev .
 
 ## Generate agent documentation
 
+From the app directory:
+
 ```bash
-wmill app generate-agents [path_to_app_folder]
+wmill app generate-agents .
 ```
 
 Generates or updates:
@@ -88,6 +87,8 @@ Generates or updates:
 - **`DATATABLES.md`**: data table schema documentation
 
 ## Generate lock files
+
+From the app directory:
 
 ```bash
 wmill app generate-locks

@@ -1,18 +1,18 @@
 ---
-description: Build custom frontends with React, Svelte or Vue connected to Windmill backend runnables and data tables.
+description: Build custom frontends with React or Svelte connected to Windmill backend runnables and data tables.
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
 # Full-code apps
 
-Full-code apps let you build custom frontends with React, Svelte or Vue that connect to Windmill [backend runnables](./2_backend_runnables/index.mdx) and [data tables](../core_concepts/11_persistent_storage/data_tables.mdx). Unlike the [low-code app editor](../apps/0_app_editor/index.mdx), you write your own components and have full control over the UI.
+Full-code apps let you build custom frontends with React or Svelte that connect to Windmill [backend runnables](./2_backend_runnables/index.mdx) and [data tables](../core_concepts/11_persistent_storage/data_tables.mdx). Unlike the [low-code app editor](../apps/0_app_editor/index.mdx), you write your own components and have full control over the UI.
 
 ## How it works
 
 A full-code app is a directory (`.raw_app/`) containing:
 
-- **Frontend code**: React, Svelte or Vue components bundled and served by Windmill
+- **Frontend code**: React or Svelte components bundled and served by Windmill
 - **Backend runnables**: scripts in any [supported language](#supported-languages) that run on Windmill workers
 - **Configuration**: a `raw_app.yaml` file defining metadata, policy and data access
 
@@ -22,7 +22,7 @@ When deployed, Windmill bundles your frontend code and serves it as a single-pag
 
 | | Full-code apps | Low-code apps |
 |---|---|---|
-| **UI** | Custom React/Svelte/Vue components | Drag-and-drop component library |
+| **UI** | Custom React/Svelte components | Drag-and-drop component library |
 | **Frontend logic** | Full framework features (hooks, stores, routing) | Connecting components + inline scripts |
 | **Backend** | Scripts in `backend/` folder, any language | Runnables panel, inline or workspace scripts |
 | **Styling** | Your own CSS, Tailwind, etc. | Component-level + global CSS editor |
@@ -37,7 +37,7 @@ The fastest way to create a full-code app is with the CLI:
 wmill app new
 ```
 
-This scaffolds a project with your chosen framework (React, Svelte or Vue), a sample backend runnable, and the necessary configuration. Then start the development server:
+This scaffolds a project with your chosen framework (React or Svelte), a sample backend runnable, and the necessary configuration. Then start the development server:
 
 ```bash
 cd f/folder/my_app.raw_app
@@ -81,7 +81,7 @@ Backend runnables support all Windmill script languages:
 	/>
 	<DocCard
 		title="Frontend"
-		description="React, Svelte and Vue support, and the wmill.ts API."
+		description="React and Svelte support, and the wmill.ts API."
 		href="/docs/full_code_apps/frontend"
 		color="orange"
 	/>

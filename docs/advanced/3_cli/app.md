@@ -50,8 +50,10 @@ Interactive wizard to scaffold a full-code app with React, Svelte or Vue.
 
 ### Start the dev server
 
+From the app directory:
+
 ```bash
-wmill app dev [path_to_app_folder]
+wmill app dev .
 ```
 
 Starts a local development server with hot reload and WebSocket backend. Options: `--port`, `--host`, `--entry`, `--no-open`.
@@ -66,8 +68,10 @@ Generates `.lock` files for backend runnables with dependencies. Options: `--yes
 
 ### Generate agent documentation
 
+From the app directory:
+
 ```bash
-wmill app generate-agents [path_to_app_folder]
+wmill app generate-agents .
 ```
 
 Generates `AGENTS.md` and `DATATABLES.md` for AI coding agent context.

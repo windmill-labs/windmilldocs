@@ -1,5 +1,5 @@
 ---
-description: Build frontends with React, Svelte or Vue and call Windmill backend runnables using the wmill.ts module.
+description: Build frontends with React or Svelte and call Windmill backend runnables using the wmill.ts module.
 ---
 
 import DocCard from '@site/src/components/DocCard';
@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Frontend
 
-Full-code apps support React, Svelte and Vue frontends. Your code is bundled by Windmill and served as a single-page application. The auto-generated `wmill.ts` module provides typed functions to call [backend runnables](../2_backend_runnables/index.mdx).
+Full-code apps support React and Svelte frontends. Your code is bundled by Windmill and served as a single-page application. The auto-generated `wmill.ts` module provides typed functions to call [backend runnables](../2_backend_runnables/index.mdx).
 
 ## Framework support
 
@@ -16,7 +16,6 @@ When scaffolding a new app with `wmill app new`, you can choose from:
 
 - **React 19** / **React 18**
 - **Svelte 5**
-- **Vue 3**
 
 The CLI generates a starter project with the selected framework, including `package.json`, entry point and a sample component.
 
@@ -153,40 +152,6 @@ export default function App() {
     </tbody>
   </table>
 {/if}
-```
-
-</TabItem>
-<TabItem value="vue" label="Vue">
-
-```vue
-<!-- App.vue -->
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { backend } from "./wmill.ts";
-
-const users = ref([]);
-const loading = ref(true);
-
-onMounted(async () => {
-  users.value = await backend.get_users({ limit: 50 });
-  loading.value = false;
-});
-</script>
-
-<template>
-  <div v-if="loading">Loading...</div>
-  <table v-else>
-    <thead>
-      <tr><th>Name</th><th>Email</th></tr>
-    </thead>
-    <tbody>
-      <tr v-for="user in users" :key="user.id">
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-      </tr>
-    </tbody>
-  </table>
-</template>
 ```
 
 </TabItem>

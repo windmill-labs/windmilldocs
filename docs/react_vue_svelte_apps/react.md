@@ -15,12 +15,12 @@ React apps in Windmill are now part of **full-code apps**. Full-code apps provid
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Full-code apps"
-		description="Build apps with React, Svelte or Vue connected to Windmill backend runnables and data tables."
+		description="Build apps with React or Svelte connected to Windmill backend runnables and data tables."
 		href="/docs/full_code_apps"
 	/>
 	<DocCard
 		title="Frontend frameworks"
-		description="Learn about React, Svelte and Vue support in full-code apps."
+		description="Learn about React and Svelte support in full-code apps."
 		href="/docs/full_code_apps/frontend"
 	/>
 </div>
