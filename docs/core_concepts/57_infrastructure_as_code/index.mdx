@@ -145,151 +145,9 @@ worker_configs:
       max_workers: 4
 ```
 
-## Handling secrets
+## Kubernetes operator (recommended)
 
-Sensitive values (license key, SMTP password, OAuth secrets) should not be stored as plaintext in version-controlled files. Windmill supports two secret reference mechanisms depending on your deployment.
-
-### Environment variable references (`envRef`)
-
-Use `envRef` to read a value from the process environment at sync time. Works everywhere (Docker Compose, Kubernetes, VMs).
-
-```yaml
-global_settings:
-  license_key:
-    envRef: "WM_LICENSE_KEY"
-  smtp_settings:
-    smtp_password:
-      envRef: "SMTP_PASSWORD"
-  oauths:
-    github:
-      id: "github-client-id"
-      secret:
-        envRef: "GITHUB_OAUTH_SECRET"
-```
-
-The referenced environment variables must be set on the process that runs `sync-config` (or on the operator pod if using `envRef` with the Kubernetes operator).
-
-### Kubernetes secret references (`secretKeyRef`)
-
-Use `secretKeyRef` to read a value directly from a Kubernetes Secret. Only available with the Kubernetes operator.
-
-```yaml
-global_settings:
-  license_key:
-    secretKeyRef:
-      name: windmill-secrets
-      key: license-key
-  smtp_settings:
-    smtp_password:
-      secretKeyRef:
-        name: windmill-secrets
-        key: smtp-password
-```
-
-The operator resolves these references at reconciliation time by calling the Kubernetes Secrets API.
-
-### Choosing between `envRef` and `secretKeyRef`
-
-| | `envRef` | `secretKeyRef` |
-|---|---|---|
-| Docker Compose | Yes | No |
-| Kubernetes | Yes | Yes |
-| Vault sidecars | Yes | No (use `envRef`) |
-| Reads from | Process environment | K8s Secrets API |
-| Requires RBAC for Secrets | No | Yes |
-
-Use `envRef` for portability across deployment targets. Use `secretKeyRef` for direct Kubernetes-native secret binding without intermediate environment variables.
-
-Supported fields for secret references: `license_key`, `hub_api_secret`, `scim_token`, `smtp_settings.smtp_password`, `oauths.<provider>.secret`, and `custom_instance_pg_databases.user_pwd`.
-
-## Docker Compose setup (`sync-config`)
-
-The `sync-config` subcommand reads a YAML config file, resolves `envRef` references, and syncs the result to the database.
-
-### How it works
-
-1. Windmill reads and parses the YAML file
-2. `envRef` fields are resolved from environment variables
-3. The current database state is read
-4. A diff is computed (changed settings are upserted, absent settings are deleted)
-5. Changes are applied
-
-### Setup
-
-Create a config file (`windmill-config.yaml`):
-
-```yaml
-global_settings:
-  base_url: "https://windmill.example.com"
-  license_key:
-    envRef: "WM_LICENSE_KEY"
-  retention_period_secs: 2592000
-
-worker_configs:
-  default:
-    worker_tags: ["deno", "python3", "bun", "go", "bash", "powershell"]
-  native:
-    worker_tags: ["nativets"]
-```
-
-Add a one-shot sync container to your `docker-compose.yml`:
-
-```yaml
-services:
-  windmill_config_sync:
-    image: ${WM_IMAGE}
-    restart: "no"
-    command: ["windmill", "sync-config", "/config/windmill-config.yaml"]
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - WM_LICENSE_KEY=${WM_LICENSE_KEY}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-    volumes:
-      - ./windmill-config.yaml:/config/windmill-config.yaml:ro
-    depends_on:
-      db:
-        condition: service_healthy
-
-  windmill_server:
-    image: ${WM_IMAGE}
-    # ...
-    depends_on:
-      windmill_config_sync:
-        condition: service_completed_successfully
-```
-
-Set your secrets in a `.env` file (not committed to version control):
-
-```env
-DATABASE_URL=postgres://postgres:changeme@db/windmill
-WM_IMAGE=ghcr.io/windmill-labs/windmill-ee:main
-WM_LICENSE_KEY=your-license-key-here
-SMTP_PASSWORD=your-smtp-password
-```
-
-### Re-syncing after changes
-
-The sync container runs once at startup and exits. To re-apply after editing the YAML:
-
-```bash
-docker compose run --rm windmill_config_sync
-```
-
-Or run the binary directly in CI/CD:
-
-```bash
-windmill sync-config ./windmill-config.yaml
-```
-
-### Replace semantics
-
-`sync-config` uses **replace** mode: any setting present in the database but absent from your YAML file is **deleted** (except protected internal settings). This ensures the database state matches the file exactly.
-
-If you only want to manage a subset of settings, include all settings you want to keep in the YAML file.
-
-## Kubernetes operator
-
-The Kubernetes operator watches `WindmillInstance` Custom Resources and continuously reconciles the database to match the declared state. It re-syncs every 5 minutes to detect and correct configuration drift. Enterprise Edition only.
+If you deploy Windmill on Kubernetes, using the operator is the recommended way to manage instance configuration. It watches `WindmillInstance` Custom Resources and continuously reconciles the database to match the declared state, re-syncing every 5 minutes to detect and correct configuration drift. Enterprise Edition only.
 
 ### Quick start
 
@@ -434,6 +292,150 @@ kubectl logs -n windmill deployment/windmill-operator
 ```
 
 A healthy operator shows `SYNCED=true` and updates `LAST SYNCED` on each reconciliation cycle.
+
+## Docker Compose setup (`sync-config`)
+
+For Docker Compose deployments, managing instance configuration from the UI is perfectly fine. The `sync-config` approach is opt-in for teams that want to version-control their instance settings.
+
+The `sync-config` subcommand reads a YAML config file, resolves `envRef` references, and syncs the result to the database.
+
+### How it works
+
+1. Windmill reads and parses the YAML file
+2. `envRef` fields are resolved from environment variables
+3. The current database state is read
+4. A diff is computed (changed settings are upserted, absent settings are deleted)
+5. Changes are applied
+
+### Setup
+
+Create a config file (`windmill-config.yaml`):
+
+```yaml
+global_settings:
+  base_url: "https://windmill.example.com"
+  license_key:
+    envRef: "WM_LICENSE_KEY"
+  retention_period_secs: 2592000
+
+worker_configs:
+  default:
+    worker_tags: ["deno", "python3", "bun", "go", "bash", "powershell"]
+  native:
+    worker_tags: ["nativets"]
+```
+
+Add a one-shot sync container to your `docker-compose.yml`:
+
+```yaml
+services:
+  windmill_config_sync:
+    image: ${WM_IMAGE}
+    restart: "no"
+    command: ["windmill", "sync-config", "/config/windmill-config.yaml"]
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - WM_LICENSE_KEY=${WM_LICENSE_KEY}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+    volumes:
+      - ./windmill-config.yaml:/config/windmill-config.yaml:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  windmill_server:
+    image: ${WM_IMAGE}
+    # ...
+    depends_on:
+      windmill_config_sync:
+        condition: service_completed_successfully
+```
+
+Set your secrets in a `.env` file (not committed to version control):
+
+```env
+DATABASE_URL=postgres://postgres:changeme@db/windmill
+WM_IMAGE=ghcr.io/windmill-labs/windmill-ee:main
+WM_LICENSE_KEY=your-license-key-here
+SMTP_PASSWORD=your-smtp-password
+```
+
+### Re-syncing after changes
+
+The sync container runs once at startup and exits. To re-apply after editing the YAML:
+
+```bash
+docker compose run --rm windmill_config_sync
+```
+
+Or run the binary directly in CI/CD:
+
+```bash
+windmill sync-config ./windmill-config.yaml
+```
+
+### Replace semantics
+
+`sync-config` uses **replace** mode: any setting present in the database but absent from your YAML file is **deleted** (except protected internal settings). This ensures the database state matches the file exactly.
+
+If you only want to manage a subset of settings, include all settings you want to keep in the YAML file.
+
+## Handling secrets
+
+Sensitive values (license key, SMTP password, OAuth secrets) should not be stored as plaintext in version-controlled files. Windmill supports two secret reference mechanisms depending on your deployment.
+
+### Environment variable references (`envRef`)
+
+Use `envRef` to read a value from the process environment at sync time. Works everywhere (Docker Compose, Kubernetes, VMs).
+
+```yaml
+global_settings:
+  license_key:
+    envRef: "WM_LICENSE_KEY"
+  smtp_settings:
+    smtp_password:
+      envRef: "SMTP_PASSWORD"
+  oauths:
+    github:
+      id: "github-client-id"
+      secret:
+        envRef: "GITHUB_OAUTH_SECRET"
+```
+
+The referenced environment variables must be set on the process that runs `sync-config` (or on the operator pod if using `envRef` with the Kubernetes operator).
+
+### Kubernetes secret references (`secretKeyRef`)
+
+Use `secretKeyRef` to read a value directly from a Kubernetes Secret. Only available with the Kubernetes operator.
+
+```yaml
+global_settings:
+  license_key:
+    secretKeyRef:
+      name: windmill-secrets
+      key: license-key
+  smtp_settings:
+    smtp_password:
+      secretKeyRef:
+        name: windmill-secrets
+        key: smtp-password
+```
+
+The operator resolves these references at reconciliation time by calling the Kubernetes Secrets API.
+
+### Choosing between `envRef` and `secretKeyRef`
+
+| | `envRef` | `secretKeyRef` |
+|---|---|---|
+| Docker Compose | Yes | No |
+| Kubernetes | Yes | Yes |
+| Vault sidecars | Yes | No (use `envRef`) |
+| Reads from | Process environment | K8s Secrets API |
+| Requires RBAC for Secrets | No | Yes |
+
+Use `envRef` for portability across deployment targets. Use `secretKeyRef` for direct Kubernetes-native secret binding without intermediate environment variables.
+
+Supported fields for secret references: `license_key`, `hub_api_secret`, `scim_token`, `smtp_settings.smtp_password`, `oauths.<provider>.secret`, and `custom_instance_pg_databases.user_pwd`.
 
 ## Exporting current configuration
 
