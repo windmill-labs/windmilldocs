@@ -38,6 +38,10 @@ Your resource can be used [passed as parameters](../core_concepts/3_resources_an
 > Example of a Supabase resource being used in two different manners from a script in Windmill.
 <br/>
 
+## Native triggers
+
+You can use [native triggers](../core_concepts/52_native_triggers/index.mdx) to automatically run scripts or flows when calendar events are created, updated, or deleted. Native triggers receive real-time push notifications so your runnables execute as soon as events occur.
+
 :::tip
 
 Find some pre-set interactions with Google Calendar on the [Hub](https://hub.windmill.dev/integrations/gcal).
