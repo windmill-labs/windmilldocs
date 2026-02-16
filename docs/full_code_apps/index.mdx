@@ -1,0 +1,112 @@
+---
+description: Build custom frontends with React or Svelte connected to Windmill backend runnables and data tables.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Full-code apps
+
+Full-code apps let you build custom frontends with React or Svelte that connect to Windmill [backend runnables](./2_backend_runnables/index.mdx) and [data tables](../core_concepts/11_persistent_storage/data_tables.mdx). Unlike the [low-code app editor](../apps/0_app_editor/index.mdx), you write your own components and have full control over the UI.
+
+## How it works
+
+A full-code app is a directory (`.raw_app/` or `__raw_app/`) containing:
+
+- **Frontend code**: React or Svelte components bundled and served by Windmill
+- **Backend runnables**: scripts in any [supported language](#supported-languages) that run on Windmill workers
+- **Configuration**: a `raw_app.yaml` file defining metadata, policy and data access
+
+When deployed, Windmill bundles your frontend code and serves it as a single-page application. Your frontend calls backend runnables through an auto-generated `wmill.ts` module, which communicates with Windmill's execution engine via WebSocket.
+
+## Full-code vs low-code apps
+
+| | Full-code apps | Low-code apps |
+|---|---|---|
+| **UI** | Custom React/Svelte components | Drag-and-drop component library |
+| **Frontend logic** | Full framework features (hooks, stores, routing) | Connecting components + inline scripts |
+| **Backend** | Scripts in `backend/` folder, any language | Runnables panel, inline or workspace scripts |
+| **Styling** | Your own CSS, Tailwind, etc. | Component-level + global CSS editor |
+| **Local dev** | `wmill app dev` with hot reload | Web-based editor only |
+| **Best for** | Custom UIs, complex interactions, existing codebases | Quick dashboards, forms, CRUD interfaces |
+
+## Getting started
+
+The fastest way to create a full-code app is with the CLI:
+
+```bash
+wmill app new
+```
+
+This scaffolds a project with your chosen framework (React or Svelte), a sample backend runnable, and the necessary configuration. Then start the development server:
+
+```bash
+cd f/folder/my_app.raw_app
+wmill app dev .
+```
+
+See the [CLI workflow](./5_cli_workflow/index.mdx) page for the full setup guide.
+
+## Supported languages
+
+Backend runnables support all Windmill script languages:
+
+| Language | Extension | Language | Extension |
+|----------|-----------|----------|-----------|
+| TypeScript (Bun) | `.bun.ts` or `.ts` | Python | `.py` |
+| TypeScript (Deno) | `.deno.ts` | Go | `.go` |
+| PostgreSQL | `.pg.sql` | MySQL | `.my.sql` |
+| BigQuery | `.bq.sql` | Snowflake | `.sf.sql` |
+| MS SQL | `.ms.sql` | OracleDB | `.odb.sql` |
+| DuckDB | `.duckdb.sql` | GraphQL | `.gql` |
+| Bash | `.sh` | PowerShell | `.ps1` |
+| PHP | `.php` | Rust | `.rs` |
+| C# | `.cs` | Java | `.java` |
+| Ruby | `.rb` | Nu | `.nu` |
+| Ansible | `.playbook.yml` | | |
+
+## Pages
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Project structure"
+		description="File layout, raw_app.yaml schema and auto-generated files."
+		href="/docs/full_code_apps/project_structure"
+		color="orange"
+	/>
+	<DocCard
+		title="Backend runnables"
+		description="Define backend scripts called from your frontend code."
+		href="/docs/full_code_apps/backend_runnables"
+		color="orange"
+	/>
+	<DocCard
+		title="Frontend"
+		description="React and Svelte support, and the wmill.ts API."
+		href="/docs/full_code_apps/frontend"
+		color="orange"
+	/>
+	<DocCard
+		title="Data tables"
+		description="Whitelist and query Windmill data tables from your app."
+		href="/docs/full_code_apps/data_tables"
+		color="orange"
+	/>
+	<DocCard
+		title="CLI workflow"
+		description="Scaffold, develop and deploy full-code apps from your terminal."
+		href="/docs/full_code_apps/cli_workflow"
+		color="orange"
+	/>
+	<DocCard
+		title="UI editor"
+		description="Edit full-code apps in the browser."
+		href="/docs/full_code_apps/ui_editor"
+		color="orange"
+	/>
+	<DocCard
+		title="Deployment"
+		description="Deploy, configure public access, custom paths and execution policy."
+		href="/docs/full_code_apps/deployment"
+		color="orange"
+	/>
+</div>
