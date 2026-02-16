@@ -1,0 +1,90 @@
+---
+description: Deploy full-code apps, configure public access, custom paths and execution policy.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Deployment
+
+Full-code apps can be deployed via the [CLI](../5_cli_workflow/index.mdx) or the [UI editor](../6_ui_editor/index.mdx). This page covers deployment options and configuration.
+
+## Deploy via CLI
+
+Push your app to Windmill:
+
+```bash
+wmill sync push
+```
+
+The CLI reads `raw_app.yaml`, bundles your frontend code, uploads backend runnables and deploys the app. See [CLI workflow](../5_cli_workflow/index.mdx) for the full push flow.
+
+## Deploy via UI
+
+From the in-browser editor, click the deploy button to save and publish your app.
+
+## Public apps
+
+Make your app accessible without authentication by setting `public: true` in `raw_app.yaml`:
+
+```yaml
+summary: "Public dashboard"
+public: true
+```
+
+Public apps are accessible at their app URL without requiring a Windmill login. The execution policy is auto-generated at deployment time. See [public apps](../../apps/8_public_apps.mdx) for more details.
+
+## Custom paths
+
+Admins can set a custom URL path for an app:
+
+```yaml
+custom_path: "my-dashboard"
+```
+
+The app will then be accessible at `https://<instance>/apps/custom/my-dashboard`.
+
+## Execution policy
+
+The execution policy is auto-generated at deployment time. It controls how backend runnables are executed:
+
+| Mode | Description |
+|------|-------------|
+| `publisher` | Runnables execute as the app owner (the user who deployed the app). Users don't need direct permissions on the underlying scripts. This is the default. |
+| `anonymous` | Runnables execute with the permissions of the viewer. Used for public apps or when you want per-user access control. |
+
+The `triggerables` and `triggerables_v2` fields map each runnable to its execution configuration and are populated automatically during push/deploy.
+
+## Versioning
+
+Each deployment creates a new version of the app. The version counter increments on every update. Previous versions are retained and can be accessed through the API.
+
+## CI/CD integration
+
+Full-code apps work with Windmill's [git sync](../../advanced/11_git_sync/index.mdx) and [deploy to prod](../../advanced/12_deploy_to_prod/index.mdx) workflows:
+
+1. Develop locally and commit your `.raw_app/` directory to git
+2. Use `wmill sync push` in CI to deploy to a staging workspace
+3. Promote to production using workspace-to-workspace deployment
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Public apps"
+		description="Share apps with anyone via a secret URL."
+		href="/docs/apps/public_apps"
+	/>
+	<DocCard
+		title="Deploy to prod"
+		description="Deploy from staging to production."
+		href="/docs/advanced/deploy_to_prod"
+	/>
+	<DocCard
+		title="Git sync"
+		description="Sync your workspace with a git repository."
+		href="/docs/advanced/git_sync"
+	/>
+	<DocCard
+		title="Version control"
+		description="Manage versions of your Windmill resources."
+		href="/docs/advanced/version_control"
+	/>
+</div>

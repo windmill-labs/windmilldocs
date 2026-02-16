@@ -1,0 +1,168 @@
+---
+description: Scaffold, develop and deploy full-code apps using the Windmill CLI.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# CLI workflow
+
+The Windmill [CLI](../../advanced/3_cli/index.mdx) provides commands to scaffold, develop and deploy full-code apps entirely from your terminal.
+
+## Create a new app
+
+```bash
+wmill app new
+```
+
+The interactive wizard prompts for:
+
+1. **Summary**: short description of the app
+2. **Path**: app path (e.g., `f/folder/my_app`)
+3. **Framework**: React 19, React 18 or Svelte 5
+4. **Data configuration**: optional datatable and schema setup
+
+This creates a `.raw_app/` directory (or `__raw_app/` if the `nonDottedPaths` option is set in `wmill.yaml`) with starter code:
+
+```
+f/folder/my_app.raw_app/
+├── raw_app.yaml
+├── package.json
+├── index.tsx
+├── App.tsx
+├── index.css
+├── AGENTS.md
+├── CLAUDE.md
+├── DATATABLES.md
+├── backend/
+│   ├── a.yaml
+│   └── a.ts
+└── sql_to_apply/
+    └── README.md
+```
+
+After scaffolding, install dependencies:
+
+```bash
+cd f/folder/my_app.raw_app
+npm install
+```
+
+## Start the dev server
+
+From inside the app directory:
+
+```bash
+cd f/folder/my_app.raw_app
+wmill app dev
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `--port <number>` | Dev server port (default: 4000) |
+| `--host <string>` | Dev server host (default: localhost) |
+| `--entry <string>` | Entry point file (default: `index.tsx` or `index.ts`) |
+| `--no-open` | Don't auto-open the browser |
+
+### Dev server features
+
+- **Hot module replacement**: frontend changes reload instantly
+- **WebSocket backend**: backend runnables execute on Windmill workers with results streamed back
+- **Type generation**: `wmill.d.ts` is regenerated when runnables change
+- **Schema inference**: runnable parameter types are inferred without modifying YAML files
+- **SQL migrations**: a modal appears for pending files in `sql_to_apply/`
+
+## Generate agent documentation
+
+From the app directory:
+
+```bash
+wmill app generate-agents
+```
+
+Generates or updates:
+
+- **`AGENTS.md`**: instructions for AI coding agents describing the project structure
+- **`DATATABLES.md`**: data table schema documentation
+
+## Generate lock files
+
+From the app directory:
+
+```bash
+wmill app generate-locks
+```
+
+Generates `.lock` files for each backend runnable that has dependencies (TypeScript, Python, PHP).
+
+| Option | Description |
+|--------|-------------|
+| `--yes`, `-y` | Skip confirmation prompt |
+| `--dry-run` | Show what would be updated |
+| `--default-ts <bun\|deno>` | Default TypeScript runtime |
+
+## Deploy with sync
+
+Full-code apps are deployed using the standard [sync](../../advanced/11_git_sync/cli_sync.mdx) commands:
+
+### Push to Windmill
+
+```bash
+wmill sync push
+```
+
+The push process:
+
+1. Reads `raw_app.yaml` for metadata and policy
+2. Loads backend runnables from `backend/`
+3. Collects frontend files (excluding `node_modules`, `dist`, `backend/`, etc.)
+4. Bundles frontend code with esbuild
+5. Uploads everything as a multipart request (app JSON + JS bundle + CSS bundle)
+
+### Pull from Windmill
+
+```bash
+wmill sync pull
+```
+
+The pull process:
+
+1. Fetches the app definition from the API
+2. Extracts frontend files to the app directory
+3. Writes `raw_app.yaml` with metadata
+4. Extracts backend runnables to `backend/` with individual `.yaml`, code and `.lock` files
+
+## Typical workflow
+
+```bash
+# 1. Create a new app
+wmill app new
+
+# 2. Install dependencies
+cd f/folder/my_app.raw_app
+npm install
+
+# 3. Develop locally with hot reload
+wmill app dev
+
+# 4. Generate lock files before deploying
+wmill app generate-locks
+
+# 5. Deploy to Windmill
+wmill sync push
+```
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-line interface"
+		description="Full CLI reference."
+		href="/docs/advanced/cli"
+	/>
+	<DocCard
+		title="Project structure"
+		description="File layout of a full-code app."
+		href="/docs/full_code_apps/project_structure"
+		color="orange"
+	/>
+</div>

@@ -1,0 +1,95 @@
+---
+description: Configure data table access for full-code apps in Windmill.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Data tables
+
+Full-code apps can access Windmill [data tables](../../core_concepts/11_persistent_storage/data_tables.mdx) by whitelisting them in `raw_app.yaml`. This gives your backend runnables direct SQL access to the specified tables.
+
+## Whitelisting tables
+
+Add a `data` section to your `raw_app.yaml`:
+
+```yaml
+summary: "My dashboard"
+
+data:
+  datatable: "main"
+  tables:
+    - "users"
+    - "orders"
+    - "products"
+  schema: "app1"
+```
+
+### Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `data.datatable` | string | The datatable name from your workspace settings |
+| `data.tables` | string[] | List of table names the app can access |
+| `data.schema` | string | Schema name within the datatable (isolates tables per app) |
+
+## Reference format
+
+Data table references follow this format:
+
+| Format | Description |
+|--------|-------------|
+| `<datatable>` | Reference the datatable itself |
+| `<datatable>/<table>` | Reference a specific table |
+| `<datatable>/<schema>:<table>` | Reference a table in a specific schema |
+
+## Accessing tables from backend runnables
+
+Backend runnables can query whitelisted tables using SQL. The database connection is available through the datatable resource:
+
+```typescript
+// backend/get_users.ts
+export async function main(limit: number = 10) {
+  const result = await Bun.sql`SELECT * FROM app1.users LIMIT ${limit}`;
+  return result;
+}
+```
+
+Or with PostgreSQL:
+
+```sql
+-- backend/get_orders.pg.sql
+SELECT * FROM app1.orders
+WHERE status = $1
+ORDER BY created_at DESC
+LIMIT $2;
+```
+
+## Schema setup
+
+When creating a new app with `wmill app new`, the CLI can optionally create a dedicated schema for your app's tables. SQL migration files are placed in `sql_to_apply/`:
+
+```
+sql_to_apply/
+├── README.md
+└── 000_create_schema_app1.sql
+```
+
+During development (`wmill app dev`), the dev server shows a modal to apply pending SQL migrations.
+
+## DATATABLES.md
+
+The `wmill app generate-agents` command generates a `DATATABLES.md` file documenting the available tables and their schemas. This file is used by AI coding agents to understand your data model.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Data tables"
+		description="Learn about Windmill data tables."
+		href="/docs/core_concepts/persistent_storage/data_tables"
+	/>
+	<DocCard
+		title="Backend runnables"
+		description="Write runnables that query your data tables."
+		href="/docs/full_code_apps/backend_runnables"
+		color="orange"
+	/>
+</div>
