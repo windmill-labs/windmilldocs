@@ -62,7 +62,7 @@ Each deployment creates a new version of the app. The version counter increments
 
 Full-code apps work with Windmill's [git sync](../../advanced/11_git_sync/index.mdx) and [deploy to prod](../../advanced/12_deploy_to_prod/index.mdx) workflows:
 
-1. Develop locally and commit your `.raw_app/` directory to git
+1. Develop locally and commit your `.raw_app/` (or `__raw_app/`) directory to git
 2. Use `wmill sync push` in CI to deploy to a staging workspace
 3. Promote to production using workspace-to-workspace deployment
 

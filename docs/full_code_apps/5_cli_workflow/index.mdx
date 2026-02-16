@@ -21,10 +21,10 @@ The interactive wizard prompts for:
 3. **Framework**: React 19, React 18 or Svelte 5
 4. **Data configuration**: optional datatable and schema setup
 
-This creates a `.raw_app/` directory (or `__raw_app/` if the `nonDottedPaths` option is set in `wmill.yaml`) with starter code:
+This creates a directory with the `.raw_app` suffix (or `__raw_app` if `nonDottedPaths: true` is set in `wmill.yaml`):
 
 ```
-f/folder/my_app.raw_app/
+f/folder/my_app.raw_app/   # or my_app__raw_app/
 ├── raw_app.yaml
 ├── package.json
 ├── index.tsx
@@ -43,7 +43,7 @@ f/folder/my_app.raw_app/
 After scaffolding, install dependencies:
 
 ```bash
-cd f/folder/my_app.raw_app
+cd f/folder/my_app.raw_app   # or my_app__raw_app
 npm install
 ```
 
@@ -52,7 +52,7 @@ npm install
 From inside the app directory:
 
 ```bash
-cd f/folder/my_app.raw_app
+cd f/folder/my_app.raw_app   # or my_app__raw_app
 wmill app dev
 ```
 
@@ -140,7 +140,7 @@ The pull process:
 wmill app new
 
 # 2. Install dependencies
-cd f/folder/my_app.raw_app
+cd f/folder/my_app.raw_app   # or my_app__raw_app   # or my_app__raw_app
 npm install
 
 # 3. Develop locally with hot reload
