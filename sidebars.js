@@ -182,6 +182,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/gcp_triggers/index',
 							label: 'GCP'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/native_triggers/index',
+							label: 'Native triggers'
 						}
 					]
 				},
@@ -492,6 +497,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/gsheets',
 							label: 'Google Sheets'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gworkspace',
+							label: 'Google Workspace'
 						},
 						{
 							type: 'doc',
