@@ -1,0 +1,554 @@
+---
+description: Manage Windmill instance configuration declaratively with YAML files, Kubernetes CRDs, or the CLI.
+---
+
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Infrastructure as code
+
+Windmill supports managing instance and workspace configuration as code. This means you can version-control, review, and reproduce your Windmill setup across environments instead of configuring everything through the UI.
+
+There are two distinct scopes of configuration:
+
+| Scope | What it covers | How to manage as code |
+|-------|---------------|----------------------|
+| **Instance configuration** | Global settings, worker groups, SMTP, OAuth, license key, etc. | YAML config file (`sync-config`) or Kubernetes operator (`WindmillInstance` CRD) |
+| **Workspace content** | Scripts, flows, apps, resources, variables, schedules, triggers | [Windmill CLI](../../advanced/3_cli/sync.mdx) (`wmill sync push/pull`) |
+
+This page focuses on instance configuration. For workspace content, see the [CLI sync section](#workspace-content-with-the-cli) at the end.
+
+## Overview
+
+Instance configuration covers everything you find under **Instance settings** in the Windmill UI: base URL, license key, retention policies, SMTP, OAuth providers, OpenTelemetry, worker group configs, and more.
+
+Windmill provides two mechanisms to manage these settings declaratively:
+
+- **`sync-config` CLI command** — reads a YAML file, resolves environment variable references, and syncs the result to the database. Works with any deployment (Docker Compose, VMs, Kubernetes).
+- **Kubernetes operator** — watches a `WindmillInstance` Custom Resource and continuously reconciles the database to match. Re-syncs every 5 minutes to detect and correct drift. Enterprise Edition only.
+
+Both mechanisms use the same YAML schema and the same underlying diff engine. The only difference is how secrets are referenced and how the sync is triggered.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Instance settings"
+		description="Configure instance-level settings from the UI."
+		href="/docs/advanced/instance_settings"
+	/>
+	<DocCard
+		title="Workers and worker groups"
+		description="Configure worker groups to run scripts on different machines."
+		href="/docs/core_concepts/worker_groups"
+	/>
+</div>
+
+## Configuration file format
+
+The configuration file has two top-level sections:
+
+```yaml
+global_settings:
+  # Instance-level settings (base URL, license, SMTP, OAuth, etc.)
+
+worker_configs:
+  # Worker group definitions (tags, init scripts, autoscaling, etc.)
+```
+
+### Global settings
+
+All fields are optional. Only include the settings you want to manage.
+
+```yaml
+global_settings:
+  base_url: "https://windmill.example.com"
+  retention_period_secs: 2592000    # 30 days
+  job_default_timeout: 900          # 15 minutes
+  request_size_limit_mb: 50
+  expose_metrics: true
+  dev_instance: false
+
+  # License key (Enterprise)
+  license_key: "your-license-key"
+
+  # SMTP for sending emails
+  smtp_settings:
+    smtp_host: "smtp.example.com"
+    smtp_port: 587
+    smtp_from: "windmill@example.com"
+    smtp_tls_implicit: false
+    smtp_username: "windmill"
+    smtp_password: "smtp-password"
+
+  # OAuth / SSO providers
+  oauths:
+    google:
+      id: "google-client-id"
+      secret: "google-client-secret"
+      login_config:
+        auth_url: "https://accounts.google.com/o/oauth2/v2/auth"
+        token_url: "https://oauth2.googleapis.com/token"
+        userinfo_url: "https://openidconnect.googleapis.com/v1/userinfo"
+        scopes: ["openid", "profile", "email"]
+
+  # OpenTelemetry
+  otel:
+    otel_exporter_otlp_endpoint: "http://otel-collector:4317"
+    tracing_enabled: true
+    metrics_enabled: true
+    logs_enabled: false
+
+  # Custom worker tags
+  custom_tags:
+    - gpu
+    - high-mem
+
+  # Critical error alert channels
+  critical_error_channels:
+    - email: "ops@example.com"
+
+  # Python/npm registries
+  pip_index_url: "https://pypi.example.com/simple"
+  npm_config_registry: "https://npm.example.com"
+```
+
+### Worker group configs
+
+Define one entry per [worker group](../9_worker_groups/index.mdx). The key is the group name.
+
+```yaml
+worker_configs:
+  default:
+    worker_tags:
+      - deno
+      - python3
+      - bun
+      - go
+      - bash
+      - powershell
+    init_bash: "echo 'Worker ready'"
+    env_vars_static:
+      MY_VAR: "value"
+    cache_clear: 7
+
+  native:
+    worker_tags:
+      - nativets
+
+  gpu:
+    worker_tags:
+      - gpu-task
+    dedicated_worker: "f/gpu_scripts/inference"
+    autoscaling:
+      enabled: true
+      min_workers: 0
+      max_workers: 4
+```
+
+## Kubernetes operator (recommended)
+
+If you deploy Windmill on Kubernetes, using the operator is the recommended way to manage instance configuration. It watches `WindmillInstance` Custom Resources and continuously reconciles the database to match the declared state, re-syncing every 5 minutes to detect and correct configuration drift. Enterprise Edition only.
+
+### Quick start
+
+**1. Install the Helm chart with the operator enabled:**
+
+```yaml
+# values.yaml
+windmill:
+  operator:
+    enabled: true
+```
+
+```bash
+helm install windmill windmill/windmill -n windmill --create-namespace -f values.yaml
+```
+
+This deploys the operator, installs the `WindmillInstance` CRD, and creates the necessary RBAC.
+
+**2. Create a `WindmillInstance` resource** (via Helm values or manually):
+
+<Tabs>
+<TabItem value="helm" label="Via Helm values">
+
+```yaml
+# values.yaml
+windmill:
+  operator:
+    enabled: true
+    instanceSpec:
+      global_settings:
+        base_url: "https://windmill.example.com"
+        license_key:
+          secretKeyRef:
+            name: windmill-secrets
+            key: license-key
+        retention_period_secs: 2592000
+      worker_configs:
+        default:
+          worker_tags: ["deno", "python3", "bun", "bash"]
+        native:
+          worker_tags: ["nativets"]
+```
+
+</TabItem>
+<TabItem value="manual" label="Manual CR">
+
+```yaml
+apiVersion: windmill.dev/v1alpha1
+kind: WindmillInstance
+metadata:
+  name: production
+  namespace: windmill
+spec:
+  global_settings:
+    base_url: "https://windmill.example.com"
+    license_key:
+      secretKeyRef:
+        name: windmill-secrets
+        key: license-key
+    retention_period_secs: 2592000
+    smtp_settings:
+      smtp_host: "smtp.example.com"
+      smtp_port: 587
+      smtp_from: "windmill@example.com"
+      smtp_password:
+        secretKeyRef:
+          name: windmill-secrets
+          key: smtp-password
+    oauths:
+      google:
+        id: "google-client-id"
+        secret:
+          secretKeyRef:
+            name: windmill-secrets
+            key: google-oauth-secret
+        login_config:
+          auth_url: "https://accounts.google.com/o/oauth2/v2/auth"
+          token_url: "https://oauth2.googleapis.com/token"
+          userinfo_url: "https://openidconnect.googleapis.com/v1/userinfo"
+          scopes: ["openid", "profile", "email"]
+  worker_configs:
+    default:
+      worker_tags: ["deno", "python3", "bun", "go", "bash", "powershell"]
+    native:
+      worker_tags: ["nativets"]
+```
+
+```bash
+kubectl apply -f windmill-instance.yaml
+```
+
+</TabItem>
+</Tabs>
+
+**3. Verify the operator synced:**
+
+```bash
+kubectl get windmillinstances -n windmill
+# NAME       SYNCED   LAST SYNCED            AGE
+# windmill   true     2025-01-15T10:30:00Z   5m
+```
+
+### First install caveat
+
+Helm cannot create a CRD and a CR that uses it in the same `helm install`. On a fresh install, either:
+
+1. Install first without `instanceSpec`, then `helm upgrade` with it added
+2. Apply the CR manually after the initial install
+3. Manage the CRD separately with `installCRD: false` and apply it before the Helm install
+
+Subsequent `helm upgrade` runs work fine since the CRD already exists.
+
+### Managing the CRD separately
+
+If you manage CRDs outside of Helm (e.g. via ArgoCD), disable CRD installation:
+
+```yaml
+windmill:
+  operator:
+    enabled: true
+    installCRD: false
+```
+
+You can generate the CRD YAML from the Windmill binary:
+
+```bash
+windmill operator crd > windmillinstance-crd.yaml
+kubectl apply -f windmillinstance-crd.yaml
+```
+
+### Monitoring
+
+```bash
+# Check sync status (shortname: wmi)
+kubectl get wmi -n windmill
+
+# Detailed status
+kubectl get wmi my-instance -n windmill -o jsonpath='{.status}' | jq
+
+# Operator logs
+kubectl logs -n windmill deployment/windmill-operator
+```
+
+A healthy operator shows `SYNCED=true` and updates `LAST SYNCED` on each reconciliation cycle.
+
+## Docker Compose setup (`sync-config`)
+
+For Docker Compose deployments, managing instance configuration from the UI is perfectly fine. The `sync-config` approach is opt-in for teams that want to version-control their instance settings.
+
+The `sync-config` subcommand reads a YAML config file, resolves `envRef` references, and syncs the result to the database.
+
+### How it works
+
+1. Windmill reads and parses the YAML file
+2. `envRef` fields are resolved from environment variables
+3. The current database state is read
+4. A diff is computed (changed settings are upserted, absent settings are deleted)
+5. Changes are applied
+
+### Setup
+
+Create a config file (`windmill-config.yaml`):
+
+```yaml
+global_settings:
+  base_url: "https://windmill.example.com"
+  license_key:
+    envRef: "WM_LICENSE_KEY"
+  retention_period_secs: 2592000
+
+worker_configs:
+  default:
+    worker_tags: ["deno", "python3", "bun", "go", "bash", "powershell"]
+  native:
+    worker_tags: ["nativets"]
+```
+
+Add a one-shot sync container to your `docker-compose.yml`:
+
+```yaml
+services:
+  windmill_config_sync:
+    image: ${WM_IMAGE}
+    restart: "no"
+    command: ["windmill", "sync-config", "/config/windmill-config.yaml"]
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - WM_LICENSE_KEY=${WM_LICENSE_KEY}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+    volumes:
+      - ./windmill-config.yaml:/config/windmill-config.yaml:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  windmill_server:
+    image: ${WM_IMAGE}
+    # ...
+    depends_on:
+      windmill_config_sync:
+        condition: service_completed_successfully
+```
+
+Set your secrets in a `.env` file (not committed to version control):
+
+```env
+DATABASE_URL=postgres://postgres:changeme@db/windmill
+WM_IMAGE=ghcr.io/windmill-labs/windmill-ee:main
+WM_LICENSE_KEY=your-license-key-here
+SMTP_PASSWORD=your-smtp-password
+```
+
+### Re-syncing after changes
+
+The sync container runs once at startup and exits. To re-apply after editing the YAML:
+
+```bash
+docker compose run --rm windmill_config_sync
+```
+
+Or run the binary directly in CI/CD:
+
+```bash
+windmill sync-config ./windmill-config.yaml
+```
+
+### Replace semantics
+
+`sync-config` uses **replace** mode: any setting present in the database but absent from your YAML file is **deleted** (except protected internal settings). This ensures the database state matches the file exactly.
+
+If you only want to manage a subset of settings, include all settings you want to keep in the YAML file.
+
+## Handling secrets
+
+Sensitive values (license key, SMTP password, OAuth secrets) should not be stored as plaintext in version-controlled files. Windmill supports two secret reference mechanisms depending on your deployment.
+
+### Environment variable references (`envRef`)
+
+Use `envRef` to read a value from the process environment at sync time. Works everywhere (Docker Compose, Kubernetes, VMs).
+
+```yaml
+global_settings:
+  license_key:
+    envRef: "WM_LICENSE_KEY"
+  smtp_settings:
+    smtp_password:
+      envRef: "SMTP_PASSWORD"
+  oauths:
+    github:
+      id: "github-client-id"
+      secret:
+        envRef: "GITHUB_OAUTH_SECRET"
+```
+
+The referenced environment variables must be set on the process that runs `sync-config` (or on the operator pod if using `envRef` with the Kubernetes operator).
+
+### Kubernetes secret references (`secretKeyRef`)
+
+Use `secretKeyRef` to read a value directly from a Kubernetes Secret. Only available with the Kubernetes operator.
+
+```yaml
+global_settings:
+  license_key:
+    secretKeyRef:
+      name: windmill-secrets
+      key: license-key
+  smtp_settings:
+    smtp_password:
+      secretKeyRef:
+        name: windmill-secrets
+        key: smtp-password
+```
+
+The operator resolves these references at reconciliation time by calling the Kubernetes Secrets API.
+
+### Choosing between `envRef` and `secretKeyRef`
+
+| | `envRef` | `secretKeyRef` |
+|---|---|---|
+| Docker Compose | Yes | No |
+| Kubernetes | Yes | Yes |
+| Vault sidecars | Yes | No (use `envRef`) |
+| Reads from | Process environment | K8s Secrets API |
+| Requires RBAC for Secrets | No | Yes |
+
+Use `envRef` for portability across deployment targets. Use `secretKeyRef` for direct Kubernetes-native secret binding without intermediate environment variables.
+
+Supported fields for secret references: `license_key`, `hub_api_secret`, `scim_token`, `smtp_settings.smtp_password`, `oauths.<provider>.secret`, and `custom_instance_pg_databases.user_pwd`.
+
+## Exporting current configuration
+
+You can export the current instance configuration as YAML from the UI or the CLI to bootstrap your config file.
+
+### From the UI
+
+In **Instance settings**, toggle to the YAML view to see the full configuration. Copy it as the starting point for your config file.
+
+### From the CLI
+
+```bash
+wmill instance get-config -o windmill-config.yaml
+```
+
+This dumps the current global settings and worker configs as YAML via the API.
+
+## Settings reference
+
+### Global settings fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `base_url` | string | Instance base URL |
+| `license_key` | string / ref | Enterprise license key |
+| `retention_period_secs` | int | Job retention period in seconds |
+| `request_size_limit_mb` | int | Max request body size |
+| `job_default_timeout` | int | Default timeout for jobs (seconds) |
+| `dev_instance` | bool | Mark as development instance |
+| `expose_metrics` | bool | Enable Prometheus metrics |
+| `smtp_settings` | object | SMTP config (`smtp_host`, `smtp_port`, `smtp_username`, `smtp_password`, `smtp_from`, `smtp_tls_implicit`) |
+| `oauths` | object | OAuth providers, keyed by provider name |
+| `otel` | object | OpenTelemetry config (`otel_exporter_otlp_endpoint`, `tracing_enabled`, `metrics_enabled`, `logs_enabled`) |
+| `pip_index_url` | string | Custom pip index URL |
+| `pip_extra_index_url` | string | Extra pip index URL |
+| `npm_config_registry` | string | Custom npm registry |
+| `custom_tags` | list | Custom worker tags |
+| `critical_error_channels` | list | Alert channels (email, Slack, Teams) |
+| `indexer_settings` | object | Full-text search indexer config |
+| `hub_api_secret` | string / ref | Hub API secret |
+| `scim_token` | string / ref | SCIM token (Enterprise) |
+
+For the complete list of fields, generate the CRD schema:
+
+```bash
+windmill operator crd
+```
+
+### Worker group config fields
+
+Keys are worker group names (e.g. `default`, `native`, `gpu`).
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `worker_tags` | list | Tags this worker group handles |
+| `dedicated_worker` | string | Dedicated worker script path |
+| `dedicated_workers` | list | Multiple dedicated worker paths |
+| `init_bash` | string | Bash script run on worker init |
+| `cache_clear` | int | Cache clear interval |
+| `env_vars_static` | object | Static environment variables |
+| `env_vars_allowlist` | list | Allowed environment variable names |
+| `pip_local_dependencies` | list | Local pip dependencies |
+| `additional_python_paths` | list | Extra Python paths |
+| `priority_tags` | object | Tag priority mapping |
+| `autoscaling` | object | Autoscaling config (`enabled`, `min_workers`, `max_workers`, `integration`) |
+
+## Workspace content with the CLI
+
+Instance configuration (global settings, worker groups) is distinct from workspace content (scripts, flows, apps, resources, variables). To manage workspace content as code, use the [Windmill CLI](../../advanced/3_cli/index.mdx) with `wmill sync push` and `wmill sync pull`.
+
+### Quick example
+
+```bash
+# Install the CLI
+npm install -g windmill-cli
+
+# Add a workspace
+wmill workspace add my-workspace https://windmill.example.com/ --token <your-token>
+
+# Pull workspace content to local files
+wmill sync pull
+
+# Edit scripts/flows locally, then push changes back
+wmill sync push --yes
+```
+
+The CLI supports syncing scripts, flows, apps, resources, variables, and optionally schedules (`--include-schedules`), triggers (`--include-triggers`), users (`--include-users`), groups (`--include-groups`), and workspace settings (`--include-settings`).
+
+You can also validate your YAML files before pushing:
+
+```bash
+wmill sync push --lint --yes
+```
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-line interface"
+		description="Interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+	<DocCard
+		title="CLI sync"
+		description="Synchronize your workspace with local files."
+		href="/docs/advanced/cli/sync"
+	/>
+	<DocCard
+		title="Git sync"
+		description="Automatically commit and push workspace changes to a Git repository."
+		href="/docs/advanced/git_sync"
+	/>
+	<DocCard
+		title="Version control"
+		description="Sync your workspace to a git repository for version control."
+		href="/docs/advanced/version_control"
+	/>
+</div>

@@ -100,7 +100,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'getting_started/apps_quickstart/index',
-							label: 'Apps'
+							label: 'Apps (low-code)'
 						},
 						{
 							type: 'category',
@@ -763,7 +763,25 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'App editor',
+					label: 'Full-code app',
+					link: {
+						type: 'doc',
+						id: 'full_code_apps/index'
+					},
+					items: [
+						'full_code_apps/project_structure/index',
+						'full_code_apps/backend_runnables/index',
+						'full_code_apps/frontend/index',
+						'full_code_apps/data_tables/index',
+						'full_code_apps/cli_workflow/index',
+						'full_code_apps/ui_editor/index',
+						'full_code_apps/deployment/index'
+					],
+					collapsed: true
+				},
+				{
+					type: 'category',
+					label: 'Low-code app editor',
 					link: {
 						type: 'doc',
 						id: 'apps/app_editor/index'
@@ -922,7 +940,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_eks_ecs']
+					items: ['advanced/instance_settings/index', 'core_concepts/infrastructure_as_code/index', 'advanced/self_host/aws_eks_ecs']
 				},
 				{
 					type: 'category',
@@ -1002,19 +1020,6 @@ const sidebars = {
 					]
 				},
 				'advanced/preinstall_binaries/index',
-				{
-					type: 'category',
-					label: 'React/Vue/Svelte apps',
-					link: {
-						type: 'doc',
-						id: 'react_vue_svelte_apps/index'
-					},
-					items: [
-						'react_vue_svelte_apps/react',
-						'react_vue_svelte_apps/vue',
-						'react_vue_svelte_apps/svelte'
-					]
-				},
 				'advanced/browser_automation/index',
 				'advanced/docker/index',
 				'advanced/security_isolation/index',

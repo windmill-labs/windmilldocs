@@ -6,7 +6,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Core concepts
 
-On top of its editors to build endpoints, flows and apps, Windmill comes with a set of features.
+On top of its editors to build endpoints, flows, [low-code apps](../apps/0_app_editor/index.mdx) and [full-code apps](../full_code_apps/index.mdx), Windmill comes with a set of features.
 
 ## Triggers
 
@@ -242,6 +242,11 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
+		title="Infrastructure as code"
+		description="Manage Windmill instance configuration declaratively with YAML files or Kubernetes CRDs."
+		href="/docs/core_concepts/infrastructure_as_code"
+	/>
+	<DocCard
 		title="Self-host"
 		description="Run Windmill on your own infrastructure."
 		href="/docs/advanced/self_host"
@@ -282,9 +287,9 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/advanced/preinstall_binaries"
 	/>
 	<DocCard
-		title="React app import"
-		description="Import your own Apps in React."
-		href="/docs/react_vue_svelte_apps/react"
+		title="Full-code apps"
+		description="Build apps with React or Svelte connected to Windmill backend runnables."
+		href="/docs/full_code_apps"
 	/>
 	<DocCard
 		title="Browser automation"
@@ -513,9 +518,40 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 
 <div className="grid grid-cols-2 gap-6 mb-4"></div>
 
-## App-specific features
+## Full-code app features
 
-All details on Apps can be found in the [Apps section](../apps/0_app_editor/index.mdx).
+Build custom frontends with React or Svelte, connected to Windmill backend runnables and [data tables](../core_concepts/11_persistent_storage/data_tables.mdx). See the [full-code app section](../full_code_apps/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Full-code apps"
+		description="Build apps with React or Svelte connected to Windmill backend runnables and data tables."
+		href="/docs/full_code_apps"
+		color="orange"
+	/>
+	<DocCard
+		title="Project structure"
+		description="Learn about the file structure, raw_app.yaml and auto-generated files."
+		href="/docs/full_code_apps/project_structure"
+		color="orange"
+	/>
+	<DocCard
+		title="Backend runnables"
+		description="Define backend scripts in any language, called from your frontend code."
+		href="/docs/full_code_apps/backend_runnables"
+		color="orange"
+	/>
+	<DocCard
+		title="CLI workflow"
+		description="Scaffold, develop and deploy full-code apps using the Windmill CLI."
+		href="/docs/full_code_apps/cli_workflow"
+		color="orange"
+	/>
+</div>
+
+## Low-code app features
+
+All details on low-code apps can be found in the [low-code app editor section](../apps/0_app_editor/index.mdx).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
