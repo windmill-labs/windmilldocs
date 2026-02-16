@@ -6,7 +6,7 @@ description: Manage Windmill instance configuration declaratively with YAML file
 features:
   [
     'Declarative YAML configuration for global settings and worker groups.',
-    'Kubernetes operator with WindmillInstance CRD for continuous reconciliation and drift detection.',
+    'Kubernetes operator with ConfigMap-based continuous reconciliation and drift detection.',
     'sync-config CLI command for Docker Compose and VM deployments.',
     'Secret references via envRef (environment variables) and secretKeyRef (Kubernetes Secrets API).',
     'Export current instance configuration as YAML from the UI or CLI.',
