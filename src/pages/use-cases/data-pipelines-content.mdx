@@ -99,22 +99,22 @@ export function BenchmarkSection() {
 }
 
 export const integrations = [
-	{ id: 'duckdb', logo: '/third_party_logos/duckdb.svg', label: 'DuckDB', desc: 'Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.', image: '/img/money-pages/duckdb.png', docLink: '/docs/integrations/duckdb' },
-	{ id: 'ducklake', logo: '/third_party_logos/ducklake.svg', label: 'Ducklake', desc: 'Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.', image: '/img/money-pages/ducklake.png', docLink: '/docs/core_concepts/persistent_storage/ducklake' },
-	{ id: 's3', logo: '/third_party_logos/s3.svg', label: 'Workspace S3', desc: 'Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse and preview Parquet, CSV and JSON directly from the UI.', image: '/img/money-pages/s3-integration.png', docLink: '/docs/core_concepts/persistent_storage/large_data_files' },
-	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.', image: '/img/money-pages/polars.png', docLink: '/docs/core_concepts/data_pipelines#windmill-integration-with-polars-and-duckdb-for-data-pipelines' },
-	{ id: 'datasets', logo: null, label: 'Assets lineage', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.', image: '/img/money-pages/dataset-ref.png', docLink: '/docs/core_concepts/persistent_storage' },
+	{ id: 'duckdb', logo: '/third_party_logos/duckdb.svg', label: 'DuckDB', desc: 'Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.', image: '/img/money-pages/duckdb.webp', docLink: '/docs/integrations/duckdb' },
+	{ id: 'ducklake', logo: '/third_party_logos/ducklake.svg', label: 'Ducklake', desc: 'Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.', image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage/ducklake' },
+	{ id: 's3', logo: '/third_party_logos/s3.svg', label: 'Workspace S3', desc: 'Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse and preview Parquet, CSV and JSON directly from the UI.', image: '/img/money-pages/s3-integration.webp', docLink: '/docs/core_concepts/persistent_storage/large_data_files' },
+	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.', image: '/img/money-pages/polars.webp', docLink: '/docs/core_concepts/data_pipelines#windmill-integration-with-polars-and-duckdb-for-data-pipelines' },
+	{ id: 'datasets', logo: null, label: 'Assets lineage', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.', image: '/img/money-pages/dataset-ref.webp', docLink: '/docs/core_concepts/persistent_storage' },
 ];
 
 {/* TODO: add screenshots for each DAG feature (parallel branches, restart from any step, retries & error handlers, trigger from anywhere) */}
 
 export const dagFeatures = [
-	{ icon: Code, title: '20+ languages', desc: 'Write each pipeline step in the language that fits best. Python, TypeScript, SQL, Go, Bash, Rust, PHP, and 20+ more. Mix and match freely within a single flow.', image: '/img/money-pages/20+languages.png', docLink: '/docs/getting_started/scripts_quickstart' },
-	{ icon: GitBranch, title: 'Parallel branches', desc: 'Fan out extraction steps across independent sources and collect results automatically.', image: '/img/money-pages/parallel-branches.png', docLink: '/docs/flows/flow_branches' },
-	{ icon: RotateCcw, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step. No need to replay the entire pipeline.', image: '/img/money-pages/restart-from-step.png', docLink: '/docs/flows/flow_editor' },
-	{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.', image: '/img/money-pages/retries-error-handlers.png', docLink: '/docs/flows/retries' },
-	{ icon: Zap, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".', image: '/img/money-pages/triggers.png', docLink: '/docs/core_concepts/triggers' },
-	{ icon: Database, title: 'Data tables', desc: 'Built-in relational storage with zero setup. Query from Python, TypeScript, SQL or DuckDB. Credentials are managed internally and never exposed.', image: '/img/money-pages/data-tables.png', docLink: '/docs/core_concepts/persistent_storage/data_tables' },
+	{ icon: Code, title: '20+ languages', desc: 'Write each pipeline step in the language that fits best. Python, TypeScript, SQL, Go, Bash, Rust, PHP, and 20+ more. Mix and match freely within a single flow.', image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' },
+	{ icon: GitBranch, title: 'Parallel branches', desc: 'Fan out extraction steps across independent sources and collect results automatically.', image: '/img/money-pages/parallel-branches.webp', docLink: '/docs/flows/flow_branches' },
+	{ icon: RotateCcw, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step. No need to replay the entire pipeline.', image: '/img/money-pages/restart-from-step.webp', docLink: '/docs/flows/flow_editor' },
+	{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.', image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/flows/retries' },
+	{ icon: Zap, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".', image: '/img/money-pages/triggers.webp', docLink: '/docs/core_concepts/triggers' },
+	{ icon: Database, title: 'Data tables', desc: 'Built-in relational storage with zero setup. Query from Python, TypeScript, SQL or DuckDB. Credentials are managed internally and never exposed.', image: '/img/money-pages/data-tables.webp', docLink: '/docs/core_concepts/persistent_storage/data_tables' },
 	{ icon: Play, title: 'Test', desc: 'Try it yourself — run a real data pipeline directly from this page.', image: null, embed: 'https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed' },
 ];
 
@@ -519,8 +519,8 @@ export default function DataPipelinesContent({ title, description }) {
 									<td className="py-3.5 px-6 text-center">
 										{typeof row.windmill === 'boolean' ? (
 											row.windmill
-												? <span className={`text-lg ${row.negative ? 'text-red-500' : 'text-emerald-500'}`}>✓</span>
-												: <span className={`text-lg ${row.negative ? 'text-emerald-500' : 'text-red-500'}`}>✗</span>
+												? <span className={`text-sm font-semibold ${row.negative ? 'text-red-500' : 'text-emerald-500'}`}>{row.negative ? 'Yes' : 'No'}</span>
+												: <span className={`text-sm font-semibold ${row.negative ? 'text-emerald-500' : 'text-red-500'}`}>{row.negative ? 'No' : 'Yes'}</span>
 										) : (
 											<span className="text-gray-700 dark:text-gray-200">{row.windmill}</span>
 										)}
@@ -528,8 +528,8 @@ export default function DataPipelinesContent({ title, description }) {
 									<td className="py-3.5 px-6 text-center">
 										{typeof row.warehouse === 'boolean' ? (
 											row.warehouse
-												? <span className={`text-lg ${row.negative ? 'text-red-500' : 'text-emerald-500'}`}>✓</span>
-												: <span className={`text-lg ${row.negative ? 'text-emerald-500' : 'text-red-500'}`}>✗</span>
+												? <span className={`text-sm font-semibold ${row.negative ? 'text-red-500' : 'text-emerald-500'}`}>{row.negative ? 'Yes' : 'No'}</span>
+												: <span className={`text-sm font-semibold ${row.negative ? 'text-emerald-500' : 'text-red-500'}`}>{row.negative ? 'No' : 'Yes'}</span>
 										) : (
 											<span className="text-gray-500 dark:text-gray-400">{row.warehouse}</span>
 										)}
