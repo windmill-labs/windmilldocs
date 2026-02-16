@@ -1,0 +1,168 @@
+---
+description: How do I trigger scripts and flows from Nextcloud or Google Drive/Calendar events in Windmill?
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Native triggers
+
+Native triggers allow external services to push events directly to Windmill and trigger [scripts](../../script_editor/index.mdx) and [flows](../../flows/1_flow_editor.mdx). Unlike [scheduled polls](../../flows/10_flow_trigger.mdx), native triggers receive real-time push notifications from the external service via webhooks or watch channels, so your runnables execute as soon as events occur.
+
+Native triggers is a [self-hosted Enterprise](/pricing) feature.
+
+Currently supported services:
+
+- [Nextcloud](#nextcloud-triggers) - file and folder change events
+- [Google Drive](#google-drive-triggers) - file and folder change events
+- [Google Calendar](#google-calendar-triggers) - calendar event changes
+
+---
+
+## How it works
+
+Native triggers use OAuth to authenticate with the external service. Each trigger registers a webhook or watch channel on the external service, which sends notifications to Windmill when events occur. Windmill then executes the configured script or flow with the event data.
+
+The general setup follows two steps:
+
+1. **Connect the service** via workspace settings (OAuth authentication)
+2. **Create a trigger** on a script or flow, selecting the service and configuring which events to watch
+
+---
+
+## Setup
+
+### Workspace integration
+
+Before creating native triggers, you need to connect the external service in your workspace settings.
+
+1. Go to **Workspace settings** > **Integrations**
+2. Select the service you want to connect (Nextcloud or Google)
+3. Provide the OAuth credentials (client ID and client secret)
+4. Complete the OAuth authorization flow
+
+<!-- TODO: add screenshot of workspace integrations page -->
+
+For Google triggers, instance admins can optionally share OAuth credentials across workspaces, so individual workspace admins don't need to create their own Google OAuth app.
+
+For Nextcloud, you also need to provide the base URL of your Nextcloud instance.
+
+### Create a trigger
+
+Once the workspace integration is configured:
+
+1. Open the script or flow you want to trigger
+2. Go to the **Triggers** tab
+3. Select **Native trigger** and choose the service
+4. Configure the service-specific options (see sections below)
+5. Save the trigger
+
+<!-- TODO: add screenshot of trigger creation -->
+
+---
+
+## Nextcloud triggers
+
+Nextcloud native triggers watch for file and folder changes on a [Nextcloud](https://nextcloud.com/) instance and trigger a script or flow when events occur.
+
+### Prerequisites
+
+- A Nextcloud instance with OAuth2 configured
+- The Nextcloud OAuth2 app enabled and a client registered
+
+### Configuration
+
+When creating a Nextcloud trigger, configure:
+
+- **Events** - select which event types to watch (e.g. file created, file updated, file deleted)
+
+<!-- TODO: add screenshot of Nextcloud trigger configuration -->
+
+---
+
+## Google Drive triggers
+
+Google Drive native triggers watch for changes to files or folders in [Google Drive](https://drive.google.com/) and trigger a script or flow when modifications occur.
+
+### Prerequisites
+
+- A Google Cloud project with the Google Drive API enabled
+- OAuth 2.0 credentials (client ID and client secret) configured with the appropriate scopes
+
+### Configuration
+
+When creating a Google Drive trigger, configure:
+
+- **File or folder** - select a file or folder from your Google Drive to watch for changes. You can browse My Drive, Shared with me, and Shared drives.
+
+<!-- TODO: add screenshot of Google Drive trigger configuration with file picker -->
+
+Google Drive triggers use push notifications via [watch channels](https://developers.google.com/drive/api/guides/push). Channels expire after 24 hours and Windmill automatically renews them before expiration.
+
+---
+
+## Google Calendar triggers
+
+Google Calendar native triggers watch for changes to events in a [Google Calendar](https://calendar.google.com/) and trigger a script or flow when calendar events are created, updated, or deleted.
+
+### Prerequisites
+
+- A Google Cloud project with the Google Calendar API enabled
+- OAuth 2.0 credentials (client ID and client secret) configured with the appropriate scopes
+
+### Configuration
+
+When creating a Google Calendar trigger, configure:
+
+- **Calendar** - select a calendar from your Google account to watch for event changes
+
+<!-- TODO: add screenshot of Google Calendar trigger configuration with calendar picker -->
+
+Google Calendar triggers use push notifications via [watch channels](https://developers.google.com/calendar/api/guides/push). Channels expire after 7 days and Windmill automatically renews them before expiration.
+
+---
+
+## Implementation examples
+
+### Basic script
+
+The trigger passes event data as arguments to your script. The payload format depends on the service.
+
+```typescript
+export async function main(payload: object) {
+  console.log("Received event:", JSON.stringify(payload));
+  return { processed: true };
+}
+```
+
+### Using a preprocessor
+
+If you configure a [preprocessor](../43_preprocessors/index.mdx), you can transform the event data before it reaches the main function.
+
+```typescript
+export async function preprocessor(
+  event: {
+    kind: 'google' | 'nextcloud',
+    payload: object,
+  }
+) {
+  if (event.kind === 'google') {
+    return {
+      payload: event.payload,
+    };
+  }
+
+  throw new Error(`Expected google or nextcloud trigger kind, got: ${event.kind}`);
+}
+```
+
+Then your `main` function receives the processed data:
+
+```typescript
+export async function main(payload: object) {
+  console.log("Processed event:", JSON.stringify(payload));
+}
+```
+
+## Error handling
+
+Native triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.
