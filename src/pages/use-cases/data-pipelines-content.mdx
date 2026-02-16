@@ -99,11 +99,11 @@ export function BenchmarkSection() {
 }
 
 export const integrations = [
-	{ id: 'duckdb', logo: '/third_party_logos/duckdb.svg', label: 'DuckDB', desc: 'Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.' },
-	{ id: 'ducklake', logo: '/third_party_logos/ducklake.svg', label: 'Ducklake', desc: 'Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.' },
-	{ id: 's3', logo: '/third_party_logos/s3.svg', label: 'Workspace S3', desc: 'Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse and preview Parquet, CSV and JSON directly from the UI.' },
-	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.' },
-	{ id: 'datasets', logo: null, label: 'Dataset references', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.' },
+	{ id: 'duckdb', logo: '/third_party_logos/duckdb.svg', label: 'DuckDB', desc: 'Query S3 files with SQL. DuckDB scripts auto-connect to your workspace storage. No credentials to manage, no connection strings to configure.', image: '/img/money-pages/duckdb.png' },
+	{ id: 'ducklake', logo: '/third_party_logos/ducklake.svg', label: 'Ducklake', desc: 'Store massive datasets in S3 and query them with SQL. Full data lake with catalog support, versioning and ACID transactions.', image: '/img/money-pages/ducklake.png' },
+	{ id: 's3', logo: '/third_party_logos/s3.svg', label: 'Workspace S3', desc: 'Link your workspace to S3, Azure Blob, GCS, R2 or MinIO. Browse and preview Parquet, CSV and JSON directly from the UI.', image: '/img/money-pages/s3-integration.png' },
+	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.', image: null },
+	{ id: 'datasets', logo: null, label: 'Dataset references', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.', image: null },
 ];
 
 {/* TODO: add screenshots for each DAG feature (parallel branches, restart from any step, retries & error handlers, trigger from anywhere) */}
@@ -235,26 +235,30 @@ export function IntegrationsSection() {
 						))}
 					</div>
 
-					{/* Right: selected content */}
-					<motion.div
-						key={active}
-						initial={{ opacity: 0, x: 10 }}
-						animate={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.25 }}
-						className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 flex flex-col justify-center"
-					>
-						<div className="flex items-center gap-3 mb-4">
-							{item.logo ? (
-								<img src={item.logo} alt={item.label} className="w-10 h-10" />
-							) : (
-								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-									<FileJson className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+					{/* Right: selected content — all panels stay mounted, only opacity changes */}
+					<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+						{integrations.map((intg, i) => (
+							<div
+								key={intg.id}
+								className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
+							>
+								<div className="flex items-center gap-3 mb-4">
+									{intg.logo ? (
+										<img src={intg.logo} alt={intg.label} className="w-10 h-10" />
+									) : (
+										<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+											<FileJson className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+										</div>
+									)}
+									<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{intg.label}</h3>
 								</div>
-							)}
-							<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{item.label}</h3>
-						</div>
-						<p className="text-gray-600 dark:text-gray-300 text-lg">{item.desc}</p>
-					</motion.div>
+								<p className="text-gray-600 dark:text-gray-300 text-lg">{intg.desc}</p>
+								{intg.image && (
+									<img src={intg.image} alt={intg.label} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full mt-4" />
+								)}
+							</div>
+						))}
+					</div>
 				</div>
 
 				<motion.div {...fadeIn} className="flex flex-wrap items-center gap-3">
