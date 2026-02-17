@@ -149,6 +149,10 @@ worker_configs:
 
 If you deploy Windmill on Kubernetes, using the operator is the recommended way to manage instance configuration. It watches a ConfigMap and continuously reconciles the database to match the declared state, re-syncing every 5 minutes to detect and correct configuration drift. Enterprise Edition only.
 
+:::caution
+Once the operator is enabled, it is the source of truth. Any settings changed directly in the UI will be reverted by the operator on the next reconciliation cycle (every 5 minutes). To make changes, update the `instanceSpec` in your Helm values or ConfigMap and re-deploy.
+:::
+
 ### Quick start
 
 Enable the operator and provide your instance spec in a single `helm install`:
@@ -382,7 +386,17 @@ Supported fields for secret references: `license_key`, `hub_api_secret`, `scim_t
 
 ## Exporting current configuration
 
-You can export the current instance configuration as YAML from the UI or the CLI to bootstrap your config file.
+You can export the current instance configuration as YAML from the UI, the API, or the CLI to bootstrap your config file. The exported YAML can be copy-pasted directly as your `instanceSpec` (Kubernetes operator) or config file (`sync-config`), making it the easiest way to migrate from a UI-managed instance to a declarative setup.
+
+### From the API
+
+The simplest way to get a complete snapshot of your current configuration:
+
+```
+GET /api/settings/instance_config/yaml
+```
+
+The response is the entire instance configuration as YAML, ready to be used as the `instanceSpec` value in your Helm values file or as a `sync-config` YAML file.
 
 ### From the UI
 
