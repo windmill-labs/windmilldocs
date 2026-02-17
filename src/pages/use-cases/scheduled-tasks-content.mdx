@@ -31,7 +31,7 @@ export default function ScheduledTasksContent({ title, description }) {
 							Schedule any task with confidence
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							Cron with a UI, execution history, error handlers, recovery handlers and team-wide visibility. Define schedules for any script or flow and let Windmill handle the rest.
+							For ops and platform teams who need production-grade cron with visibility. Define schedules for any script or flow with error handling, recovery and team-wide audit trails.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -53,19 +53,19 @@ export default function ScheduledTasksContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Visual cron builder</span> with advanced syntax (W, #, L modifiers)</span>
+								<span><span className="text-blue-500">Any language, any schedule</span> — Python, TypeScript, SQL, Go or Bash on any cron expression</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Error and recovery handlers</span> with Slack, Teams and email alerts</span>
+								<span><span className="text-blue-500">Error and recovery handlers</span> — automated alerts to Slack, Teams or email</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Full execution history</span> with inputs, outputs and one-click re-run</span>
+								<span><span className="text-blue-500">Enterprise controls</span> — RBAC, audit logs, SSO and team-wide visibility</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Dynamic skip validation</span> for weekends, holidays and custom logic</span>
+								<span><span className="text-blue-500">Part of the Windmill platform</span> — schedule scripts, flows, pipelines and agents</span>
 							</div>
 						</div>
 					</motion.div>
@@ -74,13 +74,12 @@ export default function ScheduledTasksContent({ title, description }) {
 						<div className="relative w-[480px] h-[480px]">
 							{/* Orbit ring */}
 							<div className="absolute inset-[60px] rounded-full border border-gray-200 dark:border-gray-700/50" />
-							{/* Tick marks — skip positions where cards sit (12, 3, 6, 9 o'clock = indices 0, 3, 6, 9) */}
+							{/* Tick marks — all 12, fully inside the orbit */}
 							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
 								{Array.from({ length: 12 }, (_, i) => {
-									if (i % 3 === 0) return null;
 									const angle = (i * 30 - 90) * Math.PI / 180;
-									const r1 = 174;
-									const r2 = 186;
+									const r1 = 166;
+									const r2 = 178;
 									const cx = 240, cy = 240;
 									return (
 										<line key={`tick-${i}`}
@@ -106,21 +105,22 @@ export default function ScheduledTasksContent({ title, description }) {
 							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
 								<img src="/img/windmill.svg" alt="Windmill" className="w-16 h-16" />
 							</div>
-							{/* Sweeping hand */}
+							{/* Clock hand — 12s full rotation, triggers each card at 12/3/6/9 o'clock */}
 							<motion.div className="absolute z-[5]" style={{ left: 240, top: 240, transformOrigin: '0 0' }}
 								animate={{ rotate: 360 }}
 								transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
 							>
-								<div className="w-[2px] h-[160px] bg-blue-500 rounded-full" style={{ transform: 'translateX(-1px) translateY(-160px)' }} />
-								<div className="absolute w-3 h-3 rounded-full bg-blue-500 -translate-x-1.5 -translate-y-1.5" />
+								<div className="w-[2px] h-[120px] bg-blue-500 rounded-full" style={{ transform: 'translateX(-1px) translateY(-120px)' }} />
 							</motion.div>
-							{/* Task cards sitting on the orbit */}
+							{/* Center dot */}
+							<div className="absolute z-[6] w-3 h-3 rounded-full bg-blue-500" style={{ left: 240 - 6, top: 240 - 6 }} />
+							{/* Task cards on the orbit — pulse when hand passes (every 3s per card, 12s cycle) */}
 							{[
-								{ label: 'DB backup', time: '00:00', angle: -90 },
-								{ label: 'Sync CRM', time: '06:00', angle: 0 },
-								{ label: 'Send report', time: '12:00', angle: 90 },
-								{ label: 'Cleanup', time: '18:00', angle: 180 },
-							].map((task, i) => {
+								{ label: 'DB backup', time: '12:00', angle: -90, triggerDelay: 0 },
+								{ label: 'Sync CRM', time: '03:00', angle: 0, triggerDelay: 3 },
+								{ label: 'Send report', time: '06:00', angle: 90, triggerDelay: 6 },
+								{ label: 'Cleanup', time: '09:00', angle: 180, triggerDelay: 9 },
+							].map((task) => {
 								const rad = (task.angle * Math.PI) / 180;
 								const r = 180;
 								const x = 240 + r * Math.cos(rad);
@@ -132,10 +132,10 @@ export default function ScheduledTasksContent({ title, description }) {
 										<motion.div
 											className="px-3 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm text-center min-w-[90px]"
 											animate={{
-												borderColor: ['rgb(229,231,235)', 'rgb(59,130,246)', 'rgb(229,231,235)'],
-												boxShadow: ['0 1px 2px rgba(0,0,0,0.05)', '0 0 12px rgba(59,130,246,0.3)', '0 1px 2px rgba(0,0,0,0.05)'],
+												borderColor: ['rgb(229,231,235)', 'rgb(59,130,246)', 'rgb(59,130,246)', 'rgb(229,231,235)'],
+												boxShadow: ['0 1px 2px rgba(0,0,0,0.05)', '0 0 16px rgba(59,130,246,0.4)', '0 0 16px rgba(59,130,246,0.4)', '0 1px 2px rgba(0,0,0,0.05)'],
 											}}
-											transition={{ duration: 1, delay: i * 3, repeat: Infinity, repeatDelay: 11 }}
+											transition={{ duration: 1.2, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 10.8, times: [0, 0.2, 0.7, 1] }}
 										>
 											<div className="text-[11px] font-semibold text-gray-700 dark:text-gray-200">{task.label}</div>
 											<div className="text-[10px] text-gray-400 font-mono">{task.time}</div>
