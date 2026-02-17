@@ -6,7 +6,7 @@ description: "How do I run scheduled tasks with Windmill? Cron jobs with a visua
 import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield } from 'lucide-react';
+import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2 } from 'lucide-react';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -28,10 +28,10 @@ export default function ScheduledTasksContent({ title, description }) {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Schedule any task with confidence
+							Schedule critical tasks for production 
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							For ops and platform teams who need production-grade cron with visibility. Define schedules for any script or flow with error handling, recovery and team-wide audit trails.
+							For ops and engineering teams who run critical scheduled jobs. Define schedules for any workflow with error handlers and recovery logic powered by Windmill's workflow engine.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -53,19 +53,19 @@ export default function ScheduledTasksContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Any language, any schedule</span> — Python, TypeScript, SQL, Go or Bash on any cron expression</span>
+								<span>Run scheduled jobs in <span className="text-blue-500">Python, TypeScript, SQL, Go, Bash</span> or full workflows</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Error and recovery handlers</span> — automated alerts to Slack, Teams or email</span>
+								<span>Connect to <span className="text-blue-500">databases, APIs, private packages</span> and any resource in your infra</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Enterprise controls</span> — RBAC, audit logs, SSO and team-wide visibility</span>
+								<span>Catch failures with <span className="text-blue-500">error handlers, retries</span> and alerts</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Part of the Windmill platform</span> — schedule scripts, flows, pipelines and agents</span>
+								<span>Deploy on your infrastructure with <span className="text-blue-500">RBAC, SSO</span> and audit logs</span>
 							</div>
 						</div>
 					</motion.div>
@@ -103,9 +103,9 @@ export default function ScheduledTasksContent({ title, description }) {
 							</svg>
 							{/* Center Windmill logo */}
 							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-								<img src="/img/windmill.svg" alt="Windmill" className="w-16 h-16" />
+								<img src="/img/windmill.svg" alt="Windmill" className="w-20 h-20" />
 							</div>
-							{/* Clock hand — 12s full rotation, triggers each card at 12/3/6/9 o'clock */}
+							{/* Clock hand — 12s full rotation */}
 							<motion.div className="absolute z-[5]" style={{ left: 240, top: 240, transformOrigin: '0 0' }}
 								animate={{ rotate: 360 }}
 								transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
@@ -114,12 +114,12 @@ export default function ScheduledTasksContent({ title, description }) {
 							</motion.div>
 							{/* Center dot */}
 							<div className="absolute z-[6] w-3 h-3 rounded-full bg-blue-500" style={{ left: 240 - 6, top: 240 - 6 }} />
-							{/* Task cards on the orbit — pulse when hand passes (every 3s per card, 12s cycle) */}
+							{/* Task cards on the orbit — trigger flow animation when hand passes */}
 							{[
-								{ label: 'DB backup', time: '12:00', angle: -90, triggerDelay: 0 },
-								{ label: 'Sync CRM', time: '03:00', angle: 0, triggerDelay: 3 },
-								{ label: 'Send report', time: '06:00', angle: 90, triggerDelay: 6 },
-								{ label: 'Cleanup', time: '09:00', angle: 180, triggerDelay: 9 },
+								{ label: 'DB backup', time: '12:00', Icon: Database, angle: -90, triggerDelay: 12 },
+								{ label: 'Sync CRM', time: '03:00', Icon: RefreshCw, angle: 0, triggerDelay: 15 },
+								{ label: 'Send report', time: '06:00', Icon: Mail, angle: 90, triggerDelay: 18 },
+								{ label: 'Cleanup', time: '09:00', Icon: Trash2, angle: 180, triggerDelay: 21 },
 							].map((task) => {
 								const rad = (task.angle * Math.PI) / 180;
 								const r = 180;
@@ -129,16 +129,53 @@ export default function ScheduledTasksContent({ title, description }) {
 									<div key={task.label} className="absolute z-10"
 										style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
 									>
+										{/* Card container */}
 										<motion.div
-											className="px-3 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm text-center min-w-[90px]"
+											className="relative rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm min-w-[110px] overflow-hidden whitespace-nowrap px-3 py-2 text-center"
 											animate={{
-												borderColor: ['rgb(229,231,235)', 'rgb(59,130,246)', 'rgb(59,130,246)', 'rgb(229,231,235)'],
-												boxShadow: ['0 1px 2px rgba(0,0,0,0.05)', '0 0 16px rgba(59,130,246,0.4)', '0 0 16px rgba(59,130,246,0.4)', '0 1px 2px rgba(0,0,0,0.05)'],
+												borderColor: ['rgb(229,231,235)', 'rgb(59,130,246)', 'rgb(34,197,94)', 'rgb(34,197,94)', 'rgb(229,231,235)'],
+												boxShadow: ['0 1px 2px rgba(0,0,0,0.05)', '0 0 16px rgba(59,130,246,0.4)', '0 0 16px rgba(34,197,94,0.4)', '0 0 16px rgba(34,197,94,0.4)', '0 1px 2px rgba(0,0,0,0.05)'],
 											}}
-											transition={{ duration: 1.2, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 10.8, times: [0, 0.2, 0.7, 1] }}
+											transition={{ duration: 2.4, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 9.6, times: [0, 0.12, 0.35, 0.7, 1] }}
 										>
-											<div className="text-[11px] font-semibold text-gray-700 dark:text-gray-200">{task.label}</div>
-											<div className="text-[10px] text-gray-400 font-mono">{task.time}</div>
+											<div className="flex items-center gap-1.5 justify-center mb-0.5">
+												<task.Icon className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
+												<span className="text-[11px] font-semibold text-gray-700 dark:text-gray-200">{task.label}</span>
+											</div>
+											{/* Shared slot: time ↔ Running... ↔ Success */}
+											<div className="relative h-[14px]">
+												{/* Time (default) */}
+												<motion.div
+													className="absolute inset-0 flex items-center justify-center"
+													animate={{ opacity: [1, 0, 0, 0, 1] }}
+													transition={{ duration: 2.4, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 9.6, times: [0, 0.1, 0.35, 0.9, 1] }}
+												>
+													<span className="text-[10px] text-gray-400 font-mono">{task.time}</span>
+												</motion.div>
+												{/* Running... */}
+												<motion.div
+													className="absolute inset-0 flex items-center justify-center gap-1 text-blue-500"
+													animate={{ opacity: [0, 1, 0, 0, 0] }}
+													transition={{ duration: 2.4, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 9.6, times: [0, 0.1, 0.34, 0.35, 1] }}
+												>
+													<motion.div
+														animate={{ rotate: [0, 360] }}
+														transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+													>
+														<RefreshCw className="w-2.5 h-2.5" />
+													</motion.div>
+													<span className="text-[9px] font-medium">Running...</span>
+												</motion.div>
+												{/* Success */}
+												<motion.div
+													className="absolute inset-0 flex items-center justify-center gap-1 text-emerald-500"
+													animate={{ opacity: [0, 0, 0, 1, 0] }}
+													transition={{ duration: 2.4, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 9.6, times: [0, 0.1, 0.34, 0.35, 0.9] }}
+												>
+													<CheckCircle className="w-2.5 h-2.5" />
+													<span className="text-[9px] font-medium">Success</span>
+												</motion.div>
+											</div>
 										</motion.div>
 									</div>
 								);
