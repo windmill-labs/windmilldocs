@@ -6,8 +6,9 @@ description: "How do I run scheduled tasks with Windmill? Cron jobs with a visua
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2, BookOpen, RotateCcw, Zap, Code2, Rocket } from 'lucide-react';
+import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2, BookOpen, RotateCcw, Zap, Code2, Rocket, Terminal, FolderPlus, FileCode } from 'lucide-react';
 import CodeBlock from '@theme/CodeBlock';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import { useColorMode } from '@docusaurus/theme-common';
 import { cfaInstituteCaseStudy } from '../../data/case-studies/cfa-institute';
 
@@ -24,13 +25,12 @@ export const stagger = (delay = 0) => ({
 });
 
 export const scheduleFeatures = [
-	{ icon: Code2, title: 'Write in 20+ languages', desc: 'Write a scheduled job as a simple script in TypeScript, Python, Go, SQL, Bash or any supported language. Compose multiple steps into a flow. Windmill handles execution, isolation and dependency management.', image: '/img/money-pages/script-flow.webp', docLink: '/docs/getting_started/scripts_quickstart' },
-	{ icon: Calendar, title: 'Visual cron builder', desc: 'Build schedules with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.', image: '/img/money-pages/cron-builder.webp', docLink: '/docs/core_concepts/scheduling' },
+	{ icon: Code2, title: 'Write in 20+ languages', desc: 'Write a scheduled job as a simple script in TypeScript, Python, Go, SQL, Bash or any supported language. Compose multiple steps into a flow. Windmill handles execution, isolation and dependency management.', image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' },
+	{ icon: Calendar, title: 'Visual cron builder', desc: 'Build schedules with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.', image: '/img/money-pages/triggers.webp', docLink: '/docs/core_concepts/scheduling' },
 	{ icon: Bell, title: 'Error handling & retries', desc: 'Configure retries with constant or exponential backoff. Attach error handler scripts that run on failure and recovery handlers that fire when a schedule succeeds again. Route alerts to Slack, Teams, email or any webhook.', image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/core_concepts/scheduling#error-handler' },
-	{ icon: Eye, title: 'Execution history', desc: 'Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect logs and re-run with one click.', image: '/img/money-pages/execution-history.webp', docLink: '/docs/core_concepts/jobs' },
-	{ icon: Shield, title: 'Dynamic skip logic', desc: 'Skip runs based on custom logic: weekends, holidays, external conditions. A validation script receives the scheduled time and returns whether to run or skip.', image: '/img/money-pages/dynamic-skip.webp', docLink: '/docs/core_concepts/scheduling#dynamic-skip' },
-	{ icon: Rocket, title: 'Deploy in seconds', desc: 'Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the CLI or Git sync with your CI/CD pipeline.', image: '/img/money-pages/deploy-schedule.webp', docLink: '/docs/advanced/deploy_to_prod' },
-	{ icon: Zap, title: 'Explore more triggers', desc: 'Beyond cron, trigger scripts and flows from webhooks, Kafka, Postgres CDC, SQS, emails or custom polling scripts with persistent state.', image: '/img/money-pages/triggers.webp', docLink: '/docs/getting_started/triggers' },
+	{ icon: Eye, title: 'Execution history', desc: 'Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect logs and re-run with one click.', image: '/img/money-pages/monitoring.png', docLink: '/docs/core_concepts/jobs' },
+	{ icon: Terminal, title: 'Local development', desc: 'Scheduled scripts are plain code files on disk. Write them with your favorite tools (VS Code, Cursor, Claude Code) and deploy with the Windmill CLI. Four commands from terminal to a running schedule.', image: '/img/money-pages/local-dev.webp', docLink: '/docs/advanced/local_development' },
+	{ icon: Rocket, title: 'Deploy in seconds', desc: 'Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the CLI or Git sync with your CI/CD pipeline.', image: '/img/money-pages/deploy-schedule.png', docLink: '/docs/advanced/deploy_to_prod' },
 ];
 
 export function ScheduleFeaturesSection() {
@@ -109,7 +109,7 @@ export function CaseStudyAndEmbed() {
 		: caseStudy.logo.replace('-light.png', '-dark.png').replace('-light.svg', '-dark.svg');
 
 	return (
-		<div className="bg-gray-50 dark:bg-gray-900/50">
+		<div>
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 				<motion.div {...fadeIn} className="mb-12">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -336,51 +336,18 @@ export default function ScheduledTasksContent({ title, description }) {
 			{/* Features — interactive tab layout */}
 			<ScheduleFeaturesSection />
 
-			{/* Local dev integration */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Develop locally, deploy to production
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Four commands from your terminal to a running schedule. Use the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link> with your own editor and workflow.
-					</p>
-				</motion.div>
-
-				<div className="space-y-6 max-w-3xl">
-					<motion.div {...stagger(0)}>
-						<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">1. Init your workspace</h3>
-						<CodeBlock language="bash">{`wmill init\n# Start local development`}</CodeBlock>
-					</motion.div>
-					<motion.div {...stagger(0.1)}>
-						<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">2. Create a script</h3>
-						<CodeBlock language="bash">{`wmill script add my_script\n# Write your script as classic code`}</CodeBlock>
-					</motion.div>
-					<motion.div {...stagger(0.2)}>
-						<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">3. Add a schedule</h3>
-						<CodeBlock language="bash">{`wmill schedule add my_script --cron "0 */5 * * *"\n# Trigger your script every 5 minutes`}</CodeBlock>
-					</motion.div>
-					<motion.div {...stagger(0.3)}>
-						<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">4. Deploy</h3>
-						<CodeBlock language="bash">{`wmill sync push\n# Script + schedule deployed to production`}</CodeBlock>
-					</motion.div>
-				</div>
-
-				<motion.div {...fadeIn} className="mt-10 flex flex-wrap gap-3">
-					{[
-						{ label: 'CLI docs', link: '/docs/advanced/cli' },
-						{ label: 'Git sync', link: '/docs/advanced/git_sync' },
-						{ label: 'Local development', link: '/docs/advanced/local_development' },
-					].map((item) => (
-						<Link key={item.label} to={item.link} className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium hover:border-blue-300 dark:hover:border-blue-600 transition-colors !no-underline">
-							{item.label}
-						</Link>
-					))}
-				</motion.div>
-			</div>
 
 			{/* Case study + embedded schedule */}
 			<CaseStudyAndEmbed />
+
+			{/* FAQ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What scheduling syntax does Windmill support?', textAnswer: 'Windmill supports standard cron expressions (6 fields including seconds) plus extended modifiers like nearest weekday (W), nth day-of-week (#), and last day-of-month (L). You can also use the visual cron builder to create schedules without memorizing cron syntax.' },
+				{ question: 'Can I monitor and retry failed scheduled jobs?', textAnswer: 'Yes. Every run is logged with inputs, outputs, duration and status. You can configure automatic retries with constant or exponential backoff, attach error handler scripts that run on failure, and recovery handlers that fire when a schedule succeeds again. Alerts can be routed to Slack, Teams, email or any webhook.' },
+				{ question: 'How does Windmill compare to cron on a server?', textAnswer: 'Windmill schedules run on managed infrastructure with built-in logging, error handling, retries, alerting and a visual UI. Unlike raw cron, you get execution history, permission controls, and the ability to trigger the same scripts from other events like webhooks or Kafka.' },
+				{ question: 'Can I schedule flows (multi-step pipelines)?', textAnswer: 'Yes. Anything that can be triggered manually in Windmill — scripts and flows — can be scheduled. Flows let you chain multiple steps with branching, loops, error handling and approval steps, all on a cron schedule.' },
+				{ question: 'Is Windmill scheduling free?', textAnswer: 'Windmill Community Edition is free and open-source with unlimited schedules. The Pro and Enterprise plans add features like audit logs, SAML SSO, priority support and more workers.' },
+			]} />
 
 			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
