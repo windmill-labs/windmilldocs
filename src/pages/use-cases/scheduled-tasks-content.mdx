@@ -72,14 +72,15 @@ export default function ScheduledTasksContent({ title, description }) {
 
 					<div className="hidden md:flex items-center justify-center">
 						<div className="relative w-[480px] h-[480px]">
-							{/* Clock face */}
-							<div className="absolute inset-[40px] rounded-full border-2 border-gray-200 dark:border-gray-700" />
-							{/* Tick marks */}
+							{/* Orbit ring */}
+							<div className="absolute inset-[60px] rounded-full border border-gray-200 dark:border-gray-700/50" />
+							{/* Tick marks — skip positions where cards sit (12, 3, 6, 9 o'clock = indices 0, 3, 6, 9) */}
 							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
 								{Array.from({ length: 12 }, (_, i) => {
+									if (i % 3 === 0) return null;
 									const angle = (i * 30 - 90) * Math.PI / 180;
-									const r1 = 185;
-									const r2 = 195;
+									const r1 = 174;
+									const r2 = 186;
 									const cx = 240, cy = 240;
 									return (
 										<line key={`tick-${i}`}
@@ -89,16 +90,31 @@ export default function ScheduledTasksContent({ title, description }) {
 										/>
 									);
 								})}
+								{/* Lines from center to each card */}
+								{[-90, 0, 90, 180].map((angle, i) => {
+									const rad = (angle * Math.PI) / 180;
+									return (
+										<line key={`line-${i}`}
+											x1={240 + 40 * Math.cos(rad)} y1={240 + 40 * Math.sin(rad)}
+											x2={240 + 180 * Math.cos(rad)} y2={240 + 180 * Math.sin(rad)}
+											className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={1.5}
+										/>
+									);
+								})}
 							</svg>
+							{/* Center Windmill logo */}
+							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+								<img src="/img/windmill.svg" alt="Windmill" className="w-16 h-16" />
+							</div>
 							{/* Sweeping hand */}
-							<motion.div className="absolute" style={{ left: 240, top: 240, transformOrigin: '0 0' }}
+							<motion.div className="absolute z-[5]" style={{ left: 240, top: 240, transformOrigin: '0 0' }}
 								animate={{ rotate: 360 }}
 								transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
 							>
 								<div className="w-[2px] h-[160px] bg-blue-500 rounded-full" style={{ transform: 'translateX(-1px) translateY(-160px)' }} />
 								<div className="absolute w-3 h-3 rounded-full bg-blue-500 -translate-x-1.5 -translate-y-1.5" />
 							</motion.div>
-							{/* Task cards at 12, 3, 6, 9 o'clock */}
+							{/* Task cards sitting on the orbit */}
 							{[
 								{ label: 'DB backup', time: '00:00', angle: -90 },
 								{ label: 'Sync CRM', time: '06:00', angle: 0 },
@@ -106,15 +122,12 @@ export default function ScheduledTasksContent({ title, description }) {
 								{ label: 'Cleanup', time: '18:00', angle: 180 },
 							].map((task, i) => {
 								const rad = (task.angle * Math.PI) / 180;
-								const r = 170;
+								const r = 180;
 								const x = 240 + r * Math.cos(rad);
 								const y = 240 + r * Math.sin(rad);
 								return (
-									<motion.div key={task.label} className="absolute z-10"
+									<div key={task.label} className="absolute z-10"
 										style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
-										initial={{ opacity: 0, scale: 0.8 }}
-										animate={{ opacity: 1, scale: 1 }}
-										transition={{ duration: 0.5, delay: i * 0.15 }}
 									>
 										<motion.div
 											className="px-3 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm text-center min-w-[90px]"
@@ -127,7 +140,7 @@ export default function ScheduledTasksContent({ title, description }) {
 											<div className="text-[11px] font-semibold text-gray-700 dark:text-gray-200">{task.label}</div>
 											<div className="text-[10px] text-gray-400 font-mono">{task.time}</div>
 										</motion.div>
-									</motion.div>
+									</div>
 								);
 							})}
 						</div>

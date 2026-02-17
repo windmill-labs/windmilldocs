@@ -72,65 +72,123 @@ export default function AiAgentsContent({ title, description }) {
 
 				<div className="hidden md:flex items-center justify-center">
 					<div className="relative w-[480px] h-[480px]">
-						{/* Concentric pulse rings */}
-						{[160, 200, 240].map((r, i) => (
-							<motion.div key={`ring-${i}`} className="absolute rounded-full border border-blue-200 dark:border-blue-800/40"
-								style={{ width: r * 2, height: r * 2, left: 240 - r, top: 240 - r }}
-								animate={{ opacity: [0.15, 0.35, 0.15], scale: [1, 1.03, 1] }}
-								transition={{ duration: 3, delay: i * 0.6, repeat: Infinity }}
-							/>
-						))}
+						{/* Orbit ring */}
+						<div className="absolute inset-[60px] rounded-full border border-gray-200 dark:border-gray-700/50" />
 						{/* Center Bot icon */}
 						<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-							<motion.div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg"
-								animate={{ scale: [1, 1.05, 1] }}
-								transition={{ duration: 3, repeat: Infinity }}
-							>
+							<div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
 								<Bot className="w-10 h-10 text-white" />
-							</motion.div>
+							</div>
 						</div>
-						{/* Tool nodes arranged in a circle */}
-						{[
-							{ Icon: Wrench, label: 'Script tool', angle: -90 },
-							{ Icon: Plug, label: 'MCP', angle: -30 },
-							{ Icon: MessageSquare, label: 'Chat', angle: 30 },
-							{ Icon: Eye, label: 'Observe', angle: 90 },
-							{ Icon: Settings, label: 'Structured', angle: 150 },
-							{ Icon: Database, label: 'Database', angle: 210 },
-						].map((tool, i) => {
-							const rad = (tool.angle * Math.PI) / 180;
-							const r = 170;
-							const x = 240 + r * Math.cos(rad);
-							const y = 240 + r * Math.sin(rad);
-							return (
-								<React.Fragment key={tool.label}>
-									{/* Connection line */}
-									<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none', zIndex: 1 }}>
-										<line x1={240} y1={240} x2={x} y2={y}
-											className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={1.5} />
-										{/* Pulse dot traveling from center to tool */}
-										<motion.circle r={4} className="fill-blue-400 dark:fill-blue-300" style={{ opacity: 0.8 }}
-											animate={{ cx: [240, x], cy: [240, y] }}
-											transition={{ duration: 2, delay: i * 0.8, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
+						{/* Rotating orbit */}
+						<motion.div
+							className="absolute inset-0"
+							style={{ transformOrigin: '240px 240px' }}
+							animate={{ rotate: 360 }}
+							transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+						>
+							{/* Lines from center to each tool */}
+							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+								{[
+									{ angle: -123 },
+									{ angle: -61 },
+									{ angle: -4 },
+									{ angle: 58 },
+									{ angle: 116 },
+									{ angle: 179 },
+								].map((item, i) => {
+									const rad = (item.angle * Math.PI) / 180;
+									const rStart = 40;
+									const rEnd = 180;
+									return (
+										<line
+											key={i}
+											x1={240 + rStart * Math.cos(rad)}
+											y1={240 + rStart * Math.sin(rad)}
+											x2={240 + rEnd * Math.cos(rad)}
+											y2={240 + rEnd * Math.sin(rad)}
+											className="stroke-gray-200 dark:stroke-gray-700/50"
+											strokeWidth={1.5}
 										/>
-									</svg>
-									{/* Tool node */}
-									<motion.div className="absolute z-[2]"
+									);
+								})}
+								{/* Animated data particles */}
+								{(() => {
+									const angles = [-123, -61, -4, 58, 116, 179];
+									const r = 180;
+									const c = 240;
+									const toXY = (angle) => {
+										const rad = (angle * Math.PI) / 180;
+										return { x: c + r * Math.cos(rad), y: c + r * Math.sin(rad) };
+									};
+									const pos = angles.map(toXY);
+									const balls = [
+										{ route: [0, 4, 2, 5, 1, 3], duration: 14, delay: 0 },
+										{ route: [3, 1, 5, 0, 4, 2], duration: 17, delay: 1.5 },
+										{ route: [5, 2, 0, 3, 1, 4], duration: 12, delay: 3 },
+										{ route: [1, 5, 3, 2, 0, 4], duration: 16, delay: 4.5 },
+										{ route: [4, 0, 1, 5, 3, 2], duration: 13, delay: 6 },
+										{ route: [2, 3, 4, 1, 5, 0], duration: 18, delay: 7.5 },
+										{ route: [0, 2, 5, 4, 3, 1], duration: 15, delay: 9 },
+										{ route: [5, 1, 3, 0, 2, 4], duration: 11, delay: 10.5 },
+										{ route: [3, 4, 0, 2, 5, 1], duration: 16, delay: 12 },
+										{ route: [1, 0, 4, 5, 2, 3], duration: 13, delay: 13.5 },
+										{ route: [4, 5, 2, 3, 0, 1], duration: 17, delay: 15 },
+										{ route: [2, 1, 5, 4, 3, 0], duration: 14, delay: 16.5 },
+									];
+									return balls.map((b, i) => {
+										const xK = [c];
+										const yK = [c];
+										b.route.forEach((idx) => {
+											xK.push(pos[idx].x, c);
+											yK.push(pos[idx].y, c);
+										});
+										return (
+											<motion.circle
+												key={`dot-${i}`}
+												r={4}
+												className="fill-blue-400 dark:fill-blue-300"
+												style={{ opacity: 0.8 }}
+												animate={{ cx: xK, cy: yK }}
+												transition={{ duration: b.duration, repeat: Infinity, ease: 'linear', delay: b.delay }}
+											/>
+										);
+									});
+								})()}
+							</svg>
+							{[
+								{ Icon: Wrench, label: 'Script tool', angle: -123 },
+								{ Icon: Database, label: 'Database', angle: -61 },
+								{ Icon: Plug, label: 'MCP', angle: -4 },
+								{ Icon: MessageSquare, label: 'Chat', angle: 58 },
+								{ Icon: Settings, label: 'Structured', angle: 116 },
+								{ Icon: Eye, label: 'Observe', angle: 179 },
+							].map((tool) => {
+								const rad = (tool.angle * Math.PI) / 180;
+								const r = 180;
+								const x = 240 + r * Math.cos(rad);
+								const y = 240 + r * Math.sin(rad);
+								return (
+									<div
+										key={tool.label}
+										className="absolute"
 										style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
-										initial={{ opacity: 0, scale: 0.8 }}
-										animate={{ opacity: 1, scale: 1 }}
-										transition={{ duration: 0.5, delay: i * 0.12 }}
 									>
-										<div className="flex flex-col items-center gap-1.5">
-											<div className="w-14 h-14 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex items-center justify-center">
-												<tool.Icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+										<motion.div
+											animate={{ rotate: -360 }}
+											transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+										>
+											<div className="flex flex-col items-center gap-1.5">
+												<div className="w-[72px] h-[72px] rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex items-center justify-center p-2.5">
+													<tool.Icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+												</div>
+												<span className="text-xs font-medium text-gray-500 dark:text-gray-400">{tool.label}</span>
 											</div>
-											<span className="text-xs font-medium text-gray-500 dark:text-gray-400">{tool.label}</span>
-										</div>
-									</motion.div>
-								</React.Fragment>
-							);
-						})}
+										</motion.div>
+									</div>
+								);
+							})}
+						</motion.div>
 					</div>
 				</div>
 			</div>
