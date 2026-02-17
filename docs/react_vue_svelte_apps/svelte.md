@@ -8,7 +8,7 @@ import DocCard from '@site/src/components/DocCard';
 
 :::info This section has moved
 
-Svelte apps in Windmill are now part of **full-code apps**.
+Svelte apps in Windmill are now part of **[full-code apps](../full_code_apps/index.mdx)**.
 
 :::
 

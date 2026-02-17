@@ -100,21 +100,37 @@ Field types:
 
 ## Supported languages
 
-| Language | Extension | Language | Extension |
-|----------|-----------|----------|-----------|
-| TypeScript (Bun) | `.bun.ts` or `.ts` | Python | `.py` |
-| TypeScript (Deno) | `.deno.ts` | Go | `.go` |
-| PostgreSQL | `.pg.sql` | MySQL | `.my.sql` |
-| BigQuery | `.bq.sql` | Snowflake | `.sf.sql` |
-| MS SQL | `.ms.sql` | OracleDB | `.odb.sql` |
-| DuckDB | `.duckdb.sql` | GraphQL | `.gql` |
-| Bash | `.sh` | PowerShell | `.ps1` |
-| PHP | `.php` | Rust | `.rs` |
-| C# | `.cs` | Java | `.java` |
-| Ruby | `.rb` | Nu | `.nu` |
-| Ansible | `.playbook.yml` | | |
+Backend runnables support all [Windmill script languages](../../getting_started/0_scripts_quickstart/index.mdx):
 
-Plain `.ts` files default to Bun. Use `.deno.ts` for Deno runtime.
+| Language | Extension |
+|----------|-----------|
+| [TypeScript (Bun)](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) | `.bun.ts` or `.ts` |
+| [TypeScript (Deno)](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) | `.deno.ts` |
+| [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) | `.py` |
+| [Bash](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) | `.sh` |
+| [Go](../../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx) | `.go` |
+| [REST](../../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx) | `.native.ts` |
+| [PostgreSQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) | `.pg.sql` |
+| [MySQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) | `.my.sql` |
+| [BigQuery](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) | `.bq.sql` |
+| [Oracle Database](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) | `.odb.sql` |
+| [Snowflake](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) | `.sf.sql` |
+| [MS SQL Server](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) | `.ms.sql` |
+| [GraphQL](../../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx) | `.gql` |
+| [PowerShell](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) | `.ps1` |
+| [PHP](../../getting_started/0_scripts_quickstart/8_php_quickstart/index.mdx) | `.php` |
+| [Rust](../../getting_started/0_scripts_quickstart/9_rust_quickstart/index.mdx) | `.rs` |
+| [Ansible](../../getting_started/0_scripts_quickstart/10_ansible_quickstart/) | `.playbook.yml` |
+| [C#](../../getting_started/0_scripts_quickstart/11_csharp_quickstart/) | `.cs` |
+| [Docker](../../getting_started/0_scripts_quickstart/7_docker_quickstart/index.mdx) | `Dockerfile` |
+| [Nu](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) | `.nu` |
+| [Java](../../getting_started/0_scripts_quickstart/13_java_quickstart/index.mdx) | `.java` |
+| [DuckDB](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) | `.duckdb.sql` |
+| [Ruby](../../getting_started/0_scripts_quickstart/14_ruby_quickstart/index.mdx) | `.rb` |
+
+Plain `.ts` files default to Bun. Use `.deno.ts` for Deno runtime. Use `.native.ts` for REST scripts.
+
+![Backend languages](./backend_languages.png 'Backend languages')
 
 ## Lock files
 
