@@ -3,10 +3,13 @@ title: "How to run scheduled tasks with Windmill"
 description: "How do I run scheduled tasks with Windmill? Cron jobs with a visual builder, execution history, error handlers, recovery handlers and alerting."
 ---
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2 } from 'lucide-react';
+import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2, BookOpen, RotateCcw, Zap, Code2, Rocket } from 'lucide-react';
+import CodeBlock from '@theme/CodeBlock';
+import { useColorMode } from '@docusaurus/theme-common';
+import { cfaInstituteCaseStudy } from '../../data/case-studies/cfa-institute';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -19,6 +22,151 @@ export const stagger = (delay = 0) => ({
 	...fadeIn,
 	transition: { duration: 0.5, delay }
 });
+
+export const scheduleFeatures = [
+	{ icon: Code2, title: 'Write in 20+ languages', desc: 'Write a scheduled job as a simple script in TypeScript, Python, Go, SQL, Bash or any supported language. Compose multiple steps into a flow. Windmill handles execution, isolation and dependency management.', image: '/img/money-pages/script-flow.webp', docLink: '/docs/getting_started/scripts_quickstart' },
+	{ icon: Calendar, title: 'Visual cron builder', desc: 'Build schedules with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.', image: '/img/money-pages/cron-builder.webp', docLink: '/docs/core_concepts/scheduling' },
+	{ icon: Bell, title: 'Error handling & retries', desc: 'Configure retries with constant or exponential backoff. Attach error handler scripts that run on failure and recovery handlers that fire when a schedule succeeds again. Route alerts to Slack, Teams, email or any webhook.', image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/core_concepts/scheduling#error-handler' },
+	{ icon: Eye, title: 'Execution history', desc: 'Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect logs and re-run with one click.', image: '/img/money-pages/execution-history.webp', docLink: '/docs/core_concepts/jobs' },
+	{ icon: Shield, title: 'Dynamic skip logic', desc: 'Skip runs based on custom logic: weekends, holidays, external conditions. A validation script receives the scheduled time and returns whether to run or skip.', image: '/img/money-pages/dynamic-skip.webp', docLink: '/docs/core_concepts/scheduling#dynamic-skip' },
+	{ icon: Rocket, title: 'Deploy in seconds', desc: 'Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the CLI or Git sync with your CI/CD pipeline.', image: '/img/money-pages/deploy-schedule.webp', docLink: '/docs/advanced/deploy_to_prod' },
+	{ icon: Zap, title: 'Explore more triggers', desc: 'Beyond cron, trigger scripts and flows from webhooks, Kafka, Postgres CDC, SQS, emails or custom polling scripts with persistent state.', image: '/img/money-pages/triggers.webp', docLink: '/docs/getting_started/triggers' },
+];
+
+export function ScheduleFeaturesSection() {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+			<motion.div {...fadeIn} className="mb-16">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					Built for production scheduling
+				</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300">
+					Every schedule is backed by Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">workflow engine</Link> with error handling, retries, observability and access controls built in.
+				</p>
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 mb-12">
+				{/* Left: clickable list */}
+				<div className="flex flex-col gap-2">
+					{scheduleFeatures.map((feat, i) => (
+						<button
+							key={feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
+							<span className="font-medium text-sm">{feat.title}</span>
+						</button>
+					))}
+				</div>
+
+				{/* Right: selected content */}
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{scheduleFeatures.map((feat, i) => (
+						<div
+							key={feat.title}
+							className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
+							{feat.image ? (
+								<img src={feat.image} alt={feat.title} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+								</div>
+							)}
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link to={feat.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export function CaseStudyAndEmbed() {
+	const { colorMode } = useColorMode();
+	const caseStudy = cfaInstituteCaseStudy;
+	const logoPath = colorMode === 'light'
+		? caseStudy.logo
+		: caseStudy.logo.replace('-light.png', '-dark.png').replace('-light.svg', '-dark.svg');
+
+	return (
+		<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						In production at CFA Institute
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						CFA Institute migrated from n8n to Windmill for production-critical monitoring. Their SRE team now schedules 25 synthetic tests that run every 5 minutes.
+					</p>
+				</motion.div>
+
+				<motion.div {...fadeIn} className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-6">
+					{/* Left — case study card */}
+					<Link to={caseStudy.link} className="group flex flex-col h-full rounded-2xl bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl !no-underline">
+						<div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-[200px] flex flex-col">
+							<div className="flex items-start justify-between mb-4">
+								<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
+									Case Study
+								</span>
+							</div>
+							<div className="flex items-center justify-center w-full flex-1 min-h-[120px]">
+								<img src={logoPath} alt={`${caseStudy.company} logo`} className="h-16 w-full object-contain" />
+							</div>
+						</div>
+						<div className="flex-1 px-6 pt-6 pb-6 flex flex-col">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+								{caseStudy.title}
+							</h3>
+							<p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed flex-1">
+								{caseStudy.description}
+							</p>
+							<div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
+								<span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+									{caseStudy.category}
+								</span>
+								<span className="text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 flex items-center gap-1 transition-colors">
+									Read the story
+									<ArrowRight className="w-4 h-4" />
+								</span>
+							</div>
+						</div>
+					</Link>
+
+					{/* Right — embedded schedule */}
+					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white p-4">
+						<iframe
+							src="https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed"
+							title="Scheduled workflow example"
+							className="w-full border-0 bg-white rounded"
+							style={{ height: '100%', minHeight: '400px' }}
+							loading="lazy"
+						/>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
 
 export default function ScheduledTasksContent({ title, description }) {
 	return (
@@ -53,7 +201,7 @@ export default function ScheduledTasksContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Run scheduled jobs in <span className="text-blue-500">Python, TypeScript, SQL, Go, Bash</span> or full workflows</span>
+								<span>Run scheduled scripts in <span className="text-blue-500">Python, TypeScript, SQL, Go, Bash</span> or full workflows</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
@@ -116,10 +264,10 @@ export default function ScheduledTasksContent({ title, description }) {
 							<div className="absolute z-[6] w-3 h-3 rounded-full bg-blue-500" style={{ left: 240 - 6, top: 240 - 6 }} />
 							{/* Task cards on the orbit — trigger flow animation when hand passes */}
 							{[
-								{ label: 'DB backup', time: '12:00', Icon: Database, angle: -90, triggerDelay: 12 },
-								{ label: 'Sync CRM', time: '03:00', Icon: RefreshCw, angle: 0, triggerDelay: 15 },
-								{ label: 'Send report', time: '06:00', Icon: Mail, angle: 90, triggerDelay: 18 },
-								{ label: 'Cleanup', time: '09:00', Icon: Trash2, angle: 180, triggerDelay: 21 },
+								{ label: 'DB backup', time: '12:00', Icon: Database, angle: -90, triggerDelay: 0 },
+								{ label: 'Sync CRM', time: '03:00', Icon: RefreshCw, angle: 0, triggerDelay: 3 },
+								{ label: 'Send report', time: '06:00', Icon: Mail, angle: 90, triggerDelay: 6 },
+								{ label: 'Cleanup', time: '09:00', Icon: Trash2, angle: 180, triggerDelay: 9 },
 							].map((task) => {
 								const rad = (task.angle * Math.PI) / 180;
 								const r = 180;
@@ -185,64 +333,54 @@ export default function ScheduledTasksContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* Why not raw cron */}
+			{/* Features — interactive tab layout */}
+			<ScheduleFeaturesSection />
+
+			{/* Local dev integration */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 				<motion.div {...fadeIn} className="mb-16">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Why not raw cron
+						Develop locally, deploy to production
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Traditional crontabs work, but they come with operational pain that Windmill eliminates.
+						Four commands from your terminal to a running schedule. Use the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link> with your own editor and workflow.
 					</p>
 				</motion.div>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-					{[
-						{ icon: Eye, title: 'No execution history', desc: 'Cron requires you to build your own logging. Windmill logs every run with inputs, outputs, duration and status automatically.' },
-						{ icon: AlertTriangle, title: 'No error handling', desc: 'A failed cron job is silent. Windmill schedules support error handlers that notify Slack, Teams, email or any webhook.' },
-						{ icon: Clock, title: 'No manual runs', desc: 'Running a cron job outside its schedule is difficult. In Windmill, click "Run now" at any time with the same or different arguments.' },
-						{ icon: Shield, title: 'No centralized UI', desc: 'Cron jobs live on individual servers with no team visibility. Windmill gives every schedule a dashboard with permissions.' },
-					].map((item, i) => (
-						<motion.div key={item.title} {...stagger(i * 0.08)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
-								<item.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-							</div>
-							<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-							<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-						</motion.div>
-					))}
-				</div>
-			</div>
-
-			{/* Features */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-					<motion.div {...fadeIn} className="mb-16">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							Built for production scheduling
-						</h2>
+				<div className="space-y-6 max-w-3xl">
+					<motion.div {...stagger(0)}>
+						<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">1. Init your workspace</h3>
+						<CodeBlock language="bash">{`wmill init\n# Start local development`}</CodeBlock>
 					</motion.div>
-
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-						{[
-							{ icon: Calendar, title: 'Advanced cron syntax', desc: 'Standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). Visual builder included.' },
-							{ icon: Bell, title: 'Error & recovery handlers', desc: 'Error handler runs on failure. Recovery handler runs when a previously failing schedule succeeds. Pre-built Slack/Teams handlers.' },
-							{ icon: Shield, title: 'Dynamic skip validation', desc: 'Skip runs based on custom logic — weekends, holidays, external conditions. If the handler returns false, the run is skipped.' },
-							{ icon: Clock, title: 'Multiple schedules', desc: 'One primary schedule plus unlimited additional schedules with different arguments per script or flow.' },
-							{ icon: Eye, title: 'Trigger scripts', desc: 'Poll external sources with persistent state. Return only new items since the last run — perfect when APIs don\'t support webhooks.' },
-							{ icon: Calendar, title: 'One-off scheduling', desc: 'Schedule a single future execution without a recurring schedule. Run later, once.' },
-						].map((item, i) => (
-							<motion.div key={item.title} {...stagger(i * 0.08)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-								<div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
-									<item.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-								<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-							</motion.div>
-						))}
-					</div>
+					<motion.div {...stagger(0.1)}>
+						<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">2. Create a script</h3>
+						<CodeBlock language="bash">{`wmill script add my_script\n# Write your script as classic code`}</CodeBlock>
+					</motion.div>
+					<motion.div {...stagger(0.2)}>
+						<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">3. Add a schedule</h3>
+						<CodeBlock language="bash">{`wmill schedule add my_script --cron "0 */5 * * *"\n# Trigger your script every 5 minutes`}</CodeBlock>
+					</motion.div>
+					<motion.div {...stagger(0.3)}>
+						<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">4. Deploy</h3>
+						<CodeBlock language="bash">{`wmill sync push\n# Script + schedule deployed to production`}</CodeBlock>
+					</motion.div>
 				</div>
+
+				<motion.div {...fadeIn} className="mt-10 flex flex-wrap gap-3">
+					{[
+						{ label: 'CLI docs', link: '/docs/advanced/cli' },
+						{ label: 'Git sync', link: '/docs/advanced/git_sync' },
+						{ label: 'Local development', link: '/docs/advanced/local_development' },
+					].map((item) => (
+						<Link key={item.label} to={item.link} className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium hover:border-blue-300 dark:hover:border-blue-600 transition-colors !no-underline">
+							{item.label}
+						</Link>
+					))}
+				</motion.div>
 			</div>
+
+			{/* Case study + embedded schedule */}
+			<CaseStudyAndEmbed />
 
 			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
