@@ -25,44 +25,117 @@ export default function InternalToolsContent({ title, description }) {
 		<div className="pt-32 max-w-full">
 			{/* Hero */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-				<motion.div {...fadeIn} className="mb-12 max-w-4xl">
-					<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-						Build internal tools in minutes, not weeks
-					</h1>
-					<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-						Drag-and-drop 50+ components onto a canvas, connect them to any data source, and deploy with granular role-based access control. No frontend framework needed.
-					</p>
-					<div className="flex flex-col sm:flex-row gap-4">
-						<a
-							href="https://app.windmill.dev"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-						>
-							Try Windmill free
-							<ArrowRight className="w-4 h-4" />
-						</a>
-						<Link
-							to="/docs/apps/app_editor"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-						>
-							Read the docs
-						</Link>
-					</div>
-				</motion.div>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Build internal tools in minutes, not weeks
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Drag-and-drop 50+ components onto a canvas, connect them to any data source, and deploy with granular role-based access control. No frontend framework needed.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/apps/app_editor"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">50+ components</span> — tables, charts, forms, modals and maps</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Inline scripts</span> in TypeScript, Python, Go, SQL or Bash</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Reactive data binding</span> — components update automatically</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Role-based access control</span> with SSO and audit logs</span>
+							</div>
+						</div>
+					</motion.div>
 
-				<motion.div
-					initial={{ opacity: 0, y: 40 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.6, delay: 0.2 }}
-				>
-					<img
-						src="/images/app_example.png"
-						alt="Windmill app editor"
-						className="w-full rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700"
-					/>
-				</motion.div>
+					<div className="hidden md:flex items-center justify-center">
+						<div className="relative w-[480px] h-[480px]">
+							{/* Dashed grid background */}
+							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+								{[0, 1, 2, 3].map((i) => (
+									<React.Fragment key={`grid-${i}`}>
+										<line x1={i * 160} y1={0} x2={i * 160} y2={480} className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={1} strokeDasharray="6 4" />
+										<line x1={0} y1={i * 160} x2={480} y2={i * 160} className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={1} strokeDasharray="6 4" />
+									</React.Fragment>
+								))}
+							</svg>
+							{/* UI component tiles */}
+							{[
+								{ label: 'Table', icon: '▦', row: 0, col: 0 },
+								{ label: 'Chart', icon: '📊', row: 0, col: 1 },
+								{ label: 'Form', icon: '📝', row: 0, col: 2 },
+								{ label: 'Button', icon: '⬜', row: 1, col: 0 },
+								{ label: 'Input', icon: '▭', row: 1, col: 1 },
+								{ label: 'Select', icon: '▾', row: 1, col: 2 },
+								{ label: 'Toggle', icon: '⇄', row: 2, col: 0 },
+								{ label: 'Map', icon: '🗺', row: 2, col: 1 },
+								{ label: 'Modal', icon: '⧉', row: 2, col: 2 },
+							].map((tile, i) => (
+								<motion.div
+									key={tile.label}
+									className="absolute"
+									style={{
+										left: tile.col * 160 + 20,
+										top: tile.row * 160 + 20,
+										width: 120,
+										height: 120,
+									}}
+									initial={{ opacity: 0, scale: 0.8 }}
+									animate={{ opacity: 1, scale: 1 }}
+									transition={{ duration: 0.5, delay: i * 0.12 }}
+								>
+									<div className="w-full h-full rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col items-center justify-center gap-2 hover:border-blue-300 dark:hover:border-blue-600 transition-colors">
+										<span className="text-2xl">{tile.icon}</span>
+										<span className="text-xs font-medium text-gray-500 dark:text-gray-400">{tile.label}</span>
+									</div>
+								</motion.div>
+							))}
+							{/* Connection lines between adjacent tiles */}
+							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+								{[
+									[80, 140, 180, 140], [240, 140, 340, 140],
+									[80, 300, 180, 300], [240, 300, 340, 300],
+									[80, 140, 80, 180], [240, 140, 240, 180],
+									[400, 140, 400, 180], [80, 300, 80, 340],
+									[240, 300, 240, 340],
+								].map(([x1, y1, x2, y2], i) => (
+									<motion.line
+										key={`conn-${i}`}
+										x1={x1} y1={y1} x2={x2} y2={y2}
+										className="stroke-blue-300 dark:stroke-blue-600"
+										strokeWidth={1.5}
+										strokeDasharray="4 3"
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 0.6 }}
+										transition={{ duration: 0.4, delay: 1.2 + i * 0.08 }}
+									/>
+								))}
+							</svg>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			{/* Key capabilities */}

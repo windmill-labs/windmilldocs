@@ -20,49 +20,112 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
+export const dagNodes = [
+	{ id: 'trigger', label: 'Trigger', x: 240, y: 60, color: 'bg-emerald-100 dark:bg-emerald-900/30', textColor: 'text-emerald-700 dark:text-emerald-300' },
+	{ id: 'branch-a', label: 'Extract A', x: 120, y: 180, color: 'bg-blue-100 dark:bg-blue-900/30', textColor: 'text-blue-700 dark:text-blue-300' },
+	{ id: 'branch-b', label: 'Extract B', x: 360, y: 180, color: 'bg-blue-100 dark:bg-blue-900/30', textColor: 'text-blue-700 dark:text-blue-300' },
+	{ id: 'merge', label: 'Transform', x: 240, y: 310, color: 'bg-purple-100 dark:bg-purple-900/30', textColor: 'text-purple-700 dark:text-purple-300' },
+	{ id: 'result', label: 'Load', x: 240, y: 420, color: 'bg-amber-100 dark:bg-amber-900/30', textColor: 'text-amber-700 dark:text-amber-300' },
+];
+
+export const dagEdges = [
+	{ src: 'trigger', dst: 'branch-a' },
+	{ src: 'trigger', dst: 'branch-b' },
+	{ src: 'branch-a', dst: 'merge' },
+	{ src: 'branch-b', dst: 'merge' },
+	{ src: 'merge', dst: 'result' },
+];
+
+export const dagNodeMap = Object.fromEntries(dagNodes.map(n => [n.id, n]));
+
 export default function WorkflowAutomationContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			{/* Hero */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-				<motion.div {...fadeIn} className="mb-12 max-w-4xl">
-					<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-						Automate any workflow, visually or as code
-					</h1>
-					<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-						Build workflows as directed acyclic graphs with branching, loops, retries, approval steps and error handling. Each step is a script in any language, orchestrated by the fastest open-source job engine.
-					</p>
-					<div className="flex flex-col sm:flex-row gap-4">
-						<a
-							href="https://app.windmill.dev"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-						>
-							Try Windmill free
-							<ArrowRight className="w-4 h-4" />
-						</a>
-						<Link
-							to="/docs/flows/flow_editor"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-						>
-							Read the docs
-						</Link>
-					</div>
-				</motion.div>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Automate any workflow, visually or as code
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Build workflows as directed acyclic graphs with branching, loops, retries, approval steps and error handling. Each step is a script in any language, orchestrated by the fastest open-source job engine.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/flows/flow_editor"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Branching, loops and approval steps</span> for real-world control flow</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">20+ languages</span> per step — mix Python, TypeScript, SQL, Go freely</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Error handlers and retries</span> with exponential backoff per step</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Trigger from anywhere</span> — cron, webhooks, Kafka, Postgres CDC, SQS</span>
+							</div>
+						</div>
+					</motion.div>
 
-				<motion.div
-					initial={{ opacity: 0, y: 40 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.6, delay: 0.2 }}
-				>
-					<img
-						src="/images/flow_example.png"
-						alt="Windmill flow editor"
-						className="w-full rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700"
-					/>
-				</motion.div>
+					<div className="hidden md:flex items-center justify-center">
+						<div className="relative w-[480px] h-[480px]">
+							{/* Edge lines */}
+							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+								{dagEdges.map((e, i) => (
+									<line key={`edge-${i}`} x1={dagNodeMap[e.src].x} y1={dagNodeMap[e.src].y + 24} x2={dagNodeMap[e.dst].x} y2={dagNodeMap[e.dst].y - 24}
+										className="stroke-gray-300 dark:stroke-gray-600" strokeWidth={2} />
+								))}
+								{dagEdges.map((e, i) => (
+									<motion.circle key={`dot-${i}`} r={5}
+										className="fill-blue-400 dark:fill-blue-300"
+										style={{ opacity: 0.9 }}
+										animate={{
+											cx: [dagNodeMap[e.src].x, dagNodeMap[e.dst].x, dagNodeMap[e.dst].x],
+											cy: [dagNodeMap[e.src].y + 24, dagNodeMap[e.dst].y - 24, dagNodeMap[e.dst].y - 24],
+											opacity: [0.9, 0.9, 0],
+										}}
+										transition={{ duration: 2.5, delay: i * 1.2, repeat: Infinity, repeatDelay: dagEdges.length * 1.2 - 2.5 + 0.5, ease: 'easeInOut' }}
+									/>
+								))}
+							</svg>
+							{/* Node boxes */}
+							{dagNodes.map((node, i) => (
+								<motion.div key={node.id} className="absolute"
+									style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
+									initial={{ opacity: 0, scale: 0.8 }}
+									animate={{ opacity: 1, scale: 1 }}
+									transition={{ duration: 0.5, delay: i * 0.15 }}
+								>
+									<div className={`px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm ${node.color} flex items-center gap-2`}>
+										<div className="w-2.5 h-2.5 rounded-full bg-current opacity-60" />
+										<span className={`text-sm font-semibold ${node.textColor}`}>{node.label}</span>
+									</div>
+								</motion.div>
+							))}
+						</div>
+					</div>
+				</div>
 			</div>
 
 			{/* Control flow */}

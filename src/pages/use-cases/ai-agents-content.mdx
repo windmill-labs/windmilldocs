@@ -6,7 +6,7 @@ description: "How do I build AI agents with Windmill? Add agent steps to flows w
 import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings } from 'lucide-react';
+import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings, Database } from 'lucide-react';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -25,7 +25,8 @@ export default function AiAgentsContent({ title, description }) {
 		<div className="pt-32 max-w-full">
 			{/* Hero */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-				<motion.div {...fadeIn} className="mb-12 max-w-4xl">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+				<motion.div {...fadeIn}>
 					<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
 						Build AI agents with real tool calling
 					</h1>
@@ -49,10 +50,90 @@ export default function AiAgentsContent({ title, description }) {
 							Read the docs
 						</Link>
 					</div>
+					<div className="mt-8 flex flex-col gap-3">
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">Any Windmill script as a tool</span> — typed parameters become the tool schema</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">OpenAI, Anthropic, Mistral, Gemini</span> and 10+ providers</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">Full observability</span> — every tool call logged as a flow node</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">MCP integration</span> with auto-discovered tools and OAuth</span>
+						</div>
+					</div>
 				</motion.div>
 
-				{/* Placeholder for screenshot/video */}
-				{/* TODO: Add AI agent screenshot or demo video when available */}
+				<div className="hidden md:flex items-center justify-center">
+					<div className="relative w-[480px] h-[480px]">
+						{/* Concentric pulse rings */}
+						{[160, 200, 240].map((r, i) => (
+							<motion.div key={`ring-${i}`} className="absolute rounded-full border border-blue-200 dark:border-blue-800/40"
+								style={{ width: r * 2, height: r * 2, left: 240 - r, top: 240 - r }}
+								animate={{ opacity: [0.15, 0.35, 0.15], scale: [1, 1.03, 1] }}
+								transition={{ duration: 3, delay: i * 0.6, repeat: Infinity }}
+							/>
+						))}
+						{/* Center Bot icon */}
+						<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+							<motion.div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg"
+								animate={{ scale: [1, 1.05, 1] }}
+								transition={{ duration: 3, repeat: Infinity }}
+							>
+								<Bot className="w-10 h-10 text-white" />
+							</motion.div>
+						</div>
+						{/* Tool nodes arranged in a circle */}
+						{[
+							{ Icon: Wrench, label: 'Script tool', angle: -90 },
+							{ Icon: Plug, label: 'MCP', angle: -30 },
+							{ Icon: MessageSquare, label: 'Chat', angle: 30 },
+							{ Icon: Eye, label: 'Observe', angle: 90 },
+							{ Icon: Settings, label: 'Structured', angle: 150 },
+							{ Icon: Database, label: 'Database', angle: 210 },
+						].map((tool, i) => {
+							const rad = (tool.angle * Math.PI) / 180;
+							const r = 170;
+							const x = 240 + r * Math.cos(rad);
+							const y = 240 + r * Math.sin(rad);
+							return (
+								<React.Fragment key={tool.label}>
+									{/* Connection line */}
+									<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none', zIndex: 1 }}>
+										<line x1={240} y1={240} x2={x} y2={y}
+											className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={1.5} />
+										{/* Pulse dot traveling from center to tool */}
+										<motion.circle r={4} className="fill-blue-400 dark:fill-blue-300" style={{ opacity: 0.8 }}
+											animate={{ cx: [240, x], cy: [240, y] }}
+											transition={{ duration: 2, delay: i * 0.8, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
+										/>
+									</svg>
+									{/* Tool node */}
+									<motion.div className="absolute z-[2]"
+										style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
+										initial={{ opacity: 0, scale: 0.8 }}
+										animate={{ opacity: 1, scale: 1 }}
+										transition={{ duration: 0.5, delay: i * 0.12 }}
+									>
+										<div className="flex flex-col items-center gap-1.5">
+											<div className="w-14 h-14 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex items-center justify-center">
+												<tool.Icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+											</div>
+											<span className="text-xs font-medium text-gray-500 dark:text-gray-400">{tool.label}</span>
+										</div>
+									</motion.div>
+								</React.Fragment>
+							);
+						})}
+					</div>
+				</div>
+			</div>
 			</div>
 
 			{/* Multi-provider */}
