@@ -405,6 +405,7 @@ const sidebars = {
 				'core_concepts/ai_agents/index',
 				'core_concepts/workspace_dependencies/index',
 				'core_concepts/workspace_settings/index',
+				'core_concepts/streaming/index',
 				{
 					type: 'category',
 					label: 'Integrations',
