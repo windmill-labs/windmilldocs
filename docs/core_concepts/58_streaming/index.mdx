@@ -1,0 +1,59 @@
+---
+description: How does streaming work in Windmill? Stream job results via SSE, webhooks, HTTP routes and AI agents.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Streaming
+
+Windmill supports streaming data from jobs in several ways. Runnables can return streams (any `AsyncGenerator<string>` in TypeScript, `iter` in Python, or an AI agent step), and Windmill provides multiple ways to consume them.
+
+## Job result streaming
+
+Scripts in Python and TypeScript can stream back results as a text stream. The stream exists while the job is running, and the full content becomes the result once the job completes.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Result streaming"
+		description="Stream back results from Python and TypeScript scripts."
+		href="/docs/core_concepts/jobs#result-streaming"
+	/>
+</div>
+
+
+## AI agent streaming
+
+AI agent steps support streaming token deltas, tool calls and tool results as structured JSON payloads.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="AI agents"
+		description="Integrate AI agent steps with streaming support into your flows."
+		href="/docs/core_concepts/ai_agents#streaming-optional"
+	/>
+</div>
+
+## Consuming a stream
+
+### Webhook SSE stream
+
+Runnables are associated with SSE stream webhook endpoints that trigger the job and return a Server-Sent Events stream.
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="SSE stream webhooks"
+		description="Trigger a job and get an SSE stream of the result."
+		href="/docs/core_concepts/webhooks#sse-stream-webhooks"
+	/>
+</div>
+
+### HTTP trigger SSE stream
+
+HTTP routes can be configured in Sync SSE mode to return a Server-Sent Events stream when the bound runnable returns a stream.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="HTTP routes"
+		description="Trigger scripts and flows from custom HTTP routes."
+		href="/docs/core_concepts/http_routing"
+	/>
+</div>

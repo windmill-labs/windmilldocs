@@ -155,8 +155,9 @@ The stream will contain json payloads separated by newlines. The payloads can be
 
 The final result of the step will contain an additional field `wm_stream` with the complete stream.
 
-You can use the [SSE stream webhooks](../4_webhooks/index.mdx#sse-stream-webhooks) to get the stream. 
-The `new_result_stream` field of an SSE event can contain multiple payloads at a time, make sure to split on line breaks. 
+You can use the [SSE stream webhooks](../4_webhooks/index.mdx#sse-stream-webhooks) or an [HTTP route](../39_http_routing/index.mdx) in Sync SSE mode to get the stream.
+If the AI agent step is not the last step of your flow, make sure to configure [early return](../../flows/19_early_return.mdx) with the step's id to have the stream returned.
+The `new_result_stream` field of an SSE event can contain multiple payloads at a time, make sure to split on line breaks.
 Only complete payloads are streamed, you do not need to handle partial JSON.
 
 #### user_images (optional)

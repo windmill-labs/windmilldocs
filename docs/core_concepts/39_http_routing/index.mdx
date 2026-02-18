@@ -22,6 +22,9 @@ Among the supported authentication mechanisms, there's also **Windmill Auth**, w
 You can configure the route to run:
 - **Synchronously**: Wait for the script to complete and return the result.
 - **Asynchronously**: Return a job ID immediately; the script runs in the background.
+- **Sync SSE**: Return a [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) stream. Useful when the runnable returns a [stream](../20_jobs/index.mdx#result-streaming). Works identically to the `/run_and_stream` endpoint of [SSE stream webhooks](../4_webhooks/index.mdx#sse-stream-webhooks).
+
+For more on streaming in Windmill, see [Streaming](../58_streaming/index.mdx).
 
 ---
 
