@@ -138,7 +138,7 @@ If not returning the stream directly, we introduce 2 new functions on our SDK: `
 
 The stream only exists while the job is in the queue. Afterwards, the full stream becomes the result (or added as the field "wm_stream" if there is already a result).
 
-You can run a job and get an SSE stream of the result using the [SSE stream webhooks](../4_webhooks/index.mdx#sse-stream-webhooks).
+You can run a job and get an SSE stream of the result using the [SSE stream webhooks](../4_webhooks/index.mdx#sse-stream-webhooks) or an [HTTP route](../39_http_routing/index.mdx) in Sync SSE mode.
 
 #### Returning a stream directly
 
