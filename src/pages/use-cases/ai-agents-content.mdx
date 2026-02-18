@@ -28,14 +28,14 @@ export const radius = 175;
 
 {/* 8 nodes evenly on a single circle */}
 export const heroNodeDefs = [
-	{ src: '/third_party_logos/snowflake.svg', label: 'Snowflake' },
-	{ src: '/third_party_logos/github.svg', label: 'GitHub' },
-	{ src: '/third_party_logos/slack.svg', label: 'Slack' },
-	{ src: '/third_party_logos/datadog.svg', label: 'Datadog' },
-	{ src: '/third_party_logos/postgres.svg', label: 'PostgreSQL' },
-	{ src: '/third_party_logos/aws.svg', label: 'AWS' },
-	{ src: '/third_party_logos/hubspot.svg', label: 'HubSpot' },
-	{ src: '/third_party_logos/duckdb.svg', label: 'DuckDB' },
+	{ src: '/third_party_logos/snowflake.svg', label: 'Snowflake', action: 'SELECT *' },
+	{ src: '/third_party_logos/github.svg', label: 'GitHub', action: 'POST /pr' },
+	{ src: '/third_party_logos/slack.svg', label: 'Slack', action: 'send_msg' },
+	{ src: '/third_party_logos/datadog.svg', label: 'Datadog', action: 'GET /metrics' },
+	{ src: '/third_party_logos/postgres.svg', label: 'PostgreSQL', action: 'INSERT' },
+	{ src: '/third_party_logos/aws.svg', label: 'AWS', action: 'put_object' },
+	{ src: '/third_party_logos/hubspot.svg', label: 'HubSpot', action: 'GET /contact' },
+	{ src: '/third_party_logos/duckdb.svg', label: 'DuckDB', action: 'QUERY' },
 ];
 
 export const heroNodes = heroNodeDefs.map((node, i) => {
@@ -109,16 +109,20 @@ export function HeroAnimation() {
 			</svg>
 
 			{/* Service nodes */}
-			{heroNodes.map((node) => (
+			{heroNodes.map((node, i) => (
 				<div
 					key={node.label}
 					className="absolute z-10"
 					style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
 				>
 					<div className="flex flex-col items-center gap-1">
-						<div className="w-14 h-14 rounded-xl bg-white border border-gray-200 dark:border-gray-600 shadow-sm flex items-center justify-center p-2">
+						<motion.div
+							className="w-14 h-14 rounded-xl bg-white border border-gray-200 dark:border-gray-600 shadow-sm flex items-center justify-center p-2"
+							animate={{ boxShadow: ['0 0 0px rgba(59,130,246,0)', '0 0 12px rgba(59,130,246,0.5)', '0 0 0px rgba(59,130,246,0)'] }}
+							transition={{ duration: 2, repeat: Infinity, delay: i * 1.3, ease: 'easeInOut' }}
+						>
 							<img src={node.src} alt={node.label} className="w-full h-full object-contain" />
-						</div>
+						</motion.div>
 						<span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">{node.label}</span>
 					</div>
 				</div>
