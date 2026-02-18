@@ -23,7 +23,7 @@ export const stagger = (delay = 0) => ({
 
 {/* ── Neural network hero animation ── */}
 
-export const center = { x: 240, y: 240 };
+export const center = { x: 240, y: 210 };
 export const radius = 175;
 
 {/* 8 nodes evenly on a single circle */}
@@ -48,9 +48,20 @@ export const crossLinks = heroNodes.flatMap((_, i) =>
 	heroNodes.slice(i + 1).map((_, j) => [i, i + 1 + j])
 );
 
+export const logEntries = [
+	{ action: 'send_message', target: 'Slack', status: 'ok' },
+	{ action: 'SELECT *', target: 'PostgreSQL', status: 'ok' },
+	{ action: 'create_issue', target: 'Linear', status: 'ok' },
+	{ action: 'put_object', target: 'AWS', status: 'ok' },
+	{ action: 'create_pr', target: 'GitHub', status: 'ok' },
+	{ action: 'query', target: 'DuckDB', status: 'ok' },
+	{ action: 'get_contact', target: 'HubSpot', status: 'ok' },
+	{ action: 'list_metrics', target: 'Datadog', status: 'ok' },
+];
+
 export function HeroAnimation() {
 	return (
-		<div className="relative w-[480px] h-[480px]">
+		<div className="relative w-[480px] h-[580px]">
 			{/* Center Bot icon */}
 			<div className="absolute z-10" style={{ left: center.x, top: center.y, transform: 'translate(-50%, -50%)' }}>
 				<div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-900 flex items-center justify-center shadow-lg">
@@ -112,6 +123,30 @@ export function HeroAnimation() {
 					</div>
 				</div>
 			))}
+
+			{/* Live activity log */}
+			<div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[320px] z-20">
+				<div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm overflow-hidden shadow-sm">
+					<div className="flex items-center gap-2 px-3 py-1.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+						<Eye className="w-3 h-3 text-blue-500" />
+						<span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Live agent log</span>
+					</div>
+					<div className="relative h-[72px] overflow-hidden">
+						<motion.div
+							animate={{ y: [0, -(logEntries.length * 24)] }}
+							transition={{ duration: logEntries.length * 2.5, repeat: Infinity, ease: 'linear' }}
+						>
+							{[...logEntries, ...logEntries].map((entry, i) => (
+								<div key={i} className="flex items-center gap-2 px-3 h-[24px] text-[11px] font-mono">
+									<span className="text-green-500">●</span>
+									<span className="text-gray-400 dark:text-gray-500">{entry.target}</span>
+									<span className="text-gray-600 dark:text-gray-300">{entry.action}</span>
+								</div>
+							))}
+						</motion.div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
