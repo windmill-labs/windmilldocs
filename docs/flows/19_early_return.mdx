@@ -10,6 +10,8 @@ It is possible to define a node at which the flow will return at for [sync endpo
 
 Useful when some webhooks need to return extremely fast but not just the uuid (define first step as early return) or when the expected return from the webhook doesn't need to the full flow being computed.
 
+Early return also affects [streaming](../core_concepts/58_streaming/index.mdx): when configured, the stream comes from the early return step rather than the last step of the flow.
+
 ![Set early return](../assets/flows/set_early_return.png.webp 'Set early return')
 
 Webooks can be found on the flow page once [deployed](../core_concepts/0_draft_and_deploy/index.mdx).
