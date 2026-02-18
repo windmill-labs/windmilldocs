@@ -10,6 +10,7 @@ Windmill already provides over [sixty components](./4_app_configuration_settings
 
 If you're looking for a way to:
 
+- Build a complete React or Svelte app with Windmill backend runnables, see [Full-code apps](../full_code_apps/index.mdx).
 - Import whole react apps to Windmill, see [React app import](../react_vue_svelte_apps/react.md).
 - Integrate Windmill applications into React-based project, see [Windmill React SDK](../misc/15_react_sdk/index.md).
 
@@ -25,7 +26,7 @@ There are 3 main benefits of using your own components:
 2. Controlling fully the component including theming, inputs and outputs allowing for more complex components and interactions.
 3. Embedding very complex components such as a code editor.
 
-If that's not sufficient you can even [build your own app in React](../react_vue_svelte_apps/react.md).
+If that's not sufficient you can even [build your own app in React](../react_vue_svelte_apps/react.md), or use [full-code apps](../full_code_apps/index.mdx) to build a complete React or Svelte frontend connected to Windmill backend runnables.
 
 ## How to import React components to App editor
 

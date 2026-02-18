@@ -4,7 +4,7 @@ description: How do I embed Windmill editors and apps into a React project using
 
 # Windmill React SDK
 
-The Windmill React SDK provides a suite of tools and components to integrate Windmill applications (scripts editor, flows editor, app editor and its deployed apps) into React-based projects.
+The Windmill React SDK provides a suite of tools and components to integrate Windmill applications (scripts editor, flows editor, app editor and its deployed apps) into React-based projects. If you're looking to build a standalone React app connected to Windmill backend runnables, see [full-code apps](../../full_code_apps/index.mdx) instead.
 
 This feature is available only for [White Label Edition](../8_white_labelling/index.mdx).
 
