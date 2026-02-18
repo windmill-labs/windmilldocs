@@ -214,7 +214,7 @@ services:
           memory: 2048M
     environment:
       - WORKER_GROUP=native
-      - NUM_WORKERS=8
+      - NATIVE_MODE=true
 ```
 
 #### Medium setup (8 CUs)
@@ -254,7 +254,7 @@ services:
           memory: 2048M
     environment:
       - WORKER_GROUP=native
-      - NUM_WORKERS=8
+      - NATIVE_MODE=true
 ```
 
 #### Large setup (Cloud Plan - 16 CUs)
@@ -294,7 +294,7 @@ services:
           memory: 2048M
     environment:
       - WORKER_GROUP=native
-      - NUM_WORKERS=8
+      - NATIVE_MODE=true
 ```
 
 #### Large setup (Self-hosted - 12 CUs)
@@ -332,7 +332,7 @@ services:
           memory: 2048M
     environment:
       - WORKER_GROUP=native
-      - NUM_WORKERS=8
+      - NATIVE_MODE=true
 ```
 Note: Services like db, windmill_server, lsp, multiplayer, indexer, and caddy don't count towards Compute Units.
 
@@ -347,8 +347,8 @@ workerGroups:
   - name: "native"
     replicas: 1
     extraEnv:
-      - name: "NUM_WORKERS"
-        value: "8"
+      - name: "NATIVE_MODE"
+        value: "true"
       - name: "SLEEP_QUEUE"
         value: "200"
 ```
@@ -358,10 +358,8 @@ In this configuration:
 - `name: "native"`: Specifies the native worker group that handles query language jobs
 - `replicas: 1`: Sets the number of native worker replicas (typically 1)
 - `extraEnv`: Environment variables for the native workers:
-  - `NUM_WORKERS`: Number of subworker processes (default: 8, counts as 1 Compute Unit)
+  - `NATIVE_MODE`: Automatically spawns 8 subworkers and restricts the worker to native jobs + flow handling
   - `SLEEP_QUEUE`: Sleep duration between queue polling in milliseconds (default: 200)
-
-You can adjust the `NUM_WORKERS` value based on your needs. Setting it to 0 will disable native workers entirely.
 
 For the complete default configuration, refer to the [Windmill Helm chart values.yaml](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml#L172).
 
