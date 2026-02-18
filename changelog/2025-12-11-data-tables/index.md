@@ -8,7 +8,7 @@ features:
   [
     'Near-zero setup relational data storage managed by Windmill',
     'Workspace-scoped with automatic credential management',
-    'Support for Custom Instance Database (superadmin-managed) or Postgres resources',
+    'Support for Custom instance database (superadmin-managed) or Postgres resources',
     'Safe parameterized queries in TypeScript and Python',
     'Native DuckDB integration with ATTACH syntax',
     'Automatic asset detection and data dependency visualization',
