@@ -116,7 +116,7 @@ export function CaseStudyAndEmbed() {
 						In production at CFA Institute
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						CFA Institute migrated from n8n to Windmill for production-critical monitoring. Their SRE team now schedules 25 synthetic tests that run every 5 minutes.
+						CFA Institute uses Windmill for production-critical monitoring with 25 synthetic tests running every 5 minutes.
 					</p>
 				</motion.div>
 
@@ -177,10 +177,10 @@ export default function ScheduledTasksContent({ title, description }) {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Schedule your most critical tasks
+							Schedule your most critical tasks with confidence
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							For ops and engineering teams who run critical scheduled jobs. Define schedules for any workflow with error handlers and recovery logic powered by Windmill's workflow engine.
+							For ops and engineering teams who run critical scheduled jobs. Define schedules for any workflow with error handlers and recovery logic powered by Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-400 hover:underline !no-underline">workflow engine</Link>.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -202,19 +202,19 @@ export default function ScheduledTasksContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Run scheduled scripts in <span className="text-blue-500">Python, TypeScript, SQL, Go, Bash</span> or full workflows</span>
+								<span>Run scheduled scripts in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">Python, TypeScript, SQL, Go, Bash</Link> or <Link to="/use-cases/data-pipelines" className="text-blue-500 hover:underline !no-underline">full workflows</Link></span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Connect to <span className="text-blue-500">databases, APIs, private packages</span> and any resource in your infra</span>
+								<span>Connect to <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline !no-underline">databases, APIs, private packages</Link> and any resource in your infra</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Catch failures with <span className="text-blue-500">error handlers, retries</span> and alerts</span>
+								<span>Catch failures with <Link to="/docs/core_concepts/scheduling#error-handler" className="text-blue-500 hover:underline !no-underline">error handlers, retries</Link> and alerts</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Deploy on your infrastructure with <span className="text-blue-500">RBAC, SSO</span> and audit logs</span>
+								<span>Deploy in one click with <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-500 hover:underline !no-underline">RBAC, SSO</Link> and audit logs</span>
 							</div>
 						</div>
 					</motion.div>
@@ -341,7 +341,7 @@ export default function ScheduledTasksContent({ title, description }) {
 						From single scripts to complex data pipelines
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Schedule anything: a simple script that runs in seconds or a multi-step pipeline with branching, loops and error handling. Same platform, same reliability.</p>
+						Schedule anything: a simple <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">script</Link> that runs in seconds or a <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">multi-step pipeline</Link> with branching, loops and error handling. Same platform, same reliability.</p>
 				</motion.div>
 
 				{/* Two columns */}
@@ -402,7 +402,7 @@ export default function ScheduledTasksContent({ title, description }) {
 				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
 					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start scheduling tasks today</h2>
 					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
-						Get started for free on Windmill Cloud or self-host the open-source version.
+						Get started for free on Windmill Cloud or <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">self-host</Link> the open-source version.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
 						<a
