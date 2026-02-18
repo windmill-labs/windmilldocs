@@ -26,11 +26,11 @@ export const stagger = (delay = 0) => ({
 
 export const scheduleFeatures = [
 	{ icon: Code2, title: 'Write in 20+ languages', desc: 'Write a scheduled job as a simple script in TypeScript, Python, Go, SQL, Bash or any supported language. Compose multiple steps into a flow. Windmill handles execution, isolation and dependency management.', image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' },
-	{ icon: Calendar, title: 'Visual cron builder', desc: 'Build schedules with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.', image: '/img/money-pages/cron-schedule.png', docLink: '/docs/core_concepts/scheduling' },
+	{ icon: Calendar, title: 'Visual cron builder', desc: 'Build schedules with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.', image: '/img/money-pages/cron-schedule.webp', docLink: '/docs/core_concepts/scheduling' },
 	{ icon: Bell, title: 'Error handling & retries', desc: 'Configure retries with constant or exponential backoff. Attach error handler scripts that run on failure and recovery handlers that fire when a schedule succeeds again. Route alerts to Slack, Teams, email or any webhook.', image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/core_concepts/scheduling#error-handler' },
-	{ icon: Eye, title: 'Execution history', desc: 'Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect logs and re-run with one click.', image: '/img/money-pages/monitoring.png', docLink: '/docs/core_concepts/jobs' },
-	{ icon: Terminal, title: 'Local development', desc: 'Scheduled scripts are plain code files on disk. Write them with your favorite tools (VS Code, Cursor, Claude Code) and deploy with the Windmill CLI. Four commands from terminal to a running schedule.', image: '/img/money-pages/local-schedule.png', docLink: '/docs/advanced/local_development' },
-	{ icon: Rocket, title: 'Deploy in seconds', desc: 'Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the CLI or Git sync with your CI/CD pipeline.', image: '/img/money-pages/deploy-schedule.png', docLink: '/docs/advanced/deploy_to_prod' },
+	{ icon: Eye, title: 'Execution history', desc: 'Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect logs and re-run with one click.', image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
+	{ icon: Terminal, title: 'Local development', desc: 'Scheduled scripts are plain code files on disk. Write them with your favorite tools (VS Code, Cursor, Claude Code) and deploy with the Windmill CLI. Four commands from terminal to a running schedule.', image: '/img/money-pages/local-schedule.webp', docLink: '/docs/advanced/local_development' },
+	{ icon: Rocket, title: 'Deploy in seconds', desc: 'Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the CLI or Git sync with your CI/CD pipeline.', image: '/img/money-pages/deploy-schedule.webp', docLink: '/docs/advanced/deploy_to_prod' },
 ];
 
 export function ScheduleFeaturesSection() {
@@ -347,8 +347,8 @@ export default function ScheduledTasksContent({ title, description }) {
 				{/* Two columns */}
 				<div className="flex flex-col md:flex-row gap-6 items-center md:min-h-[600px]">
 					{[
-						{ key: 'script', title: 'Schedule scripts', desc: 'Write scripts in 20+ languages and run them on cron schedules', img: '/img/money-pages/scripts-preview.png', alt: 'Single scheduled script with execution history' },
-						{ key: 'flow', title: 'Schedule multi-step workflows', desc: 'Build multi-step DAG pipelines and run them on cron schedules', img: '/img/money-pages/flow-preview.png', alt: 'Data pipeline DAG with parallel branches' },
+						{ key: 'script', title: 'Schedule scripts', desc: 'Write scripts in 20+ languages and run them on cron schedules', img: '/img/money-pages/scripts-preview.webp', alt: 'Single scheduled script with execution history' },
+						{ key: 'flow', title: 'Schedule multi-step workflows', desc: 'Build multi-step DAG pipelines and run them on cron schedules', img: '/img/money-pages/flow-preview.webp', alt: 'Data pipeline DAG with parallel branches' },
 					].map((card) => (
 						<button
 							key={card.key}
