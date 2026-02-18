@@ -99,6 +99,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'getting_started/full_code_apps_quickstart/index',
+							label: 'Apps (full-code)'
+						},
+						{
+							type: 'doc',
 							id: 'getting_started/apps_quickstart/index',
 							label: 'Apps (low-code)'
 						},
