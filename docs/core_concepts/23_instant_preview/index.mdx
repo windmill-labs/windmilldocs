@@ -6,7 +6,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Instant preview & testing
 
-On top of its integrated editors ([scripts](../../script_editor/index.mdx), [flows](../../flows/1_flow_editor.mdx), [apps](../../apps/0_app_editor/index.mdx)), Windmill allows users to see and test what they are building directly from the editor, even before deployment.
+On top of its integrated editors ([scripts](../../script_editor/index.mdx), [flows](../../flows/1_flow_editor.mdx), [low-code apps](../../apps/0_app_editor/index.mdx), [full-code apps](../../full_code_apps/index.mdx)), Windmill allows users to see and test what they are building directly from the editor, even before deployment.
 
 ## Instant preview in Script editor
 
@@ -174,13 +174,19 @@ The arguments are pre-filled from the step inputs (if the arguments use results 
 
 ## Instant preview in App editor
 
-The app editor has several methods of previewing results instantly.
+The low-code app editor has several methods of previewing results instantly. For full-code apps, see the [UI editor](../../full_code_apps/6_ui_editor/index.mdx) which provides live preview of your React or Svelte frontend, or use `wmill app dev` for local hot reload.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="App editor"
+		title="Low-code app editor"
 		description="The app editor is where you build an app with components, create interactions with runnables (scripts & flows), and configure the app settings."
 		href="/docs/apps/app_editor"
+		color="orange"
+	/>
+	<DocCard
+		title="Full-code apps UI editor"
+		description="Edit full-code apps in the browser with live preview."
+		href="/docs/full_code_apps/ui_editor"
 		color="orange"
 	/>
 </div>
