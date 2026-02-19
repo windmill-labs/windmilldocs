@@ -46,6 +46,44 @@ You will also need to set the `Private Hub api secret` field in the [instance se
 
 When an `API_SECRET` is set, the Private Hub will only be accessible to logged in users or to requests authenticated with the `X-api-secret` header.
 
+## First steps
+
+### Script asks and versions
+
+Scripts on the Hub are organized around **script asks**. A script ask defines the goal of a script. It contains:
+
+- A **summary**: what the script does (e.g. "A script that sends a Stripe invoice").
+- An **integration**: a folder/category grouping related scripts (e.g. `stripe` for Stripe-related scripts, or `hiring` for a group of hiring scripts). Use `snake_case` for integration names.
+
+Each script ask has one **approved version** — the actual code that is available on connected [Windmill instances](../../advanced/18_instance_settings/index.mdx#private-hub-base-url).
+
+### Submit a new script
+
+To add a script to your Private Hub, click **+ Add** then **Submit a new script**. Fill in the summary and integration, then write the code. This automatically creates both the script ask and its first version.
+
+![Submit a new script from the Hub](./hub_add_script.png "Submit a new script from the Hub")
+
+### Approve a script
+
+Navigate to the submitted script and click the **Approve** button to make it available on all connected Windmill instances.
+
+![Approve a script on the Hub](./hub_approve_script.png "Approve a script on the Hub")
+
+### Edit a script
+
+On the script ask page, the version toolbar contains an **Edit** button that lets you modify the code. Editing creates a new version that must be approved again. Once approved, the new version replaces the previous one as the version offered when selecting that script from a Windmill instance. Existing [flows](../../flows/1_flow_editor.mdx) that already use the script are not affected — each version has a unique ID, and previously used versions remain available.
+
+To rewrite a script in another language, use the **Submit your script** button above the version toolbar instead — this creates a new script version, which also needs to be approved.
+
+### Search availability
+
+After approving scripts, search results may take some time to update:
+
+- **Hub search**: up to 1 hour (embeddings are recomputed hourly).
+- **Windmill instance search**: up to 1 day (embeddings are fetched daily).
+
+See [Hub scripts search and embeddings](#hub-scripts-search-and-embeddings) for details on overriding these intervals.
+
 ## Local syncing and syncing with the public Hub
 
 We provide a [CLI](https://www.npmjs.com/package/@windmill-labs/hub-cli) to sync your Private Hub with your local file system. To use the CLI, set the following environment variables:
