@@ -6,7 +6,7 @@ description: "How do I build AI agents with Windmill? Add agent steps to flows w
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings, Database, BookOpen, Zap, Container, HardDrive, Cpu, Lock, Code2 } from 'lucide-react';
+import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings, Database, BookOpen, Zap, Container, HardDrive, Cpu, Lock, Code2, Terminal, FileCode, Play, Sparkles } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
 export const fadeIn = {
@@ -21,80 +21,64 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
-{/* ── Neural network hero animation ── */}
-
-export const center = { x: 240, y: 210 };
-export const radius = 175;
-
-{/* 8 nodes evenly on a single circle */}
-export const heroNodeDefs = [
-	{ src: '/third_party_logos/snowflake.svg', label: 'Snowflake', action: 'SELECT *' },
-	{ src: '/third_party_logos/github.svg', label: 'GitHub', action: 'POST /pr' },
-	{ src: '/third_party_logos/slack.svg', label: 'Slack', action: 'send_msg' },
-	{ src: '/third_party_logos/datadog.svg', label: 'Datadog', action: 'GET /metrics' },
-	{ src: '/third_party_logos/postgres.svg', label: 'PostgreSQL', action: 'INSERT' },
-	{ src: '/third_party_logos/aws.svg', label: 'AWS', action: 'put_object' },
-	{ src: '/third_party_logos/hubspot.svg', label: 'HubSpot', action: 'GET /contact' },
-	{ src: '/third_party_logos/duckdb.svg', label: 'DuckDB', action: 'QUERY' },
-];
-
-export const heroNodes = heroNodeDefs.map((node, i) => {
-	const angle = (-90 + i * 45) * (Math.PI / 180);
-	return { ...node, x: Math.round(center.x + radius * Math.cos(angle)), y: Math.round(center.y + radius * Math.sin(angle)) };
-});
-
-{/* All-to-all connections between outer nodes for neural-network web */}
-export const crossLinks = heroNodes.flatMap((_, i) =>
-	heroNodes.slice(i + 1).map((_, j) => [i, i + 1 + j])
-);
+{/* ── Hero animation: action icons network ── */}
 
 export const logEntries = [
-	{ action: 'send_message', target: 'Slack', status: 'ok' },
-	{ action: 'SELECT *', target: 'PostgreSQL', status: 'ok' },
-	{ action: 'create_issue', target: 'Linear', status: 'ok' },
-	{ action: 'put_object', target: 'AWS', status: 'ok' },
-	{ action: 'create_pr', target: 'GitHub', status: 'ok' },
-	{ action: 'query', target: 'DuckDB', status: 'ok' },
-	{ action: 'get_contact', target: 'HubSpot', status: 'ok' },
-	{ action: 'list_metrics', target: 'Datadog', status: 'ok' },
+	{ action: 'Analyzing user churn patterns...', isReasoning: true },
+	{ action: 'ls src/auth/', target: 'Bash' },
+	{ action: 'SELECT * FROM users', target: 'Query DB' },
+	{ action: 'Deciding next step...', isReasoning: true },
+	{ action: 'fetch_secret("API_KEY")', target: 'Secrets' },
+	{ action: 'POST /api/v1/deploy', target: 'API call' },
+	{ action: 'Evaluating results...', isReasoning: true },
+	{ action: 'write auth/session.ts', target: 'Write code' },
+	{ action: 'npm test', target: 'Execute' },
+	{ action: 'create_issue()', target: 'Tool call' },
 ];
 
 export function HeroAnimation() {
 	return (
-		<div className="relative w-[480px] h-[580px]">
-			{/* Center Bot icon */}
-			<div className="absolute z-10" style={{ left: center.x, top: center.y, transform: 'translate(-50%, -50%)' }}>
-				<div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-900 flex items-center justify-center shadow-lg">
-					<Bot className="w-10 h-10 text-white" />
+		<div className="relative w-[480px] h-[560px]">
+			{/* Center Bot icon with pulsing ring */}
+			<div className="absolute z-10" style={{ left: actionCenter.x, top: actionCenter.y, transform: 'translate(-50%, -50%)' }}>
+				<div className="relative">
+					<motion.div
+						className="absolute -inset-3 rounded-2xl border-2 border-blue-400/40"
+						animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0, 0.4] }}
+						transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+					/>
+					<div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-900 flex items-center justify-center shadow-lg">
+						<Bot className="w-10 h-10 text-white" />
+					</div>
 				</div>
 			</div>
 
 			{/* SVG connections + particles */}
 			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
 				{/* Web connections between all outer nodes */}
-				{crossLinks.map(([a, b], i) => (
+				{actionCrossLinks.map(([a, b], i) => (
 					<line
 						key={`x-${i}`}
-						x1={heroNodes[a].x} y1={heroNodes[a].y}
-						x2={heroNodes[b].x} y2={heroNodes[b].y}
+						x1={actionPositions[a].x} y1={actionPositions[a].y}
+						x2={actionPositions[b].x} y2={actionPositions[b].y}
 						className="stroke-gray-300/40 dark:stroke-gray-600/25"
 						strokeWidth={0.75}
 					/>
 				))}
 				{/* Lines from each node to center */}
-				{heroNodes.map((node, i) => (
+				{actionPositions.map((node, i) => (
 					<line
 						key={`c-${i}`}
-						x1={center.x} y1={center.y}
+						x1={actionCenter.x} y1={actionCenter.y}
 						x2={node.x} y2={node.y}
 						className="stroke-gray-300 dark:stroke-gray-600/60"
 						strokeWidth={1.5}
 					/>
 				))}
 				{/* Animated particles traveling along the web */}
-				{heroNodes.map((node, i) => {
-					const xK = [center.x, node.x, center.x, heroNodes[(i + 3) % heroNodes.length].x, center.x];
-					const yK = [center.y, node.y, center.y, heroNodes[(i + 3) % heroNodes.length].y, center.y];
+				{actionPositions.map((node, i) => {
+					const xK = [actionCenter.x, node.x, actionCenter.x, actionPositions[(i + 3) % actionPositions.length].x, actionCenter.x];
+					const yK = [actionCenter.y, node.y, actionCenter.y, actionPositions[(i + 3) % actionPositions.length].y, actionCenter.y];
 					return (
 						<motion.circle
 							key={`dot-${i}`}
@@ -108,8 +92,8 @@ export function HeroAnimation() {
 				})}
 			</svg>
 
-			{/* Service nodes */}
-			{heroNodes.map((node, i) => (
+			{/* Action nodes */}
+			{actionPositions.map((node, i) => (
 				<div
 					key={node.label}
 					className="absolute z-10"
@@ -117,11 +101,11 @@ export function HeroAnimation() {
 				>
 					<div className="flex flex-col items-center gap-1">
 						<motion.div
-							className="w-14 h-14 rounded-xl bg-white border border-gray-200 dark:border-gray-600 shadow-sm flex items-center justify-center p-2"
+							className="w-14 h-14 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-sm flex items-center justify-center"
 							animate={{ boxShadow: ['0 0 0px rgba(59,130,246,0)', '0 0 12px rgba(59,130,246,0.5)', '0 0 0px rgba(59,130,246,0)'] }}
 							transition={{ duration: 2, repeat: Infinity, delay: i * 1.3, ease: 'easeInOut' }}
 						>
-							<img src={node.src} alt={node.label} className="w-full h-full object-contain" />
+							<node.icon className={`w-7 h-7 ${node.color}`} />
 						</motion.div>
 						<span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">{node.label}</span>
 					</div>
@@ -142,9 +126,12 @@ export function HeroAnimation() {
 						>
 							{[...logEntries, ...logEntries].map((entry, i) => (
 								<div key={i} className="flex items-center gap-2 px-3 h-[24px] text-[11px] font-mono">
-									<span className="text-green-500">●</span>
-									<span className="text-gray-400 dark:text-gray-500">{entry.target}</span>
-									<span className="text-gray-600 dark:text-gray-300">{entry.action}</span>
+									{entry.isReasoning
+										? <Sparkles className="w-3 h-3 text-blue-400 flex-shrink-0" />
+										: <span className="text-green-500">●</span>
+									}
+									{entry.target && <span className="text-gray-400 dark:text-gray-500">{entry.target}</span>}
+									<span className={entry.isReasoning ? 'text-blue-400 dark:text-blue-300 italic' : 'text-gray-600 dark:text-gray-300'}>{entry.action}</span>
 								</div>
 							))}
 						</motion.div>
@@ -236,6 +223,32 @@ export function AgentFeaturesSection() {
 	);
 }
 
+{/* ── Animation concept 5: Action icons network ── */}
+
+export const actionNodes = [
+	{ icon: Terminal, label: 'Bash', color: 'text-green-500' },
+	{ icon: FileCode, label: 'Write code', color: 'text-yellow-500' },
+	{ icon: Play, label: 'Execute', color: 'text-blue-500' },
+	{ icon: Database, label: 'Query DB', color: 'text-purple-500' },
+	{ icon: Wrench, label: 'Tool call', color: 'text-orange-500' },
+	{ icon: Lock, label: 'Secrets', color: 'text-red-500' },
+	{ icon: Eye, label: 'Monitor', color: 'text-cyan-500' },
+	{ icon: Plug, label: 'API call', color: 'text-pink-500' },
+];
+
+export const actionCenter = { x: 240, y: 210 };
+export const actionRadius = 165;
+
+export const actionPositions = actionNodes.map((node, i) => {
+	const angle = (-90 + i * 45) * (Math.PI / 180);
+	return { ...node, x: Math.round(actionCenter.x + actionRadius * Math.cos(angle)), y: Math.round(actionCenter.y + actionRadius * Math.sin(angle)) };
+});
+
+export const actionCrossLinks = actionPositions.flatMap((_, i) =>
+	actionPositions.slice(i + 1).map((_, j) => [i, i + 1 + j])
+);
+
+
 {/* ── Main page component ── */}
 
 export default function AiAgentsContent({ title, description }) {
@@ -271,19 +284,19 @@ export default function AiAgentsContent({ title, description }) {
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Orchestrate AI agents with Windmill's <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-500 hover:underline !no-underline">enterprise-grade workflow engine</Link></span>
+							<span>Build agent with <Link to="/docs/core_concepts/ai_agents" className="text-blue-500 hover:underline !no-underline">any LLM provider</Link> including self-hosted models</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Let Claude Code run in <Link to="/docs/core_concepts/worker_groups" className="text-blue-500 hover:underline !no-underline">sandboxes</Link> with scoped access to your resources</span>
+							<span>Give your agents tools via <Link to="/docs/core_concepts/mcp" className="text-blue-500 hover:underline !no-underline">MCP</Link> or <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-500 hover:underline !no-underline">custom scripts in 20+ languages</Link></span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Monitor every <Link to="/docs/core_concepts/ai_agents#debugging" className="text-blue-500 hover:underline !no-underline">agent action</Link> with full execution details</span>
+							<span>Run full Claude/Codex in <Link to="/docs/core_concepts/worker_groups" className="text-blue-500 hover:underline !no-underline">sandboxes</Link> with bash, code writing and scoped restrictions</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Enforce access with <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-500 hover:underline !no-underline">RBAC, SSO, secret management</Link> and audit logs</span>
+							<span>Track every decision, tool call and code execution with <Link to="/docs/core_concepts/ai_agents#debugging" className="text-blue-500 hover:underline !no-underline">full observability</Link></span>
 						</div>
 					</div>
 				</motion.div>
