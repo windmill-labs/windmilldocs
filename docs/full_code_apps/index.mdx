@@ -6,7 +6,9 @@ import DocCard from '@site/src/components/DocCard';
 
 # Full-code apps
 
-Full-code apps let you build custom frontends with React or Svelte that connect to Windmill [backend runnables](./2_backend_runnables/index.mdx) and [data tables](../core_concepts/11_persistent_storage/data_tables.mdx). Unlike the [low-code app editor](../apps/0_app_editor/index.mdx), you write your own components and have full control over the UI.
+Full-code apps let you build custom frontends with [React](https://react.dev/) or [Svelte](https://svelte.dev/) that connect to Windmill [backend runnables](./2_backend_runnables/index.mdx) and [data tables](../core_concepts/11_persistent_storage/data_tables.mdx). Unlike the [low-code app editor](../apps/0_app_editor/index.mdx), you write your own components and have full control over the UI.
+
+![Full-code apps](../getting_started/9_full_code_apps_quickstart/full_code_app_demo.png 'Full-code apps')
 
 ## How it works
 
@@ -20,6 +22,8 @@ When deployed, Windmill bundles your frontend code and serves it as a single-pag
 
 ## Full-code vs low-code apps
 
+Low code apps are built with the [low-code app editor](../apps/0_app_editor/index.mdx), while full-code apps are built with React or Svelte.
+
 | | Full-code apps | Low-code apps |
 |---|---|---|
 | **UI** | Custom React/Svelte components | Drag-and-drop component library |
@@ -29,9 +33,53 @@ When deployed, Windmill bundles your frontend code and serves it as a single-pag
 | **Local dev** | `wmill app dev` with hot reload | Web-based editor only |
 | **Best for** | Custom UIs, complex interactions, existing codebases | Quick dashboards, forms, CRUD interfaces |
 
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Low-code apps"
+		description="Build apps with drag-and-drop components and inline scripts."
+		href="/docs/apps/app_editor"
+		color="orange"
+	/>
+</div>
+
 ## Getting started
 
-The fastest way to create a full-code app is with the CLI:
+For a step-by-step tutorial building a complete app, see the [full-code apps quickstart](../getting_started/9_full_code_apps_quickstart/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Full-code apps quickstart"
+		description="Step-by-step guide to build your first full-code app."
+		href="/docs/getting_started/full_code_apps_quickstart"
+		color="orange"
+	/>
+</div>
+
+### Platform
+
+The full-code apps are built on the Windmill platform, which provides a backend for running your code and a frontend for building your UI.
+
+Just hit '+ App' and select 'Full-code App'.
+
+![Choose app builder](./choose_app_builder.png 'Choose app builder')
+
+Then pick a framework (React or Svelte), a Data configuration (optional) and a name for your app. Optionally, you can start it with [AI](../core_concepts/22_ai_generation/index.mdx).
+
+![New app setup](./new_app_setup.png 'New app setup')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="UI editor"
+		description="Edit full-code apps in the browser."
+		href="/docs/full_code_apps/ui_editor"
+		color="orange"
+	/>
+</div>
+
+### Locally
+
+The fastest way to create a full-code app is with [Windmill CLI](../advanced/3_cli/index.mdx):
 
 ```bash
 wmill app new
@@ -46,27 +94,31 @@ wmill app dev .
 
 See the [CLI workflow](./5_cli_workflow/index.mdx) page for the full setup guide.
 
-### Folder suffix
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="CLI workflow"
+		description="Scaffold and develop full-code apps from your terminal."
+		href="/docs/full_code_apps/cli_workflow"
+		color="orange"
+	/>
+</div>
+
+#### Folder suffix
 
 By default the CLI uses dotted suffixes (`.raw_app`). If your filesystem or tooling hides dotfiles, set `nonDottedPaths: true` in your `wmill.yaml` to use dunder suffixes (`__raw_app`) instead. All examples in this documentation use the default `.raw_app` suffix — substitute `__raw_app` if you enabled non-dotted paths.
 
 ## Supported languages
 
-Backend runnables support all Windmill script languages:
+[Backend runnables](./2_backend_runnables/index.mdx) support all [Windmill script languages](../getting_started/0_scripts_quickstart/index.mdx).
 
-| Language | Extension | Language | Extension |
-|----------|-----------|----------|-----------|
-| TypeScript (Bun) | `.bun.ts` or `.ts` | Python | `.py` |
-| TypeScript (Deno) | `.deno.ts` | Go | `.go` |
-| PostgreSQL | `.pg.sql` | MySQL | `.my.sql` |
-| BigQuery | `.bq.sql` | Snowflake | `.sf.sql` |
-| MS SQL | `.ms.sql` | OracleDB | `.odb.sql` |
-| DuckDB | `.duckdb.sql` | GraphQL | `.gql` |
-| Bash | `.sh` | PowerShell | `.ps1` |
-| PHP | `.php` | Rust | `.rs` |
-| C# | `.cs` | Java | `.java` |
-| Ruby | `.rb` | Nu | `.nu` |
-| Ansible | `.playbook.yml` | | |
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Backend runnables"
+		description="Define backend scripts called from your frontend code."
+		href="/docs/full_code_apps/backend_runnables"
+		color="orange"
+	/>
+</div>
 
 ## Pages
 
