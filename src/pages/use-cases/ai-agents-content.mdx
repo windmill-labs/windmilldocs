@@ -145,12 +145,12 @@ export function HeroAnimation() {
 {/* ── PART A: Agent features interactive tabs ── */}
 
 export const agentFeatures = [
+	{ icon: Bot, title: 'DAG workflow', desc: <span>Build AI agents using Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">workflow engine</Link>. Incorporate an AI in specific steps of your workflow — the agent reasons, picks <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> and executes them, while the rest of the flow handles data fetching, branching, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approvals</Link> and error handling.</span>, image: 'dag', docLink: '/docs/flows/flow_editor' },
 	{ icon: Wrench, title: 'Scripts as tools', desc: 'Any Windmill script becomes a callable tool. The script\'s typed parameters and descriptions are automatically used as the tool schema — no separate SDK or adapter needed.', image: null, docLink: '/docs/core_concepts/ai_agents#script-tools' },
 	{ icon: Plug, title: 'MCP integration', desc: 'Connect to MCP servers and auto-discover tools. Supports OAuth and custom auth. Use MCP tools alongside native Windmill scripts in the same agent step.', image: null, docLink: '/docs/core_concepts/mcp' },
-	{ icon: MessageSquare, title: 'Chat mode', desc: 'Run flows with agent steps as a conversational UI. Users send messages, the agent reasons, calls tools and streams results back in real time.', image: null, docLink: '/docs/core_concepts/ai_agents#chat-mode' },
-	{ icon: Eye, title: 'Full observability', desc: 'Every tool call appears as a node on the flow graph. Inspect inputs, outputs, token usage and the full message history. No black boxes.', image: null, docLink: '/docs/core_concepts/ai_agents#debugging' },
 	{ icon: Settings, title: 'Structured outputs', desc: 'Define a JSON Schema for responses. The agent returns predictable, typed outputs that downstream steps can rely on.', image: null, docLink: '/docs/core_concepts/ai_agents#output' },
-	{ icon: Zap, title: 'Streaming', desc: 'Stream agent responses token by token. Works in chat mode, in the flow editor preview and via the API.', image: null, docLink: '/docs/core_concepts/ai_agents#chat-mode' },
+	{ icon: Code2, title: 'Local dev experience', desc: 'Define agent behavior with agents.md and skills. Develop and test agents locally, then deploy to Windmill workers. Same config works in development and production.', image: null, docLink: '/docs/core_concepts/ai_agents' },
+	{ icon: Database, title: 'Any LLM provider', desc: <span>Switch providers or models without changing your agent logic. API keys are stored as <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> and reused across flows. Supports OpenAI, Anthropic, Mistral, Google Gemini, OpenRouter and custom endpoints.</span>, image: null, docLink: '/docs/core_concepts/ai_agents' },
 ];
 
 {/* TODO: add screenshots for each agent feature tab */}
@@ -158,13 +158,13 @@ export const agentFeatures = [
 export function AgentFeaturesSection() {
 	const [active, setActive] = useState(0);
 	return (
-		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-			<motion.div {...fadeIn} className="mb-16">
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<motion.div {...fadeIn} className="mb-8">
 				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					Agents that actually do things
+					AI workflows
 				</h2>
 				<p className="text-lg text-gray-600 dark:text-gray-300">
-					Not just chat. Windmill <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">agents</Link> call tools, execute code and interact with your infrastructure — with every step visible in the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow graph</Link>.
+					Build AI agents using Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">workflow engine</Link>. Incorporate AI in specific steps — the agent reasons, picks <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> and executes them, while the rest of the flow handles branching, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approvals</Link> and error handling.
 				</p>
 			</motion.div>
 
@@ -201,7 +201,9 @@ export function AgentFeaturesSection() {
 								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
 							</div>
 							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
-							{feat.image ? (
+							{feat.image === 'dag' ? (
+								<img src={require('./ai-agent-dag.png').default} alt="Windmill flow DAG with an AI agent step" className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
+							) : feat.image ? (
 								<img src={feat.image} alt={feat.title} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
 							) : (
 								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
@@ -219,6 +221,92 @@ export function AgentFeaturesSection() {
 					))}
 				</div>
 			</div>
+		</div>
+	);
+}
+
+{/* ── Big tab section: two agent modes ── */}
+
+export function AgentModeTabs() {
+	const [activeTab, setActiveTab] = useState(0);
+	const tabs = [
+		{ icon: Bot, label: 'AI agents as workflow steps' },
+		{ icon: Code2, label: 'Claude Code in sandbox' },
+	];
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-8">
+			{/* Tab buttons */}
+			<div className="grid grid-cols-2 mb-12 border-b border-gray-200 dark:border-gray-700">
+				{tabs.map((tab, i) => (
+					<button
+						key={tab.label}
+						onClick={() => setActiveTab(i)}
+						className={`flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-b-2 transition-colors -mb-px ${
+							i === activeTab
+								? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+						}`}
+					>
+						<tab.icon className="w-5 h-5" />
+						{tab.label}
+					</button>
+				))}
+			</div>
+
+			{/* Tab 1: AI agents as workflow steps */}
+			{activeTab === 0 && (
+				<AgentFeaturesSection />
+			)}
+
+			{/* Tab 2: Claude Code in sandbox */}
+			{activeTab === 1 && (
+				<div>
+					<div className="mb-16">
+						<div className="flex items-center gap-3 mb-4">
+							<div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+								<Code2 className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+							</div>
+							<span className="text-sm font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider">New</span>
+						</div>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Run Claude Code and Codex in sandboxed workers
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
+							Windmill's existing abstractions — <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link>, nsjail sandboxing, <Link to="/docs/core_concepts/persistent_storage/large_data_files" className="text-blue-600 dark:text-blue-400 hover:underline">workspace S3 storage</Link> — map perfectly to what AI coding agents need. No wrapper SDKs, no container orchestration. Just point an agent at a Windmill worker and let it code.
+						</p>
+					</div>
+
+					{/* How it works — 3 columns */}
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+						{[
+							{
+								icon: Cpu,
+								title: 'Snapshots',
+								desc: 'Pre-configured environments loaded into sandboxed workers. Include agents.md, skills, custom instructions and dependencies on top of worker binaries. Snapshots are cached for instant startup.',
+							},
+							{
+								icon: HardDrive,
+								title: 'Volumes',
+								desc: 'Persistent storage mounted into the sandbox. Gives the agent memory across runs. Stored on workspace S3 storage (windmill-object-store). Volume mount time is the only startup overhead.',
+							},
+							{
+								icon: Lock,
+								title: 'Sandboxed execution',
+								desc: <span>nsjail isolates each agent run. The agent can use the <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill SDK</Link> for variables, resources and secrets but cannot escape the sandbox. Uses Claude/Codex SDK directly — no wrapper needed.</span>,
+							},
+						].map((item, i) => (
+							<div key={item.title} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+								<div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-4">
+									<item.icon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+								</div>
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+								<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+							</div>
+						))}
+					</div>
+
+				</div>
+			)}
 		</div>
 	);
 }
@@ -307,88 +395,12 @@ export default function AiAgentsContent({ title, description }) {
 			</div>
 			</div>
 
-			{/* ═══════════════ Multi-provider pills ═══════════════ */}
+			{/* ═══════════════ Agent modes tabs ═══════════════ */}
+			<AgentModeTabs />
+
+			{/* ═══════════════ Why Windmill for AI coding agents ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Any LLM provider, one interface
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Switch providers or models without changing your agent logic. API keys are stored as <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> and reused across flows.
-					</p>
-				</motion.div>
-				<motion.div {...fadeIn}>
-					<div className="flex flex-wrap gap-3">
-						{['OpenAI', 'Anthropic', 'Azure OpenAI', 'Mistral', 'DeepSeek', 'Google AI (Gemini)', 'Groq', 'OpenRouter', 'Together AI', 'Custom endpoints'].map((provider) => (
-							<span key={provider} className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium">
-								{provider}
-							</span>
-						))}
-					</div>
-				</motion.div>
-			</div>
-
-			{/* ═══════════════ PART A: AI agent steps in workflows ═══════════════ */}
-
-			{/* Interactive feature tabs */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
-				<AgentFeaturesSection />
-			</div>
-
-			{/* ═══════════════ PART B: Sandboxed AI coding agents ═══════════════ */}
-
-			{/* Section intro */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-					<motion.div {...fadeIn} className="mb-16">
-						<div className="flex items-center gap-3 mb-4">
-							<div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-								<Code2 className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-							</div>
-							<span className="text-sm font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider">New</span>
-						</div>
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							Run Claude Code and Codex in sandboxed workers
-						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-							Windmill's existing abstractions — <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link>, nsjail sandboxing, <Link to="/docs/core_concepts/persistent_storage/large_data_files" className="text-blue-600 dark:text-blue-400 hover:underline">workspace S3 storage</Link> — map perfectly to what AI coding agents need. No wrapper SDKs, no container orchestration. Just point an agent at a Windmill worker and let it code.
-						</p>
-					</motion.div>
-
-					{/* How it works — 3 columns */}
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-						{[
-							{
-								icon: Cpu,
-								title: 'Snapshots',
-								desc: 'Pre-configured environments loaded into sandboxed workers. Include agents.md, skills, custom instructions and dependencies on top of worker binaries. Snapshots are cached for instant startup.',
-							},
-							{
-								icon: HardDrive,
-								title: 'Volumes',
-								desc: 'Persistent storage mounted into the sandbox. Gives the agent memory across runs. Stored on workspace S3 storage (windmill-object-store). Volume mount time is the only startup overhead.',
-							},
-							{
-								icon: Lock,
-								title: 'Sandboxed execution',
-								desc: <span>nsjail isolates each agent run. The agent can use the <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill SDK</Link> for variables, resources and secrets but cannot escape the sandbox. Uses Claude/Codex SDK directly — no wrapper needed.</span>,
-							},
-						].map((item, i) => (
-							<motion.div key={item.title} {...stagger(i * 0.08)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-								<div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-4">
-									<item.icon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-								</div>
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-								<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-							</motion.div>
-						))}
-					</div>
-				</div>
-			</div>
-
-			{/* Why Windmill for AI coding agents — 4-item grid */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-				<motion.div {...fadeIn} className="mb-16">
+				<motion.div {...fadeIn} className="mb-12">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 						Why Windmill for AI coding agents
 					</h2>
@@ -413,13 +425,41 @@ export default function AiAgentsContent({ title, description }) {
 					))}
 				</div>
 
-				{/* v3: Native workers brief mention */}
 				<motion.div {...fadeIn} className="mt-12 p-6 rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/30">
 					<p className="text-gray-600 dark:text-gray-300">
 						<span className="font-semibold text-gray-900 dark:text-white">Coming: native workers</span> — a mode where the agent cannot shell out but can use Windmill's preview endpoints to write and run exploratory code. Full isolation with code execution capabilities.
 					</p>
 				</motion.div>
 			</div>
+
+			{/* ═══════════════ Multi-provider pills ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Any LLM provider, one interface
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Switch providers or models without changing your agent logic. API keys are stored as <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> and reused across flows.
+					</p>
+				</motion.div>
+				<motion.div {...fadeIn}>
+					<div className="flex flex-wrap gap-4">
+						{[
+							{ name: 'OpenAI', logo: '/third_party_logos/openai.svg' },
+							{ name: 'Anthropic', logo: '/third_party_logos/anthropic.svg' },
+							{ name: 'Google Gemini', logo: '/third_party_logos/gemini.svg' },
+							{ name: 'Mistral', logo: '/third_party_logos/mistral.svg' },
+							{ name: 'OpenRouter', logo: '/third_party_logos/openrouter.svg' },
+						].map((provider) => (
+							<div key={provider.name} className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+								<img src={provider.logo} alt={provider.name} className="w-5 h-5 object-contain" />
+								<span className="text-sm font-medium text-gray-700 dark:text-gray-300">{provider.name}</span>
+							</div>
+						))}
+					</div>
+				</motion.div>
+			</div>
+
 
 			{/* ═══════════════ SHARED SECTIONS ═══════════════ */}
 
