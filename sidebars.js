@@ -99,6 +99,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'getting_started/full_code_apps_quickstart/index',
+							label: 'Apps (full-code)'
+						},
+						{
+							type: 'doc',
 							id: 'getting_started/apps_quickstart/index',
 							label: 'Apps (low-code)'
 						},
@@ -405,6 +410,7 @@ const sidebars = {
 				'core_concepts/ai_agents/index',
 				'core_concepts/workspace_dependencies/index',
 				'core_concepts/workspace_settings/index',
+				'core_concepts/streaming/index',
 				{
 					type: 'category',
 					label: 'Integrations',

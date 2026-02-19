@@ -8,7 +8,7 @@ import DocCard from '@site/src/components/DocCard';
 
 :::info This section has moved
 
-React apps in Windmill are now part of **full-code apps**. Full-code apps provide a complete workflow for building custom frontends, including scaffolding, local development, and deployment.
+React apps in Windmill are now part of **[full-code apps](../full_code_apps/index.mdx)**. Full-code apps provide a complete workflow for building custom frontends, including scaffolding, local development, and deployment.
 
 :::
 

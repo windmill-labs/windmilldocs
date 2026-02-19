@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 This page is part of our section on [Persistent storage & databases](./index.mdx) which covers where to effectively store and manage the data manipulated by Windmill. Check that page for more options on data storage.
 
-Windmill **Data Tables** let you store and query relational data with **near-zero setup** using databases managed automatically by Windmill. They provide a simple, safe, workspace-scoped way to leverage SQL inside your workflows without exposing credentials.
+Windmill **Data Tables** let you store and query relational data with **near-zero setup** using databases managed automatically by Windmill. They provide a simple, safe, workspace-scoped way to leverage SQL inside your workflows without exposing credentials. Data tables can also be used from [full-code apps](../../full_code_apps/4_data_tables/index.mdx) via SQL backend runnables.
 
 ---
 
@@ -20,7 +20,7 @@ Go to `workspace settings` -> `Data Tables` and configure a Data Table :
 
 ![Data Table settings](./datatable_images/datatable_settings_1.png 'Data Table settings')
 
-Superadmins can use a [Custom Instance Database](/docs/core_concepts/custom_instance_database) and get started with no setup.
+Superadmins can use a [Custom instance database](/docs/core_concepts/custom_instance_database) and get started with no setup.
 
 ## Usage
 
@@ -131,7 +131,7 @@ Windmill currently supports two backend database types for Data Tables:
 - Zero-setup, one-click provisioning.
 - Requires **superadmin** to configure.
 - Although the database exists at the _instance level_, it is only accessible to workspaces that define a data table pointing to it.
-- See [Custom Instance Database](/docs/core_concepts/custom_instance_database) for more details.
+- See [Custom instance database](/docs/core_concepts/custom_instance_database) for more details.
 
 ### 2. Postgres resource
 

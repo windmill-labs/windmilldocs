@@ -69,6 +69,8 @@ Windmill embeds:
 - a **[low-code UI builder](../../getting_started/7_apps_quickstart/index.mdx)** to build
   complex internal apps, admin panels and dashboards using inline scripts in TypeScript,
   Python, Go, PHP, Bash and SQL or trigger the Scripts and Flows of the workspace
+- a **[full-code app builder](../../full_code_apps/index.mdx)** for custom frontends
+  in React or Svelte connected to Windmill backend runnables and data tables
 - an **enterprise-grade platform** with tight permissioning, secret management,
   groups and folders enabling
   [RBAC permissions](../../core_concepts/16_roles_and_permissions/index.mdx),
