@@ -1,0 +1,202 @@
+---
+description: How do I use job debouncing to reduce job volume while preserving useful outcomes in high-throughput scenarios?
+---
+
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Job debouncing
+
+Job debouncing is a high-throughput optimization feature that reduces the number of executed jobs without reducing the amount of processed items. When enabled, jobs are scheduled for execution after a specified delay. If another job with the same debounce key arrives within that window, it cancels the pending job and replaces it - but arguments can be accumulated across debounced jobs.
+
+This means you can receive 1000 webhook calls but execute only 10 jobs, each processing a batch of 100 items. Fewer jobs, same throughput.
+
+Job debouncing is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) feature.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/debouncing.mp4"
+/>
+
+<br/>
+
+## Why use debouncing
+
+Debouncing reduces job overhead and infrastructure costs while maintaining full data processing:
+
+- 10,000 webhook events arrive over 30 seconds. Without debouncing: 10,000 jobs. With debouncing: 10 jobs processing 1,000 items each.
+- Each job has startup overhead (scheduling, worker allocation, logging). Batching into fewer jobs eliminates this overhead.
+
+The result: process all your data with a fraction of the job executions.
+
+## Configuration
+
+Job debouncing is available for [scripts](../../script_editor/index.mdx) and [flows](../../flows/1_flow_editor.mdx). Configure it from the Settings menu under Runtime settings.
+
+## Configuration fields
+
+### Debounce delay
+
+The time window (in seconds) to wait before executing a job. During this window, incoming jobs with the same debounce key cancel the pending job and reset the timer. Arguments accumulate if configured.
+
+Setting this value depends on your event patterns:
+- **Short delays (1-5 seconds)**: Batch events that arrive in quick bursts.
+- **Medium delays (10-30 seconds)**: Collect events over longer clustering periods.
+- **Long delays (60+ seconds)**: Aggregate many events into large batches.
+
+If not set, debouncing is disabled for the job.
+
+### Custom debounce key
+
+Controls which jobs are considered "identical" for debouncing purposes. By default, the debounce key combines:
+- Workspace ID
+- Runnable path
+- All argument values
+
+This means two jobs with different arguments are treated as separate and won't debounce each other.
+
+Use a custom key when you want different behavior:
+
+| Pattern | Description | Use case |
+|---------|-------------|----------|
+| `$workspace` | Include workspace ID | Separate debouncing per workspace in multi-tenant setups |
+| `$args[user_id]` | Include specific argument | Debounce per user regardless of other arguments |
+| `sync-$args[source]` | Literal + argument | Group by data source regardless of payload content |
+| `global-key` | Literal string | All matching jobs debounce together regardless of arguments |
+
+Custom keys are global across Windmill. Use `$workspace` prefix for workspace isolation.
+
+### Max debouncing time
+
+The maximum duration (in seconds) that a job can remain in debounced state. After this time, the pending job executes regardless of new arrivals.
+
+This prevents indefinite postponement in high-frequency scenarios. If events arrive continuously every 2 seconds with a 5-second debounce delay, the job would never execute without a maximum time limit.
+
+Use this to control batch size indirectly - a 60-second max time with continuous events creates batches of roughly 60 seconds worth of data.
+
+### Max debounces amount
+
+Similar to max debouncing time, but counts the number of debounce events instead of elapsed time. When the count is reached, the pending job executes.
+
+This gives direct control over batch size:
+- Set to 100: execute after every 100 events, regardless of timing
+- Guarantees consistent batch sizes for predictable processing
+
+### Debounce args to accumulate
+
+This is the key field for high-throughput processing. Specify an array-type argument name, and Windmill will:
+1. Exclude this argument from the debounce key
+2. Collect values from all debounced jobs
+3. Concatenate them into a single array when the job executes
+
+Debouncing works with all languages supported by Windmill. Here's an example where three webhook calls with `items: ["a"]`, `items: ["b", "c"]`, and `items: ["d"]` debounce into one job execution with `items: ["a", "b", "c", "d"]`:
+
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+export async function main(items: string[]) {
+  // With debouncing, items = ["a", "b", "c", "d"]
+  // instead of 3 separate executions
+  for (const item of items) {
+    await processItem(item);
+  }
+  return { processed: items.length };
+}
+```
+
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+def main(items: list[str]):
+    # With debouncing, items = ["a", "b", "c", "d"]
+    # instead of 3 separate executions
+    for item in items:
+        process_item(item)
+    return {"processed": len(items)}
+```
+
+</TabItem>
+<TabItem value="Nushell" label="Nushell" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+def main [items: list<string>] {
+  # With debouncing, items = ["a", "b", "c", "d"]
+  # instead of 3 separate executions
+  $items | each { |item| process_item $item }
+  { processed: ($items | length) }
+}
+
+def process_item [item] {
+  print $item
+}
+```
+
+</TabItem>
+</Tabs>
+
+All items processed, one job executed.
+
+## Use cases
+
+### High-volume webhook processing
+
+External services send webhooks for each event. Instead of processing each webhook as a separate job:
+
+```
+Debounce delay: 5 seconds
+Debounce args to accumulate: events
+Max debounces amount: 500
+```
+
+Webhooks accumulate into batches of up to 500 events or 5 seconds of inactivity, whichever comes first. A burst of 2000 webhooks becomes 4 batch jobs.
+
+### Database change data capture
+
+When using [Postgres triggers](../46_postgres_triggers/index.mdx) to react to row changes:
+
+```
+Debounce delay: 10 seconds
+Debounce args to accumulate: rows
+Max debouncing time: 60 seconds
+```
+
+Individual row changes accumulate into batches. A bulk import of 50,000 rows might result in 50-100 batch jobs instead of 50,000 individual jobs.
+
+### IoT sensor ingestion
+
+High-frequency sensor data arriving via [MQTT triggers](../49_mqtt_triggers/index.mdx):
+
+```
+Debounce delay: 30 seconds
+Debounce args to accumulate: readings
+Max debouncing time: 300 seconds
+```
+
+Sensor readings from MQTT topics batch together for bulk insertion or analysis. Process thousands of readings per job instead of one.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Concurrency limits"
+		description="Control how many instances of a script or flow can run simultaneously."
+		href="/docs/core_concepts/concurrency_limits"
+	/>
+	<DocCard
+		title="Jobs"
+		description="Understand how jobs work in Windmill."
+		href="/docs/core_concepts/jobs"
+	/>
+	<DocCard
+		title="Caching"
+		description="Cache script results for specified durations to avoid redundant computation."
+		href="/docs/core_concepts/caching"
+	/>
+	<DocCard
+		title="Worker groups"
+		description="Run scripts on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
+</div>
