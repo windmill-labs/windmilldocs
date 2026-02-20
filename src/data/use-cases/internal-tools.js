@@ -1,8 +1,8 @@
 export const internalToolsUseCase = {
 	slug: 'internal-tools',
 	name: 'Internal tools',
-	headline: 'How to build internal tools with Windmill',
-	description: 'Build admin panels, dashboards and back-office apps with drag-and-drop or code.',
+	headline: 'The developer platform for internal tools',
+	description: 'For developers who build internal tools and need production-grade observability, monitoring and enterprise controls — without the infrastructure overhead.',
 	icon: 'WrenchScrewdriverIcon',
 	link: '/use-cases/internal-tools',
 	released: true,
