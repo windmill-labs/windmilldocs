@@ -1,6 +1,6 @@
 ---
 title: "How to build AI agents with Windmill"
-description: "How do I build AI agents with Windmill? Add agent steps to flows with tool calling, multi-provider LLM support, structured outputs and full observability. Run Claude Code and Codex in sandboxed workers."
+description: "How do I build AI agents with Windmill? Use the visual AI builder with tools or run full Claude Code, Codex and Opencode in sandboxes. Both can be used as steps of a flow with full observability."
 ---
 
 import React, { useState } from 'react';
@@ -260,10 +260,10 @@ export function AgentFeaturesSection() {
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 			<motion.div {...fadeIn} className="mb-8">
 				<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-					Integrate AI into DAG workflows
+					Visual AI builder with tools
 				</h2>
 				<p className="text-lg text-gray-600 dark:text-gray-300">
-					Build AI agents using Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">workflow engine</Link>. Incorporate AI in specific steps. The agent reasons, picks <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> and executes them, while the rest of the flow handles branching, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approvals</Link> and error handling.
+					Build AI agents as loops with tools using Windmill's visual builder. The agent reasons, picks <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> (scripts or <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP servers</Link>) and executes them. Use agent steps in any <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> alongside branching, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approvals</Link> and error handling.
 				</p>
 			</motion.div>
 
@@ -327,8 +327,8 @@ export function AgentFeaturesSection() {
 export function AgentModeTabs() {
 	const [activeTab, setActiveTab] = useState(0);
 	const tabs = [
-		{ icon: Zap, label: 'Workflows' },
-		{ icon: Code2, label: 'Sandboxes' },
+		{ icon: Zap, label: 'Visual AI builder' },
+		{ icon: Terminal, label: 'Claude / Codex / Opencode' },
 	];
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-8">
@@ -337,7 +337,7 @@ export function AgentModeTabs() {
 					Two ways to build AI agents
 				</h2>
 				<p className="text-lg text-gray-600 dark:text-gray-300">
-					Add AI steps to structured workflows for controlled, repeatable automation. Or give coding agents full autonomy inside isolated sandboxes.
+					Use the visual AI builder with tools for structured agent loops, or run full Claude Code, Codex or Opencode inside sandboxes for maximum autonomy. Both can be used as steps of a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>.
 				</p>
 			</motion.div>
 			{/* Tab buttons */}
@@ -358,20 +358,20 @@ export function AgentModeTabs() {
 				))}
 			</div>
 
-			{/* Tab 1: DAG Workflows */}
+			{/* Tab 1: Visual AI builder */}
 			{activeTab === 0 && (
 				<AgentFeaturesSection />
 			)}
 
-			{/* Tab 2: Sandboxes */}
+			{/* Tab 2: Claude / Codex / Opencode in sandboxes */}
 			{activeTab === 1 && (
 				<div>
 					<div className="mb-16">
 						<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-							Run Claude Code and Codex in sandboxed workers
+							Run Claude Code, Codex and Opencode at full power
 						</h2>
 						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Give Claude Code and Codex scoped <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> and <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource access</Link>, then let them run autonomously in isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">sandboxes</Link>. Each agent gets its own nsjail environment with only the secrets, APIs and storage you explicitly allow.
+							Run coding agents like Claude Code, Codex or Opencode inside isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">sandboxes</Link> where they can use their full capabilities: bash, code writing, file editing and more. Give them scoped <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> and <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource access</Link>, and use them as steps in any flow.
 						</p>
 					</div>
 
@@ -379,7 +379,7 @@ export function AgentModeTabs() {
 						{[
 							{ icon: Cpu, title: 'Cached snapshots', desc: 'Pre-configured environments with agents.md, skills, dependencies and custom instructions. Cached on workers for instant startup, no container builds needed.' },
 							{ icon: HardDrive, title: 'Persistent volumes', desc: 'S3-backed storage mounted into the sandbox. The agent picks up where it left off with full context of previous work across runs.' },
-							{ icon: Lock, title: 'nsjail isolation', desc: <span>Each run is sandboxed with nsjail. The agent accesses <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> and <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> via the Windmill SDK but cannot escape the sandbox. Uses Claude/Codex SDK directly.</span> },
+							{ icon: Lock, title: 'nsjail isolation', desc: <span>Each run is sandboxed with nsjail. The agent accesses <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> and <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> via the Windmill SDK but cannot escape the sandbox.</span> },
 							{ icon: Database, title: 'Self-hosted & air-gapped', desc: <span>Run on your own infrastructure. No data leaves your network. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy</Link> on Docker or Kubernetes with a single command.</span> },
 						].map((item, i) => (
 							<div key={item.title} className="flex gap-4 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
@@ -392,12 +392,6 @@ export function AgentModeTabs() {
 								</div>
 							</div>
 						))}
-					</div>
-
-					<div className="p-6 rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/30">
-						<p className="text-gray-600 dark:text-gray-300">
-							<span className="font-semibold text-gray-900 dark:text-white">Coming: native workers</span>. A mode where the agent cannot shell out but can use Windmill's preview endpoints to write and run exploratory code. Full isolation with code execution capabilities.
-						</p>
 					</div>
 				</div>
 			)}
@@ -474,7 +468,7 @@ export default function AiAgentsContent({ title, description }) {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Run full Claude/Codex in <Link to="/docs/core_concepts/worker_groups" className="text-blue-500 hover:underline !no-underline">sandboxes</Link> with bash, code writing and scoped restrictions</span>
+							<span>Run full <Link to="/docs/core_concepts/worker_groups" className="text-blue-500 hover:underline !no-underline">Claude Code, Codex or Opencode</Link> in sandboxes at their full power</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
@@ -566,7 +560,7 @@ export default function AiAgentsContent({ title, description }) {
 				{ question: 'What LLM providers does Windmill support?', textAnswer: 'Windmill supports OpenAI, Anthropic, Azure OpenAI, Mistral, DeepSeek, Google AI (Gemini), Groq, OpenRouter, Together AI and any OpenAI-compatible endpoint. Switch providers by changing a single resource, no code changes required.' },
 				{ question: 'How do Windmill AI agents differ from LangChain?', textAnswer: 'Windmill agents are flow steps, not a framework. Your existing scripts become tools automatically via their typed parameters. You get observability, retries, RBAC and deployment for free because agents run inside the Windmill workflow engine. LangChain requires you to build all of that yourself.' },
 				{ question: 'Can AI agents call external APIs and databases?', textAnswer: 'Yes. Any Windmill script can be used as a tool, and scripts can connect to any API, database or service using Windmill resources. Credentials are managed centrally and never exposed to the LLM.' },
-				{ question: 'How does the Claude Code / Codex sandbox work?', textAnswer: 'Windmill runs Claude Code or Codex inside nsjail-isolated workers. Pre-configured snapshots (agents.md, skills, dependencies) are cached for instant startup. Persistent volumes stored on workspace S3 give the agent memory across runs. The agent accesses secrets and resources via the Windmill SDK but cannot escape the sandbox.' },
+				{ question: 'How does the Claude Code / Codex / Opencode sandbox work?', textAnswer: 'Windmill runs Claude Code, Codex or Opencode inside nsjail-isolated workers where they can use their full capabilities. Pre-configured snapshots (agents.md, skills, dependencies) are cached for instant startup. Persistent volumes stored on workspace S3 give the agent memory across runs. The agent accesses secrets and resources via the Windmill SDK but cannot escape the sandbox. Sandbox agents can be used as steps in any flow, just like the visual AI builder.' },
 				{ question: 'Does Windmill support streaming?', textAnswer: 'Yes. Agent responses can be streamed token by token in chat mode, in the flow editor preview and via the API. Streaming works with all supported LLM providers.' },
 				{ question: 'Is the AI agents feature free?', textAnswer: 'The AI agents feature is available in Windmill Community Edition (free, open-source) and all paid plans. You bring your own LLM API keys. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
 			]} />
