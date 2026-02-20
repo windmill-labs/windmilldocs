@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Code2, Database, LayoutGrid, Palette, Lock, Eye, Layers, Plug, Terminal, FileCode, Play, BookOpen, Cpu, Wrench, GitBranch, Table2, HardDrive, Globe, Bot, Shield, Activity } from 'lucide-react';
+import { DotLottiePlayer } from '@dotlottie/react-player';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
 export const fadeIn = {
@@ -21,126 +22,70 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
-{/* ── Hero animation: three-layer stack ── */}
+{/* ── Hero animation: dashboard with monitoring overlay ── */}
 
-export const layerItems = [
-	{ label: 'Frontend', sublabel: 'React / Vue / Svelte', color: 'from-emerald-400 to-emerald-600', y: 0 },
-	{ label: 'Data', sublabel: 'Built-in tables / SQL', color: 'from-amber-400 to-amber-600', y: 1 },
-	{ label: 'Backend', sublabel: 'Scripts in 20+ languages', color: 'from-blue-400 to-blue-600', y: 2 },
+export const logEntries = [
+	{ script: 'sync_users', duration: '120ms', status: 'success' },
+	{ script: 'generate_report', duration: '2.4s', status: 'success' },
+	{ script: 'onboard_user', duration: '890ms', status: 'success' },
+	{ script: 'backup_db', duration: '4.1s', status: 'success' },
+	{ script: 'send_invoices', duration: '340ms', status: 'error', retry: '1/3' },
+	{ script: 'refresh_dashboard', duration: '67ms', status: 'success' },
+	{ script: 'send_invoices', duration: '290ms', status: 'success', retry: '2/3' },
+	{ script: 'deploy_staging', duration: '12.3s', status: 'success' },
+	{ script: 'check_permissions', duration: '45ms', status: 'success' },
+	{ script: 'etl_daily_metrics', duration: '8.7s', status: 'success' },
 ];
-
-export const orbitAngles = [-90, 150, 30];
-export const orbitRadius = 170;
-export const orbitCenter = 240;
 
 export function HeroAnimation() {
 	return (
-		<div className="relative w-[480px] h-[480px]">
-			{/* Orbit ring */}
-			<div className="absolute inset-[70px] rounded-full border border-gray-200 dark:border-gray-700/50" />
-
-			{/* Center Windmill logo */}
-			<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-				<motion.div
-					animate={{ rotate: 360 }}
-					transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-				>
-					<img src="/img/windmill.svg" alt="Windmill" className="w-20 h-20" />
-				</motion.div>
+		<div className="relative w-[520px] h-[480px]">
+			{/* Lottie SaaS dashboard */}
+			<div className="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-xl bg-white dark:bg-gray-900">
+				<DotLottiePlayer
+					src="/img/money-pages/saas-dashboard.lottie"
+					loop
+					autoplay
+					style={{ width: '100%', height: 360 }}
+				/>
 			</div>
 
-			{/* Rotating orbit */}
+			{/* Floating monitoring overlay */}
 			<motion.div
-				className="absolute inset-0"
-				style={{ transformOrigin: `${orbitCenter}px ${orbitCenter}px` }}
-				animate={{ rotate: 360 }}
-				transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+				className="absolute -bottom-4 -right-4 w-[280px] z-20"
+				initial={{ opacity: 0, y: 20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.6, delay: 0.8 }}
 			>
-				{/* Lines from center to each card */}
-				<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
-					{orbitAngles.map((angle, i) => {
-						const rad = (angle * Math.PI) / 180;
-						const rStart = 40;
-						return (
-							<line
-								key={i}
-								x1={orbitCenter + rStart * Math.cos(rad)}
-								y1={orbitCenter + rStart * Math.sin(rad)}
-								x2={orbitCenter + orbitRadius * Math.cos(rad)}
-								y2={orbitCenter + orbitRadius * Math.sin(rad)}
-								className="stroke-gray-200 dark:stroke-gray-700/50"
-								strokeWidth={1.5}
-							/>
-						);
-					})}
-					{/* Animated data particles */}
-					{(() => {
-						const c = orbitCenter;
-						const r = orbitRadius;
-						const toXY = (angle) => {
-							const rad = (angle * Math.PI) / 180;
-							return { x: c + r * Math.cos(rad), y: c + r * Math.sin(rad) };
-						};
-						const pos = orbitAngles.map(toXY);
-						const balls = [
-							{ route: [0, 1, 2, 0, 2, 1], duration: 14, delay: 0 },
-							{ route: [1, 2, 0, 1, 0, 2], duration: 17, delay: 2 },
-							{ route: [2, 0, 1, 2, 1, 0], duration: 12, delay: 4 },
-							{ route: [0, 2, 1, 0, 1, 2], duration: 16, delay: 6 },
-							{ route: [1, 0, 2, 1, 2, 0], duration: 13, delay: 8 },
-							{ route: [2, 1, 0, 2, 0, 1], duration: 18, delay: 10 },
-						];
-						return balls.map((b, i) => {
-							const xK = [c];
-							const yK = [c];
-							b.route.forEach((idx) => {
-								xK.push(pos[idx].x, c);
-								yK.push(pos[idx].y, c);
-							});
-							return (
-								<motion.circle
-									key={`dot-${i}`}
-									r={4}
-									className="fill-blue-400 dark:fill-blue-300"
-									style={{ opacity: 0.8 }}
-									animate={{ cx: xK, cy: yK }}
-									transition={{ duration: b.duration, repeat: Infinity, ease: 'linear', delay: b.delay }}
-								/>
-							);
-						});
-					})()}
-				</svg>
-
-				{/* Layer cards on the orbit */}
-				{layerItems.map((layer, i) => {
-					const rad = (orbitAngles[i] * Math.PI) / 180;
-					const x = orbitCenter + orbitRadius * Math.cos(rad);
-					const y = orbitCenter + orbitRadius * Math.sin(rad);
-					return (
-						<div
-							key={layer.label}
-							className="absolute"
-							style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
-						>
-							<motion.div
-								animate={{ rotate: -360 }}
-								transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-							>
-								<div className={`relative rounded-2xl bg-gradient-to-r ${layer.color} p-[2px] shadow-lg`} style={{ width: 170 }}>
-									<div className="rounded-[14px] bg-white dark:bg-gray-900 px-4 py-4 text-center">
-										<div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${layer.color} flex items-center justify-center mx-auto mb-2`}>
-											{i === 0 && <LayoutGrid className="w-5 h-5 text-white" />}
-											{i === 1 && <Database className="w-5 h-5 text-white" />}
-											{i === 2 && <Code2 className="w-5 h-5 text-white" />}
-										</div>
-										<span className="text-base font-semibold text-gray-900 dark:text-white block">{layer.label}</span>
-										<span className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 block">{layer.sublabel}</span>
-									</div>
-								</div>
-							</motion.div>
+				<div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm overflow-hidden shadow-lg">
+					<div className="flex items-center justify-between px-3 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+						<div className="flex items-center gap-2">
+							<Eye className="w-3.5 h-3.5 text-blue-500" />
+							<span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Live executions</span>
 						</div>
-					);
-				})}
+						<div className="flex items-center gap-1.5">
+							<span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+							<span className="text-[10px] text-gray-400">live</span>
+						</div>
+					</div>
+					<div className="relative h-[120px] overflow-hidden">
+						<motion.div
+							animate={{ y: [0, -(logEntries.length * 28)] }}
+							transition={{ duration: logEntries.length * 2.5, repeat: Infinity, ease: 'linear' }}
+						>
+							{[...logEntries, ...logEntries].map((entry, i) => (
+								<div key={i} className="flex items-center gap-2 px-3 h-[28px] text-[11px] font-mono border-b border-gray-100 dark:border-gray-800/50">
+									<span className={entry.status === 'success' ? 'text-emerald-500' : 'text-red-400'}>
+										{entry.status === 'success' ? '●' : '✕'}
+									</span>
+									<span className="text-gray-700 dark:text-gray-300 truncate flex-1">{entry.script}</span>
+									{entry.retry && <span className="text-amber-500 text-[10px]">retry {entry.retry}</span>}
+									<span className="text-gray-400 dark:text-gray-500 tabular-nums">{entry.duration}</span>
+								</div>
+							))}
+						</motion.div>
+					</div>
+				</div>
 			</motion.div>
 		</div>
 	);
@@ -325,19 +270,19 @@ export default function InternalToolsContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Backend-first</span> — full scripts behind every interaction, not sandboxed snippets</span>
+								<span><span className="text-blue-500">Build</span> <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">backend scripts</Link> in 20+ languages, <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-500 hover:underline !no-underline">React, Vue or Svelte</Link> frontends</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Built-in data tables</span> — SQL storage with zero setup, no external DB needed</span>
+								<span><span className="text-blue-500">Integrate</span> <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-500 hover:underline !no-underline">built-in data tables</Link>, <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-500 hover:underline !no-underline">50+ connectors</Link>, S3 and any database</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Your own frontend</span> — deploy <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-500 hover:underline !no-underline">React, Vue or Svelte apps</Link> on the same platform</span>
+								<span><span className="text-blue-500">Monitor</span> full <Link to="/docs/core_concepts/jobs" className="text-blue-500 hover:underline !no-underline">execution logs</Link>, error handlers, RBAC, SSO and audit trails</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Enterprise-ready</span> — RBAC, SSO, audit logs, <Link to="/docs/advanced/self_host" className="text-blue-500 hover:underline !no-underline">self-hosted</Link> or cloud</span>
+								<span><span className="text-blue-500">No overhead</span> one platform, no infrastructure to manage, <Link to="/docs/advanced/self_host" className="text-blue-500 hover:underline !no-underline">self-host</Link> or cloud</span>
 							</div>
 						</div>
 					</motion.div>

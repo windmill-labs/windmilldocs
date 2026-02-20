@@ -22,6 +22,7 @@
 		"@docusaurus/plugin-client-redirects": "^3.1.1",
 		"@docusaurus/preset-classic": "^3.0.0",
 		"@docusaurus/tsconfig": "^3.1.1",
+		"@dotlottie/react-player": "^1.6.19",
 		"@headlessui/react": "^2.1.1",
 		"@heroicons/react": "^2.1.4",
 		"@inkeep/widgets": "^0.2.258",
