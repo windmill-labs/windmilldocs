@@ -1,0 +1,603 @@
+---
+title: "How to build AI agents with Windmill"
+description: "How do I build AI agents with Windmill? Add agent steps to flows with tool calling, multi-provider LLM support, structured outputs and full observability. Run Claude Code and Codex in sandboxed workers."
+---
+
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings, Database, BookOpen, Zap, Container, HardDrive, Cpu, Lock, Code2, Terminal, FileCode, Play, Sparkles, Shield, Activity, Layers } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Hero animation: action icons network ── */}
+
+export const logEntries = [
+	{ action: 'Analyzing user churn patterns...', isReasoning: true },
+	{ action: 'ls src/auth/', target: 'Bash' },
+	{ action: 'SELECT * FROM users', target: 'Query DB' },
+	{ action: 'Deciding next step...', isReasoning: true },
+	{ action: 'fetch_secret("API_KEY")', target: 'Secrets' },
+	{ action: 'POST /api/v1/deploy', target: 'API call' },
+	{ action: 'Evaluating results...', isReasoning: true },
+	{ action: 'write auth/session.ts', target: 'Write code' },
+	{ action: 'npm test', target: 'Execute' },
+	{ action: 'create_issue()', target: 'Tool call' },
+];
+
+export function HeroAnimation() {
+	return (
+		<div className="relative w-[480px] h-[560px]">
+			{/* Center Bot icon with pulsing ring */}
+			<div className="absolute z-10" style={{ left: actionCenter.x, top: actionCenter.y, transform: 'translate(-50%, -50%)' }}>
+				<div className="relative">
+					<motion.div
+						className="absolute -inset-3 rounded-2xl border-2 border-blue-400/40"
+						animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0, 0.4] }}
+						transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+					/>
+					<div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-900 flex items-center justify-center shadow-lg">
+						<Bot className="w-10 h-10 text-white" />
+					</div>
+				</div>
+			</div>
+
+			{/* SVG connections + particles */}
+			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+				{/* Web connections between all outer nodes */}
+				{actionCrossLinks.map(([a, b], i) => (
+					<line
+						key={`x-${i}`}
+						x1={actionPositions[a].x} y1={actionPositions[a].y}
+						x2={actionPositions[b].x} y2={actionPositions[b].y}
+						className="stroke-gray-300/40 dark:stroke-gray-600/25"
+						strokeWidth={0.75}
+					/>
+				))}
+				{/* Lines from each node to center */}
+				{actionPositions.map((node, i) => (
+					<line
+						key={`c-${i}`}
+						x1={actionCenter.x} y1={actionCenter.y}
+						x2={node.x} y2={node.y}
+						className="stroke-gray-300 dark:stroke-gray-600/60"
+						strokeWidth={1.5}
+					/>
+				))}
+				{/* Animated particles traveling along the web */}
+				{actionPositions.map((node, i) => {
+					const xK = [actionCenter.x, node.x, actionCenter.x, actionPositions[(i + 3) % actionPositions.length].x, actionCenter.x];
+					const yK = [actionCenter.y, node.y, actionCenter.y, actionPositions[(i + 3) % actionPositions.length].y, actionCenter.y];
+					return (
+						<motion.circle
+							key={`dot-${i}`}
+							r={3.5}
+							className="fill-blue-400 dark:fill-blue-300"
+							style={{ opacity: 0.7 }}
+							animate={{ cx: xK, cy: yK }}
+							transition={{ duration: 10 + i * 1.5, repeat: Infinity, ease: 'linear', delay: i * 1.2 }}
+						/>
+					);
+				})}
+			</svg>
+
+			{/* Action nodes */}
+			{actionPositions.map((node, i) => (
+				<div
+					key={node.label}
+					className="absolute z-10"
+					style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
+				>
+					<div className="flex flex-col items-center gap-1">
+						<motion.div
+							className="w-14 h-14 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-sm flex items-center justify-center"
+							animate={{ boxShadow: ['0 0 0px rgba(59,130,246,0)', '0 0 12px rgba(59,130,246,0.5)', '0 0 0px rgba(59,130,246,0)'] }}
+							transition={{ duration: 2, repeat: Infinity, delay: i * 1.3, ease: 'easeInOut' }}
+						>
+							<node.icon className={`w-7 h-7 ${node.color}`} />
+						</motion.div>
+						<span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">{node.label}</span>
+					</div>
+				</div>
+			))}
+
+			{/* Live activity log */}
+			<div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[320px] z-20">
+				<div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm overflow-hidden shadow-sm">
+					<div className="flex items-center gap-2 px-3 py-1.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+						<Eye className="w-3 h-3 text-blue-500" />
+						<span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Live agent log</span>
+					</div>
+					<div className="relative h-[72px] overflow-hidden">
+						<motion.div
+							animate={{ y: [0, -(logEntries.length * 24)] }}
+							transition={{ duration: logEntries.length * 2.5, repeat: Infinity, ease: 'linear' }}
+						>
+							{[...logEntries, ...logEntries].map((entry, i) => (
+								<div key={i} className="flex items-center gap-2 px-3 h-[24px] text-[11px] font-mono">
+									{entry.isReasoning
+										? <Sparkles className="w-3 h-3 text-blue-400 flex-shrink-0" />
+										: <span className="text-green-500">●</span>
+									}
+									{entry.target && <span className="text-gray-400 dark:text-gray-500">{entry.target}</span>}
+									<span className={entry.isReasoning ? 'text-blue-400 dark:text-blue-300 italic' : 'text-gray-600 dark:text-gray-300'}>{entry.action}</span>
+								</div>
+							))}
+						</motion.div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── DAG workflow animation ── */}
+
+export function DagAnimation() {
+	const cx = 220;
+	return (
+		<div className="relative w-[440px] h-[440px] mx-auto">
+			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+				{/* Vertical line: trigger → script → agent container top */}
+				<line x1={cx} y1={45} x2={cx} y2={80} className="stroke-blue-500/40" strokeWidth={1.5} />
+				<line x1={cx} y1={120} x2={cx} y2={155} className="stroke-blue-500/40" strokeWidth={1.5} />
+
+				{/* Agent container glow */}
+				<rect x={cx - 100} y={170} width={200} height={90} rx={16} className="fill-blue-500/5 stroke-blue-400/30" strokeWidth={1} />
+
+				{/* Vertical line: agent container bottom → branch point */}
+				<line x1={cx} y1={260} x2={cx} y2={290} className="stroke-blue-500/40" strokeWidth={1.5} />
+
+				{/* Curved branches from center to 3 bottom nodes */}
+				<path d={`M ${cx} 290 Q ${cx} 320 ${cx - 120} 350`} fill="none" className="stroke-blue-500/40" strokeWidth={1.5} />
+				<path d={`M ${cx} 290 L ${cx} 350`} fill="none" className="stroke-blue-500/40" strokeWidth={1.5} />
+				<path d={`M ${cx} 290 Q ${cx} 320 ${cx + 120} 350`} fill="none" className="stroke-blue-500/40" strokeWidth={1.5} />
+
+				{/* Particles flowing down the main path */}
+				<motion.circle r={3} className="fill-blue-400" style={{ opacity: 0.7 }}
+					animate={{ cx: [cx, cx], cy: [45, 155], opacity: [0, 0.8, 0] }}
+					transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
+				/>
+				<motion.circle r={3} className="fill-blue-400" style={{ opacity: 0.7 }}
+					animate={{ cx: [cx, cx], cy: [260, 350], opacity: [0, 0.8, 0] }}
+					transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+				/>
+				<motion.circle r={3} className="fill-blue-400" style={{ opacity: 0.5 }}
+					animate={{ cx: [cx, cx - 120], cy: [290, 350], opacity: [0, 0.7, 0] }}
+					transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
+				/>
+				<motion.circle r={3} className="fill-blue-400" style={{ opacity: 0.5 }}
+					animate={{ cx: [cx, cx + 120], cy: [290, 350], opacity: [0, 0.7, 0] }}
+					transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 3.5 }}
+				/>
+			</svg>
+
+			{/* Top node 1: Trigger */}
+			<div className="absolute z-10" style={{ left: cx, top: 30, transform: 'translate(-50%, -50%)' }}>
+				<div className="w-10 h-10 rounded-lg bg-gray-800 dark:bg-gray-800 border border-gray-600 flex items-center justify-center">
+					<Zap className="w-5 h-5 text-purple-400" />
+				</div>
+			</div>
+
+			{/* Top node 2: Script */}
+			<div className="absolute z-10" style={{ left: cx, top: 100, transform: 'translate(-50%, -50%)' }}>
+				<div className="w-10 h-10 rounded-lg bg-gray-800 dark:bg-gray-800 border border-gray-600 flex items-center justify-center">
+					<Terminal className="w-5 h-5 text-orange-400" />
+				</div>
+			</div>
+
+			{/* AI Agent — centered in container with glow */}
+			<div className="absolute z-10" style={{ left: cx, top: 215, transform: 'translate(-50%, -50%)' }}>
+				<div className="relative">
+					<motion.div
+						className="absolute -inset-4 rounded-2xl bg-blue-500/10"
+						animate={{ opacity: [0.3, 0.6, 0.3] }}
+						transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+					/>
+					<div className="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+						<Bot className="w-7 h-7 text-white" />
+					</div>
+				</div>
+			</div>
+
+			{/* Small tool icons floating around the agent container */}
+			{[
+				{ icon: Wrench, x: cx - 85, y: 195 },
+				{ icon: FileCode, x: cx - 70, y: 240 },
+				{ icon: Plug, x: cx + 85, y: 195 },
+				{ icon: Database, x: cx + 70, y: 240 },
+			].map((tool, i) => (
+				<div key={i} className="absolute z-10" style={{ left: tool.x, top: tool.y, transform: 'translate(-50%, -50%)' }}>
+					<div className="w-7 h-7 rounded-md bg-gray-800/80 dark:bg-gray-800 border border-gray-600/50 flex items-center justify-center">
+						<tool.icon className="w-3.5 h-3.5 text-gray-400" />
+					</div>
+				</div>
+			))}
+
+			{/* Bottom branch nodes — service-style */}
+			{[
+				{ icon: Terminal, x: cx - 120, y: 370, color: 'text-green-400' },
+				{ icon: MessageSquare, x: cx, y: 370, color: 'text-pink-400' },
+				{ icon: Database, x: cx + 120, y: 370, color: 'text-blue-400' },
+			].map((node, i) => (
+				<div key={i} className="absolute z-10" style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}>
+					<div className="w-11 h-11 rounded-lg bg-gray-800 dark:bg-gray-800 border border-gray-600 flex items-center justify-center">
+						<node.icon className={`w-5 h-5 ${node.color}`} />
+					</div>
+				</div>
+			))}
+		</div>
+	);
+}
+
+{/* ── PART A: Agent features interactive tabs ── */}
+
+export const agentFeatures = [
+	{ icon: Bot, title: 'AI Agent step', desc: <span>Windmill flows are DAG workflows made of steps. The AI agent step is a ready-to-use node you drop into any <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>. It handles LLM calls, <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tool execution</Link> and reasoning loops out of the box, so you focus on your business logic.</span>, image: '/img/money-pages/ai-dag.webp', docLink: '/docs/core_concepts/ai_agents' },
+	{ icon: Database, title: 'Any LLM provider', desc: <span>Use AI agent steps with the LLM of your choice, including self-hosted models. Just provide an API key as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> and switch providers or models without changing your agent logic.</span>, image: '/img/money-pages/llm.webp', docLink: '/docs/core_concepts/ai_agents' },
+	{ icon: Settings, title: 'Built-in presets', desc: <span>Each agent step exposes configurable presets: <code>system_prompt</code>, <code>user_message</code>, <code>output_schema</code>, <code>memory</code>, <code>temperature</code>, <code>max_tokens</code> and more. Set them in the UI or pass them dynamically from previous steps. No boilerplate code to write.</span>, image: '/img/money-pages/ai-presets.webp', docLink: '/docs/core_concepts/ai_agents' },
+	{ icon: Wrench, title: 'Scripts as tools', desc: <span>Write tools in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ languages</Link> (TypeScript, Python, Go, Bash, SQL, and more). Each script's typed parameters and descriptions are automatically used as the tool schema. No separate SDK or adapter needed.</span>, image: '/img/money-pages/ai-tool.webp', docLink: '/docs/core_concepts/ai_agents#script-tools' },
+	{ icon: Plug, title: 'MCP integration', desc: 'Connect to MCP servers and auto-discover tools. Supports OAuth and custom auth. Use MCP tools alongside native Windmill scripts in the same agent step.', image: '/img/money-pages/ai-mcp.webp', docLink: '/docs/core_concepts/mcp' },
+	{ icon: Zap, title: 'Deploy in one click', desc: <span>Build your agent flow in the editor, test it with live previews and deploy to production in one click. Every deployment is versioned with full history, so you can compare changes and roll back instantly. Integrate with <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> for CI/CD workflows.</span>, image: '/img/money-pages/deploy.webp', docLink: '/docs/core_concepts/draft_and_deploy' },
+];
+
+{/* TODO: add screenshots for each agent feature tab */}
+
+export function AgentFeaturesSection() {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<motion.div {...fadeIn} className="mb-8">
+				<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+					Integrate AI into DAG workflows
+				</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300">
+					Build AI agents using Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">workflow engine</Link>. Incorporate AI in specific steps. The agent reasons, picks <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> and executes them, while the rest of the flow handles branching, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approvals</Link> and error handling.
+				</p>
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 mb-12">
+				{/* Left: clickable list */}
+				<div className="flex flex-col gap-2">
+					{agentFeatures.map((feat, i) => (
+						<button
+							key={feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
+							<span className="font-medium text-sm">{feat.title}</span>
+						</button>
+					))}
+				</div>
+
+				{/* Right: selected content */}
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{agentFeatures.map((feat, i) => (
+						<div
+							key={feat.title}
+							className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
+							{feat.image ? (
+								<img src={feat.image} alt={feat.title} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+								</div>
+							)}
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link to={feat.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── Big tab section: two agent modes ── */}
+
+export function AgentModeTabs() {
+	const [activeTab, setActiveTab] = useState(0);
+	const tabs = [
+		{ icon: Zap, label: 'Workflows' },
+		{ icon: Code2, label: 'Sandboxes' },
+	];
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-8">
+			<motion.div {...fadeIn} className="mb-8">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					Two ways to build AI agents
+				</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300">
+					Add AI steps to structured workflows for controlled, repeatable automation. Or give coding agents full autonomy inside isolated sandboxes.
+				</p>
+			</motion.div>
+			{/* Tab buttons */}
+			<div className="grid grid-cols-2 mb-12 border-b border-gray-200 dark:border-gray-700">
+				{tabs.map((tab, i) => (
+					<button
+						key={tab.label}
+						onClick={() => setActiveTab(i)}
+						className={`flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-b-2 transition-colors -mb-px ${
+							i === activeTab
+								? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+						}`}
+					>
+						<tab.icon className="w-5 h-5" />
+						{tab.label}
+					</button>
+				))}
+			</div>
+
+			{/* Tab 1: DAG Workflows */}
+			{activeTab === 0 && (
+				<AgentFeaturesSection />
+			)}
+
+			{/* Tab 2: Sandboxes */}
+			{activeTab === 1 && (
+				<div>
+					<div className="mb-16">
+						<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+							Run Claude Code and Codex in sandboxed workers
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							Give Claude Code and Codex scoped <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> and <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource access</Link>, then let them run autonomously in isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">sandboxes</Link>. Each agent gets its own nsjail environment with only the secrets, APIs and storage you explicitly allow.
+						</p>
+					</div>
+
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+						{[
+							{ icon: Cpu, title: 'Cached snapshots', desc: 'Pre-configured environments with agents.md, skills, dependencies and custom instructions. Cached on workers for instant startup, no container builds needed.' },
+							{ icon: HardDrive, title: 'Persistent volumes', desc: 'S3-backed storage mounted into the sandbox. The agent picks up where it left off with full context of previous work across runs.' },
+							{ icon: Lock, title: 'nsjail isolation', desc: <span>Each run is sandboxed with nsjail. The agent accesses <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> and <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> via the Windmill SDK but cannot escape the sandbox. Uses Claude/Codex SDK directly.</span> },
+							{ icon: Database, title: 'Self-hosted & air-gapped', desc: <span>Run on your own infrastructure. No data leaves your network. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy</Link> on Docker or Kubernetes with a single command.</span> },
+						].map((item, i) => (
+							<div key={item.title} className="flex gap-4 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+								<div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center flex-shrink-0">
+									<item.icon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+								</div>
+								<div>
+									<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{item.title}</h3>
+									<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+								</div>
+							</div>
+						))}
+					</div>
+
+					<div className="p-6 rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/30">
+						<p className="text-gray-600 dark:text-gray-300">
+							<span className="font-semibold text-gray-900 dark:text-white">Coming: native workers</span>. A mode where the agent cannot shell out but can use Windmill's preview endpoints to write and run exploratory code. Full isolation with code execution capabilities.
+						</p>
+					</div>
+				</div>
+			)}
+		</div>
+	);
+}
+
+{/* ── Animation concept 5: Action icons network ── */}
+
+export const actionNodes = [
+	{ icon: Terminal, label: 'Bash', color: 'text-green-500' },
+	{ icon: FileCode, label: 'Write code', color: 'text-yellow-500' },
+	{ icon: Play, label: 'Execute', color: 'text-blue-500' },
+	{ icon: Database, label: 'Query DB', color: 'text-purple-500' },
+	{ icon: Wrench, label: 'Tool call', color: 'text-orange-500' },
+	{ icon: Lock, label: 'Secrets', color: 'text-red-500' },
+	{ icon: Eye, label: 'Monitor', color: 'text-cyan-500' },
+	{ icon: Plug, label: 'API call', color: 'text-pink-500' },
+];
+
+export const actionCenter = { x: 240, y: 210 };
+export const actionRadius = 165;
+
+export const actionPositions = actionNodes.map((node, i) => {
+	const angle = (-90 + i * 45) * (Math.PI / 180);
+	return { ...node, x: Math.round(actionCenter.x + actionRadius * Math.cos(angle)), y: Math.round(actionCenter.y + actionRadius * Math.sin(angle)) };
+});
+
+export const actionCrossLinks = actionPositions.flatMap((_, i) =>
+	actionPositions.slice(i + 1).map((_, j) => [i, i + 1 + j])
+);
+
+
+{/* ── Main page component ── */}
+
+export default function AiAgentsContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+				<motion.div {...fadeIn}>
+					<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+						Build AI agents with full control and observability
+					</h1>
+					<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+						For platform teams who deploy AI agents to production and need full control over <Link to="/docs/core_concepts/ai_agents" className="text-blue-400 hover:underline !no-underline">permissions</Link>, <Link to="/docs/core_concepts/ai_agents#debugging" className="text-blue-400 hover:underline !no-underline">monitoring</Link> and audit logs.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/docs/core_concepts/ai_agents"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							Read the docs
+						</Link>
+					</div>
+					<div className="mt-8 flex flex-col gap-3">
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span>Build agent with <Link to="/docs/core_concepts/ai_agents" className="text-blue-500 hover:underline !no-underline">any LLM provider</Link> including self-hosted models</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span>Give your agents tools via <Link to="/docs/core_concepts/mcp" className="text-blue-500 hover:underline !no-underline">MCP</Link> or <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-500 hover:underline !no-underline">custom scripts in 20+ languages</Link></span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span>Run full Claude/Codex in <Link to="/docs/core_concepts/worker_groups" className="text-blue-500 hover:underline !no-underline">sandboxes</Link> with bash, code writing and scoped restrictions</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span>Track every decision, tool call and code execution with <Link to="/docs/core_concepts/ai_agents#debugging" className="text-blue-500 hover:underline !no-underline">full observability</Link></span>
+						</div>
+					</div>
+				</motion.div>
+
+				<div className="hidden md:flex items-center justify-center">
+					<HeroAnimation />
+				</div>
+			</div>
+			</div>
+
+			{/* ═══════════════ Agent modes tabs ═══════════════ */}
+			<AgentModeTabs />
+
+
+			{/* ═══════════════ SHARED SECTIONS ═══════════════ */}
+
+			{/* Why Windmill for AI agents */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="mb-12">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Built on a production-grade workflow engine
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							Windmill is not an AI framework. It is an open-source workflow engine already used by teams to orchestrate scripts, APIs and infrastructure at scale. AI agents plug directly into that existing platform, with enterprise-grade security, observability and integration built in.
+						</p>
+					</motion.div>
+
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+						{[
+							{
+								title: 'Part of your orchestration layer',
+								image: '/img/money-pages/parallel-branches.webp',
+								points: [
+									'AI agents are flow steps alongside HTTP calls, database queries and approval gates',
+									'Retries, error handling and conditional branching apply to agent steps like any other',
+									'Schedule agents, chain them with existing workflows, trigger them from webhooks or events',
+								],
+							},
+							{
+								title: 'Full observability out of the box',
+								image: '/img/money-pages/monitoring.webp',
+								points: [
+									'Every agent run is a job with structured logs, timing and resource usage',
+									'Track each tool call, LLM request and token count in the run detail view',
+									'Audit trails, run history and flow-level debugging across all steps',
+								],
+							},
+							{
+								title: 'Enterprise-grade security',
+								image: '/img/money-pages/security.webp',
+								points: [
+									'SSO, RBAC and granular permissions control who can build and trigger agents',
+									'Secrets and API keys are managed centrally and never exposed to the LLM',
+									'Self-host on your infrastructure, air-gapped deployments supported',
+								],
+							},
+						].map((card) => (
+							<motion.div key={card.title} {...fadeIn} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
+								{card.image ? (
+									<img src={card.image} alt={card.title} className="w-full h-48 object-cover border-b border-gray-200 dark:border-gray-700" />
+								) : (
+									<div className="w-full h-48 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-center text-sm text-gray-400">Screenshot coming soon</div>
+								)}
+								<div className="p-8">
+									<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{card.title}</h3>
+									<ul className="space-y-3">
+										{card.points.map((point, i) => (
+											<li key={i} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+												<span className="text-blue-500 mt-0.5 shrink-0">&#10003;</span>
+												<span>{point}</span>
+											</li>
+										))}
+									</ul>
+								</div>
+							</motion.div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			{/* FAQ */}
+			<div>
+			<UseCaseFAQ faqs={[
+				{ question: 'What LLM providers does Windmill support?', textAnswer: 'Windmill supports OpenAI, Anthropic, Azure OpenAI, Mistral, DeepSeek, Google AI (Gemini), Groq, OpenRouter, Together AI and any OpenAI-compatible endpoint. Switch providers by changing a single resource, no code changes required.' },
+				{ question: 'How do Windmill AI agents differ from LangChain?', textAnswer: 'Windmill agents are flow steps, not a framework. Your existing scripts become tools automatically via their typed parameters. You get observability, retries, RBAC and deployment for free because agents run inside the Windmill workflow engine. LangChain requires you to build all of that yourself.' },
+				{ question: 'Can AI agents call external APIs and databases?', textAnswer: 'Yes. Any Windmill script can be used as a tool, and scripts can connect to any API, database or service using Windmill resources. Credentials are managed centrally and never exposed to the LLM.' },
+				{ question: 'How does the Claude Code / Codex sandbox work?', textAnswer: 'Windmill runs Claude Code or Codex inside nsjail-isolated workers. Pre-configured snapshots (agents.md, skills, dependencies) are cached for instant startup. Persistent volumes stored on workspace S3 give the agent memory across runs. The agent accesses secrets and resources via the Windmill SDK but cannot escape the sandbox.' },
+				{ question: 'Does Windmill support streaming?', textAnswer: 'Yes. Agent responses can be streamed token by token in chat mode, in the flow editor preview and via the API. Streaming works with all supported LLM providers.' },
+				{ question: 'Is the AI agents feature free?', textAnswer: 'The AI agents feature is available in Windmill Community Edition (free, open-source) and all paid plans. You bring your own LLM API keys. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
+			]} />
+			</div>
+
+			{/* CTA */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start building AI agents today</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Get started for free on Windmill Cloud or <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">self-host</Link> the open-source version.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/pricing"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							View pricing
+						</Link>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}

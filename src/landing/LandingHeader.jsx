@@ -1,13 +1,29 @@
 import React, { Fragment, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import BookDemoModal from '../components/BookDemoModal';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import {
+	Bars3Icon,
+	XMarkIcon,
+	WrenchScrewdriverIcon,
+	ArrowPathIcon,
+	CircleStackIcon,
+	CodeBracketIcon,
+	UserGroupIcon,
+	ServerStackIcon,
+	CpuChipIcon,
+	CommandLineIcon,
+	ScaleIcon,
+	ClockIcon,
+	ShieldCheckIcon,
+	ComputerDesktopIcon,
+} from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
+import { Bot, Landmark, HeartPulse } from 'lucide-react';
 import Banner from './Banner';
 import Link from '@docusaurus/Link';
 
@@ -27,6 +43,66 @@ const products = [
 		description: 'Build super fast and powerful apps using drag-and-drop.',
 		href: '/apps'
 	}
+];
+
+const solutionsByUseCase = [
+	{
+		name: 'Internal tools',
+		description: 'Build admin panels, dashboards and back-office apps.',
+		href: '/use-cases/internal-tools',
+		icon: WrenchScrewdriverIcon,
+	},
+	{
+		name: 'Workflow automation',
+		description: 'Orchestrate multi-step processes across services.',
+		href: '/use-cases/workflow-automation',
+		icon: ArrowPathIcon,
+	},
+	{
+		name: 'Data pipelines',
+		description: 'ETL, syncs and scheduled data jobs.',
+		href: '/use-cases/data-pipelines',
+		icon: CircleStackIcon,
+	},
+	{
+		name: 'Scripts & endpoints',
+		description: 'Deploy scripts as APIs or cron jobs instantly.',
+		href: '/use-cases/scripts-and-endpoints',
+		icon: CodeBracketIcon,
+	},
+	{
+		name: 'AI agents',
+		description: 'Build and orchestrate AI agents with tools.',
+		href: '/use-cases/ai-agents',
+		icon: Bot,
+	},
+	{
+		name: 'Scheduled tasks',
+		description: 'Cron jobs, polling and background processing.',
+		href: '/use-cases/scheduled-tasks',
+		icon: ClockIcon,
+	},
+];
+
+const solutionsByRole = [
+	{ name: 'Engineering', href: '/docs/intro', icon: CommandLineIcon },
+	{ name: 'DevOps', href: '/docs/intro', icon: ServerStackIcon },
+	{ name: 'Data teams', href: '/docs/intro', icon: CpuChipIcon },
+	{ name: 'Platform teams', href: '/docs/intro', icon: UserGroupIcon },
+];
+
+const solutionsByIndustry = [
+	{ name: 'Finance', href: '/docs/intro', icon: Landmark },
+	{ name: 'Healthcare', href: '/docs/intro', icon: HeartPulse },
+	{ name: 'Cybersecurity', href: '/docs/intro', icon: ShieldCheckIcon },
+	{ name: 'Enterprise software', href: '/docs/intro', icon: ComputerDesktopIcon },
+];
+
+const solutionsCompare = [
+	{ name: 'vs Retool', href: '/docs/compared_to/retool' },
+	{ name: 'vs Prefect', href: '/docs/compared_to/prefect' },
+	{ name: 'vs Airflow', href: '/docs/compared_to/peers' },
+	{ name: 'All alternatives', href: '/docs/compared_to/peers' },
 ];
 
 const resources = [
@@ -100,21 +176,20 @@ export default function LandingHeader() {
 					</Link>
 					
 					<Popover.Group as="nav" className="hidden space-x-8 lg:space-x-10 md:flex min-w-0 grow">
-						{/* Products dropdown - temporarily hidden while improving sections
 						<Popover className="relative">
 							{({ open }) => (
 								<>
 									<Popover.Button
 										className={classNames(
-											open ? 'text-gray-900' : 'text-gray-500',
-											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-offset-1 dark:focus:ring-offset-gray-800 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
+											open ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500',
+											'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-offset-1 dark:focus:ring-offset-gray-800 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300'
 										)}
 									>
-										<span>Products</span>
+										<span>Solutions</span>
 										<ChevronDownIcon
 											className={classNames(
-												open ? 'text-gray-600' : 'text-gray-400',
-												'ml-2 h-5 w-5 group-hover:text-gray-500'
+												open ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400',
+												'ml-2 h-5 w-5 group-hover:text-gray-500 dark:group-hover:text-gray-300'
 											)}
 											aria-hidden="true"
 										/>
@@ -129,25 +204,102 @@ export default function LandingHeader() {
 										leaveFrom="opacity-100 translate-y-0"
 										leaveTo="opacity-0 translate-y-1"
 									>
-										<Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-xs -translate-x-1/2 transform px-2 sm:px-0">
-											<div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-												<div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8">
-													{products.map((product) => (
-														<Link
-															key={product.name}
-															to={product.href}
-															className="-m-3 block rounded-md p-3 hover:bg-gray-50 dark:hover:bg-gray-700 !no-underline"
-															target={product.newtab ? '_blank' : undefined}
-															rel={product.newtab ? 'noopener noreferrer' : undefined}
-														>
-															<p className="font-medium text-gray-900 dark:text-gray-100">
-																{product.name}
+										<Popover.Panel className="absolute left-0 z-10 mt-3 w-screen max-w-3xl transform px-2 sm:px-0">
+											<div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
+												<div className="bg-white dark:bg-gray-800 p-6">
+													<div className="grid grid-cols-2 gap-6">
+														{/* Use cases - main column */}
+														<div>
+															<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3 px-3">
+																By use case
 															</p>
-															<p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-																{product.description}
-															</p>
-														</Link>
-													))}
+															<div className="space-y-1">
+																{solutionsByUseCase.map((item) => (
+																	<Link
+																		key={item.name}
+																		to={item.href}
+																		className="group flex items-start gap-3 rounded-lg px-3 py-3 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
+																	>
+																		<item.icon className="h-6 w-6 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" />
+																		<div>
+																			<p className="text-base font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+																				{item.name}
+																			</p>
+																			<p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+																				{item.description}
+																			</p>
+																		</div>
+																	</Link>
+																))}
+															</div>
+														</div>
+
+														{/* Right sidebar */}
+														<div className="border-l border-gray-100 dark:border-gray-700 pl-6 space-y-6">
+															{/* By role */}
+															<div>
+																<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3">
+																	By role
+																</p>
+																<div className="space-y-1">
+																	{solutionsByRole.map((item) => (
+																		<Link
+																			key={item.name}
+																			to={item.href}
+																			className="group flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
+																		>
+																			<item.icon className="h-5 w-5 text-gray-400 dark:text-gray-400 group-hover:text-blue-500" />
+																			<span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+																				{item.name}
+																			</span>
+																		</Link>
+																	))}
+																</div>
+															</div>
+
+															{/* By industry */}
+															<div>
+																<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3">
+																	By industry
+																</p>
+																<div className="space-y-1">
+																	{solutionsByIndustry.map((item) => (
+																		<Link
+																			key={item.name}
+																			to={item.href}
+																			className="group flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
+																		>
+																			<item.icon className="h-5 w-5 text-gray-400 dark:text-gray-400 group-hover:text-blue-500" />
+																			<span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+																				{item.name}
+																			</span>
+																		</Link>
+																	))}
+																</div>
+															</div>
+
+															{/* Compare */}
+															<div>
+																<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3">
+																	Compare
+																</p>
+																<div className="space-y-1">
+																	{solutionsCompare.map((item) => (
+																		<Link
+																			key={item.name}
+																			to={item.href}
+																			className="group flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
+																		>
+																			<ScaleIcon className="h-5 w-5 text-gray-400 dark:text-gray-400 group-hover:text-blue-500" />
+																			<span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+																				{item.name}
+																			</span>
+																		</Link>
+																	))}
+																</div>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</Popover.Panel>
@@ -155,7 +307,6 @@ export default function LandingHeader() {
 								</>
 							)}
 						</Popover>
-						*/}
 						<Link
 							to="/docs/intro"
 							onClick={() => window.plausible?.('read-docs')}
@@ -359,24 +510,32 @@ export default function LandingHeader() {
 									))}
 								</div>
 
-								{/* Show Products dropdown items on mobile - temporarily hidden while improving sections
-								<div className="md:hidden mt-4">
-									<div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-										Products
-									</div>
-									<div className="space-y-2">
-										{products.map((product) => (
-											<a
-												key={product.name}
-												href={product.href}
-												className="block text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-											>
-												{product.name}
-											</a>
-										))}
-									</div>
+								{/* Solutions section in mobile menu */}
+								<div className="md:hidden mt-4 space-y-4">
+									{[
+										{ title: 'By use case', items: solutionsByUseCase },
+										{ title: 'By role', items: solutionsByRole },
+										{ title: 'By industry', items: solutionsByIndustry },
+										{ title: 'Compare', items: solutionsCompare },
+									].map((section) => (
+										<div key={section.title}>
+											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
+												{section.title}
+											</div>
+											<div className="grid grid-cols-2 gap-2">
+												{section.items.map((item) => (
+													<a
+														key={item.name}
+														href={item.href}
+														className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+													>
+														{item.name}
+													</a>
+												))}
+											</div>
+										</div>
+									))}
 								</div>
-								*/}
 
 								{/* Show social icons only on xl screens (xl:hidden) */}
 								<div className="lg:hidden mt-6 flex justify-center items-center space-x-4 mb-4">

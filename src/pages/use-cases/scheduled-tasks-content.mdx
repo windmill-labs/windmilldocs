@@ -1,0 +1,428 @@
+---
+title: "How to run scheduled tasks with Windmill"
+description: "How do I run scheduled tasks with Windmill? Cron jobs with a visual builder, execution history, error handlers, recovery handlers and alerting."
+---
+
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2, BookOpen, RotateCcw, Code2, Rocket, Terminal, FolderPlus } from 'lucide-react';
+import CodeBlock from '@theme/CodeBlock';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import { useColorMode } from '@docusaurus/theme-common';
+import { cfaInstituteCaseStudy } from '../../data/case-studies/cfa-institute';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+export const scheduleFeatures = [
+	{ icon: Code2, title: 'Write in 20+ languages', desc: 'Write a scheduled job as a simple script in TypeScript, Python, Go, SQL, Bash or any supported language. Compose multiple steps into a flow. Windmill handles execution, isolation and dependency management.', image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' },
+	{ icon: Calendar, title: 'Visual cron builder', desc: 'Build schedules with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.', image: '/img/money-pages/cron-schedule.webp', docLink: '/docs/core_concepts/scheduling' },
+	{ icon: Bell, title: 'Error handling & retries', desc: 'Configure retries with constant or exponential backoff. Attach error handler scripts that run on failure and recovery handlers that fire when a schedule succeeds again. Route alerts to Slack, Teams, email or any webhook.', image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/core_concepts/scheduling#error-handler' },
+	{ icon: Eye, title: 'Execution history', desc: 'Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect logs and re-run with one click.', image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
+	{ icon: Terminal, title: 'Local development', desc: 'Scheduled scripts are plain code files on disk. Write them with your favorite tools (VS Code, Cursor, Claude Code) and deploy with the Windmill CLI. Four commands from terminal to a running schedule.', image: '/img/money-pages/local-schedule.webp', docLink: '/docs/advanced/local_development' },
+	{ icon: Rocket, title: 'Deploy in seconds', desc: 'Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the CLI or Git sync with your CI/CD pipeline.', image: '/img/money-pages/deploy-schedule.webp', docLink: '/docs/advanced/deploy_to_prod' },
+];
+
+export function ScheduleFeaturesSection() {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+			<motion.div {...fadeIn} className="mb-16">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					Built for production scheduling
+				</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300">
+					Every schedule is backed by Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">workflow engine</Link> with error handling, retries, observability and access controls built in.
+				</p>
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 mb-12">
+				{/* Left: clickable list */}
+				<div className="flex flex-col gap-2">
+					{scheduleFeatures.map((feat, i) => (
+						<button
+							key={feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
+							<span className="font-medium text-sm">{feat.title}</span>
+						</button>
+					))}
+				</div>
+
+				{/* Right: selected content */}
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{scheduleFeatures.map((feat, i) => (
+						<div
+							key={feat.title}
+							className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
+							{feat.image ? (
+								<img src={feat.image} alt={feat.title} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+								</div>
+							)}
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link to={feat.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export function CaseStudyAndEmbed() {
+	const { colorMode } = useColorMode();
+	const caseStudy = cfaInstituteCaseStudy;
+	const logoPath = colorMode === 'light'
+		? caseStudy.logo
+		: caseStudy.logo.replace('-light.png', '-dark.png').replace('-light.svg', '-dark.svg');
+
+	return (
+		<div>
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						In production at CFA Institute
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						CFA Institute uses Windmill for production-critical monitoring with 25 synthetic tests running every 5 minutes.
+					</p>
+				</motion.div>
+
+				<motion.div {...fadeIn} className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-6">
+					{/* Left — case study card */}
+					<Link to={caseStudy.link} className="group flex flex-col h-full rounded-2xl bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl !no-underline">
+						<div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-[200px] flex flex-col">
+							<div className="flex items-start justify-between mb-4">
+								<span className="text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
+									Case Study
+								</span>
+							</div>
+							<div className="flex items-center justify-center w-full flex-1 min-h-[120px]">
+								<img src={logoPath} alt={`${caseStudy.company} logo`} className="h-16 w-full object-contain" />
+							</div>
+						</div>
+						<div className="flex-1 px-6 pt-6 pb-6 flex flex-col">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+								{caseStudy.title}
+							</h3>
+							<p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed flex-1">
+								{caseStudy.description}
+							</p>
+							<div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
+								<span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+									{caseStudy.category}
+								</span>
+								<span className="text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 flex items-center gap-1 transition-colors">
+									Read the story
+									<ArrowRight className="w-4 h-4" />
+								</span>
+							</div>
+						</div>
+					</Link>
+
+					{/* Right — embedded schedule */}
+					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white p-4">
+						<iframe
+							src="https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed"
+							title="Scheduled workflow example"
+							className="w-full border-0 bg-white rounded"
+							style={{ height: '100%', minHeight: '400px' }}
+							loading="lazy"
+						/>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
+
+export default function ScheduledTasksContent({ title, description }) {
+	const [scheduleView, setScheduleView] = useState('script');
+	return (
+		<div className="pt-32 max-w-full">
+			{/* Hero */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Schedule your most critical tasks with confidence
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							For ops and engineering teams who run critical scheduled jobs. Define schedules for any workflow with error handlers and recovery logic powered by Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-400 hover:underline !no-underline">workflow engine</Link>.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/core_concepts/scheduling"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Run scheduled scripts in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">Python, TypeScript, SQL, Go, Bash</Link> or <Link to="/use-cases/data-pipelines" className="text-blue-500 hover:underline !no-underline">full workflows</Link></span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Connect to <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline !no-underline">databases, APIs, private packages</Link> and any resource in your infra</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Catch failures with <Link to="/docs/core_concepts/scheduling#error-handler" className="text-blue-500 hover:underline !no-underline">error handlers, retries</Link> and alerts</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Deploy in one click with <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-500 hover:underline !no-underline">RBAC, SSO</Link> and audit logs</span>
+							</div>
+						</div>
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<div className="relative w-[480px] h-[480px]">
+							{/* Orbit ring */}
+							<div className="absolute inset-[60px] rounded-full border border-gray-200 dark:border-gray-700/50" />
+							{/* Tick marks — all 12, fully inside the orbit */}
+							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+								{Array.from({ length: 12 }, (_, i) => {
+									const angle = (i * 30 - 90) * Math.PI / 180;
+									const r1 = 166;
+									const r2 = 178;
+									const cx = 240, cy = 240;
+									return (
+										<line key={`tick-${i}`}
+											x1={cx + r1 * Math.cos(angle)} y1={cy + r1 * Math.sin(angle)}
+											x2={cx + r2 * Math.cos(angle)} y2={cy + r2 * Math.sin(angle)}
+											className="stroke-gray-400 dark:stroke-gray-500" strokeWidth={2} strokeLinecap="round"
+										/>
+									);
+								})}
+								{/* Lines from center to each card */}
+								{[-90, 0, 90, 180].map((angle, i) => {
+									const rad = (angle * Math.PI) / 180;
+									return (
+										<line key={`line-${i}`}
+											x1={240 + 40 * Math.cos(rad)} y1={240 + 40 * Math.sin(rad)}
+											x2={240 + 180 * Math.cos(rad)} y2={240 + 180 * Math.sin(rad)}
+											className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={1.5}
+										/>
+									);
+								})}
+							</svg>
+							{/* Center Windmill logo */}
+							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+								<img src="/img/windmill.svg" alt="Windmill" className="w-20 h-20" />
+							</div>
+							{/* Clock hand — 12s full rotation */}
+							<motion.div className="absolute z-[5]" style={{ left: 240, top: 240, transformOrigin: '0 0' }}
+								animate={{ rotate: 360 }}
+								transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
+							>
+								<div className="w-[2px] h-[120px] bg-blue-500 rounded-full" style={{ transform: 'translateX(-1px) translateY(-120px)' }} />
+							</motion.div>
+							{/* Center dot */}
+							<div className="absolute z-[6] w-3 h-3 rounded-full bg-blue-500" style={{ left: 240 - 6, top: 240 - 6 }} />
+							{/* Task cards on the orbit — trigger flow animation when hand passes */}
+							{[
+								{ label: 'DB backup', time: '12:00', Icon: Database, angle: -90, triggerDelay: 0 },
+								{ label: 'Sync CRM', time: '03:00', Icon: RefreshCw, angle: 0, triggerDelay: 3 },
+								{ label: 'Send report', time: '06:00', Icon: Mail, angle: 90, triggerDelay: 6 },
+								{ label: 'Cleanup', time: '09:00', Icon: Trash2, angle: 180, triggerDelay: 9 },
+							].map((task) => {
+								const rad = (task.angle * Math.PI) / 180;
+								const r = 180;
+								const x = 240 + r * Math.cos(rad);
+								const y = 240 + r * Math.sin(rad);
+								return (
+									<div key={task.label} className="absolute z-10"
+										style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
+									>
+										{/* Card container */}
+										<motion.div
+											className="relative rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm min-w-[110px] overflow-hidden whitespace-nowrap px-3 py-2 text-center"
+											animate={{
+												borderColor: ['rgb(229,231,235)', 'rgb(59,130,246)', 'rgb(34,197,94)', 'rgb(34,197,94)', 'rgb(229,231,235)'],
+												boxShadow: ['0 1px 2px rgba(0,0,0,0.05)', '0 0 16px rgba(59,130,246,0.4)', '0 0 16px rgba(34,197,94,0.4)', '0 0 16px rgba(34,197,94,0.4)', '0 1px 2px rgba(0,0,0,0.05)'],
+											}}
+											transition={{ duration: 2.4, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 9.6, times: [0, 0.12, 0.35, 0.7, 1] }}
+										>
+											<div className="flex items-center gap-1.5 justify-center mb-0.5">
+												<task.Icon className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
+												<span className="text-[11px] font-semibold text-gray-700 dark:text-gray-200">{task.label}</span>
+											</div>
+											{/* Shared slot: time ↔ Running... ↔ Success */}
+											<div className="relative h-[14px]">
+												{/* Time (default) */}
+												<motion.div
+													className="absolute inset-0 flex items-center justify-center"
+													animate={{ opacity: [1, 0, 0, 0, 1] }}
+													transition={{ duration: 2.4, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 9.6, times: [0, 0.1, 0.35, 0.9, 1] }}
+												>
+													<span className="text-[10px] text-gray-400 font-mono">{task.time}</span>
+												</motion.div>
+												{/* Running... */}
+												<motion.div
+													className="absolute inset-0 flex items-center justify-center gap-1 text-blue-500"
+													animate={{ opacity: [0, 1, 0, 0, 0] }}
+													transition={{ duration: 2.4, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 9.6, times: [0, 0.1, 0.34, 0.35, 1] }}
+												>
+													<motion.div
+														animate={{ rotate: [0, 360] }}
+														transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+													>
+														<RefreshCw className="w-2.5 h-2.5" />
+													</motion.div>
+													<span className="text-[9px] font-medium">Running...</span>
+												</motion.div>
+												{/* Success */}
+												<motion.div
+													className="absolute inset-0 flex items-center justify-center gap-1 text-emerald-500"
+													animate={{ opacity: [0, 0, 0, 1, 0] }}
+													transition={{ duration: 2.4, delay: task.triggerDelay, repeat: Infinity, repeatDelay: 9.6, times: [0, 0.1, 0.34, 0.35, 0.9] }}
+												>
+													<CheckCircle className="w-2.5 h-2.5" />
+													<span className="text-[9px] font-medium">Success</span>
+												</motion.div>
+											</div>
+										</motion.div>
+									</div>
+								);
+							})}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* From scripts to pipelines */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						From single scripts to complex data pipelines
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Schedule anything: a simple <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">script</Link> that runs in seconds or a <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">multi-step pipeline</Link> with branching, loops and error handling. Same platform, same reliability.</p>
+				</motion.div>
+
+				{/* Two columns */}
+				<div className="flex flex-col md:flex-row gap-6 items-center md:min-h-[600px]">
+					{[
+						{ key: 'script', title: 'Schedule scripts', desc: 'Write scripts in 20+ languages and run them on cron schedules', img: '/img/money-pages/scripts-preview.webp', alt: 'Single scheduled script with execution history' },
+						{ key: 'flow', title: 'Schedule multi-step workflows', desc: 'Build multi-step DAG pipelines and run them on cron schedules', img: '/img/money-pages/flow-preview.webp', alt: 'Data pipeline DAG with parallel branches' },
+					].map((card) => (
+						<button
+							key={card.key}
+							onClick={() => setScheduleView(card.key)}
+							className={`text-left rounded-2xl border-2 overflow-hidden cursor-pointer bg-white dark:bg-gray-950 transition-all duration-500 ease-in-out ${
+								scheduleView === card.key
+									? 'border-blue-500 dark:border-blue-400 shadow-lg shadow-blue-500/10 flex-[2]'
+									: 'border-gray-200 dark:border-gray-700 opacity-60 hover:opacity-80 flex-[1]'
+							}`}
+						>
+							<div className="p-5 sm:p-6">
+								<div className="mb-4">
+									<h3 className="text-base font-semibold text-gray-900 dark:text-white">{card.title}</h3>
+									{scheduleView === card.key && <p className="text-sm text-gray-500 dark:text-gray-400">{card.desc}</p>}
+								</div>
+								<img
+									src={card.img}
+									alt={card.alt}
+									className={`w-full rounded-lg border border-gray-100 dark:border-gray-800 transition-all duration-500 ${
+										scheduleView === card.key ? 'max-h-[500px]' : 'max-h-[200px] object-cover object-top'
+									}`}
+								/>
+							</div>
+						</button>
+					))}
+				</div>
+			</div>
+
+			{/* Features — interactive tab layout */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+			<ScheduleFeaturesSection />
+			</div>
+
+
+			{/* Case study + embedded schedule */}
+			<CaseStudyAndEmbed />
+
+			{/* FAQ */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+			<UseCaseFAQ faqs={[
+				{ question: 'What scheduling syntax does Windmill support?', textAnswer: 'Windmill supports standard cron expressions (6 fields including seconds) plus extended modifiers like nearest weekday (W), nth day-of-week (#), and last day-of-month (L). You can also use the visual cron builder to create schedules without memorizing cron syntax.' },
+				{ question: 'Can I monitor and retry failed scheduled jobs?', textAnswer: 'Yes. Every run is logged with inputs, outputs, duration and status. You can configure automatic retries with constant or exponential backoff, attach error handler scripts that run on failure, and recovery handlers that fire when a schedule succeeds again. Alerts can be routed to Slack, Teams, email or any webhook.' },
+				{ question: 'How does Windmill compare to cron on a server?', textAnswer: 'Windmill schedules run on managed infrastructure with built-in logging, error handling, retries, alerting and a visual UI. Unlike raw cron, you get execution history, permission controls, and the ability to trigger the same scripts from other events like webhooks or Kafka.' },
+				{ question: 'Can I schedule flows (multi-step pipelines)?', textAnswer: 'Yes. Anything that can be triggered manually in Windmill — scripts and flows — can be scheduled. Flows let you chain multiple steps with branching, loops, error handling and approval steps, all on a cron schedule.' },
+				{ question: 'Is Windmill scheduling free?', textAnswer: 'Windmill Community Edition is free and open-source with unlimited schedules. The Pro and Enterprise plans add features like audit logs, SAML SSO, priority support and more workers.' },
+			]} />
+			</div>
+
+			{/* CTA */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start scheduling tasks today</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Get started for free on Windmill Cloud or <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">self-host</Link> the open-source version.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/pricing"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							View pricing
+						</Link>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}

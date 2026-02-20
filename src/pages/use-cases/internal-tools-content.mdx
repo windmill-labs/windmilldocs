@@ -1,0 +1,246 @@
+---
+title: "How to build internal tools with Windmill"
+description: "How do I build internal tools with Windmill? Drag-and-drop app editor with 50+ components, inline scripts in any language and granular permissions."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, LayoutGrid, Code2, Link2, Lock, Palette, Database } from 'lucide-react';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+export default function InternalToolsContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* Hero */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Build internal tools in minutes, not weeks
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							For engineering teams who need internal apps without maintaining a frontend stack. Drag-and-drop components backed by real scripts, with enterprise access controls.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/apps/app_editor"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Code-backed components</span> — full scripts behind each interaction, not just API calls</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Any language</span> — TypeScript, Python, Go, SQL, Bash inline or from workspace</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Enterprise security</span> — granular RBAC, SSO, audit logs and self-hosting</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Part of the Windmill platform</span> — connect apps to flows, schedules and agents</span>
+							</div>
+						</div>
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<div className="relative w-[480px] h-[480px]">
+							{/* Dashed grid background */}
+							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+								{[0, 1, 2, 3].map((i) => (
+									<React.Fragment key={`grid-${i}`}>
+										<line x1={i * 160} y1={0} x2={i * 160} y2={480} className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={1} strokeDasharray="6 4" />
+										<line x1={0} y1={i * 160} x2={480} y2={i * 160} className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={1} strokeDasharray="6 4" />
+									</React.Fragment>
+								))}
+							</svg>
+							{/* UI component tiles */}
+							{[
+								{ label: 'Table', icon: '▦', row: 0, col: 0 },
+								{ label: 'Chart', icon: '📊', row: 0, col: 1 },
+								{ label: 'Form', icon: '📝', row: 0, col: 2 },
+								{ label: 'Button', icon: '⬜', row: 1, col: 0 },
+								{ label: 'Input', icon: '▭', row: 1, col: 1 },
+								{ label: 'Select', icon: '▾', row: 1, col: 2 },
+								{ label: 'Toggle', icon: '⇄', row: 2, col: 0 },
+								{ label: 'Map', icon: '🗺', row: 2, col: 1 },
+								{ label: 'Modal', icon: '⧉', row: 2, col: 2 },
+							].map((tile, i) => (
+								<motion.div
+									key={tile.label}
+									className="absolute"
+									style={{
+										left: tile.col * 160 + 20,
+										top: tile.row * 160 + 20,
+										width: 120,
+										height: 120,
+									}}
+									initial={{ opacity: 0, scale: 0.8 }}
+									animate={{ opacity: 1, scale: 1 }}
+									transition={{ duration: 0.5, delay: i * 0.12 }}
+								>
+									<div className="w-full h-full rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col items-center justify-center gap-2 hover:border-blue-300 dark:hover:border-blue-600 transition-colors">
+										<span className="text-2xl">{tile.icon}</span>
+										<span className="text-xs font-medium text-gray-500 dark:text-gray-400">{tile.label}</span>
+									</div>
+								</motion.div>
+							))}
+							{/* Connection lines between adjacent tiles */}
+							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+								{[
+									[80, 140, 180, 140], [240, 140, 340, 140],
+									[80, 300, 180, 300], [240, 300, 340, 300],
+									[80, 140, 80, 180], [240, 140, 240, 180],
+									[400, 140, 400, 180], [80, 300, 80, 340],
+									[240, 300, 240, 340],
+								].map(([x1, y1, x2, y2], i) => (
+									<motion.line
+										key={`conn-${i}`}
+										x1={x1} y1={y1} x2={x2} y2={y2}
+										className="stroke-blue-300 dark:stroke-blue-600"
+										strokeWidth={1.5}
+										strokeDasharray="4 3"
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 0.6 }}
+										transition={{ duration: 0.4, delay: 1.2 + i * 0.08 }}
+									/>
+								))}
+							</svg>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Key capabilities */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Everything you need for internal apps
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						The <Link to="/docs/apps/app_editor" className="text-blue-600 dark:text-blue-400 hover:underline">app editor</Link> combines a visual canvas, a code editor and a component library into one tool.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{[
+						{ icon: LayoutGrid, title: '50+ components', desc: 'Tables, charts, forms, modals, tabs, maps, file uploads, rich text editors — everything you need out of the box.' },
+						{ icon: Code2, title: 'Inline scripts', desc: 'Write backend logic in TypeScript, Python, Go, SQL or Bash directly in the app. Scripts run server-side on Windmill workers.' },
+						{ icon: Link2, title: 'Reactive data binding', desc: 'Connect components by referencing outputs. Change an input and all dependent components update automatically.' },
+						{ icon: Database, title: '50+ integrations', desc: 'PostgreSQL, MySQL, MongoDB, BigQuery, Snowflake, REST APIs, Stripe, Slack — stored as shared resources.' },
+						{ icon: Palette, title: 'Custom components', desc: 'Import your own React, Vue or Svelte components when built-in ones aren\'t enough.' },
+						{ icon: Lock, title: 'Permissions & SSO', desc: 'Role-based access control, SSO integration and audit logs. Deploy via Git sync with CI/CD.' },
+					].map((item, i) => (
+						<motion.div key={item.title} {...stagger(i * 0.08)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
+								<item.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+							</div>
+							<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+							<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+						</motion.div>
+					))}
+				</div>
+			</div>
+
+			{/* How it works */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="mb-16">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							How it works
+						</h2>
+					</motion.div>
+
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+						{[
+							{ step: '01', title: 'Drag components', desc: 'Pick from 50+ components and arrange them on a responsive grid canvas.' },
+							{ step: '02', title: 'Connect data', desc: 'Bind components to inline scripts or workspace scripts. The script parameters become your component inputs.' },
+							{ step: '03', title: 'Deploy & share', desc: 'Publish the app with permissions. Share a link or embed it. Every user gets their own execution context.' },
+						].map((item, i) => (
+							<motion.div key={item.step} {...stagger(i * 0.1)} className="relative">
+								<span className="text-6xl font-bold text-blue-100 dark:text-blue-900/40">{item.step}</span>
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-white mt-2 mb-2">{item.title}</h3>
+								<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+							</motion.div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			{/* Data sources */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Connect any data source
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Credentials are stored as <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> and shared securely across your team.
+					</p>
+				</motion.div>
+				<motion.div {...fadeIn}>
+					<div className="flex flex-wrap gap-3">
+						{['PostgreSQL', 'MySQL', 'MongoDB', 'BigQuery', 'Snowflake', 'REST APIs', 'GraphQL', 'S3', 'Stripe', 'Slack', 'GitHub', 'Google Sheets'].map((source) => (
+							<span key={source} className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium">
+								{source}
+							</span>
+						))}
+					</div>
+				</motion.div>
+			</div>
+
+			{/* CTA */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start building internal tools today</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Get started for free on Windmill Cloud or self-host the open-source version.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/pricing"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							View pricing
+						</Link>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}

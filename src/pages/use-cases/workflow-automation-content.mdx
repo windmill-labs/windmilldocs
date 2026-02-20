@@ -1,0 +1,249 @@
+---
+title: "How to automate workflows with Windmill"
+description: "How do I automate workflows with Windmill? Build DAG-based flows with branching, loops, retries, approval steps and error handling in a visual editor or as code."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers } from 'lucide-react';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+export const dagNodes = [
+	{ id: 'trigger', label: 'Trigger', x: 240, y: 60, color: 'bg-emerald-100 dark:bg-emerald-900/30', textColor: 'text-emerald-700 dark:text-emerald-300' },
+	{ id: 'branch-a', label: 'Extract A', x: 120, y: 180, color: 'bg-blue-100 dark:bg-blue-900/30', textColor: 'text-blue-700 dark:text-blue-300' },
+	{ id: 'branch-b', label: 'Extract B', x: 360, y: 180, color: 'bg-blue-100 dark:bg-blue-900/30', textColor: 'text-blue-700 dark:text-blue-300' },
+	{ id: 'merge', label: 'Transform', x: 240, y: 310, color: 'bg-purple-100 dark:bg-purple-900/30', textColor: 'text-purple-700 dark:text-purple-300' },
+	{ id: 'result', label: 'Load', x: 240, y: 420, color: 'bg-amber-100 dark:bg-amber-900/30', textColor: 'text-amber-700 dark:text-amber-300' },
+];
+
+export const dagEdges = [
+	{ src: 'trigger', dst: 'branch-a' },
+	{ src: 'trigger', dst: 'branch-b' },
+	{ src: 'branch-a', dst: 'merge' },
+	{ src: 'branch-b', dst: 'merge' },
+	{ src: 'merge', dst: 'result' },
+];
+
+export const dagNodeMap = Object.fromEntries(dagNodes.map(n => [n.id, n]));
+
+export default function WorkflowAutomationContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* Hero */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Automate any workflow, visually or as code
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							For engineering and ops teams who need code-first workflow automation with enterprise controls. Build flows as DAGs with full code flexibility, not low-code limitations.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/flows/flow_editor"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Full code flexibility</span> — 20+ languages per step, no low-code constraints</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Trigger from anywhere</span> — cron, webhooks, Kafka, Postgres CDC, SQS and more</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Enterprise-ready</span> — SSO, RBAC, audit logs, Git sync and self-hosting</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">One platform</span> — scripts, schedules, UIs, agents and pipelines all in one place</span>
+							</div>
+						</div>
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<div className="relative w-[480px] h-[480px]">
+							{/* Edge lines */}
+							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+								{dagEdges.map((e, i) => (
+									<line key={`edge-${i}`} x1={dagNodeMap[e.src].x} y1={dagNodeMap[e.src].y + 24} x2={dagNodeMap[e.dst].x} y2={dagNodeMap[e.dst].y - 24}
+										className="stroke-gray-300 dark:stroke-gray-600" strokeWidth={2} />
+								))}
+								{dagEdges.map((e, i) => (
+									<motion.circle key={`dot-${i}`} r={5}
+										className="fill-blue-400 dark:fill-blue-300"
+										style={{ opacity: 0.9 }}
+										animate={{
+											cx: [dagNodeMap[e.src].x, dagNodeMap[e.dst].x, dagNodeMap[e.dst].x],
+											cy: [dagNodeMap[e.src].y + 24, dagNodeMap[e.dst].y - 24, dagNodeMap[e.dst].y - 24],
+											opacity: [0.9, 0.9, 0],
+										}}
+										transition={{ duration: 2.5, delay: i * 1.2, repeat: Infinity, repeatDelay: dagEdges.length * 1.2 - 2.5 + 0.5, ease: 'easeInOut' }}
+									/>
+								))}
+							</svg>
+							{/* Node boxes */}
+							{dagNodes.map((node, i) => (
+								<motion.div key={node.id} className="absolute"
+									style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
+									initial={{ opacity: 0, scale: 0.8 }}
+									animate={{ opacity: 1, scale: 1 }}
+									transition={{ duration: 0.5, delay: i * 0.15 }}
+								>
+									<div className={`px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm ${node.color} flex items-center gap-2`}>
+										<div className="w-2.5 h-2.5 rounded-full bg-current opacity-60" />
+										<span className={`text-sm font-semibold ${node.textColor}`}>{node.label}</span>
+									</div>
+								</motion.div>
+							))}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Control flow */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Full control flow primitives
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Not just linear pipelines. Windmill flows support the control flow you need for real-world automation.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+					{[
+						{ icon: GitBranch, title: 'Branching', desc: 'Conditional branches (if/else) or parallel branches (fan-out). Run multiple paths and collect all results.' },
+						{ icon: RotateCcw, title: 'Loops', desc: 'For-loops over lists with configurable parallelism. While-loops for polling, pagination or convergence logic.' },
+						{ icon: ShieldCheck, title: 'Approval steps', desc: 'Suspend a flow until a human approves. Send approval links via Slack, email or any notification system.' },
+						{ icon: Timer, title: 'Retries & timeouts', desc: 'Per-step retry count with exponential backoff. Custom timeouts to prevent hung steps from blocking the flow.' },
+					].map((item, i) => (
+						<motion.div key={item.title} {...stagger(i * 0.08)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
+								<item.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+							</div>
+							<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+							<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+						</motion.div>
+					))}
+				</div>
+			</div>
+
+			{/* Error handling */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="mb-16">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Error handling that doesn't fail silently
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							Each step can be configured with its own <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> strategy — retries, custom error handlers, early stop, continue on error, or custom timeouts.
+						</p>
+					</motion.div>
+
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+						{[
+							{ title: 'Error handlers', desc: 'Run a custom script when a step fails — send a Slack notification, create a ticket, or trigger a rollback.' },
+							{ title: 'Early stop', desc: 'Stop the entire flow based on a predicate, without marking it as failed.' },
+							{ title: 'Continue on error', desc: 'Mark non-critical steps to continue even on failure — useful for notifications or logging.' },
+						].map((item, i) => (
+							<motion.div key={item.title} {...stagger(i * 0.1)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+								<p className="text-gray-600 dark:text-gray-300 text-sm">{item.desc}</p>
+							</motion.div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			{/* Triggers */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Trigger from anywhere
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						<Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Trigger flows</Link> from cron schedules, webhooks, Slack commands, emails, Postgres CDC, Kafka, SQS — or manually from the UI.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+					{['Cron schedules', 'Webhooks', 'Slack commands', 'Emails', 'Postgres CDC', 'Kafka & SQS', 'Manual UI', 'Trigger scripts'].map((trigger, i) => (
+						<motion.div key={trigger} {...stagger(i * 0.05)} className="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 text-center">
+							<p className="text-gray-900 dark:text-white font-medium text-sm">{trigger}</p>
+						</motion.div>
+					))}
+				</div>
+			</div>
+
+			{/* Code or visual */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Visual editor or workflows as code
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+							Build flows in the visual drag-and-drop editor, or define them programmatically with <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> in Python or TypeScript using decorators and the Windmill SDK. Both approaches produce the same <Link to="/docs/openflow" className="text-blue-600 dark:text-blue-400 hover:underline">OpenFlow</Link> JSON format.
+						</p>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* CTA */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start automating workflows today</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Get started for free on Windmill Cloud or self-host the open-source version.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/pricing"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							View pricing
+						</Link>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}

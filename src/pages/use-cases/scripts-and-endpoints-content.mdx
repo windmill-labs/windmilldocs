@@ -1,0 +1,243 @@
+---
+title: "How to deploy scripts as endpoints with Windmill"
+description: "How do I deploy scripts as API endpoints with Windmill? Turn TypeScript, Python, Go or Bash scripts into webhooks with auto-generated UIs and full execution history."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, Code2, Globe, LayoutDashboard, History, Languages, Webhook } from 'lucide-react';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+export default function ScriptsAndEndpointsContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* Hero */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+				<motion.div {...fadeIn}>
+					<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+						Deploy scripts as production endpoints
+					</h1>
+					<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+						For developers who want to ship scripts as production services without infrastructure overhead. Write a function, get an endpoint, a UI and full observability instantly.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/docs/script_editor"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							Read the docs
+						</Link>
+					</div>
+					<div className="mt-8 flex flex-col gap-3">
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">20+ languages</span> — TypeScript, Python, Go, SQL, Bash, Rust, PHP and more</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">Zero boilerplate</span> — auto-generated UI, webhooks and logs from typed parameters</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">Enterprise controls</span> — versioning, approval flows, RBAC and audit logs</span>
+						</div>
+						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+							<span className="text-blue-500 font-bold">✓</span>
+							<span><span className="text-blue-500">Part of the Windmill platform</span> — reuse scripts in flows, apps, schedules and agents</span>
+						</div>
+					</div>
+				</motion.div>
+
+				<div className="hidden md:flex items-center justify-center">
+					<div className="relative w-[480px] h-[480px] flex items-center justify-center">
+						{/* Code block (left side) */}
+						<motion.div className="absolute left-0 top-[80px] w-[180px]"
+							initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.6 }}
+						>
+							<div className="rounded-xl bg-gray-900 dark:bg-gray-800 border border-gray-700 p-4 shadow-lg">
+								<div className="flex gap-1.5 mb-3">
+									<div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+									<div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+									<div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+								</div>
+								<div className="space-y-1.5 font-mono text-[10px] leading-relaxed">
+									<div><span className="text-purple-400">export</span> <span className="text-blue-400">async</span> <span className="text-purple-400">function</span></div>
+									<div><span className="text-yellow-300">main</span><span className="text-gray-400">(</span></div>
+									<div className="pl-2"><span className="text-orange-300">name</span><span className="text-gray-400">:</span> <span className="text-green-300">string</span><span className="text-gray-400">,</span></div>
+									<div className="pl-2"><span className="text-orange-300">count</span><span className="text-gray-400">:</span> <span className="text-green-300">number</span></div>
+									<div><span className="text-gray-400">{')'}</span> <span className="text-gray-400">{'{'}</span></div>
+									<motion.div
+										animate={{ opacity: [0, 1, 1, 0] }}
+										transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
+									>
+										<div className="pl-2"><span className="text-purple-400">return</span> <span className="text-gray-400">{`{ name, count }`}</span></div>
+									</motion.div>
+									<div><span className="text-gray-400">{'}'}</span></div>
+								</div>
+							</div>
+						</motion.div>
+
+						{/* Arrow */}
+						<motion.div className="absolute left-[195px] top-[170px]"
+							initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+							transition={{ duration: 0.4, delay: 0.6 }}
+						>
+							<svg width="90" height="40" viewBox="0 0 90 40">
+								<motion.path d="M 0 20 L 70 20" className="stroke-blue-400 dark:stroke-blue-300" strokeWidth={2} fill="none"
+									strokeDasharray="6 4"
+									animate={{ strokeDashoffset: [24, 0] }}
+									transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+								/>
+								<path d="M 65 12 L 80 20 L 65 28" className="stroke-blue-400 dark:stroke-blue-300" strokeWidth={2} fill="none" />
+							</svg>
+						</motion.div>
+
+						{/* Endpoint cards (right side) */}
+						<motion.div className="absolute right-0 top-[40px] w-[190px] space-y-3"
+							initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.6, delay: 0.8 }}
+						>
+							{/* Endpoint card */}
+							<div className="rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 shadow-sm">
+								<div className="flex items-center gap-2 mb-1.5">
+									<span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300">POST</span>
+									<span className="text-[10px] text-gray-500 dark:text-gray-400 font-mono truncate">/api/w/.../main</span>
+								</div>
+								<div className="text-[10px] text-gray-400">Webhook endpoint</div>
+							</div>
+							{/* Auto-generated form card */}
+							<div className="rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 shadow-sm">
+								<div className="text-[10px] font-medium text-gray-700 dark:text-gray-300 mb-2">Auto-generated form</div>
+								<div className="space-y-1.5">
+									<div className="h-5 rounded bg-gray-100 dark:bg-gray-700 px-2 flex items-center">
+										<span className="text-[9px] text-gray-400">name: string</span>
+									</div>
+									<div className="h-5 rounded bg-gray-100 dark:bg-gray-700 px-2 flex items-center">
+										<span className="text-[9px] text-gray-400">count: number</span>
+									</div>
+								</div>
+							</div>
+							{/* Execution log card */}
+							<div className="rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 shadow-sm">
+								<div className="flex items-center justify-between mb-1.5">
+									<span className="text-[10px] font-medium text-gray-700 dark:text-gray-300">Execution log</span>
+									<motion.span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300"
+										animate={{ opacity: [0.5, 1, 0.5] }}
+										transition={{ duration: 2, repeat: Infinity }}
+									>
+										200 OK
+									</motion.span>
+								</div>
+								<div className="text-[9px] text-gray-400 font-mono">42ms · just now</div>
+							</div>
+						</motion.div>
+					</div>
+				</div>
+			</div>
+			</div>
+
+			{/* How it works */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="mb-16">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							How it works
+						</h2>
+					</motion.div>
+
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+						{[
+							{ step: '01', title: 'Write a function', desc: 'Define a main function with typed parameters in any supported language. Windmill infers the input schema.' },
+							{ step: '02', title: 'Get endpoints instantly', desc: 'Every script gets auto-generated webhook URLs (sync and async) plus a UI form for manual runs.' },
+							{ step: '03', title: 'Monitor everything', desc: 'Every execution is logged with inputs, outputs, duration and status. Search, filter and re-run from the dashboard.' },
+						].map((item, i) => (
+							<motion.div key={item.step} {...stagger(i * 0.1)} className="relative">
+								<span className="text-6xl font-bold text-blue-100 dark:text-blue-900/40">{item.step}</span>
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-white mt-2 mb-2">{item.title}</h3>
+								<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+							</motion.div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			{/* Key features */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Everything you get from a single function
+					</h2>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{[
+						{ icon: Languages, title: 'Any language', desc: 'TypeScript (Deno/Bun), Python, Go, Bash, SQL, PHP, Rust, C# and Docker. Auto-generated lockfiles for reproducible deps.' },
+						{ icon: LayoutDashboard, title: 'Auto-generated UI', desc: 'Windmill infers a JSON Schema from your parameters and generates a form UI. Non-technical users can run scripts without code.' },
+						{ icon: Webhook, title: 'Webhook endpoints', desc: 'Sync endpoint (waits for result) and async endpoint (returns job UUID). Hash-based URLs for version pinning.' },
+						{ icon: History, title: 'Execution history', desc: 'Every run logged with inputs, outputs, duration and status. Filter by date, status, user. Re-run with one click.' },
+						{ icon: Code2, title: 'Full IDE', desc: 'Online editor with autocompletion, AI code generation, type checking and integrated testing.' },
+						{ icon: Globe, title: 'Versioning', desc: 'Every save creates a new version. Roll back anytime. Diff between versions. Deploy via Git sync.' },
+					].map((item, i) => (
+						<motion.div key={item.title} {...stagger(i * 0.08)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+							<div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
+								<item.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+							</div>
+							<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+							<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+						</motion.div>
+					))}
+				</div>
+			</div>
+
+			{/* CTA */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Deploy your first script today</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Get started for free on Windmill Cloud or self-host the open-source version.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/pricing"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							View pricing
+						</Link>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
