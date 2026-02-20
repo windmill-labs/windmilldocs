@@ -144,6 +144,8 @@ The tags of _default_ worker group are:
 Native workers are workers within the _native_ worker group.
 This group is pre-configured to listen to native jobs tags. Those jobs are executed under a special mode with subworkers for increased throughput.
 
+Setting the `NATIVE_MODE=true` [environment variable](../47_environment_variables/index.mdx) on any worker group automatically spawns 8 subworkers and restricts the worker to only accept native jobs (bunnative, nativets, postgresql, mysql, mssql, graphql, snowflake, bigquery, oracledb — no dependency jobs) and flow handling. The "native" dedicated worker group always has this mode enabled. It can also be toggled from the UI on any worker group.
+
 You can set the number of native workers to 0. Just make sure that you assign the native tags to other worker groups. Otherwise, the jobs with those tags will never be executed.
 
 The tags of _native_ worker group are:
