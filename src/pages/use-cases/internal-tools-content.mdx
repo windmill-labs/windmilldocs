@@ -91,35 +91,12 @@ export function HeroAnimation() {
 	);
 }
 
-{/* ── Three-tab interactive section ── */}
-
-export const backendFeatures = [
-	{ icon: Code2, title: 'Write in 20+ languages', desc: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Each script runs server-side on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> with full resource isolation.</span>, image: null, docLink: '/docs/getting_started/scripts_quickstart' },
-	{ icon: Bot, title: 'Vibe-code with Claude Code', desc: <span>Use <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code and Codex</Link> to generate scripts and apps directly within Windmill. AI writes the code, Windmill runs it on a production engine with full observability. Not a throwaway prototype — a real deployed runnable.</span>, image: null, docLink: '/docs/core_concepts/ai_agents' },
-	{ icon: Play, title: 'Auto-generated UI & endpoints', desc: <span>Every script gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link> from its parameters and a <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook endpoint</Link> for programmatic access. No boilerplate to expose your logic.</span>, image: null, docLink: '/docs/core_concepts/auto_generated_uis' },
-	{ icon: Eye, title: 'Full execution history', desc: 'Every run is logged with input, output, duration, errors and resource usage. Search, filter and debug past executions. Set up error handlers and retries per script.', image: null, docLink: '/docs/core_concepts/jobs' },
-	{ icon: Plug, title: '50+ integrations', desc: <span>Connect to PostgreSQL, MySQL, MongoDB, BigQuery, Snowflake, Stripe, Slack, GitHub, REST APIs and more. Credentials are stored as shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>, not hardcoded in scripts.</span>, image: null, docLink: '/docs/integrations/integrations_on_windmill' },
-	{ icon: GitBranch, title: 'Version control & CI/CD', desc: <span>Every script is versioned. Deploy from the UI or via <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> with GitHub or GitLab. Roll back to any previous version instantly.</span>, image: null, docLink: '/docs/advanced/deploy_gh_gl' },
-];
-
-export const dataFeatures = [
-	{ icon: Table2, title: 'Data tables', desc: <span><Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">Data tables</Link> give you SQL storage with near-zero setup. Workspace-scoped, safe parameterized queries, no external database to spin up or manage. Perfect for CRUD apps, config stores and reference data.</span>, image: null, docLink: '/docs/core_concepts/persistent_storage/data_tables' },
-	{ icon: Database, title: 'Connect any external database', desc: <span>For heavier workloads, connect to PostgreSQL, MySQL, BigQuery, Snowflake or any database via <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Run SQL directly or write scripts that query and transform data.</span>, image: null, docLink: '/docs/core_concepts/resources_and_types' },
-	{ icon: HardDrive, title: 'S3 & object storage', desc: <span>Store files and large datasets in <Link to="/docs/core_concepts/persistent_storage" className="text-blue-600 dark:text-blue-400 hover:underline">workspace S3</Link>, Azure Blob or GCS. Browse files in the UI, reference them in scripts and apps. Built-in asset management with lineage tracking.</span>, image: null, docLink: '/docs/core_concepts/persistent_storage' },
-	{ icon: Activity, title: 'Database studio', desc: <span>Explore and query your databases directly from the Windmill UI with the built-in <Link to="/docs/apps/4_app_configuration_settings/database_studio" className="text-blue-600 dark:text-blue-400 hover:underline">database studio</Link> component. Browse tables, run queries and inspect results without switching tools.</span>, image: null, docLink: '/docs/apps/4_app_configuration_settings/database_studio' },
-];
-
-export const frontendFeatures = [
-	{ icon: FileCode, title: 'Deploy React/Vue/Svelte apps', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React, Vue or Svelte app</Link>. Full control over the frontend with the same backend scripts, data layer and permissions. No ceiling on what you can build.</span>, image: null, docLink: '/docs/react_vue_svelte_apps/react' },
-	{ icon: Bot, title: 'Vibe-code your frontend', desc: <span>Use <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex</Link> to generate React components and full apps. AI writes the frontend, Windmill deploys it on the same platform as your backend scripts and data.</span>, image: null, docLink: '/docs/core_concepts/ai_agents' },
-	{ icon: Layers, title: 'Same backend, same data', desc: <span>Your frontend apps connect to the same <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">backend scripts</Link> and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>. No separate API layer to build. Permissions, versioning and observability apply across the stack.</span>, image: null, docLink: '/docs/getting_started/scripts_quickstart' },
-	{ icon: Wrench, title: 'CSS editor & theming', desc: <span>Full <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS editor</Link> for pixel-level control. Apply global themes or style individual components. Match your internal tools to your company's design system.</span>, image: null, docLink: '/docs/apps/css_editor' },
-];
+{/* ── Feature panel component ── */}
 
 export function FeaturePanel({ features }) {
 	const [active, setActive] = useState(0);
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 mb-12">
+		<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
 			{/* Left: clickable list */}
 			<div className="flex flex-col gap-2">
 				{features.map((feat, i) => (
@@ -173,67 +150,125 @@ export function FeaturePanel({ features }) {
 	);
 }
 
-export function InternalToolsTabs() {
+{/* ── Three-tab card content ── */}
+
+export const backendCards = [
+	{ title: '20+ languages', desc: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Each script runs server-side on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> with full resource isolation.</span>, image: '/img/money-pages/scripts-preview.webp', docLink: '/docs/getting_started/scripts_quickstart' },
+	{ title: 'Workflow engine', desc: <span>Chain scripts into <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link> with parallel branches, <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">triggers</Link> (cron, webhooks, Kafka, Postgres CDC), <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries with exponential backoff</Link> and custom error handlers per step.</span>, image: '/img/money-pages/flow-preview.webp', docLink: '/docs/flows/flow_editor' },
+	{ title: '100+ integrations, no boilerplate', desc: <span>Connect to PostgreSQL, Slack, GitHub, Stripe, REST APIs and <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">100+ services</Link> out of the box. Credentials are stored as shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>, not hardcoded. No SDK wrappers or auth plumbing to write.</span>, image: null, docLink: '/docs/integrations/integrations_on_windmill' },
+];
+
+export const dataCards = [
+	{ title: 'Connect to your databases', desc: <span>Connect to PostgreSQL, MySQL, BigQuery, Snowflake or any database via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Query S3 files with <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>, manage datasets with <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link>. Zero-config connections.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage' },
+	{ title: 'Data tables', desc: <span><Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">Built-in SQL storage</Link> with near-zero setup. Workspace-scoped, safe parameterized queries, no external database to spin up or manage. Perfect for CRUD apps, config stores and reference data.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage/data_tables' },
+	{ title: 'Database studio', desc: <span>Explore and query your databases directly from the Windmill UI with the built-in <Link to="/docs/apps/4_app_configuration_settings/database_studio" className="text-blue-600 dark:text-blue-400 hover:underline">database studio</Link>. Browse tables, run queries and inspect results without switching tools.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/apps/4_app_configuration_settings/database_studio' },
+];
+
+export const frontendCards = [
+	{ title: 'Full-code app builder', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React, Vue or Svelte app</Link>. Full control over the frontend with <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS editing</Link>, theming and no ceiling on what you can build.</span>, image: null, docLink: '/docs/react_vue_svelte_apps/react' },
+	{ title: 'Connected to backend runnables', desc: <span>Your frontend apps connect to the same <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">backend scripts</Link> and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>. No separate API layer to build. Permissions, versioning and observability apply across the stack.</span>, image: null, docLink: '/docs/getting_started/scripts_quickstart' },
+	{ title: 'Local development', desc: <span>Develop frontends locally with your own IDE and tools. Use <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex</Link> to generate React components and full apps. Sync and deploy via the <Link to="/docs/advanced/local_development" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link>.</span>, image: null, docLink: '/docs/advanced/local_development' },
+];
+
+export function CardGrid({ cards }) {
+	return (
+		<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+			{cards.map((card, i) => (
+				<motion.div key={card.title} {...stagger(i * 0.1)} className="flex flex-col p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{card.title}</h3>
+					<p className="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-1">{card.desc}</p>
+					{card.image ? (
+						<div className="w-full h-44 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+							<img src={card.image} alt={card.title} className="w-full h-full object-cover object-top" />
+						</div>
+					) : (
+						<div className="w-full h-44 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+					{card.docLink && (
+						<div className="flex justify-end mt-3">
+							<Link to={card.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								<BookOpen className="w-4 h-4" /> Read the docs
+							</Link>
+						</div>
+					)}
+				</motion.div>
+			))}
+		</div>
+	);
+}
+
+export function BuildIntegrateTabs() {
 	const [activeTab, setActiveTab] = useState(0);
 	const tabs = [
 		{ icon: Code2, label: 'Backend' },
 		{ icon: Database, label: 'Data' },
 		{ icon: LayoutGrid, label: 'Frontend' },
 	];
-
 	const tabContent = [
-		{ title: 'Scripts as production runnables', subtitle: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ languages</Link>. Each script runs on Windmill's execution engine with full isolation, logging and error handling. Use <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex</Link> to generate scripts, then deploy them with one click.</span>, features: backendFeatures },
-		{ title: 'Built-in storage you don\'t have to manage', subtitle: <span><Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">Data tables</Link> give you SQL storage with zero setup. No external database to provision, no connection strings to manage. For heavier workloads, connect any database via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>.</span>, features: dataFeatures },
-		{ title: 'Your own React, Vue or Svelte app', subtitle: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy your own frontend app</Link> on the same platform as your backend scripts and data. Vibe-code it with AI or bring an existing codebase. Same permissions, same observability, same versioning.</span>, features: frontendFeatures },
+		{ title: 'Write backend with no overhead', subtitle: <span>Scripts in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go or SQL</Link> run as isolated production runnables with logging, retries and error handling built in. Chain them into <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link> with triggers and branching.</span>, cards: backendCards },
+		{ title: 'Connect to any database natively', subtitle: <span>PostgreSQL, MySQL, BigQuery, Snowflake or S3 via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Built-in <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link> and <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>/<Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link> for datasets that live on the platform. Combined with the workflow engine, Windmill is also optimized for <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline">heavy data pipelines</Link>.</span>, cards: dataCards },
+		{ title: 'Build your own frontend', subtitle: <span>Build your frontend in <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">React, Vue or Svelte</Link>. Your app connects directly to backend scripts and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>, no API layer to build.</span>, cards: frontendCards },
 	];
-
 	return (
-		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-8">
-			<motion.div {...fadeIn} className="mb-8">
-				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					Three layers, one platform
-				</h2>
-				<p className="text-lg text-gray-600 dark:text-gray-300">
-					Real backend scripts. Built-in data tables. Your own React, Vue or Svelte frontend. No glue code between layers.
-				</p>
-			</motion.div>
-			{/* Tab buttons */}
-			<div className="grid grid-cols-3 mb-12 border-b border-gray-200 dark:border-gray-700">
-				{tabs.map((tab, i) => (
-					<button
-						key={tab.label}
-						onClick={() => setActiveTab(i)}
-						className={`flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-b-2 transition-colors -mb-px ${
-							i === activeTab
-								? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-						}`}
-					>
-						<tab.icon className="w-5 h-5" />
-						{tab.label}
-					</button>
+		<div>
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="mb-8">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Backend, data and frontend in one platform
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Full code flexibility to build what you need, built-in integrations to connect your resources. No wiring required.
+					</p>
+				</motion.div>
+				{/* Tab buttons */}
+				<div className="grid grid-cols-3 mb-12 border-b border-gray-200 dark:border-gray-700">
+					{tabs.map((tab, i) => (
+						<button
+							key={tab.label}
+							onClick={() => setActiveTab(i)}
+							className={`flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-b-2 transition-colors -mb-px ${
+								i === activeTab
+									? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+									: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+							}`}
+						>
+							<tab.icon className="w-5 h-5" />
+							{tab.label}
+						</button>
+					))}
+				</div>
+				{/* Tab content */}
+				{tabContent.map((content, i) => (
+					activeTab === i && (
+						<div key={content.title}>
+							<div className="mb-12">
+								<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+									{content.title}
+								</h2>
+								<p className="text-lg text-gray-600 dark:text-gray-300">
+									{content.subtitle}
+								</p>
+							</div>
+							<CardGrid cards={content.cards} />
+						</div>
+					)
 				))}
 			</div>
-
-			{/* Tab content */}
-			{tabContent.map((content, i) => (
-				activeTab === i && (
-					<div key={content.title}>
-						<div className="mb-12">
-							<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-								{content.title}
-							</h2>
-							<p className="text-lg text-gray-600 dark:text-gray-300">
-								{content.subtitle}
-							</p>
-						</div>
-						<FeaturePanel features={content.features} />
-					</div>
-				)
-			))}
 		</div>
 	);
 }
+
+{/* ── Monitor feature list ── */}
+
+export const monitorFeatures = [
+	{ icon: Eye, title: 'Full execution history', desc: <span>Every run is logged with input, output, duration, errors and resource usage. Search, filter and debug past <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">executions</Link> across all scripts and apps.</span>, image: null, docLink: '/docs/core_concepts/jobs' },
+	{ icon: Activity, title: 'Error handlers & retries', desc: <span>Configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retry count with exponential backoff</Link>. Custom error handler scripts per step. Apps that don't break silently at 2am.</span>, image: null, docLink: '/docs/flows/retries' },
+	{ icon: Lock, title: 'RBAC & SSO', desc: <span>Granular <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> control who can build, view and execute apps. SSO with SAML, OAuth and LDAP.</span>, image: null, docLink: '/docs/core_concepts/roles_and_permissions' },
+	{ icon: Shield, title: 'Audit logs', desc: 'Every action is tracked. Who ran what, when, with which inputs. Full audit trail for compliance and debugging.', image: null, docLink: '/docs/core_concepts/audit_logs' },
+	{ icon: GitBranch, title: 'Version control & rollback', desc: <span>Every script is versioned. Deploy from the UI or via <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> with GitHub or GitLab. Roll back to any previous version instantly.</span>, image: null, docLink: '/docs/advanced/deploy_gh_gl' },
+];
 
 {/* ── Main page ── */}
 
@@ -248,7 +283,7 @@ export default function InternalToolsContent({ title, description }) {
 							Build production-grade internal tools
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							For developers who build internal tools and need production-grade observability, monitoring and enterprise controls without the infrastructure overhead.
+							For platform teams who need to ship internal tools with production-grade observability, enterprise controls and zero infrastructure overhead.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -270,11 +305,11 @@ export default function InternalToolsContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Build</span> <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">backend scripts</Link> in 20+ languages, <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-500 hover:underline !no-underline">React, Vue or Svelte</Link> frontends</span>
+								<span><span className="text-blue-500">Build</span> <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">backend</Link> in 20+ languages, <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-500 hover:underline !no-underline">and React, Vue or Svelte</Link> frontends</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Integrate</span> <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-500 hover:underline !no-underline">built-in data tables</Link>, <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-500 hover:underline !no-underline">50+ connectors</Link>, S3 and any database</span>
+								<span>Native integrations with <Link to="/docs/integrations/duckdb" className="text-blue-500 hover:underline !no-underline">DuckDB</Link>, <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-500 hover:underline !no-underline">Ducklake</Link>, S3 and any database</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
@@ -282,7 +317,7 @@ export default function InternalToolsContent({ title, description }) {
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">No overhead</span> one platform, no infrastructure to manage, <Link to="/docs/advanced/self_host" className="text-blue-500 hover:underline !no-underline">self-host</Link> or cloud</span>
+								<span>One platform, no infrastructure to manage, <Link to="/docs/advanced/self_host" className="text-blue-500 hover:underline !no-underline">self-host</Link> or cloud</span>
 							</div>
 						</div>
 					</motion.div>
@@ -293,179 +328,74 @@ export default function InternalToolsContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* ═══════════════ Three-category comparison ═══════════════ */}
+			{/* ═══════════════ 1. Build & Integrate (3 tabs) ═══════════════ */}
+			<BuildIntegrateTabs />
+
+			{/* ═══════════════ 2. Monitor ═══════════════ */}
 			<div className="bg-gray-50 dark:bg-gray-900/50">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 					<motion.div {...fadeIn} className="mb-12">
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							You shouldn't have to choose between speed and control
+							Production-grade observability and enterprise controls
 						</h2>
 						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Vibe coding gives you throwaway apps. Full code buries you in infrastructure. Windmill gives you both speed and production-grade controls.
+							This is what vibe coding tools don't give you. Every execution is logged. Every error is caught. Every action is audited. RBAC, SSO and version control are built in.
 						</p>
 					</motion.div>
-
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-						{[
-							{
-								category: 'Low-code platforms',
-								examples: 'Retool, Appsmith',
-								strength: 'Fast to get started with pre-built components',
-								weakness: 'Sandboxed JavaScript, limited backend logic, per-seat pricing, vendor lock-in',
-								icon: LayoutGrid,
-							},
-							{
-								category: 'Vibe coding tools',
-								examples: 'Lovable, Bolt, v0',
-								strength: 'AI generates full-stack apps in minutes',
-								weakness: 'No execution engine, no observability, no enterprise controls, no persistent storage strategy',
-								icon: Bot,
-							},
-							{
-								category: 'Full code (DIY)',
-								examples: 'React + Express + Postgres',
-								strength: 'Total control over every layer of the stack',
-								weakness: 'Months of setup, infrastructure management, boilerplate, no built-in observability',
-								icon: Terminal,
-							},
-						].map((item, i) => (
-							<motion.div key={item.category} {...stagger(i * 0.1)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-								<div className="w-12 h-12 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
-									<item.icon className="w-6 h-6 text-gray-500 dark:text-gray-400" />
-								</div>
-								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{item.category}</h3>
-								<p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{item.examples}</p>
-								<div className="flex items-start gap-2 mb-3">
-									<span className="text-emerald-500 mt-0.5 shrink-0">&#10003;</span>
-									<span className="text-sm text-gray-600 dark:text-gray-300">{item.strength}</span>
-								</div>
-								<div className="flex items-start gap-2">
-									<span className="text-red-400 mt-0.5 shrink-0">&#10007;</span>
-									<span className="text-sm text-gray-600 dark:text-gray-300">{item.weakness}</span>
-								</div>
-							</motion.div>
-						))}
-					</div>
-
-					<motion.div {...fadeIn} className="text-center py-8 px-6 rounded-2xl border-2 border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30">
-						<p className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-							Windmill gives you both
-						</p>
-						<p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-							Vibe-code scripts with Claude Code. Deploy React apps for the frontend. All on a production engine with built-in storage, observability and enterprise security.
-						</p>
-					</motion.div>
+					<FeaturePanel features={monitorFeatures} />
 				</div>
 			</div>
 
-			{/* ═══════════════ Three-tab deep dive ═══════════════ */}
-			<InternalToolsTabs />
-
-			{/* ═══════════════ Detailed comparison table ═══════════════ */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-					<motion.div {...fadeIn} className="mb-12">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							How Windmill compares
-						</h2>
-					</motion.div>
-
-					<motion.div {...fadeIn} className="overflow-x-auto">
-						<table className="w-full text-sm text-left border-collapse">
-							<thead>
-								<tr className="border-b-2 border-gray-200 dark:border-gray-700">
-									<th className="py-4 pr-4 font-semibold text-gray-900 dark:text-white w-48"></th>
-									<th className="py-4 px-4 font-semibold text-blue-600 dark:text-blue-400">Windmill</th>
-									<th className="py-4 px-4 font-semibold text-gray-500 dark:text-gray-400">Retool / Appsmith</th>
-									<th className="py-4 px-4 font-semibold text-gray-500 dark:text-gray-400">Lovable / Bolt</th>
-									<th className="py-4 px-4 font-semibold text-gray-500 dark:text-gray-400">DIY (full code)</th>
-								</tr>
-							</thead>
-							<tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-								{[
-									['Backend logic', 'Full scripts in 20+ languages, server-side workers', 'Sandboxed JavaScript', 'AI-generated code, no execution engine', 'Full control, manual setup'],
-									['Storage', 'Built-in data tables + any external DB', 'Retool DB (limited) / none', 'You manage your own', 'You manage your own'],
-									['Observability', 'Execution history, logs, error handlers per run', 'Basic logs', 'None', 'Build it yourself'],
-									['Frontend', 'React/Vue/Svelte apps on the platform', 'Drag-and-drop only', 'Full code (AI-generated)', 'Full code (manual)'],
-									['AI integration', 'Claude Code / Codex built into the IDE', 'Limited AI assist', 'Core product', 'External tools'],
-									['Enterprise', 'RBAC, SSO, audit logs, self-host, air-gapped', 'Enterprise tier only / partial', 'No', 'Build it yourself'],
-									['Workflow engine', 'Flows, schedules, triggers, AI agents', 'Separate product / none', 'None', 'Build it yourself'],
-									['Versioning', 'Git sync, deployment history, rollback', 'Limited', 'Git (manual)', 'Git (manual)'],
-								].map(([label, windmill, retool, lovable, diy]) => (
-									<tr key={label}>
-										<td className="py-3 pr-4 font-medium text-gray-900 dark:text-white">{label}</td>
-										<td className="py-3 px-4 text-gray-700 dark:text-gray-200">{windmill}</td>
-										<td className="py-3 px-4 text-gray-500 dark:text-gray-400">{retool}</td>
-										<td className="py-3 px-4 text-gray-500 dark:text-gray-400">{lovable}</td>
-										<td className="py-3 px-4 text-gray-500 dark:text-gray-400">{diy}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</motion.div>
-				</div>
-			</div>
-
-			{/* ═══════════════ Production-grade section ═══════════════ */}
+			{/* ═══════════════ 4. No overhead — comparison table ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 				<motion.div {...fadeIn} className="mb-12">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Part of a production-grade platform
+						One platform, no infrastructure overhead
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Internal tools built on Windmill connect to the rest of the platform: <Link to="/use-cases/scheduled-tasks" className="text-blue-600 dark:text-blue-400 hover:underline">scheduled tasks</Link>, <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline">data pipelines</Link>, <Link to="/use-cases/ai-agents" className="text-blue-600 dark:text-blue-400 hover:underline">AI agents</Link> and <Link to="/use-cases/workflow-automation" className="text-blue-600 dark:text-blue-400 hover:underline">workflow automation</Link>.
+						No separate tools for backend, frontend, storage, monitoring and deployment. Windmill replaces the entire stack. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Self-host</Link> or use Windmill Cloud.
 					</p>
 				</motion.div>
 
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-					{[
-						{
-							title: 'Full observability',
-							image: null,
-							points: [
-								'Every script and app execution is logged with input, output, duration and errors',
-								'Search and filter runs across all scripts and apps in the workspace',
-								'Error handlers, retries and alerts — apps that don\'t break silently at 2am',
-							],
-						},
-						{
-							title: 'Enterprise-grade security',
-							image: null,
-							points: [
-								'SSO, RBAC and granular permissions control who can build, view and execute apps',
-								'Secrets and credentials managed centrally, never exposed in frontend code',
-								'Self-host on your infrastructure, air-gapped deployments supported',
-							],
-						},
-						{
-							title: 'Connected to the whole platform',
-							image: null,
-							points: [
-								'Apps can trigger flows, schedules and AI agents from button clicks',
-								'Share scripts and resources across apps, flows and schedules',
-								'One platform for internal tools, automation, data pipelines and AI agents',
-							],
-						},
-					].map((card) => (
-						<motion.div key={card.title} {...fadeIn} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
-							{card.image && (
-								<img src={card.image} alt={card.title} className="w-full h-48 object-cover border-b border-gray-200 dark:border-gray-700" />
-							)}
-							{/* placeholder for screenshot */}
-							<div className="p-8">
-								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{card.title}</h3>
-								<ul className="space-y-3">
-									{card.points.map((point, i) => (
-										<li key={i} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
-											<span className="text-blue-500 mt-0.5 shrink-0">&#10003;</span>
-											<span>{point}</span>
-										</li>
-									))}
-								</ul>
-							</div>
-						</motion.div>
-					))}
-				</div>
+				<motion.div {...fadeIn} className="overflow-x-auto">
+					<table className="w-full text-sm text-left border-collapse">
+						<thead>
+							<tr className="border-b-2 border-gray-200 dark:border-gray-700">
+								<th className="py-4 pr-4 font-semibold text-gray-900 dark:text-white w-48"></th>
+								<th className="py-4 px-4 font-semibold text-blue-600 dark:text-blue-400">Windmill</th>
+								<th className="py-4 px-4 font-semibold text-gray-500 dark:text-gray-400">Retool / Appsmith</th>
+								<th className="py-4 px-4 font-semibold text-gray-500 dark:text-gray-400">Lovable / Bolt</th>
+								<th className="py-4 px-4 font-semibold text-gray-500 dark:text-gray-400">DIY (full code)</th>
+							</tr>
+						</thead>
+						<tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+							{[
+								['Backend logic', 'Full scripts in 20+ languages', 'Sandboxed JavaScript', 'AI-generated, no engine', 'Full control, manual setup'],
+								['Frontend', 'React/Vue/Svelte on the platform', 'Drag-and-drop only', 'Full code (AI-generated)', 'Full code (manual)'],
+								['Storage', 'Built-in data tables + any DB', 'Retool DB (limited) / none', 'You manage your own', 'You manage your own'],
+								['Observability', 'Execution history, logs, error handlers', 'Basic logs', 'None', 'Build it yourself'],
+								['Enterprise', 'RBAC, SSO, audit logs, self-host', 'Enterprise tier only', 'No', 'Build it yourself'],
+								['AI integration', 'Claude Code / Codex in the IDE', 'Limited AI assist', 'Core product', 'External tools'],
+								['Workflow engine', 'Flows, schedules, triggers, AI agents', 'Separate product / none', 'None', 'Build it yourself'],
+								['Versioning', 'Git sync, rollback', 'Limited', 'Git (manual)', 'Git (manual)'],
+							].map(([label, windmill, retool, lovable, diy]) => (
+								<tr key={label}>
+									<td className="py-3 pr-4 font-medium text-gray-900 dark:text-white">{label}</td>
+									<td className="py-3 px-4 text-gray-700 dark:text-gray-200">{windmill}</td>
+									<td className="py-3 px-4 text-gray-500 dark:text-gray-400">{retool}</td>
+									<td className="py-3 px-4 text-gray-500 dark:text-gray-400">{lovable}</td>
+									<td className="py-3 px-4 text-gray-500 dark:text-gray-400">{diy}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</motion.div>
+
+				<motion.div {...fadeIn} className="mt-12 text-center py-8 px-6 rounded-2xl border-2 border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30">
+					<p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+						Internal tools built on Windmill connect to the rest of the platform: <Link to="/use-cases/scheduled-tasks" className="text-blue-600 dark:text-blue-400 hover:underline">scheduled tasks</Link>, <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline">data pipelines</Link>, <Link to="/use-cases/ai-agents" className="text-blue-600 dark:text-blue-400 hover:underline">AI agents</Link> and <Link to="/use-cases/workflow-automation" className="text-blue-600 dark:text-blue-400 hover:underline">workflow automation</Link>.
+					</p>
+				</motion.div>
 			</div>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
