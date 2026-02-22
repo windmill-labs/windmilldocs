@@ -1,0 +1,104 @@
+---
+title: Language support
+description: Compare features available across all programming languages supported by Windmill.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Language support
+
+Windmill supports scripts in TypeScript, Python, Go, PHP, Bash, SQL, Rust, C#, Java, Ruby, Ansible and more. This page provides a detailed comparison of features available for each language.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Scripts quickstart"
+		description="Get started with your first script in any supported language."
+		href="/docs/getting_started/scripts_quickstart"
+	/>
+</div>
+
+## Core language features
+
+| Language | Stability | SDK | LSP | Resource types | Relative imports | Workflows as code | Version selection | Other |
+|----------|-----------|-----|-----|----------------|------------------|-------------------|-------------------|-------|
+| TypeScript (Bun) | Stable | Full | ✓ | ✓ | ✓ | ✓ | - | Native mode for REST |
+| TypeScript (Deno) | Stable | Full | ✓ | ✓ | ✓ | ✓ | - | - |
+| Python | Stable | Full | ✓ | ✓ | ✓ | ✓ | ✓ (3.10-3.13) | - |
+| Go | Stable | Simple | ✓ | - | - | - | - | - |
+| Bash | Stable | - | - | - | via curl | - | - | Docker mode |
+| PowerShell | Stable | - | - | - | - | - | - | - |
+| Nu | Unstable | - | - | - | - | - | - | - |
+| SQL (PostgreSQL) | Stable | - | - | - | - | - | - | No cold start |
+| SQL (DuckDB) | Stable | - | - | - | - | - | - | DuckLake native |
+| PHP | Stable | - | - | ✓ | - | - | - | - |
+| Rust | Stable | Simple | - | ✓ | - | - | - | Debug/Release builds |
+| C# | Stable | - | - | - | - | - | - | - |
+| Java | Stable | Minimal | - | - | - | - | - | - |
+| Ruby | Unstable | Minimal | - | - | - | - | - | - |
+| Ansible | Stable | - | - | - | - | - | - | Vault support, git repos |
+
+## Dependency management
+
+| Language | Dependency sources | Auto import inference | Proxy | Private registries (EE) |
+|----------|-------------------|----------------------|-------|-------------------------|
+| TypeScript (Bun) | npm, git | ✓ | ✓ | ✓ |
+| TypeScript (Deno) | npm, git, URL | ✓ | ✓ | ✓ |
+| Python | PyPI, git, local | ✓ | ✓ | ✓ + resolution strategy |
+| Go | Go proxy, git | ✓ | ✓ | ✓ |
+| Bash | - | - | ✓ | - |
+| PowerShell | - | - | ✓ | - |
+| Nu | - | - | ✓ | - |
+| SQL (PostgreSQL) | - | - | ✓ | - |
+| SQL (DuckDB) | - | - | ✓ | - |
+| PHP | Packagist, git | - | ✓ | - |
+| Rust | crates.io, git | - | ✓ | ✓ |
+| C# | NuGet | - | ✓ | - |
+| Java | Maven, Ivy | - | ✓ | ✓ |
+| Ruby | RubyGems | - | ✓ | ✓ |
+| Ansible | Galaxy, PyPI, git | - | ✓ | ✓ |
+
+See [workspace dependencies](../core_concepts/55_workspace_dependencies/index.mdx) for more details.
+
+## Platform features
+
+| Language | Dedicated workers (EE) | HTTP tracing (EE) | Caching (EE) | Data tables + Ducklake | Windows |
+|----------|------------------------|-------------------|--------------|------------------------|---------|
+| TypeScript (Bun) | ✓ | ✓ (native) | ✓ | ✓ | ✓ |
+| TypeScript (Deno) | - | ✓ | ✓ | ✓ | - |
+| Python | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Go | - | ✓ | ✓ | - | - |
+| Bash | - | ✓ | - | - | - |
+| PowerShell | - | - | - | - | ✓ |
+| Nu | - | ✓ | - | - | ✓ |
+| SQL (PostgreSQL) | - | - | - | - | - |
+| SQL (DuckDB) | - | - | - | ✓ | - |
+| PHP | - | - | ✓ | - | - |
+| Rust | - | ✓ | ✓ | - | - |
+| C# | - | ✓ | ✓ | - | ✓ |
+| Java | - | - | ✓ | - | ✓ |
+| Ruby | - | ✓ | ✓ | - | ✓ |
+| Ansible | - | - | ✓ | - | - |
+
+:::tip Missing a feature or language?
+Help us prioritize what to build next! [Vote for the next feature or language](https://app.windmill.dev/a/vote) to be supported in Windmill.
+:::
+
+## Legend
+
+- **Stability**: Production readiness (Stable / Unstable)
+- **SDK**: Official Windmill client (Full = complete SDK, Simple = basic client, Minimal = minimal client)
+- **LSP**: [Language Server Protocol](../code_editor/assistants.mdx) support for code assistance
+- **Resource types**: Ability to fetch [resources](../core_concepts/3_resources_and_types/index.mdx) programmatically
+- **Relative imports**: Ability to share code between scripts via [relative imports](../advanced/5_sharing_common_logic/index.mdx)
+- **Workflows as code**: Support for [programmatic workflow definition](../core_concepts/31_workflows_as_code/index.mdx)
+- **Version selection**: Ability to specify language version per script
+- **Dependency sources**: Where packages can be fetched from (registries, git, local)
+- **Auto import inference**: Automatic detection of dependencies from import statements
+- **Proxy**: Support for proxy configuration during dependency resolution
+- **Private registries (EE)**: Support for private package registries
+- **Dedicated workers (EE)**: [High-throughput mode](../core_concepts/25_dedicated_workers/index.mdx) eliminating cold starts
+- **HTTP tracing (EE)**: [HTTP request tracing](../advanced/18_instance_settings/index.mdx#http-request-tracing) for debugging
+- **Caching (EE)**: Support for [distributed cache storage](../misc/13_s3_cache/index.mdx)
+- **Data tables + Ducklake**: Support for [Data Tables](../core_concepts/11_persistent_storage/data_tables.mdx) and [Ducklake](../core_concepts/11_persistent_storage/ducklake.mdx)
+- **Windows**: Support on [Windows workers](../misc/17_windows_workers/index.mdx)
+- **EE**: Enterprise Edition feature
