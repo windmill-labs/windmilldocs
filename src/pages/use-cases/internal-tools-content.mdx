@@ -91,6 +91,134 @@ export function HeroAnimation() {
 	);
 }
 
+
+{/* ── Orbit animation: Windmill orchestrating three layers ── */}
+
+export function StackAnimation({ activeTab = 0, onSelect }) {
+	/* Items keep their original visual order on the orbit.
+	   tabIndex maps each item to the corresponding tab index
+	   (tabs order: 0=Backend, 1=Data, 2=Frontend). */
+	const items = [
+		{ Icon: LayoutGrid, label: 'Frontend', sublabel: 'React / Vue / Svelte', color: 'from-emerald-400 to-emerald-600', baseAngle: -90, tabIndex: 2 },
+		{ Icon: Database, label: 'Data', sublabel: 'Built-in tables / SQL', color: 'from-amber-400 to-amber-600', baseAngle: 30, tabIndex: 1 },
+		{ Icon: Code2, label: 'Backend', sublabel: 'Scripts in 20+ languages', color: 'from-blue-400 to-blue-600', baseAngle: 150, tabIndex: 0 },
+	];
+	const c = 240;
+	const r = 180;
+
+	/* Rotate the orbit so the active card lands at 0° (right side, closest to the tabs panel). */
+	const activeItem = items.find((it) => it.tabIndex === activeTab);
+	const orbitRotation = -activeItem.baseAngle;
+
+	return (
+		<div className="relative w-[480px] h-[480px]">
+			{/* Center Windmill logo — stays fixed */}
+			<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+				<motion.div
+					animate={{ rotate: 360 }}
+					transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+				>
+					<img src="/img/windmill.svg" alt="Windmill" className="w-20 h-20" />
+				</motion.div>
+			</div>
+
+			{/* Rotating orbit (ring + lines + particles + cards) */}
+			<motion.div
+				className="absolute inset-0"
+				animate={{ rotate: orbitRotation }}
+				transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+			>
+				{/* Orbit ring */}
+				<div className="absolute inset-[60px] rounded-full border border-gray-200 dark:border-gray-700/50" />
+
+				{/* Lines + particles */}
+				<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+					{items.map((item, i) => {
+						const rad = (item.baseAngle * Math.PI) / 180;
+						const rStart = 40;
+						return (
+							<line
+								key={`line-${i}`}
+								x1={c + rStart * Math.cos(rad)}
+								y1={c + rStart * Math.sin(rad)}
+								x2={c + r * Math.cos(rad)}
+								y2={c + r * Math.sin(rad)}
+								className="stroke-gray-200 dark:stroke-gray-700/50"
+								strokeWidth={1.5}
+							/>
+						);
+					})}
+					{(() => {
+						const toXY = (angle) => {
+							const rad = (angle * Math.PI) / 180;
+							return { x: c + r * Math.cos(rad), y: c + r * Math.sin(rad) };
+						};
+						const pos = items.map((it) => toXY(it.baseAngle));
+						const balls = [
+							{ route: [0, 1, 2], duration: 10, delay: 0 },
+							{ route: [2, 0, 1], duration: 12, delay: 2 },
+							{ route: [1, 2, 0], duration: 11, delay: 4 },
+							{ route: [0, 2, 1], duration: 13, delay: 6 },
+							{ route: [2, 1, 0], duration: 10, delay: 8 },
+							{ route: [1, 0, 2], duration: 12, delay: 10 },
+						];
+						return balls.map((b, i) => {
+							const xK = [c];
+							const yK = [c];
+							b.route.forEach((idx) => {
+								xK.push(pos[idx].x, c);
+								yK.push(pos[idx].y, c);
+							});
+							return (
+								<motion.circle
+									key={`dot-${i}`}
+									r={4}
+									className="fill-blue-400 dark:fill-blue-300"
+									style={{ opacity: 0.8 }}
+									animate={{ cx: xK, cy: yK }}
+									transition={{ duration: b.duration, repeat: Infinity, ease: 'linear', delay: b.delay }}
+								/>
+							);
+						});
+					})()}
+				</svg>
+
+				{/* Orbit cards — counter-rotate so text stays upright */}
+				{items.map((item) => {
+					const rad = (item.baseAngle * Math.PI) / 180;
+					const x = c + r * Math.cos(rad);
+					const y = c + r * Math.sin(rad);
+					const isActive = item.tabIndex === activeTab;
+					return (
+						<div
+							key={item.label}
+							className="absolute"
+							style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
+						>
+							<motion.div
+								className="cursor-pointer"
+								animate={{ rotate: -orbitRotation, scale: isActive ? 1.1 : 1 }}
+								transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+								onClick={() => onSelect?.(item.tabIndex)}
+							>
+								<div className={`relative rounded-2xl bg-gradient-to-r ${item.color} p-[2px] shadow-lg transition-shadow duration-300 ${isActive ? 'shadow-xl ring-2 ring-blue-400/50' : ''}`}>
+									<div className="rounded-[14px] bg-white dark:bg-gray-900 px-4 py-3 text-center min-w-[140px]">
+										<div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${item.color} flex items-center justify-center mx-auto mb-1.5`}>
+											<item.Icon className="w-4 h-4 text-white" />
+										</div>
+										<span className="text-sm font-semibold text-gray-900 dark:text-white block">{item.label}</span>
+										<span className="text-[11px] text-gray-500 dark:text-gray-400 block">{item.sublabel}</span>
+									</div>
+								</div>
+							</motion.div>
+						</div>
+					);
+				})}
+			</motion.div>
+		</div>
+	);
+}
+
 {/* ── Feature panel component ── */}
 
 export function FeaturePanel({ features }) {
@@ -152,50 +280,34 @@ export function FeaturePanel({ features }) {
 
 {/* ── Three-tab card content ── */}
 
-export const backendCards = [
-	{ title: '20+ languages', desc: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Each script runs server-side on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> with full resource isolation.</span>, image: '/img/money-pages/scripts-preview.webp', docLink: '/docs/getting_started/scripts_quickstart' },
-	{ title: 'Workflow engine', desc: <span>Chain scripts into <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link> with parallel branches, <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">triggers</Link> (cron, webhooks, Kafka, Postgres CDC), <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries with exponential backoff</Link> and custom error handlers per step.</span>, image: '/img/money-pages/flow-preview.webp', docLink: '/docs/flows/flow_editor' },
-	{ title: '100+ integrations, no boilerplate', desc: <span>Connect to PostgreSQL, Slack, GitHub, Stripe, REST APIs and <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">100+ services</Link> out of the box. Credentials are stored as shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>, not hardcoded. No SDK wrappers or auth plumbing to write.</span>, image: null, docLink: '/docs/integrations/integrations_on_windmill' },
-];
+export const backendCard = { title: 'Scripts in 20+ languages with 100+ integrations', desc: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Connect to PostgreSQL, Slack, GitHub, Stripe and <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">100+ services</Link> out of the box. Credentials are stored as shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Each script runs on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> with full isolation.</span>, image: '/img/money-pages/scripts-preview.webp', docLink: '/docs/getting_started/scripts_quickstart' };
 
-export const dataCards = [
-	{ title: 'Connect to your databases', desc: <span>Connect to PostgreSQL, MySQL, BigQuery, Snowflake or any database via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Query S3 files with <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>, manage datasets with <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link>. Zero-config connections.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage' },
-	{ title: 'Data tables', desc: <span><Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">Built-in SQL storage</Link> with near-zero setup. Workspace-scoped, safe parameterized queries, no external database to spin up or manage. Perfect for CRUD apps, config stores and reference data.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage/data_tables' },
-	{ title: 'Database studio', desc: <span>Explore and query your databases directly from the Windmill UI with the built-in <Link to="/docs/apps/4_app_configuration_settings/database_studio" className="text-blue-600 dark:text-blue-400 hover:underline">database studio</Link>. Browse tables, run queries and inspect results without switching tools.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/apps/4_app_configuration_settings/database_studio' },
-];
+export const dataCard = { title: 'Connect to your databases', desc: <span>Connect to PostgreSQL, MySQL, BigQuery, Snowflake or any database via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Query S3 files with <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>, manage datasets with <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link>. Use <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">built-in data tables</Link> for zero-setup SQL storage.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage' };
 
-export const frontendCards = [
-	{ title: 'Full-code app builder', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React, Vue or Svelte app</Link>. Full control over the frontend with <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS editing</Link>, theming and no ceiling on what you can build.</span>, image: null, docLink: '/docs/react_vue_svelte_apps/react' },
-	{ title: 'Connected to backend runnables', desc: <span>Your frontend apps connect to the same <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">backend scripts</Link> and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>. No separate API layer to build. Permissions, versioning and observability apply across the stack.</span>, image: null, docLink: '/docs/getting_started/scripts_quickstart' },
-	{ title: 'Local development', desc: <span>Develop frontends locally with your own IDE and tools. Use <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex</Link> to generate React components and full apps. Sync and deploy via the <Link to="/docs/advanced/local_development" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link>.</span>, image: null, docLink: '/docs/advanced/local_development' },
-];
+export const frontendCard = { title: 'Full-code app builder', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React, Vue or Svelte app</Link>. Full control over the frontend with <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS editing</Link>, theming and no ceiling on what you can build. Your app connects directly to backend scripts and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>, no API layer to build.</span>, image: null, docLink: '/docs/react_vue_svelte_apps/react' };
 
-export function CardGrid({ cards }) {
+export function SingleCard({ card }) {
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-			{cards.map((card, i) => (
-				<motion.div key={card.title} {...stagger(i * 0.1)} className="flex flex-col p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{card.title}</h3>
-					<p className="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-1">{card.desc}</p>
-					{card.image ? (
-						<div className="w-full h-44 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-							<img src={card.image} alt={card.title} className="w-full h-full object-cover object-top" />
-						</div>
-					) : (
-						<div className="w-full h-44 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
-					)}
-					{card.docLink && (
-						<div className="flex justify-end mt-3">
-							<Link to={card.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
-								<BookOpen className="w-4 h-4" /> Read the docs
-							</Link>
-						</div>
-					)}
-				</motion.div>
-			))}
-		</div>
+		<motion.div {...fadeIn} className="flex flex-col gap-6">
+			<div>
+				<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{card.title}</h3>
+				<p className="text-base text-gray-600 dark:text-gray-300 mb-4">{card.desc}</p>
+				{card.docLink && (
+					<Link to={card.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+						<BookOpen className="w-4 h-4" /> Read the docs
+					</Link>
+				)}
+			</div>
+			{card.image ? (
+				<div className="w-full rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+					<img src={card.image} alt={card.title} className="w-full object-cover object-top" />
+				</div>
+			) : (
+				<div className="w-full h-56 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+					<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+				</div>
+			)}
+		</motion.div>
 	);
 }
 
@@ -207,9 +319,9 @@ export function BuildIntegrateTabs() {
 		{ icon: LayoutGrid, label: 'Frontend' },
 	];
 	const tabContent = [
-		{ title: 'Write backend with no overhead', subtitle: <span>Scripts in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go or SQL</Link> run as isolated production runnables with logging, retries and error handling built in. Chain them into <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link> with triggers and branching.</span>, cards: backendCards },
-		{ title: 'Connect to any database natively', subtitle: <span>PostgreSQL, MySQL, BigQuery, Snowflake or S3 via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Built-in <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link> and <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>/<Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link> for datasets that live on the platform. Combined with the workflow engine, Windmill is also optimized for <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline">heavy data pipelines</Link>.</span>, cards: dataCards },
-		{ title: 'Build your own frontend', subtitle: <span>Build your frontend in <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">React, Vue or Svelte</Link>. Your app connects directly to backend scripts and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>, no API layer to build.</span>, cards: frontendCards },
+		{ card: backendCard },
+		{ card: dataCard },
+		{ card: frontendCard },
 	];
 	return (
 		<div>
@@ -222,39 +334,38 @@ export function BuildIntegrateTabs() {
 						Full code flexibility to build what you need, built-in integrations to connect your resources. No wiring required.
 					</p>
 				</motion.div>
-				{/* Tab buttons */}
-				<div className="grid grid-cols-3 mb-12 border-b border-gray-200 dark:border-gray-700">
-					{tabs.map((tab, i) => (
-						<button
-							key={tab.label}
-							onClick={() => setActiveTab(i)}
-							className={`flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-b-2 transition-colors -mb-px ${
-								i === activeTab
-									? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-									: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-							}`}
-						>
-							<tab.icon className="w-5 h-5" />
-							{tab.label}
-						</button>
-					))}
-				</div>
-				{/* Tab content */}
-				{tabContent.map((content, i) => (
-					activeTab === i && (
-						<div key={content.title}>
-							<div className="mb-12">
-								<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-									{content.title}
-								</h2>
-								<p className="text-lg text-gray-600 dark:text-gray-300">
-									{content.subtitle}
-								</p>
-							</div>
-							<CardGrid cards={content.cards} />
+				<div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-12 items-start">
+					{/* Left: orbit animation — synced with tabs */}
+					<div className="hidden lg:flex justify-center">
+						<StackAnimation activeTab={activeTab} onSelect={setActiveTab} />
+					</div>
+					{/* Right: tabs + content */}
+					<div>
+						{/* Tab buttons */}
+						<div className="grid grid-cols-3 mb-8 border-b border-gray-200 dark:border-gray-700">
+							{tabs.map((tab, i) => (
+								<button
+									key={tab.label}
+									onClick={() => setActiveTab(i)}
+									className={`flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-b-2 transition-colors -mb-px ${
+										i === activeTab
+											? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+											: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+									}`}
+								>
+									<tab.icon className="w-5 h-5" />
+									{tab.label}
+								</button>
+							))}
 						</div>
-					)
-				))}
+						{/* Tab content */}
+						{tabContent.map((content, i) => (
+							activeTab === i && (
+								<SingleCard key={content.card.title} card={content.card} />
+							)
+						))}
+					</div>
+				</div>
 			</div>
 		</div>
 	);
