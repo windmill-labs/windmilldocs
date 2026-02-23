@@ -162,6 +162,10 @@ Packages can be installed using cargo. Just add the dependencies you need in the
 //! ```
 ```
 
+### Private Cargo registries
+
+On [Enterprise Edition](/pricing), you can configure private Cargo registries from [Instance settings](../../../advanced/18_instance_settings/index.mdx#registries) -> Registries -> Cargo registries. Provide the content of a Cargo `config.toml` file — Windmill writes it to `.cargo/config.toml` in the job directory during execution.
+
 ## Instant preview & testing
 
 
