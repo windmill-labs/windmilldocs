@@ -6,7 +6,7 @@ description: Audit windmill repo commits against windmilldocs coverage. Use when
 # Documentation Audit
 
 ## Context
-The engineering of Windmill is done in the `../windmill` repository.
+The engineering of Windmill is done in the windmill repository usually located in a sibiling location, from root of this repo try `../windmill` repository.
 However, our engineers often forget to add docs to the windmilldocs repository. As a result, we accumulate gaps in the documentation.
 Not all feats or fixes are worth documenting, but what is changing the user experience is probably worth being documented.
 
