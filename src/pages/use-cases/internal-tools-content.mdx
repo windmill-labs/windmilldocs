@@ -94,20 +94,18 @@ export function HeroAnimation() {
 
 {/* ── Orbit animation: Windmill orchestrating three layers ── */}
 
+export const orbitItems = [
+	{ Icon: LayoutGrid, label: 'Frontend', sublabel: 'React / Vue / Svelte', color: 'from-emerald-400 to-emerald-600', baseAngle: -90, tabIndex: 2 },
+	{ Icon: Database, label: 'Data', sublabel: 'Built-in tables / SQL', color: 'from-amber-400 to-amber-600', baseAngle: 30, tabIndex: 1 },
+	{ Icon: Code2, label: 'Backend', sublabel: 'Scripts in 20+ languages', color: 'from-blue-400 to-blue-600', baseAngle: 150, tabIndex: 0 },
+];
+
 export function StackAnimation({ activeTab = 0, onSelect }) {
-	/* Items keep their original visual order on the orbit.
-	   tabIndex maps each item to the corresponding tab index
-	   (tabs order: 0=Backend, 1=Data, 2=Frontend). */
-	const items = [
-		{ Icon: LayoutGrid, label: 'Frontend', sublabel: 'React / Vue / Svelte', color: 'from-emerald-400 to-emerald-600', baseAngle: -90, tabIndex: 2 },
-		{ Icon: Database, label: 'Data', sublabel: 'Built-in tables / SQL', color: 'from-amber-400 to-amber-600', baseAngle: 30, tabIndex: 1 },
-		{ Icon: Code2, label: 'Backend', sublabel: 'Scripts in 20+ languages', color: 'from-blue-400 to-blue-600', baseAngle: 150, tabIndex: 0 },
-	];
 	const c = 240;
 	const r = 180;
 
-	/* Rotate the orbit so the active card lands at 0° (right side, closest to the tabs panel). */
-	const activeItem = items.find((it) => it.tabIndex === activeTab);
+	/* Rotate orbit so the active card lands at 0° (right edge, facing the detail panel) */
+	const activeItem = orbitItems.find((it) => it.tabIndex === activeTab);
 	const orbitRotation = -activeItem.baseAngle;
 
 	return (
@@ -122,7 +120,7 @@ export function StackAnimation({ activeTab = 0, onSelect }) {
 				</motion.div>
 			</div>
 
-			{/* Rotating orbit (ring + lines + particles + cards) */}
+			{/* Rotating orbit */}
 			<motion.div
 				className="absolute inset-0"
 				animate={{ rotate: orbitRotation }}
@@ -132,17 +130,20 @@ export function StackAnimation({ activeTab = 0, onSelect }) {
 				<div className="absolute inset-[60px] rounded-full border border-gray-200 dark:border-gray-700/50" />
 
 				{/* Lines + particles */}
-				<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
-					{items.map((item, i) => {
+				<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none', overflow: 'visible' }}>
+					{orbitItems.map((item, i) => {
 						const rad = (item.baseAngle * Math.PI) / 180;
 						const rStart = 40;
+						const isActive = item.tabIndex === activeTab;
+						/* Active line extends to the right edge of the container (touches the detail panel border) */
+						const rEnd = isActive ? 240 : r;
 						return (
 							<line
 								key={`line-${i}`}
 								x1={c + rStart * Math.cos(rad)}
 								y1={c + rStart * Math.sin(rad)}
-								x2={c + r * Math.cos(rad)}
-								y2={c + r * Math.sin(rad)}
+								x2={c + rEnd * Math.cos(rad)}
+								y2={c + rEnd * Math.sin(rad)}
 								className="stroke-gray-200 dark:stroke-gray-700/50"
 								strokeWidth={1.5}
 							/>
@@ -153,7 +154,7 @@ export function StackAnimation({ activeTab = 0, onSelect }) {
 							const rad = (angle * Math.PI) / 180;
 							return { x: c + r * Math.cos(rad), y: c + r * Math.sin(rad) };
 						};
-						const pos = items.map((it) => toXY(it.baseAngle));
+						const pos = orbitItems.map((it) => toXY(it.baseAngle));
 						const balls = [
 							{ route: [0, 1, 2], duration: 10, delay: 0 },
 							{ route: [2, 0, 1], duration: 12, delay: 2 },
@@ -183,8 +184,8 @@ export function StackAnimation({ activeTab = 0, onSelect }) {
 					})()}
 				</svg>
 
-				{/* Orbit cards — counter-rotate so text stays upright */}
-				{items.map((item) => {
+				{/* Orbit cards — counter-rotate to stay upright, active card fades out at the right edge */}
+				{orbitItems.map((item) => {
 					const rad = (item.baseAngle * Math.PI) / 180;
 					const x = c + r * Math.cos(rad);
 					const y = c + r * Math.sin(rad);
@@ -196,18 +197,24 @@ export function StackAnimation({ activeTab = 0, onSelect }) {
 							style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
 						>
 							<motion.div
-								className="cursor-pointer"
-								animate={{ rotate: -orbitRotation, scale: isActive ? 1.1 : 1 }}
+								className={isActive ? '' : 'cursor-pointer'}
+								animate={{
+									rotate: -orbitRotation,
+									opacity: isActive ? 0 : 1,
+									scale: isActive ? 0.8 : 1,
+								}}
 								transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-								onClick={() => onSelect?.(item.tabIndex)}
+								onClick={() => !isActive && onSelect?.(item.tabIndex)}
 							>
-								<div className={`relative rounded-2xl bg-gradient-to-r ${item.color} p-[2px] shadow-lg transition-shadow duration-300 ${isActive ? 'shadow-xl ring-2 ring-blue-400/50' : ''}`}>
-									<div className="rounded-[14px] bg-white dark:bg-gray-900 px-4 py-3 text-center min-w-[140px]">
-										<div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${item.color} flex items-center justify-center mx-auto mb-1.5`}>
-											<item.Icon className="w-4 h-4 text-white" />
+								<div className={`relative rounded-2xl bg-gradient-to-r ${item.color} p-[2px] shadow-lg`}>
+									<div className="rounded-[14px] bg-white dark:bg-gray-900 px-5 py-4 flex items-center gap-4 whitespace-nowrap">
+										<div className={`w-11 h-11 rounded-lg bg-gradient-to-br ${item.color} flex items-center justify-center flex-shrink-0`}>
+											<item.Icon className="w-5 h-5 text-white" />
 										</div>
-										<span className="text-sm font-semibold text-gray-900 dark:text-white block">{item.label}</span>
-										<span className="text-[11px] text-gray-500 dark:text-gray-400 block">{item.sublabel}</span>
+										<div>
+											<span className="text-base font-semibold text-gray-900 dark:text-white block">{item.label}</span>
+											<span className="text-xs text-gray-500 dark:text-gray-400 block">{item.sublabel}</span>
+										</div>
 									</div>
 								</div>
 							</motion.div>
@@ -323,6 +330,8 @@ export function BuildIntegrateTabs() {
 		{ card: dataCard },
 		{ card: frontendCard },
 	];
+	/* Find the orbit item that matches the active tab (for card header on desktop) */
+	const activeOrbitItem = orbitItems.find((it) => it.tabIndex === activeTab);
 	return (
 		<div>
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
@@ -334,15 +343,15 @@ export function BuildIntegrateTabs() {
 						Full code flexibility to build what you need, built-in integrations to connect your resources. No wiring required.
 					</p>
 				</motion.div>
-				<div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-12 items-start">
-					{/* Left: orbit animation — synced with tabs */}
+				<div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] lg:gap-0 gap-12 items-center">
+					{/* Left: orbit — the cards ARE the navigation on desktop */}
 					<div className="hidden lg:flex justify-center">
 						<StackAnimation activeTab={activeTab} onSelect={setActiveTab} />
 					</div>
-					{/* Right: tabs + content */}
+					{/* Right: content panel — vertically centered with the orbit */}
 					<div>
-						{/* Tab buttons */}
-						<div className="grid grid-cols-3 mb-8 border-b border-gray-200 dark:border-gray-700">
+						{/* Tab buttons — mobile only (orbit replaces them on desktop) */}
+						<div className="grid grid-cols-3 mb-8 border-b border-gray-200 dark:border-gray-700 lg:hidden">
 							{tabs.map((tab, i) => (
 								<button
 									key={tab.label}
@@ -358,12 +367,32 @@ export function BuildIntegrateTabs() {
 								</button>
 							))}
 						</div>
-						{/* Tab content */}
-						{tabContent.map((content, i) => (
-							activeTab === i && (
-								<SingleCard key={content.card.title} card={content.card} />
-							)
-						))}
+						{/* Detail panel — on desktop, shows the orbit card header so it feels like the card "moved" here */}
+						<motion.div
+							key={activeTab}
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.35 }}
+							className={`rounded-2xl border-2 bg-white dark:bg-gray-950 overflow-hidden border-gray-200 dark:border-gray-700`}
+						>
+							{/* Orbit-style card header — desktop only */}
+							<div className={`hidden lg:flex items-center gap-3 px-6 py-4 bg-gradient-to-r ${activeOrbitItem.color} text-white`}>
+								<div className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center">
+									<activeOrbitItem.Icon className="w-4 h-4 text-white" />
+								</div>
+								<div>
+									<span className="text-base font-semibold block">{activeOrbitItem.label}</span>
+									<span className="text-xs text-white/80">{activeOrbitItem.sublabel}</span>
+								</div>
+							</div>
+							<div className="p-6">
+								{tabContent.map((content, i) => (
+									activeTab === i && (
+										<SingleCard key={content.card.title} card={content.card} />
+									)
+								))}
+							</div>
+						</motion.div>
 					</div>
 				</div>
 			</div>
