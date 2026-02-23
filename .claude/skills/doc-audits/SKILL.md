@@ -21,7 +21,8 @@ Cross-reference feat/fix commits in `../windmill` against documentation in this 
 - New features or major changes should be added to the changelog `./changelog/` directory.
 4. Classify each commit: ✅ documented / ⚠️ partial / ❌ missing and ✅ changeloged / ❌ changelog missing
 5. Write a gap report to `./docs-gaps-{start_date}-{end_date}.md` including the windmill commit authors, date of the commit, and the commit message.
-6. For ⚠️ and ❌ items, I might ask to later draft stub doc content in the appropriate `./docs/` subdirectory using rules set in `../../AGENTS.md`
+6. For ⚠️ and ❌ items, I might ask to later draft stub doc content in the appropriate `./docs/` subdirectory.
+7. If you are asked to draft stub doc content, always base it on the `../windmill` commit commit message **and code**, not only on the message of the summary made it the doc-gaps report. When writing docs, follow the rules set in `../../AGENTS.md`
 
 ## Scoping
 Always ask the user for a date range or commit range before starting.
