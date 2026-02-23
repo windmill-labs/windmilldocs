@@ -150,9 +150,10 @@ export function StackAnimation({ activeTab = 0, onSelect }) {
 						);
 					})}
 					{(() => {
+						const rDot = 220;
 						const toXY = (angle) => {
 							const rad = (angle * Math.PI) / 180;
-							return { x: c + r * Math.cos(rad), y: c + r * Math.sin(rad) };
+							return { x: c + rDot * Math.cos(rad), y: c + rDot * Math.sin(rad) };
 						};
 						const pos = orbitItems.map((it) => toXY(it.baseAngle));
 						const balls = [
@@ -238,7 +239,7 @@ export function FeaturePanel({ features }) {
 					<button
 						key={feat.title}
 						onClick={() => setActive(i)}
-						className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors border ${
+						className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
 							i === active
 								? 'bg-blue-600 text-white border-blue-600'
 								: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -287,11 +288,11 @@ export function FeaturePanel({ features }) {
 
 {/* ── Three-tab card content ── */}
 
-export const backendCard = { title: 'Scripts in 20+ languages with 100+ integrations', desc: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Connect to PostgreSQL, Slack, GitHub, Stripe and <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">100+ services</Link> out of the box. Credentials are stored as shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Each script runs on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> with full isolation.</span>, image: '/img/money-pages/scripts-preview.webp', docLink: '/docs/getting_started/scripts_quickstart' };
+export const backendCard = { title: 'Scripts in 20+ languages with 100+ integrations', desc: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Connect to PostgreSQL, Slack, GitHub, Stripe and <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">100+ services</Link> out of the box. Credentials are stored as shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Each script runs on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> with full isolation.</span>, image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' };
 
 export const dataCard = { title: 'Connect to your databases', desc: <span>Connect to PostgreSQL, MySQL, BigQuery, Snowflake or any database via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Query S3 files with <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>, manage datasets with <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link>. Use <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">built-in data tables</Link> for zero-setup SQL storage.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage' };
 
-export const frontendCard = { title: 'Full-code app builder', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React, Vue or Svelte app</Link>. Full control over the frontend with <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS editing</Link>, theming and no ceiling on what you can build. Your app connects directly to backend scripts and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>, no API layer to build.</span>, image: null, docLink: '/docs/react_vue_svelte_apps/react' };
+export const frontendCard = { title: 'Full-code app builder', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React, Vue or Svelte app</Link>. Full control over the frontend with <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS editing</Link>, theming and no ceiling on what you can build. Your app connects directly to backend scripts and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>, no API layer to build.</span>, image: '/img/money-pages/frontend.png', docLink: '/docs/react_vue_svelte_apps/react' };
 
 export function SingleCard({ card }) {
 	return (
@@ -403,7 +404,7 @@ export function BuildIntegrateTabs() {
 {/* ── Boilerplate animation ── */}
 
 export const codeLines = [
-	{ tokens: [{ text: 'import ', color: 'text-purple-400' }, { text: 'Windmill ', color: 'text-blue-300' }, { text: 'from ', color: 'text-purple-400' }, { text: "'windmill-client'", color: 'text-amber-300' }] },
+	{ tokens: [{ text: 'import ', color: 'text-purple-400' }, { text: 'wmill ', color: 'text-blue-300' }, { text: 'from ', color: 'text-purple-400' }, { text: "'windmill-client'", color: 'text-amber-300' }] },
 	{ tokens: [] },
 	{ tokens: [{ text: 'export async function ', color: 'text-purple-400' }, { text: 'main', color: 'text-blue-300' }, { text: '(', color: 'text-gray-400' }] },
 	{ tokens: [{ text: '  db', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'Postgresql', color: 'text-emerald-300' }, { text: ',', color: 'text-gray-400' }] },
@@ -415,12 +416,12 @@ export const codeLines = [
 ];
 
 export const boilerplateLayers = [
-	{ label: 'Backend', detail: 'Dedicated workers, 20+ languages', icon: Code2, expanded: 'Scripts run on isolated workers with configurable CPU, memory and timeout. Support for TypeScript, Python, Go, SQL, Bash, PHP, Rust and more. No container orchestration to manage.' },
+	{ label: 'Backend', detail: 'Runs in dedicated workers', icon: Code2, expanded: 'Scripts run on isolated workers with configurable CPU, memory and timeout. Support for TypeScript, Python, Go, SQL, Bash, PHP, Rust and more. No container orchestration to manage.' },
 	{ label: 'Frontend', detail: 'React / Vue / Svelte on the platform', icon: LayoutGrid, expanded: 'Import your own React, Vue or Svelte codebase. Windmill serves it with built-in routing, auth and direct access to backend scripts. No separate hosting or API gateway.' },
-	{ label: 'Storage', detail: 'Built-in data tables + any DB', icon: Database, expanded: 'Built-in data tables for zero-setup SQL storage. Connect to PostgreSQL, MySQL, BigQuery, Snowflake or S3 via shared resources. Query with DuckDB or Ducklake.' },
+	{ label: 'Storage', detail: 'Built-in data tables +  integration', icon: Database, expanded: 'Built-in data tables for zero-setup SQL storage. Connect to PostgreSQL, MySQL, BigQuery, Snowflake or S3 via shared resources. Query with DuckDB or Ducklake.' },
 	{ label: 'Observability', detail: 'Execution history, logs, error handlers', icon: Activity, expanded: 'Every execution is logged with input, output, duration and errors. Configurable retries with exponential backoff. Custom error handler scripts per step.' },
 	{ label: 'Enterprise', detail: 'RBAC, SSO, audit logs, self-host', icon: Shield, expanded: 'Granular role-based access control. SSO with SAML, OAuth and LDAP. Full audit trail of every action. Self-host on your own infrastructure, including air-gapped deployments.' },
-	{ label: 'AI integration', detail: 'Claude Code / Codex in the IDE', icon: Bot, expanded: 'Generate scripts and apps with Claude Code or Codex directly in the editor. AI-assisted development that deploys instantly on the production engine.' },
+	{ label: 'AI integration', detail: 'Claude Code / Codex in the IDE, sandboxes', icon: Bot, expanded: 'Generate scripts and apps with Claude Code or Codex directly in the editor. Run AI agents in isolated sandboxes with controlled access to resources. AI-assisted development that deploys instantly on the production engine.' },
 	{ label: 'Workflow engine', detail: 'Flows, schedules, triggers, AI agents', icon: Cpu, expanded: 'Chain scripts into flows with parallel branches, approval steps and loops. Trigger via cron, webhooks, Kafka, Postgres CDC or custom events.' },
 	{ label: 'Versioning', detail: 'Git sync, rollback', icon: GitBranch, expanded: 'Every script and flow is versioned. Sync with GitHub or GitLab. Roll back to any previous version instantly from the UI.' },
 ];
@@ -489,7 +490,7 @@ export function BoilerplateAnimation() {
 				if (tokCharsSoFar >= lineCharsShown) break;
 				const visibleLen = Math.min(token.text.length, lineCharsShown - tokCharsSoFar);
 				renderedTokens.push(
-					<span key={renderedTokens.length} className={token.color}>{token.text.slice(0, visibleLen)}</span>
+					<span key={renderedTokens.length} className={token.color} style={{ whiteSpace: 'pre' }}>{token.text.slice(0, visibleLen)}</span>
 				);
 				tokCharsSoFar += token.text.length;
 			}
@@ -558,8 +559,8 @@ export function BoilerplateAnimation() {
 					</div>
 				) : (
 					<div className="p-6 flex-1 flex flex-col justify-center">
-						<div className="w-full h-[220px] rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center">
-							<span className="text-gray-500 text-sm">Windmill script editor screenshot</span>
+						<div className="w-full rounded-lg bg-gray-800 border border-gray-700 overflow-hidden">
+							<img src="/img/money-pages/scripts-preview.webp" alt="Windmill script editor" className="w-full object-cover object-top" />
 						</div>
 						<p className="text-xs text-gray-500 mt-4">Same script, deployed and managed in the Windmill UI.</p>
 					</div>
@@ -585,48 +586,45 @@ export function BoilerplateAnimation() {
 					<path d="M 2 0 L 8 10 L 14 0" className="fill-blue-400 dark:fill-blue-500" />
 				</svg>
 
-				{/* Big Windmill pill */}
-				<motion.div
-					className="flex items-center gap-4 px-8 py-5 mt-2 rounded-2xl bg-blue-50 dark:bg-blue-950/50 border-2 border-blue-200 dark:border-blue-800 shadow-md"
-					initial={{ scale: 0.9, opacity: 0 }}
-					animate={phase >= 2 ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
-					transition={{ duration: 0.4, delay: 0.2 }}
-				>
-					<motion.img
-						src="/img/windmill.svg"
-						alt="Windmill"
-						className="w-14 h-14"
-						animate={phase >= 2 ? { rotate: 360 } : {}}
-						transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-					/>
-					<span className="text-xl font-bold text-blue-700 dark:text-blue-300">Windmill runs it</span>
-				</motion.div>
-
-				{/* L-shaped arrow: down from pill then right to the layers panel */}
-				<motion.svg
-					className="w-full h-16 mt-1"
-					viewBox="0 0 400 64"
-					fill="none"
-					preserveAspectRatio="xMidYMin meet"
-					initial={{ opacity: 0 }}
-					animate={phase >= 2 ? { opacity: 1 } : { opacity: 0 }}
-					transition={{ duration: 0.4, delay: 0.5 }}
-				>
-					<defs>
-						<linearGradient id="arrowGradA" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
-							<stop offset="100%" stopColor="#3b82f6" />
-						</linearGradient>
-					</defs>
-					<path
-						d="M 200 0 L 200 36 Q 200 48 212 48 L 384 48"
-						stroke="url(#arrowGradA)"
-						strokeWidth="2.5"
-						strokeLinecap="round"
-						fill="none"
-					/>
-					<path d="M 380 40 L 394 48 L 380 56" fill="#3b82f6" />
-				</motion.svg>
+				{/* Big Windmill pill (centered) + horizontal arrow to the right panel */}
+				<div className="flex items-center mt-2" style={{ width: 'calc(100% + 4rem)' }}>
+					{/* Spacer to center the pill */}
+					<div className="flex-1" />
+					<motion.div
+						className="flex items-center gap-4 px-8 py-5 rounded-2xl bg-blue-50 dark:bg-blue-950/50 border-2 border-blue-200 dark:border-blue-800 shadow-md flex-shrink-0"
+						initial={{ scale: 0.9, opacity: 0 }}
+						animate={phase >= 2 ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
+						transition={{ duration: 0.4, delay: 0.2 }}
+					>
+						<motion.img
+							src="/img/windmill.svg"
+							alt="Windmill"
+							className="w-14 h-14"
+							animate={phase >= 2 ? { rotate: 360 } : {}}
+							transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+						/>
+						<span className="text-xl font-bold text-blue-700 dark:text-blue-300">Windmill runs it</span>
+					</motion.div>
+					<div className="flex items-center flex-1 ml-2 overflow-hidden">
+						<motion.div
+							className="h-[2.5px] bg-gradient-to-r from-blue-400/40 to-blue-500 dark:from-blue-500/40 dark:to-blue-400 rounded-full origin-left"
+							initial={{ scaleX: 0 }}
+							animate={phase >= 2 ? { scaleX: 1 } : { scaleX: 0 }}
+							transition={{ duration: 0.5, delay: 0.5 }}
+							style={{ width: '100%' }}
+						/>
+						<motion.svg
+							className="w-4 h-6 -ml-[1px] flex-shrink-0"
+							viewBox="0 0 16 24"
+							fill="none"
+							initial={{ opacity: 0 }}
+							animate={phase >= 2 ? { opacity: 1 } : { opacity: 0 }}
+							transition={{ duration: 0.2, delay: 0.95 }}
+						>
+							<path d="M 0 4 L 14 12 L 0 20" fill="#3b82f6" />
+						</motion.svg>
+					</div>
+				</div>
 			</motion.div>
 			</div>
 
@@ -681,8 +679,8 @@ export function BoilerplateAnimation() {
 {/* ── Monitor feature list ── */}
 
 export const monitorFeatures = [
-	{ icon: Eye, title: 'Full execution history', desc: <span>Every run is logged with input, output, duration, errors and resource usage. Search, filter and debug past <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">executions</Link> across all scripts and apps.</span>, image: null, docLink: '/docs/core_concepts/jobs' },
-	{ icon: Activity, title: 'Error handlers & retries', desc: <span>Configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retry count with exponential backoff</Link>. Custom error handler scripts per step. Apps that don't break silently at 2am.</span>, image: null, docLink: '/docs/flows/retries' },
+	{ icon: Eye, title: 'Full execution history', desc: <span>Every run is logged with input, output, duration, errors and resource usage. Search, filter and debug past <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">executions</Link> across all scripts and apps.</span>, image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
+	{ icon: Activity, title: 'Error handlers & retries', desc: <span>Configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retry count with exponential backoff</Link>. Custom error handler scripts per step. Apps that don't break silently at 2am.</span>, image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/flows/retries' },
 	{ icon: Lock, title: 'RBAC & SSO', desc: <span>Granular <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> control who can build, view and execute apps. SSO with SAML, OAuth and LDAP.</span>, image: null, docLink: '/docs/core_concepts/roles_and_permissions' },
 	{ icon: Shield, title: 'Audit logs', desc: 'Every action is tracked. Who ran what, when, with which inputs. Full audit trail for compliance and debugging.', image: null, docLink: '/docs/core_concepts/audit_logs' },
 	{ icon: GitBranch, title: 'Version control & rollback', desc: <span>Every script is versioned. Deploy from the UI or via <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> with GitHub or GitLab. Roll back to any previous version instantly.</span>, image: null, docLink: '/docs/advanced/deploy_gh_gl' },
@@ -757,7 +755,7 @@ export default function InternalToolsContent({ title, description }) {
 							Production-grade observability and enterprise controls
 						</h2>
 						<p className="text-lg text-gray-600 dark:text-gray-300">
-							This is what vibe coding tools don't give you. Every execution is logged. Every error is caught. Every action is audited. RBAC, SSO and version control are built in.
+							Everything you need to run tools in production while meeting enterprise observability and security requirements. Every execution is logged. Every error is caught. Every action is audited. RBAC, SSO and version control are built in.
 						</p>
 					</motion.div>
 					<FeaturePanel features={monitorFeatures} />
@@ -777,11 +775,78 @@ export default function InternalToolsContent({ title, description }) {
 
 				<BoilerplateAnimation />
 
-				<motion.div {...fadeIn} className="mt-12 py-8 px-6 rounded-2xl border-2 border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30">
-					<p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-						Internal tools built on Windmill connect to the rest of the platform: <Link to="/use-cases/scheduled-tasks" className="text-blue-600 dark:text-blue-400 hover:underline">scheduled tasks</Link>, <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline">data pipelines</Link>, <Link to="/use-cases/ai-agents" className="text-blue-600 dark:text-blue-400 hover:underline">AI agents</Link> and <Link to="/use-cases/workflow-automation" className="text-blue-600 dark:text-blue-400 hover:underline">workflow automation</Link>.
-					</p>
-				</motion.div>
+			</div>
+
+			{/* ═══════════════ 5. Connected to the rest of the platform ═══════════════ */}
+			<div className="bg-gray-50 dark:bg-gray-900/50">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="mb-8">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							More you can build on Windmill
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							Internal tools are just one use case. The same platform powers scheduled tasks, data pipelines, AI agents and workflow automations.
+						</p>
+					</motion.div>
+					{(() => {
+						const carouselRef = useRef(null);
+						const useCases = [
+							{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.png' },
+							{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.png' },
+							{ label: 'Workflow automation', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflow-automation', cover: '/img/money-pages/parallel-branches.webp' },
+							{ label: 'Scheduled tasks', subtitle: 'Run scripts on cron schedules, webhooks or custom triggers with retries and error handlers built in.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedules-card.png' },
+						];
+						const scroll = (dir) => {
+							if (!carouselRef.current) return;
+							const card = carouselRef.current.querySelector('a');
+							const w = card ? card.offsetWidth + 16 : 300;
+							carouselRef.current.scrollBy({ left: dir * w, behavior: 'smooth' });
+						};
+						return (
+							<div className="relative">
+								{/* Scroll arrows */}
+								<button
+									onClick={() => scroll(-1)}
+									className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors hidden sm:flex"
+									aria-label="Previous"
+								>
+									<ArrowRight className="w-4 h-4 text-gray-600 dark:text-gray-300 rotate-180" />
+								</button>
+								<button
+									onClick={() => scroll(1)}
+									className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors hidden sm:flex"
+									aria-label="Next"
+								>
+									<ArrowRight className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+								</button>
+
+								{/* Scrollable track */}
+								<div
+									ref={carouselRef}
+									className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 -mx-4 px-4"
+									style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+								>
+									{useCases.map((item) => (
+										<Link
+											key={item.label}
+											to={item.to}
+											className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all !no-underline group overflow-hidden snap-start flex-shrink-0 w-[340px] sm:w-[380px]"
+										>
+											<div className="h-48 overflow-hidden bg-gray-100 dark:bg-gray-800">
+												<img src={item.cover} alt={item.label} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" />
+											</div>
+											<div className="flex items-center gap-2 px-5 pt-4 pb-1">
+												<span className="text-base font-semibold text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{item.label}</span>
+												<ArrowRight className="w-4 h-4 text-gray-300 dark:text-gray-600 ml-auto flex-shrink-0 group-hover:text-blue-500 transition-colors" />
+											</div>
+											<p className="text-sm text-gray-500 dark:text-gray-400 px-5 pb-4 leading-relaxed">{item.subtitle}</p>
+										</Link>
+									))}
+								</div>
+							</div>
+						);
+					})()}
+				</div>
 			</div>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
@@ -790,7 +855,7 @@ export default function InternalToolsContent({ title, description }) {
 					{ question: 'How is Windmill different from Retool?', textAnswer: 'Windmill lets you write backend logic in 20+ languages (TypeScript, Python, Go, SQL, Bash and more) running server-side on dedicated workers. Retool limits you to sandboxed JavaScript. Windmill also includes built-in data tables, a workflow engine with schedules and triggers, Git-based version control, and full self-hosting support. You deploy your own React, Vue or Svelte frontend on the same platform, with a real execution engine underneath.' },
 					{ question: 'How is Windmill different from Lovable?', textAnswer: 'Lovable generates full-stack apps with AI, but the result is a standalone codebase with no execution engine, observability or enterprise controls. Windmill gives you the same AI-powered development (via Claude Code and Codex integration) but runs your code on a production engine with execution history, error handlers, RBAC, SSO, audit logs and built-in data storage. Apps built on Windmill are production-grade, not prototypes.' },
 					{ question: 'Can I use Claude Code to build internal tools on Windmill?', textAnswer: 'Yes. Windmill integrates Claude Code and Codex directly into the development experience. AI generates backend scripts and app configurations that deploy instantly on the Windmill platform with full observability, versioning and permissions. You vibe-code the logic, Windmill handles the production infrastructure.' },
-					{ question: 'Do I need to set up an external database?', textAnswer: 'No. Windmill Data Tables provide built-in SQL storage with near-zero setup, workspace-scoped and with safe parameterized queries. For heavier workloads you can connect any external database (PostgreSQL, MySQL, BigQuery, Snowflake) via shared resources.' },
+					{ question: 'Do I need to set up an external database?', textAnswer: 'Windmill requires a PostgreSQL database for its core storage. On top of that, Data Tables provide workspace-scoped SQL storage with safe parameterized queries, no additional setup beyond the instance database. For heavier workloads you can also connect external databases (MySQL, BigQuery, Snowflake) via shared resources.' },
 					{ question: 'Can I import my own React app into Windmill?', textAnswer: 'Yes. You can import full React, Vue or Svelte apps that run inside Windmill with access to the same backend scripts, data tables and permissions.' },
 					{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source and can be self-hosted on your own infrastructure, including air-gapped deployments. The Community Edition is free. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
 				]} />

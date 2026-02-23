@@ -140,7 +140,7 @@ export function DAGOrchestrationSection() {
 						<button
 							key={feat.title}
 							onClick={() => setActive(i)}
-							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors border ${
+							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
 								i === active
 									? 'bg-blue-600 text-white border-blue-600'
 									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -220,7 +220,7 @@ export function IntegrationsSection() {
 							<button
 								key={intg.id}
 								onClick={() => setActive(i)}
-								className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors border ${
+								className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
 									i === active
 										? 'bg-blue-600 text-white border-blue-600'
 										: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
