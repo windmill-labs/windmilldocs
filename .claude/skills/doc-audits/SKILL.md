@@ -19,7 +19,7 @@ Cross-reference feat/fix commits in `../windmill` against documentation in this 
 2. For each commit, run `git show <hash>` to understand the change
 3. Search this repo for relevant documentation using grep on `./docs/`
 4. Classify each commit: ✅ documented / ⚠️ partial / ❌ missing
-5. Write a gap report to `./docs-gaps.md`
+5. Write a gap report to `./docs-gaps-{start_date}-{end_date}.md` including the windmill commit authors, date of the commit, and the commit message.
 6. For ⚠️ and ❌ items, I might ask to later draft stub doc content in the appropriate `./docs/` subdirectory using rules set in `../../AGENTS.md`
 
 ## Scoping

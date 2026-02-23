@@ -37,6 +37,7 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 - Use meaningful names for image files that describe their content
 - Apply proper className to media elements for consistent styling
 - If a file / illustration / video would be useful but you don't have it, add a placeholder in comment to the file
+- Even when you don't have the file, add a placeholder in comment to the file and describe what it is and what it should look like. This will be used to generate the file later. Feel free to do this as much as needed
 
 ## Content organization
 
