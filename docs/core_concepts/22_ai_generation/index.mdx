@@ -70,7 +70,8 @@ You can open the AI chat panel using **Cmd+L** (Mac) or **Ctrl+L** (Windows/Linu
 
 Key features:
 - When the AI suggests code changes, you can apply or discard specific parts of the suggestion, rather than having to accept or reject the entire block.
-- You can provide additional context to guide the AI's suggestions, such as database schemas, deployed script diffs, and runtime errors. Access the context menu by clicking the context button or typing `@` directly in the chat input.
+- You can provide additional context to guide the AI's suggestions, such as database schemas, deployed script diffs, runtime errors, and workspace scripts or flows. Access the context menu by clicking the context button or typing `@` directly in the chat input.
+- The AI has access to a `search_workspace` tool to find relevant scripts and flows in your workspace, and a `get_runnable_details` tool to inspect their schema and content. These tools are available across navigator, script, flow, and app chat modes.
 - The panel includes built-in shortcuts for common tasks like fixing bugs or optimizing code.
 
 <video
