@@ -3,9 +3,9 @@ title: "How to build internal tools with Windmill"
 description: "How do I build internal tools with Windmill? Write backend scripts in TypeScript, Python or SQL, store data in built-in tables, and deploy a React, Vue or Svelte frontend on a production engine."
 ---
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from '@docusaurus/Link';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Code2, Database, LayoutGrid, Palette, Lock, Eye, Layers, Plug, Terminal, FileCode, Play, BookOpen, Cpu, Wrench, GitBranch, Table2, HardDrive, Globe, Bot, Shield, Activity } from 'lucide-react';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
@@ -403,19 +403,19 @@ export function BuildIntegrateTabs() {
 {/* ── Boilerplate animation ── */}
 
 export const codeLines = [
-	{ tokens: [{ text: 'import', color: 'text-purple-400' }, { text: ' Windmill ', color: 'text-blue-300' }, { text: 'from', color: 'text-purple-400' }, { text: " 'windmill-client'", color: 'text-amber-300' }] },
+	{ tokens: [{ text: 'import ', color: 'text-purple-400' }, { text: 'Windmill ', color: 'text-blue-300' }, { text: 'from ', color: 'text-purple-400' }, { text: "'windmill-client'", color: 'text-amber-300' }] },
 	{ tokens: [] },
-	{ tokens: [{ text: 'export async function', color: 'text-purple-400' }, { text: ' main', color: 'text-blue-300' }, { text: '(', color: 'text-gray-400' }] },
+	{ tokens: [{ text: 'export async function ', color: 'text-purple-400' }, { text: 'main', color: 'text-blue-300' }, { text: '(', color: 'text-gray-400' }] },
 	{ tokens: [{ text: '  db', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'Postgresql', color: 'text-emerald-300' }, { text: ',', color: 'text-gray-400' }] },
 	{ tokens: [{ text: '  slack', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'Slack', color: 'text-emerald-300' }] },
 	{ tokens: [{ text: ') {', color: 'text-gray-400' }] },
-	{ tokens: [{ text: '  const', color: 'text-purple-400' }, { text: ' rows ', color: 'text-blue-300' }, { text: '= ', color: 'text-gray-400' }, { text: 'await', color: 'text-purple-400' }, { text: ' db', color: 'text-orange-300' }, { text: '.query(', color: 'text-gray-400' }, { text: "'SELECT ...'", color: 'text-amber-300' }, { text: ')', color: 'text-gray-400' }] },
-	{ tokens: [{ text: '  await', color: 'text-purple-400' }, { text: ' slack', color: 'text-orange-300' }, { text: '.post(', color: 'text-gray-400' }, { text: "'#alerts'", color: 'text-amber-300' }, { text: ', rows)', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  const ', color: 'text-purple-400' }, { text: 'rows ', color: 'text-blue-300' }, { text: '= ', color: 'text-gray-400' }, { text: 'await ', color: 'text-purple-400' }, { text: 'db', color: 'text-orange-300' }, { text: '.query(', color: 'text-gray-400' }, { text: "'SELECT ...'", color: 'text-amber-300' }, { text: ')', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  await ', color: 'text-purple-400' }, { text: 'slack', color: 'text-orange-300' }, { text: '.post(', color: 'text-gray-400' }, { text: "'#alerts'", color: 'text-amber-300' }, { text: ', rows)', color: 'text-gray-400' }] },
 	{ tokens: [{ text: '}', color: 'text-gray-400' }] },
 ];
 
 export const boilerplateLayers = [
-	{ label: 'Backend logic', detail: 'Dedicated workers, 20+ languages', icon: Code2, expanded: 'Scripts run on isolated workers with configurable CPU, memory and timeout. Support for TypeScript, Python, Go, SQL, Bash, PHP, Rust and more. No container orchestration to manage.' },
+	{ label: 'Backend', detail: 'Dedicated workers, 20+ languages', icon: Code2, expanded: 'Scripts run on isolated workers with configurable CPU, memory and timeout. Support for TypeScript, Python, Go, SQL, Bash, PHP, Rust and more. No container orchestration to manage.' },
 	{ label: 'Frontend', detail: 'React / Vue / Svelte on the platform', icon: LayoutGrid, expanded: 'Import your own React, Vue or Svelte codebase. Windmill serves it with built-in routing, auth and direct access to backend scripts. No separate hosting or API gateway.' },
 	{ label: 'Storage', detail: 'Built-in data tables + any DB', icon: Database, expanded: 'Built-in data tables for zero-setup SQL storage. Connect to PostgreSQL, MySQL, BigQuery, Snowflake or S3 via shared resources. Query with DuckDB or Ducklake.' },
 	{ label: 'Observability', detail: 'Execution history, logs, error handlers', icon: Activity, expanded: 'Every execution is logged with input, output, duration and errors. Configurable retries with exponential backoff. Custom error handler scripts per step.' },
@@ -428,9 +428,86 @@ export const boilerplateLayers = [
 export function BoilerplateAnimation() {
 	const [view, setView] = useState('local');
 	const [openLayer, setOpenLayer] = useState(null);
+
+	/* Animation phases: typing → connector → layers */
+	const sectionRef = useRef(null);
+	const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+	const [phase, setPhase] = useState(0); /* 0=idle, 1=typing, 2=connector, 3=layers */
+	const [typedChars, setTypedChars] = useState(0);
+
+	/* Flatten all code lines into a single character count for the typing effect */
+	const allText = codeLines.map((line) => line.tokens.map((t) => t.text).join('') || ' ').join('\n');
+	const totalChars = allText.length;
+
+	useEffect(() => {
+		if (isInView && phase === 0) setPhase(1);
+	}, [isInView]);
+
+	/* Phase 1: typing effect */
+	useEffect(() => {
+		if (phase !== 1) return;
+		const speed = 12; /* ms per character */
+		const interval = setInterval(() => {
+			setTypedChars((prev) => {
+				if (prev >= totalChars) {
+					clearInterval(interval);
+					setTimeout(() => setPhase(2), 400);
+					return totalChars;
+				}
+				return prev + 1;
+			});
+		}, speed);
+		return () => clearInterval(interval);
+	}, [phase, totalChars]);
+
+	/* Phase 2 → 3: connector appears, then after a beat, layers cascade in */
+	useEffect(() => {
+		if (phase === 2) {
+			const t = setTimeout(() => setPhase(3), 800);
+			return () => clearTimeout(t);
+		}
+	}, [phase]);
+
+	/* Helper: render code lines with typing effect */
+	const renderTypedLines = () => {
+		let charsSoFar = 0;
+		return codeLines.map((line, i) => {
+			const lineText = line.tokens.map((t) => t.text).join('') || ' ';
+			const lineStart = charsSoFar;
+			charsSoFar += lineText.length + 1; /* +1 for \n */
+			const lineVisible = typedChars > lineStart;
+			const lineCharsShown = Math.max(0, Math.min(lineText.length, typedChars - lineStart));
+			if (!lineVisible) return (
+				<div key={i} className="flex h-[1.75em]">
+					<span className="text-gray-600 w-8 text-right mr-4 select-none opacity-0">{i + 1}</span>
+				</div>
+			);
+			/* Render tokens up to lineCharsShown characters */
+			let tokCharsSoFar = 0;
+			const renderedTokens = [];
+			for (const token of line.tokens) {
+				if (tokCharsSoFar >= lineCharsShown) break;
+				const visibleLen = Math.min(token.text.length, lineCharsShown - tokCharsSoFar);
+				renderedTokens.push(
+					<span key={renderedTokens.length} className={token.color}>{token.text.slice(0, visibleLen)}</span>
+				);
+				tokCharsSoFar += token.text.length;
+			}
+			return (
+				<div key={i} className="flex">
+					<span className="text-gray-600 w-8 text-right mr-4 select-none">{i + 1}</span>
+					{line.tokens.length === 0 ? <span>&nbsp;</span> : renderedTokens}
+					{lineCharsShown < lineText.length && (
+						<span className="inline-block w-[2px] h-[1.1em] bg-gray-300 ml-[1px] animate-pulse" />
+					)}
+				</div>
+			);
+		});
+	};
+
 	return (
-		<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-			{/* Left: code editor / Windmill UI toggle */}
+		<div ref={sectionRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+			{/* Left: code editor + connector */}
 			<div className="flex flex-col">
 			<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-950 overflow-hidden flex-1 flex flex-col">
 				<div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800 bg-gray-900">
@@ -467,23 +544,20 @@ export function BoilerplateAnimation() {
 				</div>
 				{view === 'local' ? (
 					<div className="p-6 font-mono text-sm leading-relaxed flex-1 flex flex-col justify-center">
-						{codeLines.map((line, i) => (
-							<div key={i} className="flex">
-								<span className="text-gray-600 w-8 text-right mr-4 select-none">{i + 1}</span>
-								{line.tokens.length === 0 ? (
-									<span>&nbsp;</span>
-								) : (
-									line.tokens.map((token, j) => (
-										<span key={j} className={token.color}>{token.text}</span>
-									))
-								)}
-							</div>
-						))}
-						<p className="text-xs text-gray-500 mt-6">Code locally with Windmill CLI, VS code extension, skills and plug-in.</p>
+						{phase >= 1 ? renderTypedLines() : (
+							/* Pre-animation: reserve space with invisible lines */
+							codeLines.map((_, i) => (
+								<div key={i} className="flex h-[1.75em]">
+									<span className="text-gray-600 w-8 text-right mr-4 select-none opacity-0">{i + 1}</span>
+								</div>
+							))
+						)}
+						<p className={`text-xs text-gray-500 mt-6 transition-opacity duration-500 ${typedChars >= totalChars ? 'opacity-100' : 'opacity-0'}`}>
+							Code locally with Windmill CLI, VS code extension, skills and plug-in.
+						</p>
 					</div>
 				) : (
 					<div className="p-6 flex-1 flex flex-col justify-center">
-						{/* Placeholder for Windmill UI screenshot */}
 						<div className="w-full h-[220px] rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center">
 							<span className="text-gray-500 text-sm">Windmill script editor screenshot</span>
 						</div>
@@ -492,48 +566,92 @@ export function BoilerplateAnimation() {
 				)}
 			</div>
 
-			{/* Connector: Centered pill + solid curved arrow */}
-			<div className="hidden lg:flex flex-col items-center mt-4">
-				<div className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 shadow-sm">
+			{/* Connector: vertical line → big pill → L-arrow right — appears in phase 2 */}
+			<motion.div
+				className="hidden lg:flex flex-col items-center"
+				initial={{ opacity: 0 }}
+				animate={phase >= 2 ? { opacity: 1 } : { opacity: 0 }}
+				transition={{ duration: 0.5 }}
+			>
+				{/* Vertical line from code editor to pill */}
+				<motion.div
+					className="w-[2.5px] bg-blue-400 dark:bg-blue-500 rounded-full"
+					initial={{ height: 0 }}
+					animate={phase >= 2 ? { height: 32 } : { height: 0 }}
+					transition={{ duration: 0.3 }}
+				/>
+				{/* Arrow head pointing down */}
+				<svg className="w-4 h-3 -mt-[1px]" viewBox="0 0 16 12" fill="none">
+					<path d="M 2 0 L 8 10 L 14 0" className="fill-blue-400 dark:fill-blue-500" />
+				</svg>
+
+				{/* Big Windmill pill */}
+				<motion.div
+					className="flex items-center gap-4 px-8 py-5 mt-2 rounded-2xl bg-blue-50 dark:bg-blue-950/50 border-2 border-blue-200 dark:border-blue-800 shadow-md"
+					initial={{ scale: 0.9, opacity: 0 }}
+					animate={phase >= 2 ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
+					transition={{ duration: 0.4, delay: 0.2 }}
+				>
 					<motion.img
 						src="/img/windmill.svg"
 						alt="Windmill"
-						className="w-10 h-10"
-						animate={{ rotate: 360 }}
+						className="w-14 h-14"
+						animate={phase >= 2 ? { rotate: 360 } : {}}
 						transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
 					/>
-					<span className="text-base font-semibold text-blue-700 dark:text-blue-300">Windmill runs it</span>
-				</div>
-				<svg className="w-full h-12 mt-1" viewBox="0 0 400 48" fill="none" preserveAspectRatio="xMidYMin meet">
+					<span className="text-xl font-bold text-blue-700 dark:text-blue-300">Windmill runs it</span>
+				</motion.div>
+
+				{/* L-shaped arrow: down from pill then right to the layers panel */}
+				<motion.svg
+					className="w-full h-16 mt-1"
+					viewBox="0 0 400 64"
+					fill="none"
+					preserveAspectRatio="xMidYMin meet"
+					initial={{ opacity: 0 }}
+					animate={phase >= 2 ? { opacity: 1 } : { opacity: 0 }}
+					transition={{ duration: 0.4, delay: 0.5 }}
+				>
 					<defs>
 						<linearGradient id="arrowGradA" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+							<stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
 							<stop offset="100%" stopColor="#3b82f6" />
 						</linearGradient>
 					</defs>
 					<path
-						d="M 200 0 L 200 24 Q 200 36 212 36 L 388 36"
+						d="M 200 0 L 200 36 Q 200 48 212 48 L 384 48"
 						stroke="url(#arrowGradA)"
 						strokeWidth="2.5"
 						strokeLinecap="round"
 						fill="none"
 					/>
-					<path d="M 384 28 L 396 36 L 384 44" fill="#3b82f6" />
-				</svg>
-			</div>
+					<path d="M 380 40 L 394 48 L 380 56" fill="#3b82f6" />
+				</motion.svg>
+			</motion.div>
 			</div>
 
-			{/* Right: static layers */}
+			{/* Right: layers — each row cascades in during phase 3 */}
 			<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
-				<div className="flex items-center gap-2 px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+				<motion.div
+					className="flex items-center gap-2 px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+					initial={{ opacity: 0 }}
+					animate={phase >= 3 ? { opacity: 1 } : { opacity: 0 }}
+					transition={{ duration: 0.4 }}
+				>
 					<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
-					<span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Windmill handles the rest</span>
-				</div>
+					<span className="text-sm font-semibold text-gray-700 dark:text-gray-300">And provides all the platform layers</span>
+				</motion.div>
 				<div className="p-6 flex flex-col gap-3">
 					{boilerplateLayers.map((layer, i) => {
 						const isOpen = openLayer === i;
 						return (
-							<div key={layer.label} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 overflow-hidden">
+							<motion.div
+								key={layer.label}
+								className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 overflow-hidden"
+								initial={{ opacity: 0, x: 30 }}
+								animate={phase >= 3 ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+								transition={{ duration: 0.35, delay: i * 0.08 }}
+							>
 								<button
 									onClick={() => setOpenLayer(isOpen ? null : i)}
 									className="flex items-center gap-3 px-4 py-3 w-full text-left"
@@ -551,7 +669,7 @@ export function BoilerplateAnimation() {
 										<p className="text-sm text-gray-600 dark:text-gray-300">{layer.expanded}</p>
 									</div>
 								)}
-							</div>
+							</motion.div>
 						);
 					})}
 				</div>
@@ -653,7 +771,7 @@ export default function InternalToolsContent({ title, description }) {
 						One platform, no infrastructure overhead
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						No separate tools for backend, frontend, storage, monitoring and deployment. Windmill replaces the entire stack. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Self-host</Link> or use Windmill Cloud.
+						No separate tools for backend, frontend, storage, monitoring and deployment. Windmill provides them all as built-in layers, natively integrated, no glue code required. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Self-host</Link> or use Windmill Cloud.
 					</p>
 				</motion.div>
 
