@@ -6,7 +6,7 @@ description: "How do I build internal tools with Windmill? Write backend scripts
 import React, { useState, useRef, useEffect } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Code2, Database, LayoutGrid, Palette, Lock, Eye, Layers, Plug, Terminal, FileCode, Play, BookOpen, Cpu, Wrench, GitBranch, Table2, HardDrive, Globe, Bot, Shield, Activity } from 'lucide-react';
+import { ArrowRight, Code2, Database, LayoutGrid, Palette, Lock, Eye, Layers, Plug, Terminal, FileCode, Play, BookOpen, Cpu, Wrench, GitBranch, Table2, HardDrive, Globe, Bot, Shield, Activity, History } from 'lucide-react';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
@@ -95,9 +95,9 @@ export function HeroAnimation() {
 {/* ── Orbit animation: Windmill orchestrating three layers ── */}
 
 export const orbitItems = [
-	{ Icon: LayoutGrid, label: 'Frontend', sublabel: 'React / Vue / Svelte', color: 'from-emerald-400 to-emerald-600', baseAngle: -90, tabIndex: 2 },
-	{ Icon: Database, label: 'Data', sublabel: 'Built-in tables / SQL', color: 'from-amber-400 to-amber-600', baseAngle: 30, tabIndex: 1 },
-	{ Icon: Code2, label: 'Backend', sublabel: 'Scripts in 20+ languages', color: 'from-blue-400 to-blue-600', baseAngle: 150, tabIndex: 0 },
+	{ Icon: LayoutGrid, label: 'Frontend', sublabel: 'React / Vue / Svelte, served by the platform', color: 'from-emerald-400 to-emerald-600', baseAngle: -90, tabIndex: 2 },
+	{ Icon: Database, label: 'Data', sublabel: 'Built-in integrations to your existing resources', color: 'from-amber-400 to-amber-600', baseAngle: 30, tabIndex: 1 },
+	{ Icon: Code2, label: 'Backend', sublabel: 'Scripts in 20+ languages, run in dedicated workers', color: 'from-blue-400 to-blue-600', baseAngle: 150, tabIndex: 0 },
 ];
 
 export function StackAnimation({ activeTab = 0, onSelect }) {
@@ -680,11 +680,12 @@ export function BoilerplateAnimation() {
 {/* ── Monitor feature list ── */}
 
 export const monitorFeatures = [
-	{ icon: Eye, title: 'Full execution history', desc: <span>Every run is logged with input, output, duration, errors and resource usage. Search, filter and debug past <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">executions</Link> across all scripts and apps.</span>, image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
+	{ icon: History, title: 'Full deployment history', desc: <span><Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy</Link> your app in one click from the UI or via CLI. Backend logic runs on dedicated workers, frontend is served by the platform. Every deployment is tracked with who deployed what, when and which version. Roll back to any previous deployment instantly.</span>, image: '/img/money-pages/deployment-history.webp', docLink: '/docs/core_concepts/draft_and_deploy' },
+	{ icon: Eye, title: 'Full execution history', desc: <span>Every script and flow run is logged with input, output, duration and errors. Search, filter and replay past <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">executions</Link> to debug issues in seconds.</span>, image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
 	{ icon: Activity, title: 'Error handlers & retries', desc: <span>Configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retry count with exponential backoff</Link>. Custom error handler scripts per step. Apps that don't break silently at 2am.</span>, image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/flows/retries' },
-	{ icon: Lock, title: 'RBAC & SSO', desc: <span>Granular <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> control who can build, view and execute apps. SSO with SAML, OAuth and LDAP.</span>, image: null, docLink: '/docs/core_concepts/roles_and_permissions' },
-	{ icon: Shield, title: 'Audit logs', desc: 'Every action is tracked. Who ran what, when, with which inputs. Full audit trail for compliance and debugging.', image: null, docLink: '/docs/core_concepts/audit_logs' },
-	{ icon: GitBranch, title: 'Version control & rollback', desc: <span>Every script is versioned. Deploy from the UI or via <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> with GitHub or GitLab. Roll back to any previous version instantly.</span>, image: null, docLink: '/docs/advanced/deploy_gh_gl' },
+	{ icon: Lock, title: 'RBAC & SSO', desc: <span>Granular <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> control who can build, view and execute apps. SSO with SAML, OAuth and LDAP.</span>, image: '/img/money-pages/sso.webp', docLink: '/docs/core_concepts/roles_and_permissions' },
+	{ icon: Shield, title: 'Audit logs', desc: <span>Track every user action: logins, permission changes, script edits, resource access. Full <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit trail</Link> for compliance, security reviews and incident investigations.</span>, image: '/img/money-pages/auditlogs.webp', docLink: '/docs/core_concepts/audit_logs' },
+	{ icon: GitBranch, title: 'Git sync', desc: <span>Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link>. Push and pull scripts, flows and apps as code. Use your existing CI/CD and code review workflows.</span>, image: '/img/money-pages/gitsync.webp', docLink: '/docs/advanced/deploy_gh_gl' },
 ];
 
 {/* ── Main page ── */}
