@@ -12,7 +12,8 @@ export default function LogoClouds() {
 			dark: '/images/brands/zoom-dark.png.webp',
 			light: '/images/brands/zoom-light.png.webp',
 			name: 'Zoom',
-			internal: true
+			internal: true,
+			hoverSrc: '/images/brands/zoom.svg'
 		},
 		{
 			url: '/blog/kahoot-case-study',
@@ -30,17 +31,19 @@ export default function LogoClouds() {
 		},
 		{
 			url: '/case-studies/cfa-institute',
-			dark: '/images/brands/cfa-institute-dark.svg',
-			light: '/images/brands/cfa-institute-light.svg',
+			dark: '/images/brands/cfa-institute-light.svg',
+			light: '/images/brands/cfa-institute-dark.svg',
 			name: 'CFA Institute',
-			internal: true
+			internal: true,
+			hoverSrc: '/images/brands/cfa-institute-hoover.svg'
 		},
 		{
 			url: '/case-studies/axians',
-			dark: '/images/brands/axians-dark.svg',
-			light: '/images/brands/axians-light.svg',
+			dark: '/images/brands/axians-light.svg',
+			light: '/images/brands/axians.svg',
 			name: 'Axians',
-			internal: true
+			internal: true,
+			hoverSrc: '/images/brands/axians.svg'
 		},
 		{
 			url: 'https://www.photoroom.com',
@@ -91,19 +94,36 @@ export default function LogoClouds() {
 							target={logo.anchor || logo.internal ? '_self' : '_blank'}
 							title={String(logo.name)}
 							className={classNames(
-								'flex items-center justify-center',
+								'flex items-center justify-center relative group',
 								logo.name === 'Nocd' && 'mt-[-8px]'
 							)}
 						>
-							<img
-								className={classNames(
-									'w-full h-auto max-w-[150px] max-h-[75px] object-contain',
-									'grayscale transition-all hover:grayscale-0'
-								)}
-								src={colorMode === 'light' ? logo.light : logo.dark}
-								alt={logo.name}
-								loading="lazy"
-							/>
+							{logo.hoverSrc ? (
+								<>
+									<img
+										className="w-full h-auto max-w-[150px] max-h-[75px] object-contain grayscale transition-opacity group-hover:opacity-0"
+										src={colorMode === 'light' ? logo.light : logo.dark}
+										alt={logo.name}
+										loading="lazy"
+									/>
+									<img
+										className="w-full h-auto max-w-[150px] max-h-[75px] object-contain absolute opacity-0 transition-opacity group-hover:opacity-100"
+										src={logo.hoverSrc}
+										alt={logo.name}
+										loading="lazy"
+									/>
+								</>
+							) : (
+								<img
+									className={classNames(
+										'w-full h-auto max-w-[150px] max-h-[75px] object-contain',
+										'grayscale transition-all hover:grayscale-0'
+									)}
+									src={colorMode === 'light' ? logo.light : logo.dark}
+									alt={logo.name}
+									loading="lazy"
+								/>
+							)}
 						</a>
 					))}
 				</div>

@@ -14,15 +14,11 @@ const INDUSTRY_FILTERS = ['All', 'Enterprise Software', 'IT Infrastructure', 'Cy
 function CaseStudyCard({ caseStudy }) {
 	const { colorMode } = useColorMode();
 	
-	// Derive logo path based on color mode
-	// Logo files are named: *-light.svg = black logo for light mode, *-dark.svg = white logo for dark mode
 	const getLogoPath = () => {
 		if (colorMode === 'light') {
-			// Light mode: use the light variant (black logo on light background)
 			return caseStudy.logo;
 		} else {
-			// Dark mode: use the dark variant (white logo on dark background)
-			return caseStudy.logo
+			return caseStudy.logoDark || caseStudy.logo
 				.replace('-light.png', '-dark.png')
 				.replace('-light.svg', '-dark.svg');
 		}
@@ -43,7 +39,7 @@ function CaseStudyCard({ caseStudy }) {
 					<img
 						src={getLogoPath()}
 						alt={`${caseStudy.company} logo`}
-						className="h-16 w-full object-contain"
+						className={`h-24 w-full object-contain${caseStudy.grayscale ? ' grayscale' : ''}`}
 					/>
 				</div>
 			</div>
