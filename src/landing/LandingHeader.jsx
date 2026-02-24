@@ -52,24 +52,24 @@ const solutionsByUseCase = [
 		href: '/use-cases/internal-tools',
 		icon: WrenchScrewdriverIcon,
 	},
-	{
-		name: 'Workflow automation',
-		description: 'Orchestrate multi-step processes across services.',
-		href: '/use-cases/workflow-automation',
-		icon: ArrowPathIcon,
-	},
+	// {
+	// 	name: 'Workflow automation',
+	// 	description: 'Orchestrate multi-step processes across services.',
+	// 	href: '/use-cases/workflow-automation',
+	// 	icon: ArrowPathIcon,
+	// },
 	{
 		name: 'Data pipelines',
 		description: 'ETL, syncs and scheduled data jobs.',
 		href: '/use-cases/data-pipelines',
 		icon: CircleStackIcon,
 	},
-	{
-		name: 'Scripts & endpoints',
-		description: 'Deploy scripts as APIs or cron jobs instantly.',
-		href: '/use-cases/scripts-and-endpoints',
-		icon: CodeBracketIcon,
-	},
+	// {
+	// 	name: 'Scripts & endpoints',
+	// 	description: 'Deploy scripts as APIs or cron jobs instantly.',
+	// 	href: '/use-cases/scripts-and-endpoints',
+	// 	icon: CodeBracketIcon,
+	// },
 	{
 		name: 'AI agents',
 		description: 'Build and orchestrate AI agents with tools.',
@@ -84,26 +84,26 @@ const solutionsByUseCase = [
 	},
 ];
 
-const solutionsByRole = [
-	{ name: 'Engineering', href: '/docs/intro', icon: CommandLineIcon },
-	{ name: 'DevOps', href: '/docs/intro', icon: ServerStackIcon },
-	{ name: 'Data teams', href: '/docs/intro', icon: CpuChipIcon },
-	{ name: 'Platform teams', href: '/docs/intro', icon: UserGroupIcon },
-];
+// const solutionsByRole = [
+// 	{ name: 'Engineering', href: '/docs/intro', icon: CommandLineIcon },
+// 	{ name: 'DevOps', href: '/docs/intro', icon: ServerStackIcon },
+// 	{ name: 'Data teams', href: '/docs/intro', icon: CpuChipIcon },
+// 	{ name: 'Platform teams', href: '/docs/intro', icon: UserGroupIcon },
+// ];
 
-const solutionsByIndustry = [
-	{ name: 'Finance', href: '/docs/intro', icon: Landmark },
-	{ name: 'Healthcare', href: '/docs/intro', icon: HeartPulse },
-	{ name: 'Cybersecurity', href: '/docs/intro', icon: ShieldCheckIcon },
-	{ name: 'Enterprise software', href: '/docs/intro', icon: ComputerDesktopIcon },
-];
+// const solutionsByIndustry = [
+// 	{ name: 'Finance', href: '/docs/intro', icon: Landmark },
+// 	{ name: 'Healthcare', href: '/docs/intro', icon: HeartPulse },
+// 	{ name: 'Cybersecurity', href: '/docs/intro', icon: ShieldCheckIcon },
+// 	{ name: 'Enterprise software', href: '/docs/intro', icon: ComputerDesktopIcon },
+// ];
 
-const solutionsCompare = [
-	{ name: 'vs Retool', href: '/docs/compared_to/retool' },
-	{ name: 'vs Prefect', href: '/docs/compared_to/prefect' },
-	{ name: 'vs Airflow', href: '/docs/compared_to/peers' },
-	{ name: 'All alternatives', href: '/docs/compared_to/peers' },
-];
+// const solutionsCompare = [
+// 	{ name: 'vs Retool', href: '/docs/compared_to/retool' },
+// 	{ name: 'vs Prefect', href: '/docs/compared_to/prefect' },
+// 	{ name: 'vs Airflow', href: '/docs/compared_to/peers' },
+// 	{ name: 'All alternatives', href: '/docs/compared_to/peers' },
+// ];
 
 const resources = [
 	{
@@ -204,11 +204,11 @@ export default function LandingHeader() {
 										leaveFrom="opacity-100 translate-y-0"
 										leaveTo="opacity-0 translate-y-1"
 									>
-										<Popover.Panel className="absolute left-0 z-10 mt-3 w-screen max-w-3xl transform px-2 sm:px-0">
+										<Popover.Panel className="absolute left-0 z-10 mt-3 w-screen max-w-md transform px-2 sm:px-0">
 											<div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
 												<div className="bg-white dark:bg-gray-800 p-6">
-													<div className="grid grid-cols-2 gap-6">
-														{/* Use cases - main column */}
+													<div>
+														{/* Use cases */}
 														<div>
 															<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3 px-3">
 																By use case
@@ -234,71 +234,6 @@ export default function LandingHeader() {
 															</div>
 														</div>
 
-														{/* Right sidebar */}
-														<div className="border-l border-gray-100 dark:border-gray-700 pl-6 space-y-6">
-															{/* By role */}
-															<div>
-																<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3">
-																	By role
-																</p>
-																<div className="space-y-1">
-																	{solutionsByRole.map((item) => (
-																		<Link
-																			key={item.name}
-																			to={item.href}
-																			className="group flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
-																		>
-																			<item.icon className="h-5 w-5 text-gray-400 dark:text-gray-400 group-hover:text-blue-500" />
-																			<span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-																				{item.name}
-																			</span>
-																		</Link>
-																	))}
-																</div>
-															</div>
-
-															{/* By industry */}
-															<div>
-																<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3">
-																	By industry
-																</p>
-																<div className="space-y-1">
-																	{solutionsByIndustry.map((item) => (
-																		<Link
-																			key={item.name}
-																			to={item.href}
-																			className="group flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
-																		>
-																			<item.icon className="h-5 w-5 text-gray-400 dark:text-gray-400 group-hover:text-blue-500" />
-																			<span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-																				{item.name}
-																			</span>
-																		</Link>
-																	))}
-																</div>
-															</div>
-
-															{/* Compare */}
-															<div>
-																<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3">
-																	Compare
-																</p>
-																<div className="space-y-1">
-																	{solutionsCompare.map((item) => (
-																		<Link
-																			key={item.name}
-																			to={item.href}
-																			className="group flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
-																		>
-																			<ScaleIcon className="h-5 w-5 text-gray-400 dark:text-gray-400 group-hover:text-blue-500" />
-																			<span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-																				{item.name}
-																			</span>
-																		</Link>
-																	))}
-																</div>
-															</div>
-														</div>
 													</div>
 												</div>
 											</div>
@@ -514,9 +449,9 @@ export default function LandingHeader() {
 								<div className="md:hidden mt-4 space-y-4">
 									{[
 										{ title: 'By use case', items: solutionsByUseCase },
-										{ title: 'By role', items: solutionsByRole },
-										{ title: 'By industry', items: solutionsByIndustry },
-										{ title: 'Compare', items: solutionsCompare },
+										// { title: 'By role', items: solutionsByRole },
+										// { title: 'By industry', items: solutionsByIndustry },
+										// { title: 'Compare', items: solutionsCompare },
 									].map((section) => (
 										<div key={section.title}>
 											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
