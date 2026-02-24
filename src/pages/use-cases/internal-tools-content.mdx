@@ -779,8 +779,31 @@ export default function InternalToolsContent({ title, description }) {
 
 			</div>
 
-			{/* ═══════════════ 5. Connected to the rest of the platform ═══════════════ */}
+			{/* ═══════════════ Example internal tool ═══════════════ */}
 			<div className="bg-gray-50 dark:bg-gray-900/50">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="mb-12">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							See it in action
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							An example production planning tool built on Windmill. Browse the <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill Hub</a> for more templates.
+						</p>
+					</motion.div>
+					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white p-6">
+						<iframe
+							src="https://hub.windmill.dev/embed/raw_app/25/production-planning"
+							className="w-full rounded-lg"
+							style={{ height: '900px', border: 'none', backgroundColor: 'white' }}
+							title="Production planning — example internal tool built on Windmill"
+							loading="lazy"
+						/>
+					</div>
+				</div>
+			</div>
+
+			{/* ═══════════════ 5. Connected to the rest of the platform ═══════════════ */}
+			<div>
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 					<motion.div {...fadeIn} className="mb-8">
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
