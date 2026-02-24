@@ -7,6 +7,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Code2, Database, LayoutGrid, Palette, Lock, Eye, Layers, Plug, Terminal, FileCode, Play, BookOpen, Cpu, Wrench, GitBranch, Table2, HardDrive, Globe, Bot, Shield, Activity, History } from 'lucide-react';
+import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
@@ -804,6 +805,17 @@ export default function InternalToolsContent({ title, description }) {
 						/>
 					</div>
 				</div>
+			</div>
+
+			{/* ═══════════════ Case study: Zoom ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<CaseStudyBanner
+					logo="/images/brands/zoom-light.png"
+					logoDark="/images/brands/zoom-dark.png"
+					title="How Zoom builds internal tools with Windmill"
+					description="See how Zoom uses Windmill to build and deploy internal tools at scale with full observability and enterprise controls."
+					link="/case-studies/zoom"
+				/>
 			</div>
 
 			{/* ═══════════════ 5. Connected to the rest of the platform ═══════════════ */}

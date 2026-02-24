@@ -8,6 +8,8 @@ import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings, Database, BookOpen, Zap, Container, HardDrive, Cpu, Lock, Code2, Terminal, FileCode, Play, Sparkles, Shield, Activity, Layers } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
+import { athenaIntelligenceCaseStudy } from '../../data/case-studies/athena-intelligence';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
 
@@ -556,6 +558,17 @@ export default function AiAgentsContent({ title, description }) {
 						))}
 					</div>
 				</div>
+			</div>
+
+			{/* Case study: Athena Intelligence */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<CaseStudyBanner
+					logo={athenaIntelligenceCaseStudy.logo}
+					logoDark={athenaIntelligenceCaseStudy.logo.replace('-light.', '-dark.')}
+					title="How Athena Intelligence runs AI agents on-premise with Windmill"
+					description="Athena Intelligence deploys AI agents inside customer environments in regulated industries. Windmill's self-hostable architecture lets them run agents with full data isolation, no cloud dependency."
+					link={athenaIntelligenceCaseStudy.link}
+				/>
 			</div>
 
 			{/* More use cases */}
