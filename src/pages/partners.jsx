@@ -26,6 +26,30 @@ const roles = {
   };  
 
 const people = [
+  {
+    name: 'CloudShapers',
+    description: 'CloudShapers is a Dutch cloud consultancy specializing in automation for MSPs and enterprise platform teams. We implemented Windmill at Axians and other customers, building multi-tenant orchestration platforms with hundreds of users and thousands of daily executions.',
+    roles: ['Common tree'],
+    email: 'thierry.vanzantvoort@cloudshapers.nl',
+    profile: 'https://www.linkedin.com/company/cloudshapers/',
+    imageUrl: '/images/partners/cloudshapers.webp'
+  },
+  {
+  name: 'Chris Edgington',
+  description: 'Chris Edgington is a seasoned software architect and problem solver with over 30 years of experience, leveraging Windmill to host Autodesk API and ERP integrations for clients of his company EdgeCraft Studio.',
+  roles: ['Common tree', 'ERP integration'],
+  email: 'chris@edgecraftstudio.com',
+  profile: 'https://www.linkedin.com/in/chris-edgington-46973533/',
+  imageUrl: '/images/partners/chris-edgington.jpg'
+},
+{
+  name: 'David Peter',
+  description: 'David Peter is a TypeScript programmer and founder at Type Driven, a software development agency.',
+  roles: ['Common tree', 'App editor'],
+  email: 'david@type-driven.com',
+  profile: 'https://www.linkedin.com/in/david-peter-498423280/',
+  imageUrl: '/images/partners/davidpeter.jpg'
+},
 {
     name: 'José Governo Pais Neto',
     description: 'José Governo, CFA, CQF is from Brazil. José worked in an asset management firm where he used Windmill to build complex dashboard applications for his clients.',
@@ -41,22 +65,6 @@ const people = [
     email: 'stephan@knowsuchagency.com',
     profile: 'https://www.linkedin.com/in/fitzpatrickstephan/',
     imageUrl: '/images/partners/stphftzptrk.jpg'
-},
-{
-  name: 'David Peter',
-  description: 'David Peter is a TypeScript programmer and founder at Type Driven, a software development agency.',
-  roles: ['Common tree', 'App editor'],
-  email: 'david@type-driven.com',
-  profile: 'https://www.linkedin.com/in/david-peter-498423280/',
-  imageUrl: '/images/partners/davidpeter.jpg'
-},
-{
-  name: 'Chris Edgington',
-  description: 'Chris Edgington is a seasoned software architect and problem solver with over 30 years of experience, leveraging Windmill to host Autodesk API and ERP integrations for clients of his company EdgeCraft Studio.',
-  roles: ['Common tree', 'ERP integration'],
-  email: 'chris@edgecraftstudio.com',
-  profile: 'https://www.linkedin.com/in/chris-edgington-46973533/',
-  imageUrl: '/images/partners/chris-edgington.jpg'
 }
 ];
 
