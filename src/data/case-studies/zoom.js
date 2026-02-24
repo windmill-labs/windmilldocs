@@ -4,7 +4,7 @@ export const zoomCaseStudy = {
 	logo: '/images/brands/zoom-light.png.webp',
 	title: 'How Zoom built their enterprise demo platform with Windmill',
 	description: "Zoom's Global Architecture organization needed a scalable way to create consistent demo environments for 400+ solution engineers. They built a centralized demo platform on Windmill, enabling 60+ Global Architects to contribute workflows in multiple languages, all self-hosted on AWS EKS.",
-	category: 'Enterprise software',
+	category: 'Enterprise Software',
 	author: {
 		name: 'Frederick Loucks',
 		role: 'Technical Leader, Demo Platform',

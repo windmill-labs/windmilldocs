@@ -8,6 +8,13 @@ export default function LogoClouds() {
 
 	const logos = [
 		{
+			url: '/case-studies/zoom',
+			dark: '/images/brands/zoom-dark.png.webp',
+			light: '/images/brands/zoom-light.png.webp',
+			name: 'Zoom',
+			internal: true
+		},
+		{
 			url: '/blog/kahoot-case-study',
 			dark: '/images/brands/Kahoot_Logo-dark.svg',
 			light: '/images/brands/Kahoot_Logo.svg',
@@ -68,13 +75,6 @@ export default function LogoClouds() {
 			light: '/images/brands/Bloomcredit-Light.svg',
 			name: 'Bloomcredit'
 		},
-		{
-			url: '/case-studies/athena-intelligence',
-			dark: '/images/brands/athena-dark.svg',
-			light: '/images/brands/athena-light.svg',
-			name: 'Athena Intelligence',
-			internal: true
-		}
 	];
 
 	return (

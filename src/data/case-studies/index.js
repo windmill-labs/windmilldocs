@@ -8,10 +8,10 @@ import { zoomCaseStudy } from './zoom';
 // import { twilioCaseStudy } from './twilio';
 
 export const caseStudies = [
-	cfaInstituteCaseStudy,
-	athenaIntelligenceCaseStudy,
-	pantherLabsCaseStudy,
+	zoomCaseStudy,
 	axiansCaseStudy,
-	zoomCaseStudy
+	pantherLabsCaseStudy,
+	athenaIntelligenceCaseStudy,
+	cfaInstituteCaseStudy
 	// twilioCaseStudy
 ];
