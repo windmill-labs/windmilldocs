@@ -9,8 +9,8 @@ export default function LogoClouds() {
 	const logos = [
 		{
 			url: '/case-studies/zoom',
-			dark: '/images/brands/zoom-dark.png.webp',
-			light: '/images/brands/zoom-light.png.webp',
+			dark: '/images/brands/zoom-dark.webp',
+			light: '/images/brands/zoom-light.webp',
 			name: 'Zoom',
 			internal: true,
 			hoverSrc: '/images/brands/zoom.svg'
