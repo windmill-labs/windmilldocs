@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import LogoClouds from '../../landing/LogoClouds';
 import { ArrowRight, Zap, GitBranch, Clock, FileJson, RotateCcw, Code, Play, BookOpen, Database } from 'lucide-react';
 import BarChart from '../../components/BarChart';
 
@@ -51,7 +53,7 @@ export function BenchmarkSection() {
 	const [active, setActive] = useState(0);
 	const bench = benchmarks[active];
 	return (
-		<div className="bg-gray-50 dark:bg-gray-900/50">
+		<div>
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 				<motion.div {...fadeIn} className="mb-12">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -491,31 +493,10 @@ export default function DataPipelinesContent({ title, description }) {
 				</div>
 			</div>
 
+			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
+
 			{/* DAG orchestration */}
 			<DAGOrchestrationSection />
-
-			{/* Try it yourself */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-					<motion.div {...fadeIn} className="mb-12">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							Try it yourself
-						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Run a real data pipeline directly from this page. This flow monitors Hacker News for mentions and publishes them to Slack with sentiment analysis.
-						</p>
-					</motion.div>
-					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white p-6">
-						<iframe
-							src="https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed"
-							className="w-full rounded-lg"
-							style={{ height: '900px', border: 'none', backgroundColor: 'white' }}
-							title="Data pipeline example — Hacker News to Slack with sentiment analysis"
-							loading="lazy"
-						/>
-					</div>
-				</div>
-			</div>
 
 			{/* Integrations: interactive 2-column selector */}
 			<IntegrationsSection />
@@ -594,6 +575,35 @@ export default function DataPipelinesContent({ title, description }) {
 
 			{/* Performance */}
 			<BenchmarkSection />
+
+			{/* Try it yourself */}
+			<div>
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+					<motion.div {...fadeIn} className="mb-12">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Try it yourself
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							Run a real data pipeline directly from this page. This flow monitors Hacker News for mentions and publishes them to Slack with sentiment analysis.
+						</p>
+					</motion.div>
+					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white p-6">
+						<iframe
+							src="https://hub.windmill.dev/embed/flow/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed"
+							className="w-full rounded-lg"
+							style={{ height: '900px', border: 'none', backgroundColor: 'white' }}
+							title="Data pipeline example — Hacker News to Slack with sentiment analysis"
+							loading="lazy"
+						/>
+					</div>
+				</div>
+			</div>
+
+			{/* More use cases */}
+			<UseCaseCarousel
+				current="data-pipelines"
+				subtitle="Data pipelines are just one use case. The same platform powers internal tools, AI agents, workflow automations and scheduled tasks."
+			/>
 
 			{/* FAQ */}
 			<UseCaseFAQ faqs={faqs} />

@@ -8,6 +8,8 @@ import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings, Database, BookOpen, Zap, Container, HardDrive, Cpu, Lock, Code2, Terminal, FileCode, Play, Sparkles, Shield, Activity, Layers } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import LogoClouds from '../../landing/LogoClouds';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -483,6 +485,8 @@ export default function AiAgentsContent({ title, description }) {
 			</div>
 			</div>
 
+			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
+
 			{/* ═══════════════ Agent modes tabs ═══════════════ */}
 			<AgentModeTabs />
 
@@ -490,7 +494,7 @@ export default function AiAgentsContent({ title, description }) {
 			{/* ═══════════════ SHARED SECTIONS ═══════════════ */}
 
 			{/* Why Windmill for AI agents */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div className="">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 					<motion.div {...fadeIn} className="mb-12">
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -554,8 +558,14 @@ export default function AiAgentsContent({ title, description }) {
 				</div>
 			</div>
 
+			{/* More use cases */}
+			<UseCaseCarousel
+				current="ai-agents"
+				subtitle="AI agents are just one use case. The same platform powers internal tools, data pipelines, workflow automations and scheduled tasks."
+			/>
+
 			{/* FAQ */}
-			<div>
+			<div className="">
 			<UseCaseFAQ faqs={[
 				{ question: 'What LLM providers does Windmill support?', textAnswer: 'Windmill supports OpenAI, Anthropic, Azure OpenAI, Mistral, DeepSeek, Google AI (Gemini), Groq, OpenRouter, Together AI and any OpenAI-compatible endpoint. Switch providers by changing a single resource, no code changes required.' },
 				{ question: 'How do Windmill AI agents differ from LangChain?', textAnswer: 'Windmill agents are flow steps, not a framework. Your existing scripts become tools automatically via their typed parameters. You get observability, retries, RBAC and deployment for free because agents run inside the Windmill workflow engine. LangChain requires you to build all of that yourself.' },

@@ -9,6 +9,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2, BookOpen, RotateCcw, Code2, Rocket, Terminal, FolderPlus } from 'lucide-react';
 import CodeBlock from '@theme/CodeBlock';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import LogoClouds from '../../landing/LogoClouds';
 import { useColorMode } from '@docusaurus/theme-common';
 import { cfaInstituteCaseStudy } from '../../data/case-studies/cfa-institute';
 
@@ -334,6 +336,8 @@ export default function ScheduledTasksContent({ title, description }) {
 				</div>
 			</div>
 
+			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
+
 			{/* From scripts to pipelines */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 				<motion.div {...fadeIn} className="mb-12">
@@ -378,7 +382,7 @@ export default function ScheduledTasksContent({ title, description }) {
 			</div>
 
 			{/* Features — interactive tab layout */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div className="">
 			<ScheduleFeaturesSection />
 			</div>
 
@@ -386,8 +390,16 @@ export default function ScheduledTasksContent({ title, description }) {
 			{/* Case study + embedded schedule */}
 			<CaseStudyAndEmbed />
 
+			{/* More use cases */}
+			<div className="">
+			<UseCaseCarousel
+				current="scheduled-tasks"
+				subtitle="Scheduled tasks are just one use case. The same platform powers internal tools, data pipelines, AI agents and workflow automations."
+			/>
+			</div>
+
 			{/* FAQ */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div>
 			<UseCaseFAQ faqs={[
 				{ question: 'What scheduling syntax does Windmill support?', textAnswer: 'Windmill supports standard cron expressions (6 fields including seconds) plus extended modifiers like nearest weekday (W), nth day-of-week (#), and last day-of-month (L). You can also use the visual cron builder to create schedules without memorizing cron syntax.' },
 				{ question: 'Can I monitor and retry failed scheduled jobs?', textAnswer: 'Yes. Every run is logged with inputs, outputs, duration and status. You can configure automatic retries with constant or exponential backoff, attach error handler scripts that run on failure, and recovery handlers that fire when a schedule succeeds again. Alerts can be routed to Slack, Teams, email or any webhook.' },

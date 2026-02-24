@@ -9,6 +9,8 @@ import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Code2, Database, LayoutGrid, Palette, Lock, Eye, Layers, Plug, Terminal, FileCode, Play, BookOpen, Cpu, Wrench, GitBranch, Table2, HardDrive, Globe, Bot, Shield, Activity, History } from 'lucide-react';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import LogoClouds from '../../landing/LogoClouds';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -746,11 +748,13 @@ export default function InternalToolsContent({ title, description }) {
 				</div>
 			</div>
 
+			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
+
 			{/* ═══════════════ 1. Build & Integrate (3 tabs) ═══════════════ */}
 			<BuildIntegrateTabs />
 
 			{/* ═══════════════ 2. Monitor ═══════════════ */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div className="">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 					<motion.div {...fadeIn} className="mb-12">
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -780,7 +784,7 @@ export default function InternalToolsContent({ title, description }) {
 			</div>
 
 			{/* ═══════════════ Example internal tool ═══════════════ */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div className="">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
 					<motion.div {...fadeIn} className="mb-12">
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -803,79 +807,13 @@ export default function InternalToolsContent({ title, description }) {
 			</div>
 
 			{/* ═══════════════ 5. Connected to the rest of the platform ═══════════════ */}
-			<div>
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-					<motion.div {...fadeIn} className="mb-8">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							More you can build on Windmill
-						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Internal tools are just one use case. The same platform powers scheduled tasks, data pipelines, AI agents and workflow automations.
-						</p>
-					</motion.div>
-					{(() => {
-						const carouselRef = useRef(null);
-						const useCases = [
-							{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.png' },
-							{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.png' },
-							{ label: 'Workflow automation', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflow-automation', cover: '/img/money-pages/parallel-branches.webp' },
-							{ label: 'Scheduled tasks', subtitle: 'Run scripts on cron schedules, webhooks or custom triggers with retries and error handlers built in.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedules-card.png' },
-						];
-						const scroll = (dir) => {
-							if (!carouselRef.current) return;
-							const card = carouselRef.current.querySelector('a');
-							const w = card ? card.offsetWidth + 16 : 300;
-							carouselRef.current.scrollBy({ left: dir * w, behavior: 'smooth' });
-						};
-						return (
-							<div className="relative">
-								{/* Scroll arrows */}
-								<button
-									onClick={() => scroll(-1)}
-									className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors hidden sm:flex"
-									aria-label="Previous"
-								>
-									<ArrowRight className="w-4 h-4 text-gray-600 dark:text-gray-300 rotate-180" />
-								</button>
-								<button
-									onClick={() => scroll(1)}
-									className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors hidden sm:flex"
-									aria-label="Next"
-								>
-									<ArrowRight className="w-4 h-4 text-gray-600 dark:text-gray-300" />
-								</button>
-
-								{/* Scrollable track */}
-								<div
-									ref={carouselRef}
-									className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 -mx-4 px-4"
-									style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
-								>
-									{useCases.map((item) => (
-										<Link
-											key={item.label}
-											to={item.to}
-											className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all !no-underline group overflow-hidden snap-start flex-shrink-0 w-[340px] sm:w-[380px]"
-										>
-											<div className="h-48 overflow-hidden bg-gray-100 dark:bg-gray-800">
-												<img src={item.cover} alt={item.label} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" />
-											</div>
-											<div className="flex items-center gap-2 px-5 pt-4 pb-1">
-												<span className="text-base font-semibold text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{item.label}</span>
-												<ArrowRight className="w-4 h-4 text-gray-300 dark:text-gray-600 ml-auto flex-shrink-0 group-hover:text-blue-500 transition-colors" />
-											</div>
-											<p className="text-sm text-gray-500 dark:text-gray-400 px-5 pb-4 leading-relaxed">{item.subtitle}</p>
-										</Link>
-									))}
-								</div>
-							</div>
-						);
-					})()}
-				</div>
-			</div>
+			<UseCaseCarousel
+				current="internal-tools"
+				subtitle="Internal tools are just one use case. The same platform powers scheduled tasks, data pipelines, AI agents and workflow automations."
+			/>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
-			<div className="bg-gray-50 dark:bg-gray-900/50">
+			<div className="">
 				<UseCaseFAQ faqs={[
 					{ question: 'How is Windmill different from Retool?', textAnswer: 'Windmill lets you write backend logic in 20+ languages (TypeScript, Python, Go, SQL, Bash and more) running server-side on dedicated workers. Retool limits you to sandboxed JavaScript. Windmill also includes built-in data tables, a workflow engine with schedules and triggers, Git-based version control, and full self-hosting support. You deploy your own React, Vue or Svelte frontend on the same platform, with a real execution engine underneath.' },
 					{ question: 'How is Windmill different from Lovable?', textAnswer: 'Lovable generates full-stack apps with AI, but the result is a standalone codebase with no execution engine, observability or enterprise controls. Windmill gives you the same AI-powered development (via Claude Code and Codex integration) but runs your code on a production engine with execution history, error handlers, RBAC, SSO, audit logs and built-in data storage. Apps built on Windmill are production-grade, not prototypes.' },
