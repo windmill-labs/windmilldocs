@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Footer from '../landing/Footer';
 import LandingHeader from '../landing/LandingHeader';
 import Head from '@docusaurus/Head';
@@ -9,18 +9,16 @@ import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '../data/case-studies';
 import { useColorMode } from '@docusaurus/theme-common';
 
+const INDUSTRY_FILTERS = ['All', 'Enterprise Software', 'IT Infrastructure', 'Cybersecurity', 'Financial Services'];
+
 function CaseStudyCard({ caseStudy }) {
 	const { colorMode } = useColorMode();
 	
-	// Derive logo path based on color mode
-	// Logo files are named: *-light.svg = black logo for light mode, *-dark.svg = white logo for dark mode
 	const getLogoPath = () => {
 		if (colorMode === 'light') {
-			// Light mode: use the light variant (black logo on light background)
 			return caseStudy.logo;
 		} else {
-			// Dark mode: use the dark variant (white logo on dark background)
-			return caseStudy.logo
+			return caseStudy.logoDark || caseStudy.logo
 				.replace('-light.png', '-dark.png')
 				.replace('-light.svg', '-dark.svg');
 		}
@@ -41,7 +39,7 @@ function CaseStudyCard({ caseStudy }) {
 					<img
 						src={getLogoPath()}
 						alt={`${caseStudy.company} logo`}
-						className="h-16 w-full object-contain"
+						className={`h-24 w-full object-contain${caseStudy.grayscale ? ' grayscale' : ''}`}
 					/>
 				</div>
 			</div>
@@ -70,7 +68,11 @@ function CaseStudyCard({ caseStudy }) {
 }
 
 export default function CaseStudiesPage() {
+	const [activeFilter, setActiveFilter] = useState('All');
 	const releasedStudies = caseStudies.filter((cs) => cs.released);
+	const filteredStudies = activeFilter === 'All'
+		? releasedStudies
+		: releasedStudies.filter((cs) => cs.category === activeFilter);
 	const itemListSchema = {
 		'@context': 'https://schema.org',
 		'@type': 'ItemList',
@@ -112,11 +114,28 @@ export default function CaseStudiesPage() {
 								<p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
 									From startups to public companies, our customers choose Windmill to power their internal platforms and operations at scale.
 								</p>
+
+								{/* Industry filters */}
+								<div className="flex flex-wrap justify-center gap-2 mt-8">
+									{INDUSTRY_FILTERS.map((filter) => (
+										<button
+											key={filter}
+											onClick={() => setActiveFilter(filter)}
+											className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+												activeFilter === filter
+													? 'bg-blue-600 text-white'
+													: 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+											}`}
+										>
+											{filter}
+										</button>
+									))}
+								</div>
 							</div>
 
 							{/* Case studies grid */}
 							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-								{releasedStudies.map((caseStudy) => (
+								{filteredStudies.map((caseStudy) => (
 										<CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
 									))}
 							</div>
