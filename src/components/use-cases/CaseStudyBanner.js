@@ -11,14 +11,14 @@ const fadeIn = {
 	transition: { duration: 0.5 },
 };
 
-export default function CaseStudyBanner({ logo, logoDark, title, description, link }) {
+export default function CaseStudyBanner({ logo, logoDark, title, description, link, from }) {
 	const { colorMode } = useColorMode();
 	const logoSrc = colorMode === 'dark' && logoDark ? logoDark : logo;
 
 	return (
 		<motion.div {...fadeIn}>
 			<Link
-				to={link}
+				to={from ? `${link}?from=${from}` : link}
 				className="group flex flex-col md:flex-row items-center gap-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 p-8 md:p-12 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-lg transition-all !no-underline"
 			>
 				<div className="flex-shrink-0">

@@ -3,7 +3,7 @@ import Link from '@docusaurus/Link';
 import { ArrowRight } from 'lucide-react';
 import { useColorMode } from '@docusaurus/theme-common';
 
-export default function CaseStudyCard({ caseStudy, title, description }) {
+export default function CaseStudyCard({ caseStudy, title, description, from }) {
 	const { colorMode } = useColorMode();
 
 	const getLogoPath = () => {
@@ -19,7 +19,7 @@ export default function CaseStudyCard({ caseStudy, title, description }) {
 
 	return (
 		<Link
-			to={caseStudy.link}
+			to={from ? `${caseStudy.link}?from=${from}` : caseStudy.link}
 			className="group flex flex-col h-full rounded-2xl bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl !no-underline"
 		>
 			{/* Top section with logo and case study label */}
