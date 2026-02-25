@@ -43,7 +43,7 @@ export default function Hero() {
 							<span>Zero-ops infra powered by the{' '}
 								<Link 
 									href="/docs/misc/benchmarks/competitors"
-									className="text-white underline"
+									className="underline"
 								>
 									fastest job orchestrator and workflow engine
 								</Link>
