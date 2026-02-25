@@ -59,6 +59,9 @@ You can use them in a Script by clicking on "+Context Var":
 | RUN_UPDATE_CA_CERTIFICATE_AT_START | false | If true, runs CA certificate update command at startup before other initialization | All |
 | RUN_UPDATE_CA_CERTIFICATE_PATH | /usr/sbin/update-ca-certificates | Path to the CA certificate update command/script to run when RUN_UPDATE_CA_CERTIFICATE_AT_START is true | All |
 | OIDC_TOKEN_EXPIRY_SECS | 48 * 60 * 60 | The default expiry time in seconds for OIDC tokens. The default is 48 hours. | All |
+| QUIET | false | When set to `true` or `1`, enables quiet mode which suppresses verbose per-job worker logs (fetched job, started handling, job finished) and reduces frequency of periodic "still running" and memory snapshot logs by 10x. Useful for reducing log noise in production. | Worker |
+| LOGIN_DOMAIN | None | When set, normalizes external login emails by appending `@{LOGIN_DOMAIN}` if the email has no `@` sign. Also lowercases all emails. Useful for identity providers that send usernames instead of full emails. | Server |
+| HIDE_WORKERS_FOR_NON_ADMINS | false | When set to `true`, hides the workers page from non-admin users. | Server |
 
 ## Contextual variables
 

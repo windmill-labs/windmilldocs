@@ -64,6 +64,24 @@ When adding a step to a flow, pick `Approval`, and write a new approval script o
 
 Use `wmill.getResumeUrls()` in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) or `wmill.get_resume_urls()` in [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) from the [wmill client](../advanced/2_clients/ts_client.mdx) to generate secret URLs.
 
+### Flow-level resume URLs (pre-approvals)
+
+By default, resume URLs are tied to a specific step. With `flowLevel: true` (TypeScript) or `flow_level=True` (Python), you can generate resume URLs for the parent flow instead. These "pre-approvals" can be consumed by any later suspend step in the same flow.
+
+This is useful when you want to request approval early in the flow (e.g. in the first step) and have it automatically satisfy a suspend step that comes later:
+
+```ts
+// TypeScript
+const urls = await wmill.getResumeUrls("approver1", true) // flowLevel = true
+```
+
+```python
+# Python
+urls = wmill.get_resume_urls(approver="approver1", flow_level=True)
+```
+
+When a flow-level resume is received, the approval is stored at the flow level and matched when the worker checks for resumes at any subsequent suspend step.
+
 ## Core
 
 ### Number of approvals/events required for resuming flow

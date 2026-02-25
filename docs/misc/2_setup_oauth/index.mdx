@@ -6,7 +6,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Setup OAuth and SSO
 
-Windmill supports Single Sign-On for [Google](#google-login), [Microsoft](#microsoft), [Okta](#okta), [GitHub](#github), [GitLab](#gitlab), [Jumpcloud](#jumpcloud), [Keycloak](#keycloak), [Authentik](#authentik), [Authelia](#authelia), [Kanidm](#kanidm), [Zitadel](#zitadel), [Nextcloud](#nextcloud) and domain restriction.
+Windmill supports Single Sign-On for [Google](#google-login), [Microsoft](#microsoft), [Okta](#okta), [GitHub](#github), [GitLab](#gitlab), [Jumpcloud](#jumpcloud), [Keycloak](#keycloak), [Authentik](#authentik), [Authelia](#authelia), [Kanidm](#kanidm), [Zitadel](#zitadel), [Nextcloud](#nextcloud), [PocketID](#pocketid) and domain restriction.
 
 Windmill supports [Slack](#slack), [GitHub](#github-1), [GitLab](#gitlab-1), [Bitbucket](#bitbucket), [Google Sheets](#google-sheets), [Google Drive](#google-drive-gdrive), [Gmail](#gmail), [Google Calendar](#google-calendar-gcal), [Google Forms](#google-forms-gforms), [Google Cloud](#google-cloud-gcloud), [Google Workspace](#google-workspace-gworkspace), [Basecamp](#basecamp), [LinkedIn](#linkedin), [QuickBooks](#quickbooks), [Visma](#visma), [Snowflake](#snowflake), and [Custom OAuth](#custom-oauth).
 
@@ -241,6 +241,25 @@ To integrate Windmill with Nextcloud as an OAuth provider, follow these steps:
      - **Nextcloud Instance Domain**: `your.nextcloud.domain` (without https://)
      - **Client ID**: [from Nextcloud]
      - **Client Secret**: [from Nextcloud]
+   - Save your settings.
+
+### PocketID
+
+[PocketID](https://github.com/pocket-id/pocket-id) is a simple, self-hosted OIDC provider. To integrate it with Windmill:
+
+1. **Create OAuth client in PocketID**:
+   - Go to your PocketID instance admin panel.
+   - Create a new OAuth client with the following settings:
+     - **Redirect URI**: `https://<YOUR_INSTANCE>/user/login_callback/pocketid`
+   - After saving, you will receive a **Client ID** and **Client Secret**.
+
+2. **Instance settings in Windmill**:
+   - Go to Windmill's admin settings under 'SSO OAuth' - 'SSO'.
+   - Toggle "pocketid" and enter:
+     - **PocketID URL**: The base URL of your PocketID instance (e.g. `https://pocket-id.example.com`). The OIDC endpoints (`/authorize`, `/api/oidc/token`, `/api/oidc/userinfo`) are derived automatically.
+     - **Custom Name** (optional): A display name for the login button.
+     - **Client ID**: [from PocketID]
+     - **Client Secret**: [from PocketID]
    - Save your settings.
 
 ### Custom OAuth

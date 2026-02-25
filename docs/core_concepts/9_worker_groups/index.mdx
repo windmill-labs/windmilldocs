@@ -426,6 +426,25 @@ Dedicated workers / High throughput is a [Cloud plans & Self-Hosted Enterprise E
 	/>
 </div>
 
+## Quiet mode
+
+Set the `QUIET` [environment variable](../47_environment_variables/index.mdx) to `true` or `1` on workers to reduce log verbosity. When enabled:
+
+- Verbose per-job logs (fetched job, started handling, job finished) are suppressed.
+- Periodic "still running" and memory snapshot logs are emitted 10x less frequently.
+
+This is useful in production environments where per-job log entries create excessive noise. A "Quiet mode enabled" message is added to job logs for visibility.
+
+```yaml
+# Docker Compose example
+windmill_worker:
+  environment:
+    - DATABASE_URL=${DATABASE_URL}
+    - MODE=worker
+    - WORKER_GROUP=default
+    - QUIET=true
+```
+
 ## Service logs
 
 View logs from any workers or servers directly within the service logs section of the search modal.

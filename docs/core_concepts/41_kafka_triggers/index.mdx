@@ -193,6 +193,22 @@ export async function main(message_content: string, topic: string) {
 }
 ```
 
+## Filters
+
+Kafka triggers support message filtering so that only messages matching specified criteria trigger the runnable. Filters are evaluated on the raw message payload before it is passed to the script.
+
+Each filter is a key/value pair where:
+- **Key**: A path into the JSON-decoded message (e.g. `type`, `data.status`)
+- **Value**: The expected value at that path (can be a string, number, object, or array)
+
+A message must match all filters (AND logic) to trigger the runnable. The matching uses a superset check — the message value at the given key must contain all fields from the filter value (additional fields in the message are allowed).
+
+Filters can be configured in the Kafka trigger editor UI using the filter section. You can add multiple key/value pairs, and a human-readable preview is shown for each filter (e.g. `payload.type == "order_created"`).
+
+:::info
+Filters use the same mechanism as [WebSocket trigger](../40_websocket_triggers/index.mdx) filters and are evaluated server-side before dispatching the job.
+:::
+
 ## Error handling
 
 Kafka triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.

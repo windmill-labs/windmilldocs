@@ -179,6 +179,7 @@ entrypoint. There are a few important things to note about the `main`.
 - Type annotations are used to generate the UI form, and help pre-validate
   inputs. While not mandatory, they are highly recommended. You can customize
   the UI in later steps (but not change the input type!).
+- Windmill supports [Pydantic `BaseModel`](https://docs.pydantic.dev/) and [`@dataclass`](https://docs.python.org/3/library/dataclasses.html) classes as parameter types. When a parameter is typed with a Pydantic model or dataclass, Windmill infers the JSON schema from the class fields and generates a structured input form. Nested models, `Optional`, `List`, and `Dict` types are supported.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -187,6 +188,43 @@ entrypoint. There are a few important things to note about the `main`.
 		href="/docs/core_concepts/json_schema_and_parsing"
 	/>
 </div>
+
+### Pydantic and dataclass support
+
+You can use Pydantic `BaseModel` or Python `@dataclass` as parameter types for your main function. Windmill will parse the class definition and generate a structured input form with proper field types.
+
+```python
+from pydantic import BaseModel
+from typing import Optional, List
+
+class Address(BaseModel):
+    street: str
+    city: str
+    zip_code: Optional[str] = None
+
+class User(BaseModel):
+    name: str
+    age: int
+    addresses: List[Address] = []
+
+def main(user: User):
+    return f"Hello {user.name}, age {user.age}"
+```
+
+Dataclasses work the same way:
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Config:
+    host: str
+    port: int = 8080
+    debug: bool = False
+
+def main(config: Config):
+    return f"Connecting to {config.host}:{config.port}"
+```
 
 The last import line imports the [Windmill client](../../../advanced/2_clients/python_client.md), which is needed for example to access
 [variables](../../../core_concepts/2_variables_and_secrets/index.mdx) or

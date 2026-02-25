@@ -47,6 +47,8 @@ The following section details Database studio's specific settings. For more deta
 - Edit the content of a table by directly editing the cells (only when the cell is editable).
 - Add a new row: The form is automatically generated based on the column definitions, and the default values are automatically set. The form opens in a drawer.
 - Delete a row: The delete button is displayed on the right of the row. The delete button is only displayed if the `Allow delete` property is set to true.
+- Create a new table: Open the table editor to define columns, types, primary keys, default values and foreign keys, then generate and execute the `CREATE TABLE` SQL.
+- Alter an existing table: Right-click on a table name and select "Alter table" to modify its schema. You can rename columns, change types, add or remove columns, and update foreign keys. The editor shows a SQL preview of the `ALTER TABLE` statements before execution. A warning is displayed for databases that do not support transactional DDL (changes cannot be rolled back).
 
 ## Controls
 
