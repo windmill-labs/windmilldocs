@@ -24,7 +24,7 @@ For each step of the flow, an early stop can be defined. The result of the step 
 
 - Toggle on "Early stop or Break if condition met".
 
-- Write the condition you want to stop on, based on the step's results.
+- Write the condition you want to stop on, based on the step's results. In the expression, you can use `result` to access the current step's result and `flow_input` for the flow's input. You can also reference previous steps' results using `results` (e.g. `results.a`, `results.b`), which gives access to the full result map of all completed steps.
 
 - Optionally, toggle on "Label flow as "skipped" if stopped". Skipped flows are just a label useful to not see them in the [runs](../core_concepts/5_monitor_past_and_future_runs/index.mdx) page.
 
