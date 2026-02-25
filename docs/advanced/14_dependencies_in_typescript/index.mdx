@@ -206,15 +206,32 @@ Note that path in Windmill can have as many depth as needed, so you can have pat
 
 ### Private npm registry & private npm packages
 
+Private registry configuration is an [Enterprise Edition](/pricing) feature.
+
 You can use private npm registries and private npm packages in your TypeScript scripts.
 
 This applies to all methods above. Only, if using Codebases & bundles locally, there is nothing to configure in Windmill, because the bundle is built locally using your locally-installed modules (which support traditional npm packages and private npm packages).
 
 ![Private NPM registry](../6_imports/private_registry.png 'Private NPM registry')
 
-On [Enterprise Edition](/pricing), go to [Instance settings](../18_instance_settings/index.mdx#registries) -> Registries.
+#### Using `.npmrc` (recommended)
 
-Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with your GitHub username or organization name).
+On [Enterprise Edition](/pricing), go to [Instance settings](../18_instance_settings/index.mdx#registries) -> Registries -> `.npmrc`.
+
+Provide the full content of a standard `.npmrc` file. This works natively with Bun (since 1.1.18), Deno (2.x), and the Windmill npm proxy (which parses the default registry and auth token from the `.npmrc`).
+
+Example `.npmrc` content:
+
+```ini
+//npm.pkg.github.com/:_authToken=ghp_xxxxxxxxxxxx
+@myorg:registry=https://npm.pkg.github.com/myorg
+```
+
+When the `.npmrc` setting is configured, the legacy `Npm config registry` and `Bunfig install scopes` fields are hidden for new setups.
+
+#### Using registry URL (legacy)
+
+Alternatively, set the registry URL directly in [Instance settings](../18_instance_settings/index.mdx#registries) -> `Npm config registry`: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with your GitHub username or organization name).
 
 Currently, Deno does not support private npm packages requiring tokens (but support private npm registries). Bun however does.
 

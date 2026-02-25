@@ -8,6 +8,8 @@ description: How do I use DuckDB with Windmill? Run analytical SQL queries on S3
 
 Windmill supports seamless integration with DuckDB, allowing you to manipulate data from S3 (csv, parquet, json), BigQuery, PostgreSQL, and MySQL.
 
+DuckDB in Windmill supports automatic column detection on S3 objects. You can query S3 paths directly without wrapping them in `read_parquet()` — for example `SELECT col1, col2 FROM 's3:///file.parquet'` — and the SQL parser will infer the referenced columns. The standard `read_parquet()`, `read_csv()`, and `read_json()` table functions also support column detection when used with S3 paths.
+
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay

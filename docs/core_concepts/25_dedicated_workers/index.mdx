@@ -23,7 +23,7 @@ Dedicated workers allow you to remove completely the cold start for selected scr
 
 Dedicated workers / High throughput are a [Cloud plans & Self-Hosted Enterprise](/pricing) feature.
 
-Dedicated workers work with [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) scripts, they have the highest cold starts. Queries to databases such as PostgreSQL, MySQL, BigQuery, or bash and go scripts do not suffer from any cold starts and hence have the same benefits already without any compexity.
+Dedicated workers work with [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Bun and Deno), [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), and native TypeScript (nativets) scripts. For nativets, dedicated workers use prewarmed V8 isolates that are pipelined — the next isolate starts warming up while the current job runs, minimizing latency between executions. Queries to databases such as PostgreSQL, MySQL, BigQuery, or bash and go scripts do not suffer from any cold starts and hence have the same benefits already without any complexity.
 
 The scripts can be used within flows.
 
@@ -57,7 +57,7 @@ Each [run](../5_monitor_past_and_future_runs/index.mdx) will have a Worker group
 
 ## Dedicated workers for flows
 
-Dedicated workers can also be assigned to a flow. In that case, the dedicated worker will start one runner for each flow step that supports it ([TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)), eliminating cold start between each execution.
+Dedicated workers can also be assigned to a flow. In that case, the dedicated worker will start one runner for each flow step that supports it ([TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), and native TypeScript), eliminating cold start between each execution.
 Other steps will be run on the same worker but without any optimization.
 
 To enable it, the process is the same as for scripts, but the "Dedicated Workers" option for that flow has to be enabled in the [flow Settings](../../flows/3_editor_components.mdx#settings).

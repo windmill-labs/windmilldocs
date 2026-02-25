@@ -599,6 +599,40 @@ GRANT USAGE ON SCHEMA public TO windmill_user;
 If you use a schema other than `public`, pass `PG_SCHEMA=<schema>` as an environment variable to every `windmill_server` container.
 :::
 
+## Health endpoints
+
+Windmill exposes `/health` HTTP endpoints for monitoring and orchestration. There are two variants:
+
+- **`/api/health`** — unauthenticated, cached (5-second TTL). Returns the overall status (`healthy`, `degraded`, or `unhealthy`), whether the database is reachable, and the number of alive workers. Suitable for load balancers and liveness probes.
+- **Detailed health** — authenticated (superadmin), always fresh. Returns database latency and connection pool stats (size, idle, max), worker group details with versions, queue depth (pending/running jobs), and readiness status.
+
+The health status is `healthy` when the database is reachable and workers are alive, `degraded` when workers are missing or versions are inconsistent, and `unhealthy` when the database is unreachable.
+
+Prometheus metrics are also exposed when metrics are enabled: `health_status_phase`, `health_database_latency_ms`, `health_database_unresponsive`, `health_database_pool_size`, `health_database_pool_idle`, and `health_database_pool_max`.
+
+Set the `SILENCE_HEALTH_LOGS=true` environment variable to suppress health endpoint log output.
+
+Example Kubernetes readiness probe:
+
+```yaml
+readinessProbe:
+  httpGet:
+    path: /api/health
+    port: 8000
+  initialDelaySeconds: 5
+  periodSeconds: 10
+```
+
+Example Docker Compose healthcheck:
+
+```yaml
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+  interval: 30s
+  timeout: 10s
+  retries: 3
+```
+
 ## First time login
 
 Once you have setup your environment for deployment and have access to the instance, you will be able to login with the default credentials `admin@windmill.dev` / `changeme` (even if you [setup OAuth](../../misc/2_setup_oauth/index.mdx)).

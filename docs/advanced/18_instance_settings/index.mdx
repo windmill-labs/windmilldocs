@@ -233,7 +233,7 @@ XML metadata url OR content for the SAML IdP.
 
 ## Registries
 
-Add private registries for [UV](https://pypi.org/), [Bun](https://bun.sh/), [npm](https://www.npmjs.com/), [Nuget](https://www.nuget.org/), and [PowerShell](https://learn.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library).
+Add private registries for [UV](https://pypi.org/), [Bun](https://bun.sh/), [npm](https://www.npmjs.com/), [Nuget](https://www.nuget.org/), [PowerShell](https://learn.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library), [Maven/Java](../../getting_started/0_scripts_quickstart/13_java_quickstart/index.mdx#private-maven-registries), and [Cargo/Rust](../../getting_started/0_scripts_quickstart/9_rust_quickstart/index.mdx).
 
 These settings are only available on [Enterprise Edition](/pricing).
 
@@ -272,6 +272,18 @@ Add private NPM registry.
 ### Bunfig install scopes
 
 Add private scoped registries for Bun, See: https://bun.sh/docs/install/registries.
+
+### `.npmrc`
+
+Provide the full content of a standard [`.npmrc`](https://docs.npmjs.com/cli/v10/configuring-npm/npmrc) file. This works natively with Bun (since 1.1.18), Deno (2.x), and the Windmill npm proxy (which parses the default registry and auth token from the `.npmrc`). When configured, the legacy `Npm config registry` and `Bunfig install scopes` fields are hidden for new setups.
+
+### Maven `settings.xml`
+
+Provide the full content of a Maven `settings.xml` file. Windmill writes it to `{JAVA_HOME}/.m2/settings.xml` so Coursier can use your configured servers, mirrors, and repository URLs when resolving [Java](../../getting_started/0_scripts_quickstart/13_java_quickstart/index.mdx) dependencies. Clearing the setting removes the file.
+
+### Cargo registries
+
+Provide the content of a Cargo `config.toml` file for configuring private [Rust](../../getting_started/0_scripts_quickstart/9_rust_quickstart/index.mdx) crate registries. Written to `{job_dir}/.cargo/config.toml` during job execution.
 
 ### Nuget config
 
@@ -482,5 +494,7 @@ The following information is collected:
 - development instance status
 
 From the instance settings, you can manually disable telemetry or "Send usage" to send usage data to Windmill and monitor it from the [Customer portal](../../misc/7_plans_details/index.mdx#windmill-customer-portal).
+
+On [Enterprise Edition](/pricing), you can also "Download usage" to get an encrypted copy of the telemetry data as a `.enc` file. This is useful for air-gapped instances that cannot send telemetry directly — the encrypted file can be sent manually to Windmill.
 
 Under [Enterprise Edition](/pricing) (self-hosted), telemetry is mandatory to ensure usage correctly matches the subscription.
