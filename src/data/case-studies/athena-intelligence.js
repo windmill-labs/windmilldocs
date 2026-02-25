@@ -2,6 +2,7 @@ export const athenaIntelligenceCaseStudy = {
 	id: 7,
 	company: 'Athena Intelligence',
 	logo: '/images/brands/athena-light.svg',
+	logoDark: '/images/brands/athena-dark.svg',
 	title: 'How Athena Intelligence gained access to customers in regulated markets',
 	description: "Athena Intelligence needed to serve regulated industries where data cannot leave customer environments. Windmill's self-hostable architecture enabled on-premise deployment, unlocking access to advisory and consulting firms, financial services, and healthcare markets.",
 	category: 'Enterprise Software',

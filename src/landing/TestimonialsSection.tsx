@@ -6,6 +6,21 @@ import { ArrowRight } from 'lucide-react';
 const clientTestimonials = [
 	{
 		author: {
+			name: 'Frederic Louks',
+			company: 'Zoom',
+			position: 'Demo Platform Product Manager',
+			dark: '/images/brands/zoom-dark.webp',
+			light: '/images/brands/zoom-light.webp',
+			anchor: 'zoom',
+			profile_picture: '/contributors/frederic_louks.jpg'
+		},
+		company_url: 'https://zoom.us',
+		linkedIn: '',
+		caseStudyHref: '/case-studies/zoom',
+		text: `We actually use Windmill's job engine to do a lot of the heavy lifting for us. We schedule future jobs into Windmill's job engine to handle some drip hydration tasks for our demo platform. We can build things very quickly in Windmill, iterate very quickly, and we can ship them into a nice front end portal.`
+	},
+	{
+		author: {
 			name: 'Eliot Andres',
 			company: 'Photoroom',
 			position: 'Co-Founder & CTO',
@@ -63,21 +78,6 @@ const clientTestimonials = [
 		linkedIn: 'https://www.linkedin.com/in/yonatan-adest/',
 		caseStudyHref: '',
 		text: `At Investing.com, we use Windmill to orchestrate our AI workflows. The quick setup through Docker Compose and intuitive UI allowed us to get started immediately. We leverage Windmill for various automation tasks including content processing pipelines, automated stock analysis report generation, and ETL processes.`
-	},
-	{
-		author: {
-			name: 'Romaric Philogène',
-			company: 'Qovery',
-			position: 'Co-Founder & CEO',
-			dark: '/images/brands/Qovery-dark.svg',
-			light: '/images/brands/Qovery-light.svg',
-			anchor: 'qovery',
-			profile_picture: '/contributors/romaric_philogene.webp'
-		},
-		company_url: 'https://www.qovery.com',
-		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
-		caseStudyHref: '/blog/qovery-case-study',
-		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. The platform offers a clear DX for code editing, permission management and error handling.`
 	},
 	{
 		author: {
@@ -196,16 +196,14 @@ export default function Example() {
                 </div>
               </a>
             ) : (
-              <>
-                <p className="text-sm font-bold dark:text-gray-50 text-gray-900 w-full">
+              <div className="flex-grow">
+                <p className="text-sm font-bold dark:text-gray-50 text-gray-900">
                   {testimonial.author.name}
                 </p>
                 <div className="text-sm dark:text-gray-50 text-gray-500">
-                  {[testimonial.author.position, testimonial.author.company]
-                    .filter(Boolean)
-                    .join(' @ ')}
+                  {testimonial.author.position}
                 </div>
-              </>
+              </div>
             )}
 
             <a

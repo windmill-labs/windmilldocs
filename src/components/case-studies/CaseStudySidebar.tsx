@@ -14,6 +14,7 @@ interface CaseStudySidebarProps {
 		light: string;
 		dark: string;
 		alt: string;
+		className?: string;
 	};
 	industry: string;
 	companySize: string;
@@ -47,6 +48,7 @@ export default function CaseStudySidebar({
 						lightSrc={logo.light}
 						darkSrc={logo.dark}
 						alt={logo.alt}
+						{...(logo.className ? { className: logo.className } : {})}
 					/>
 				</div>
 				<div className="space-y-6">

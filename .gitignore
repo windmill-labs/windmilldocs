@@ -32,9 +32,6 @@ brand-guidelines.md
 brand-guidelines-assets/
 
 # Private case studies (pending customer approval)
-src/pages/case-studies/zoom.jsx
-src/pages/case-studies/zoom-content.mdx
 src/pages/case-studies/twilio.jsx
 src/pages/case-studies/twilio-content.mdx
-src/data/case-studies/zoom.js
 src/data/case-studies/twilio.js
