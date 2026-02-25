@@ -275,6 +275,32 @@ When multiple isolation methods are available, Windmill uses them in this priori
 
 **Important**: NSJAIL and PID namespace isolation are **not used simultaneously**. If NSJAIL is available and enabled, it takes precedence and PID namespace isolation is not used.
 
+## Force sandboxing
+
+### Instance-level setting (`job_isolation`)
+
+The `job_isolation` instance setting can be set to `nsjail_sandboxing` to enable NSJAIL sandboxing for all jobs across the instance, regardless of the per-worker `DISABLE_NSJAIL` environment variable. Sandboxing is enabled when **either** `job_isolation` is set to `nsjail_sandboxing` **or** `DISABLE_NSJAIL=false` — neither overrides the other.
+
+Configure it from [Instance settings](../18_instance_settings/index.mdx) or via the [Infrastructure as code](../../core_concepts/57_infrastructure_as_code/index.mdx) YAML configuration.
+
+When `job_isolation` is set to `nsjail_sandboxing` but the NSJAIL binary is not available on a worker, all jobs on that worker will fail until NSJAIL is installed or the setting is changed. NSJAIL availability is always probed at worker startup regardless of `DISABLE_NSJAIL`.
+
+All language executors (Python, TypeScript/Bun, Deno, Go, Bash, Rust, C#, Java, Ansible, PHP, Ruby) respect this setting through a centralized `is_sandboxing_enabled()` check.
+
+### Per-script `#sandbox` bash annotation
+
+For bash scripts, you can enable sandboxing on a per-script basis using the `#sandbox` annotation:
+
+```bash
+#sandbox
+
+echo "This script runs inside an NSJAIL sandbox"
+```
+
+When a bash script includes the `#sandbox` annotation, it will be executed inside an NSJAIL sandbox even if neither `job_isolation` nor `DISABLE_NSJAIL` enables sandboxing globally. The script will fail with an error if the NSJAIL binary is not available on the worker.
+
+The annotation is logged as "sandbox mode (nsjail)" in job execution logs.
+
 ## Recommended configurations
 
 ### PID namespace isolation (recommended for production)

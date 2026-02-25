@@ -145,6 +145,8 @@ There are 2 main ways variables are used within scripts:
 
 Variables can be passed as parameters of the script, using the UI-based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
 
+The `$var:` and `$res:` references are resolved recursively, including inside arrays and nested objects (up to depth 2, with a 1000-item limit on arrays). For example, an array parameter like `["$var:u/user/token1", "$var:u/user/token2"]` will have each element resolved individually at execution time.
+
 ![Select Variable](./select_variable.png.webp)
 
 #### Fetching them from within a script by using the wmill client in the respective language

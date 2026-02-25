@@ -182,6 +182,40 @@ Packages can be installed through [Coursier](https://get-coursier.io/). Just add
 ```
 It supports [Maven](https://maven.apache.org/what-is-maven.html) and [Ivy](https://ant.apache.org/ivy/) repositories.
 
+### Private Maven registries
+
+On [Enterprise Edition](/pricing), you can configure private Maven repositories from [Instance settings](../../../advanced/18_instance_settings/index.mdx#registries) -> Registries -> Maven `settings.xml`.
+
+Provide the full content of a Maven `settings.xml` file. Windmill writes this file to the Java home `.m2/settings.xml` directory, allowing Coursier to use your configured servers, mirrors, and repository URLs when resolving dependencies. If the setting is cleared, the `settings.xml` file is removed.
+
+Example `settings.xml` content:
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>my-private-repo</id>
+      <username>deploy-user</username>
+      <password>my-secret-token</password>
+    </server>
+  </servers>
+  <profiles>
+    <profile>
+      <id>private</id>
+      <repositories>
+        <repository>
+          <id>my-private-repo</id>
+          <url>https://maven.example.com/releases</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>private</activeProfile>
+  </activeProfiles>
+</settings>
+```
+
 ## Instant preview & testing
 
 

@@ -441,7 +441,7 @@ By enabling this option, only users logged in to Windmill can approve the step.
 
 ### Disable self-approval
 
-The user who triggered the flow will not be allowed to approve it.
+The user who triggered the flow will not be allowed to approve it. This restriction is enforced both on the approval page and on the flow resume API endpoint, preventing flow owners from bypassing approval requirements programmatically.
 
 ![Disable self-approval](../assets/flows/disable-self-approval.png 'Disable self-approval')
 
