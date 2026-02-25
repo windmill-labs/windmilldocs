@@ -277,6 +277,60 @@ export async function main(
 
 This allows you to customize error handling behavior per trigger while maintaining consistent fallback to workspace-level error handling.
 
+### Skip error handler for user-scoped scripts and flows
+
+A workspace setting allows disabling the error handler for scripts and flows under `u/` (user) paths. When enabled, errors in user-scoped runnables will not trigger the workspace error handler. This is useful to avoid noise from personal development scripts.
+
+## Workspace success handler
+
+Configure a script to run automatically when jobs complete successfully in the workspace. This is the counterpart to the [workspace error handler](#workspace-error-handler) — while the error handler runs on failures, the success handler runs on successful completions.
+
+Workspace success handler is an [Enterprise Edition](/pricing) feature.
+
+Configure workspace success handlers from **Workspace Settings > Error Handler** tab (in the success handler section).
+
+**Parameters passed to success handlers:**
+
+- `path`: The path of the script or flow that succeeded
+- `email`: The email of the user who ran the script or flow
+- `result`: The result of the successful job
+- `job_id`: The job id
+- `is_flow`: Whether the job is a flow
+- `workspace_id`: The workspace id
+- `started_at`: When the job started
+
+**Success handler template:**
+
+```ts
+export async function main(
+	path: string,
+	email: string,
+	result: any,
+	job_id: string,
+	is_flow: boolean,
+	workspace_id: string,
+	started_at: string
+) {
+	const run_type = is_flow ? 'flow' : 'script';
+	console.log(
+		`Success: ${run_type} ${path} run by ${email} completed in workspace ${workspace_id}`
+	);
+	console.log(`Job ${job_id} started at ${started_at}`);
+	console.log('Result:', JSON.stringify(result));
+
+	// Add your custom success handling logic here
+	// Examples: send metrics, update dashboards, notify on completion
+
+	return { handled: true, workspace_id, job_id };
+}
+```
+
+The success handler is executed by the automatically created group `g/success_handler`. If your handler requires variables or resources, add them to this group.
+
+:::info Cache propagation
+Success handler settings are cached for 60 seconds. After updating the configuration, it may take up to 60 seconds for the change to take effect.
+:::
+
 ## Instance error handler
 
 You can define a script to be executed automatically in case of error in your instance (all workspaces).

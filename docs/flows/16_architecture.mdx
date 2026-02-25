@@ -56,6 +56,17 @@ and a few more functions which are the following:
 Using JavaScript in this manner, for every parameter, is extremely flexible and
 allows Windmill to be extremely generic in the kind of modules it runs.
 
+### JavaScript evaluation engine
+
+Flow expressions (input transforms, branch predicates, for-loop iterators) are evaluated using a JavaScript engine. Two engines are available:
+
+- **QuickJS**: A lightweight JavaScript engine with 8-16x faster startup times for simple expressions. It uses lazy evaluation — `resource()` and `variable()` calls are resolved on demand rather than pre-fetched, which is more efficient for expressions that don't use all available resources.
+- **Deno (V8)**: The full V8-based JavaScript engine with broader compatibility.
+
+On Community Edition, QuickJS is the default engine. To switch back to Deno, set the `USE_DENO_FOR_FLOW_EVAL` environment variable.
+
+On Enterprise Edition, Deno remains the default. To opt into QuickJS, set the `USE_QUICKJS_FOR_FLOW_EVAL` environment variable.
+
 ### Connecting flow steps
 
 For each field, one has the option to write the JavaScript directly or to use

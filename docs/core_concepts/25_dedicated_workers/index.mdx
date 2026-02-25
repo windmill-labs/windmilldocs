@@ -55,6 +55,21 @@ Each [run](../5_monitor_past_and_future_runs/index.mdx) will have a Worker group
 	/>
 </div>
 
+## Multiple dedicated workers per worker group
+
+A worker group can be configured with multiple dedicated workers, allowing a single worker to be dedicated to several scripts or flows across workspaces. Instead of configuring a single `worker:path`, use the `dedicated_workers` array in the worker group configuration:
+
+```
+dedicated_workers:
+  - "workspace_id:f/folder/script_a"
+  - "workspace_id:f/folder/script_b"
+  - "other_workspace:u/user/script_c"
+```
+
+Each entry uses the format `<workspace_id>:<path>`. The worker will dispatch incoming jobs to the appropriate dedicated runner based on the job's script path.
+
+This is configured from the worker group settings in the UI using the dedicated workers selector, which lets you search and pick scripts and flows from any workspace.
+
 ## Dedicated workers for flows
 
 Dedicated workers can also be assigned to a flow. In that case, the dedicated worker will start one runner for each flow step that supports it ([TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), and native TypeScript), eliminating cold start between each execution.

@@ -64,6 +64,14 @@ When running a flow and passing an asset as an input, it will appear as an input
 
 ![Flow input assets](./flow_input_assets.png 'Flow input assets')
 
+## Column-level tracking
+
+For [DuckDB](../../integrations/duckdb.md) and [data table](../11_persistent_storage/data_tables.mdx) assets, Windmill tracks which columns are accessed by each script or flow step. The SQL parser detects column references in `SELECT`, `INSERT`, and `UPDATE` statements and records whether each column is read or written.
+
+Column information is displayed:
+- In the [flow editor](../../flows/1_flow_editor.mdx) as column badges on asset nodes, showing which columns each step reads or writes.
+- In the asset usage drawer, alongside the script/flow path and read/write mode.
+
 ## Tracking where your assets are used
 
 Assets are stored in the database upon script / flow deployment.
@@ -72,3 +80,17 @@ You can see a list of all assets used in your workspace by going to the Assets t
 Clicking on the `usages` link will show the list of scripts and flows that use the asset.
 
 ![Assets page](./assets_page.png 'Assets page')
+
+## Assets exploration
+
+The Assets page provides an overview of all workspace data sources organized by category:
+
+- **Data tables**: Lists all [data tables](../11_persistent_storage/data_tables.mdx) in the workspace with an explore button to open them in the [database manager](../3_resources_and_types/index.mdx#database-manager).
+- **Ducklakes**: Lists all [Ducklake](../../integrations/duckdb.md) tables with explore access.
+- **Workspace object storages**: Lists primary and [secondary S3 storages](../38_object_storage_in_windmill/index.mdx) configured in the workspace.
+
+Below the exploration cards, a table of "Latest assets used" shows recent asset activity with filters for asset path, usage path, and asset kind.
+
+## Favorite assets
+
+You can star/favorite individual tables within data tables and Ducklakes directly from the [database manager](../3_resources_and_types/index.mdx#database-manager). Starred tables appear in the favorites menu for quick access. Clicking a favorite opens the database manager directly to that table.
