@@ -332,7 +332,7 @@ export function AgentModeTabs() {
 	const [activeTab, setActiveTab] = useState(0);
 	const tabs = [
 		{ icon: Zap, label: 'Visual AI builder' },
-		{ icon: Terminal, label: 'Claude / Codex / Opencode' },
+		{ icon: Terminal, label: 'Claude / Codex / Opencode (Coming soon)' },
 	];
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
@@ -581,7 +581,7 @@ export default function AiAgentsContent({ title, description }) {
 			<div className="">
 			<UseCaseFAQ faqs={[
 				{ question: 'What LLM providers does Windmill support?', textAnswer: 'Windmill supports OpenAI, Anthropic, Azure OpenAI, Mistral, DeepSeek, Google AI (Gemini), Groq, OpenRouter, Together AI and any OpenAI-compatible endpoint. Switch providers by changing a single resource, no code changes required.' },
-				{ question: 'How do Windmill AI agents differ from LangChain?', textAnswer: 'Windmill agents are flow steps, not a framework. Your existing scripts become tools automatically via their typed parameters. You get observability, retries, RBAC and deployment for free because agents run inside the Windmill workflow engine. LangChain requires you to build all of that yourself.' },
+				{ question: 'How do Windmill AI agents differ from LangChain?', textAnswer: 'Windmill is a platform, not a framework. You can build agents visually with the AI builder, run coding agents like Claude Code or Codex in sandboxes, or combine both as steps in a flow. Your existing scripts become tools automatically via their typed parameters, and you get observability, retries, RBAC and deployment for free. LangChain requires you to build all of that yourself.' },
 				{ question: 'Can AI agents call external APIs and databases?', textAnswer: 'Yes. Any Windmill script can be used as a tool, and scripts can connect to any API, database or service using Windmill resources. Credentials are managed centrally and never exposed to the LLM.' },
 				{ question: 'How does the Claude Code / Codex / Opencode sandbox work?', textAnswer: 'Windmill runs Claude Code, Codex or Opencode inside nsjail-isolated workers where they can use their full capabilities. Pre-configured snapshots (agents.md, skills, dependencies) are cached for instant startup. Persistent volumes stored on workspace S3 give the agent memory across runs. The agent accesses secrets and resources via the Windmill SDK but cannot escape the sandbox. Sandbox agents can be used as steps in any flow, just like the visual AI builder.' },
 				{ question: 'Does Windmill support streaming?', textAnswer: 'Yes. Agent responses can be streamed token by token in chat mode, in the flow editor preview and via the API. Streaming works with all supported LLM providers.' },
