@@ -6,31 +6,24 @@ description: Axians is a managed service provider with approximately 400 employe
 import CodeBlock from '@theme/CodeBlock';
 import React from 'react';
 import Link from '@docusaurus/Link';
-import { ArrowLeft } from 'lucide-react';
 import CaseStudySidebar from '@site/src/components/case-studies/CaseStudySidebar';
+import CaseStudyBackLink from '@site/src/components/case-studies/CaseStudyBackLink';
 import { axiansCaseStudy } from '@site/src/data/case-studies/axians';
 
 export default function AxiansContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				{/* Back button */}
-				<Link
-					to="/case-studies"
-					className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
-				>
-					<ArrowLeft className="w-4 h-4" />
-					Back to Case studies
-				</Link>
+				<CaseStudyBackLink />
 
 				{/* Two-column layout */}
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 					<CaseStudySidebar
 						logo={{
 							light: "/images/brands/axians.svg",
-							dark: "/images/brands/axians-light.svg",
+							dark: "/images/brands/axians.svg",
 							alt: "Axians logo",
-							className: "h-44 w-auto object-contain mb-6 grayscale"
+							className: "h-44 w-auto object-contain mb-6"
 						}}
 						industry="IT Infrastructure"
 						companySize="400"
@@ -94,7 +87,7 @@ export default function AxiansContent({ title, description }) {
 		"We manage network and datacenter environments for customers such as government agencies, schools, hospitals, and large enterprises. These customers entrust Axians with mission-critical infrastructure, which requires a high degree of control, transparency, and compliance. To meet these expectations, we want to enable our engineers—who work closest to the customer—to develop automations themselves, within a centrally governed, secure, and auditable platform."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
-		— Ben Willems, Product Owner, Automation Team
+		— <a href="https://www.linkedin.com/in/benwillems/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Ben Willems</a>, Product Owner, Automation Team
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">

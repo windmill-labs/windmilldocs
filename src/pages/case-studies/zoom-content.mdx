@@ -6,29 +6,22 @@ description: Zoom's Global Architecture organization built a centralized demo pl
 import CodeBlock from '@theme/CodeBlock';
 import React from 'react';
 import Link from '@docusaurus/Link';
-import { ArrowLeft } from 'lucide-react';
 import CaseStudySidebar from '@site/src/components/case-studies/CaseStudySidebar';
+import CaseStudyBackLink from '@site/src/components/case-studies/CaseStudyBackLink';
 import { zoomCaseStudy } from '@site/src/data/case-studies/zoom';
 
 export default function ZoomContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				{/* Back button */}
-				<Link
-					to="/case-studies"
-					className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
-				>
-					<ArrowLeft className="w-4 h-4" />
-					Back to Case studies
-				</Link>
+				<CaseStudyBackLink />
 
 				{/* Two-column layout */}
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 					<CaseStudySidebar
 						logo={{
-							light: "/images/brands/zoom-light.webp",
-							dark: "/images/brands/zoom-dark.webp",
+							light: "/images/brands/zoom.svg",
+							dark: "/images/brands/zoom.svg",
 							alt: "Zoom logo",
 							className: "h-44 w-auto object-contain mb-6"
 						}}

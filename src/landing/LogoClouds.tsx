@@ -94,7 +94,8 @@ export default function LogoClouds() {
 							title={String(logo.name)}
 							className={classNames(
 								'flex items-center justify-center relative group',
-								logo.name === 'Nocd' && 'mt-[-8px]'
+								logo.name === 'Nocd' && 'mt-[-8px]',
+								logo.name === 'Bloomcredit' && 'hidden sm:flex'
 							)}
 						>
 							{logo.hoverSrc ? (

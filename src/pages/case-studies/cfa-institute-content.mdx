@@ -6,21 +6,15 @@ description: CFA Institute's SRE team needed to replace n8n with a platform robu
 import CodeBlock from '@theme/CodeBlock';
 import React from 'react';
 import Link from '@docusaurus/Link';
-import { ArrowLeft } from 'lucide-react';
 import CaseStudySidebar from '@site/src/components/case-studies/CaseStudySidebar';
+import CaseStudyBackLink from '@site/src/components/case-studies/CaseStudyBackLink';
 import { cfaInstituteCaseStudy } from '@site/src/data/case-studies/cfa-institute';
 
 export default function CFAInstituteContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<Link
-					to="/case-studies"
-					className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
-				>
-					<ArrowLeft className="w-4 h-4" />
-					Back to Case studies
-				</Link>
+				<CaseStudyBackLink />
 
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 					<CaseStudySidebar
@@ -80,7 +74,7 @@ export default function CFAInstituteContent({ title, description }) {
 		"Our company has strict requirements around maintenance and deployment processes. We needed a way to get scripts into production quickly while still meeting those compliance standards."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
-		— Cam Barts, Manager, SRE
+		— <a href="https://www.linkedin.com/in/cam-barts/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">Cam Barts</a>, Manager, SRE
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">

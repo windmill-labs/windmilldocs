@@ -6,22 +6,15 @@ description: When Airplane.dev shut down, Panther Labs had 30 days to migrate th
 import CodeBlock from '@theme/CodeBlock';
 import React from 'react';
 import Link from '@docusaurus/Link';
-import { ArrowLeft } from 'lucide-react';
 import CaseStudySidebar from '@site/src/components/case-studies/CaseStudySidebar';
+import CaseStudyBackLink from '@site/src/components/case-studies/CaseStudyBackLink';
 import { pantherLabsCaseStudy } from '@site/src/data/case-studies/panther-labs';
 
 export default function PantherLabsContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				{/* Back button */}
-				<Link
-					to="/case-studies"
-					className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 mb-8 !no-underline"
-				>
-					<ArrowLeft className="w-4 h-4" />
-					Back to Case studies
-				</Link>
+				<CaseStudyBackLink />
 
 				{/* Two-column layout */}
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -30,7 +23,7 @@ export default function PantherLabsContent({ title, description }) {
 							light: "/images/brands/panther-light.svg",
 							dark: "/images/brands/panther-dark.svg",
 							alt: "Panther Labs logo",
-							className: "h-44 w-auto object-contain mb-6 grayscale"
+							className: "h-44 w-auto object-contain mb-6"
 						}}
 						industry="Cybersecurity"
 						companySize="100-500"
@@ -85,7 +78,7 @@ export default function PantherLabsContent({ title, description }) {
 		"We were fully embedded into this platform. Everything was fine. We weren't looking to migrate. They got acqui-killed... we had to migrate to a new platform in 30 days."
 	</p>
 	<cite className="text-sm text-gray-500 dark:text-gray-400">
-		— BJ Maldonado, Platform Manager
+		— <a href="https://www.linkedin.com/in/bjmaldonado/" target="_blank" rel="noopener noreferrer" className="text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 underline cursor-pointer">BJ Maldonado</a>, Platform Manager
 	</cite>
 </blockquote>
 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
