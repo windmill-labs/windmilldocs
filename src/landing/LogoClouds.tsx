@@ -31,11 +31,10 @@ export default function LogoClouds() {
 		},
 		{
 			url: '/case-studies/cfa-institute',
-			dark: '/images/brands/cfa-institute-light.svg',
-			light: '/images/brands/cfa-institute-dark.svg',
+			dark: '/images/brands/cfa-institute-dark.svg',
+			light: '/images/brands/cfa-institute-light.svg',
 			name: 'CFA Institute',
 			internal: true,
-			hoverSrc: '/images/brands/cfa-institute-hoover.svg'
 		},
 		{
 			url: '/case-studies/axians',
