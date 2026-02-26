@@ -13,6 +13,7 @@ import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CaseStudyCard from '../../components/use-cases/CaseStudyCard';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
+import GithubStarCount from '../../landing/GithubStarCount';
 import { useColorMode } from '@docusaurus/theme-common';
 import { cfaInstituteCaseStudy } from '../../data/case-studies/cfa-institute';
 import { zoomCaseStudy } from '../../data/case-studies/zoom';
@@ -30,12 +31,12 @@ export const stagger = (delay = 0) => ({
 });
 
 export const scheduleFeatures = [
-	{ icon: Code2, title: 'Write in 20+ languages', desc: 'Write a scheduled job as a simple script in TypeScript, Python, Go, SQL, Bash or any supported language. Compose multiple steps into a flow. Windmill handles execution, isolation and dependency management.', image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' },
-	{ icon: Calendar, title: 'Visual cron builder', desc: 'Build schedules with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.', image: '/img/money-pages/cron-schedule.webp', docLink: '/docs/core_concepts/scheduling' },
-	{ icon: Bell, title: 'Error handling & retries', desc: 'Configure retries with constant or exponential backoff. Attach error handler scripts that run on failure and recovery handlers that fire when a schedule succeeds again. Route alerts to Slack, Teams, email or any webhook.', image: '/img/money-pages/error-handler.webp', docLink: '/docs/core_concepts/scheduling#error-handler' },
-	{ icon: Eye, title: 'Execution history', desc: 'Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect logs and re-run with one click.', image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
-	{ icon: Terminal, title: 'Local development', desc: 'Scheduled scripts are plain code files on disk. Write them with your favorite tools (VS Code, Cursor, Claude Code) and deploy with the Windmill CLI. Four commands from terminal to a running schedule.', image: '/img/money-pages/local-schedule.webp', docLink: '/docs/advanced/local_development' },
-	{ icon: Rocket, title: 'Deploy in seconds', desc: 'Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the CLI or Git sync with your CI/CD pipeline.', image: '/img/money-pages/deploy-schedule.webp', docLink: '/docs/advanced/deploy_to_prod' },
+	{ icon: Code2, title: 'Write in 20+ languages', desc: <span>Write a scheduled job as a simple script in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> or any supported language. Compose multiple steps into a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>. Windmill handles execution, isolation and dependency management.</span>, image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' },
+	{ icon: Calendar, title: 'Visual cron builder', desc: <span>Build <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">schedules</Link> with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.</span>, image: '/img/money-pages/cron-schedule.webp', docLink: '/docs/core_concepts/scheduling' },
+	{ icon: Bell, title: 'Error handling & retries', desc: <span>Configure <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with constant or exponential backoff. Attach <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handler</Link> scripts that run on failure and recovery handlers that fire when a schedule succeeds again. Route alerts to Slack, Teams, email or any webhook.</span>, image: '/img/money-pages/error-handler.webp', docLink: '/docs/core_concepts/scheduling#error-handler' },
+	{ icon: Eye, title: 'Execution history', desc: <span>Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">logs</Link> and re-run with one click. Track resource usage, monitor <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> and set up alerts for failures.</span>, image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
+	{ icon: Terminal, title: 'Local development', desc: <span>Scheduled scripts are plain code files on disk. Write them with your favorite tools (VS Code, Cursor, Claude Code) and deploy with the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link>. Four commands from terminal to a running schedule.</span>, image: '/img/money-pages/local-schedule.webp', docLink: '/docs/advanced/local_development' },
+	{ icon: Rocket, title: 'Deploy in seconds', desc: <span>Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> with your CI/CD pipeline.</span>, image: '/img/money-pages/deploy-schedule.webp', docLink: '/docs/advanced/deploy_to_prod' },
 ];
 
 
@@ -79,6 +80,7 @@ export default function ScheduledTasksContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
 							Schedule your most critical tasks with confidence
 						</h1>

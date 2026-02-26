@@ -13,6 +13,7 @@ import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
 import { athenaIntelligenceCaseStudy } from '../../data/case-studies/athena-intelligence';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
+import GithubStarCount from '../../landing/GithubStarCount';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -376,6 +377,7 @@ export default function AiAgentsContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 				<motion.div {...fadeIn}>
+					<div className="mb-4"><GithubStarCount /></div>
 					<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
 						Build AI agents with full control and observability
 					</h1>

@@ -15,7 +15,9 @@ import classNames from 'classnames';
 import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
 import LogoClouds from '../../landing/LogoClouds';
+import GithubStarCount from '../../landing/GithubStarCount';
 
 export function PythonColored({ className }) {
 	return (
@@ -254,15 +256,6 @@ export function HeroAnimation() {
 
 export const workflowFeatures = [
 	{
-		id: 'dag-workflow',
-		icon: Layers,
-		label: 'DAG visualizer',
-		title: 'DAG visualizer',
-		desc: <span>See your entire workflow as an interactive graph. Inspect inputs and outputs at each node, follow data as it flows between <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">steps</Link>, spot bottlenecks at a glance and restart from any step without replaying the full run.</span>,
-		image: '/img/money-pages/dag-workflow.png',
-		docLink: '/docs/flows/flow_editor',
-	},
-	{
 		id: 'steps-as-code',
 		icon: Code,
 		label: 'Steps as code',
@@ -270,6 +263,15 @@ export const workflowFeatures = [
 		desc: <span>Write each workflow step in the language that fits best. <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, SQL, Go, Bash</Link>, Rust, PHP and 20+ more. Mix and match freely within a single flow.</span>,
 		image: '/img/money-pages/workflow-code.png',
 		docLink: '/docs/getting_started/scripts_quickstart',
+	},
+	{
+		id: 'dag-workflow',
+		icon: Layers,
+		label: 'DAG visualizer',
+		title: 'DAG visualizer',
+		desc: <span>See your entire workflow as an interactive graph. Inspect inputs and outputs at each node, follow data as it flows between <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">steps</Link>, spot bottlenecks at a glance and restart from any step without replaying the full run.</span>,
+		image: '/img/money-pages/dag-workflow.png',
+		docLink: '/docs/flows/flow_editor',
 	},
 	{
 		id: 'resources',
@@ -285,7 +287,7 @@ export const workflowFeatures = [
 		icon: GitBranch,
 		label: 'Branching, loops & approvals',
 		title: 'Branching, loops & approvals',
-		desc: <span>Use <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">branching</Link> (if/else, parallel fan-out), <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">for-loops</Link> with configurable parallelism, while-loops for polling, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approval steps</Link> that suspend until a human approves, and per-step <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with exponential backoff and custom timeouts.</span>,
+		desc: <span>Use <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">branching</Link> (if/else, parallel fan-out), <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">for-loops</Link> with configurable parallelism, while-loops for polling, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">and approval steps</Link> that suspend until someone approves.</span>,
 		image: '/img/money-pages/parallel-branches.webp',
 		docLink: '/docs/flows/flow_editor',
 	},
@@ -423,6 +425,7 @@ export default function WorkflowAutomationContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
 							Build production-grade workflows
 						</h1>
@@ -481,6 +484,18 @@ export default function WorkflowAutomationContent({ title, description }) {
 		/>
 
 			<ScaleAndSpeedSection />
+
+			{/* Case study */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
+				<CaseStudyBanner
+					logo="/images/brands/panther-light.svg"
+					logoDark="/images/brands/panther-dark.svg"
+					title="How Panther Labs runs customer provisioning workflows in production with Windmill"
+					description="Panther Labs uses Windmill to orchestrate customer provisioning, AWS account management and infrastructure deployment across their cybersecurity platform."
+					link="/case-studies/panther-labs"
+					from="workflow-automation"
+				/>
+			</div>
 
 			{/* More use cases */}
 			<UseCaseCarousel
