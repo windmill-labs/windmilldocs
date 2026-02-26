@@ -7,8 +7,28 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2 } from 'lucide-react';
+import { SiTypescript } from 'react-icons/si';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
+
+export function PythonColored({ className }) {
+	return (
+		<svg viewBox="0 0 256 255" className={className} xmlns="http://www.w3.org/2000/svg">
+			<defs>
+				<linearGradient id="pyA" x1="12.96%" y1="12.07%" x2="79.64%" y2="78.8%">
+					<stop offset="0%" stopColor="#387EB8" />
+					<stop offset="100%" stopColor="#366994" />
+				</linearGradient>
+				<linearGradient id="pyB" x1="19.13%" y1="20.58%" x2="90.43%" y2="88.01%">
+					<stop offset="0%" stopColor="#FFE052" />
+					<stop offset="100%" stopColor="#FFC331" />
+				</linearGradient>
+			</defs>
+			<path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072ZM92.802 19.66a11.12 11.12 0 1 1 0 22.24 11.12 11.12 0 0 1 0-22.24Z" fill="url(#pyA)" />
+			<path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897Zm34.114-19.586a11.12 11.12 0 1 1 0-22.24 11.12 11.12 0 0 1 0 22.24Z" fill="url(#pyB)" />
+		</svg>
+	);
+}
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -28,14 +48,14 @@ export const CX = 240;
 export const NH = 40;
 
 export const dagNodes = [
-	{ id: 'trigger',   label: 'Trigger',              x: CX,       y: 40,   w: 230, icon: Zap,         color: 'bg-blue-50 dark:bg-blue-900/20',     borderColor: 'border-blue-200 dark:border-blue-700',     iconColor: 'text-blue-500',    textColor: 'text-gray-700 dark:text-gray-200' },
-	{ id: 'input',     label: 'Input',                x: CX,       y: 120,  w: 230, icon: null,        color: 'bg-gray-50 dark:bg-gray-800/40',     borderColor: 'border-gray-200 dark:border-gray-600',     iconColor: '',                 textColor: 'text-gray-600 dark:text-gray-300' },
-	{ id: 'create',    label: 'Create AWS resources',  x: CX,       y: 210,  w: 230, icon: null,        color: 'bg-white dark:bg-gray-800/60',       borderColor: 'border-gray-200 dark:border-gray-600',     iconColor: '',                 textColor: 'text-gray-700 dark:text-gray-200' },
-	{ id: 'branch-a',  label: 'Setup permissions',    x: CX - 120, y: 320, w: 230, icon: null,        color: 'bg-blue-50 dark:bg-blue-900/20',     borderColor: 'border-blue-200 dark:border-blue-700',     iconColor: '',                 textColor: 'text-gray-700 dark:text-gray-200' },
-	{ id: 'branch-b',  label: 'Configure database',   x: CX + 120, y: 320, w: 230, icon: null,        color: 'bg-blue-50 dark:bg-blue-900/20',     borderColor: 'border-blue-200 dark:border-blue-700',     iconColor: '',                 textColor: 'text-gray-700 dark:text-gray-200' },
-	{ id: 'merge',     label: 'Collect results',      x: CX,       y: 430, w: 230, icon: GitFork,      color: 'bg-violet-50 dark:bg-violet-900/20', borderColor: 'border-violet-200 dark:border-violet-700', iconColor: 'text-violet-500',  textColor: 'text-gray-700 dark:text-gray-200' },
-	{ id: 'email',     label: 'Send welcome email',   x: CX,       y: 520, w: 230, icon: null,        color: 'bg-white dark:bg-gray-800/60',       borderColor: 'border-gray-200 dark:border-gray-600',     iconColor: '',                 textColor: 'text-gray-700 dark:text-gray-200' },
-	{ id: 'result',    label: 'Result',               x: CX,       y: 610, w: 230, icon: CheckCircle2, color: 'bg-emerald-50 dark:bg-emerald-900/20', borderColor: 'border-emerald-200 dark:border-emerald-700', iconColor: 'text-emerald-500', textColor: 'text-gray-700 dark:text-gray-200' },
+	{ id: 'trigger',   label: 'Trigger',              x: CX,       y: 40,   w: 230, icon: Zap,         color: 'bg-blue-50',     borderColor: 'border-blue-200',     iconColor: 'text-blue-500',    textColor: 'text-gray-700' },
+	{ id: 'input',     label: 'Input',                x: CX,       y: 120,  w: 230, icon: null,        color: 'bg-gray-50',     borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-600' },
+	{ id: 'create',    label: 'Create AWS resources',  x: CX,       y: 210,  w: 230, icon: SiTypescript,        color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: 'text-[#3178C6]',   textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'branch-a',  label: 'Setup permissions',    x: CX - 120, y: 320, w: 230, icon: PythonColored,   color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'branch-b',  label: 'Configure database',   x: CX + 120, y: 320, w: 230, icon: PythonColored,   color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'merge',     label: 'Collect results',      x: CX,       y: 430, w: 230, icon: GitFork,      color: 'bg-violet-50', borderColor: 'border-violet-200', iconColor: 'text-violet-500',  textColor: 'text-gray-700' },
+	{ id: 'email',     label: 'Send welcome email',   x: CX,       y: 520, w: 230, icon: SiTypescript,        color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: 'text-[#3178C6]',   textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'result',    label: 'Result',               x: CX,       y: 610, w: 230, icon: null,         color: 'bg-gray-50',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-600', delayedIcon: CheckCircle2 },
 ];
 
 export const dagEdges = [
@@ -70,9 +90,9 @@ export const stepOutputs = {
 	trigger:    { text: 'Webhook received', detail: 'POST /api/provision' },
 	input:      { text: 'Validated input', detail: '{ customer: "Acme" }' },
 	create:     { text: 'Resources created', detail: 'ec2-i-0a3b, vpc-7f2e' },
-	'branch-b': { text: '2 branches running', detail: 'permissions + database' },
+	'branch-b': { text: 'run 2 branches', detail: 'permissions + database' },
 	merge:      { text: '2/2 branches done', detail: '1.2s total' },
-	email:      { text: 'Email sent', detail: 'welcome@acme.com' },
+	email:      { text: 'Email sent', detail: 'from : welcome@windmill.com' },
 	result:     { text: 'Success', detail: 'Provisioned in 4.8s' },
 };
 
@@ -105,12 +125,12 @@ export function StepOutput({ nodeId, delay }) {
 				animate={{ opacity: [0, 0, 1], scale: [0.8, 0.8, 1] }}
 				transition={{ duration: 0.6, delay, times: [0, 0.01, 1], ease: 'easeOut' }}
 			>
-				<div className="rounded-lg border border-green-200 dark:border-green-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm px-2.5 py-1.5 whitespace-nowrap overflow-hidden">
+				<div className="rounded-lg border border-green-800 bg-gray-900/95 backdrop-blur-sm shadow-sm px-2.5 py-1.5 overflow-hidden" style={{ width: 185 }}>
 					<div className="flex items-center gap-1.5">
 						<span className="text-green-500 text-xs">{String.fromCharCode(10003)}</span>
-						<span className="text-[11px] font-medium text-gray-800 dark:text-gray-200">{output.text}</span>
+						<span className="text-[11px] font-medium text-gray-200">{output.text}</span>
 					</div>
-					<div className="text-[10px] font-mono text-gray-500 dark:text-gray-200 mt-0.5">{output.detail}</div>
+					<div className="text-[10px] font-mono text-gray-400 mt-0.5">{output.detail}</div>
 				</div>
 			</motion.div>
 		</div>
@@ -123,14 +143,14 @@ export function HeroAnimation() {
 			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
 				{dagEdges.map((e, i) => (
 					<path key={`edge-${i}`} d={edgePath(e)}
-						className="stroke-gray-300 dark:stroke-gray-600" strokeWidth={1.5} fill="none" />
+						className="stroke-gray-300" strokeWidth={1.5} fill="none" />
 				))}
 				<path id="topRoute" d={topPath} fill="none" stroke="none" />
 				<path id="leftBranch" d={leftBranchPath} fill="none" stroke="none" />
 				<path id="rightBranch" d={rightBranchPath} fill="none" stroke="none" />
 				<path id="bottomRoute" d={bottomPath} fill="none" stroke="none" />
 				{/* Single ball: Trigger → Create AWS resources */}
-				<circle r={6} opacity="0" className="fill-blue-400 dark:fill-blue-300" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
 					<animateMotion dur={`${topDur}s`} repeatCount="1" begin={`${initDelay}s`} fill="freeze"
 						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
 						<mpath href="#topRoute" />
@@ -139,7 +159,7 @@ export function HeroAnimation() {
 						values="0;1;1;0;0;0;0;0" keyTimes={`0;0.01;${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+0.3)/totalCycleDur};0.7;0.9;1`} />
 				</circle>
 				{/* Left branch ball */}
-				<circle r={6} opacity="0" className="fill-blue-400 dark:fill-blue-300" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
 					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
 						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
 						<mpath href="#leftBranch" />
@@ -148,7 +168,7 @@ export function HeroAnimation() {
 						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
 				</circle>
 				{/* Right branch ball */}
-				<circle r={6} opacity="0" className="fill-blue-400 dark:fill-blue-300" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
 					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
 						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
 						<mpath href="#rightBranch" />
@@ -157,7 +177,7 @@ export function HeroAnimation() {
 						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
 				</circle>
 				{/* Single ball: Collect results → Result */}
-				<circle r={6} opacity="0" className="fill-blue-400 dark:fill-blue-300" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
 					<animateMotion dur={`${bottomDur}s`} repeatCount="1" begin={`${initDelay + topDur+branchDur}s`} fill="freeze"
 						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
 						<mpath href="#bottomRoute" />
@@ -179,18 +199,43 @@ export function HeroAnimation() {
 				>
 					{/* Node glow */}
 					<motion.div
-						className="absolute -inset-1 rounded-xl bg-blue-400/20 dark:bg-blue-400/10"
+						className="absolute -inset-1 rounded-xl bg-blue-400/20"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: [0, 0, 1, 1, 0] }}
 						transition={{ duration: 3, delay: stepTimings[node.id], times: [0, 0.01, 0.1, 0.7, 1], ease: 'easeOut' }}
 					/>
 					{/* Node box */}
-					<div
-						className={`relative px-4 py-2 rounded-xl border ${node.borderColor} shadow-sm ${node.color} flex items-center gap-2.5`}
-						style={{ width: node.w, height: NH, justifyContent: 'center' }}
-					>
-						{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
-						<span className={`text-sm font-medium ${node.textColor} whitespace-nowrap`}>{node.label}</span>
+					<div className="relative" style={{ width: node.w, height: NH }}>
+						{/* Initial state */}
+						<div
+							className={`absolute inset-0 px-4 py-2 rounded-xl border ${node.borderColor} shadow-sm ${node.color} flex items-center gap-2.5`}
+							style={{ justifyContent: 'center' }}
+						>
+							{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+							<span className={`text-sm font-medium ${node.textColor} whitespace-nowrap`}>{node.label}</span>
+						</div>
+						{/* Success state - fades in */}
+						{node.turnsGreen && <motion.div
+							className="absolute inset-0 px-4 py-2 rounded-xl border border-green-300 shadow-sm bg-green-50 flex items-center gap-2.5"
+							style={{ justifyContent: 'center' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [0, 0, 1] }}
+							transition={{ duration: 0.5, delay: stepTimings[node.id] + 0.2, times: [0, 0.01, 1], ease: 'easeOut' }}
+						>
+							{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+							<span className="text-sm font-medium text-green-700 whitespace-nowrap">{node.label}</span>
+						</motion.div>}
+						{/* Result node - delayed icon + success colors */}
+						{node.delayedIcon && <motion.div
+							className="absolute inset-0 px-4 py-2 rounded-xl border border-emerald-200 shadow-sm bg-emerald-50 flex items-center gap-2.5"
+							style={{ justifyContent: 'center' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [0, 0, 1] }}
+							transition={{ duration: 0.5, delay: stepTimings[node.id] + 0.2, times: [0, 0.01, 1], ease: 'easeOut' }}
+						>
+							<node.delayedIcon className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+							<span className="text-sm font-medium text-gray-700 whitespace-nowrap">{node.label}</span>
+						</motion.div>}
 					</div>
 					{/* Step output panel */}
 					<StepOutput nodeId={node.id} delay={stepTimings[node.id]} />
