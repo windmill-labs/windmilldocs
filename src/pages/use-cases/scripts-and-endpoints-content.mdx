@@ -6,8 +6,12 @@ description: "How do I deploy scripts as API endpoints with Windmill? Turn TypeS
 import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Code2, Globe, LayoutDashboard, History, Languages, Webhook } from 'lucide-react';
+import { ArrowRight, Code, Plug, Rocket, Globe, Eye, Webhook } from 'lucide-react';
 import GithubStarCount from '../../landing/GithubStarCount';
+import LogoClouds from '../../landing/LogoClouds';
+import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
+import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -21,6 +25,54 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
+export const journeyFeatures = [
+	{
+		id: 'write',
+		icon: Code,
+		label: '1. Write a script',
+		title: 'Write a script in any language',
+		desc: <span>Define a <code>main</code> function with typed parameters in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, Bash, SQL</Link>, PHP, Rust or any of 20+ supported languages. Windmill infers a JSON Schema from your types to generate input forms and validate API payloads. Use the built-in editor with autocompletion and AI code generation, or sync from <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git</Link>.</span>,
+		image: '/img/money-pages/workflow-code.webp',
+		docLink: '/docs/script_editor',
+	},
+	{
+		id: 'connect',
+		icon: Plug,
+		label: '2. Connect resources',
+		title: 'Connect to databases and APIs',
+		desc: <span>Attach <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> — PostgreSQL, MySQL, S3, Slack, or any of <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">50+ integrations</Link> — to your script. Credentials are stored centrally, encrypted, and injected at runtime. Share connections across scripts without duplicating secrets or hardcoding tokens.</span>,
+		image: '/img/money-pages/resource.webp',
+		docLink: '/docs/core_concepts/resources_and_types',
+	},
+	{
+		id: 'deploy',
+		icon: Rocket,
+		label: '3. Deploy',
+		title: 'Deploy from draft to production',
+		desc: <span>Promote a script from <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">draft to deployed</Link> in one click. Every save creates a new immutable version with diff history and instant rollback. Sync with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link> for code review, or push from the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> and CI/CD pipelines.</span>,
+		image: '/img/money-pages/deploy-workflow.webp',
+		docLink: '/docs/core_concepts/draft_and_deploy',
+	},
+	{
+		id: 'use',
+		icon: Globe,
+		label: '4. Use as endpoint',
+		title: 'Use as a webhook, API or scheduled job',
+		desc: <span>Every deployed script automatically gets a sync <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook</Link> (waits for the result) and an async webhook (returns a job ID). Pin endpoints to a specific version with hash-based URLs. Add a <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedule</Link> or trigger from <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Kafka, SQS, Postgres CDC</Link> or any event source. Non-technical users can run scripts from the auto-generated UI form.</span>,
+		image: '/img/money-pages/triggers.webp',
+		docLink: '/docs/core_concepts/webhooks',
+	},
+	{
+		id: 'monitor',
+		icon: Eye,
+		label: '5. Monitor',
+		title: 'Full observability out of the box',
+		desc: <span>Every execution is logged with inputs, outputs, duration and status. Filter <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">runs</Link> by date, status or user, inspect logs, and re-run with one click. Track resource usage across <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> and set up alerts on failures. View <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link> for every action taken on a script.</span>,
+		image: '/img/money-pages/monitoring.webp',
+		docLink: '/docs/core_concepts/jobs',
+	},
+];
+
 export default function ScriptsAndEndpointsContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
@@ -33,7 +85,7 @@ export default function ScriptsAndEndpointsContent({ title, description }) {
 						Deploy scripts as production endpoints
 					</h1>
 					<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-						For developers who want to ship scripts as production services without infrastructure overhead. Write a function, get an endpoint, a UI and full observability instantly.
+						Write a function, connect it to your services, deploy it, and get a production endpoint with built-in monitoring. No infra to manage.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4">
 						<a
@@ -55,19 +107,19 @@ export default function ScriptsAndEndpointsContent({ title, description }) {
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span><span className="text-blue-500">20+ languages</span> — TypeScript, Python, Go, SQL, Bash, Rust, PHP and more</span>
+							<span>Write in <span className="text-blue-500">TypeScript, Python, Go, Bash</span> and 20+ languages</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span><span className="text-blue-500">Zero boilerplate</span> — auto-generated UI, webhooks and logs from typed parameters</span>
+							<span>Connect to <span className="text-blue-500">50+ integrations</span> — databases, APIs, SaaS tools</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span><span className="text-blue-500">Enterprise controls</span> — versioning, approval flows, RBAC and audit logs</span>
+							<span><span className="text-blue-500">Webhooks, schedules and triggers</span> out of the box</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span><span className="text-blue-500">Part of the Windmill platform</span> — reuse scripts in flows, apps, schedules and agents</span>
+							<span><span className="text-blue-500">Full observability</span> — logs, execution history, audit trails</span>
 						</div>
 					</div>
 				</motion.div>
@@ -161,58 +213,30 @@ export default function ScriptsAndEndpointsContent({ title, description }) {
 			</div>
 			</div>
 
-			{/* How it works */}
-			<div className="">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-					<motion.div {...fadeIn} className="mb-16">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							How it works
-						</h2>
-					</motion.div>
+			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-						{[
-							{ step: '01', title: 'Write a function', desc: 'Define a main function with typed parameters in any supported language. Windmill infers the input schema.' },
-							{ step: '02', title: 'Get endpoints instantly', desc: 'Every script gets auto-generated webhook URLs (sync and async) plus a UI form for manual runs.' },
-							{ step: '03', title: 'Monitor everything', desc: 'Every execution is logged with inputs, outputs, duration and status. Search, filter and re-run from the dashboard.' },
-						].map((item, i) => (
-							<motion.div key={item.step} {...stagger(i * 0.1)} className="relative">
-								<span className="text-6xl font-bold text-blue-100 dark:text-blue-900/40">{item.step}</span>
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white mt-2 mb-2">{item.title}</h3>
-								<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-							</motion.div>
-						))}
-					</div>
-				</div>
-			</div>
+			{/* Journey: Write → Connect → Deploy → Use → Monitor */}
+			<TabFeatureSection
+				title="From script to production endpoint in 5 steps"
+				subtitle={<>Write a function in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any language</Link>, connect it to your <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>, deploy it, expose it as a <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook</Link> or <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">scheduled job</Link>, and monitor every execution.</>}
+				features={journeyFeatures}
+			/>
 
-			{/* Key features */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Everything you get from a single function
-					</h2>
-				</motion.div>
+			{/* More use cases */}
+			<UseCaseCarousel
+				current="scripts-and-endpoints"
+				subtitle="Scripts and endpoints are just one use case. The same platform powers internal tools, data pipelines, AI agents and scheduled tasks."
+			/>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{[
-						{ icon: Languages, title: 'Any language', desc: 'TypeScript (Deno/Bun), Python, Go, Bash, SQL, PHP, Rust, C# and Docker. Auto-generated lockfiles for reproducible deps.' },
-						{ icon: LayoutDashboard, title: 'Auto-generated UI', desc: 'Windmill infers a JSON Schema from your parameters and generates a form UI. Non-technical users can run scripts without code.' },
-						{ icon: Webhook, title: 'Webhook endpoints', desc: 'Sync endpoint (waits for result) and async endpoint (returns job UUID). Hash-based URLs for version pinning.' },
-						{ icon: History, title: 'Execution history', desc: 'Every run logged with inputs, outputs, duration and status. Filter by date, status, user. Re-run with one click.' },
-						{ icon: Code2, title: 'Full IDE', desc: 'Online editor with autocompletion, AI code generation, type checking and integrated testing.' },
-						{ icon: Globe, title: 'Versioning', desc: 'Every save creates a new version. Roll back anytime. Diff between versions. Deploy via Git sync.' },
-					].map((item, i) => (
-						<motion.div key={item.title} {...stagger(i * 0.08)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
-								<item.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-							</div>
-							<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-							<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-						</motion.div>
-					))}
-				</div>
-			</div>
+			{/* FAQ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What languages can I use to write scripts?', textAnswer: 'Windmill supports TypeScript (Deno and Bun), Python, Go, Bash, SQL, PHP, Rust, C#, PowerShell and Docker. Each script can use a different language. Windmill auto-generates lockfiles for reproducible dependency management.' },
+				{ question: 'How do webhooks work in Windmill?', textAnswer: 'Every deployed script gets two webhook URLs: a sync endpoint that waits for the result and returns it directly, and an async endpoint that queues the job and returns a job UUID. You can pin webhooks to a specific script version using hash-based URLs. Authentication is handled via tokens or workspace-level API keys.' },
+				{ question: 'Can non-technical users run scripts?', textAnswer: 'Yes. Windmill auto-generates a form UI from your function parameters. Anyone with workspace access can run a script from the browser without writing code. You control who can see and execute each script with role-based access controls.' },
+				{ question: 'How do I connect to databases and external APIs?', textAnswer: 'Windmill provides typed resources for 50+ services including PostgreSQL, MySQL, S3, Slack, GitHub and more. Credentials are stored encrypted, shared across scripts and injected at runtime. No hardcoded secrets in your code.' },
+				{ question: 'How is versioning handled?', textAnswer: 'Every save creates a new immutable version of your script. You can diff any two versions, roll back instantly, and pin webhook URLs to a specific version. Scripts can also be synced bidirectionally with a Git repository for code review and CI/CD workflows.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source (AGPLv3) and can be self-hosted on Docker or Kubernetes. The Community Edition is free. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
+			]} />
 
 			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
