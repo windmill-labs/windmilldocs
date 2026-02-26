@@ -52,12 +52,12 @@ const solutionsByUseCase = [
 		href: '/use-cases/internal-tools',
 		icon: WrenchScrewdriverIcon,
 	},
-	// {
-	// 	name: 'Workflow automation',
-	// 	description: 'Orchestrate multi-step processes across services.',
-	// 	href: '/use-cases/workflow-automation',
-	// 	icon: ArrowPathIcon,
-	// },
+	{
+		name: 'Workflow automation',
+		description: 'Orchestrate multi-step processes across services.',
+		href: '/use-cases/workflow-automation',
+		icon: ArrowPathIcon,
+	},
 	{
 		name: 'Data pipelines',
 		description: 'ETL, syncs and scheduled data jobs.',

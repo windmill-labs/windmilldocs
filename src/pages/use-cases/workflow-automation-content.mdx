@@ -6,7 +6,7 @@ description: "How do I automate workflows with Windmill? Build DAG-based flows w
 import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers } from 'lucide-react';
+import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2 } from 'lucide-react';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
 
@@ -22,23 +22,186 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
+{/* ── DAG workflow hero animation ── */}
+
+export const CX = 240;
+export const NH = 40;
+
 export const dagNodes = [
-	{ id: 'trigger', label: 'Trigger', x: 240, y: 60, color: 'bg-emerald-100 dark:bg-emerald-900/30', textColor: 'text-emerald-700 dark:text-emerald-300' },
-	{ id: 'branch-a', label: 'Extract A', x: 120, y: 180, color: 'bg-blue-100 dark:bg-blue-900/30', textColor: 'text-blue-700 dark:text-blue-300' },
-	{ id: 'branch-b', label: 'Extract B', x: 360, y: 180, color: 'bg-blue-100 dark:bg-blue-900/30', textColor: 'text-blue-700 dark:text-blue-300' },
-	{ id: 'merge', label: 'Transform', x: 240, y: 310, color: 'bg-purple-100 dark:bg-purple-900/30', textColor: 'text-purple-700 dark:text-purple-300' },
-	{ id: 'result', label: 'Load', x: 240, y: 420, color: 'bg-amber-100 dark:bg-amber-900/30', textColor: 'text-amber-700 dark:text-amber-300' },
+	{ id: 'trigger',   label: 'Trigger',              x: CX,       y: 40,   w: 230, icon: Zap,         color: 'bg-blue-50 dark:bg-blue-900/20',     borderColor: 'border-blue-200 dark:border-blue-700',     iconColor: 'text-blue-500',    textColor: 'text-gray-700 dark:text-gray-200' },
+	{ id: 'input',     label: 'Input',                x: CX,       y: 120,  w: 230, icon: null,        color: 'bg-gray-50 dark:bg-gray-800/40',     borderColor: 'border-gray-200 dark:border-gray-600',     iconColor: '',                 textColor: 'text-gray-600 dark:text-gray-300' },
+	{ id: 'create',    label: 'Create AWS resources',  x: CX,       y: 210,  w: 230, icon: null,        color: 'bg-white dark:bg-gray-800/60',       borderColor: 'border-gray-200 dark:border-gray-600',     iconColor: '',                 textColor: 'text-gray-700 dark:text-gray-200' },
+	{ id: 'branch-a',  label: 'Setup permissions',    x: CX - 120, y: 320, w: 230, icon: null,        color: 'bg-blue-50 dark:bg-blue-900/20',     borderColor: 'border-blue-200 dark:border-blue-700',     iconColor: '',                 textColor: 'text-gray-700 dark:text-gray-200' },
+	{ id: 'branch-b',  label: 'Configure database',   x: CX + 120, y: 320, w: 230, icon: null,        color: 'bg-blue-50 dark:bg-blue-900/20',     borderColor: 'border-blue-200 dark:border-blue-700',     iconColor: '',                 textColor: 'text-gray-700 dark:text-gray-200' },
+	{ id: 'merge',     label: 'Collect results',      x: CX,       y: 430, w: 230, icon: GitFork,      color: 'bg-violet-50 dark:bg-violet-900/20', borderColor: 'border-violet-200 dark:border-violet-700', iconColor: 'text-violet-500',  textColor: 'text-gray-700 dark:text-gray-200' },
+	{ id: 'email',     label: 'Send welcome email',   x: CX,       y: 520, w: 230, icon: null,        color: 'bg-white dark:bg-gray-800/60',       borderColor: 'border-gray-200 dark:border-gray-600',     iconColor: '',                 textColor: 'text-gray-700 dark:text-gray-200' },
+	{ id: 'result',    label: 'Result',               x: CX,       y: 610, w: 230, icon: CheckCircle2, color: 'bg-emerald-50 dark:bg-emerald-900/20', borderColor: 'border-emerald-200 dark:border-emerald-700', iconColor: 'text-emerald-500', textColor: 'text-gray-700 dark:text-gray-200' },
 ];
 
 export const dagEdges = [
-	{ src: 'trigger', dst: 'branch-a' },
-	{ src: 'trigger', dst: 'branch-b' },
-	{ src: 'branch-a', dst: 'merge' },
-	{ src: 'branch-b', dst: 'merge' },
-	{ src: 'merge', dst: 'result' },
+	{ src: 'trigger',   dst: 'input' },
+	{ src: 'input',     dst: 'create' },
+	{ src: 'create',    dst: 'branch-a' },
+	{ src: 'create',    dst: 'branch-b' },
+	{ src: 'branch-a',  dst: 'merge' },
+	{ src: 'branch-b',  dst: 'merge' },
+	{ src: 'merge',     dst: 'email' },
+	{ src: 'email',     dst: 'result' },
 ];
 
 export const dagNodeMap = Object.fromEntries(dagNodes.map(n => [n.id, n]));
+
+export function edgePath(e) {
+	const s = dagNodeMap[e.src];
+	const d = dagNodeMap[e.dst];
+	const sy = s.y + NH / 2;
+	const dy = d.y - NH / 2;
+	if (s.x === d.x) return `M${s.x},${sy} L${d.x},${dy}`;
+	const midY = (sy + dy) / 2;
+	return `M${s.x},${sy} C${s.x},${midY} ${d.x},${midY} ${d.x},${dy}`;
+}
+
+export const topPath = "M240,60 L240,100 L240,140 L240,190 L240,230";
+export const leftBranchPath = "M240,230 C240,265 120,265 120,300 L120,340 C120,375 240,375 240,410";
+export const rightBranchPath = "M240,230 C240,265 360,265 360,300 L360,340 C360,375 240,375 240,410";
+export const bottomPath = "M240,410 L240,450 L240,500 L240,540 L240,590";
+
+export const stepOutputs = {
+	trigger:    { text: 'Webhook received', detail: 'POST /api/provision' },
+	input:      { text: 'Validated input', detail: '{ customer: "Acme" }' },
+	create:     { text: 'Resources created', detail: 'ec2-i-0a3b, vpc-7f2e' },
+	'branch-b': { text: '2 branches running', detail: 'permissions + database' },
+	merge:      { text: '2/2 branches done', detail: '1.2s total' },
+	email:      { text: 'Email sent', detail: 'welcome@acme.com' },
+	result:     { text: 'Success', detail: 'Provisioned in 4.8s' },
+};
+
+export const topDur = 1.9;
+export const branchDur = 1.6;
+export const bottomDur = 1.6;
+export const totalCycleDur = topDur + branchDur + bottomDur + 1;
+
+export const initDelay = 1.5;
+export const stepTimings = {
+	trigger:    initDelay + 0,
+	input:      initDelay + 0.65,
+	create:     initDelay + 1.65,
+	'branch-a': initDelay + 2.7,
+	'branch-b': initDelay + 2.7,
+	merge:      initDelay + 3.7,
+	email:      initDelay + 4.5,
+	result:     initDelay + 5.1,
+};
+
+export const activeSequence = ['trigger', 'input', 'create', 'branch-a', 'branch-b', 'merge', 'email', 'result'];
+
+export function StepOutput({ nodeId, delay }) {
+	const output = stepOutputs[nodeId];
+	if (!output) return null;
+	return (
+		<div className="absolute left-full ml-2 z-30 top-1/2" style={{ transform: 'translateY(-50%)' }}>
+			<motion.div
+				initial={{ opacity: 0, scale: 0.8 }}
+				animate={{ opacity: [0, 0, 1], scale: [0.8, 0.8, 1] }}
+				transition={{ duration: 0.6, delay, times: [0, 0.01, 1], ease: 'easeOut' }}
+			>
+				<div className="rounded-lg border border-green-200 dark:border-green-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm px-2.5 py-1.5 whitespace-nowrap overflow-hidden">
+					<div className="flex items-center gap-1.5">
+						<span className="text-green-500 text-xs">{String.fromCharCode(10003)}</span>
+						<span className="text-[11px] font-medium text-gray-800 dark:text-gray-200">{output.text}</span>
+					</div>
+					<div className="text-[10px] font-mono text-gray-500 dark:text-gray-200 mt-0.5">{output.detail}</div>
+				</div>
+			</motion.div>
+		</div>
+	);
+}
+
+export function HeroAnimation() {
+	return (
+		<div className="relative w-[520px] h-[650px]">
+			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+				{dagEdges.map((e, i) => (
+					<path key={`edge-${i}`} d={edgePath(e)}
+						className="stroke-gray-300 dark:stroke-gray-600" strokeWidth={1.5} fill="none" />
+				))}
+				<path id="topRoute" d={topPath} fill="none" stroke="none" />
+				<path id="leftBranch" d={leftBranchPath} fill="none" stroke="none" />
+				<path id="rightBranch" d={rightBranchPath} fill="none" stroke="none" />
+				<path id="bottomRoute" d={bottomPath} fill="none" stroke="none" />
+				{/* Single ball: Trigger → Create AWS resources */}
+				<circle r={6} opacity="0" className="fill-blue-400 dark:fill-blue-300" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${topDur}s`} repeatCount="1" begin={`${initDelay}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#topRoute" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;1;1;0;0;0;0;0" keyTimes={`0;0.01;${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+0.3)/totalCycleDur};0.7;0.9;1`} />
+				</circle>
+				{/* Left branch ball */}
+				<circle r={6} opacity="0" className="fill-blue-400 dark:fill-blue-300" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#leftBranch" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
+				</circle>
+				{/* Right branch ball */}
+				<circle r={6} opacity="0" className="fill-blue-400 dark:fill-blue-300" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#rightBranch" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
+				</circle>
+				{/* Single ball: Collect results → Result */}
+				<circle r={6} opacity="0" className="fill-blue-400 dark:fill-blue-300" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${bottomDur}s`} repeatCount="1" begin={`${initDelay + topDur+branchDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#bottomRoute" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0" keyTimes={`0;${(topDur+branchDur-0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};${(topDur+branchDur+bottomDur)/totalCycleDur};${(topDur+branchDur+bottomDur+0.01)/totalCycleDur};1`} />
+				</circle>
+			</svg>
+
+			{dagNodes.map((node, i) => (
+				<div key={node.id} className="absolute"
+					style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
+				>
+				<motion.div
+					initial={{ opacity: 0, scale: 0.85 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.45, delay: i * 0.1, ease: 'easeOut' }}
+					className="relative"
+				>
+					{/* Node glow */}
+					<motion.div
+						className="absolute -inset-1 rounded-xl bg-blue-400/20 dark:bg-blue-400/10"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: [0, 0, 1, 1, 0] }}
+						transition={{ duration: 3, delay: stepTimings[node.id], times: [0, 0.01, 0.1, 0.7, 1], ease: 'easeOut' }}
+					/>
+					{/* Node box */}
+					<div
+						className={`relative px-4 py-2 rounded-xl border ${node.borderColor} shadow-sm ${node.color} flex items-center gap-2.5`}
+						style={{ width: node.w, height: NH, justifyContent: 'center' }}
+					>
+						{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+						<span className={`text-sm font-medium ${node.textColor} whitespace-nowrap`}>{node.label}</span>
+					</div>
+					{/* Step output panel */}
+					<StepOutput nodeId={node.id} delay={stepTimings[node.id]} />
+				</motion.div>
+				</div>
+			))}
+		</div>
+	);
+}
+
+}
 
 export default function WorkflowAutomationContent({ title, description }) {
 	return (
@@ -91,41 +254,7 @@ export default function WorkflowAutomationContent({ title, description }) {
 					</motion.div>
 
 					<div className="hidden md:flex items-center justify-center">
-						<div className="relative w-[480px] h-[480px]">
-							{/* Edge lines */}
-							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
-								{dagEdges.map((e, i) => (
-									<line key={`edge-${i}`} x1={dagNodeMap[e.src].x} y1={dagNodeMap[e.src].y + 24} x2={dagNodeMap[e.dst].x} y2={dagNodeMap[e.dst].y - 24}
-										className="stroke-gray-300 dark:stroke-gray-600" strokeWidth={2} />
-								))}
-								{dagEdges.map((e, i) => (
-									<motion.circle key={`dot-${i}`} r={5}
-										className="fill-blue-400 dark:fill-blue-300"
-										style={{ opacity: 0.9 }}
-										animate={{
-											cx: [dagNodeMap[e.src].x, dagNodeMap[e.dst].x, dagNodeMap[e.dst].x],
-											cy: [dagNodeMap[e.src].y + 24, dagNodeMap[e.dst].y - 24, dagNodeMap[e.dst].y - 24],
-											opacity: [0.9, 0.9, 0],
-										}}
-										transition={{ duration: 2.5, delay: i * 1.2, repeat: Infinity, repeatDelay: dagEdges.length * 1.2 - 2.5 + 0.5, ease: 'easeInOut' }}
-									/>
-								))}
-							</svg>
-							{/* Node boxes */}
-							{dagNodes.map((node, i) => (
-								<motion.div key={node.id} className="absolute"
-									style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
-									initial={{ opacity: 0, scale: 0.8 }}
-									animate={{ opacity: 1, scale: 1 }}
-									transition={{ duration: 0.5, delay: i * 0.15 }}
-								>
-									<div className={`px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm ${node.color} flex items-center gap-2`}>
-										<div className="w-2.5 h-2.5 rounded-full bg-current opacity-60" />
-										<span className={`text-sm font-semibold ${node.textColor}`}>{node.label}</span>
-									</div>
-								</motion.div>
-							))}
-						</div>
+						<HeroAnimation />
 					</div>
 				</div>
 			</div>
