@@ -170,10 +170,34 @@ Also, [extra permission](#extra-permissions) was given to Ruben as viewer.
 
 <br />
 
+## Run on behalf of
+
+Scripts and flows can be configured to run **on behalf of** a specific user. When set, that user's permissions are used during execution — the runnable can only access the resources, variables, and folders that user has rights to — and all runs are attributed to that user in the [audit logs](../14_audit_logs/index.mdx).
+
+For **apps**, run on behalf of is always enabled: app executions always use the permissions of the app's owner.
+
+**Schedules and triggers** work in a similar manner: they use the `edited_by` user as the owner of the executions they create.
+
+## Permission compartmentalization with virtual users
+
+By combining the run on behalf of mechanism with dedicated users, you can implement fine-grained permission compartmentalization. Instead of running everything as a single admin or shared account, create users scoped to specific logical modules. For example:
+
+- A `billing-bot` user with access only to billing-related resources and folders
+- A `data-pipeline` user scoped to data processing folders and their associated variables
+
+Then set scripts, flows, schedules, and triggers to run on behalf of these virtual users. A script running on behalf of `billing-bot` cannot accidentally read or modify resources outside its scope, even if the script code itself contains a bug or misconfiguration. The audit logs will also clearly show which virtual user initiated each execution.
+
+Combined with the ["run on behalf of" selector during deployments](../12_staging_prod/index.md#run-on-behalf-of), this pattern extends across workspaces: when deploying to a production workspace, you can assign each item to the appropriate virtual user in the target environment.
+
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Groups and folders"
 		description="Groups classify users with shared permissions, while folders group items and assign role-based access control."
 		href="/docs/core_concepts/groups_and_folders"
+	/>
+	<DocCard
+		title="Deploy to staging/prod"
+		description="Deploy items to another workspace with control over which user they run as."
+		href="/docs/core_concepts/staging_prod"
 	/>
 </div>
