@@ -3,10 +3,10 @@ title: "How to automate workflows with Windmill"
 description: "How do I automate workflows with Windmill? Build DAG-based flows with branching, loops, retries, approval steps and error handling in a visual editor or as code."
 ---
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2, BookOpen, Code2, AlertTriangle } from 'lucide-react';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
@@ -246,6 +246,95 @@ export function HeroAnimation() {
 	);
 }
 
+export const workflowFeatures = [
+	{
+		id: 'control-flow',
+		icon: GitBranch,
+		label: 'Control flow',
+		title: 'Full control flow primitives',
+		desc: 'Not just linear pipelines. Windmill flows support branching (if/else, parallel fan-out), for-loops with configurable parallelism, while-loops for polling, approval steps that suspend until a human approves, and per-step retries with exponential backoff and custom timeouts.',
+		docLink: '/docs/flows/flow_editor',
+	},
+	{
+		id: 'error-handling',
+		icon: AlertTriangle,
+		label: 'Error handling',
+		title: 'Error handling that doesn\'t fail silently',
+		desc: 'Each step can have its own error handling strategy. Run a custom script on failure (send a Slack alert, create a ticket, trigger a rollback), stop the flow early based on a predicate, or mark non-critical steps to continue on error.',
+		docLink: '/docs/flows/error_handling',
+	},
+	{
+		id: 'triggers',
+		icon: Webhook,
+		label: 'Triggers',
+		title: 'Trigger from anywhere',
+		desc: 'Start flows from cron schedules, webhooks, Slack commands, emails, Postgres CDC, Kafka, SQS, or manually from the UI. Combine multiple trigger types on the same flow.',
+		docLink: '/docs/getting_started/triggers',
+	},
+	{
+		id: 'code-or-visual',
+		icon: Code2,
+		label: 'Visual or code',
+		title: 'Visual editor or workflows as code',
+		desc: 'Build flows in the visual drag-and-drop editor, or define them programmatically in Python or TypeScript using decorators and the Windmill SDK. Both approaches produce the same OpenFlow JSON format and can be version-controlled with Git.',
+		docLink: '/docs/core_concepts/workflows_as_code',
+	},
+];
+
+export function WorkflowFeaturesSection() {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn} className="mb-12">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					Everything you need in a workflow engine
+				</h2>
+			</motion.div>
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+				<div className="flex flex-col gap-2">
+					{workflowFeatures.map((feat, i) => (
+						<button
+							key={feat.id}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
+							<span className="font-medium text-sm">{feat.label}</span>
+						</button>
+					))}
+				</div>
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{workflowFeatures.map((feat, i) => (
+						<div
+							key={feat.id}
+							className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link to={feat.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
 }
 
 export default function WorkflowAutomationContent({ title, description }) {
@@ -306,95 +395,7 @@ export default function WorkflowAutomationContent({ title, description }) {
 
 			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
-			{/* Control flow */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Full control flow primitives
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Not just linear pipelines. Windmill flows support the control flow you need for real-world automation.
-					</p>
-				</motion.div>
-
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-					{[
-						{ icon: GitBranch, title: 'Branching', desc: 'Conditional branches (if/else) or parallel branches (fan-out). Run multiple paths and collect all results.' },
-						{ icon: RotateCcw, title: 'Loops', desc: 'For-loops over lists with configurable parallelism. While-loops for polling, pagination or convergence logic.' },
-						{ icon: ShieldCheck, title: 'Approval steps', desc: 'Suspend a flow until a human approves. Send approval links via Slack, email or any notification system.' },
-						{ icon: Timer, title: 'Retries & timeouts', desc: 'Per-step retry count with exponential backoff. Custom timeouts to prevent hung steps from blocking the flow.' },
-					].map((item, i) => (
-						<motion.div key={item.title} {...stagger(i * 0.08)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-							<div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
-								<item.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-							</div>
-							<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-							<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-						</motion.div>
-					))}
-				</div>
-			</div>
-
-			{/* Error handling */}
-			<div className="">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-					<motion.div {...fadeIn} className="mb-16">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							Error handling that doesn't fail silently
-						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Each step can be configured with its own <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> strategy — retries, custom error handlers, early stop, continue on error, or custom timeouts.
-						</p>
-					</motion.div>
-
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-						{[
-							{ title: 'Error handlers', desc: 'Run a custom script when a step fails — send a Slack notification, create a ticket, or trigger a rollback.' },
-							{ title: 'Early stop', desc: 'Stop the entire flow based on a predicate, without marking it as failed.' },
-							{ title: 'Continue on error', desc: 'Mark non-critical steps to continue even on failure — useful for notifications or logging.' },
-						].map((item, i) => (
-							<motion.div key={item.title} {...stagger(i * 0.1)} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-								<p className="text-gray-600 dark:text-gray-300 text-sm">{item.desc}</p>
-							</motion.div>
-						))}
-					</div>
-				</div>
-			</div>
-
-			{/* Triggers */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Trigger from anywhere
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						<Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Trigger flows</Link> from cron schedules, webhooks, Slack commands, emails, Postgres CDC, Kafka, SQS — or manually from the UI.
-					</p>
-				</motion.div>
-
-				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-					{['Cron schedules', 'Webhooks', 'Slack commands', 'Emails', 'Postgres CDC', 'Kafka & SQS', 'Manual UI', 'Trigger scripts'].map((trigger, i) => (
-						<motion.div key={trigger} {...stagger(i * 0.05)} className="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 text-center">
-							<p className="text-gray-900 dark:text-white font-medium text-sm">{trigger}</p>
-						</motion.div>
-					))}
-				</div>
-			</div>
-
-			{/* Code or visual */}
-			<div className="">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-					<motion.div {...fadeIn} className="">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							Visual editor or workflows as code
-						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-							Build flows in the visual drag-and-drop editor, or define them programmatically with <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> in Python or TypeScript using decorators and the Windmill SDK. Both approaches produce the same <Link to="/docs/openflow" className="text-blue-600 dark:text-blue-400 hover:underline">OpenFlow</Link> JSON format.
-						</p>
-					</motion.div>
-				</div>
-			</div>
+			<WorkflowFeaturesSection />
 
 			{/* More use cases */}
 			<UseCaseCarousel
