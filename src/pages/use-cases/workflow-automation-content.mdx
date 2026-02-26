@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2, BookOpen, Code2, AlertTriangle } from 'lucide-react';
+import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
@@ -281,60 +282,6 @@ export const workflowFeatures = [
 	},
 ];
 
-export function WorkflowFeaturesSection() {
-	const [active, setActive] = useState(0);
-	return (
-		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-			<motion.div {...fadeIn} className="mb-12">
-				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					Everything you need in a workflow engine
-				</h2>
-			</motion.div>
-			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
-				<div className="flex flex-col gap-2">
-					{workflowFeatures.map((feat, i) => (
-						<button
-							key={feat.id}
-							onClick={() => setActive(i)}
-							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
-								i === active
-									? 'bg-blue-600 text-white border-blue-600'
-									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-							}`}
-						>
-							<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
-							<span className="font-medium text-sm">{feat.label}</span>
-						</button>
-					))}
-				</div>
-				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
-					{workflowFeatures.map((feat, i) => (
-						<div
-							key={feat.id}
-							className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
-						>
-							<div className="flex items-center gap-3 mb-4">
-								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
-							{feat.docLink && (
-								<div className="flex justify-end mt-3">
-									<Link to={feat.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
-										<BookOpen className="w-4 h-4" /> Read the docs
-									</Link>
-								</div>
-							)}
-						</div>
-					))}
-				</div>
-			</div>
-		</div>
-	);
-}
-
 }
 
 export default function WorkflowAutomationContent({ title, description }) {
@@ -395,7 +342,10 @@ export default function WorkflowAutomationContent({ title, description }) {
 
 			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
-			<WorkflowFeaturesSection />
+			<TabFeatureSection
+			title="Everything you need in a workflow engine"
+			features={workflowFeatures}
+		/>
 
 			{/* More use cases */}
 			<UseCaseCarousel
