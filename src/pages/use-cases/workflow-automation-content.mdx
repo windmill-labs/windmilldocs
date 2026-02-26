@@ -125,12 +125,12 @@ export function StepOutput({ nodeId, delay }) {
 				animate={{ opacity: [0, 0, 1], scale: [0.8, 0.8, 1] }}
 				transition={{ duration: 0.6, delay, times: [0, 0.01, 1], ease: 'easeOut' }}
 			>
-				<div className="rounded-lg border border-green-800 bg-gray-900/95 backdrop-blur-sm shadow-sm px-2.5 py-1.5 overflow-hidden" style={{ width: 185 }}>
+				<div className="rounded-lg border border-green-800 bg-gray-900/95 backdrop-blur-sm shadow-sm px-3 py-2 overflow-hidden" style={{ width: 210 }}>
 					<div className="flex items-center gap-1.5">
-						<span className="text-green-500 text-xs">{String.fromCharCode(10003)}</span>
-						<span className="text-[11px] font-medium text-gray-200">{output.text}</span>
+						<span className="text-green-400 text-sm">{String.fromCharCode(10003)}</span>
+						<span className="text-[12px] font-medium text-white">{output.text}</span>
 					</div>
-					<div className="text-[10px] font-mono text-gray-400 mt-0.5">{output.detail}</div>
+					<div className="text-[11px] font-mono text-white mt-0.5">{output.detail}</div>
 				</div>
 			</motion.div>
 		</div>
@@ -256,10 +256,10 @@ export default function WorkflowAutomationContent({ title, description }) {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Automate any workflow, visually or as code
+							Build production-grade workflows
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							For engineering and ops teams who need code-first workflow automation with enterprise controls. Build flows as DAGs with full code flexibility, not low-code limitations.
+							For engineering teams who need to build workflows with production-grade observability, scalability and security.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -281,19 +281,19 @@ export default function WorkflowAutomationContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Full code flexibility</span> — 20+ languages per step, no low-code constraints</span>
+								<span>Write workflow steps in Python, TypeScript, SQL, and <span className="text-blue-500">20+ languages</span></span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Trigger from anywhere</span> — cron, webhooks, Kafka, Postgres CDC, SQS and more</span>
+								<span>Connect steps with the <span className="text-blue-500">fastest workflow engine</span> built for enterprise scale</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Enterprise-ready</span> — SSO, RBAC, audit logs, Git sync and self-hosting</span>
+								<span><span className="text-blue-500">Enterprise-ready</span> with SSO, RBAC, audit logs, Git sync and self-hosting</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">One platform</span> — scripts, schedules, UIs, agents and pipelines all in one place</span>
+								<span><span className="text-blue-500">Everything built-in</span> from triggers and retries to approval steps, error handling and secrets</span>
 							</div>
 						</div>
 					</motion.div>
