@@ -174,7 +174,7 @@ Also, [extra permission](#extra-permissions) was given to Ruben as viewer.
 
 Scripts and flows can be configured to run **on behalf of** a specific user. When set, that user's permissions are used during execution — the runnable can only access the resources, variables, and folders that user has rights to — and all runs are attributed to that user in the [audit logs](../14_audit_logs/index.mdx).
 
-For **apps**, run on behalf of is always enabled: app executions always use the permissions of the app's owner.
+For **apps**, run on behalf of is always enabled: app executions always use the permissions of the set user (usually the app's last editor).
 
 **Schedules and triggers** work in a similar manner: they use the `edited_by` user as the owner of the executions they create.
 
