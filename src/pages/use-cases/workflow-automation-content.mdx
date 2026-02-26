@@ -16,6 +16,7 @@ import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
 
@@ -502,6 +503,16 @@ export default function WorkflowAutomationContent({ title, description }) {
 				current="workflow-automation"
 				subtitle="Workflow automation is just one use case. The same platform powers internal tools, data pipelines, AI agents and scheduled tasks."
 			/>
+
+			{/* FAQ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'How is Windmill different from Airflow?', textAnswer: 'Windmill replaces Airflow with a simpler developer experience: no DAG-as-code boilerplate, a built-in code editor with AI assistance, a visual flow editor with branching, loops and approval steps, and native support for 20+ languages. Workflows run on lightweight workers instead of a complex Celery/Kubernetes setup. You get built-in error handling, retries, observability and version control out of the box.' },
+				{ question: 'How is Windmill different from Temporal?', textAnswer: 'Temporal requires you to define workflows and activities in code with a specific SDK. Windmill lets you write plain scripts in any language and compose them visually or as code. You get a built-in UI for monitoring, a visual flow editor, approval steps, and auto-generated forms for each workflow input. No separate worker infrastructure to manage.' },
+				{ question: 'Can I write workflow steps in different languages?', textAnswer: 'Yes. Each step in a Windmill flow can be written in a different language — TypeScript, Python, SQL, Go, Bash, Rust, PHP and more. Steps pass data to each other automatically. You can mix and match languages freely within a single workflow.' },
+				{ question: 'What triggers can start a workflow?', textAnswer: 'Windmill workflows can be triggered by cron schedules, webhooks, Slack commands, emails, Postgres CDC, Kafka topics, SQS queues, or manually from the UI. You can combine multiple trigger types on the same flow.' },
+				{ question: 'Does Windmill support approval steps and human-in-the-loop?', textAnswer: 'Yes. Approval steps suspend a workflow until a human approves or rejects via the UI, email or Slack. You can add approval gates at any point in a flow, with configurable timeouts and escalation logic.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source (Apache 2.0) and can be self-hosted on your own infrastructure, from a single-node VPS to large Kubernetes clusters. The Community Edition is free. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
+			]} />
 
 			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
