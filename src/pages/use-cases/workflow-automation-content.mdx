@@ -6,7 +6,12 @@ description: "How do I automate workflows with Windmill? Build DAG-based flows w
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2, BookOpen, Code2, AlertTriangle } from 'lucide-react';
+import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2, BookOpen, Code2, Code, AlertTriangle, Rocket, Eye, Plug } from 'lucide-react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
+import { useColorMode } from '@docusaurus/theme-common';
+import { Switch } from '@headlessui/react';
+import classNames from 'classnames';
 import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
@@ -249,38 +254,165 @@ export function HeroAnimation() {
 
 export const workflowFeatures = [
 	{
+		id: 'dag-workflow',
+		icon: Layers,
+		label: 'DAG visualizer',
+		title: 'DAG visualizer',
+		desc: <span>See your entire workflow as an interactive graph. Inspect inputs and outputs at each node, follow data as it flows between <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">steps</Link>, spot bottlenecks at a glance and restart from any step without replaying the full run.</span>,
+		image: '/img/money-pages/dag-workflow.png',
+		docLink: '/docs/flows/flow_editor',
+	},
+	{
+		id: 'steps-as-code',
+		icon: Code,
+		label: 'Steps as code',
+		title: 'Steps as code',
+		desc: <span>Write each workflow step in the language that fits best. <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, SQL, Go, Bash</Link>, Rust, PHP and 20+ more. Mix and match freely within a single flow.</span>,
+		image: '/img/money-pages/workflow-code.png',
+		docLink: '/docs/getting_started/scripts_quickstart',
+	},
+	{
+		id: 'resources',
+		icon: Plug,
+		label: 'Resources',
+		title: 'Connect to any service',
+		desc: <span>Connect to <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">databases, APIs and third-party services</Link> using typed <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Credentials are stored centrally and injected at runtime. Share connections across scripts and flows without duplicating secrets.</span>,
+		image: '/img/money-pages/resource.png',
+		docLink: '/docs/core_concepts/resources_and_types',
+	},
+	{
 		id: 'control-flow',
 		icon: GitBranch,
-		label: 'Control flow',
-		title: 'Full control flow primitives',
-		desc: 'Not just linear pipelines. Windmill flows support branching (if/else, parallel fan-out), for-loops with configurable parallelism, while-loops for polling, approval steps that suspend until a human approves, and per-step retries with exponential backoff and custom timeouts.',
+		label: 'Branching, loops & approvals',
+		title: 'Branching, loops & approvals',
+		desc: <span>Use <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">branching</Link> (if/else, parallel fan-out), <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">for-loops</Link> with configurable parallelism, while-loops for polling, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approval steps</Link> that suspend until a human approves, and per-step <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with exponential backoff and custom timeouts.</span>,
+		image: '/img/money-pages/parallel-branches.webp',
 		docLink: '/docs/flows/flow_editor',
 	},
 	{
 		id: 'error-handling',
 		icon: AlertTriangle,
-		label: 'Error handling',
-		title: 'Error handling that doesn\'t fail silently',
-		desc: 'Each step can have its own error handling strategy. Run a custom script on failure (send a Slack alert, create a ticket, trigger a rollback), stop the flow early based on a predicate, or mark non-critical steps to continue on error.',
+		label: 'Error handling & retry',
+		title: 'Error handling and retry that don\'t fail silently',
+		desc: <span>Each step can have its own <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> strategy and configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with exponential backoff. Run a custom script on failure (send a Slack alert, create a ticket, trigger a rollback), stop the flow early based on a predicate, or mark non-critical steps to continue on error.</span>,
+		image: '/img/money-pages/error-handler.webp',
 		docLink: '/docs/flows/error_handling',
 	},
 	{
 		id: 'triggers',
-		icon: Webhook,
+		icon: Zap,
 		label: 'Triggers',
 		title: 'Trigger from anywhere',
-		desc: 'Start flows from cron schedules, webhooks, Slack commands, emails, Postgres CDC, Kafka, SQS, or manually from the UI. Combine multiple trigger types on the same flow.',
+		desc: <span>Start flows from <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedules</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks</Link>, Slack commands, emails, <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Postgres CDC, Kafka, SQS</Link>, or manually from the UI. Combine multiple trigger types on the same flow.</span>,
+		image: '/img/money-pages/triggers.webp',
 		docLink: '/docs/getting_started/triggers',
 	},
 	{
-		id: 'code-or-visual',
-		icon: Code2,
-		label: 'Visual or code',
-		title: 'Visual editor or workflows as code',
-		desc: 'Build flows in the visual drag-and-drop editor, or define them programmatically in Python or TypeScript using decorators and the Windmill SDK. Both approaches produce the same OpenFlow JSON format and can be version-controlled with Git.',
-		docLink: '/docs/core_concepts/workflows_as_code',
+		id: 'deploy-and-version',
+		icon: Rocket,
+		label: 'Deploy & version control',
+		title: 'Deploy & version control',
+		desc: <span>Promote flows from <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">draft to production</Link> in one click with full deployment history and instant rollbacks. Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link>, use your existing code review workflows and deploy via the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">CI/CD pipelines</Link>.</span>,
+		image: '/img/money-pages/deploy-workflow.png',
+		docLink: '/docs/advanced/git_sync',
+	},
+	{
+		id: 'observability',
+		icon: Eye,
+		label: 'Observability',
+		title: 'Full observability out of the box',
+		desc: <span>Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">logs</Link> and re-run with one click. Track resource usage, monitor <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> and set up alerts for failures.</span>,
+		image: '/img/money-pages/monitoring.webp',
+		docLink: '/docs/core_concepts/jobs',
 	},
 ];
+
+export function ScaleAndSpeedSection() {
+	const { colorMode } = useColorMode();
+	const [chart, setChart] = useState('short');
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn} className="mb-12">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					Run at any scale with best performance
+				</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300">
+					Engineered to be the fastest workflow engine in the industry. From a single-node VPS to 1,000-node Kubernetes clusters, auto-scale on demand or isolate critical tasks with dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link>.
+				</p>
+			</motion.div>
+
+			<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 p-6">
+				<div className="flex flex-row gap-2 items-center justify-end mb-4">
+					<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+						10 long tasks
+					</span>
+					<Switch
+						checked={chart === 'short'}
+						title="Switch between short and long running tasks"
+						onChange={() => setChart(chart === 'long' ? 'short' : 'long')}
+						className={`${
+							chart === 'short' ? 'bg-blue-500 dark:bg-blue-900' : 'bg-gray-200 dark:bg-gray-800'
+						} relative inline-flex h-[24px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+					>
+						<span
+							aria-hidden="true"
+							className={`${
+								chart === 'short' ? 'translate-x-6' : 'translate-x-0'
+							} pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+						/>
+					</Switch>
+					<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+						40 lightweight tasks
+					</span>
+				</div>
+				<div
+					className={classNames(
+						colorMode === 'dark' ? 'bg-black' : 'bg-gray-100',
+						'w-full p-4 md:p-8 bg-opacity-40 rounded-xl benchmark-chart-container'
+					)}
+					data-theme={colorMode}
+				>
+					<BrowserOnly fallback={<div className="h-64" />}>
+						{() => (
+							<div className="grid">
+								{chart === 'short' ? (
+									<div key="short">
+										<BenchmarkVisualization
+											usecase="fibonacci_40_10"
+											language="python"
+											engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
+											workers={1}
+											title="40 lightweight tasks comparison"
+											maintainAspectRatio={false}
+											shouldAnimate={true}
+										/>
+									</div>
+								) : (
+									<div key="long">
+										<BenchmarkVisualization
+											usecase="fibonacci_10_33"
+											language="python"
+											engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
+											workers={1}
+											title="10 long running tasks comparison"
+											maintainAspectRatio={false}
+											shouldAnimate={true}
+										/>
+									</div>
+								)}
+							</div>
+						)}
+					</BrowserOnly>
+				</div>
+				<div className="flex justify-end mt-3">
+					<Link to="/docs/misc/benchmarks/competitors" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+						<BookOpen className="w-4 h-4" /> See benchmarks
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
+}
 
 }
 
@@ -344,8 +476,11 @@ export default function WorkflowAutomationContent({ title, description }) {
 
 			<TabFeatureSection
 			title="Everything you need in a workflow engine"
+			subtitle={<>Write each step in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link> or any supported language, and connect them in the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link> with built-in error handling, retries and observability.</>}
 			features={workflowFeatures}
 		/>
+
+			<ScaleAndSpeedSection />
 
 			{/* More use cases */}
 			<UseCaseCarousel

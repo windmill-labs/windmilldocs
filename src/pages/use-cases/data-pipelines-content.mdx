@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
-import { ArrowRight, Zap, GitBranch, Clock, FileJson, RotateCcw, Code, Play, BookOpen, Database } from 'lucide-react';
+import { ArrowRight, AlertTriangle, Zap, GitBranch, FileJson, RotateCcw, Code, Play, BookOpen, Database, Plug, Layers, Rocket, Eye } from 'lucide-react';
 import BarChart from '../../components/BarChart';
 import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 
@@ -113,12 +113,16 @@ export const integrations = [
 {/* TODO: add screenshots for each DAG feature (parallel branches, restart from any step, retries & error handlers, trigger from anywhere) */}
 
 export const dagFeatures = [
-	{ icon: Code, title: '20+ languages', desc: 'Write each pipeline step in the language that fits best. Python, TypeScript, SQL, Go, Bash, Rust, PHP, and 20+ more. Mix and match freely within a single flow.', image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' },
+	{ icon: Layers, title: 'DAG Visualizer', desc: 'See your entire pipeline as an interactive graph. Inspect inputs and outputs at each node, follow data as it flows between steps, spot bottlenecks at a glance and restart from any step without replaying the full run.', image: '/img/money-pages/dag-workflow.png', docLink: '/docs/flows/flow_editor' },
+	{ icon: Code, title: 'Steps as code', desc: 'Write each pipeline step in the language that fits best. Python, TypeScript, SQL, Go, Bash, Rust, PHP, and 20+ more. Mix and match freely within a single pipeline.', image: '/img/money-pages/workflow-code.png', docLink: '/docs/getting_started/scripts_quickstart' },
+	{ icon: Plug, title: 'Resources', desc: 'Connect to databases, APIs and third-party services using typed resources. Credentials are stored centrally and injected at runtime. Share connections across scripts and flows without duplicating secrets.', image: '/img/money-pages/resource.png', docLink: '/docs/core_concepts/resources_and_types' },
 	{ icon: GitBranch, title: 'Parallel branches', desc: 'Fan out extraction steps across independent sources and collect results automatically.', image: '/img/money-pages/parallel-branches.webp', docLink: '/docs/flows/flow_branches' },
 	{ icon: RotateCcw, title: 'Restart from any step', desc: 'Fix a bug and re-run from the failing step. No need to replay the entire pipeline.', image: '/img/money-pages/restart-from-step.webp', docLink: '/docs/flows/flow_editor' },
-	{ icon: Clock, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.', image: '/img/money-pages/retries-error-handlers.webp', docLink: '/docs/flows/retries' },
+	{ icon: AlertTriangle, title: 'Retries & error handlers', desc: 'Configurable retry count with exponential backoff. Custom error handler scripts per step.', image: '/img/money-pages/error-handler.webp', docLink: '/docs/flows/retries' },
 	{ icon: Zap, title: 'Trigger from anywhere', desc: 'Cron schedules, webhooks, Postgres CDC, Kafka topics, SQS queues — or just click "Run".', image: '/img/money-pages/triggers.webp', docLink: '/docs/getting_started/triggers' },
 	{ icon: Database, title: 'Data tables', desc: 'Built-in relational storage with zero setup. Query from Python, TypeScript, SQL or DuckDB. Credentials are managed internally and never exposed.', image: '/img/money-pages/datatables.webp', docLink: '/docs/core_concepts/persistent_storage/data_tables' },
+	{ icon: Rocket, title: 'Deploy & version control', desc: 'Promote pipelines from draft to production in one click with full deployment history and instant rollbacks. Sync your workspace with GitHub or GitLab, use your existing code review workflows and deploy via the UI, the CLI or CI/CD pipelines.', image: '/img/money-pages/deploy-workflow.png', docLink: '/docs/advanced/git_sync' },
+	{ icon: Eye, title: 'Observability', desc: 'Every pipeline run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect logs and re-run with one click. Track resource usage, monitor worker groups and set up alerts for failures.', image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
 ];
 
 
@@ -420,8 +424,8 @@ export default function DataPipelinesContent({ title, description }) {
 
 			{/* DAG orchestration */}
 			<TabFeatureSection
-				title="Build pipelines with full code flexibility and DAG visualization"
-				subtitle={<>Each pipeline is a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> — a directed acyclic graph where each step is a script in Python, TypeScript, SQL or any supported language.</>}
+				title="Everything you need to build and run production-grade data pipelines"
+				subtitle={<>Write each step in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link> or any supported language, connect to your data sources with native <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link> and <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link> integrations, and deploy with built-in scheduling, retries and observability.</>}
 				features={dagFeatures}
 			/>
 
