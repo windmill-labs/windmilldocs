@@ -247,23 +247,84 @@ function MiniDag() {
 
 // ─── Mini internal app (Lottie dashboard) ───────────────────────────────────
 
-function MiniApp() {
+// Small plug-in badge showing a script is connected to a widget
+function PlugBadge({ label, isGlowing }: { label: string; isGlowing: boolean }) {
 	return (
-		<div className="relative w-[440px] h-[340px] mx-auto flex flex-col items-center">
-			{/* Script node on top */}
-			<div className="flex flex-col items-center">
-				<div className="flex items-center justify-center gap-2 rounded-xl border border-blue-400 bg-blue-50 shadow-sm" style={{ width: NODE_W, height: NODE_H, boxShadow: '0 0 12px rgba(59,130,246,0.35), 0 1px 2px rgba(0,0,0,0.05)' }}>
-					<TsLogo />
-					<span className="text-[11px] font-medium text-blue-700 whitespace-nowrap">my_script.ts</span>
-				</div>
-				<span className="text-[9px] text-gray-400 mt-1">Backend runnable</span>
-			</div>
+		<motion.div
+			className="flex items-center gap-1 rounded-md border px-1.5 py-0.5"
+			animate={isGlowing
+				? { borderColor: 'rgba(59,130,246,0.7)', backgroundColor: 'rgba(59,130,246,0.08)' }
+				: { borderColor: 'rgba(209,213,219,0.5)', backgroundColor: 'transparent' }
+			}
+			transition={{ duration: 0.3 }}
+		>
+			<motion.div
+				className="w-1.5 h-1.5 rounded-full"
+				animate={isGlowing
+					? { backgroundColor: 'rgb(96,165,250)', boxShadow: '0 0 4px rgba(96,165,250,0.8)' }
+					: { backgroundColor: 'rgb(156,163,175)', boxShadow: '0 0 0px rgba(96,165,250,0)' }
+				}
+				transition={{ duration: 0.3 }}
+			/>
+			<span className="text-[8px] font-mono text-gray-400">{label}</span>
+		</motion.div>
+	);
+}
 
-			{/* Arrow connecting script to frontend */}
-			<svg width="40" height="30" style={{ pointerEvents: 'none' }}>
-				<line x1="20" y1="0" x2="20" y2="22" className="stroke-blue-300" strokeWidth={1.5} />
-				<polygon points="14,18 20,26 26,18" className="fill-blue-300" />
-			</svg>
+function MiniApp() {
+	const PULSE_INTERVAL = 1500;
+	const [pulseIndex, setPulseIndex] = useState(0);
+	const [isGlowing, setIsGlowing] = useState(false);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setIsGlowing(true);
+			setPulseIndex((prev) => prev + 1);
+			setTimeout(() => setIsGlowing(false), 600);
+		}, PULSE_INTERVAL);
+		return () => clearInterval(interval);
+	}, []);
+
+	const stats = [
+		{ label: 'Revenue', values: ['$12,340', '$12,580', '$12,920', '$13,100'], color: 'blue' },
+		{ label: 'Users', values: ['1,205', '1,208', '1,215', '1,221'], color: 'green' },
+		{ label: 'Active', values: ['847', '852', '861', '858'], color: 'amber' },
+	];
+
+	const barSets = [
+		[18, 30, 22, 38, 28, 42, 35],
+		[22, 28, 30, 35, 32, 38, 40],
+		[20, 34, 25, 40, 30, 45, 32],
+		[24, 26, 32, 36, 34, 40, 38],
+	];
+	const bars = barSets[pulseIndex % barSets.length];
+
+	return (
+		<div className="w-[440px] mx-auto flex flex-col items-center">
+			{/* Script node above */}
+			<motion.div
+				className="flex items-center justify-center gap-2 rounded-xl border bg-blue-50 shadow-sm"
+				style={{ width: NODE_W, height: NODE_H }}
+				animate={isGlowing
+					? { borderColor: 'rgba(59,130,246,0.8)', boxShadow: '0 0 20px rgba(59,130,246,0.5), 0 1px 2px rgba(0,0,0,0.05)' }
+					: { borderColor: 'rgba(147,197,253,0.6)', boxShadow: '0 0 0px rgba(59,130,246,0), 0 1px 2px rgba(0,0,0,0.05)' }
+				}
+				transition={{ duration: 0.3 }}
+			>
+				<TsLogo />
+				<span className="text-[11px] font-medium text-blue-700 whitespace-nowrap">my_script.ts</span>
+			</motion.div>
+
+			{/* Connection line + animated ball */}
+			<div className="relative w-full flex justify-center" style={{ height: 28 }}>
+				<svg width="4" height="28" className="overflow-visible">
+					<line x1="2" y1="0" x2="2" y2="28" className="stroke-gray-300" strokeWidth={1.5} />
+					<circle r={4} className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 6px rgba(96,165,250,0.8))' }}>
+						<animateMotion dur="1.5s" repeatCount="indefinite" path="M2,0 L2,28" />
+						<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="1.5s" repeatCount="indefinite" />
+					</circle>
+				</svg>
+			</div>
 
 			{/* Frontend app mockup */}
 			<div className="w-full rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
@@ -279,45 +340,79 @@ function MiniApp() {
 				<div className="p-2.5 space-y-2">
 					{/* Stat cards */}
 					<div className="grid grid-cols-3 gap-1.5">
-						<div className="rounded-lg bg-blue-50 border border-blue-100 px-2 py-1.5">
-							<div className="text-[8px] text-gray-400">Revenue</div>
-							<div className="text-[11px] font-semibold text-gray-700">$12,340</div>
-						</div>
-						<div className="rounded-lg bg-green-50 border border-green-100 px-2 py-1.5">
-							<div className="text-[8px] text-gray-400">Users</div>
-							<div className="text-[11px] font-semibold text-gray-700">1,205</div>
-						</div>
-						<div className="rounded-lg bg-amber-50 border border-amber-100 px-2 py-1.5">
-							<div className="text-[8px] text-gray-400">Active</div>
-							<div className="text-[11px] font-semibold text-gray-700">847</div>
-						</div>
+						{stats.map((stat) => (
+							<div key={stat.label} className={`rounded-lg bg-${stat.color}-50 border border-${stat.color}-100 px-2 py-1.5`}>
+								<div className="flex items-center justify-between mb-0.5">
+									<div className="text-[8px] text-gray-400">{stat.label}</div>
+									<PlugBadge label="my_script" isGlowing={isGlowing} />
+								</div>
+								<motion.div
+									key={`${stat.label}-${pulseIndex}`}
+									className="text-[11px] font-semibold text-gray-700"
+									initial={{ opacity: 0.5 }}
+									animate={{ opacity: 1 }}
+									transition={{ duration: 0.3 }}
+								>
+									{stat.values[pulseIndex % stat.values.length]}
+								</motion.div>
+							</div>
+						))}
 					</div>
 					{/* Chart + Table side by side */}
 					<div className="grid grid-cols-2 gap-1.5">
 						{/* Mini bar chart */}
 						<div className="rounded-lg border border-gray-100 p-2">
-							<div className="text-[8px] text-gray-400 mb-1.5">Monthly activity</div>
+							<div className="flex items-center justify-between mb-1.5">
+								<div className="text-[8px] text-gray-400">Monthly activity</div>
+								<PlugBadge label="my_script" isGlowing={isGlowing} />
+							</div>
 							<svg viewBox="0 0 120 50" className="w-full h-[44px]">
-								{[18, 30, 22, 38, 28, 42, 35].map((h, i) => (
-									<rect key={i} x={4 + i * 17} y={50 - h} width={10} rx={2} height={h} className={i === 5 ? 'fill-blue-400' : 'fill-blue-200'} />
+								{bars.map((h, i) => (
+									<motion.rect
+										key={i}
+										x={4 + i * 17}
+										width={10}
+										rx={2}
+										animate={{ y: 50 - h, height: h }}
+										transition={{ duration: 0.4, ease: 'easeOut' }}
+										className={i === 5 ? 'fill-blue-400' : 'fill-blue-200'}
+									/>
 								))}
 							</svg>
 						</div>
 						{/* Mini table */}
 						<div className="rounded-lg border border-gray-100 p-2">
-							<div className="text-[8px] text-gray-400 mb-1">Table</div>
-							{[['Alice', '$420', 'Active'], ['Bob', '$310', 'Pending'], ['Carol', '$580', 'Active']].map(([name, amt, status], i) => (
+							<div className="flex items-center justify-between mb-1">
+								<div className="text-[8px] text-gray-400">Table</div>
+								<PlugBadge label="my_script" isGlowing={isGlowing} />
+							</div>
+							{[
+								['Alice', ['$420', '$435', '$450', '$448']],
+								['Bob', ['$310', '$310', '$325', '$330']],
+								['Carol', ['$580', '$595', '$600', '$610']],
+							].map(([name, amts], i) => (
 								<div key={i} className={`flex justify-between text-[9px] py-0.5 ${i > 0 ? 'border-t border-gray-100' : ''}`}>
-									<span className="text-gray-600">{name}</span>
-									<span className="text-gray-500">{amt}</span>
-									<span className={status === 'Active' ? 'text-green-500' : 'text-amber-500'}>{status}</span>
+									<span className="text-gray-600">{name as string}</span>
+									<motion.span
+										key={`${name}-${pulseIndex}`}
+										className="text-gray-500"
+										initial={{ opacity: 0.5 }}
+										animate={{ opacity: 1 }}
+										transition={{ duration: 0.3 }}
+									>
+										{(amts as string[])[pulseIndex % (amts as string[]).length]}
+									</motion.span>
+									<span className={i !== 1 ? 'text-green-500' : 'text-amber-500'}>{i !== 1 ? 'Active' : 'Pending'}</span>
 								</div>
 							))}
 						</div>
 					</div>
 					{/* Mini line chart */}
 					<div className="rounded-lg border border-gray-100 p-2">
-						<div className="text-[8px] text-gray-400 mb-1">Trend</div>
+						<div className="flex items-center justify-between mb-1">
+							<div className="text-[8px] text-gray-400">Trend</div>
+							<PlugBadge label="my_script" isGlowing={isGlowing} />
+						</div>
 						<svg viewBox="0 0 200 36" className="w-full h-[32px]">
 							<polyline points="0,30 20,26 40,28 60,20 80,22 100,14 120,16 140,10 160,12 180,6 200,8" fill="none" className="stroke-blue-300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 							<polyline points="0,30 20,26 40,28 60,20 80,22 100,14 120,16 140,10 160,12 180,6 200,8" fill="url(#lineGrad)" stroke="none" />
@@ -481,8 +576,8 @@ function MiniAgent() {
 										<TsLogo />
 										<span className="text-[11px] font-mono font-medium text-gray-300">refund_charges</span>
 									</div>
-									<span className="text-[10px] text-gray-500 ml-auto">
-										{toolExecuting ? 'calling script...' : 'script completed'}
+									<span className={`text-[11px] font-medium ml-auto ${toolExecuting ? 'text-blue-400' : 'text-green-400'}`}>
+										{toolExecuting ? 'Calling script...' : 'Script completed'}
 									</span>
 								</div>
 								{/* Collapsible body — opens when done */}
