@@ -177,7 +177,7 @@ function LiveRunsScatter({ runCount }: { runCount: number }) {
 	return (
 		<div className="flex flex-col h-full">
 			<div className="flex-1 min-h-0">
-				<svg viewBox="0 0 200 100" className="w-full h-full" preserveAspectRatio="none">
+				<svg viewBox="0 0 200 100" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
 					{/* Grid lines + Y labels */}
 					{Y_LABELS.map((l) => {
 						const ly = PY + (l.pct / 100) * PH;
@@ -207,11 +207,11 @@ function LiveRunsScatter({ runCount }: { runCount: number }) {
 					))}
 				</svg>
 			</div>
-			<div className="flex items-center justify-between mt-1 shrink-0">
-				<span className="text-[9px] text-gray-600">last 5 min</span>
+			<div className="flex items-center justify-between mt-1.5 shrink-0">
+				<span className="text-[11px] text-gray-600">last 5 min</span>
 				<div className="flex items-center gap-2">
-					<span className="text-[9px] text-green-400 font-medium">{successCount} ok</span>
-					{failCount > 0 && <span className="text-[9px] text-red-400 font-medium">{failCount} err</span>}
+					<span className="text-[11px] text-green-400 font-medium">{successCount} ok</span>
+					{failCount > 0 && <span className="text-[11px] text-red-400 font-medium">{failCount} err</span>}
 				</div>
 			</div>
 		</div>
@@ -270,9 +270,9 @@ function LiveResultJson({ runCount }: { runCount: number }) {
 	const snapshot = RESULT_SNAPSHOTS[snapshotIndex];
 
 	return (
-		<div className="font-mono text-[10px] leading-[18px]">
-			<div className="flex items-center gap-1.5 mb-1.5">
-				<span className={`text-[9px] px-1.5 py-0.5 rounded font-medium ${
+		<div className="font-mono text-[12px] leading-[22px]">
+			<div className="flex items-center gap-1.5 mb-2">
+				<span className={`text-[10px] px-2 py-0.5 rounded font-medium ${
 					snapshot.label === 'input'
 						? 'bg-blue-500/20 text-blue-400'
 						: 'bg-green-500/20 text-green-400'
@@ -290,7 +290,7 @@ function LiveResultJson({ runCount }: { runCount: number }) {
 				>
 					<span className="text-white">{'{'}</span>
 					{snapshot.json.map((entry, i) => (
-						<div key={entry.key} className="pl-3">
+						<div key={entry.key} className="pl-4">
 							<motion.span
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
@@ -329,10 +329,10 @@ function LiveDatabase({ runCount }: { runCount: number }) {
 	return (
 		<table className="w-full">
 			<thead>
-				<tr className="text-[9px] text-gray-500 border-b border-gray-800">
-					<th className="text-left pb-1.5 font-medium">id</th>
-					<th className="text-left pb-1.5 font-medium">customer</th>
-					<th className="text-right pb-1.5 font-medium">amount</th>
+				<tr className="text-[11px] text-gray-500 border-b border-gray-800">
+					<th className="text-left pb-2 font-medium">id</th>
+					<th className="text-left pb-2 font-medium">customer</th>
+					<th className="text-right pb-2 font-medium">amount</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -343,11 +343,11 @@ function LiveDatabase({ runCount }: { runCount: number }) {
 							initial={{ opacity: 0, y: 8 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.3 }}
-							className="text-[10px] border-b border-gray-800/50 last:border-0"
+							className="text-[12px] border-b border-gray-800/50 last:border-0"
 						>
-							<td className="py-1 text-gray-400 font-mono">{row.id}</td>
-							<td className="py-1 text-gray-300">{row.customer}</td>
-							<td className="py-1 text-right text-white font-mono">{row.amount}</td>
+							<td className="py-1.5 text-gray-400 font-mono">{row.id}</td>
+							<td className="py-1.5 text-gray-300">{row.customer}</td>
+							<td className="py-1.5 text-right text-white font-mono">{row.amount}</td>
 						</motion.tr>
 					))}
 				</AnimatePresence>
@@ -378,21 +378,21 @@ function LiveFrontend({ runCount }: { runCount: number }) {
 		<div className="flex flex-col h-full">
 			{/* Header stats */}
 			<div className="flex items-center justify-between mb-2 shrink-0">
-				<span className="text-[9px] text-gray-500">Refunds processed</span>
-				<span className="text-[10px] text-cyan-400 font-mono font-medium">${total.toLocaleString()}</span>
+				<span className="text-[11px] text-gray-500">Refunds processed</span>
+				<span className="text-[12px] text-cyan-400 font-mono font-medium">${total.toLocaleString()}</span>
 			</div>
 			{/* Bar chart */}
-			<div className="flex-1 flex items-end gap-1.5 min-h-0">
+			<div className="flex-1 flex items-end gap-2 min-h-0">
 				{BAR_DATA.map((bar, i) => (
 					<div key={bar.label} className="flex-1 flex flex-col items-center justify-end h-full">
 						<motion.div
 							className="w-full rounded-t"
 							style={{ backgroundColor: bar.color }}
 							initial={{ height: 0 }}
-							animate={{ height: i < visibleBars ? (bar.value / 100) * MAX_BAR_HEIGHT : 0 }}
+							animate={{ height: i < visibleBars ? `${bar.value}%` : 0 }}
 							transition={{ duration: 0.4 }}
 						/>
-						<span className="text-[7px] text-gray-600 mt-1 shrink-0">{bar.label}</span>
+						<span className="text-[9px] text-gray-600 mt-1 shrink-0">{bar.label}</span>
 					</div>
 				))}
 			</div>
@@ -848,7 +848,7 @@ export default function HeroAnimation() {
 				)}
 			</AnimatePresence>
 
-			{/* Monitoring phase - logo on top, dashboards below */}
+			{/* Monitoring phase - two bordered sections: workers + platform */}
 			<AnimatePresence>
 				{showMonitoring && (
 					<motion.div
@@ -856,94 +856,109 @@ export default function HeroAnimation() {
 						animate={{ opacity: 1, scale: 1 }}
 						exit={{ opacity: 0, scale: 0.95 }}
 						transition={{ duration: 0.5 }}
-						className="absolute inset-0"
+						className="absolute inset-0 flex flex-col gap-3 p-2"
 					>
-						{/* Spinning logo + script name on top */}
+						{/* Section 1: Windmill workers — bordered with floating label */}
 						<motion.div
 							initial={{ opacity: 0, y: -10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.2, duration: 0.4 }}
-							className="absolute top-0 left-0 right-0 flex flex-col items-center py-2 z-10"
+							className="relative rounded-xl border border-gray-700 p-4 pt-5 shrink-0"
 						>
-							<span className="text-[10px] text-gray-500 mb-1">Running on Windmill workers</span>
-							<div className="flex items-center gap-2.5">
-								<img
-									src="/img/windmill.svg"
-									alt="Windmill"
-									className="w-7 h-7 animate-spin"
-									style={{ animationDuration: '3s' }}
-								/>
-								<div className="flex items-center gap-2">
-									<span className="text-sm font-mono text-gray-300">f/stripe/refund.ts</span>
-									<div className="flex items-center gap-1">
-										<div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-										<span className="text-[10px] text-green-400">live</span>
+							<span className="absolute -top-2.5 left-4 px-2 bg-[#0a0f18] text-[11px] font-medium text-gray-400 uppercase tracking-wider">Windmill workers</span>
+							<div className="flex flex-col items-center">
+								<div className="flex items-center gap-2.5">
+									<img
+										src="/img/windmill.svg"
+										alt="Windmill"
+										className="w-7 h-7 animate-spin"
+										style={{ animationDuration: '3s' }}
+									/>
+									<div className="flex items-center gap-2">
+										<span className="text-sm font-mono text-gray-300">f/stripe/refund.ts</span>
+										<div className="flex items-center gap-1">
+											<div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+											<span className="text-[10px] text-green-400">live</span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</motion.div>
 
-						{/* Dashboard: Runs (top-left) */}
+						{/* Section 2: Windmill platform — bordered with floating label */}
 						<motion.div
-							initial={{ opacity: 0, scale: 0.8, x: 30 }}
-							animate={{ opacity: 1, scale: 1, x: 0 }}
-							transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
-							className="absolute top-[12%] left-[1.5%] w-[47%] rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden"
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ delay: 0.4, duration: 0.4 }}
+							className="relative rounded-xl border border-gray-700 p-3 pt-5 flex-1 min-h-0"
 						>
-							<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5">
-								<div className="w-2 h-2 rounded-full bg-green-400" />
-								<span className="text-sm text-gray-400 font-medium">Runs</span>
-							</div>
-							<div className="p-2 sm:p-2.5 h-[150px] sm:h-[170px] flex flex-col justify-center">
-								<LiveRunsScatter runCount={runCount} />
-							</div>
-						</motion.div>
+							<span className="absolute -top-2.5 left-4 px-2 bg-[#0a0f18] text-[11px] font-medium text-gray-400 uppercase tracking-wider">Windmill platform</span>
 
-						{/* Dashboard: Result (top-right) */}
-						<motion.div
-							initial={{ opacity: 0, scale: 0.8, x: -30 }}
-							animate={{ opacity: 1, scale: 1, x: 0 }}
-							transition={{ delay: 0.55, type: 'spring', stiffness: 200 }}
-							className="absolute top-[12%] right-[1.5%] w-[47%] rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden"
-						>
-							<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5">
-								<div className="w-2 h-2 rounded-full bg-purple-400" />
-								<span className="text-sm text-gray-400 font-medium">Result</span>
-							</div>
-							<div className="p-2 sm:p-2.5 h-[150px] sm:h-[170px] flex flex-col justify-center overflow-hidden">
-								<LiveResultJson runCount={runCount} />
-							</div>
-						</motion.div>
+							{/* Dashboard grid */}
+							<div className="h-full grid grid-cols-2 grid-rows-2 gap-2">
+								{/* Dashboard: Runs (top-left) */}
+								<motion.div
+									initial={{ opacity: 0, scale: 0.8, x: 30 }}
+									animate={{ opacity: 1, scale: 1, x: 0 }}
+									transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
+									className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col"
+								>
+									<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0">
+										<div className="w-2 h-2 rounded-full bg-green-400" />
+										<span className="text-sm text-gray-400 font-medium">Runs</span>
+									</div>
+									<div className="p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col justify-center">
+										<LiveRunsScatter runCount={runCount} />
+									</div>
+								</motion.div>
 
-						{/* Dashboard: Database (bottom-left) */}
-						<motion.div
-							initial={{ opacity: 0, scale: 0.8, y: -20 }}
-							animate={{ opacity: 1, scale: 1, y: 0 }}
-							transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
-							className="absolute top-[52%] left-[1.5%] w-[47%] rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden"
-						>
-							<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5">
-								<div className="w-2 h-2 rounded-full bg-amber-400" />
-								<span className="text-sm text-gray-400 font-medium">Database</span>
-							</div>
-							<div className="p-2 sm:p-2.5 h-[150px] sm:h-[170px] flex flex-col justify-center overflow-hidden">
-								<LiveDatabase runCount={runCount} />
-							</div>
-						</motion.div>
+								{/* Dashboard: Result (top-right) */}
+								<motion.div
+									initial={{ opacity: 0, scale: 0.8, x: -30 }}
+									animate={{ opacity: 1, scale: 1, x: 0 }}
+									transition={{ delay: 0.65, type: 'spring', stiffness: 200 }}
+									className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col"
+								>
+									<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0">
+										<div className="w-2 h-2 rounded-full bg-purple-400" />
+										<span className="text-sm text-gray-400 font-medium">Result</span>
+									</div>
+									<div className="p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
+										<LiveResultJson runCount={runCount} />
+									</div>
+								</motion.div>
 
-						{/* Dashboard: Frontend (bottom-right) */}
-						<motion.div
-							initial={{ opacity: 0, scale: 0.8, y: -20 }}
-							animate={{ opacity: 1, scale: 1, y: 0 }}
-							transition={{ delay: 0.85, type: 'spring', stiffness: 200 }}
-							className="absolute top-[52%] right-[1.5%] w-[47%] rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden"
-						>
-							<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5">
-								<div className="w-2 h-2 rounded-full bg-cyan-400" />
-								<span className="text-sm text-gray-400 font-medium">Frontend</span>
-							</div>
-							<div className="p-2 sm:p-2.5 h-[150px] sm:h-[170px] flex flex-col overflow-hidden">
-								<LiveFrontend runCount={runCount} />
+								{/* Dashboard: Database (bottom-left) */}
+								<motion.div
+									initial={{ opacity: 0, scale: 0.8, y: -20 }}
+									animate={{ opacity: 1, scale: 1, y: 0 }}
+									transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
+									className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col"
+								>
+									<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0">
+										<div className="w-2 h-2 rounded-full bg-amber-400" />
+										<span className="text-sm text-gray-400 font-medium">Database</span>
+									</div>
+									<div className="p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
+										<LiveDatabase runCount={runCount} />
+									</div>
+								</motion.div>
+
+								{/* Dashboard: Frontend (bottom-right) */}
+								<motion.div
+									initial={{ opacity: 0, scale: 0.8, y: -20 }}
+									animate={{ opacity: 1, scale: 1, y: 0 }}
+									transition={{ delay: 0.95, type: 'spring', stiffness: 200 }}
+									className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col"
+								>
+									<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0">
+										<div className="w-2 h-2 rounded-full bg-cyan-400" />
+										<span className="text-sm text-gray-400 font-medium">Frontend</span>
+									</div>
+									<div className="p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col overflow-hidden">
+										<LiveFrontend runCount={runCount} />
+									</div>
+								</motion.div>
 							</div>
 						</motion.div>
 
@@ -954,4 +969,113 @@ export default function HeroAnimation() {
 	);
 }
 
+// ─── Simplified version: monitoring only (no IDE) ────────────────────────────
+
+export function HeroAnimationSimplified() {
+	const [runCount, setRunCount] = useState(0);
+
+	useEffect(() => {
+		setRunCount(1);
+		let count = 1;
+		const interval = setInterval(() => {
+			count++;
+			setRunCount(count);
+			if (count >= DB_ROWS.length) clearInterval(interval);
+		}, 1000);
+		return () => clearInterval(interval);
+	}, []);
+
+	return (
+		<div className="w-full min-h-[540px] sm:min-h-[620px] flex items-center justify-center relative">
+			<div className="absolute inset-0 flex flex-col gap-3 p-2">
+				{/* Section 1: Windmill workers */}
+				<div className="relative rounded-xl border border-gray-700 p-4 pt-5 shrink-0">
+					<span className="absolute -top-2.5 left-4 px-2 bg-[#0a0f18] text-[11px] font-medium text-gray-400 uppercase tracking-wider">Windmill workers</span>
+					<div className="flex flex-col items-center">
+						<div className="flex items-center gap-2.5">
+							<img
+								src="/img/windmill.svg"
+								alt="Windmill"
+								className="w-7 h-7 animate-spin"
+								style={{ animationDuration: '3s' }}
+							/>
+							<div className="flex items-center gap-2">
+								<span className="text-sm font-mono text-gray-300">my_script.ts</span>
+								<div className="flex items-center gap-1">
+									<div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+									<span className="text-[10px] text-green-400">live</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{/* Section 2: Windmill platform */}
+				<div className="relative rounded-xl border border-gray-700 p-3 pt-5 flex-1 min-h-0">
+					<span className="absolute -top-2.5 left-4 px-2 bg-[#0a0f18] text-[11px] font-medium text-gray-400 uppercase tracking-wider">Windmill platform</span>
+
+					<div className="h-full grid grid-cols-2 grid-rows-2 gap-2">
+						{/* Runs */}
+						<div className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col">
+							<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0">
+								<div className="w-2 h-2 rounded-full bg-green-400" />
+								<span className="text-sm text-gray-400 font-medium">Runs</span>
+							</div>
+							<div className="p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col justify-center">
+								<LiveRunsScatter runCount={runCount} />
+							</div>
+						</div>
+
+						{/* Result */}
+						<div className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col">
+							<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0">
+								<div className="w-2 h-2 rounded-full bg-purple-400" />
+								<span className="text-sm text-gray-400 font-medium">Result</span>
+							</div>
+							<div className="p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
+								<LiveResultJson runCount={runCount} />
+							</div>
+						</div>
+
+						{/* Database */}
+						<div className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col">
+							<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0">
+								<div className="w-2 h-2 rounded-full bg-amber-400" />
+								<span className="text-sm text-gray-400 font-medium">Database</span>
+							</div>
+							<div className="p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
+								<LiveDatabase runCount={runCount} />
+							</div>
+						</div>
+
+						{/* Frontend */}
+						<div className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col">
+							<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0">
+								<div className="w-2 h-2 rounded-full bg-cyan-400" />
+								<span className="text-sm text-gray-400 font-medium">Frontend</span>
+							</div>
+							<div className="p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col overflow-hidden">
+								<LiveFrontend runCount={runCount} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
 export { HeroAnimation as HeroAnimationA };
+
+// Export sub-components for reuse in test pages
+export {
+	TypingCode,
+	StaticCode,
+	StripeResourceInput,
+	TriggerPicker,
+	LiveRunsScatter,
+	LiveResultJson,
+	LiveDatabase,
+	LiveFrontend,
+	DB_ROWS,
+};
