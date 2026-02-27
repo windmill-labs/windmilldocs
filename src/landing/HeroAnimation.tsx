@@ -248,8 +248,7 @@ const RESULT_SNAPSHOTS = [
 	{
 		label: 'input',
 		json: [
-			{ key: 'token', value: '"sk_live_\u2022\u2022\u2022"', color: 'text-green-400' },
-			{ key: 'charge_id', value: '"ch_3MqBz2"', color: 'text-green-400' },
+			{ key: 'charge', value: '"ch_3MqBz2"', color: 'text-green-400' },
 			{ key: 'amount', value: '8900', color: 'text-orange-300' },
 		],
 	},
@@ -257,9 +256,8 @@ const RESULT_SNAPSHOTS = [
 		label: 'output',
 		json: [
 			{ key: 'id', value: '"re_3NqKx1"', color: 'text-green-400' },
+			{ key: 'status', value: '"ok"', color: 'text-green-400' },
 			{ key: 'amount', value: '8900', color: 'text-orange-300' },
-			{ key: 'status', value: '"succeeded"', color: 'text-green-400' },
-			{ key: 'currency', value: '"usd"', color: 'text-green-400' },
 		],
 	},
 ];
@@ -313,14 +311,14 @@ function LiveResultJson({ runCount }: { runCount: number }) {
 // ─── Live database rows ─────────────────────────────────────────────────────
 
 const DB_ROWS = [
-	{ id: 'ref_01', customer: 'acme_corp', amount: '$240' },
-	{ id: 'ref_02', customer: 'globex', amount: '$89' },
-	{ id: 'ref_03', customer: 'initech', amount: '$1,200' },
-	{ id: 'ref_04', customer: 'stark_ind', amount: '$560' },
-	{ id: 'ref_05', customer: 'wayne_ent', amount: '$340' },
-	{ id: 'ref_06', customer: 'umbrella', amount: '$78' },
-	{ id: 'ref_07', customer: 'cyberdyne', amount: '$2,100' },
-	{ id: 'ref_08', customer: 'oscorp', amount: '$430' },
+	{ id: '1', customer: 'acme', amount: '$240' },
+	{ id: '2', customer: 'globex', amount: '$89' },
+	{ id: '3', customer: 'initech', amount: '$1,200' },
+	{ id: '4', customer: 'stark', amount: '$560' },
+	{ id: '5', customer: 'wayne', amount: '$340' },
+	{ id: '6', customer: 'umbrella', amount: '$78' },
+	{ id: '7', customer: 'cyberdyne', amount: '$2,100' },
+	{ id: '8', customer: 'oscorp', amount: '$430' },
 ];
 
 function LiveDatabase({ runCount }: { runCount: number }) {
