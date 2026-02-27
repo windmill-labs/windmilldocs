@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GitBranch, LayoutDashboard, Globe, Bot, Workflow } from 'lucide-react';
+import { GitBranch, LayoutDashboard, Globe, Bot, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Plug } from 'lucide-react';
 
 // ─── Use case data ───────────────────────────────────────────────────────────
 
 const USE_CASES = [
 	{ id: 'dag', icon: GitBranch, label: 'Data pipeline', duration: 3500 },
 	{ id: 'app', icon: LayoutDashboard, label: 'Internal app', duration: 3500 },
-	{ id: 'agent', icon: Bot, label: 'AI agent', duration: 8000 },
-	{ id: 'endpoint', icon: Globe, label: 'Endpoint', duration: 3500 },
+	{ id: 'agent', icon: Bot, label: 'AI agent', duration: 6000 },
 	{ id: 'workflow', icon: Workflow, label: 'Workflow', duration: 3500 },
+	{ id: 'endpoint', icon: Globe, label: 'Endpoint', duration: 3500 },
 ];
 
 // ─── Shared DAG node component (light theme, matching workflow-automation) ───
@@ -432,23 +432,65 @@ function MiniApp() {
 
 // ─── Mini endpoint ──────────────────────────────────────────────────────────
 
+const TRIGGERS = [
+	{ icon: Clock, label: 'Schedule' },
+	{ icon: Webhook, label: 'Webhook' },
+	{ icon: Mail, label: 'Email' },
+	{ icon: Database, label: 'Postgres' },
+	{ icon: Globe, label: 'HTTP routes' },
+	{ icon: Radio, label: 'WebSocket' },
+	{ icon: MessageSquare, label: 'Kafka' },
+	{ icon: Rss, label: 'NATS' },
+	{ icon: Cloud, label: 'SQS' },
+	{ icon: Radio, label: 'MQTT' },
+	{ icon: Cloud, label: 'GCP Pub/Sub' },
+	{ icon: Bot, label: 'MCP' },
+];
+
 function MiniEndpoint() {
+	const [activeIdx, setActiveIdx] = useState(0);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setActiveIdx((prev) => (prev + 1) % TRIGGERS.length);
+		}, 1000);
+		return () => clearInterval(interval);
+	}, []);
+
 	return (
-		<div className="w-full max-w-md mx-auto flex flex-col justify-center space-y-4 px-6">
-			<div className="rounded-lg border border-gray-700 bg-gray-800/50 p-4">
-				<div className="font-mono text-[11px] text-gray-500 mb-1.5">Synchronous</div>
+		<div className="w-full max-w-md mx-auto flex flex-col gap-4 px-4 py-4">
+			{/* Endpoint route */}
+			<div className="rounded-lg border border-gray-700 bg-gray-800/50 p-3">
+				<div className="font-mono text-[11px] text-gray-500 mb-1">Endpoint</div>
 				<div className="font-mono text-[13px]">
 					<span className="text-gray-300">POST</span>
 					<span className="text-gray-500"> /api/w/demo/jobs/run/</span>
 					<span className="text-blue-400 font-semibold">my_script</span>
 				</div>
 			</div>
-			<div className="rounded-lg border border-gray-700 bg-gray-800/50 p-4">
-				<div className="font-mono text-[11px] text-gray-500 mb-1.5">Async</div>
-				<div className="font-mono text-[13px]">
-					<span className="text-gray-300">POST</span>
-					<span className="text-gray-500"> /api/w/demo/jobs/run_async/</span>
-					<span className="text-blue-400 font-semibold">my_script</span>
+
+			{/* Triggers section */}
+			<div>
+				<div className="text-[11px] text-gray-500 font-medium uppercase tracking-wider mb-2 px-1">Triggers</div>
+				<div className="grid grid-cols-3 gap-2">
+					{TRIGGERS.map((trigger, i) => {
+						const Icon = trigger.icon;
+						const isActive = activeIdx === i;
+						return (
+							<motion.div
+								key={`${trigger.label}-${i}`}
+								className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2"
+								animate={isActive
+									? { borderColor: 'rgba(59,130,246,0.6)', boxShadow: '0 0 16px rgba(59,130,246,0.3), 0 1px 2px rgba(0,0,0,0.05)' }
+									: { borderColor: 'rgb(229,231,235)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }
+								}
+								transition={{ duration: 0.2 }}
+							>
+								<Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-blue-500' : 'text-gray-400'}`} />
+								<span className={`text-[11px] font-medium whitespace-nowrap ${isActive ? 'text-gray-800' : 'text-gray-600'}`}>{trigger.label}</span>
+							</motion.div>
+						);
+					})}
 				</div>
 			</div>
 		</div>
@@ -485,10 +527,10 @@ function MiniAgent() {
 
 	// Timeline
 	const showUser = time >= 0 && time < 7.2;
-	const showThinking = time >= 0.6 && time < 1.6;
-	const showToolCall = time >= 1.6 && time < 7;
-	const toolExecuting = time >= 1.6 && time < 3;
-	const toolDone = time >= 3;
+	const showThinking = time >= 0.6 && time < 1.8;
+	const showToolCall = time >= 1.8 && time < 7;
+	const toolExecuting = time >= 1.8 && time < 3.2;
+	const toolDone = time >= 3.2;
 	const showAnswer = time >= 4.5 && time < 7.2;
 
 	return (
@@ -634,12 +676,53 @@ function MiniAgent() {
 
 // ─── Cycling use cases ──────────────────────────────────────────────────────
 
+function TabBar({ items, activeIndex, onSelect }: { items: typeof USE_CASES; activeIndex: number; onSelect: (i: number) => void }) {
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [pillStyle, setPillStyle] = useState({ left: 0, width: 0 });
+
+	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+		const buttons = container.querySelectorAll<HTMLButtonElement>('[data-tab-btn]');
+		const btn = buttons[activeIndex];
+		if (!btn) return;
+		setPillStyle({
+			left: btn.offsetLeft,
+			width: btn.offsetWidth,
+		});
+	}, [activeIndex]);
+
+	return (
+		<div ref={containerRef} className="relative flex items-center rounded-full bg-gray-800/60 border border-gray-700/50 p-1">
+			{/* Animated pill */}
+			<motion.div
+				className="absolute top-1 bottom-1 rounded-full bg-gray-700/80 border border-gray-600/50"
+				animate={{ left: pillStyle.left, width: pillStyle.width }}
+				transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+			/>
+			{items.map((u, i) => (
+				<button
+					key={u.id}
+					data-tab-btn
+					onClick={() => onSelect(i)}
+					className="relative z-10 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-medium transition-colors duration-200"
+					style={{ color: i === activeIndex ? '#e5e7eb' : '#6b7280' }}
+				>
+					<u.icon className="w-3.5 h-3.5" />
+					{u.label}
+				</button>
+			))}
+		</div>
+	);
+}
+
 function UseCasesCycling() {
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	useEffect(() => {
+		if (activeIndex >= USE_CASES.length - 1) return; // Stop at last tab
 		const timeout = setTimeout(() => {
-			setActiveIndex((prev) => (prev + 1) % USE_CASES.length);
+			setActiveIndex((prev) => prev + 1);
 		}, USE_CASES[activeIndex].duration);
 		return () => clearTimeout(timeout);
 	}, [activeIndex]);
@@ -650,26 +733,13 @@ function UseCasesCycling() {
 		<MiniDag key="dag" />,
 		<MiniApp key="app" />,
 		<MiniAgent key="agent" />,
-		<MiniEndpoint key="endpoint" />,
 		<MiniWorkflow key="workflow" />,
+		<MiniEndpoint key="endpoint" />,
 	];
 
 	return (
 		<div className="flex flex-col items-center justify-center w-full h-full gap-4">
-			<div className="flex gap-1.5">
-				{USE_CASES.map((u, i) => (
-					<button
-						key={u.id}
-						onClick={() => setActiveIndex(i)}
-						className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-medium border transition-colors ${
-							i === activeIndex ? 'text-gray-200 border-gray-600 bg-gray-800' : 'text-gray-500 border-transparent'
-						}`}
-					>
-						<u.icon className="w-3.5 h-3.5" />
-						{u.label}
-					</button>
-				))}
-			</div>
+			<TabBar items={USE_CASES} activeIndex={activeIndex} onSelect={setActiveIndex} />
 
 			<AnimatePresence mode="wait">
 				<motion.div
@@ -690,7 +760,7 @@ function UseCasesCycling() {
 
 // ─── Complete animation: IDE → use cases → deploy → monitoring ──────────────
 
-type Phase = 'expanding' | 'typing' | 'resource' | 'usecases' | 'ready' | 'pushing' | 'deploying' | 'monitoring';
+type Phase = 'expanding' | 'typing' | 'resource' | 'connect' | 'usecases' | 'ready' | 'pushing' | 'deploying' | 'monitoring';
 
 function CompleteAnimation() {
 	const [phase, setPhase] = useState<Phase>('expanding');
@@ -713,10 +783,20 @@ function CompleteAnimation() {
 		setPhase('resource');
 	}, []);
 
-	// Phase transitions: expanding → typing → resource → usecases → ready → pushing → deploying → monitoring
+	// Phase transitions: expanding → typing → resource → connect → usecases → ready → pushing → deploying → monitoring
 	useEffect(() => { if (phase === 'expanding') { const t = setTimeout(() => setPhase('typing'), 800); return () => clearTimeout(t); } }, [phase]);
-	useEffect(() => { if (phase === 'resource') { const t = setTimeout(() => setPhase('usecases'), 2000); return () => clearTimeout(t); } }, [phase]);
-	useEffect(() => { if (phase === 'usecases') { const t = setTimeout(() => setPhase('ready'), 23000); return () => clearTimeout(t); } }, [phase]);
+	useEffect(() => { if (phase === 'resource') { const t = setTimeout(() => setPhase('connect'), 2000); return () => clearTimeout(t); } }, [phase]);
+	const [connectPushed, setConnectPushed] = useState(false);
+	useEffect(() => {
+		if (phase === 'connect') {
+			setConnectPushed(false);
+			const pushT = setTimeout(() => setConnectPushed(true), 1800);
+			const nextT = setTimeout(() => setPhase('usecases'), 2500);
+			return () => { clearTimeout(pushT); clearTimeout(nextT); };
+		}
+	}, [phase]);
+	// Total: 3500+3500+6000+3500+3500 = 20000
+	useEffect(() => { if (phase === 'usecases') { const t = setTimeout(() => setPhase('ready'), 20500); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'ready') { const t = setTimeout(() => setPhase('pushing'), 1200); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'pushing') { const t = setTimeout(() => setPhase('deploying'), 400); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'deploying') { const t = setTimeout(() => setPhase('monitoring'), 1400); return () => clearTimeout(t); } }, [phase]);
@@ -730,8 +810,8 @@ function CompleteAnimation() {
 		return () => clearInterval(interval);
 	}, [phase, comps.DB_ROWS.length]);
 
-	const showIde = phase === 'typing' || phase === 'resource' || phase === 'ready' || phase === 'pushing';
-	const showUseCases = phase === 'usecases';
+	const showIde = phase === 'typing' || phase === 'resource' || phase === 'connect';
+	const showUseCases = phase === 'usecases' || phase === 'ready' || phase === 'pushing';
 	const showMonitoring = phase === 'monitoring';
 
 	return (
@@ -754,7 +834,7 @@ function CompleteAnimation() {
 					className="w-full"
 					animate={{
 						opacity: showIde ? 1 : 0,
-						filter: phase === 'ready' || phase === 'pushing' ? 'blur(3px)' : 'blur(0px)',
+						filter: phase === 'connect' ? 'blur(3px)' : 'blur(0px)',
 					}}
 					transition={{ duration: showIde ? 0.3 : 0.15, delay: showIde ? 0.3 : 0 }}
 				>
@@ -777,18 +857,40 @@ function CompleteAnimation() {
 					</div>
 				</motion.div>
 
-				{/* Deploy button */}
+				{/* Connect button */}
 				<AnimatePresence>
-					{(phase === 'ready' || phase === 'pushing') && (
-						<motion.div className="absolute inset-0 flex items-center justify-center z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+					{phase === 'connect' && (
+						<motion.div className="absolute inset-0 flex items-center justify-center z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 1.1 }} transition={{ duration: 0.3 }}>
 							<motion.div
-								initial={{ scale: 0.8 }}
-								animate={{ scale: phase === 'pushing' ? 0.92 : 1 }}
-								exit={{ scale: 0.8 }}
-								className="bg-blue-700 text-white shadow-xl shadow-blue-700/30 px-6 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2"
+								initial={{ scale: 0.8, opacity: 0 }}
+								animate={{ scale: connectPushed ? 0.92 : 1, opacity: 1 }}
+								exit={{ scale: 1.1, opacity: 0 }}
+								transition={connectPushed ? { duration: 0.1 } : { type: 'spring', stiffness: 300, damping: 20 }}
+								className="flex flex-col items-center gap-3"
 							>
-								<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
-								Deploy
+								<motion.div
+									className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center shadow-xl shadow-blue-600/30"
+									animate={connectPushed
+										? { scale: 0.9, boxShadow: '0 4px 12px rgba(37,99,235,0.4)' }
+										: { scale: 1, boxShadow: ['0 10px 25px rgba(37,99,235,0.3)', '0 10px 40px rgba(37,99,235,0.5)', '0 10px 25px rgba(37,99,235,0.3)'] }
+									}
+									transition={connectPushed ? { duration: 0.1 } : { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+								>
+									<Plug className="w-7 h-7 text-white" />
+								</motion.div>
+								<span className="text-sm font-semibold text-gray-200">Connect</span>
+								<div className="flex items-center gap-4 mt-1">
+									{USE_CASES.map((uc) => (
+										<motion.div
+											key={uc.id}
+											initial={{ opacity: 0, y: 8 }}
+											animate={{ opacity: 0.6, y: 0 }}
+											transition={{ delay: 0.3 + USE_CASES.indexOf(uc) * 0.1, duration: 0.3 }}
+										>
+											<uc.icon className="w-4 h-4 text-gray-400" />
+										</motion.div>
+									))}
+								</div>
 							</motion.div>
 						</motion.div>
 					)}
@@ -840,9 +942,42 @@ function CompleteAnimation() {
 						animate={{ opacity: 1, scale: 1 }}
 						exit={{ opacity: 0, scale: 0.95 }}
 						transition={{ duration: 0.5 }}
-						className="absolute inset-0"
+						className="absolute inset-0 flex flex-col items-center"
 					>
-						<UseCasesCycling />
+						<motion.span
+							className="text-sm text-gray-400 font-medium mb-2"
+							initial={{ opacity: 0, y: -8 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ delay: 0.2, duration: 0.4 }}
+						>
+							Connect your script to
+						</motion.span>
+						<motion.div
+							className="w-full flex-1"
+							animate={{
+								filter: phase === 'ready' || phase === 'pushing' ? 'blur(3px)' : 'blur(0px)',
+							}}
+							transition={{ duration: 0.3 }}
+						>
+							<UseCasesCycling />
+						</motion.div>
+
+						{/* Deploy button overlay on use cases */}
+						<AnimatePresence>
+							{(phase === 'ready' || phase === 'pushing') && (
+								<motion.div className="absolute inset-0 flex items-center justify-center z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+									<motion.div
+										initial={{ scale: 0.8 }}
+										animate={{ scale: phase === 'pushing' ? 0.92 : 1 }}
+										exit={{ scale: 0.8 }}
+										className="bg-blue-700 text-white shadow-xl shadow-blue-700/30 px-6 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2"
+									>
+										<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+										Deploy
+									</motion.div>
+								</motion.div>
+							)}
+						</AnimatePresence>
 					</motion.div>
 				)}
 			</AnimatePresence>
