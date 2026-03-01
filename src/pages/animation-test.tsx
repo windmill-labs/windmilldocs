@@ -119,7 +119,7 @@ function DagNode({ node }: { node: DagNodeType }) {
 const WORKFLOW_NODES = [
 	{ label: 'Trigger', x: 200, y: 35, isTrigger: true },
 	{ label: 'Fetch data', x: 200, y: 105, isTs: true },
-	{ label: 'my_script.ts', x: 200, y: 175, isTs: true, isHighlighted: true },
+	{ label: 'get_failed_payment.ts', x: 200, y: 175, isTs: true, isHighlighted: true },
 	{ label: 'Send notification', x: 200, y: 245, isTs: true },
 	{ label: 'Result', x: 200, y: 315 },
 ];
@@ -157,7 +157,7 @@ const BY = 225;
 const DAG_NODES: DagNodeType[] = [
 	{ label: 'Trigger', x: CX, y: 30, isTrigger: true },
 	{ label: 'Extract', x: CX, y: 90 },
-	{ label: 'my_script.ts', x: CX, y: 150, isTs: true, isHighlighted: true },
+	{ label: 'get_failed_payment.ts', x: CX, y: 150, isTs: true, isHighlighted: true },
 	{ label: '', x: B1, y: BY, isPy: true, iconOnly: true },
 	{ label: '', x: B2, y: BY, isPy: true, iconOnly: true },
 	{ label: '', x: B3, y: BY, isDuckDb: true, iconOnly: true },
@@ -312,7 +312,7 @@ function MiniApp() {
 				transition={{ duration: 0.3 }}
 			>
 				<TsLogo />
-				<span className="text-[11px] font-medium text-blue-700 whitespace-nowrap">my_script.ts</span>
+				<span className="text-[11px] font-medium text-blue-700 whitespace-nowrap">get_failed_payment.ts</span>
 			</motion.div>
 
 			{/* Connection line + animated ball */}
@@ -344,7 +344,7 @@ function MiniApp() {
 							<div key={stat.label} className={`rounded-lg bg-${stat.color}-50 border border-${stat.color}-100 px-2 py-1.5`}>
 								<div className="flex items-center justify-between mb-0.5">
 									<div className="text-[8px] text-gray-400">{stat.label}</div>
-									<PlugBadge label="my_script" isGlowing={isGlowing} />
+									<PlugBadge label="get_failed_payment" isGlowing={isGlowing} />
 								</div>
 								<motion.div
 									key={`${stat.label}-${pulseIndex}`}
@@ -364,7 +364,7 @@ function MiniApp() {
 						<div className="rounded-lg border border-gray-100 p-2">
 							<div className="flex items-center justify-between mb-1.5">
 								<div className="text-[8px] text-gray-400">Monthly activity</div>
-								<PlugBadge label="my_script" isGlowing={isGlowing} />
+								<PlugBadge label="get_failed_payment" isGlowing={isGlowing} />
 							</div>
 							<svg viewBox="0 0 120 50" className="w-full h-[44px]">
 								{bars.map((h, i) => (
@@ -384,7 +384,7 @@ function MiniApp() {
 						<div className="rounded-lg border border-gray-100 p-2">
 							<div className="flex items-center justify-between mb-1">
 								<div className="text-[8px] text-gray-400">Table</div>
-								<PlugBadge label="my_script" isGlowing={isGlowing} />
+								<PlugBadge label="get_failed_payment" isGlowing={isGlowing} />
 							</div>
 							{[
 								['Alice', ['$420', '$435', '$450', '$448']],
@@ -411,7 +411,7 @@ function MiniApp() {
 					<div className="rounded-lg border border-gray-100 p-2">
 						<div className="flex items-center justify-between mb-1">
 							<div className="text-[8px] text-gray-400">Trend</div>
-							<PlugBadge label="my_script" isGlowing={isGlowing} />
+							<PlugBadge label="get_failed_payment" isGlowing={isGlowing} />
 						</div>
 						<svg viewBox="0 0 200 36" className="w-full h-[32px]">
 							<polyline points="0,30 20,26 40,28 60,20 80,22 100,14 120,16 140,10 160,12 180,6 200,8" fill="none" className="stroke-blue-300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -448,24 +448,23 @@ const TRIGGERS = [
 ];
 
 function MiniEndpoint() {
-	const [activeIdx, setActiveIdx] = useState(0);
+	const [clicked, setClicked] = useState(false);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setActiveIdx((prev) => (prev + 1) % TRIGGERS.length);
-		}, 1000);
-		return () => clearInterval(interval);
+		// Auto-click Schedule after a short delay
+		const t = setTimeout(() => setClicked(true), 800);
+		return () => clearTimeout(t);
 	}, []);
 
 	return (
 		<div className="w-full max-w-md mx-auto flex flex-col gap-4 px-4 py-4">
 			{/* Endpoint route */}
-			<div className="rounded-lg border border-gray-700 bg-gray-800/50 p-3">
-				<div className="font-mono text-[11px] text-gray-500 mb-1">Endpoint</div>
+			<div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
+				<div className="font-mono text-[11px] text-gray-400 mb-1">Endpoint</div>
 				<div className="font-mono text-[13px]">
-					<span className="text-gray-300">POST</span>
-					<span className="text-gray-500"> /api/w/demo/jobs/run/</span>
-					<span className="text-blue-400 font-semibold">my_script</span>
+					<span className="text-gray-700">POST</span>
+					<span className="text-gray-400"> /api/w/demo/jobs/run/</span>
+					<span className="text-blue-600 font-semibold">get_failed_payment</span>
 				</div>
 			</div>
 
@@ -475,7 +474,8 @@ function MiniEndpoint() {
 				<div className="grid grid-cols-3 gap-2">
 					{TRIGGERS.map((trigger, i) => {
 						const Icon = trigger.icon;
-						const isActive = activeIdx === i;
+						const isSchedule = i === 0;
+						const isActive = isSchedule && clicked;
 						return (
 							<motion.div
 								key={`${trigger.label}-${i}`}
@@ -546,7 +546,7 @@ function MiniAgent() {
 						className="flex justify-end"
 					>
 						<div className="rounded-2xl rounded-tr-sm bg-blue-600 px-3.5 py-2 max-w-[75%]">
-							<span className="text-[12px] text-white">Refund the last 3 charges</span>
+							<span className="text-[12px] text-white">Get failed payments from last week</span>
 						</div>
 					</motion.div>
 				)}
@@ -562,11 +562,11 @@ function MiniAgent() {
 						transition={{ duration: 0.25 }}
 						className="flex items-start gap-2"
 					>
-						<div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-							<Bot className="w-3.5 h-3.5 text-gray-300" />
+						<div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300 flex items-center justify-center flex-shrink-0 mt-0.5">
+							<Bot className="w-3.5 h-3.5 text-gray-500" />
 						</div>
-						<div className="rounded-2xl rounded-tl-sm bg-gray-800/80 border border-gray-700/50 px-3.5 py-2">
-							<span className="text-[12px] text-gray-400">Thinking</span>
+						<div className="rounded-2xl rounded-tl-sm bg-gray-100 border border-gray-200 px-3.5 py-2">
+							<span className="text-[12px] text-gray-500">Thinking</span>
 							<TypingDots />
 						</div>
 					</motion.div>
@@ -583,19 +583,19 @@ function MiniAgent() {
 						transition={{ duration: 0.3 }}
 						className="flex items-start gap-2"
 					>
-						<div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-							<Bot className="w-3.5 h-3.5 text-gray-300" />
+						<div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300 flex items-center justify-center flex-shrink-0 mt-0.5">
+							<Bot className="w-3.5 h-3.5 text-gray-500" />
 						</div>
 						<div className="flex-1 min-w-0">
 							<motion.div
 								className="rounded-xl border overflow-hidden"
 								animate={{
-									borderColor: toolExecuting ? 'rgba(96,165,250,0.4)' : toolDone ? 'rgba(74,222,128,0.3)' : 'rgba(55,65,81,0.5)',
+									borderColor: toolExecuting ? 'rgba(59,130,246,0.4)' : toolDone ? 'rgba(34,197,94,0.3)' : 'rgba(209,213,219,0.8)',
 								}}
 								transition={{ duration: 0.3 }}
 							>
 								{/* Tool call header — acts as collapsible trigger */}
-								<div className="flex items-center gap-2 px-3 py-1.5 bg-gray-800/60 border-b border-gray-700/50">
+								<div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 border-b border-gray-200">
 									{/* Chevron that rotates open */}
 									<motion.svg
 										width="10" height="10" viewBox="0 0 10 10"
@@ -607,18 +607,18 @@ function MiniAgent() {
 									</motion.svg>
 									{toolExecuting ? (
 										<motion.div
-											className="w-2 h-2 rounded-full bg-blue-400"
+											className="w-2 h-2 rounded-full bg-blue-500"
 											animate={{ opacity: [1, 0.4, 1] }}
 											transition={{ duration: 0.8, repeat: Infinity }}
 										/>
 									) : toolDone ? (
-										<div className="w-2 h-2 rounded-full bg-green-400" />
+										<div className="w-2 h-2 rounded-full bg-green-500" />
 									) : null}
 									<div className="flex items-center gap-1.5">
 										<TsLogo />
-										<span className="text-[11px] font-mono font-medium text-gray-300">refund_charges</span>
+										<span className="text-[11px] font-mono font-medium text-gray-700">get_failed_payment</span>
 									</div>
-									<span className={`text-[11px] font-medium ml-auto ${toolExecuting ? 'text-blue-400' : 'text-green-400'}`}>
+									<span className={`text-[11px] font-medium ml-auto ${toolExecuting ? 'text-blue-600' : 'text-green-600'}`}>
 										{toolExecuting ? 'Calling script...' : 'Script completed'}
 									</span>
 								</div>
@@ -629,18 +629,18 @@ function MiniAgent() {
 									transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
 									className="overflow-hidden"
 								>
-									<div className="px-3 py-2.5 bg-gray-900/40">
+									<div className="px-3 py-2.5 bg-gray-50/50">
 										<div className="font-mono text-[10px] text-gray-500 mb-2">
-											<span className="text-gray-600">args:</span> <span className="text-gray-500">{'{'}</span> <span className="text-blue-400">"count"</span><span className="text-gray-600">: </span><span className="text-orange-300">3</span> <span className="text-gray-500">{'}'}</span>
+											<span className="text-gray-600">args:</span> <span className="text-gray-400">{'{'}</span> <span className="text-blue-600">"days"</span><span className="text-gray-500">: </span><span className="text-orange-600">7</span> <span className="text-gray-400">{'}'}</span>
 										</div>
-										<div className="border-t border-gray-700/40 pt-2">
-											<div className="text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Result</div>
+										<div className="border-t border-gray-200 pt-2">
+											<div className="text-[9px] text-gray-400 uppercase tracking-wider mb-1.5">Result</div>
 											<div className="font-mono text-[10px] leading-relaxed">
-												<div><span className="text-gray-500">{'{'}</span></div>
-												<div className="pl-3"><span className="text-blue-400">"refunded"</span><span className="text-gray-600">: </span><span className="text-orange-300">3</span><span className="text-gray-600">,</span></div>
-												<div className="pl-3"><span className="text-blue-400">"total"</span><span className="text-gray-600">: </span><span className="text-green-400">"$127.50"</span><span className="text-gray-600">,</span></div>
-												<div className="pl-3"><span className="text-blue-400">"status"</span><span className="text-gray-600">: </span><span className="text-green-400">"success"</span></div>
-												<div><span className="text-gray-500">{'}'}</span></div>
+												<div><span className="text-gray-400">{'{'}</span></div>
+												<div className="pl-3"><span className="text-blue-600">"count"</span><span className="text-gray-500">: </span><span className="text-orange-600">5</span><span className="text-gray-500">,</span></div>
+												<div className="pl-3"><span className="text-blue-600">"total"</span><span className="text-gray-500">: </span><span className="text-green-600">"$1,240.00"</span><span className="text-gray-500">,</span></div>
+												<div className="pl-3"><span className="text-blue-600">"status"</span><span className="text-gray-500">: </span><span className="text-green-600">"done"</span></div>
+												<div><span className="text-gray-400">{'}'}</span></div>
 											</div>
 										</div>
 									</div>
@@ -661,11 +661,11 @@ function MiniAgent() {
 						transition={{ duration: 0.3 }}
 						className="flex items-start gap-2"
 					>
-						<div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-							<Bot className="w-3.5 h-3.5 text-gray-300" />
+						<div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300 flex items-center justify-center flex-shrink-0 mt-0.5">
+							<Bot className="w-3.5 h-3.5 text-gray-500" />
 						</div>
-						<div className="rounded-2xl rounded-tl-sm bg-gray-800/80 border border-gray-700/50 px-3.5 py-2 max-w-[85%]">
-							<span className="text-[12px] text-gray-200">Done! Refunded <span className="text-green-400 font-medium">$127.50</span> across 3 charges.</span>
+						<div className="rounded-2xl rounded-tl-sm bg-gray-100 border border-gray-200 px-3.5 py-2 max-w-[85%]">
+							<span className="text-[12px] text-gray-700">Found <span className="text-green-600 font-medium">5 failed payments</span> totalling $1,240.00 last week.</span>
 						</div>
 					</motion.div>
 				)}
@@ -693,10 +693,10 @@ function TabBar({ items, activeIndex, onSelect }: { items: typeof USE_CASES; act
 	}, [activeIndex]);
 
 	return (
-		<div ref={containerRef} className="relative flex items-center rounded-full bg-gray-800/60 border border-gray-700/50 p-1">
+		<div ref={containerRef} className="relative flex items-center rounded-full bg-gray-100 border border-gray-200 p-1">
 			{/* Animated pill */}
 			<motion.div
-				className="absolute top-1 bottom-1 rounded-full bg-gray-700/80 border border-gray-600/50"
+				className="absolute top-1 bottom-1 rounded-full bg-white border border-gray-300 shadow-sm"
 				animate={{ left: pillStyle.left, width: pillStyle.width }}
 				transition={{ type: 'spring', stiffness: 400, damping: 30 }}
 			/>
@@ -706,7 +706,7 @@ function TabBar({ items, activeIndex, onSelect }: { items: typeof USE_CASES; act
 					data-tab-btn
 					onClick={() => onSelect(i)}
 					className="relative z-10 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-medium transition-colors duration-200"
-					style={{ color: i === activeIndex ? '#e5e7eb' : '#6b7280' }}
+					style={{ color: i === activeIndex ? '#111827' : '#9ca3af' }}
 				>
 					<u.icon className="w-3.5 h-3.5" />
 					{u.label}
@@ -748,7 +748,7 @@ function UseCasesCycling() {
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -10 }}
 					transition={{ duration: 0.25 }}
-					className="rounded-xl border border-gray-700 bg-[#0d1117] w-full flex items-center justify-center overflow-hidden"
+					className="rounded-xl border border-gray-200 bg-white w-full flex items-center justify-center overflow-hidden"
 				style={{ minHeight: 400 }}
 				>
 					{previews[activeIndex]}
@@ -846,7 +846,7 @@ function CompleteAnimation() {
 						</div>
 						<div className="flex items-center gap-1.5 ml-2">
 							<img src="/img/windmill.svg" alt="Windmill" className="h-3.5 w-3.5" />
-							<span className="text-[11px] text-gray-400 font-mono">f/stripe/refund.ts</span>
+							<span className="text-[11px] text-gray-400 font-mono">get_failed_payment.ts</span>
 						</div>
 					</div>
 					<div className="p-3 sm:p-4 min-h-[280px] sm:min-h-[300px] flex flex-col">
@@ -1003,7 +1003,7 @@ function CompleteAnimation() {
 								<div className="flex items-center gap-2.5">
 									<img src="/img/windmill.svg" alt="Windmill" className="w-7 h-7 animate-spin" style={{ animationDuration: '3s' }} />
 									<div className="flex items-center gap-2">
-										<span className="text-sm font-mono text-gray-300">f/stripe/refund.ts</span>
+										<span className="text-sm font-mono text-gray-300">get_failed_payment.ts</span>
 										<div className="flex items-center gap-1">
 											<div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
 											<span className="text-[10px] text-green-400">live</span>
@@ -1021,21 +1021,21 @@ function CompleteAnimation() {
 						>
 							<span className="absolute -top-2.5 left-4 px-2 bg-[#0a0f18] text-[11px] font-medium text-gray-400 uppercase tracking-wider">Windmill platform</span>
 							<div className="h-full grid grid-cols-2 grid-rows-2 gap-2">
-								<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, type: 'spring', stiffness: 200 }} className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col">
-									<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-green-400" /><span className="text-sm text-gray-400 font-medium">Runs</span></div>
-									<div className="p-2 flex-1 min-h-0 flex flex-col justify-center"><comps.LiveRunsScatter runCount={runCount} /></div>
+								<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, type: 'spring', stiffness: 200 }} className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col">
+									<div className="px-2.5 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-green-500" /><span className="text-sm text-gray-600 font-medium">Runs</span></div>
+									<div className="p-2 flex-1 min-h-0 flex flex-col justify-center"><comps.LiveRunsScatter runCount={runCount} light /></div>
 								</motion.div>
-								<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.65, type: 'spring', stiffness: 200 }} className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col">
-									<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-purple-400" /><span className="text-sm text-gray-400 font-medium">Result</span></div>
-									<div className="p-2 flex-1 min-h-0 flex flex-col justify-center overflow-hidden"><comps.LiveResultJson runCount={runCount} /></div>
+								<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.65, type: 'spring', stiffness: 200 }} className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col">
+									<div className="px-2.5 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-purple-500" /><span className="text-sm text-gray-600 font-medium">Result</span></div>
+									<div className="p-2 flex-1 min-h-0 flex flex-col justify-center overflow-hidden"><comps.LiveResultJson runCount={runCount} light /></div>
 								</motion.div>
-								<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.8, type: 'spring', stiffness: 200 }} className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col">
-									<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-amber-400" /><span className="text-sm text-gray-400 font-medium">Database</span></div>
-									<div className="p-2 flex-1 min-h-0 flex flex-col justify-center overflow-hidden"><comps.LiveDatabase runCount={runCount} /></div>
+								<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.8, type: 'spring', stiffness: 200 }} className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col">
+									<div className="px-2.5 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-amber-500" /><span className="text-sm text-gray-600 font-medium">Database</span></div>
+									<div className="p-2 flex-1 min-h-0 flex flex-col justify-center overflow-hidden"><comps.LiveDatabase runCount={runCount} light /></div>
 								</motion.div>
-								<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.95, type: 'spring', stiffness: 200 }} className="rounded-xl border border-gray-800 bg-[#0d1117] shadow-lg overflow-hidden flex flex-col">
-									<div className="px-2.5 py-1.5 bg-[#161b22] border-b border-gray-800 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-cyan-400" /><span className="text-sm text-gray-400 font-medium">Frontend</span></div>
-									<div className="p-2 flex-1 min-h-0 flex flex-col overflow-hidden"><comps.LiveFrontend runCount={runCount} /></div>
+								<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.95, type: 'spring', stiffness: 200 }} className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col">
+									<div className="px-2.5 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-cyan-500" /><span className="text-sm text-gray-600 font-medium">Audit logs</span></div>
+									<div className="p-2 flex-1 min-h-0 flex flex-col overflow-hidden"><comps.LiveFrontend runCount={runCount} light /></div>
 								</motion.div>
 							</div>
 						</motion.div>

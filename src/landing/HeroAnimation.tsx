@@ -17,9 +17,9 @@ const CODE_SEGMENTS = [
 	{ text: ': ', cls: 'text-white' },
 	{ text: 'string', cls: 'text-blue-300' },
 	{ text: ',\n', cls: 'text-white' },
-	{ text: '  charge_id', cls: 'text-orange-300' },
+	{ text: '  days', cls: 'text-orange-300' },
 	{ text: ': ', cls: 'text-white' },
-	{ text: 'string', cls: 'text-blue-300' },
+	{ text: 'number', cls: 'text-blue-300' },
 	{ text: '\n) {\n', cls: 'text-white' },
 	{ text: '  const ', cls: 'text-purple-400' },
 	{ text: 'stripe ', cls: 'text-white' },
@@ -27,11 +27,11 @@ const CODE_SEGMENTS = [
 	{ text: 'Stripe', cls: 'text-yellow-300' },
 	{ text: '(resource)\n', cls: 'text-white' },
 	{ text: '  return ', cls: 'text-purple-400' },
-	{ text: 'stripe.refunds.', cls: 'text-white' },
-	{ text: 'create', cls: 'text-yellow-300' },
+	{ text: 'stripe.charges.', cls: 'text-white' },
+	{ text: 'list', cls: 'text-yellow-300' },
 	{ text: '({\n', cls: 'text-white' },
-	{ text: '    charge', cls: 'text-orange-300' },
-	{ text: ': charge_id\n', cls: 'text-white' },
+	{ text: '    status', cls: 'text-orange-300' },
+	{ text: ": 'failed'\n", cls: 'text-green-400' },
 	{ text: '  })\n', cls: 'text-white' },
 	{ text: '}', cls: 'text-white' },
 ];
@@ -163,12 +163,12 @@ const Y_LABELS = [
 const PX = 18;
 const PW = 180;
 const PY = 5;
-const PH = 88;
+const PH = 128;
 
 // Group scatter dots by run (3 dots per run)
 const DOTS_PER_RUN = 3;
 
-function LiveRunsScatter({ runCount }: { runCount: number }) {
+function LiveRunsScatter({ runCount, light }: { runCount: number; light?: boolean }) {
 	const visibleCount = Math.min(runCount * DOTS_PER_RUN, SCATTER_DOTS.length);
 
 	const successCount = SCATTER_DOTS.slice(0, visibleCount).filter((d) => d.success).length;
@@ -177,20 +177,22 @@ function LiveRunsScatter({ runCount }: { runCount: number }) {
 	return (
 		<div className="flex flex-col h-full">
 			<div className="flex-1 min-h-0">
-				<svg viewBox="0 0 200 100" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+				<svg viewBox="0 0 200 140" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
 					{/* Grid lines + Y labels */}
 					{Y_LABELS.map((l) => {
 						const ly = PY + (l.pct / 100) * PH;
 						return (
 							<g key={l.label}>
-								<line x1={PX} y1={ly} x2={PX + PW} y2={ly} stroke="#374151" strokeWidth="0.5" />
-								<text x={PX - 1.5} y={ly + 1.5} textAnchor="end" fill="#6b7280" fontSize="4" fontFamily="monospace">{l.label}</text>
+								<line x1={PX} y1={ly} x2={PX + PW} y2={ly} stroke={light ? '#e5e7eb' : '#374151'} strokeWidth="0.5" />
+								<text x={PX - 1.5} y={ly + 1.5} textAnchor="end" fill={light ? '#9ca3af' : '#6b7280'} fontSize="4" fontFamily="monospace">{l.label}</text>
 							</g>
 						);
 					})}
+					{/* Top line */}
+					<line x1={PX} y1={PY} x2={PX + PW} y2={PY} stroke={light ? '#e5e7eb' : '#374151'} strokeWidth="0.5" />
 					{/* Y-axis line */}
-					<line x1={PX} y1={PY} x2={PX} y2={PY + PH} stroke="#4b5563" strokeWidth="0.5" />
-					<line x1={PX} y1={PY + PH} x2={PX + PW} y2={PY + PH} stroke="#4b5563" strokeWidth="0.5" />
+					<line x1={PX} y1={PY} x2={PX} y2={PY + PH} stroke={light ? '#d1d5db' : '#4b5563'} strokeWidth="0.5" />
+					<line x1={PX} y1={PY + PH} x2={PX + PW} y2={PY + PH} stroke={light ? '#d1d5db' : '#4b5563'} strokeWidth="0.5" />
 					{/* Dots */}
 					{SCATTER_DOTS.slice(0, visibleCount).map((dot, i) => (
 						<motion.circle
@@ -198,7 +200,7 @@ function LiveRunsScatter({ runCount }: { runCount: number }) {
 							cx={PX + (dot.x / 100) * PW}
 							cy={PY + (dot.y / 100) * PH}
 							r="2.5"
-							fill={dot.success ? '#4ade80' : '#f87171'}
+							fill={dot.success ? (light ? '#22c55e' : '#4ade80') : (light ? '#ef4444' : '#f87171')}
 							fillOpacity="0.8"
 							initial={{ scale: 0, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
@@ -208,10 +210,10 @@ function LiveRunsScatter({ runCount }: { runCount: number }) {
 				</svg>
 			</div>
 			<div className="flex items-center justify-between mt-1.5 shrink-0">
-				<span className="text-[11px] text-gray-600">last 5 min</span>
+				<span className={`text-[11px] ${light ? 'text-gray-500' : 'text-gray-600'}`}>last 5 min</span>
 				<div className="flex items-center gap-2">
-					<span className="text-[11px] text-green-400 font-medium">{successCount} ok</span>
-					{failCount > 0 && <span className="text-[11px] text-red-400 font-medium">{failCount} err</span>}
+					<span className={`text-[11px] font-medium ${light ? 'text-green-600' : 'text-green-400'}`}>{successCount} ok</span>
+					{failCount > 0 && <span className={`text-[11px] font-medium ${light ? 'text-red-600' : 'text-red-400'}`}>{failCount} err</span>}
 				</div>
 			</div>
 		</div>
@@ -248,32 +250,35 @@ const RESULT_SNAPSHOTS = [
 	{
 		label: 'input',
 		json: [
-			{ key: 'charge', value: '"ch_3MqBz2"', color: 'text-green-400' },
-			{ key: 'amount', value: '8900', color: 'text-orange-300' },
+			{ key: 'status', value: '"failed"', color: 'text-green-400' },
+			{ key: 'days', value: '7', color: 'text-orange-300' },
 		],
 	},
 	{
 		label: 'output',
 		json: [
-			{ key: 'id', value: '"re_3NqKx1"', color: 'text-green-400' },
-			{ key: 'status', value: '"ok"', color: 'text-green-400' },
-			{ key: 'amount', value: '8900', color: 'text-orange-300' },
+			{ key: 'count', value: '5', color: 'text-orange-300' },
+			{ key: 'total', value: '"$1,240.00"', color: 'text-green-400' },
+			{ key: 'status', value: '"done"', color: 'text-green-400' },
 		],
 	},
 ];
 
-function LiveResultJson({ runCount }: { runCount: number }) {
+function LiveResultJson({ runCount, light }: { runCount: number; light?: boolean }) {
 	// Toggle every 3 runs instead of every 1
 	const snapshotIndex = Math.floor(runCount / 3) % 2 === 0 ? 0 : 1;
 	const snapshot = RESULT_SNAPSHOTS[snapshotIndex];
+
+	const bracketColor = light ? 'text-gray-800' : 'text-white';
+	const keyColor = light ? 'text-blue-600' : 'text-blue-300';
 
 	return (
 		<div className="font-mono text-[12px] leading-[22px]">
 			<div className="flex items-center gap-1.5 mb-2">
 				<span className={`text-[10px] px-2 py-0.5 rounded font-medium ${
 					snapshot.label === 'input'
-						? 'bg-blue-500/20 text-blue-400'
-						: 'bg-green-500/20 text-green-400'
+						? (light ? 'bg-blue-100 text-blue-700' : 'bg-blue-500/20 text-blue-400')
+						: (light ? 'bg-green-100 text-green-700' : 'bg-green-500/20 text-green-400')
 				}`}>
 					{snapshot.label}
 				</span>
@@ -286,7 +291,7 @@ function LiveResultJson({ runCount }: { runCount: number }) {
 					exit={{ opacity: 0, y: -6 }}
 					transition={{ duration: 0.25 }}
 				>
-					<span className="text-white">{'{'}</span>
+					<span className={bracketColor}>{'{'}</span>
 					{snapshot.json.map((entry, i) => (
 						<div key={entry.key} className="pl-4">
 							<motion.span
@@ -294,14 +299,14 @@ function LiveResultJson({ runCount }: { runCount: number }) {
 								animate={{ opacity: 1 }}
 								transition={{ delay: 0.1 + i * 0.08 }}
 							>
-								<span className="text-blue-300">"{entry.key}"</span>
-								<span className="text-white">: </span>
+								<span className={keyColor}>"{entry.key}"</span>
+								<span className={bracketColor}>: </span>
 								<span className={entry.color}>{entry.value}</span>
-								{i < snapshot.json.length - 1 && <span className="text-white">,</span>}
+								{i < snapshot.json.length - 1 && <span className={bracketColor}>,</span>}
 							</motion.span>
 						</div>
 					))}
-					<span className="text-white">{'}'}</span>
+					<span className={bracketColor}>{'}'}</span>
 				</motion.div>
 			</AnimatePresence>
 		</div>
@@ -321,78 +326,78 @@ const DB_ROWS = [
 	{ id: '8', customer: 'oscorp', amount: '$430' },
 ];
 
-function LiveDatabase({ runCount }: { runCount: number }) {
+function LiveDatabase({ runCount, light }: { runCount: number; light?: boolean }) {
 	const visibleCount = Math.min(runCount, DB_ROWS.length);
 
 	return (
-		<table className="w-full">
-			<thead>
-				<tr className="text-[11px] text-gray-500 border-b border-gray-800">
-					<th className="text-left pb-2 font-medium">id</th>
-					<th className="text-left pb-2 font-medium">customer</th>
-					<th className="text-right pb-2 font-medium">amount</th>
-				</tr>
-			</thead>
-			<tbody>
+		<div className="flex flex-col h-full overflow-hidden">
+			{/* Column headers */}
+			<div className={`grid grid-cols-[24px_1fr_60px] gap-1 text-[9px] uppercase tracking-wider pb-1.5 border-b shrink-0 ${light ? 'text-gray-500 border-gray-200' : 'text-gray-600 border-gray-800'}`}>
+				<span>#</span>
+				<span>customer</span>
+				<span className="text-right">amount</span>
+			</div>
+			{/* Rows */}
+			<div className="flex-1 min-h-0 overflow-hidden">
 				<AnimatePresence>
-					{DB_ROWS.slice(0, visibleCount).map((row) => (
-						<motion.tr
+					{DB_ROWS.slice(0, visibleCount).map((row, i) => (
+						<motion.div
 							key={row.id}
-							initial={{ opacity: 0, y: 8 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.3 }}
-							className="text-[12px] border-b border-gray-800/50 last:border-0"
+							initial={{ opacity: 0, x: -8 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.25 }}
+							className={`grid grid-cols-[24px_1fr_60px] gap-1 text-[11px] py-1.5 ${i < visibleCount - 1 ? (light ? 'border-b border-gray-200' : 'border-b border-gray-800/30') : ''}`}
 						>
-							<td className="py-1.5 text-gray-400 font-mono">{row.id}</td>
-							<td className="py-1.5 text-gray-300">{row.customer}</td>
-							<td className="py-1.5 text-right text-white font-mono">{row.amount}</td>
-						</motion.tr>
+							<span className={`font-mono ${light ? 'text-gray-400' : 'text-gray-600'}`}>{row.id}</span>
+							<span className={light ? 'text-gray-700' : 'text-gray-300'}>{row.customer}</span>
+							<span className={`text-right font-mono ${light ? 'text-gray-700' : 'text-gray-300'}`}>{row.amount}</span>
+						</motion.div>
 					))}
 				</AnimatePresence>
-			</tbody>
-		</table>
+			</div>
+		</div>
 	);
 }
 
 // ─── Live frontend app ──────────────────────────────────────────────────────
 
-const BAR_DATA = [
-	{ label: 'Jan', value: 45, color: '#22d3ee' },
-	{ label: 'Feb', value: 72, color: '#22d3ee' },
-	{ label: 'Mar', value: 58, color: '#22d3ee' },
-	{ label: 'Apr', value: 89, color: '#22d3ee' },
-	{ label: 'May', value: 34, color: '#f87171' },
-	{ label: 'Jun', value: 95, color: '#22d3ee' },
-	{ label: 'Jul', value: 67, color: '#22d3ee' },
+const AUDIT_LOGS = [
+	{ time: '14:32:01', user: 'admin', action: 'deployed', target: 'get_failed_payment.ts' },
+	{ time: '14:32:02', user: 'system', action: 'started', target: 'worker-1' },
+	{ time: '14:32:05', user: 'system', action: 'completed', target: 'run #1' },
+	{ time: '14:32:08', user: 'system', action: 'completed', target: 'run #2' },
+	{ time: '14:32:12', user: 'admin', action: 'viewed', target: 'logs' },
+	{ time: '14:32:15', user: 'system', action: 'completed', target: 'run #3' },
+	{ time: '14:32:19', user: 'system', action: 'completed', target: 'run #4' },
+	{ time: '14:32:22', user: 'system', action: 'completed', target: 'run #5' },
 ];
 
-const MAX_BAR_HEIGHT = 80; // px
-
-function LiveFrontend({ runCount }: { runCount: number }) {
-	const visibleBars = Math.min(runCount, BAR_DATA.length);
-	const total = BAR_DATA.slice(0, visibleBars).reduce((s, d) => s + d.value, 0);
+function LiveFrontend({ runCount, light }: { runCount: number; light?: boolean }) {
+	const visibleCount = Math.min(runCount, AUDIT_LOGS.length);
 
 	return (
-		<div className="flex flex-col h-full">
-			{/* Header stats */}
+		<div className="flex flex-col h-full overflow-hidden">
 			<div className="flex items-center justify-between mb-2 shrink-0">
-				<span className="text-[11px] text-gray-500">Refunds processed</span>
-				<span className="text-[12px] text-cyan-400 font-mono font-medium">${total.toLocaleString()}</span>
+				<span className={`text-[11px] ${light ? 'text-gray-600' : 'text-gray-500'}`}>Audit logs</span>
+				<span className={`text-[10px] font-mono ${light ? 'text-gray-500' : 'text-gray-600'}`}>{visibleCount} events</span>
 			</div>
-			{/* Bar chart */}
-			<div className="flex-1 flex items-end gap-2 min-h-0">
-				{BAR_DATA.map((bar, i) => (
-					<div key={bar.label} className="flex-1 flex flex-col items-center justify-end h-full">
+			<div className="flex-1 min-h-0 overflow-hidden">
+				<AnimatePresence>
+					{AUDIT_LOGS.slice(0, visibleCount).map((log) => (
 						<motion.div
-							className="w-full rounded-t"
-							style={{ backgroundColor: bar.color }}
-							initial={{ height: 0 }}
-							animate={{ height: i < visibleBars ? `${bar.value}%` : 0 }}
-							transition={{ duration: 0.4 }}
-						/>
-						<span className="text-[9px] text-gray-600 mt-1 shrink-0">{bar.label}</span>
-					</div>
-				))}
+							key={log.time + log.target}
+							initial={{ opacity: 0, y: 6 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.25 }}
+							className={`flex items-center gap-2 text-[10px] py-1 last:border-0 ${light ? 'border-b border-gray-200' : 'border-b border-gray-800/50'}`}
+						>
+							<span className={`font-mono shrink-0 ${light ? 'text-gray-500' : 'text-gray-600'}`}>{log.time}</span>
+							<span className={`shrink-0 ${light ? 'text-gray-400' : 'text-gray-500'}`}>{log.user}</span>
+							<span className={log.action === 'completed' ? (light ? 'text-green-600' : 'text-green-400') : log.action === 'deployed' ? (light ? 'text-blue-600' : 'text-blue-400') : (light ? 'text-gray-500' : 'text-gray-400')}>{log.action}</span>
+							<span className={`truncate ${light ? 'text-gray-700' : 'text-gray-300'}`}>{log.target}</span>
+						</motion.div>
+					))}
+				</AnimatePresence>
 			</div>
 		</div>
 	);
@@ -581,7 +586,7 @@ function TriggerPicker({ active }: { active: boolean }) {
 					{step === 'configured' ? (
 						<span className="text-[10px] text-gray-300 font-mono flex items-center gap-1.5">
 							<Webhook className="w-3 h-3 text-cyan-400 shrink-0" />
-							Webhook — POST /api/w/demo/jobs/run_wait_result/f/stripe/refund
+							Webhook — POST /api/w/demo/jobs/run_wait_result/get_failed_payment
 						</span>
 					) : (
 						<span className="text-[10px] text-gray-600">Select a trigger...</span>
@@ -745,7 +750,7 @@ export default function HeroAnimation() {
 						</div>
 						<div className="flex items-center gap-1.5 ml-2">
 							<img src="/img/windmill.svg" alt="Windmill" className="h-3.5 w-3.5" />
-							<span className="text-[11px] text-gray-400 font-mono">f/stripe/refund.ts</span>
+							<span className="text-[11px] text-gray-400 font-mono">get_failed_payment.ts</span>
 						</div>
 					</div>
 					{/* Code */}
@@ -873,7 +878,7 @@ export default function HeroAnimation() {
 										style={{ animationDuration: '3s' }}
 									/>
 									<div className="flex items-center gap-2">
-										<span className="text-sm font-mono text-gray-300">f/stripe/refund.ts</span>
+										<span className="text-sm font-mono text-gray-300">get_failed_payment.ts</span>
 										<div className="flex items-center gap-1">
 											<div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
 											<span className="text-[10px] text-green-400">live</span>
@@ -998,7 +1003,7 @@ export function HeroAnimationSimplified() {
 								style={{ animationDuration: '3s' }}
 							/>
 							<div className="flex items-center gap-2">
-								<span className="text-sm font-mono text-gray-300">my_script.ts</span>
+								<span className="text-sm font-mono text-gray-300">get_failed_payment.ts</span>
 								<div className="flex items-center gap-1">
 									<div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
 									<span className="text-[10px] text-green-400">live</span>
