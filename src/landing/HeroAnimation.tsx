@@ -161,7 +161,7 @@ const Y_LABELS = [
 
 // Plot area
 const PX = 28;
-const PW = 260;
+const PW = 360;
 const PY = 5;
 const PH = 180;
 
@@ -177,7 +177,7 @@ function LiveRunsScatter({ runCount, light }: { runCount: number; light?: boolea
 	return (
 		<div className="flex flex-col h-full">
 			<div className="flex-1 min-h-0">
-				<svg viewBox="0 0 295 195" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+				<svg viewBox="0 0 395 195" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
 					{/* Grid lines + Y labels */}
 					{Y_LABELS.map((l) => {
 						const ly = PY + (l.pct / 100) * PH;
