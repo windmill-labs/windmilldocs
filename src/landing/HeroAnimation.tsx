@@ -160,10 +160,10 @@ const Y_LABELS = [
 ];
 
 // Plot area
-const PX = 18;
-const PW = 180;
+const PX = 28;
+const PW = 260;
 const PY = 5;
-const PH = 128;
+const PH = 180;
 
 // Group scatter dots by run (3 dots per run)
 const DOTS_PER_RUN = 3;
@@ -177,14 +177,14 @@ function LiveRunsScatter({ runCount, light }: { runCount: number; light?: boolea
 	return (
 		<div className="flex flex-col h-full">
 			<div className="flex-1 min-h-0">
-				<svg viewBox="0 0 200 140" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+				<svg viewBox="0 0 295 195" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
 					{/* Grid lines + Y labels */}
 					{Y_LABELS.map((l) => {
 						const ly = PY + (l.pct / 100) * PH;
 						return (
 							<g key={l.label}>
 								<line x1={PX} y1={ly} x2={PX + PW} y2={ly} stroke={light ? '#e5e7eb' : '#374151'} strokeWidth="0.5" />
-								<text x={PX - 1.5} y={ly + 1.5} textAnchor="end" fill={light ? '#9ca3af' : '#6b7280'} fontSize="4" fontFamily="monospace">{l.label}</text>
+								<text x={PX - 3} y={ly + 2} textAnchor="end" fill={light ? '#9ca3af' : '#6b7280'} fontSize="6" fontFamily="monospace">{l.label}</text>
 							</g>
 						);
 					})}
@@ -199,7 +199,7 @@ function LiveRunsScatter({ runCount, light }: { runCount: number; light?: boolea
 							key={i}
 							cx={PX + (dot.x / 100) * PW}
 							cy={PY + (dot.y / 100) * PH}
-							r="2.5"
+							r="3.5"
 							fill={dot.success ? (light ? '#22c55e' : '#4ade80') : (light ? '#ef4444' : '#f87171')}
 							fillOpacity="0.8"
 							initial={{ scale: 0, opacity: 0 }}
