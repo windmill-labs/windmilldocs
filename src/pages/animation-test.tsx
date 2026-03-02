@@ -2,15 +2,15 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GitBranch, LayoutDashboard, Globe, Bot, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Plug } from 'lucide-react';
+import { GitBranch, LayoutDashboard, Globe, Bot, SlidersHorizontal, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Plug } from 'lucide-react';
 
 // ─── Use case data ───────────────────────────────────────────────────────────
 
 const USE_CASES = [
-	{ id: 'dag', icon: GitBranch, label: 'Data pipeline', duration: 3500 },
+	{ id: 'dag', icon: Workflow, label: 'Workflow engine', duration: 3500 },
+	{ id: 'autoui', icon: SlidersHorizontal, label: 'Parameters UI', duration: 4500 },
 	{ id: 'app', icon: LayoutDashboard, label: 'Internal app', duration: 3500 },
-	{ id: 'agent', icon: Bot, label: 'AI agent', duration: 6000 },
-	{ id: 'workflow', icon: Workflow, label: 'Workflow', duration: 3500 },
+	{ id: 'agent', icon: Bot, label: 'AI agent', duration: 3500 },
 	{ id: 'endpoint', icon: Globe, label: 'Endpoint', duration: 3500 },
 ];
 
@@ -447,6 +447,125 @@ const TRIGGERS = [
 	{ icon: Bot, label: 'MCP' },
 ];
 
+// ─── Mini Parameters UI (matches main function: resource: string, days: number) ──
+
+function MiniAutoUI() {
+	const CYCLE = 7;
+	const [time, setTime] = useState(0);
+	useEffect(() => {
+		let frame: number;
+		const start = performance.now();
+		const tick = (now: number) => { setTime(((now - start) / 1000) % CYCLE); frame = requestAnimationFrame(tick); };
+		frame = requestAnimationFrame(tick);
+		return () => cancelAnimationFrame(frame);
+	}, []);
+
+	// Timeline: show function sig → fill resource → fill days → run button glows
+	const showSig = time >= 0;
+	const resourceFilled = time >= 1.5;
+	const daysFilled = time >= 2.8;
+	const runGlow = time >= 3.8;
+
+	return (
+		<div className="w-full max-w-sm mx-auto flex flex-col gap-3 px-4 py-5">
+			{/* Main function signature — same lines/colors as the IDE script */}
+			<AnimatePresence>
+				{showSig && (
+					<motion.div
+						initial={{ opacity: 0, y: 6 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.3 }}
+						className="rounded-lg bg-[#0d1117] border border-gray-800 px-3 py-2"
+					>
+						<pre className="text-[10px] font-mono leading-relaxed">
+							{[
+								<><span className="text-gray-600 select-none mr-2">3</span><span className="text-purple-400">export async function </span><span className="text-yellow-300">main</span><span className="text-white">(</span></>,
+								<><span className="text-gray-600 select-none mr-2">4</span><span className="text-orange-300">  resource</span><span className="text-white">: </span><span className="text-blue-300">string</span><span className="text-white">,</span></>,
+								<><span className="text-gray-600 select-none mr-2">5</span><span className="text-orange-300">  days</span><span className="text-white">: </span><span className="text-blue-300">number</span></>,
+								<><span className="text-gray-600 select-none mr-2">6</span><span className="text-white">)</span></>,
+							].map((line, i) => <div key={i}>{line}</div>)}
+						</pre>
+					</motion.div>
+				)}
+			</AnimatePresence>
+
+			{/* Arrow */}
+			<div className="flex justify-center">
+				<svg className="w-4 h-4 text-gray-600" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+					<path d="M8 3v10M4 9l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+				</svg>
+			</div>
+
+			{/* Parameters form */}
+			<div className="rounded-xl bg-[#161b22] border border-gray-800 p-3 flex flex-col gap-3">
+				<div className="flex items-center gap-1.5">
+					<SlidersHorizontal className="w-3 h-3 text-blue-400" />
+					<span className="text-[10px] text-gray-400 font-medium">Parameters UI</span>
+				</div>
+
+				{/* resource: string */}
+				<div className="flex flex-col gap-1">
+					<div className="flex items-center gap-1.5">
+						<span className="text-[10px] text-gray-400">resource</span>
+						<span className="text-[9px] text-gray-600 ml-auto">string</span>
+					</div>
+					<div className="h-6 rounded bg-[#0d1117] border border-gray-800 px-2 flex items-center">
+						{resourceFilled ? (
+							<motion.span
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								className="text-[10px] text-gray-300 font-mono"
+							>
+								sk_live_•••••••••••••••
+							</motion.span>
+						) : (
+							<span className="text-[10px] text-gray-600">Enter a value...</span>
+						)}
+					</div>
+				</div>
+
+				{/* days: number */}
+				<div className="flex flex-col gap-1">
+					<div className="flex items-center gap-1.5">
+						<span className="text-[10px] text-gray-400">days</span>
+						<span className="text-[9px] text-gray-600 ml-auto">number</span>
+					</div>
+					<div className="h-6 rounded bg-[#0d1117] border border-gray-800 px-2 flex items-center">
+						{daysFilled ? (
+							<motion.span
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								className="text-[10px] text-gray-300 font-mono"
+							>
+								7
+							</motion.span>
+						) : (
+							<span className="text-[10px] text-gray-600">Enter a value...</span>
+						)}
+					</div>
+				</div>
+
+				{/* Run button */}
+				<motion.div
+					className="h-7 rounded-lg flex items-center justify-center gap-1.5 mt-1"
+					animate={runGlow
+						? { backgroundColor: 'rgba(37,99,235,1)', boxShadow: '0 0 16px rgba(59,130,246,0.5)' }
+						: { backgroundColor: 'rgba(37,99,235,0.3)', boxShadow: '0 0 0px rgba(59,130,246,0)' }
+					}
+					transition={{ duration: 0.4 }}
+				>
+					<svg className="w-3 h-3 text-white" viewBox="0 0 16 16" fill="currentColor">
+						<path d="M4 2l10 6-10 6V2z" />
+					</svg>
+					<span className="text-[10px] text-white font-medium">Run</span>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
+
+// ─── Mini Endpoint animation ─────────────────────────────────────────────────
+
 function MiniEndpoint() {
 	const [clicked, setClicked] = useState(false);
 
@@ -693,10 +812,9 @@ function TabBar({ items, activeIndex, onSelect }: { items: typeof USE_CASES; act
 	}, [activeIndex]);
 
 	return (
-		<div ref={containerRef} className="relative flex items-center rounded-full bg-gray-100 border border-gray-200 p-1">
-			{/* Animated pill */}
+		<div ref={containerRef} className="relative flex items-center rounded-full bg-gray-800/60 border border-gray-700 p-1">
 			<motion.div
-				className="absolute top-1 bottom-1 rounded-full bg-white border border-gray-300 shadow-sm"
+				className="absolute top-1 bottom-1 rounded-full bg-gray-700 border border-gray-600 shadow-sm"
 				animate={{ left: pillStyle.left, width: pillStyle.width }}
 				transition={{ type: 'spring', stiffness: 400, damping: 30 }}
 			/>
@@ -705,8 +823,8 @@ function TabBar({ items, activeIndex, onSelect }: { items: typeof USE_CASES; act
 					key={u.id}
 					data-tab-btn
 					onClick={() => onSelect(i)}
-					className="relative z-10 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-medium transition-colors duration-200"
-					style={{ color: i === activeIndex ? '#111827' : '#9ca3af' }}
+					className="relative z-10 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-medium whitespace-nowrap transition-colors duration-200"
+					style={{ color: i === activeIndex ? '#e5e7eb' : '#6b7280' }}
 				>
 					<u.icon className="w-3.5 h-3.5" />
 					{u.label}
@@ -720,22 +838,25 @@ function UseCasesCycling() {
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	useEffect(() => {
-		if (activeIndex >= USE_CASES.length - 1) return; // Stop at last tab
+		if (activeIndex >= USE_CASES.length - 1) return;
 		const timeout = setTimeout(() => {
 			setActiveIndex((prev) => prev + 1);
 		}, USE_CASES[activeIndex].duration);
 		return () => clearTimeout(timeout);
 	}, [activeIndex]);
 
-	const uc = USE_CASES[activeIndex];
-
-	const previews = [
-		<MiniDag key="dag" />,
-		<MiniApp key="app" />,
-		<MiniAgent key="agent" />,
-		<MiniWorkflow key="workflow" />,
-		<MiniEndpoint key="endpoint" />,
-	];
+	const previews: Record<string, React.ReactNode> = {
+		dag: <MiniDag />,
+		autoui: <MiniAutoUI />,
+		app: <MiniApp />,
+		agent: (
+			<div className="flex flex-col items-center justify-center gap-3 py-16">
+				<Bot className="w-16 h-16 text-blue-400" strokeWidth={1.5} />
+				<span className="text-sm font-medium text-gray-400">AI Agent</span>
+			</div>
+		),
+		endpoint: <MiniEndpoint />,
+	};
 
 	return (
 		<div className="flex flex-col items-center justify-center w-full h-full gap-4">
@@ -748,10 +869,10 @@ function UseCasesCycling() {
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -10 }}
 					transition={{ duration: 0.25 }}
-					className="rounded-xl border border-gray-200 bg-white w-full flex items-center justify-center overflow-hidden"
-				style={{ minHeight: 400 }}
+					className="rounded-xl border border-gray-700 bg-gray-900 w-full flex items-center justify-center overflow-hidden"
+					style={{ minHeight: 400 }}
 				>
-					{previews[activeIndex]}
+					{previews[USE_CASES[activeIndex].id]}
 				</motion.div>
 			</AnimatePresence>
 		</div>
@@ -760,7 +881,7 @@ function UseCasesCycling() {
 
 // ─── Complete animation: IDE → use cases → deploy → monitoring ──────────────
 
-type Phase = 'expanding' | 'typing' | 'resource' | 'connect' | 'usecases' | 'ready' | 'pushing' | 'deploying' | 'monitoring';
+type Phase = 'expanding' | 'typing' | 'connect' | 'usecases' | 'ready' | 'pushing' | 'deploying' | 'monitoring';
 
 function CompleteAnimation() {
 	const [phase, setPhase] = useState<Phase>('expanding');
@@ -770,7 +891,6 @@ function CompleteAnimation() {
 		return {
 			TypingCode: mod.TypingCode,
 			StaticCode: mod.StaticCode,
-			StripeResourceInput: mod.StripeResourceInput,
 			LiveRunsScatter: mod.LiveRunsScatter,
 			LiveResultJson: mod.LiveResultJson,
 			LiveDatabase: mod.LiveDatabase,
@@ -780,12 +900,11 @@ function CompleteAnimation() {
 	}, []);
 
 	const handleTypingComplete = useCallback(() => {
-		setPhase('resource');
+		setPhase('connect');
 	}, []);
 
-	// Phase transitions: expanding → typing → resource → connect → usecases → ready → pushing → deploying → monitoring
+	// Phase transitions: expanding → typing → connect → usecases → ready → pushing → deploying → monitoring
 	useEffect(() => { if (phase === 'expanding') { const t = setTimeout(() => setPhase('typing'), 800); return () => clearTimeout(t); } }, [phase]);
-	useEffect(() => { if (phase === 'resource') { const t = setTimeout(() => setPhase('connect'), 2000); return () => clearTimeout(t); } }, [phase]);
 	const [connectPushed, setConnectPushed] = useState(false);
 	useEffect(() => {
 		if (phase === 'connect') {
@@ -795,8 +914,8 @@ function CompleteAnimation() {
 			return () => { clearTimeout(pushT); clearTimeout(nextT); };
 		}
 	}, [phase]);
-	// Total: 3500+3500+6000+3500+3500 = 20000
-	useEffect(() => { if (phase === 'usecases') { const t = setTimeout(() => setPhase('ready'), 20500); return () => clearTimeout(t); } }, [phase]);
+	// Total: 3500+4500+3500+3500+3500 = 18500
+	useEffect(() => { if (phase === 'usecases') { const t = setTimeout(() => setPhase('ready'), 19000); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'ready') { const t = setTimeout(() => setPhase('pushing'), 1200); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'pushing') { const t = setTimeout(() => setPhase('deploying'), 400); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'deploying') { const t = setTimeout(() => setPhase('monitoring'), 1400); return () => clearTimeout(t); } }, [phase]);
@@ -810,7 +929,7 @@ function CompleteAnimation() {
 		return () => clearInterval(interval);
 	}, [phase, comps.DB_ROWS.length]);
 
-	const showIde = phase === 'typing' || phase === 'resource' || phase === 'connect';
+	const showIde = phase === 'typing' || phase === 'connect';
 	const showUseCases = phase === 'usecases' || phase === 'ready' || phase === 'pushing';
 	const showMonitoring = phase === 'monitoring';
 
@@ -852,10 +971,7 @@ function CompleteAnimation() {
 					<div className="p-3 sm:p-4 min-h-[280px] sm:min-h-[300px] flex flex-col">
 						{phase === 'typing' ? <comps.TypingCode onComplete={handleTypingComplete} /> : <comps.StaticCode />}
 					</div>
-					<div className="border-t border-gray-800">
-						<comps.StripeResourceInput active={phase === 'resource' || phase === 'ready'} />
-					</div>
-				</motion.div>
+					</motion.div>
 
 				{/* Connect button */}
 				<AnimatePresence>
