@@ -469,6 +469,20 @@ From workspace settings, go to the "Webhooks" tab and fill an URL under "URL to 
 
 ![Workspace Webhook](./workspace_webhook.png 'Workspace Webhook')
 
+The following event types are sent to the workspace webhook:
+
+| Event type | Description |
+|-----------|-------------|
+| `CreateScript`, `UpdateScript`, `DeleteScript`, `DeleteScriptPath` | Script lifecycle events |
+| `CreateFlow`, `UpdateFlow`, `ArchiveFlow`, `DeleteFlow` | Flow lifecycle events |
+| `CreateApp`, `UpdateApp`, `DeleteApp` | App lifecycle events |
+| `CreateResource`, `UpdateResource`, `DeleteResource` | Resource lifecycle events |
+| `CreateResourceType`, `UpdateResourceType`, `DeleteResourceType` | Resource type lifecycle events |
+| `CreateVariable`, `UpdateVariable`, `DeleteVariable` | Variable lifecycle events |
+| `CreateFolder`, `UpdateFolder`, `DeleteFolder` | Folder lifecycle events |
+| `TokenExpiringSoon` | An API token is expiring within 7 days |
+| `TokenExpired` | An API token has expired and been deleted |
+
 <!-- Resources -->
 
 [runs]: ../5_monitor_past_and_future_runs/index.mdx

@@ -19,6 +19,17 @@ Critical alerts are generated under the following conditions:
 - [Workspace error handler](../10_error_handling/index.mdx#workspace-error-handler) fails.
 - Number of running workers in a group falls below a specified threshold (has to be configured in the [worker group](../9_worker_groups/index.mdx) config).
 - Number of [jobs waiting in queue](../9_worker_groups/index.mdx#queue-metric-alerts) is above a threshold for more than a specified amount of time.
+- API token is about to expire (within 7 days) or has expired (requires ["Alert on token expiry"](../../advanced/18_instance_settings/index.mdx#alert-on-token-expiry) to be enabled in instance settings).
+
+## Token expiration notifications
+
+Windmill monitors API tokens and sends notifications when they are about to expire or have expired. Token owners receive an email notification 7 days before expiration, and again when the token is deleted after expiry.
+
+- Email notifications are always sent when [SMTP](../../advanced/18_instance_settings/index.mdx#smtp) is configured, regardless of the "Alert on token expiry" setting.
+- In-app critical alerts are only shown when the ["Alert on token expiry"](../../advanced/18_instance_settings/index.mdx#alert-on-token-expiry) instance setting is enabled.
+- Session and ephemeral tokens are excluded from expiration notifications.
+
+The tokens table in user settings also shows color-coded expiration badges for tokens expiring within 30 days, and a warning banner for tokens expiring within 7 days.
 
 ## Critical alert channels
 
