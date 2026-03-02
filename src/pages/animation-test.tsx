@@ -7,8 +7,8 @@ import { GitBranch, LayoutDashboard, Globe, Bot, SlidersHorizontal, Workflow, Cl
 // ─── Use case data ───────────────────────────────────────────────────────────
 
 const USE_CASES = [
-	{ id: 'dag', icon: Workflow, label: 'Workflow engine', duration: 3500 },
 	{ id: 'autoui', icon: SlidersHorizontal, label: 'Parameters UI', duration: 4500 },
+	{ id: 'dag', icon: Workflow, label: 'Workflow engine', duration: 3500 },
 	{ id: 'app', icon: LayoutDashboard, label: 'Internal app', duration: 3500 },
 	{ id: 'agent', icon: Bot, label: 'AI agent', duration: 3500 },
 	{ id: 'endpoint', icon: Globe, label: 'Endpoint', duration: 3500 },
@@ -50,29 +50,13 @@ function PyLogo() {
 
 function DuckDbLogo() {
 	return (
-		<svg viewBox="0 0 256 256" className="w-4 h-4 flex-shrink-0">
-			<rect width="256" height="256" rx="30" fill="#FFF100" />
-			<g transform="translate(40, 45) scale(0.7)">
-				<path d="M128 12C62.8 12 10 64.8 10 130s52.8 118 118 118 118-52.8 118-118S193.2 12 128 12zm0 206c-48.6 0-88-39.4-88-88s39.4-88 88-88 88 39.4 88 88-39.4 88-88 88z" fill="#111" />
-				<circle cx="100" cy="110" r="14" fill="#111" />
-				<path d="M160 130c0 17.7-14.3 32-32 32s-32-14.3-32-32" fill="none" stroke="#111" strokeWidth="10" strokeLinecap="round" />
-				<path d="M180 90 l30-20 v60 l-30-20z" fill="#111" />
-			</g>
-		</svg>
+		<img src="/third_party_logos/duckdb.svg" alt="DuckDB" className="w-4 h-4 flex-shrink-0" />
 	);
 }
 
 function DuckLakeLogo() {
 	return (
-		<svg viewBox="0 0 256 256" className="w-4 h-4 flex-shrink-0">
-			<rect width="256" height="256" rx="30" fill="#2CBFDF" />
-			<g transform="translate(40, 45) scale(0.7)">
-				<path d="M128 12C62.8 12 10 64.8 10 130s52.8 118 118 118 118-52.8 118-118S193.2 12 128 12zm0 206c-48.6 0-88-39.4-88-88s39.4-88 88-88 88 39.4 88 88-39.4 88-88 88z" fill="#FFF" />
-				<circle cx="100" cy="110" r="14" fill="#FFF" />
-				<path d="M160 130c0 17.7-14.3 32-32 32s-32-14.3-32-32" fill="none" stroke="#FFF" strokeWidth="10" strokeLinecap="round" />
-				<path d="M180 90 l30-20 v60 l-30-20z" fill="#FFF" />
-			</g>
-		</svg>
+		<img src="/third_party_logos/ducklake.svg" alt="DuckLake" className="w-4 h-4 flex-shrink-0" />
 	);
 }
 
@@ -300,32 +284,7 @@ function MiniApp() {
 	const bars = barSets[pulseIndex % barSets.length];
 
 	return (
-		<div className="w-[440px] mx-auto flex flex-col items-center">
-			{/* Script node above */}
-			<motion.div
-				className="flex items-center justify-center gap-2 rounded-xl border bg-blue-50 shadow-sm"
-				style={{ width: NODE_W, height: NODE_H }}
-				animate={isGlowing
-					? { borderColor: 'rgba(59,130,246,0.8)', boxShadow: '0 0 20px rgba(59,130,246,0.5), 0 1px 2px rgba(0,0,0,0.05)' }
-					: { borderColor: 'rgba(147,197,253,0.6)', boxShadow: '0 0 0px rgba(59,130,246,0), 0 1px 2px rgba(0,0,0,0.05)' }
-				}
-				transition={{ duration: 0.3 }}
-			>
-				<TsLogo />
-				<span className="text-[11px] font-medium text-blue-700 whitespace-nowrap">get_failed_payment.ts</span>
-			</motion.div>
-
-			{/* Connection line + animated ball */}
-			<div className="relative w-full flex justify-center" style={{ height: 28 }}>
-				<svg width="4" height="28" className="overflow-visible">
-					<line x1="2" y1="0" x2="2" y2="28" className="stroke-gray-300" strokeWidth={1.5} />
-					<circle r={4} className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 6px rgba(96,165,250,0.8))' }}>
-						<animateMotion dur="1.5s" repeatCount="indefinite" path="M2,0 L2,28" />
-						<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="1.5s" repeatCount="indefinite" />
-					</circle>
-				</svg>
-			</div>
-
+		<div className="w-full max-w-[540px] mx-auto flex flex-col items-center px-4">
 			{/* Frontend app mockup */}
 			<div className="w-full rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
 				{/* App title bar */}
@@ -344,7 +303,7 @@ function MiniApp() {
 							<div key={stat.label} className={`rounded-lg bg-${stat.color}-50 border border-${stat.color}-100 px-2 py-1.5`}>
 								<div className="flex items-center justify-between mb-0.5">
 									<div className="text-[8px] text-gray-400">{stat.label}</div>
-									<PlugBadge label="get_failed_payment" isGlowing={isGlowing} />
+	
 								</div>
 								<motion.div
 									key={`${stat.label}-${pulseIndex}`}
@@ -364,7 +323,7 @@ function MiniApp() {
 						<div className="rounded-lg border border-gray-100 p-2">
 							<div className="flex items-center justify-between mb-1.5">
 								<div className="text-[8px] text-gray-400">Monthly activity</div>
-								<PlugBadge label="get_failed_payment" isGlowing={isGlowing} />
+
 							</div>
 							<svg viewBox="0 0 120 50" className="w-full h-[44px]">
 								{bars.map((h, i) => (
@@ -384,7 +343,7 @@ function MiniApp() {
 						<div className="rounded-lg border border-gray-100 p-2">
 							<div className="flex items-center justify-between mb-1">
 								<div className="text-[8px] text-gray-400">Table</div>
-								<PlugBadge label="get_failed_payment" isGlowing={isGlowing} />
+
 							</div>
 							{[
 								['Alice', ['$420', '$435', '$450', '$448']],
@@ -460,14 +419,15 @@ function MiniAutoUI() {
 		return () => cancelAnimationFrame(frame);
 	}, []);
 
-	// Timeline: show function sig → fill resource → fill days → run button glows
+	// Timeline: show function sig → dropdown opens → selects stripe_prod → fill days → run button glows
 	const showSig = time >= 0;
-	const resourceFilled = time >= 1.5;
-	const daysFilled = time >= 2.8;
-	const runGlow = time >= 3.8;
+	const dropdownOpen = time >= 1.2 && time < 2.8;
+	const resourceSelected = time >= 2.8;
+	const daysFilled = time >= 3.5;
+	const runGlow = time >= 4.2;
 
 	return (
-		<div className="w-full max-w-sm mx-auto flex flex-col gap-3 px-4 py-5">
+		<div className="w-full max-w-[480px] mx-auto flex flex-col gap-3 px-4 py-5">
 			{/* Main function signature — same lines/colors as the IDE script */}
 			<AnimatePresence>
 				{showSig && (
@@ -475,9 +435,9 @@ function MiniAutoUI() {
 						initial={{ opacity: 0, y: 6 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.3 }}
-						className="rounded-lg bg-[#0d1117] border border-gray-800 px-3 py-2"
+						className="rounded-lg bg-[#0d1117] px-3 py-2"
 					>
-						<pre className="text-[10px] font-mono leading-relaxed">
+						<pre className="text-[10px] font-mono leading-relaxed bg-transparent m-0 p-0">
 							{[
 								<><span className="text-gray-600 select-none mr-2">3</span><span className="text-purple-400">export async function </span><span className="text-yellow-300">main</span><span className="text-white">(</span></>,
 								<><span className="text-gray-600 select-none mr-2">4</span><span className="text-orange-300">  resource</span><span className="text-white">: </span><span className="text-blue-300">string</span><span className="text-white">,</span></>,
@@ -491,56 +451,90 @@ function MiniAutoUI() {
 
 			{/* Arrow */}
 			<div className="flex justify-center">
-				<svg className="w-4 h-4 text-gray-600" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+				<svg className="w-4 h-4 text-gray-400" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
 					<path d="M8 3v10M4 9l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
 				</svg>
 			</div>
 
 			{/* Parameters form */}
-			<div className="rounded-xl bg-[#161b22] border border-gray-800 p-3 flex flex-col gap-3">
+			<div className="rounded-xl bg-gray-50 border border-gray-200 p-3 flex flex-col gap-3">
 				<div className="flex items-center gap-1.5">
-					<SlidersHorizontal className="w-3 h-3 text-blue-400" />
-					<span className="text-[10px] text-gray-400 font-medium">Parameters UI</span>
+					<SlidersHorizontal className="w-3 h-3 text-blue-500" />
+					<span className="text-[10px] text-gray-500 font-medium">Parameters UI</span>
 				</div>
 
-				{/* resource: string */}
+				{/* resource: string — dropdown select */}
 				<div className="flex flex-col gap-1">
 					<div className="flex items-center gap-1.5">
-						<span className="text-[10px] text-gray-400">resource</span>
-						<span className="text-[9px] text-gray-600 ml-auto">string</span>
+						<svg className="w-3 h-3 text-purple-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+							<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+						</svg>
+						<span className="text-[10px] text-gray-600">resource</span>
+						<span className="text-[9px] text-purple-400 font-bold">stripe</span>
+						<span className="text-[9px] text-gray-400 ml-auto">string</span>
 					</div>
-					<div className="h-6 rounded bg-[#0d1117] border border-gray-800 px-2 flex items-center">
-						{resourceFilled ? (
+					<div className="h-6 rounded bg-white border border-gray-200 px-2 flex items-center justify-between">
+						{resourceSelected ? (
 							<motion.span
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="text-[10px] text-gray-300 font-mono"
+								className="text-[10px] text-gray-700 font-mono"
 							>
-								sk_live_•••••••••••••••
+								stripe_prod
 							</motion.span>
 						) : (
-							<span className="text-[10px] text-gray-600">Enter a value...</span>
+							<span className="text-[10px] text-gray-400">Select a resource...</span>
 						)}
+						<svg className="w-3 h-3 text-gray-400" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+							<path d="M3 5l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" />
+						</svg>
 					</div>
+					<AnimatePresence>
+						{dropdownOpen && (
+							<motion.div
+								initial={{ opacity: 0, height: 0 }}
+								animate={{ opacity: 1, height: 'auto' }}
+								exit={{ opacity: 0, height: 0 }}
+								transition={{ duration: 0.15 }}
+								className="rounded bg-white border border-gray-200 overflow-hidden shadow-sm"
+							>
+								{[
+									{ name: 'stripe_sandbox', active: false },
+									{ name: 'stripe_prod', active: true },
+								].map((opt, i) => (
+									<motion.div
+										key={opt.name}
+										initial={{ opacity: 0, x: -8 }}
+										animate={{ opacity: 1, x: 0 }}
+										transition={{ delay: 0.1 + i * 0.1 }}
+										className={`px-2 py-1.5 flex items-center gap-2 ${opt.active ? 'bg-blue-50' : ''}`}
+									>
+										<div className={`w-1.5 h-1.5 rounded-full ${opt.active ? 'bg-blue-500' : 'bg-gray-300'}`} />
+										<span className="text-[10px] text-gray-700 font-mono">{opt.name}</span>
+									</motion.div>
+								))}
+							</motion.div>
+						)}
+					</AnimatePresence>
 				</div>
 
 				{/* days: number */}
 				<div className="flex flex-col gap-1">
 					<div className="flex items-center gap-1.5">
-						<span className="text-[10px] text-gray-400">days</span>
-						<span className="text-[9px] text-gray-600 ml-auto">number</span>
+						<span className="text-[10px] text-gray-600">days</span>
+						<span className="text-[9px] text-gray-400 ml-auto">number</span>
 					</div>
-					<div className="h-6 rounded bg-[#0d1117] border border-gray-800 px-2 flex items-center">
+					<div className="h-6 rounded bg-white border border-gray-200 px-2 flex items-center">
 						{daysFilled ? (
 							<motion.span
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="text-[10px] text-gray-300 font-mono"
+								className="text-[10px] text-gray-700 font-mono"
 							>
 								7
 							</motion.span>
 						) : (
-							<span className="text-[10px] text-gray-600">Enter a value...</span>
+							<span className="text-[10px] text-gray-400">Enter a value...</span>
 						)}
 					</div>
 				</div>
@@ -567,22 +561,14 @@ function MiniAutoUI() {
 // ─── Mini Endpoint animation ─────────────────────────────────────────────────
 
 function MiniEndpoint() {
-	const [clicked, setClicked] = useState(false);
-
-	useEffect(() => {
-		// Auto-click Schedule after a short delay
-		const t = setTimeout(() => setClicked(true), 800);
-		return () => clearTimeout(t);
-	}, []);
-
 	return (
-		<div className="w-full max-w-md mx-auto flex flex-col gap-4 px-4 py-4">
+		<div className="w-full max-w-[480px] mx-auto flex flex-col gap-4 px-4 py-4">
 			{/* Endpoint route */}
 			<div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
 				<div className="font-mono text-[11px] text-gray-400 mb-1">Endpoint</div>
 				<div className="font-mono text-[13px]">
 					<span className="text-gray-700">POST</span>
-					<span className="text-gray-400"> /api/w/demo/jobs/run/</span>
+					<span className="text-gray-400"> /api/w/my_workspace/</span>
 					<span className="text-blue-600 font-semibold">get_failed_payment</span>
 				</div>
 			</div>
@@ -593,21 +579,14 @@ function MiniEndpoint() {
 				<div className="grid grid-cols-3 gap-2">
 					{TRIGGERS.map((trigger, i) => {
 						const Icon = trigger.icon;
-						const isSchedule = i === 0;
-						const isActive = isSchedule && clicked;
 						return (
-							<motion.div
+							<div
 								key={`${trigger.label}-${i}`}
-								className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2"
-								animate={isActive
-									? { borderColor: 'rgba(59,130,246,0.6)', boxShadow: '0 0 16px rgba(59,130,246,0.3), 0 1px 2px rgba(0,0,0,0.05)' }
-									: { borderColor: 'rgb(229,231,235)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }
-								}
-								transition={{ duration: 0.2 }}
+								className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-sm"
 							>
-								<Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-blue-500' : 'text-gray-400'}`} />
-								<span className={`text-[11px] font-medium whitespace-nowrap ${isActive ? 'text-gray-800' : 'text-gray-600'}`}>{trigger.label}</span>
-							</motion.div>
+								<Icon className="w-4 h-4 flex-shrink-0 text-gray-400" />
+								<span className="text-[11px] font-medium whitespace-nowrap text-gray-600">{trigger.label}</span>
+							</div>
 						);
 					})}
 				</div>
@@ -653,7 +632,7 @@ function MiniAgent() {
 	const showAnswer = time >= 4.5 && time < 7.2;
 
 	return (
-		<div className="w-full max-w-sm mx-auto flex flex-col gap-2.5 px-4 py-4">
+		<div className="w-full max-w-[480px] mx-auto flex flex-col gap-2.5 px-4 py-4">
 			{/* User message */}
 			<AnimatePresence>
 				{showUser && (
@@ -812,9 +791,9 @@ function TabBar({ items, activeIndex, onSelect }: { items: typeof USE_CASES; act
 	}, [activeIndex]);
 
 	return (
-		<div ref={containerRef} className="relative flex items-center rounded-full bg-gray-800/60 border border-gray-700 p-1">
+		<div ref={containerRef} className="relative flex items-center rounded-full bg-gray-100 border border-gray-200 p-1">
 			<motion.div
-				className="absolute top-1 bottom-1 rounded-full bg-gray-700 border border-gray-600 shadow-sm"
+				className="absolute top-1 bottom-1 rounded-full bg-white border border-gray-300 shadow-sm"
 				animate={{ left: pillStyle.left, width: pillStyle.width }}
 				transition={{ type: 'spring', stiffness: 400, damping: 30 }}
 			/>
@@ -824,7 +803,7 @@ function TabBar({ items, activeIndex, onSelect }: { items: typeof USE_CASES; act
 					data-tab-btn
 					onClick={() => onSelect(i)}
 					className="relative z-10 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-medium whitespace-nowrap transition-colors duration-200"
-					style={{ color: i === activeIndex ? '#e5e7eb' : '#6b7280' }}
+					style={{ color: i === activeIndex ? '#111827' : '#9ca3af' }}
 				>
 					<u.icon className="w-3.5 h-3.5" />
 					{u.label}
@@ -851,8 +830,8 @@ function UseCasesCycling() {
 		app: <MiniApp />,
 		agent: (
 			<div className="flex flex-col items-center justify-center gap-3 py-16">
-				<Bot className="w-16 h-16 text-blue-400" strokeWidth={1.5} />
-				<span className="text-sm font-medium text-gray-400">AI Agent</span>
+				<Bot className="w-16 h-16 text-blue-500" strokeWidth={1.5} />
+				<span className="text-sm font-medium text-gray-500">AI Agent</span>
 			</div>
 		),
 		endpoint: <MiniEndpoint />,
@@ -869,8 +848,8 @@ function UseCasesCycling() {
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -10 }}
 					transition={{ duration: 0.25 }}
-					className="rounded-xl border border-gray-700 bg-gray-900 w-full flex items-center justify-center overflow-hidden"
-					style={{ minHeight: 400 }}
+					className="rounded-xl bg-white w-full flex items-center justify-center overflow-hidden"
+					style={{ height: 420 }}
 				>
 					{previews[USE_CASES[activeIndex].id]}
 				</motion.div>
@@ -881,10 +860,10 @@ function UseCasesCycling() {
 
 // ─── Complete animation: IDE → use cases → deploy → monitoring ──────────────
 
-type Phase = 'expanding' | 'typing' | 'connect' | 'usecases' | 'ready' | 'pushing' | 'deploying' | 'monitoring';
+type Phase = 'typing' | 'connect' | 'usecases' | 'ready' | 'pushing' | 'deploying' | 'monitoring';
 
 function CompleteAnimation() {
-	const [phase, setPhase] = useState<Phase>('expanding');
+	const [phase, setPhase] = useState<Phase>('typing');
 
 	const comps = React.useMemo(() => {
 		const mod = require('../landing/HeroAnimation');
@@ -903,8 +882,7 @@ function CompleteAnimation() {
 		setPhase('connect');
 	}, []);
 
-	// Phase transitions: expanding → typing → connect → usecases → ready → pushing → deploying → monitoring
-	useEffect(() => { if (phase === 'expanding') { const t = setTimeout(() => setPhase('typing'), 800); return () => clearTimeout(t); } }, [phase]);
+	// Phase transitions: typing → connect → usecases → ready → pushing → deploying → monitoring
 	const [connectPushed, setConnectPushed] = useState(false);
 	useEffect(() => {
 		if (phase === 'connect') {
@@ -938,7 +916,7 @@ function CompleteAnimation() {
 			{/* Main morphing container */}
 			<motion.div
 				className="relative overflow-hidden border flex items-center justify-center"
-				initial={{ width: 96, height: 96, borderRadius: 20, borderColor: 'transparent', backgroundColor: 'transparent', boxShadow: 'none' }}
+				initial={{ width: '100%', height: 'auto', borderRadius: 12, borderColor: '#1f2937', backgroundColor: '#0d1117', boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)' }}
 				animate={
 					showIde
 						? { width: '100%', height: 'auto', borderRadius: 12, borderColor: '#1f2937', backgroundColor: '#0d1117', boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)' }
@@ -1013,22 +991,17 @@ function CompleteAnimation() {
 				</AnimatePresence>
 
 				{/* Spinning logo during deploy */}
-				<motion.div
-					className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
-					animate={{ opacity: phase === 'deploying' ? 1 : 0 }}
-					transition={{ duration: 0.2, delay: phase === 'deploying' ? 0.2 : 0 }}
-				>
-					<img src="/img/windmill.svg" alt="Windmill" className={`w-16 h-16 sm:w-20 sm:h-20 ${phase === 'deploying' ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }} />
-				</motion.div>
+				{phase === 'deploying' && (
+					<motion.div
+						className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.2, delay: 0.2 }}
+					>
+						<img src="/img/windmill.svg" alt="Windmill" className="w-16 h-16 sm:w-20 sm:h-20 animate-spin" style={{ animationDuration: '3s' }} />
+					</motion.div>
+				)}
 
-				{/* Initial windmill icon */}
-				<motion.div
-					className="absolute inset-0 flex items-center justify-center pointer-events-none"
-					animate={{ opacity: phase === 'expanding' ? 1 : 0 }}
-					transition={{ duration: phase === 'expanding' ? 0.1 : 0.2 }}
-				>
-					<img src="/img/windmill.svg" alt="Windmill" className="w-20 h-20" />
-				</motion.div>
 			</motion.div>
 
 			{/* Deployed label */}
@@ -1060,14 +1033,6 @@ function CompleteAnimation() {
 						transition={{ duration: 0.5 }}
 						className="absolute inset-0 flex flex-col items-center"
 					>
-						<motion.span
-							className="text-sm text-gray-400 font-medium mb-2"
-							initial={{ opacity: 0, y: -8 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ delay: 0.2, duration: 0.4 }}
-						>
-							Connect your script to
-						</motion.span>
 						<motion.div
 							className="w-full flex-1"
 							animate={{
