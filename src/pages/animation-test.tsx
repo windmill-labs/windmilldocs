@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GitBranch, LayoutDashboard, Globe, Bot, SlidersHorizontal, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Plug } from 'lucide-react';
+import { GitBranch, LayoutDashboard, Globe, Bot, SlidersHorizontal, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Plug, Zap } from 'lucide-react';
 
 // ─── Use case data ───────────────────────────────────────────────────────────
 
@@ -11,7 +11,7 @@ const USE_CASES = [
 	{ id: 'dag', icon: Workflow, label: 'Workflow engine', duration: 3500 },
 	{ id: 'app', icon: LayoutDashboard, label: 'Internal app', duration: 3500 },
 	{ id: 'agent', icon: Bot, label: 'AI agent', duration: 3500 },
-	{ id: 'endpoint', icon: Globe, label: 'Endpoint', duration: 3500 },
+	{ id: 'endpoint', icon: Zap, label: 'Triggers', duration: 2000 },
 ];
 
 // ─── Shared DAG node component (light theme, matching workflow-automation) ───
@@ -350,18 +350,18 @@ function MiniApp() {
 								['Bob', ['$310', '$310', '$325', '$330']],
 								['Carol', ['$580', '$595', '$600', '$610']],
 							].map(([name, amts], i) => (
-								<div key={i} className={`flex justify-between text-[9px] py-0.5 ${i > 0 ? 'border-t border-gray-100' : ''}`}>
+								<div key={i} className={`grid grid-cols-3 text-[9px] py-0.5 ${i > 0 ? 'border-t border-gray-100' : ''}`}>
 									<span className="text-gray-600">{name as string}</span>
 									<motion.span
 										key={`${name}-${pulseIndex}`}
-										className="text-gray-500"
+										className="text-gray-500 text-center"
 										initial={{ opacity: 0.5 }}
 										animate={{ opacity: 1 }}
 										transition={{ duration: 0.3 }}
 									>
 										{(amts as string[])[pulseIndex % (amts as string[]).length]}
 									</motion.span>
-									<span className={i !== 1 ? 'text-green-500' : 'text-amber-500'}>{i !== 1 ? 'Active' : 'Pending'}</span>
+									<span className={`text-right ${i !== 1 ? 'text-green-500' : 'text-amber-500'}`}>{i !== 1 ? 'Active' : 'Pending'}</span>
 								</div>
 							))}
 						</div>
@@ -419,8 +419,7 @@ function MiniAutoUI() {
 		return () => cancelAnimationFrame(frame);
 	}, []);
 
-	// Timeline: show function sig → dropdown opens → selects stripe_prod → fill days → run button glows
-	const showSig = time >= 0;
+	// Timeline: dropdown opens → selects stripe_prod → fill days → run button glows
 	const dropdownOpen = time >= 1.2 && time < 2.8;
 	const resourceSelected = time >= 2.8;
 	const daysFilled = time >= 3.5;
@@ -428,34 +427,6 @@ function MiniAutoUI() {
 
 	return (
 		<div className="w-full max-w-[480px] mx-auto flex flex-col gap-3 px-4 py-5">
-			{/* Main function signature — same lines/colors as the IDE script */}
-			<AnimatePresence>
-				{showSig && (
-					<motion.div
-						initial={{ opacity: 0, y: 6 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.3 }}
-						className="rounded-lg bg-[#0d1117] px-3 py-2"
-					>
-						<pre className="text-[10px] font-mono leading-relaxed bg-transparent m-0 p-0">
-							{[
-								<><span className="text-gray-600 select-none mr-2">3</span><span className="text-purple-400">export async function </span><span className="text-yellow-300">main</span><span className="text-white">(</span></>,
-								<><span className="text-gray-600 select-none mr-2">4</span><span className="text-orange-300">  resource</span><span className="text-white">: </span><span className="text-blue-300">string</span><span className="text-white">,</span></>,
-								<><span className="text-gray-600 select-none mr-2">5</span><span className="text-orange-300">  days</span><span className="text-white">: </span><span className="text-blue-300">number</span></>,
-								<><span className="text-gray-600 select-none mr-2">6</span><span className="text-white">)</span></>,
-							].map((line, i) => <div key={i}>{line}</div>)}
-						</pre>
-					</motion.div>
-				)}
-			</AnimatePresence>
-
-			{/* Arrow */}
-			<div className="flex justify-center">
-				<svg className="w-4 h-4 text-gray-400" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-					<path d="M8 3v10M4 9l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-				</svg>
-			</div>
-
 			{/* Parameters form */}
 			<div className="rounded-xl bg-gray-50 border border-gray-200 p-3 flex flex-col gap-3">
 				<div className="flex items-center gap-1.5">
@@ -882,7 +853,6 @@ function CompleteAnimation() {
 		setPhase('connect');
 	}, []);
 
-	// Phase transitions: typing → connect → usecases → ready → pushing → deploying → monitoring
 	const [connectPushed, setConnectPushed] = useState(false);
 	useEffect(() => {
 		if (phase === 'connect') {
@@ -954,37 +924,15 @@ function CompleteAnimation() {
 				{/* Connect button */}
 				<AnimatePresence>
 					{phase === 'connect' && (
-						<motion.div className="absolute inset-0 flex items-center justify-center z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 1.1 }} transition={{ duration: 0.3 }}>
+						<motion.div className="absolute inset-0 flex items-center justify-center z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
 							<motion.div
-								initial={{ scale: 0.8, opacity: 0 }}
-								animate={{ scale: connectPushed ? 0.92 : 1, opacity: 1 }}
-								exit={{ scale: 1.1, opacity: 0 }}
-								transition={connectPushed ? { duration: 0.1 } : { type: 'spring', stiffness: 300, damping: 20 }}
-								className="flex flex-col items-center gap-3"
+								initial={{ scale: 0.8 }}
+								animate={{ scale: connectPushed ? 0.92 : 1 }}
+								exit={{ scale: 0.8 }}
+								className="bg-blue-700 text-white shadow-xl shadow-blue-700/30 px-6 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2"
 							>
-								<motion.div
-									className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center shadow-xl shadow-blue-600/30"
-									animate={connectPushed
-										? { scale: 0.9, boxShadow: '0 4px 12px rgba(37,99,235,0.4)' }
-										: { scale: 1, boxShadow: ['0 10px 25px rgba(37,99,235,0.3)', '0 10px 40px rgba(37,99,235,0.5)', '0 10px 25px rgba(37,99,235,0.3)'] }
-									}
-									transition={connectPushed ? { duration: 0.1 } : { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-								>
-									<Plug className="w-7 h-7 text-white" />
-								</motion.div>
-								<span className="text-sm font-semibold text-gray-200">Connect</span>
-								<div className="flex items-center gap-4 mt-1">
-									{USE_CASES.map((uc) => (
-										<motion.div
-											key={uc.id}
-											initial={{ opacity: 0, y: 8 }}
-											animate={{ opacity: 0.6, y: 0 }}
-											transition={{ delay: 0.3 + USE_CASES.indexOf(uc) * 0.1, duration: 0.3 }}
-										>
-											<uc.icon className="w-4 h-4 text-gray-400" />
-										</motion.div>
-									))}
-								</div>
+								<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+								Connect
 							</motion.div>
 						</motion.div>
 					)}
