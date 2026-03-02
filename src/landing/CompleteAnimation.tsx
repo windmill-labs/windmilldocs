@@ -96,20 +96,19 @@ function DagNode({ node }: { node: DagNodeType }) {
 	);
 }
 
-// ─── Mini DAG animation (with 4 branches) ───────────────────────────────────
+// ─── Mini DAG animation (with 3 branches) ───────────────────────────────────
 
-const CX = 240;
-const B1 = 120, B2 = 190, B3 = 290, B4 = 360;
+const CX = 280;
+const B1 = 110, B2 = 280, B3 = 450; // 3 branch x-positions
 const BY = 225;
 
 const DAG_NODES: DagNodeType[] = [
 	{ label: 'Trigger', x: CX, y: 30, isTrigger: true },
 	{ label: 'Extract', x: CX, y: 90 },
 	{ label: 'get_failed_payment.ts', x: CX, y: 150, isTs: true, isHighlighted: true },
-	{ label: '', x: B1, y: BY, isPy: true, iconOnly: true },
-	{ label: '', x: B2, y: BY, isPy: true, iconOnly: true },
-	{ label: '', x: B3, y: BY, isDuckDb: true, iconOnly: true },
-	{ label: '', x: B4, y: BY, isDuckLake: true, iconOnly: true },
+	{ label: 'Send email', x: B1, y: BY, isPy: true },
+	{ label: 'Query DuckDB', x: B2, y: BY, isDuckDb: true },
+	{ label: 'Archive', x: B3, y: BY, isDuckLake: true },
 ];
 
 function DagBall({ pathId, dur, delay, cycleDur }: { pathId: string; dur: number; delay: number; cycleDur: number }) {
@@ -150,12 +149,12 @@ const BRANCH_DUR = 2.5;
 const BRANCH_DELAY = TOP_DUR + 0.2;
 
 function MiniDag() {
-	const branches = [B1, B2, B3, B4];
+	const branches = [B1, B2, B3];
 	const [mounted, setMounted] = useState(false);
 	useEffect(() => { setMounted(true); }, []);
 
 	return (
-		<div className="relative w-[480px] h-[280px] mx-auto">
+		<div className="relative w-[560px] h-[280px] mx-auto" style={{ transform: 'scale(0.95)', transformOrigin: 'top center' }}>
 			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
 				{/* Straight edges */}
 				<line x1={CX} y1={30 + NODE_H / 2} x2={CX} y2={90 - NODE_H / 2} className="stroke-gray-300" strokeWidth={1.5} />
@@ -180,7 +179,6 @@ function MiniDag() {
 						<DagBall pathId="dag-br-path-0" dur={BRANCH_DUR} delay={BRANCH_DELAY} cycleDur={CYCLE_DUR} />
 						<DagBall pathId="dag-br-path-1" dur={BRANCH_DUR} delay={BRANCH_DELAY} cycleDur={CYCLE_DUR} />
 						<DagBall pathId="dag-br-path-2" dur={BRANCH_DUR} delay={BRANCH_DELAY} cycleDur={CYCLE_DUR} />
-						<DagBall pathId="dag-br-path-3" dur={BRANCH_DUR} delay={BRANCH_DELAY} cycleDur={CYCLE_DUR} />
 					</>
 				)}
 			</svg>
@@ -702,7 +700,7 @@ function UseCasesCycling() {
 
 	return (
 		<div className="flex flex-col items-center justify-center w-full h-full">
-			<div className="rounded-b-xl bg-white border border-gray-200 border-t-0 shadow-sm w-full overflow-hidden">
+			<div className="w-full overflow-hidden">
 				<div className="flex justify-center pt-2 pb-1">
 					<TabBar items={USE_CASES} activeIndex={activeIndex} onSelect={setActiveIndex} />
 				</div>
@@ -710,12 +708,12 @@ function UseCasesCycling() {
 				<AnimatePresence mode="wait">
 					<motion.div
 						key={activeIndex}
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -10 }}
-						transition={{ duration: 0.25 }}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.2 }}
 						className="w-full flex items-center justify-center overflow-hidden"
-						style={{ height: 350 }}
+						style={{ height: 300 }}
 					>
 						{previews[USE_CASES[activeIndex].id]}
 					</motion.div>
@@ -762,7 +760,7 @@ function CompleteAnimation() {
 	const totalUseCasesDuration = USE_CASES.reduce((sum, uc) => sum + uc.duration, 0);
 	useEffect(() => { if (phase === 'usecases') { const t = setTimeout(() => setPhase('ready'), totalUseCasesDuration); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'ready') { const t = setTimeout(() => setPhase('pushing'), 1200); return () => clearTimeout(t); } }, [phase]);
-	useEffect(() => { if (phase === 'pushing') { const t = setTimeout(() => setPhase('deploying'), 400); return () => clearTimeout(t); } }, [phase]);
+	useEffect(() => { if (phase === 'pushing') { const t = setTimeout(() => setPhase('deploying'), 800); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'deploying') { const t = setTimeout(() => setPhase('monitoring'), 1400); return () => clearTimeout(t); } }, [phase]);
 
 	const [runCount, setRunCount] = useState(0);
@@ -774,208 +772,175 @@ function CompleteAnimation() {
 		return () => clearInterval(interval);
 	}, [phase, comps.DB_ROWS.length]);
 
-	const showTitleBar = phase !== 'deploying';
 	const showCodeBody = phase === 'typing' || phase === 'connect';
 	const showUseCases = phase === 'usecases' || phase === 'ready' || phase === 'pushing';
 	const showMonitoring = phase === 'monitoring';
-
-	// Progress bar: track elapsed time per phase
-	const PHASE_DURATIONS: Record<Phase, number> = {
-		typing: 3500,
-		connect: 2500,
-		usecases: totalUseCasesDuration,
-		ready: 1200,
-		pushing: 400,
-		deploying: 1400,
-		monitoring: 6000,
-	};
-
-	const [progress, setProgress] = useState(0);
-	const phaseStartRef = useRef(performance.now());
-
-	useEffect(() => {
-		phaseStartRef.current = performance.now();
-		setProgress(0);
-		let frame: number;
-		const tick = () => {
-			const elapsed = performance.now() - phaseStartRef.current;
-			const duration = PHASE_DURATIONS[phase] || 3000;
-			setProgress(Math.min(elapsed / duration, 1));
-			frame = requestAnimationFrame(tick);
-		};
-		frame = requestAnimationFrame(tick);
-		return () => cancelAnimationFrame(frame);
-	}, [phase]);
-
-	// Compute cumulative progress across all phases
-	const PHASE_ORDER: Phase[] = ['typing', 'connect', 'usecases', 'ready', 'pushing', 'deploying', 'monitoring'];
-	const totalDuration = PHASE_ORDER.reduce((sum, p) => sum + PHASE_DURATIONS[p], 0);
-	const phaseIdx = PHASE_ORDER.indexOf(phase);
-	const elapsedBefore = PHASE_ORDER.slice(0, phaseIdx).reduce((sum, p) => sum + PHASE_DURATIONS[p], 0);
-	const globalProgress = (elapsedBefore + progress * PHASE_DURATIONS[phase]) / totalDuration;
+	const isDeploying = phase === 'deploying';
 
 	return (
-		<div className="w-full min-h-[440px] sm:min-h-[500px] flex flex-col items-center justify-center relative">
-			{/* Deploying phase: centered spinning logo */}
-			{phase === 'deploying' && (
+		<div className="w-full h-[440px] sm:h-[500px] flex flex-col items-center justify-center relative pb-2">
+			{/* Deploying phase: centered spinning logo overlaid on top */}
+			<AnimatePresence>
+				{isDeploying && (
+					<motion.div
+						className="absolute inset-0 flex flex-col items-center justify-center z-20"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.3 }}
+					>
+						<img src="/img/windmill.svg" alt="Windmill" className="w-16 h-16 sm:w-20 sm:h-20 animate-spin" style={{ animationDuration: '3s' }} />
+						<motion.div
+							initial={{ opacity: 0, y: 5 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ delay: 0.5, duration: 0.3 }}
+							className="mt-4 flex items-center gap-2 text-green-400 font-medium text-sm"
+						>
+							<motion.svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+								<circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" fill="none" />
+								<motion.path d="M4.5 8 L7 10.5 L11.5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4, delay: 0.6 }} />
+							</motion.svg>
+							<span>Deployment successful</span>
+						</motion.div>
+					</motion.div>
+				)}
+			</AnimatePresence>
+
+			{/* IDE container: always mounted, fades out during deploying */}
+			<motion.div
+				className="w-full overflow-hidden border"
+				initial={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderColor: '#1f2937', backgroundColor: '#0d1117', boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)' }}
+				animate={isDeploying
+					? { opacity: 0, scale: 0.95, borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderColor: '#e5e7eb', backgroundColor: '#f9fafb', boxShadow: 'none' }
+					: showCodeBody
+						? { opacity: 1, scale: 1, borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderColor: '#1f2937', backgroundColor: '#0d1117', boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)' }
+						: { opacity: 1, scale: 1, borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderColor: '#e5e7eb', backgroundColor: '#f9fafb', boxShadow: 'none' }
+				}
+				transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+			>
+				{/* Title bar — always visible */}
 				<motion.div
-					className="absolute inset-0 flex flex-col items-center justify-center z-20"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 0.3 }}
+					className="flex items-center px-3 py-2 gap-2"
+					initial={{ backgroundColor: '#161b22', borderBottomWidth: 1, borderBottomColor: '#1f2937' }}
+					animate={showCodeBody
+						? { backgroundColor: '#161b22', borderBottomWidth: 1, borderBottomColor: '#1f2937' }
+						: { backgroundColor: '#f9fafb', borderBottomWidth: 1, borderBottomColor: '#e5e7eb' }
+					}
+					transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+					style={{ borderBottomStyle: 'solid' }}
 				>
-					<img src="/img/windmill.svg" alt="Windmill" className="w-16 h-16 sm:w-20 sm:h-20 animate-spin" style={{ animationDuration: '3s' }} />
-					<motion.div
-						initial={{ opacity: 0, y: 5 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.5, duration: 0.3 }}
-						className="mt-4 flex items-center gap-2 text-green-400 font-medium text-sm"
-					>
-						<motion.svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-							<circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" fill="none" />
-							<motion.path d="M4.5 8 L7 10.5 L11.5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4, delay: 0.6 }} />
-						</motion.svg>
-						<span>Deployment successful</span>
-					</motion.div>
-				</motion.div>
-			)}
-
-			{/* IDE container: title bar + collapsible code body */}
-			<AnimatePresence>
-				{showTitleBar && (
-					<motion.div
-						className="w-full overflow-hidden border"
-						initial={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderColor: '#1f2937', backgroundColor: '#0d1117', boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)' }}
-						animate={showCodeBody
-							? { borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderColor: '#1f2937', backgroundColor: '#0d1117', boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)' }
-							: (showUseCases || showMonitoring)
-								? { borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderColor: '#e5e7eb', backgroundColor: '#f9fafb', boxShadow: 'none' }
-								: { borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderColor: '#e5e7eb', backgroundColor: '#f9fafb', boxShadow: 'none' }
+					<div className="flex items-center gap-1.5">
+						{showCodeBody
+							? <TsLogo />
+							: <img src="/img/windmill.svg" alt="Windmill" className={`h-4 w-4 ${showMonitoring ? 'animate-spin' : ''}`} style={showMonitoring ? { animationDuration: '3s' } : undefined} />
 						}
-						exit={{ opacity: 0, scale: 0.9 }}
-						transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-					>
-						{/* Title bar — always visible */}
-						<motion.div
-							className="flex items-center px-3 py-2 gap-2"
-							initial={{ backgroundColor: '#161b22', borderBottomWidth: 1, borderBottomColor: '#1f2937' }}
-							animate={showCodeBody
-								? { backgroundColor: '#161b22', borderBottomWidth: 1, borderBottomColor: '#1f2937' }
-								: { backgroundColor: '#f9fafb', borderBottomWidth: 1, borderBottomColor: '#e5e7eb' }
-							}
-							transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-							style={{ borderBottomStyle: 'solid' }}
+						<motion.span
+							className="text-[11px] font-mono"
+							animate={{ color: showCodeBody ? '#9ca3af' : '#374151' }}
+							transition={{ duration: 0.5 }}
 						>
-							<div className="flex items-center gap-1.5">
-								<img src="/img/windmill.svg" alt="Windmill" className="h-3.5 w-3.5" />
+							get_failed_payment.ts
+						</motion.span>
+						<AnimatePresence>
+							{showMonitoring && (
 								<motion.span
-									className="text-[11px] font-mono"
-									animate={{ color: showCodeBody ? '#9ca3af' : '#374151' }}
-									transition={{ duration: 0.5 }}
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.3 }}
+									className="text-[11px] text-gray-400 font-mono"
 								>
-									get_failed_payment.ts
+									- Running on Windmill workers
 								</motion.span>
-							</div>
+							)}
+						</AnimatePresence>
+					</div>
 
-							{/* Connect / Deploy button in title bar */}
-							<AnimatePresence>
-								{showCodeBody && (
-									<motion.button
-										key="connect-btn"
-										initial={{ opacity: 0, scale: 0.8 }}
-										animate={{
-											opacity: phase === 'typing' ? 0.5 : 1,
-											scale: connectPushed ? 0.92 : 1,
-										}}
-										exit={{ opacity: 0, scale: 0.8 }}
-										transition={{ duration: 0.2 }}
-										className={`ml-auto px-3 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 ${
-											phase === 'typing'
-												? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-												: 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
-										}`}
-									>
-										<img src="/img/windmill.svg" alt="" className="w-3 h-3" />
-										Connect
-									</motion.button>
-								)}
-								{showUseCases && (
-									<motion.button
-										key="deploy-btn"
-										initial={{ opacity: 0, scale: 0.8 }}
-										animate={{
-											opacity: phase === 'usecases' ? 0.5 : 1,
-											scale: phase === 'pushing' ? 0.92 : 1,
-										}}
-										exit={{ opacity: 0, scale: 0.8 }}
-										transition={{ duration: 0.2 }}
-										className={`ml-auto px-3 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 ${
-											phase === 'usecases'
-												? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-												: 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
-										}`}
-									>
-										<img src="/img/windmill.svg" alt="" className="w-3 h-3" />
-										Deploy
-									</motion.button>
-								)}
-								{showMonitoring && (
-									<motion.div
-										key="running-label"
-										initial={{ opacity: 0 }}
-										animate={{ opacity: 1 }}
-										exit={{ opacity: 0 }}
-										transition={{ duration: 0.3 }}
-										className="ml-auto flex items-center gap-1.5 text-[11px] text-gray-500 font-medium"
-									>
-										Running on Windmill workers
-										<img src="/img/windmill.svg" alt="" className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '3s' }} />
-									</motion.div>
-								)}
-							</AnimatePresence>
-						</motion.div>
+					{/* Buttons and labels in title bar */}
+					<AnimatePresence mode="wait">
+						{showCodeBody && (
+							<motion.button
+								key="connect-btn"
+								initial={{ opacity: 0, scale: 0.8 }}
+								animate={{
+									opacity: phase === 'typing' ? 0.5 : 1,
+									scale: connectPushed ? 0.92 : 1,
+								}}
+								exit={{ opacity: 0, scale: 0.8 }}
+								transition={{ duration: 0.2 }}
+								className={`ml-auto px-3 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 ${
+									phase === 'typing'
+										? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+										: 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
+								}`}
+							>
+								<img src="/img/windmill.svg" alt="" className="w-3 h-3" />
+								Push to Windmill
+							</motion.button>
+						)}
+						{showUseCases && (
+							<motion.button
+								key="deploy-btn"
+								initial={{ opacity: 0, scale: 0.8 }}
+								animate={{
+									opacity: phase === 'usecases' ? 0.5 : 1,
+									scale: phase === 'pushing' ? 0.92 : 1,
+								}}
+								exit={{ opacity: 0, scale: 0.8 }}
+								transition={{ duration: 0.2 }}
+								className={`ml-auto px-3 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 ${
+									phase === 'usecases'
+										? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+										: 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
+								}`}
+							>
+								Deploy
+							</motion.button>
+						)}
+					</AnimatePresence>
 
-						{/* Code body — collapses when transitioning to use cases */}
-						<motion.div
-							className="overflow-hidden"
-							initial={{ height: 'auto' }}
-							animate={{ height: showCodeBody ? 'auto' : 0 }}
-							transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-						>
-							<div className="p-3 sm:p-4 min-h-[280px] sm:min-h-[300px] flex flex-col">
-								{phase === 'typing' ? <comps.TypingCode onComplete={handleTypingComplete} /> : <comps.StaticCode />}
-							</div>
-						</motion.div>
-					</motion.div>
-				)}
-			</AnimatePresence>
+				</motion.div>
 
-			{/* Use cases cycling section — appears below title bar in normal flow */}
-			<AnimatePresence>
-				{showUseCases && (
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -10 }}
-						transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-						className="w-full relative"
-					>
-						<UseCasesCycling />
-					</motion.div>
-				)}
-			</AnimatePresence>
+				{/* Content area — crossfades between code, use cases, and monitoring */}
+				<div className="relative" style={{ height: 400 }}>
+					<AnimatePresence mode="wait">
+						{showCodeBody && (
+							<motion.div
+								key="code"
+								className="absolute inset-0"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ duration: 0.3 }}
+							>
+								<div className="p-3 sm:p-4 min-h-[280px] sm:min-h-[300px] flex flex-col">
+									{phase === 'typing' ? <comps.TypingCode onComplete={handleTypingComplete} /> : <comps.StaticCode />}
+								</div>
+							</motion.div>
+						)}
 
-			{/* Monitoring phase */}
-			<AnimatePresence>
-				{showMonitoring && (
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -10 }}
-						transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-						className="w-full rounded-b-xl border border-gray-200 border-t-0 bg-white shadow-sm overflow-hidden grid grid-cols-2 grid-rows-2 gap-2 p-2"
-						style={{ maxHeight: 400 }}
-					>
+						{showUseCases && (
+							<motion.div
+								key="usecases"
+								className="absolute inset-0"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ duration: 0.3 }}
+							>
+								<UseCasesCycling />
+							</motion.div>
+						)}
+
+						{showMonitoring && (
+							<motion.div
+								key="monitoring"
+								className="absolute inset-0 overflow-hidden grid grid-cols-2 grid-rows-2 gap-2 p-2"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ duration: 0.3 }}
+							>
 								<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.3 }} className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col">
 									<div className="px-2.5 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-green-500" /><span className="text-sm text-gray-600 font-medium">Runs</span></div>
 									<div className="p-2 flex-1 min-h-0 flex flex-col justify-center"><comps.LiveRunsScatter runCount={runCount} light /></div>
@@ -992,19 +957,12 @@ function CompleteAnimation() {
 									<div className="px-2.5 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center gap-1.5 shrink-0"><div className="w-2 h-2 rounded-full bg-cyan-500" /><span className="text-sm text-gray-600 font-medium">Audit logs</span></div>
 									<div className="p-2 flex-1 min-h-0 flex flex-col overflow-hidden"><comps.LiveFrontend runCount={runCount} light /></div>
 								</motion.div>
-					</motion.div>
-				)}
-			</AnimatePresence>
-
-			{/* Progress bar — hidden once animation completes */}
-			{globalProgress < 1 && (
-				<div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/5 rounded-full overflow-hidden">
-					<div
-						className="h-full bg-blue-500/30 transition-none"
-						style={{ width: `${globalProgress * 100}%` }}
-					/>
+							</motion.div>
+						)}
+					</AnimatePresence>
 				</div>
-			)}
+			</motion.div>
+
 		</div>
 	);
 }
