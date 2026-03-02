@@ -11,7 +11,7 @@ const USE_CASES = [
 	{ id: 'dag', icon: Workflow, label: 'Workflow engine', duration: 3500 },
 	{ id: 'app', icon: LayoutDashboard, label: 'Internal app', duration: 3500 },
 	{ id: 'agent', icon: Bot, label: 'AI agent', duration: 3500 },
-	{ id: 'endpoint', icon: Zap, label: 'Triggers', duration: 2000 },
+	{ id: 'endpoint', icon: Zap, label: 'Triggers', duration: 2200 },
 ];
 
 // ─── Shared DAG node component (light theme, matching workflow-automation) ───
@@ -295,6 +295,27 @@ function MiniApp() {
 						<div className="w-2 h-2 rounded-full bg-green-400/60" />
 					</div>
 					<span className="text-[10px] text-gray-400 font-mono ml-1">Internal tool</span>
+					<div className="flex items-center gap-1 ml-auto">
+						{/* React (selected) */}
+						<div className="flex items-center gap-1 rounded bg-blue-50 border border-blue-200 px-1.5 py-0.5">
+							<svg viewBox="-11.5 -10.232 23 20.463" className="w-3 h-3">
+								<circle r="2.05" fill="#61DAFB" />
+								<g stroke="#61DAFB" strokeWidth="1" fill="none">
+									<ellipse rx="11" ry="4.2" />
+									<ellipse rx="11" ry="4.2" transform="rotate(60)" />
+									<ellipse rx="11" ry="4.2" transform="rotate(120)" />
+								</g>
+							</svg>
+							<span className="text-[8px] text-blue-600 font-medium">React</span>
+						</div>
+						{/* Svelte */}
+						<div className="flex items-center gap-1 rounded bg-white border border-gray-200 px-1.5 py-0.5 opacity-50">
+							<svg viewBox="0 0 98.1 118" className="w-3 h-3">
+								<path d="M91.8 15.6C80.9-.5 59.2-4.7 43.6 5.2L16.1 22.8C8.6 27.5 3.4 35.2 1.9 43.9c-1.3 7.3-.2 14.8 3.3 21.3-2.4 3.6-4 7.6-4.7 11.8-1.6 8.9.5 18.1 5.7 25.4 11 16.1 32.7 20.3 48.2 10.4l27.5-17.6c7.5-4.7 12.7-12.4 14.2-21.1 1.3-7.3.2-14.8-3.3-21.3 2.4-3.6 4-7.6 4.7-11.8 1.7-9-.4-18.2-5.7-25.4" fill="#FF3E00" />
+								<path d="M40.9 103.9a27.7 27.7 0 0 1-16.2-2.4A21.7 21.7 0 0 1 15 88.3c-1.4-5.2-.6-10.9 2.1-15.5l.6-1 .5-.9.8.6a38.3 38.3 0 0 0 11.6 6.1l1.1.4-.1 1a6.7 6.7 0 0 0 .8 3.8c.9 1.5 2.5 2.5 4.2 2.9a7.4 7.4 0 0 0 4.5-.5l27.5-17.6a6.2 6.2 0 0 0 2.8-3.9c.3-1.7-.2-3.5-1.4-4.8-.9-1.5-2.5-2.5-4.2-2.9a7.4 7.4 0 0 0-4.5.5l-10.5 6.7a22.9 22.9 0 0 1-14 1.6A21.7 21.7 0 0 1 26 52.3a20.7 20.7 0 0 1-2.2-14.8 19.5 19.5 0 0 1 8.5-12.2l27.5-17.6a22.9 22.9 0 0 1 14-1.6A21.7 21.7 0 0 1 83.5 19.3c1.4 5.2.6 10.9-2.1 15.5l-.6 1-.5.9-.8-.6a38.3 38.3 0 0 0-11.6-6.1l-1.1-.4.1-1a6.7 6.7 0 0 0-.8-3.8c-.9-1.5-2.5-2.5-4.2-2.9a7.4 7.4 0 0 0-4.5.5L30 40.1a6.2 6.2 0 0 0-2.8 3.9c-.3 1.7.2 3.5 1.4 4.8.9 1.5 2.5 2.5 4.2 2.9a7.4 7.4 0 0 0 4.5-.5l10.5-6.7a22.9 22.9 0 0 1 14-1.6 21.7 21.7 0 0 1 9.7 13.2 20.7 20.7 0 0 1 2.2 14.8 19.5 19.5 0 0 1-8.5 12.2l-27.5 17.6a22.3 22.3 0 0 1-6.8 3.2" fill="#FFF" />
+							</svg>
+						</div>
+					</div>
 				</div>
 				<div className="p-2.5 space-y-2">
 					{/* Stat cards */}
@@ -385,6 +406,7 @@ function MiniApp() {
 					</div>
 				</div>
 			</div>
+
 		</div>
 	);
 }
@@ -863,7 +885,8 @@ function CompleteAnimation() {
 		}
 	}, [phase]);
 	// Total: 3500+4500+3500+3500+3500 = 18500
-	useEffect(() => { if (phase === 'usecases') { const t = setTimeout(() => setPhase('ready'), 19000); return () => clearTimeout(t); } }, [phase]);
+	const totalUseCasesDuration = USE_CASES.reduce((sum, uc) => sum + uc.duration, 0);
+	useEffect(() => { if (phase === 'usecases') { const t = setTimeout(() => setPhase('ready'), totalUseCasesDuration); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'ready') { const t = setTimeout(() => setPhase('pushing'), 1200); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'pushing') { const t = setTimeout(() => setPhase('deploying'), 400); return () => clearTimeout(t); } }, [phase]);
 	useEffect(() => { if (phase === 'deploying') { const t = setTimeout(() => setPhase('monitoring'), 1400); return () => clearTimeout(t); } }, [phase]);
@@ -881,8 +904,43 @@ function CompleteAnimation() {
 	const showUseCases = phase === 'usecases' || phase === 'ready' || phase === 'pushing';
 	const showMonitoring = phase === 'monitoring';
 
+	// Progress bar: track elapsed time per phase
+	const PHASE_DURATIONS: Record<Phase, number> = {
+		typing: 3500,
+		connect: 2500,
+		usecases: totalUseCasesDuration,
+		ready: 1200,
+		pushing: 400,
+		deploying: 1400,
+		monitoring: 6000,
+	};
+
+	const [progress, setProgress] = useState(0);
+	const phaseStartRef = useRef(performance.now());
+
+	useEffect(() => {
+		phaseStartRef.current = performance.now();
+		setProgress(0);
+		let frame: number;
+		const tick = () => {
+			const elapsed = performance.now() - phaseStartRef.current;
+			const duration = PHASE_DURATIONS[phase] || 3000;
+			setProgress(Math.min(elapsed / duration, 1));
+			frame = requestAnimationFrame(tick);
+		};
+		frame = requestAnimationFrame(tick);
+		return () => cancelAnimationFrame(frame);
+	}, [phase]);
+
+	// Compute cumulative progress across all phases
+	const PHASE_ORDER: Phase[] = ['typing', 'connect', 'usecases', 'ready', 'pushing', 'deploying', 'monitoring'];
+	const totalDuration = PHASE_ORDER.reduce((sum, p) => sum + PHASE_DURATIONS[p], 0);
+	const phaseIdx = PHASE_ORDER.indexOf(phase);
+	const elapsedBefore = PHASE_ORDER.slice(0, phaseIdx).reduce((sum, p) => sum + PHASE_DURATIONS[p], 0);
+	const globalProgress = (elapsedBefore + progress * PHASE_DURATIONS[phase]) / totalDuration;
+
 	return (
-		<div className="w-full min-h-[540px] sm:min-h-[620px] flex items-center justify-center relative">
+		<div className="w-full min-h-[540px] sm:min-h-[620px] flex flex-col items-center justify-center relative">
 			{/* Main morphing container */}
 			<motion.div
 				className="relative overflow-hidden border flex items-center justify-center"
@@ -1071,6 +1129,14 @@ function CompleteAnimation() {
 					</motion.div>
 				)}
 			</AnimatePresence>
+
+			{/* Progress bar */}
+			<div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/5 rounded-full overflow-hidden">
+				<div
+					className="h-full bg-blue-500/30 transition-none"
+					style={{ width: `${globalProgress * 100}%` }}
+				/>
+			</div>
 		</div>
 	);
 }
