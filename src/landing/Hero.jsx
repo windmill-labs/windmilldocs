@@ -1,7 +1,7 @@
 import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
-import HomescreenSvg from '../../static/homescreen.svg';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import Link from '@docusaurus/Link';
 
 export default function Hero() {
@@ -71,9 +71,12 @@ export default function Hero() {
 					</div>
 				</div>
 				<div>
-					<div className="flex  justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">
-						<HomescreenSvg className="scaled-svg" style={{ width: '90%', height: '90%' }} />
-					</div>
+					<BrowserOnly>
+						{() => {
+							const CompleteAnimation = require('./CompleteAnimation').default;
+							return <CompleteAnimation />;
+						}}
+					</BrowserOnly>
 				</div>
 			</div>
 		</div>
