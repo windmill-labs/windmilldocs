@@ -19,7 +19,7 @@ interface FeatureCardProps {
 	lottieData?: unknown;
 }
 
-function FeatureCard({
+export function FeatureCard({
 	title,
 	description,
 	href,
@@ -64,7 +64,7 @@ function FeatureCard({
 				className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer flex flex-col justify-center"
 			>
 				<div className="font-medium text-2xl mb-4 group-hover:ml-2 transition-all">{title}</div>
-				<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">{description}</div>
+				<div className="text-md text-gray-600 dark:text-gray-300 mb-4 group-hover:ml-2 transition-all max-w-sm">{description}</div>
 				<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
 					{actionText}
 					<ArrowRight size={20} />
@@ -94,7 +94,7 @@ function FeatureCard({
 	);
 }
 
-function BenchmarkCard() {
+export function BenchmarkCard() {
 	const { colorMode } = useColorMode();
 	const [chart, setChart] = useState<'short' | 'long' | undefined>(undefined);
 
@@ -212,13 +212,12 @@ export default function DeveloperExperienceSection() {
 		<LandingSection bgClass="py-16">
 			<div className="w-full">
 				<div className="mb-12 text-left">
-					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-600">
-						Run in production
-					</h1>
-					<span className="text-lg text-gray-700 dark:text-gray-200">
-						Review, deploy and run on the most scalable and reliable infra with workers managed by
-						Windmill, and all observability, alerting and error handling built-in (+ export to OTel).
-					</span>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Built for production
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Git-based collaboration, auto-scaling infrastructure, and full observability. No DevOps glue required.
+					</p>
 				</div>
 				<div className="flex flex-col gap-6">
 					<FeatureCard

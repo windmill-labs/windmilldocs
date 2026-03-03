@@ -28,7 +28,7 @@ export default function MobileTutorialSection() {
 					</div>
 				</div>
 
-				{/* Develop locally card */}
+				{/* Develop locally card - commented out
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl">
 					<a
 						href="/docs/advanced/local_development"
@@ -50,6 +50,7 @@ export default function MobileTutorialSection() {
 					</a>
 					<Lottie lottieData={devfriendly} autoplay loop={true} />
 				</div>
+				*/}
 			</div>
 		</div>
 	);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutDashboard, Globe, Bot, SlidersHorizontal, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Zap } from 'lucide-react';
+import { LayoutDashboard, Globe, Bot, SlidersHorizontal, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Zap} from 'lucide-react';
 
 // ─── Use case data ───────────────────────────────────────────────────────────
 

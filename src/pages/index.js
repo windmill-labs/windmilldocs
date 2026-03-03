@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import Hero from '../landing/Hero';
 import Footer from '../landing/Footer';
-import IntegrationsList from '../landing/IntegrationsList';
 import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
-import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 import SeoHead from '../components/SeoHead';
 import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
@@ -27,7 +25,7 @@ import DeveloperExperienceSection from '../landing/DeveloperExperienceSection';
 const steps = [
 	{ num: 1, label: 'Write your business logic' },
 	{ num: 2, label: 'Push it to Windmill' },
-	{ num: 3, label: 'Get a complete platform' },
+	{ num: 3, label: 'Get a complete platform out of the box' },
 ];
 
 
@@ -119,13 +117,13 @@ function HomepageHeader() {
 			<LandingHeader />
 			<Hero />
 			<LogoClouds />
-			<div className="max-w-7xl mx-auto px-8 py-16">
+			<div className="max-w-7xl mx-auto px-8 py-16 mt-8">
 				<div className="mb-8">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 						You write the logic, Windmill runs it
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Windmill turns your scripts into a production-grade platform. Backend, frontend, workflows, monitoring, all built in. Self-host or use Windmill Cloud.
+						Windmill turns your scripts into a production-grade platform. Backend, frontend, orchestration, monitoring, all built in. Self-host or use Windmill Cloud.
 					</p>
 				</div>
 
@@ -142,19 +140,18 @@ function HomepageHeader() {
 					</BrowserOnly>
 					<PlatformLayersPanel />
 				</div>
+
 			</div>
+			<DeveloperExperienceSection />
+			<CorePrinciple />
+			<TestimonialsSection />
 			{/* <div className="hidden sm:block">
 				<TutorialSection subIndex={undefined} />
 			</div>
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
-			</div>
-			<DeveloperExperienceSection /> */}
-			<CorePrinciple />
-			<TestimonialsSection />
+			</div> */}
 			<HeroExample />
-			{/* <IntegrationsList /> */}
-			{/* <EntrepriseFeatures /> */}
 			<LandingSection bgClass="py-0">
 				<CallToAction />
 			</LandingSection>
