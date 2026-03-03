@@ -29,22 +29,31 @@ const steps = [
 ];
 
 
-function StepsRow() {
+function StepsRow({ activeStep = 0 }) {
 	return (
 		<div className="flex items-center w-full">
-			{steps.map((step, i) => (
-				<React.Fragment key={step.num}>
-					<div className="flex items-center gap-2.5 flex-1 justify-center py-3">
-						<span className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 text-xs font-bold shrink-0">
-							{step.num}
-						</span>
-						<span className="text-sm text-gray-700 dark:text-gray-300">{step.label}</span>
-					</div>
-					{i < steps.length - 1 && (
-						<ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
-					)}
-				</React.Fragment>
-			))}
+			{steps.map((step, i) => {
+				const isActive = step.num === activeStep;
+				return (
+					<React.Fragment key={step.num}>
+						<div className={`flex items-center gap-2.5 flex-1 justify-center py-3 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
+							<span className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0 transition-colors duration-300 ${
+								isActive
+									? 'border-2 border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30'
+									: 'border-2 border-gray-400 text-gray-400 dark:border-gray-600 dark:text-gray-600'
+							}`}>
+								{step.num}
+							</span>
+							<span className={`text-sm transition-colors duration-300 ${
+								isActive ? 'text-gray-900 dark:text-white font-medium' : 'text-gray-500 dark:text-gray-500'
+							}`}>{step.label}</span>
+						</div>
+						{i < steps.length - 1 && (
+							<ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+						)}
+					</React.Fragment>
+				);
+			})}
 		</div>
 	);
 }
@@ -111,7 +120,23 @@ const organizationSchema = {
 	}
 };
 
+const phaseToStep = {
+	waiting: 0,
+	typing: 1,
+	connect: 1,
+	usecases: 2,
+	ready: 2,
+	pushing: 2,
+	deploying: 2,
+	monitoring: 3,
+};
+
 function HomepageHeader() {
+	const [activeStep, setActiveStep] = useState(0);
+	const handlePhaseChange = React.useCallback((phase) => {
+		setActiveStep(phaseToStep[phase] || 0);
+	}, []);
+
 	return (
 		<>
 			<LandingHeader />
@@ -128,14 +153,14 @@ function HomepageHeader() {
 				</div>
 
 				<div className="mb-8">
-					<StepsRow />
+					<StepsRow activeStep={activeStep} />
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<BrowserOnly>
 						{() => {
 							const CompleteAnimation = require('../landing/CompleteAnimation').default;
-							return <CompleteAnimation />;
+							return <CompleteAnimation onPhaseChange={handlePhaseChange} />;
 						}}
 					</BrowserOnly>
 					<PlatformLayersPanel />

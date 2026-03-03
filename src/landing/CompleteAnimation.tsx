@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutDashboard, Globe, Bot, SlidersHorizontal, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Zap} from 'lucide-react';
+import { LayoutDashboard, Globe, Bot, SlidersHorizontal, Workflow, Clock, Webhook, Mail, Database, Radio, MessageSquare, Cloud, Rss, Zap, RotateCcw } from 'lucide-react';
 
 // ─── Use case data ───────────────────────────────────────────────────────────
 
@@ -794,10 +794,32 @@ function UseCasesCycling() {
 
 // ─── Complete animation: IDE → use cases → deploy → monitoring ──────────────
 
-type Phase = 'typing' | 'connect' | 'usecases' | 'ready' | 'pushing' | 'deploying' | 'monitoring';
+type Phase = 'waiting' | 'typing' | 'connect' | 'usecases' | 'ready' | 'pushing' | 'deploying' | 'monitoring';
 
-function CompleteAnimation() {
-	const [phase, setPhase] = useState<Phase>('typing');
+function CompleteAnimation({ onPhaseChange }: { onPhaseChange?: (phase: Phase) => void }) {
+	const [phase, setPhase] = useState<Phase>('waiting');
+	const animContainerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		onPhaseChange?.(phase);
+	}, [phase, onPhaseChange]);
+
+	// Wait until fully visible before starting
+	useEffect(() => {
+		const el = animContainerRef.current;
+		if (!el) return;
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					setPhase((p) => p === 'waiting' ? 'typing' : p);
+					observer.disconnect();
+				}
+			},
+			{ threshold: 1.0 }
+		);
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, []);
 
 	const comps = React.useMemo(() => {
 		const mod = require('./HeroAnimation');
@@ -857,12 +879,39 @@ function CompleteAnimation() {
 		return () => clearTimeout(t);
 	}, [phase, comps.DB_ROWS.length]);
 
-	const showCodeBody = phase === 'typing' || phase === 'connect';
+	const showCodeBody = phase === 'waiting' || phase === 'typing' || phase === 'connect';
 	const showUseCases = phase === 'usecases' || phase === 'ready' || phase === 'pushing';
 	const showMonitoring = phase === 'monitoring';
 	const isDeploying = phase === 'deploying';
 
+	// Smooth progress bar: track start time and estimate total cycle duration
+	const [progress, setProgress] = useState(0);
+	const animFrameRef = useRef<number>(0);
+	const cycleStartRef = useRef<number>(Date.now());
+	const totalMonitoringTime = comps ? comps.DB_ROWS.length * 1000 + 2000 : 10000;
+	// Estimated total: typing ~4s + connect 2.5s + usecases ~18.5s + ready 1.2s + pushing 0.8s + deploying 1.4s + monitoring ~totalMonitoringTime
+	const estimatedTotal = 4000 + 2500 + totalUseCasesDuration + 1200 + 800 + 1400 + totalMonitoringTime;
+
+	useEffect(() => {
+		if (phase === 'waiting') return;
+		cycleStartRef.current = Date.now();
+		setProgress(0);
+	}, [cycleKey]);
+
+	useEffect(() => {
+		if (phase === 'waiting') return;
+		cycleStartRef.current = Date.now();
+		const tick = () => {
+			const elapsed = Date.now() - cycleStartRef.current;
+			setProgress(Math.min(elapsed / estimatedTotal, 1));
+			animFrameRef.current = requestAnimationFrame(tick);
+		};
+		animFrameRef.current = requestAnimationFrame(tick);
+		return () => cancelAnimationFrame(animFrameRef.current);
+	}, [cycleKey, estimatedTotal, phase === 'waiting']);
+
 	return (
+		<div ref={animContainerRef} className="flex flex-col items-center">
 		<div className="w-full h-[440px] sm:h-[500px] flex flex-col items-center justify-center relative pb-2">
 			{/* Deploying phase: centered spinning logo overlaid on top */}
 			<AnimatePresence>
@@ -1048,6 +1097,25 @@ function CompleteAnimation() {
 				</div>
 			</motion.div>
 
+		</div>
+		<div className="w-full flex items-center gap-2 -mt-2">
+			<div className="flex-1 h-0.5 bg-gray-200/50 dark:bg-gray-700/30 rounded-full overflow-hidden">
+				<div
+					className="h-full bg-gray-400/40 dark:bg-gray-500/30 rounded-full"
+					style={{ width: `${progress * 100}%`, transition: 'width 0.1s linear' }}
+				/>
+			</div>
+			<button
+				onClick={() => {
+					setCycleKey((k) => k + 1);
+					setPhase('typing');
+				}}
+				className="p-1 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+				title="Restart animation"
+			>
+				<RotateCcw size={12} />
+			</button>
+		</div>
 		</div>
 	);
 }
