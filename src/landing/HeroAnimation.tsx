@@ -17,6 +17,10 @@ const CODE_SEGMENTS = [
 	{ text: ': ', cls: 'text-white' },
 	{ text: 'string', cls: 'text-blue-300' },
 	{ text: ',\n', cls: 'text-white' },
+	{ text: '  status', cls: 'text-orange-300' },
+	{ text: ': ', cls: 'text-white' },
+	{ text: 'string', cls: 'text-blue-300' },
+	{ text: ',\n', cls: 'text-white' },
 	{ text: '  days', cls: 'text-orange-300' },
 	{ text: ': ', cls: 'text-white' },
 	{ text: 'number', cls: 'text-blue-300' },
@@ -29,10 +33,7 @@ const CODE_SEGMENTS = [
 	{ text: '  return ', cls: 'text-purple-400' },
 	{ text: 'stripe.charges.', cls: 'text-white' },
 	{ text: 'list', cls: 'text-yellow-300' },
-	{ text: '({\n', cls: 'text-white' },
-	{ text: '    status', cls: 'text-orange-300' },
-	{ text: ": 'failed'\n", cls: 'text-green-400' },
-	{ text: '  })\n', cls: 'text-white' },
+	{ text: '({ status })\n', cls: 'text-white' },
 	{ text: '}', cls: 'text-white' },
 ];
 
@@ -362,7 +363,7 @@ function LiveDatabase({ runCount, light }: { runCount: number; light?: boolean }
 // ─── Live frontend app ──────────────────────────────────────────────────────
 
 const AUDIT_LOGS = [
-	{ time: '14:32:01', user: 'admin', action: 'deployed', target: 'get_failed_payment.ts' },
+	{ time: '14:32:01', user: 'admin', action: 'deployed', target: 'get_payments.ts' },
 	{ time: '14:32:02', user: 'system', action: 'started', target: 'worker-1' },
 	{ time: '14:32:05', user: 'system', action: 'completed', target: 'run #1' },
 	{ time: '14:32:08', user: 'system', action: 'completed', target: 'run #2' },
@@ -586,7 +587,7 @@ function TriggerPicker({ active }: { active: boolean }) {
 					{step === 'configured' ? (
 						<span className="text-[10px] text-gray-300 font-mono flex items-center gap-1.5">
 							<Webhook className="w-3 h-3 text-cyan-400 shrink-0" />
-							Webhook — POST /api/w/demo/jobs/run_wait_result/get_failed_payment
+							Webhook — POST /api/w/demo/jobs/run_wait_result/get_payments
 						</span>
 					) : (
 						<span className="text-[10px] text-gray-600">Select a trigger...</span>
@@ -750,7 +751,7 @@ export default function HeroAnimation() {
 						</div>
 						<div className="flex items-center gap-1.5 ml-2">
 							<img src="/img/windmill.svg" alt="Windmill" className="h-3.5 w-3.5" />
-							<span className="text-[11px] text-gray-400 font-mono">get_failed_payment.ts</span>
+							<span className="text-[11px] text-gray-400 font-mono">get_payments.ts</span>
 						</div>
 					</div>
 					{/* Code */}
@@ -878,7 +879,7 @@ export default function HeroAnimation() {
 										style={{ animationDuration: '3s' }}
 									/>
 									<div className="flex items-center gap-2">
-										<span className="text-sm font-mono text-gray-300">get_failed_payment.ts</span>
+										<span className="text-sm font-mono text-gray-300">get_payments.ts</span>
 										<div className="flex items-center gap-1">
 											<div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
 											<span className="text-[10px] text-green-400">live</span>
@@ -1003,7 +1004,7 @@ export function HeroAnimationSimplified() {
 								style={{ animationDuration: '3s' }}
 							/>
 							<div className="flex items-center gap-2">
-								<span className="text-sm font-mono text-gray-300">get_failed_payment.ts</span>
+								<span className="text-sm font-mono text-gray-300">get_payments.ts</span>
 								<div className="flex items-center gap-1">
 									<div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
 									<span className="text-[10px] text-green-400">live</span>
