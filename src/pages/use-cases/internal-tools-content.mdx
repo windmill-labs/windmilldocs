@@ -13,6 +13,7 @@ import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
+import { platformLayers } from '../../landing/platformLayers';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -419,17 +420,6 @@ export const codeLines = [
 	{ tokens: [{ text: '}', color: 'text-gray-400' }] },
 ];
 
-export const boilerplateLayers = [
-	{ label: 'Backend', detail: 'Runs in dedicated workers', icon: Code2, expanded: 'Scripts run on isolated workers with configurable CPU, memory and timeout. Support for TypeScript, Python, Go, SQL, Bash, PHP, Rust and more. No container orchestration to manage.' },
-	{ label: 'Frontend', detail: 'React / Vue / Svelte on the platform', icon: LayoutGrid, expanded: 'Import your own React, Vue or Svelte codebase. Windmill serves it with built-in routing, auth and direct access to backend scripts. No separate hosting or API gateway.' },
-	{ label: 'Storage', detail: 'Built-in data tables +  integration', icon: Database, expanded: 'Built-in data tables for zero-setup SQL storage. Connect to PostgreSQL, MySQL, BigQuery, Snowflake or S3 via shared resources. Query with DuckDB or Ducklake.' },
-	{ label: 'Observability', detail: 'Execution history, logs, error handlers', icon: Activity, expanded: 'Every execution is logged with input, output, duration and errors. Configurable retries with exponential backoff. Custom error handler scripts per step.' },
-	{ label: 'Enterprise', detail: 'RBAC, SSO, audit logs, self-host', icon: Shield, expanded: 'Granular role-based access control. SSO with SAML, OAuth and LDAP. Full audit trail of every action. Self-host on your own infrastructure, including air-gapped deployments.' },
-	{ label: 'AI integration', detail: 'Claude Code / Codex in the IDE, sandboxes', icon: Bot, expanded: 'Generate scripts and apps with Claude Code or Codex directly in the editor. Run AI agents in isolated sandboxes with controlled access to resources. AI-assisted development that deploys instantly on the production engine.' },
-	{ label: 'Workflow engine', detail: 'Flows, schedules, triggers, AI agents', icon: Cpu, expanded: 'Chain scripts into flows with parallel branches, approval steps and loops. Trigger via cron, webhooks, Kafka, Postgres CDC or custom events.' },
-	{ label: 'Deployment', detail: 'One-click deploy, no CI/CD to configure', icon: Play, expanded: 'Deploy scripts, flows and apps in one click from the UI or via CLI. No Docker builds, no CI pipelines to maintain. Git sync with GitHub or GitLab for automated deployments.' },
-	{ label: 'Versioning', detail: 'Git sync, rollback', icon: GitBranch, expanded: 'Every script and flow is versioned. Sync with GitHub or GitLab. Roll back to any previous version instantly from the UI.' },
-];
 
 export function BoilerplateAnimation() {
 	const [view, setView] = useState('local');
@@ -645,7 +635,7 @@ export function BoilerplateAnimation() {
 					<span className="text-sm font-semibold text-gray-700 dark:text-gray-300">And provides all the platform layers</span>
 				</motion.div>
 				<div className="p-6 flex flex-col gap-3">
-					{boilerplateLayers.map((layer, i) => {
+					{platformLayers.map((layer, i) => {
 						const isOpen = openLayer === i;
 						return (
 							<motion.div

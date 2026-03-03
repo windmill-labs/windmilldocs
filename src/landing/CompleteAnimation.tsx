@@ -160,7 +160,7 @@ function MiniDag() {
 	useEffect(() => { setMounted(true); }, []);
 
 	return (
-		<div className="relative w-[560px] h-[350px] mx-auto mt-14" style={{ transform: 'scale(0.85)', transformOrigin: 'top center' }}>
+		<div className="relative w-[560px] h-[350px] mx-auto mt-14" style={{ transform: 'scale(0.90)', transformOrigin: 'top center' }}>
 			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
 				{/* Straight edges: Trigger → Input → get_payments */}
 				<line x1={CX} y1={40 + NODE_H / 2} x2={CX} y2={100 - NODE_H / 2} className="stroke-gray-300" strokeWidth={1.5} />
@@ -342,9 +342,9 @@ function MiniApp() {
 
 							</div>
 							{[
-								['Alice', ['$420', '$435', '$450', '$448']],
-								['Bob', ['$310', '$310', '$325', '$330']],
-								['Carol', ['$580', '$595', '$600', '$610']],
+								['Acme Corp', ['$4,200', '$4,350', '$4,500', '$4,480']],
+								['Globex Inc', ['$3,100', '$3,100', '$3,250', '$3,300']],
+								['Initech Ltd', ['$5,800', '$5,950', '$6,000', '$6,100']],
 							].map(([name, amts], i) => (
 								<div key={i} className={`grid grid-cols-3 text-[9px] py-0.5 ${i > 0 ? 'border-t border-gray-100' : ''}`}>
 									<span className="text-gray-600">{name as string}</span>
@@ -461,7 +461,7 @@ function MiniAutoUI() {
 								animate={{ opacity: 1, y: 0 }}
 								exit={{ opacity: 0, y: -4 }}
 								transition={{ duration: 0.15 }}
-								className="absolute top-full left-0 right-0 z-10 mt-1 rounded-lg bg-white border border-gray-200 shadow-lg"
+								className="absolute top-full left-0 right-0 z-10 mt-1 rounded-lg bg-white border border-gray-200 shadow-lg overflow-hidden"
 							>
 								{[
 									{ name: 'stripe_sandbox', active: false },
@@ -512,7 +512,7 @@ function MiniAutoUI() {
 								animate={{ opacity: 1, y: 0 }}
 								exit={{ opacity: 0, y: -4 }}
 								transition={{ duration: 0.15 }}
-								className="absolute top-full left-0 right-0 z-10 mt-1 rounded-lg bg-white border border-gray-200 shadow-lg"
+								className="absolute top-full left-0 right-0 z-10 mt-1 rounded-lg bg-white border border-gray-200 shadow-lg overflow-hidden"
 							>
 								{[
 									{ name: 'succeeded', active: false },
@@ -565,9 +565,6 @@ function MiniAutoUI() {
 					}
 					transition={{ duration: 0.4 }}
 				>
-					<svg className="w-3.5 h-3.5 text-white" viewBox="0 0 16 16" fill="currentColor">
-						<path d="M4 2l10 6-10 6V2z" />
-					</svg>
 					<span className="text-[11px] text-white font-medium">Run</span>
 				</motion.div>
 			</div>
@@ -836,12 +833,28 @@ function CompleteAnimation() {
 	useEffect(() => { if (phase === 'deploying') { const t = setTimeout(() => setPhase('monitoring'), 1400); return () => clearTimeout(t); } }, [phase]);
 
 	const [runCount, setRunCount] = useState(0);
+	const [cycleKey, setCycleKey] = useState(0);
 	useEffect(() => {
 		if (phase !== 'monitoring') { setRunCount(0); return; }
 		setRunCount(1);
 		let count = 1;
-		const interval = setInterval(() => { count++; setRunCount(count); if (count >= comps.DB_ROWS.length) clearInterval(interval); }, 1000);
+		const interval = setInterval(() => {
+			count++;
+			setRunCount(count);
+			if (count >= comps.DB_ROWS.length) clearInterval(interval);
+		}, 1000);
 		return () => clearInterval(interval);
+	}, [phase, comps.DB_ROWS.length]);
+
+	// Loop: restart after monitoring completes
+	useEffect(() => {
+		if (phase !== 'monitoring') return;
+		const totalMonitoringTime = comps.DB_ROWS.length * 1000 + 2000;
+		const t = setTimeout(() => {
+			setCycleKey((k) => k + 1);
+			setPhase('typing');
+		}, totalMonitoringTime);
+		return () => clearTimeout(t);
 	}, [phase, comps.DB_ROWS.length]);
 
 	const showCodeBody = phase === 'typing' || phase === 'connect';
@@ -907,7 +920,7 @@ function CompleteAnimation() {
 							: <img src="/img/windmill.svg" alt="Windmill" className={`h-4 w-4 ${showMonitoring ? 'animate-spin' : ''}`} style={showMonitoring ? { animationDuration: '3s' } : undefined} />
 						}
 						<motion.span
-							className="text-[11px] font-mono"
+							className="text-sm font-mono"
 							animate={{ color: showCodeBody ? '#9ca3af' : '#374151' }}
 							transition={{ duration: 0.5 }}
 						>
@@ -920,7 +933,7 @@ function CompleteAnimation() {
 									animate={{ opacity: 1 }}
 									exit={{ opacity: 0 }}
 									transition={{ duration: 0.3 }}
-									className="text-[11px] text-gray-400 font-mono"
+									className="text-sm text-gray-400 font-mono"
 								>
 									- Running on Windmill workers
 								</motion.span>
@@ -940,13 +953,13 @@ function CompleteAnimation() {
 								}}
 								exit={{ opacity: 0, scale: 0.8 }}
 								transition={{ duration: 0.2 }}
-								className={`ml-auto px-3 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 ${
+								className={`ml-auto px-4 py-1.5 rounded-md text-sm font-semibold flex items-center gap-1.5 ${
 									phase === 'typing'
-										? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+										? 'bg-gray-300 text-white cursor-not-allowed'
 										: 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
 								}`}
 							>
-								<img src="/img/windmill.svg" alt="" className="w-3 h-3" />
+								<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
 								Push to Windmill
 							</motion.button>
 						)}
@@ -960,9 +973,9 @@ function CompleteAnimation() {
 								}}
 								exit={{ opacity: 0, scale: 0.8 }}
 								transition={{ duration: 0.2 }}
-								className={`ml-auto px-3 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 ${
+								className={`ml-auto px-4 py-1.5 rounded-md text-sm font-semibold flex items-center gap-1.5 ${
 									phase === 'usecases'
-										? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+										? 'bg-gray-300 text-white cursor-not-allowed'
 										: 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
 								}`}
 							>
@@ -986,7 +999,7 @@ function CompleteAnimation() {
 								transition={{ duration: 0.3 }}
 							>
 								<div className="p-3 sm:p-4 min-h-[280px] sm:min-h-[300px] flex flex-col">
-									{phase === 'typing' ? <comps.TypingCode onComplete={handleTypingComplete} /> : <comps.StaticCode />}
+									{phase === 'typing' ? <comps.TypingCode key={cycleKey} onComplete={handleTypingComplete} /> : <comps.StaticCode />}
 								</div>
 							</motion.div>
 						)}
@@ -1000,7 +1013,7 @@ function CompleteAnimation() {
 								exit={{ opacity: 0 }}
 								transition={{ duration: 0.3 }}
 							>
-								<UseCasesCycling />
+								<UseCasesCycling key={cycleKey} />
 							</motion.div>
 						)}
 

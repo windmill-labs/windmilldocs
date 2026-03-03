@@ -13,24 +13,24 @@ const CODE_SEGMENTS = [
 	{ text: 'export async function ', cls: 'text-purple-400' },
 	{ text: 'main', cls: 'text-yellow-300' },
 	{ text: '(\n', cls: 'text-white' },
-	{ text: '  resource', cls: 'text-orange-300' },
+	{ text: '    resource', cls: 'text-orange-300' },
 	{ text: ': ', cls: 'text-white' },
 	{ text: 'string', cls: 'text-blue-300' },
 	{ text: ',\n', cls: 'text-white' },
-	{ text: '  status', cls: 'text-orange-300' },
+	{ text: '    status', cls: 'text-orange-300' },
 	{ text: ': ', cls: 'text-white' },
 	{ text: 'string', cls: 'text-blue-300' },
 	{ text: ',\n', cls: 'text-white' },
-	{ text: '  days', cls: 'text-orange-300' },
+	{ text: '    days', cls: 'text-orange-300' },
 	{ text: ': ', cls: 'text-white' },
 	{ text: 'number', cls: 'text-blue-300' },
 	{ text: '\n) {\n', cls: 'text-white' },
-	{ text: '  const ', cls: 'text-purple-400' },
+	{ text: '    const ', cls: 'text-purple-400' },
 	{ text: 'stripe ', cls: 'text-white' },
 	{ text: '= new ', cls: 'text-purple-400' },
 	{ text: 'Stripe', cls: 'text-yellow-300' },
 	{ text: '(resource)\n', cls: 'text-white' },
-	{ text: '  return ', cls: 'text-purple-400' },
+	{ text: '    return ', cls: 'text-purple-400' },
 	{ text: 'stripe.charges.', cls: 'text-white' },
 	{ text: 'list', cls: 'text-yellow-300' },
 	{ text: '({ status })\n', cls: 'text-white' },
@@ -83,7 +83,7 @@ function CodeRenderer({ charCount, showCursor }: { charCount: number; showCursor
 	const pushLine = () => {
 		rendered.push(
 			<div key={`line-${lineNum}`} className="flex">
-				<span className="w-5 text-right mr-2 text-gray-600 select-none text-[10px]">{lineNum}</span>
+				<span className="w-6 text-right mr-3 text-gray-600 select-none text-[15px] sm:text-[16px]">{lineNum}</span>
 				<span>{lineContent}</span>
 			</div>
 		);
@@ -111,7 +111,7 @@ function CodeRenderer({ charCount, showCursor }: { charCount: number; showCursor
 	}
 	if (lineContent.length > 0 || charCount > 0) pushLine();
 
-	return <div className="font-mono text-[10px] leading-[16px] sm:text-[11px] sm:leading-[18px]">{rendered}</div>;
+	return <div className="font-mono text-[15px] leading-[26px] sm:text-[16px] sm:leading-[28px] whitespace-pre">{rendered}</div>;
 }
 
 
