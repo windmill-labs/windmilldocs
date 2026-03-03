@@ -33,7 +33,7 @@ export const journeyFeatures = [
 		label: '1. Write a script',
 		title: 'Write a script in any language',
 		desc: <span>Write a script in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, Bash, SQL</Link> or 20+ languages, from the Windmill UI or locally using the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>.</span>,
-		image: '/img/money-pages/workflow-code.webp',
+		image: '/img/money-pages/script-for-endpoint.png',
 		docLink: '/docs/script_editor',
 	},
 	{
@@ -41,7 +41,7 @@ export const journeyFeatures = [
 		icon: Plug,
 		label: '2. Connect resources',
 		title: 'Connect to databases and APIs',
-		desc: <span>Attach <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> — PostgreSQL, MySQL, S3, Slack, or any of <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">50+ integrations</Link>. Credentials are encrypted and injected at runtime.</span>,
+		desc: <span>Connect <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> like PostgreSQL, MySQL, S3, Slack, or any of <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">50+ integrations</Link>. Credentials are encrypted and injected at runtime.</span>,
 		image: '/img/money-pages/resource.webp',
 		docLink: '/docs/core_concepts/resources_and_types',
 	},
@@ -86,7 +86,7 @@ export default function ScriptsAndEndpointsContent({ title, description }) {
 						Deploy scripts as production endpoints
 					</h1>
 					<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-						Write a function, connect it to your services, deploy it, and get a production endpoint with built-in monitoring. No infra to manage.
+						Write a script, connect it to your ressources, deploy it, and get a production endpoint with built-in monitoring. No infra to manage.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4">
 						<a
@@ -108,11 +108,11 @@ export default function ScriptsAndEndpointsContent({ title, description }) {
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Write in <span className="text-blue-500">TypeScript, Python, Go, Bash</span> and 20+ languages</span>
+							<span><span className="text-blue-500">TypeScript, Python, Go, Bash</span> and 20+ languages</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Connect to <span className="text-blue-500">50+ integrations</span> — databases, APIs, SaaS tools</span>
+							<span><span className="text-blue-500">50+ integrations</span> with databases, APIs, SaaS tools</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
@@ -120,7 +120,7 @@ export default function ScriptsAndEndpointsContent({ title, description }) {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span><span className="text-blue-500">Full observability</span> — logs, execution history, audit trails</span>
+							<span><span className="text-blue-500">Full observability</span> with logs, execution history, audit trails</span>
 						</div>
 					</div>
 				</motion.div>
@@ -128,8 +128,8 @@ export default function ScriptsAndEndpointsContent({ title, description }) {
 				<div className="hidden md:block">
 					<BrowserOnly fallback={<div className="min-h-[540px]" />}>
 						{() => {
-							const HeroAnimation = require('../../landing/HeroAnimation').default;
-							return <HeroAnimation />;
+							const ScriptsEndpointsHeroAnimation = require('./ScriptsEndpointsHeroAnimation').default;
+							return <ScriptsEndpointsHeroAnimation />;
 						}}
 					</BrowserOnly>
 				</div>

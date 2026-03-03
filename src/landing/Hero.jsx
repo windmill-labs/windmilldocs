@@ -92,7 +92,7 @@ export default function Hero() {
 							Self-host in 3 mins <span aria-hidden="true">→</span>
 						</Link>
 					</div>
-					<CliSnippet />
+					{/* <CliSnippet /> */}
 				</div>
 				<div>
 					<div className="flex  justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">

@@ -109,8 +109,7 @@ export default function HeroExample() {
 								Learn Windmill's core features through hands-on video tutorials covering scripts, workflows, apps, and local dev.
 							</p>
 						</div>
-						<ProductionTabs tabs={defaultTabs} enableSubtitles={true} />
-						<div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 mt-6">
+						<div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
 							<div className="flex flex-col gap-2">
 								{videoTabs.map((tab, idx) => {
 									const Icon = tab.icon;
