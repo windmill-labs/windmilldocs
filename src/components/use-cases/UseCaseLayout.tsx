@@ -12,6 +12,7 @@ interface UseCaseData {
 	headline: string;
 	description: string;
 	link: string;
+	image?: string;
 }
 
 interface UseCaseLayoutProps {
@@ -45,6 +46,7 @@ export default function UseCaseLayout({ Content, frontMatter, useCaseData }: Use
 						priceCurrency: 'USD'
 					}
 				],
+				...(useCaseData.image ? { image: useCaseData.image } : {}),
 				publisher: {
 					'@type': 'Organization',
 					name: 'Windmill',
@@ -65,6 +67,7 @@ export default function UseCaseLayout({ Content, frontMatter, useCaseData }: Use
 					title={`${frontMatter.title} | Windmill`}
 					description={frontMatter.description}
 					url={pageUrl}
+					{...(useCaseData?.image ? { image: useCaseData.image } : {})}
 				/>
 				{pageSchema && (
 					<Head>

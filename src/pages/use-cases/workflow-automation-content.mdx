@@ -1,6 +1,6 @@
 ---
 title: "How to automate workflows with Windmill"
-description: "How do I automate workflows with Windmill? Build DAG-based flows with branching, loops, retries, approval steps and error handling in a visual editor or as code."
+description: "How do I automate production workflows? Windmill orchestrates DAG-based flows with branching, retries, approval steps, error handling and full audit trails at scale."
 ---
 
 import React, { useState } from 'react';
@@ -511,7 +511,7 @@ export default function WorkflowAutomationContent({ title, description }) {
 				{ question: 'Can I write workflow steps in different languages?', textAnswer: 'Yes. Each step in a Windmill flow can be written in a different language — TypeScript, Python, SQL, Go, Bash, Rust, PHP and more. Steps pass data to each other automatically. You can mix and match languages freely within a single workflow.' },
 				{ question: 'What triggers can start a workflow?', textAnswer: 'Windmill workflows can be triggered by cron schedules, webhooks, Slack commands, emails, Postgres CDC, Kafka topics, SQS queues, or manually from the UI. You can combine multiple trigger types on the same flow.' },
 				{ question: 'Does Windmill support approval steps and human-in-the-loop?', textAnswer: 'Yes. Approval steps suspend a workflow until a human approves or rejects via the UI, email or Slack. You can add approval gates at any point in a flow, with configurable timeouts and escalation logic.' },
-				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source (Apache 2.0) and can be self-hosted on your own infrastructure, from a single-node VPS to large Kubernetes clusters. The Community Edition is free. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source (AGPLv3) and can be self-hosted on your own infrastructure, from a single-node VPS to large Kubernetes clusters. The Community Edition is free. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
 			]} />
 
 			{/* CTA */}

@@ -5,5 +5,6 @@ export const workflowAutomationUseCase = {
 	description: 'Orchestrate multi-step processes across services with branching, retries and approval steps.',
 	icon: 'ArrowPathIcon',
 	link: '/use-cases/workflow-automation',
+	image: 'https://www.windmill.dev/img/money-pages/dag-workflow.webp',
 	released: true,
 };
