@@ -5,6 +5,6 @@ export const scriptsAndEndpointsUseCase = {
 	description: 'Turn any script into an API endpoint, webhook handler or cron job with zero boilerplate.',
 	icon: 'CodeBracketIcon',
 	link: '/use-cases/scripts-and-endpoints',
-	image: 'https://www.windmill.dev/img/money-pages/script-for-endpoint.png',
+	image: 'https://www.windmill.dev/img/money-pages/script-for-endpoint.webp',
 	released: true,
 };
