@@ -213,7 +213,7 @@ export default function DeveloperExperienceSection() {
 			<div className="w-full">
 				<div className="mb-12 text-left">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Built for production
+						Run in production
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
 						Git-based collaboration, auto-scaling infrastructure, and full observability. No DevOps glue required.

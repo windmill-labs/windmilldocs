@@ -171,10 +171,10 @@ function HomepageHeader() {
 			<div className="max-w-7xl mx-auto px-8 py-16">
 				<div className="mb-8">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Build
+						Build with code, without the overhead
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Build mission-critical internal tools and data pipelines that integrate directly with your existing stack and resources using code with a powerful WebIDE or locally using our CLI and your favorite editor and AI agent.
+						Build mission-critical internal tools and data pipelines that integrate directly with your existing stack and resources. Use Windmill's WebIDE or work locally with your favorite editor, CLI and AI agent.
 					</p>
 				</div>
 				<ProductionTabs tabs={defaultTabs} enableSubtitles={true} />
