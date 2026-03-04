@@ -182,7 +182,9 @@ function HomepageHeader() {
 						Build mission-critical internal tools and data pipelines that integrate directly with your existing stack and resources. Use Windmill's WebIDE or work locally with your favorite editor, CLI and AI agent.
 					</p>
 				</div>
-				<ProductionTabs tabs={defaultTabs} enableSubtitles={true} />
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
+					<ProductionTabs tabs={defaultTabs} enableSubtitles={true} />
+				</div>
 			</div>
 			<DeveloperExperienceSection />
 			<CorePrinciple />
