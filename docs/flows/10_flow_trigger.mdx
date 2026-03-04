@@ -8,6 +8,8 @@ import DocCard from '@site/src/components/DocCard';
 
 Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used as scheduled poll with [schedules](../core_concepts/1_scheduling/index.mdx) and [states](../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
 
+For more complex objects or when you need structured relational data instead of simple state tracking, consider using [Data tables](../core_concepts/11_persistent_storage/data_tables.mdx) which provide a workspace-scoped SQL database for storing and querying data.
+
 By default, adding a trigger will set the schedule to 15 minutes.
 
 :::info
@@ -21,6 +23,12 @@ Check our pages dedicated to [Scheduling](../core_concepts/1_scheduling/index.md
 		title="States"
 		description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
 		href="/docs/core_concepts/resources_and_types#states"
+		color="teal"
+	/>
+	<DocCard
+		title="Data tables"
+		description="Store and query relational data with near-zero setup using databases managed by Windmill."
+		href="/docs/core_concepts/persistent_storage/data_tables"
 		color="teal"
 	/>
 	<DocCard
