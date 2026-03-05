@@ -12,7 +12,8 @@ import {
 	GitBranch,
 	Bot,
 	Shield,
-	Activity
+	Activity,
+	BookOpen
 } from 'lucide-react';
 import LandingSection from './LandingSection';
 
@@ -247,7 +248,7 @@ function BoilerplateAnimation() {
 					transition={{ duration: 0.4 }}
 				>
 					<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
-					<span className="text-sm font-semibold text-gray-700 dark:text-gray-300">And provides all the platform layers</span>
+					<span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Windmill provides all the platform layers</span>
 				</motion.div>
 				<div className="p-6 flex flex-col gap-3">
 					{boilerplateLayers.map((layer, i) => {
@@ -275,6 +276,11 @@ function BoilerplateAnimation() {
 								{isOpen && (
 									<div className="px-4 pb-4 pt-0 ml-[44px]">
 										<p className="text-sm text-gray-600 dark:text-gray-300">{layer.expanded}</p>
+										{layer.docLink && (
+											<div className="flex justify-end mt-1.5">
+												<a href={layer.docLink} className="inline-flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:underline !no-underline hover:!underline"><BookOpen className="w-3.5 h-3.5" /> {layer.docLabel || 'Read the docs'}</a>
+											</div>
+										)}
 									</div>
 								)}
 							</motion.div>
