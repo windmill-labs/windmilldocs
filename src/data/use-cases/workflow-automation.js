@@ -1,6 +1,6 @@
 export const workflowAutomationUseCase = {
 	slug: 'workflow-automation',
-	name: 'Workflow automation',
+	name: 'Workflows',
 	headline: 'How to automate workflows with Windmill',
 	description: 'Orchestrate multi-step processes across services with branching, retries and approval steps.',
 	icon: 'ArrowPathIcon',

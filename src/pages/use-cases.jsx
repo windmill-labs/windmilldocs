@@ -64,7 +64,7 @@ export default function UseCasesPage() {
 		'@context': 'https://schema.org',
 		'@type': 'ItemList',
 		name: 'Windmill use cases',
-		description: 'Discover what you can build with Windmill: internal tools, workflow automation, data pipelines, AI agents and more.',
+		description: 'Discover what you can build with Windmill: internal tools, workflows, data pipelines, AI agents and more.',
 		itemListElement: releasedUseCases.map((uc, index) => ({
 			'@type': 'ListItem',
 			position: index + 1,
@@ -82,7 +82,7 @@ export default function UseCasesPage() {
 					<meta name="title" content="Windmill use cases" />
 					<meta
 						name="description"
-						content="Discover what you can build with Windmill: internal tools, workflow automation, data pipelines, AI agents and triggers."
+						content="Discover what you can build with Windmill: internal tools, workflows, data pipelines, AI agents and triggers."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 					<script type="application/ld+json">

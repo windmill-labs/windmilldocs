@@ -14,7 +14,7 @@ const allUseCases = [
 	{ label: 'Internal tools', subtitle: 'Build production-grade internal tools with backend scripts, data tables and React, Vue or Svelte frontends.', to: '/use-cases/internal-tools', cover: '/img/money-pages/frontend.webp' },
 	{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.webp' },
 	{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.webp' },
-	{ label: 'Workflow automation', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflow-automation', cover: '/img/money-pages/parallel-branches.webp' },
+	{ label: 'Workflows', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflow-automation', cover: '/img/money-pages/parallel-branches.webp' },
 	{ label: 'Triggers', subtitle: 'Trigger scripts and flows from schedules, webhooks, Kafka, Postgres, websockets, emails and more.', to: '/use-cases/triggers', cover: '/img/money-pages/cron-schedules-card.webp' },
 ];
 

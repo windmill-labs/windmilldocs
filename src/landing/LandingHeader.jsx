@@ -53,7 +53,7 @@ const solutionsByUseCase = [
 		icon: WrenchScrewdriverIcon,
 	},
 	{
-		name: 'Workflow automation',
+		name: 'Workflows',
 		description: 'Orchestrate multi-step processes across services.',
 		href: '/use-cases/workflow-automation',
 		icon: ArrowPathIcon,
