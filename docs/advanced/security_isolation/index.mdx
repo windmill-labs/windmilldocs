@@ -287,9 +287,11 @@ When `job_isolation` is set to `nsjail_sandboxing` but the NSJAIL binary is not 
 
 All language executors (Python, TypeScript/Bun, Deno, Go, Bash, Rust, C#, Java, Ansible, PHP, Ruby) respect this setting through a centralized `is_sandboxing_enabled()` check.
 
-### Per-script `#sandbox` bash annotation
+### Per-script sandbox annotation {#sandbox-annotation}
 
-For bash scripts, you can enable sandboxing on a per-script basis using the `#sandbox` annotation:
+You can enable nsjail sandboxing on a per-script basis using the `sandbox` annotation. This works for Python, TypeScript (Bun and Deno), and Bash scripts. When present, the script runs inside an nsjail sandbox even if sandboxing is not enabled globally.
+
+The script will fail with a clear error if nsjail is not available on the worker.
 
 ```bash
 #sandbox
@@ -297,9 +299,24 @@ For bash scripts, you can enable sandboxing on a per-script basis using the `#sa
 echo "This script runs inside an NSJAIL sandbox"
 ```
 
-When a bash script includes the `#sandbox` annotation, it will be executed inside an NSJAIL sandbox even if neither `job_isolation` nor `DISABLE_NSJAIL` enables sandboxing globally. The script will fail with an error if the NSJAIL binary is not available on the worker.
+```python
+# sandbox
+
+def main():
+    return "sandboxed Python"
+```
+
+```ts
+// sandbox
+
+export async function main() {
+  return "sandboxed TypeScript";
+}
+```
 
 The annotation is logged as "sandbox mode (nsjail)" in job execution logs.
+
+The `sandbox` annotation can be combined with [volume annotations](../../core_concepts/56_volumes/index.mdx) to run scripts with persistent file storage inside a sandbox.
 
 ## Recommended configurations
 
