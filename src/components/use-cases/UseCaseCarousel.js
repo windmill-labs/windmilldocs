@@ -16,7 +16,6 @@ const allUseCases = [
 	{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.webp' },
 	{ label: 'Workflow automation', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflow-automation', cover: '/img/money-pages/parallel-branches.webp' },
 	{ label: 'Triggers', subtitle: 'Trigger scripts and flows from schedules, webhooks, Kafka, Postgres, websockets, emails and more.', to: '/use-cases/triggers', cover: '/img/money-pages/cron-schedules-card.webp' },
-	{ label: 'Scripts & endpoints', subtitle: 'Deploy scripts as webhooks, APIs or scheduled jobs with auto-generated UIs and full execution history.', to: '/use-cases/scripts-and-endpoints', cover: '/img/money-pages/script-for-endpoint.webp' },
 ];
 
 export default function UseCaseCarousel({ current, subtitle }) {

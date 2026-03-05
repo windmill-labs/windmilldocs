@@ -65,12 +65,6 @@ const solutionsByUseCase = [
 		icon: CircleStackIcon,
 	},
 	{
-		name: 'Scripts & endpoints',
-		description: 'Deploy scripts as APIs or cron jobs instantly.',
-		href: '/use-cases/scripts-and-endpoints',
-		icon: CodeBracketIcon,
-	},
-	{
 		name: 'AI agents',
 		description: 'Build and orchestrate AI agents with tools.',
 		href: '/use-cases/ai-agents',
