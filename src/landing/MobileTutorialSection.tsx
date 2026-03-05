@@ -27,30 +27,6 @@ export default function MobileTutorialSection() {
 						<ProductionTabs tabs={defaultTabs} enableSubtitles={true} />
 					</div>
 				</div>
-
-				{/* Develop locally card - commented out
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl">
-					<a
-						href="/docs/advanced/local_development"
-						target="_blank"
-						className="group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer"
-					>
-						<div className="font-medium text-2xl mb-4 group-hover:ml-2 transition-all">
-							Full local dev experience
-						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all">
-							Develop in our cloud editor or locally via our CLI and VS Code extension. Leverage
-							AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync
-							pipelines across staging and production.
-						</div>
-						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all mb-4">
-							Set up local dev
-							<ArrowRight size={24} />
-						</div>
-					</a>
-					<Lottie lottieData={devfriendly} autoplay loop={true} />
-				</div>
-				*/}
 			</div>
 		</div>
 	);

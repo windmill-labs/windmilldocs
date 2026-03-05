@@ -21,6 +21,8 @@ import Head from '@docusaurus/Head';
 import MobileTutorialSection from '../landing/MobileTutorialSection';
 import DeveloperExperienceSection from '../landing/DeveloperExperienceSection';
 import ProductionTabs, { defaultTabs } from '../landing/components/ProductionTabs';
+import { Lottie } from '../landing/LightFeatureCard';
+import devfriendly from '/illustrations/devfriendly.json';
 
 
 const organizationSchema = {
@@ -64,16 +66,27 @@ function HomepageHeader() {
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
 					<ProductionTabs tabs={defaultTabs} enableSubtitles={true} />
 				</div>
+				<a href="/docs/advanced/local_development" className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl mt-8 grid grid-cols-1 md:grid-cols-5 gap-8 group !no-underline hover:text-current cursor-pointer">
+					<div className="col-span-2 flex flex-col justify-center">
+						<div className="font-medium text-2xl mb-4 text-gray-900 dark:text-white group-hover:ml-2 transition-all">
+							Full local dev experience
+						</div>
+						<div className="text-md mb-4 text-gray-700 dark:text-gray-300 group-hover:ml-2 transition-all max-w-sm">
+							Use Windmill locally via our CLI and VS Code extension. Leverage AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync pipelines across staging and production.
+						</div>
+						<div className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all">
+							Set up local dev
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+						</div>
+					</div>
+					<div className="col-span-3">
+						<Lottie lottieData={devfriendly} autoplay loop={true} />
+					</div>
+				</a>
 			</div>
 			<DeveloperExperienceSection />
 			<CorePrinciple />
 			<TestimonialsSection />
-			{/* <div className="hidden sm:block">
-				<TutorialSection subIndex={undefined} />
-			</div>
-			<div className="block sm:hidden">
-				<MobileTutorialSection />
-			</div> */}
 			<HeroExample />
 			<LandingSection bgClass="py-0">
 				<CallToAction />
