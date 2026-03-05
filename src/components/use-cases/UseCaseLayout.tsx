@@ -32,20 +32,10 @@ export default function UseCaseLayout({ Content, frontMatter, useCaseData }: Use
 	const pageSchema = useCaseData
 		? {
 				'@context': 'https://schema.org',
-				'@type': 'SoftwareApplication',
+				'@type': 'WebPage',
 				name: useCaseData.name,
 				headline: useCaseData.headline,
 				description: useCaseData.description,
-				applicationCategory: 'DeveloperApplication',
-				operatingSystem: 'Web',
-				offers: [
-					{
-						'@type': 'Offer',
-						name: 'Community Edition',
-						price: '0',
-						priceCurrency: 'USD'
-					}
-				],
 				...(useCaseData.image ? { image: useCaseData.image } : {}),
 				publisher: {
 					'@type': 'Organization',
