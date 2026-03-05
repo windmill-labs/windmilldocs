@@ -7,7 +7,7 @@ const USE_CASE_LABELS = {
 	'internal-tools': 'Internal tools',
 	'data-pipelines': 'Data pipelines',
 	'ai-agents': 'AI agents',
-	'scheduled-tasks': 'Scheduled tasks',
+	'triggers': 'Triggers',
 	'workflow-automation': 'Workflow automation',
 };
 

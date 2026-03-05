@@ -77,9 +77,9 @@ const solutionsByUseCase = [
 		icon: Bot,
 	},
 	{
-		name: 'Scheduled tasks',
-		description: 'Cron jobs, polling and background processing.',
-		href: '/use-cases/scheduled-tasks',
+		name: 'Triggers',
+		description: 'Schedules, webhooks, Kafka, Postgres and more.',
+		href: '/use-cases/triggers',
 		icon: ClockIcon,
 	},
 ];

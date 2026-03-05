@@ -82,7 +82,7 @@ export default function UseCasesPage() {
 					<meta name="title" content="Windmill use cases" />
 					<meta
 						name="description"
-						content="Discover what you can build with Windmill: internal tools, workflow automation, data pipelines, scripts and endpoints, AI agents and scheduled tasks."
+						content="Discover what you can build with Windmill: internal tools, workflow automation, data pipelines, scripts and endpoints, AI agents and triggers."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 					<script type="application/ld+json">

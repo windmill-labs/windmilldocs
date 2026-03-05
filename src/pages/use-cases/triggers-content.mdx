@@ -1,12 +1,12 @@
 ---
-title: "How to run scheduled tasks with Windmill"
-description: "How do I run scheduled tasks with Windmill? Cron jobs with a visual builder, execution history, error handlers, recovery handlers and alerting."
+title: "How to trigger scripts and flows with Windmill"
+description: "How do I trigger scripts and flows with Windmill? Schedules, webhooks, Kafka, Postgres, websockets, emails and more — with retries and alerting built in."
 ---
 
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2, BookOpen, RotateCcw, Code2, Rocket, Terminal, FolderPlus } from 'lucide-react';
+import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2, BookOpen, RotateCcw, Code, Code2, Plug, Globe, Rocket, Terminal, FolderPlus } from 'lucide-react';
 import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 import CodeBlock from '@theme/CodeBlock';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
@@ -30,13 +30,52 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
-export const scheduleFeatures = [
-	{ icon: Code2, title: 'Write in 20+ languages', desc: <span>Write a scheduled job as a simple script in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> or any supported language. Compose multiple steps into a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>. Windmill handles execution, isolation and dependency management.</span>, image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' },
-	{ icon: Calendar, title: 'Visual cron builder', desc: <span>Build <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">schedules</Link> with a visual editor supporting standard cron plus extended modifiers: nearest weekday (W), nth day-of-week (#), last day-of-month (L). No need to memorize cron syntax.</span>, image: '/img/money-pages/cron-schedule.webp', docLink: '/docs/core_concepts/scheduling' },
-	{ icon: Bell, title: 'Error handling & retries', desc: <span>Configure <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with constant or exponential backoff. Attach <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handler</Link> scripts that run on failure and recovery handlers that fire when a schedule succeeds again. Route alerts to Slack, Teams, email or any webhook.</span>, image: '/img/money-pages/error-handler.webp', docLink: '/docs/core_concepts/scheduling#error-handler' },
-	{ icon: Eye, title: 'Execution history', desc: <span>Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">logs</Link> and re-run with one click. Track resource usage, monitor <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> and set up alerts for failures.</span>, image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
-	{ icon: Terminal, title: 'Local development', desc: <span>Scheduled scripts are plain code files on disk. Write them with your favorite tools (VS Code, Cursor, Claude Code) and deploy with the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link>. Four commands from terminal to a running schedule.</span>, image: '/img/money-pages/local-schedule.webp', docLink: '/docs/advanced/local_development' },
-	{ icon: Rocket, title: 'Deploy in seconds', desc: <span>Pick a script or flow, set a cron schedule and activate. No infrastructure to configure. Deploy from the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> with your CI/CD pipeline.</span>, image: '/img/money-pages/deploy-schedule.webp', docLink: '/docs/advanced/deploy_to_prod' },
+export const journeyFeatures = [
+	{
+		id: 'write',
+		icon: Code,
+		label: '1. Write a script',
+		title: 'Write a script in any language',
+		desc: <span>Write a script in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, Bash, SQL</Link> or 20+ languages, from the Windmill UI or locally using the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>.</span>,
+		image: '/img/money-pages/script-for-endpoint.webp',
+		docLink: '/docs/script_editor',
+	},
+	{
+		id: 'connect',
+		icon: Plug,
+		label: '2. Connect resources',
+		title: 'Connect to databases and APIs',
+		desc: <span>Connect <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> like PostgreSQL, MySQL, S3, Slack, or any of <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">50+ integrations</Link>. Credentials are encrypted and injected at runtime.</span>,
+		image: '/img/money-pages/resource.webp',
+		docLink: '/docs/core_concepts/resources_and_types',
+	},
+	{
+		id: 'deploy',
+		icon: Rocket,
+		label: '3. Deploy',
+		title: 'Deploy from draft to production',
+		desc: <span>Go from <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">draft to deployed</Link> in one click. Every save creates an immutable version with diff history and instant rollback. Sync with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link> for CI/CD.</span>,
+		image: '/img/money-pages/deploy-workflow.webp',
+		docLink: '/docs/core_concepts/draft_and_deploy',
+	},
+	{
+		id: 'use',
+		icon: Globe,
+		label: '4. Use as endpoint',
+		title: 'Use as a webhook, API or scheduled job',
+		desc: <span>Every script gets a sync and async <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook</Link>. Add a <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedule</Link> or trigger from <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Kafka, SQS, Postgres CDC</Link> or any event source.</span>,
+		image: '/img/money-pages/triggers.webp',
+		docLink: '/docs/core_concepts/webhooks',
+	},
+	{
+		id: 'monitor',
+		icon: Eye,
+		label: '5. Monitor',
+		title: 'Full observability out of the box',
+		desc: <span>Every execution is logged with inputs, outputs, duration and status. Filter <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">runs</Link>, inspect logs, re-run with one click. Set up alerts on failures and view <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link>.</span>,
+		image: '/img/money-pages/monitoring.webp',
+		docLink: '/docs/core_concepts/jobs',
+	},
 ];
 
 
@@ -46,10 +85,10 @@ export function CaseStudyAndEmbed() {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="mb-12">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Schedules in production
+						Triggers in production
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						From synthetic monitoring to environment hydration, teams rely on Windmill schedules for their most critical recurring jobs.
+						From synthetic monitoring to environment hydration, teams rely on Windmill triggers for their most critical recurring jobs.
 					</p>
 				</motion.div>
 
@@ -58,13 +97,13 @@ export function CaseStudyAndEmbed() {
 						caseStudy={cfaInstituteCaseStudy}
 						title="How CFA Institute monitors production with scheduled synthetic tests"
 						description="CFA Institute runs 25 synthetic monitoring tests every 5 minutes on Windmill schedules, catching regressions before users do. Error handlers and recovery alerts keep the ops team informed in real time."
-						from="scheduled-tasks"
+						from="triggers"
 					/>
 					<CaseStudyCard
 						caseStudy={zoomCaseStudy}
 						title="How Zoom hydrates demo environments with scheduled flows"
 						description="Zoom's demo platform uses Windmill schedules to hydrate and refresh demo environments for 400+ solution engineers. Scheduled flows provision infrastructure, seed data and keep environments ready around the clock."
-						from="scheduled-tasks"
+						from="triggers"
 					/>
 				</div>
 			</div>
@@ -82,10 +121,10 @@ export default function ScheduledTasksContent({ title, description }) {
 					<motion.div {...fadeIn}>
 						<div className="mb-4"><GithubStarCount /></div>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Schedule your most critical tasks with confidence
+							Trigger your most critical tasks with confidence
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							For ops and engineering teams who run critical scheduled jobs. Define schedules for any workflow with error handlers and recovery logic powered by Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-400 hover:underline !no-underline">workflow engine</Link>.
+							For ops and engineering teams who run critical jobs. Trigger any script or workflow from schedules, webhooks, Kafka, Postgres, websockets and more — with error handlers and recovery logic powered by Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-400 hover:underline !no-underline">workflow engine</Link>.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -107,7 +146,7 @@ export default function ScheduledTasksContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Run scheduled scripts in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">Python, TypeScript, SQL, Go, Bash</Link> or <Link to="/use-cases/data-pipelines" className="text-blue-500 hover:underline !no-underline">full workflows</Link></span>
+								<span>Trigger scripts in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">Python, TypeScript, SQL, Go, Bash</Link> or <Link to="/use-cases/data-pipelines" className="text-blue-500 hover:underline !no-underline">full workflows</Link></span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
@@ -248,14 +287,14 @@ export default function ScheduledTasksContent({ title, description }) {
 						From single scripts to complex data pipelines
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Schedule anything: a simple <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">script</Link> that runs in seconds or a <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">multi-step pipeline</Link> with branching, loops and error handling. Same platform, same reliability.</p>
+						Trigger anything: a simple <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">script</Link> that runs in seconds or a <Link to="/use-cases/data-pipelines" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">multi-step pipeline</Link> with branching, loops and error handling. Same platform, same reliability.</p>
 				</motion.div>
 
 				{/* Two columns */}
 				<div className="flex flex-col md:flex-row gap-6 items-center md:min-h-[600px]">
 					{[
-						{ key: 'script', title: 'Schedule scripts', desc: 'Write scripts in 20+ languages and run them on cron schedules', img: '/img/money-pages/scripts-preview.webp', alt: 'Single scheduled script with execution history' },
-						{ key: 'flow', title: 'Schedule multi-step workflows', desc: 'Build multi-step DAG pipelines and run them on cron schedules', img: '/img/money-pages/flow-preview.webp', alt: 'Data pipeline DAG with parallel branches' },
+						{ key: 'script', title: 'Trigger scripts', desc: 'Write scripts in 20+ languages and trigger them from schedules, webhooks, Kafka and more', img: '/img/money-pages/scripts-preview.webp', alt: 'Script triggered with execution history' },
+						{ key: 'flow', title: 'Trigger multi-step workflows', desc: 'Build multi-step DAG pipelines and trigger them from any event source', img: '/img/money-pages/flow-preview.webp', alt: 'Data pipeline DAG with parallel branches' },
 					].map((card) => (
 						<button
 							key={card.key}
@@ -284,40 +323,40 @@ export default function ScheduledTasksContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* Features — interactive tab layout */}
+			{/* Journey: Write → Connect → Deploy → Use → Monitor */}
 			<TabFeatureSection
-				title="Built for production scheduling"
-				subtitle={<>Every schedule is backed by Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">workflow engine</Link> with error handling, retries, observability and access controls built in.</>}
-				features={scheduleFeatures}
+				title="From script to production endpoint in 5 steps"
+				subtitle={<>Write a function in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any language</Link>, connect it to your <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>, deploy it, expose it as a <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook</Link> or <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">scheduled job</Link>, and monitor every execution.</>}
+				features={journeyFeatures}
 			/>
 
 
-			{/* Case study + embedded schedule */}
+			{/* Case study + embedded trigger */}
 			<CaseStudyAndEmbed />
 
 			{/* More use cases */}
 			<div className="">
 			<UseCaseCarousel
-				current="scheduled-tasks"
-				subtitle="Scheduled tasks are just one use case. The same platform powers internal tools, data pipelines, AI agents and workflow automations."
+				current="triggers"
+				subtitle="Triggers are just one use case. The same platform powers internal tools, data pipelines, AI agents and workflow automations."
 			/>
 			</div>
 
 			{/* FAQ */}
 			<div>
 			<UseCaseFAQ faqs={[
-				{ question: 'What scheduling syntax does Windmill support?', textAnswer: 'Windmill supports standard cron expressions (6 fields including seconds) plus extended modifiers like nearest weekday (W), nth day-of-week (#), and last day-of-month (L). You can also use the visual cron builder to create schedules without memorizing cron syntax.' },
-				{ question: 'Can I monitor and retry failed scheduled jobs?', textAnswer: 'Yes. Every run is logged with inputs, outputs, duration and status. You can configure automatic retries with constant or exponential backoff, attach error handler scripts that run on failure, and recovery handlers that fire when a schedule succeeds again. Alerts can be routed to Slack, Teams, email or any webhook.' },
-				{ question: 'How does Windmill compare to cron on a server?', textAnswer: 'Windmill schedules run on managed infrastructure with built-in logging, error handling, retries, alerting and a visual UI. Unlike raw cron, you get execution history, permission controls, and the ability to trigger the same scripts from other events like webhooks or Kafka.' },
-				{ question: 'Can I schedule flows (multi-step pipelines)?', textAnswer: 'Yes. Anything that can be triggered manually in Windmill — scripts and flows — can be scheduled. Flows let you chain multiple steps with branching, loops, error handling and approval steps, all on a cron schedule.' },
-				{ question: 'Is Windmill scheduling free?', textAnswer: 'Windmill Community Edition is free and open-source with unlimited schedules. The Pro and Enterprise plans add features like audit logs, SAML SSO, priority support and more workers.' },
+				{ question: 'What trigger types does Windmill support?', textAnswer: 'Windmill supports standard cron expressions (6 fields including seconds) plus extended modifiers like nearest weekday (W), nth day-of-week (#), and last day-of-month (L). You can also use the visual cron builder to create schedules without memorizing cron syntax.' },
+				{ question: 'Can I monitor and retry failed triggered jobs?', textAnswer: 'Yes. Every run is logged with inputs, outputs, duration and status. You can configure automatic retries with constant or exponential backoff, attach error handler scripts that run on failure, and recovery handlers that fire when a trigger succeeds again. Alerts can be routed to Slack, Teams, email or any webhook.' },
+				{ question: 'How does Windmill compare to cron on a server?', textAnswer: 'Windmill triggers run on managed infrastructure with built-in logging, error handling, retries, alerting and a visual UI. Unlike raw cron, you get execution history, permission controls, and the ability to trigger the same scripts from other events like webhooks or Kafka.' },
+				{ question: 'Can I trigger flows (multi-step pipelines)?', textAnswer: 'Yes. Anything that can be triggered manually in Windmill — scripts and flows — can be triggered. Flows let you chain multiple steps with branching, loops, error handling and approval steps, all from any trigger source.' },
+				{ question: 'Are Windmill triggers free?', textAnswer: 'Windmill Community Edition is free and open-source with unlimited triggers. The Pro and Enterprise plans add features like audit logs, SAML SSO, priority support and more workers.' },
 			]} />
 			</div>
 
 			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
-					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start scheduling tasks today</h2>
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start triggering tasks today</h2>
 					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
 						Get started for free on Windmill Cloud or <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">self-host</Link> the open-source version.
 					</p>
