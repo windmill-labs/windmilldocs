@@ -386,6 +386,7 @@ const sidebars = {
 					]
 				},
 				'core_concepts/object_storage_in_windmill/index',
+				'core_concepts/volumes/index',
 				'core_concepts/custom_instance_database/index',
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
@@ -408,6 +409,7 @@ const sidebars = {
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
 				'core_concepts/ai_agents/index',
+				'core_concepts/ai_sandbox/index',
 				'core_concepts/workspace_dependencies/index',
 				'core_concepts/workspace_settings/index',
 				'core_concepts/streaming/index',
