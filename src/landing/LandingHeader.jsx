@@ -47,10 +47,10 @@ const products = [
 
 const solutionsByUseCase = [
 	{
-		name: 'Internal tools',
-		description: 'Build admin panels, dashboards and back-office apps.',
-		href: '/use-cases/internal-tools',
-		icon: WrenchScrewdriverIcon,
+		name: 'AI agents',
+		description: 'Build and orchestrate AI agents with tools.',
+		href: '/use-cases/ai-agents',
+		icon: Bot,
 	},
 	{
 		name: 'Workflows',
@@ -59,16 +59,16 @@ const solutionsByUseCase = [
 		icon: ArrowPathIcon,
 	},
 	{
+		name: 'Internal tools',
+		description: 'Build admin panels, dashboards and back-office apps.',
+		href: '/use-cases/internal-tools',
+		icon: WrenchScrewdriverIcon,
+	},
+	{
 		name: 'Data pipelines',
 		description: 'ETL, syncs and scheduled data jobs.',
 		href: '/use-cases/data-pipelines',
 		icon: CircleStackIcon,
-	},
-	{
-		name: 'AI agents',
-		description: 'Build and orchestrate AI agents with tools.',
-		href: '/use-cases/ai-agents',
-		icon: Bot,
 	},
 	{
 		name: 'Triggers',
