@@ -249,15 +249,15 @@ export default function TutorialSection({ subIndex, children }) {
 			href: '/docs/intro',
 			lottieData: devfriendly
 		},
-		// {
-		// 	title: 'Full local dev experience',
-		// 	description:
-		// 		'Use Windmill locally via our CLI and VS Code extension. Leverage AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync pipelines across staging and production.',
-		// 	href: '/docs/advanced/local_development',
-		// 	actionText: 'Set up local dev',
-		// 	lottieData: devfriendly,
-		// 	youtubeUrl: 'https://www.youtube.com/watch?v=sxNW_6J4RG8'
-		// }
+		{
+		 	title: 'Full local dev experience',
+		 	description:
+		 		'Use Windmill locally via our CLI and VS Code extension. Leverage AI-assisted rules for Cursor and Claude, and deploy through automated Git-sync pipelines across staging and production.',
+		 	href: '/docs/advanced/local_development',
+		 	actionText: 'Set up local dev',
+		 	lottieData: devfriendly,
+		 	youtubeUrl: 'https://www.youtube.com/watch?v=sxNW_6J4RG8'
+		 }
 	];
 
 	const ArrowSeparator = () => (
