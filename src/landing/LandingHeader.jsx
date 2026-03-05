@@ -25,7 +25,7 @@ import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
 import {
 	Bot, Landmark, HeartPulse,
-	Code, GitFork, Plug, BrainCircuit,
+	Code, GitFork, Plug, Bot as BotIcon,
 	Cpu, LayoutDashboard, Container, GitBranch,
 	Activity, ShieldCheck,
 } from 'lucide-react';
@@ -56,9 +56,9 @@ const productCategories = [
 			},
 			{
 				name: 'AI',
-				description: 'AI-assisted development and code generation.',
+				description: 'Generate and iterate on code with AI assistance.',
 				href: '/product/ai',
-				icon: BrainCircuit,
+				icon: BotIcon,
 			},
 		],
 	},
@@ -67,25 +67,25 @@ const productCategories = [
 		items: [
 			{
 				name: 'Workers',
-				description: 'Scalable compute with worker groups and auto-scaling.',
+				description: 'Run backend logic on scalable worker groups.',
 				href: '/product/workers',
 				icon: Cpu,
 			},
 			{
 				name: 'Frontend',
-				description: 'Drag-and-drop app builder powered by your scripts.',
+				description: 'Connect backend logic to React & Svelte frontends.',
 				href: '/product/frontend',
 				icon: LayoutDashboard,
 			},
 			{
 				name: 'Sandboxes',
-				description: 'Isolated environments for AI agents with predefined tools.',
+				description: 'Run AI agents in isolated environments with predefined tools.',
 				href: '/product/sandboxes',
 				icon: Container,
 			},
 			{
 				name: 'Versioning',
-				description: 'Git sync, staging workspaces and CI/CD.',
+				description: 'Sync with Git, stage workspaces and deploy via CI/CD.',
 				href: '/product/versioning',
 				icon: GitBranch,
 			},
@@ -96,13 +96,13 @@ const productCategories = [
 		items: [
 			{
 				name: 'Observability',
-				description: 'Real-time logs, metrics and alerting.',
+				description: 'Monitor logs, metrics and alerts in real time.',
 				href: '/product/observability',
 				icon: Activity,
 			},
 			{
 				name: 'Security & governance',
-				description: 'RBAC, audit logs, secrets and compliance controls.',
+				description: 'Enforce RBAC, audit logs, secrets and compliance controls.',
 				href: '/product/security-governance',
 				icon: ShieldCheck,
 			},
