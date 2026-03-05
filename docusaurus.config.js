@@ -139,6 +139,23 @@ const config = {
 				},
 				items: [
 					{
+						type: 'dropdown',
+						label: 'Products',
+						position: 'left',
+						items: [
+							{ label: 'Script editor', href: '/product/script-editor' },
+							{ label: 'Workflow engine', href: '/product/workflow-engine' },
+							{ label: 'Integrations', href: '/product/integrations' },
+							{ label: 'AI', href: '/product/ai' },
+							{ label: 'Workers', href: '/product/workers' },
+							{ label: 'Frontend', href: '/product/frontend' },
+							{ label: 'Sandboxes', href: '/product/sandboxes' },
+							{ label: 'Versioning', href: '/product/versioning' },
+							{ label: 'Observability', href: '/product/observability' },
+							{ label: 'Security & governance', href: '/product/security-governance' },
+						]
+					},
+					{
 						href: '/pricing',
 						position: 'left',
 						label: 'Pricing'

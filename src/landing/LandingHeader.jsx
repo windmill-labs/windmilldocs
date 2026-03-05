@@ -23,26 +23,91 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
-import { Bot, Landmark, HeartPulse } from 'lucide-react';
+import {
+	Bot, Landmark, HeartPulse,
+	Code, GitFork, Plug, BrainCircuit,
+	Cpu, LayoutDashboard, Container, GitBranch,
+	Activity, ShieldCheck,
+} from 'lucide-react';
 import Banner from './Banner';
 import Link from '@docusaurus/Link';
 
-const products = [
+const productCategories = [
 	{
-		name: 'Scripts',
-		description: 'Code to production in minutes.',
-		href: '/scripts'
+		title: 'Build',
+		items: [
+			{
+				name: 'Script editor',
+				description: 'Write scripts in TypeScript, Python, Go, Bash or SQL.',
+				href: '/product/script-editor',
+				icon: Code,
+			},
+			{
+				name: 'Workflow engine',
+				description: 'Connect scripts into flows with no glue code.',
+				href: '/product/workflow-engine',
+				icon: GitFork,
+			},
+			{
+				name: 'Integrations',
+				description: 'Connect to any API, database or service.',
+				href: '/product/integrations',
+				icon: Plug,
+			},
+			{
+				name: 'AI',
+				description: 'AI-assisted development and code generation.',
+				href: '/product/ai',
+				icon: BrainCircuit,
+			},
+		],
 	},
 	{
-		name: 'Flows',
-		description: 'Build complex flows without complexity.',
-		href: '/flows'
+		title: 'Deploy',
+		items: [
+			{
+				name: 'Workers',
+				description: 'Scalable compute with worker groups and auto-scaling.',
+				href: '/product/workers',
+				icon: Cpu,
+			},
+			{
+				name: 'Frontend',
+				description: 'Drag-and-drop app builder powered by your scripts.',
+				href: '/product/frontend',
+				icon: LayoutDashboard,
+			},
+			{
+				name: 'Sandboxes',
+				description: 'Isolated environments for AI agents with predefined tools.',
+				href: '/product/sandboxes',
+				icon: Container,
+			},
+			{
+				name: 'Versioning',
+				description: 'Git sync, staging workspaces and CI/CD.',
+				href: '/product/versioning',
+				icon: GitBranch,
+			},
+		],
 	},
 	{
-		name: 'Apps',
-		description: 'Build super fast and powerful apps using drag-and-drop.',
-		href: '/apps'
-	}
+		title: 'Monitor',
+		items: [
+			{
+				name: 'Observability',
+				description: 'Real-time logs, metrics and alerting.',
+				href: '/product/observability',
+				icon: Activity,
+			},
+			{
+				name: 'Security & governance',
+				description: 'RBAC, audit logs, secrets and compliance controls.',
+				href: '/product/security-governance',
+				icon: ShieldCheck,
+			},
+		],
+	},
 ];
 
 const solutionsByUseCase = [
@@ -170,6 +235,72 @@ export default function LandingHeader() {
 					</Link>
 					
 					<Popover.Group as="nav" className="hidden space-x-8 lg:space-x-10 md:flex min-w-0 grow">
+						<Popover className="relative">
+							{({ open }) => (
+								<>
+									<Popover.Button
+										className={classNames(
+											open ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500',
+											'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-offset-1 dark:focus:ring-offset-gray-800 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300'
+										)}
+									>
+										<span>Products</span>
+										<ChevronDownIcon
+											className={classNames(
+												open ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400',
+												'ml-2 h-5 w-5 group-hover:text-gray-500 dark:group-hover:text-gray-300'
+											)}
+											aria-hidden="true"
+										/>
+									</Popover.Button>
+
+									<Transition
+										as={Fragment}
+										enter="transition ease-out duration-200"
+										enterFrom="opacity-0 translate-y-1"
+										enterTo="opacity-100 translate-y-0"
+										leave="transition ease-in duration-150"
+										leaveFrom="opacity-100 translate-y-0"
+										leaveTo="opacity-0 translate-y-1"
+									>
+										<Popover.Panel className="absolute left-0 z-10 mt-3 w-screen max-w-2xl transform px-2 sm:px-0">
+											<div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
+												<div className="bg-white dark:bg-gray-800 p-6">
+													<div className="grid grid-cols-3 gap-6">
+														{productCategories.map((category) => (
+															<div key={category.title}>
+																<p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2 px-3">
+																	{category.title}
+																</p>
+																<div className="space-y-1">
+																	{category.items.map((item) => (
+																		<Link
+																			key={item.name}
+																			to={item.href}
+																			className="group flex items-start gap-3 rounded-lg px-3 py-2.5 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
+																		>
+																			<item.icon className="h-5 w-5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" />
+																			<div>
+																				<p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+																					{item.name}
+																				</p>
+																				<p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+																					{item.description}
+																				</p>
+																			</div>
+																		</Link>
+																	))}
+																</div>
+															</div>
+														))}
+													</div>
+												</div>
+											</div>
+										</Popover.Panel>
+									</Transition>
+								</>
+							)}
+						</Popover>
 						<Popover className="relative">
 							{({ open }) => (
 								<>
@@ -436,6 +567,28 @@ export default function LandingHeader() {
 										>
 											{resource.name}
 										</a>
+									))}
+								</div>
+
+								{/* Products section in mobile menu */}
+								<div className="md:hidden mt-4 space-y-4">
+									{productCategories.map((category) => (
+										<div key={category.title}>
+											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
+												{category.title}
+											</div>
+											<div className="grid grid-cols-2 gap-2">
+												{category.items.map((item) => (
+													<a
+														key={item.name}
+														href={item.href}
+														className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+													>
+														{item.name}
+													</a>
+												))}
+											</div>
+										</div>
 									))}
 								</div>
 
