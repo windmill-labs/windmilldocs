@@ -12,7 +12,7 @@ const USE_CASES = [
 	{ id: 'endpoint', icon: Zap, label: 'Triggers', duration: 2200 },
 ];
 
-// ─── Shared DAG node component (light theme, matching workflow-automation) ───
+// ─── Shared DAG node component (light theme, matching workflows) ───
 
 const NODE_W = 160;
 const NODE_H = 34;

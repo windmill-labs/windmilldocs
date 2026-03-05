@@ -1,5 +1,5 @@
 import { internalToolsUseCase } from './internal-tools';
-import { workflowAutomationUseCase } from './workflow-automation';
+import { workflowAutomationUseCase } from './workflows';
 import { dataPipelinesUseCase } from './data-pipelines';
 import { aiAgentsUseCase } from './ai-agents';
 import { triggersUseCase } from './triggers';
