@@ -1,15 +1,14 @@
 // Build
 export { scriptEditorProduct } from './script-editor';
-export { workflowEngineProduct } from './workflow-engine';
-export { integrationsProduct } from './integrations';
+export { workflowEditorProduct } from './workflow-editor';
+export { frontendBuilderProduct } from './frontend-builder';
 export { aiProduct } from './ai';
-
-// Deploy
-export { workersProduct } from './workers';
-export { frontendProduct } from './frontend';
-export { sandboxesProduct } from './sandboxes';
 export { versioningProduct } from './versioning';
+export { localDevProduct } from './local-dev';
 
-// Monitor
+// Run
 export { observabilityProduct } from './observability';
-export { securityGovernanceProduct } from './security-governance';
+export { rbacProduct } from './rbac';
+export { sandboxesProduct } from './sandboxes';
+export { scaleProduct } from './scale';
+export { selfHostProduct } from './self-host';
