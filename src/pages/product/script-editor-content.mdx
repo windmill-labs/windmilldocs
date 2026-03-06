@@ -6,7 +6,7 @@ description: "How do I write scripts in Windmill? Write a function, get an auto-
 import React, { useState, useEffect, useRef } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Code2, Terminal, FileCode, Play, BookOpen, Clock, Globe, Lock, Layers, GitBranch, Puzzle, Braces, Package, Webhook, CalendarClock, History, KeyRound, Cpu, ChevronDown, ScrollText, AlertTriangle, Shield, Activity } from 'lucide-react';
+import { ArrowRight, Code2, Terminal, FileCode, Play, BookOpen, Clock, Globe, Lock, Layers, GitBranch, Puzzle, Braces, Package, Webhook, CalendarClock, History, KeyRound, ChevronDown } from 'lucide-react';
 import {
 	SiTypescript, SiPython, SiGo, SiGnubash, SiGraphql, SiPhp, SiRust, SiDocker,
 	SiCsharp, SiRuby, SiAnsible, SiPowershell, SiOracle, SiDeno
@@ -477,37 +477,88 @@ export const iconColors = {
 	'rest': '#3B82F6', 'nu': '#3AA675',
 };
 
+export const PRIMARY_LANG_COUNT = 9;
+
 export function LanguageShowcase() {
 	const [active, setActive] = useState(0);
+	const [moreOpen, setMoreOpen] = useState(false);
+	const moreRef = useRef(null);
 	const lang = languages[active];
+
+	const primaryLangs = languages.slice(0, PRIMARY_LANG_COUNT);
+	const overflowLangs = languages.slice(PRIMARY_LANG_COUNT);
+	const activeInOverflow = active >= PRIMARY_LANG_COUNT;
+
+	useEffect(() => {
+		if (!moreOpen) return;
+		function handleClick(e) {
+			if (moreRef.current && !moreRef.current.contains(e.target)) setMoreOpen(false);
+		}
+		document.addEventListener('mousedown', handleClick);
+		return () => document.removeEventListener('mousedown', handleClick);
+	}, [moreOpen]);
+
+	const LangButton = ({ l, i, small }) => (
+		<button
+			key={l.id}
+			onClick={() => { setActive(i); setMoreOpen(false); }}
+			className={`group flex ${small ? 'flex-row items-center gap-2 px-3 py-2 rounded-lg w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700' : 'flex-col items-center gap-2'} transition-all duration-200 ${
+				i === active ? 'opacity-100' : 'opacity-50 hover:opacity-80'
+			}`}
+		>
+			<div className={`${small ? 'w-8 h-8' : 'w-12 h-12 sm:w-14 sm:h-14'} rounded-xl flex items-center justify-center transition-all duration-200 ${
+				i === active
+					? 'bg-white dark:bg-gray-800 shadow-lg ring-2 ring-blue-500 dark:ring-blue-400'
+					: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
+			}`}>
+				{l.logo ? (
+					<img src={l.logo} alt="" className={`${small ? 'w-4 h-4' : 'w-6 h-6'} object-contain`} />
+				) : l.icon ? (
+					<l.icon className={`${small ? 'w-4 h-4' : 'w-6 h-6'}`} style={{ color: iconColors[l.id] || '#3B82F6' }} />
+				) : null}
+			</div>
+			<span className={`${small ? 'text-xs' : 'text-[11px]'} font-medium whitespace-nowrap ${
+				i === active ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'
+			}`}>{l.label}</span>
+		</button>
+	);
+
 	return (
 		<div className="flex flex-col items-center">
 			{/* Icon carousel */}
-			<div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 mb-8 justify-items-center">
-				{languages.map((l, i) => (
-					<button
-						key={l.id}
-						onClick={() => setActive(i)}
-						className={`group flex flex-col items-center gap-2 transition-all duration-200 ${
-							i === active ? 'opacity-100' : 'opacity-50 hover:opacity-80'
-						}`}
-					>
-						<div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-200 ${
-							i === active
-								? 'bg-white dark:bg-gray-800 shadow-lg ring-2 ring-blue-500 dark:ring-blue-400'
-								: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
-						}`}>
-							{l.logo ? (
-								<img src={l.logo} alt="" className="w-6 h-6 object-contain" />
-							) : l.icon ? (
-								<l.icon className="w-6 h-6" style={{ color: iconColors[l.id] || '#3B82F6' }} />
-							) : null}
-						</div>
-						<span className={`text-[11px] font-medium whitespace-nowrap ${
-							i === active ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'
-						}`}>{l.label}</span>
-					</button>
+			<div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 items-start">
+				{primaryLangs.map((l, i) => (
+					<LangButton key={l.id} l={l} i={i} />
 				))}
+				{/* More dropdown */}
+				{overflowLangs.length > 0 && (
+					<div className="relative" ref={moreRef}>
+						<button
+							onClick={() => setMoreOpen(!moreOpen)}
+							className={`group flex flex-col items-center gap-2 transition-all duration-200 ${
+								activeInOverflow ? 'opacity-100' : 'opacity-50 hover:opacity-80'
+							}`}
+						>
+							<div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-200 ${
+								activeInOverflow
+									? 'bg-white dark:bg-gray-800 shadow-lg ring-2 ring-blue-500 dark:ring-blue-400'
+									: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
+							}`}>
+								<ChevronDown className={`w-5 h-5 transition-transform ${moreOpen ? 'rotate-180' : ''} ${activeInOverflow ? 'text-blue-500' : 'text-gray-400'}`} />
+							</div>
+							<span className={`text-[11px] font-medium whitespace-nowrap ${
+								activeInOverflow ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'
+							}`}>+{overflowLangs.length} more</span>
+						</button>
+						{moreOpen && (
+							<div className="absolute top-full mt-2 right-0 z-50 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 min-w-[200px] max-h-[300px] overflow-y-auto">
+								{overflowLangs.map((l, i) => (
+									<LangButton key={l.id} l={l} i={i + PRIMARY_LANG_COUNT} small />
+								))}
+							</div>
+						)}
+					</div>
+				)}
 			</div>
 
 			{/* Code block */}
@@ -555,7 +606,7 @@ export function LanguageShowcase() {
 
 {/* ── Code editor with tab bar ── */}
 
-export const primaryLangIds = ['typescript-bun', 'python', 'go', 'bash', 'postgresql', 'rest', 'php', 'rust', 'docker', 'ruby', 'java'];
+export const primaryLangIds = ['typescript-bun', 'python', 'go', 'bash', 'postgresql', 'rest', 'php', 'rust', 'docker'];
 
 export function CodeEditor() {
 	const primaryLangs = primaryLangIds.map(id => languages.find(l => l.id === id));
@@ -692,14 +743,6 @@ export const coreFeatures = [
 		showTriggerGrid: true,
 	},
 	{
-		icon: History,
-		title: 'Versioning that stays out of your way',
-		subtitle: 'Every save is a new immutable version. Nothing is ever lost.',
-		desc: <span>Scripts are never overwritten. Each save creates a new <Link to="/docs/core_concepts/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">version with a unique hash</Link> — like a git commit SHA. Previous versions stay deployed and accessible. Fork any prior version, revert in one click, or pin integrations to a specific hash while the path URL always routes to the latest.</span>,
-		image: '/img/money-pages/deployment-history.webp',
-		docLink: '/docs/core_concepts/versioning',
-	},
-	{
 		icon: KeyRound,
 		title: 'Credentials and config, inline',
 		subtitle: 'Secrets resolved at runtime. Never exposed in code.',
@@ -708,74 +751,15 @@ export const coreFeatures = [
 		docLink: '/docs/core_concepts/resources_and_types',
 	},
 	{
-		icon: Cpu,
-		title: 'Five layers of monitoring, built in',
-		subtitle: 'From live logs to OpenTelemetry traces — every execution is observable.',
-		desc: <span>Every <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">job</Link> is tracked end-to-end. No external tooling required to get full visibility into what ran, when, why it failed, and who triggered it.</span>,
-		docLink: '/docs/core_concepts/monitor_past_and_future_runs',
-		showMonitoringGrid: true,
+		icon: Play,
+		title: 'Deploy in one click, share with your whole team',
+		subtitle: 'From draft to production in a single action.',
+		desc: <span>Hit deploy and your script is immediately available to every member of the <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">workspace</Link> — with its auto-generated UI, webhook endpoints, and scheduling options all live at once. Permissions follow folder-level access controls, so you decide who can view, edit, or execute. No deployment pipeline to configure, no staging environment to manage. Write a function, deploy it, and your teammates can run it from the UI without touching code.</span>,
+		image: '/img/money-pages/scripts-preview.webp',
+		docLink: '/docs/core_concepts/draft_and_deploy',
 	},
 ];
 
-export const monitoringLayers = [
-	{ icon: ScrollText, label: 'Real-time logs', desc: 'Every job streams stdout and stderr live to the UI while it executes. Watch output appear line by line — no SSH, no log files, no external collector.', link: '/docs/core_concepts/jobs', image: '/img/money-pages/monitoring.webp' },
-	{ icon: Braces, label: 'Structured results', desc: 'Each completed job stores its JSON result, input arguments, execution duration, worker ID, and memory usage. Results are queryable via the API and displayable in apps.', link: '/docs/core_concepts/jobs#result', image: '/img/money-pages/monitoring.webp' },
-	{ icon: History, label: 'Runs page', desc: 'A unified view of all past and scheduled runs. Filter by datetime, user, path, worker, status, or concurrency key. Visualize success/failure as a time series with duration or concurrency graphs.', link: '/docs/core_concepts/monitor_past_and_future_runs', image: '/img/money-pages/monitoring.webp' },
-	{ icon: AlertTriangle, label: 'Error handlers', desc: 'Attach error handlers at the schedule, flow, or workspace level. Built-in handlers for Slack, Microsoft Teams, and email. Or write a custom script that receives the failed job metadata and routes alerts however you want.', link: '/docs/core_concepts/error_handling', image: '/img/money-pages/error-handler.webp' },
-	{ icon: Shield, label: 'Audit logs', desc: 'Every side-effect operation — create, update, delete, execute — is recorded with the user, timestamp, and operation details. Filter by action type, user, or date range. Enterprise only.', link: '/docs/core_concepts/audit_logs', image: '/img/money-pages/auditlogs.webp' },
-	{ icon: Activity, label: 'OpenTelemetry', desc: 'Export traces, spans, and metrics to Jaeger, Grafana Tempo, Datadog, or any OTEL-compatible backend. Each job becomes a span with full context for centralized observability.', link: '/docs/misc/guides/otel', image: '/img/money-pages/monitoring.webp' },
-];
-
-export function MonitoringTabs() {
-	const [active, setActive] = useState(0);
-	const layer = monitoringLayers[active];
-	return (
-		<div className="mt-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
-			{/* Tab bar */}
-			<div className="flex flex-wrap gap-1 p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
-				{monitoringLayers.map((l, i) => {
-					const Icon = l.icon;
-					return (
-						<button
-							key={l.label}
-							onClick={() => setActive(i)}
-							className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap ${
-								i === active
-									? 'bg-blue-600 text-white'
-									: 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-							}`}
-						>
-							<Icon className="w-3.5 h-3.5" /> {l.label}
-						</button>
-					);
-				})}
-			</div>
-			{/* Content */}
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
-				<div className="flex flex-col justify-center">
-					<div className="flex items-center gap-2 mb-3">
-						<layer.icon className="w-5 h-5 text-blue-500" />
-						<h4 className="text-lg font-semibold text-gray-900 dark:text-white">{layer.label}</h4>
-					</div>
-					<p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4">{layer.desc}</p>
-					<Link
-						to={layer.link}
-						className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline w-fit"
-					>
-						<BookOpen className="w-3.5 h-3.5" /> Read the docs
-					</Link>
-				</div>
-				<div>
-					<img
-						src={layer.image}
-						alt={layer.label}
-						className="rounded-xl border border-gray-200 dark:border-gray-700 w-full shadow-sm"
-					/>
-				</div>
-			</div>
-		</div>
-	);
-}
 
 export function FeatureSection({ feature, reverse }) {
 	const hasImage = !!feature.image;
@@ -815,7 +799,6 @@ export function FeatureSection({ feature, reverse }) {
 					<TriggerGrid title={null} subtitle={null} />
 				</div>
 			)}
-			{feature.showMonitoringGrid && <MonitoringTabs />}
 		</div>
 	);
 }
