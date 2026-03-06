@@ -1,14 +1,480 @@
 ---
 title: "Script editor"
-description: "How do I write scripts in Windmill? Use the built-in editor with TypeScript, Python, Go, Bash, SQL, AI assist, and LSP support."
+description: "How do I write scripts in Windmill? Write a function, get an auto-generated UI, a webhook endpoint, and a scheduled job — with zero config."
 ---
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Link from '@docusaurus/Link';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, Code2, Terminal, FileCode, Play, BookOpen, Clock, Globe, Lock, Layers, GitBranch, Puzzle, Braces, Package, Webhook, CalendarClock, History, KeyRound, Cpu } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import TriggerGrid from '../../components/use-cases/TriggerGrid';
+import GithubStarCount from '../../landing/GithubStarCount';
 
-{/* Placeholder: product page content will be added here */}
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
 
-<div className="max-w-4xl mx-auto pt-32 pb-16 px-4">
-<h1 className="text-4xl font-bold mb-4 dark:text-white">Script editor</h1>
-<p className="text-xl text-gray-600 dark:text-gray-400">Write backend logic in any language.</p>
-<p className="mt-8 text-gray-500 dark:text-gray-400">This page is under construction.</p>
-</div>
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Hero animation: typing code → auto-generated outputs ── */}
+
+export const heroCodeLines = [
+	{ tokens: [{ text: 'import ', color: 'text-purple-400' }, { text: '{ Client } ', color: 'text-blue-300' }, { text: 'from ', color: 'text-purple-400' }, { text: "'pg'", color: 'text-amber-300' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'type ', color: 'text-purple-400' }, { text: 'Postgresql ', color: 'text-emerald-300' }, { text: '= { ', color: 'text-gray-400' }, { text: 'host', color: 'text-orange-300' }, { text: ': string; ... }', color: 'text-gray-400' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'export async function ', color: 'text-purple-400' }, { text: 'main', color: 'text-blue-300' }, { text: '(', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  db', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'Postgresql', color: 'text-emerald-300' }, { text: ',', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  query', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'string', color: 'text-emerald-300' }, { text: ',', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  limit', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'number', color: 'text-emerald-300' }, { text: ' = ', color: 'text-gray-400' }, { text: '100', color: 'text-amber-300' }] },
+	{ tokens: [{ text: ') {', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  const ', color: 'text-purple-400' }, { text: 'client ', color: 'text-blue-300' }, { text: '= ', color: 'text-gray-400' }, { text: 'new ', color: 'text-purple-400' }, { text: 'Client', color: 'text-blue-300' }, { text: '(db)', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  return ', color: 'text-purple-400' }, { text: 'client', color: 'text-blue-300' }, { text: '.query(query, [limit])', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '}', color: 'text-gray-400' }] },
+];
+
+export const outputCards = [
+	{ icon: Braces, label: 'Auto-generated UI', detail: 'Form with db picker, query input, limit slider' },
+	{ icon: Globe, label: 'Webhook endpoint', detail: 'POST /api/w/.../run_wait_result/p/.../query_db' },
+	{ icon: CalendarClock, label: 'Schedulable', detail: 'Cron: 0 0 */6 * * — every 6 hours' },
+	{ icon: History, label: 'Versioned', detail: 'Hash: a3f8c2e — immutable, forkable' },
+];
+
+export function HeroAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, amount: 0.3 });
+	const [typedChars, setTypedChars] = useState(0);
+	const [showOutputs, setShowOutputs] = useState(false);
+
+	const allText = heroCodeLines.map((line) => line.tokens.map((t) => t.text).join('') || ' ').join('\n');
+	const totalChars = allText.length;
+
+	useEffect(() => {
+		if (!isInView) return;
+		const speed = 10;
+		const interval = setInterval(() => {
+			setTypedChars((prev) => {
+				if (prev >= totalChars) {
+					clearInterval(interval);
+					setTimeout(() => setShowOutputs(true), 500);
+					return totalChars;
+				}
+				return prev + 1;
+			});
+		}, speed);
+		return () => clearInterval(interval);
+	}, [isInView, totalChars]);
+
+	const renderTypedLines = () => {
+		let charsSoFar = 0;
+		return heroCodeLines.map((line, i) => {
+			const lineText = line.tokens.map((t) => t.text).join('') || ' ';
+			const lineStart = charsSoFar;
+			charsSoFar += lineText.length + 1;
+			const lineCharsShown = Math.max(0, Math.min(lineText.length, typedChars - lineStart));
+			if (typedChars <= lineStart) return (
+				<div key={i} className="flex h-[1.6em]">
+					<span className="text-gray-600 w-6 text-right mr-3 select-none opacity-0 text-[11px]">{i + 1}</span>
+				</div>
+			);
+			let tokCharsSoFar = 0;
+			const rendered = [];
+			for (const token of line.tokens) {
+				if (tokCharsSoFar >= lineCharsShown) break;
+				const visibleLen = Math.min(token.text.length, lineCharsShown - tokCharsSoFar);
+				rendered.push(
+					<span key={rendered.length} className={token.color} style={{ whiteSpace: 'pre' }}>{token.text.slice(0, visibleLen)}</span>
+				);
+				tokCharsSoFar += token.text.length;
+			}
+			return (
+				<div key={i} className="flex">
+					<span className="text-gray-600 w-6 text-right mr-3 select-none text-[11px]">{i + 1}</span>
+					{line.tokens.length === 0 ? <span>&nbsp;</span> : rendered}
+					{lineCharsShown < lineText.length && (
+						<span className="inline-block w-[2px] h-[1.1em] bg-gray-300 ml-[1px] animate-pulse" />
+					)}
+				</div>
+			);
+		});
+	};
+
+	return (
+		<div ref={ref} className="flex flex-col gap-4">
+			{/* Code editor */}
+			<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-950 overflow-hidden">
+				<div className="flex items-center gap-2 px-4 py-2.5 border-b border-gray-800 bg-gray-900">
+					<div className="flex gap-1.5">
+						<span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+						<span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+						<span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+					</div>
+					<span className="text-xs font-medium text-gray-400 ml-2">query_db.ts</span>
+				</div>
+				<div className="p-4 font-mono text-[12px] leading-relaxed">
+					{renderTypedLines()}
+				</div>
+			</div>
+
+			{/* Output cards — cascade in after typing */}
+			<div className="grid grid-cols-2 gap-2">
+				{outputCards.map((card, i) => (
+					<motion.div
+						key={card.label}
+						className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 px-3 py-2.5 flex items-start gap-2.5"
+						initial={{ opacity: 0, y: 12 }}
+						animate={showOutputs ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+						transition={{ duration: 0.35, delay: i * 0.1 }}
+					>
+						<div className="w-7 h-7 rounded-md bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+							<card.icon className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+						</div>
+						<div>
+							<span className="text-xs font-semibold text-gray-900 dark:text-white block">{card.label}</span>
+							<span className="text-[10px] text-gray-500 dark:text-gray-400 block leading-tight">{card.detail}</span>
+						</div>
+					</motion.div>
+				))}
+			</div>
+		</div>
+	);
+}
+
+
+{/* ── Language tabs ── */}
+
+export const languages = [
+	{ id: 'typescript', label: 'TypeScript', icon: '🟦', runtime: 'Bun (default), Node.js, or Deno', deps: 'npm — auto-resolved from imports', lsp: 'Deno LSP, formatting, autocomplete', snippet:
+`import { WebClient } from "@slack/web-api";
+
+type Slack = { token: string };
+
+export async function main(
+  slack: Slack,
+  channel: string,
+  message: string
+) {
+  const web = new WebClient(slack.token);
+  await web.chat.postMessage({ channel, text: message });
+}` },
+	{ id: 'python', label: 'Python', icon: '🐍', runtime: 'Python 3.11+ with uv/pip', deps: 'PyPI — parsed from top-level imports', lsp: 'Ruff, Black, Pyright', snippet:
+`import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+nltk.download("vader_lexicon")
+
+def main(text: str = "Windmill is great"):
+    return SentimentIntensityAnalyzer().polarity_scores(text)` },
+	{ id: 'sql', label: 'SQL', icon: '🗄️', runtime: 'PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', snippet:
+`-- @param {resource} db: postgresql
+-- @param {string} status: active
+
+SELECT id, name, email
+FROM users
+WHERE status = $1
+ORDER BY created_at DESC
+LIMIT 100;` },
+	{ id: 'go', label: 'Go', icon: '🔵', runtime: 'Go 1.21+', deps: 'Go modules — resolved from imports', lsp: 'Go LSP', snippet:
+`package inner
+
+import (
+  "fmt"
+  wmill "github.com/windmill-labs/windmill-go-client"
+)
+
+func main(name string, age int) (interface{}, error) {
+  fmt.Printf("Hello %s, you are %d\\n", name, age)
+  return map[string]interface{}{"name": name, "age": age}, nil
+}` },
+	{ id: 'bash', label: 'Bash', icon: '💻', runtime: 'Native shell, PowerShell, Nushell', deps: 'System packages via pre-install script', lsp: 'shellcheck', snippet:
+`# Arguments are passed as environment variables
+# ARG_NAME for string args
+
+echo "Hello $1"
+curl -s "https://api.example.com/data" \\
+  -H "Authorization: Bearer $WM_TOKEN"` },
+];
+
+export function LanguageTabs() {
+	const [active, setActive] = useState(0);
+	const lang = languages[active];
+	return (
+		<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
+			{/* Tab bar */}
+			<div className="flex border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
+				{languages.map((l, i) => (
+					<button
+						key={l.id}
+						onClick={() => setActive(i)}
+						className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap -mb-px ${
+							i === active
+								? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+						}`}
+					>
+						<span>{l.icon}</span>
+						{l.label}
+					</button>
+				))}
+			</div>
+			{/* Content */}
+			<div className="grid grid-cols-1 lg:grid-cols-2">
+				{/* Left: code */}
+				<div className="bg-gray-950 p-6 font-mono text-[12px] leading-relaxed overflow-x-auto border-r border-gray-800 lg:border-r-gray-700">
+					<pre className="text-gray-300 whitespace-pre">{lang.snippet}</pre>
+				</div>
+				{/* Right: details */}
+				<motion.div
+					key={lang.id}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.25 }}
+					className="p-6 flex flex-col gap-4"
+				>
+					<div>
+						<span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Runtime</span>
+						<p className="text-base text-gray-900 dark:text-white mt-1">{lang.runtime}</p>
+					</div>
+					<div>
+						<span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Dependencies</span>
+						<p className="text-base text-gray-900 dark:text-white mt-1">{lang.deps}</p>
+					</div>
+					<div>
+						<span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Editor support</span>
+						<p className="text-base text-gray-900 dark:text-white mt-1">{lang.lsp}</p>
+					</div>
+					<Link
+						to="/docs/getting_started/scripts_quickstart"
+						className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline mt-auto"
+					>
+						<BookOpen className="w-4 h-4" /> Quickstart guide
+					</Link>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
+
+
+{/* ── Core features — individual sections ── */}
+
+export const coreFeatures = [
+	{
+		icon: Package,
+		title: 'Dependencies, handled',
+		subtitle: 'No package.json. No requirements.txt. Just imports.',
+		desc: <span>Write your imports. Windmill parses them, resolves packages, and generates a per-script <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">lockfile</Link> — so every execution uses the exact same dependency versions. No manifest files to maintain, no manual pinning. Workers cache resolved dependencies, so most jobs complete with sub-100ms overhead.</span>,
+		image: '/img/money-pages/scripts-preview.webp',
+		docLink: '/docs/advanced/imports',
+	},
+	{
+		icon: Braces,
+		title: 'A UI from your type signature',
+		subtitle: 'Any script is instantly usable by non-technical teammates.',
+		desc: <span>Every script gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link> based on its main function parameters. Strings become text inputs, numbers become sliders, booleans become toggles, and resource types like <code className="text-sm bg-gray-100 dark:bg-gray-800 px-1 rounded">Postgresql</code> become connection pickers. You can customize field labels, add descriptions, set defaults, restrict inputs to enums, or mark fields as passwords. No frontend work required.</span>,
+		image: '/img/money-pages/scripts-preview.webp',
+		docLink: '/docs/core_concepts/auto_generated_uis',
+	},
+	{
+		icon: Globe,
+		title: 'Every script is an API endpoint',
+		subtitle: 'Deploy once. Call via HTTP immediately.',
+		desc: <span>Deploy a script and it's immediately callable via HTTP. Windmill generates two <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook URLs</Link>: path-based (always latest version) and hash-based (immutable, tied to a specific deployment). Call synchronously for direct results, or asynchronously to get a job ID and poll later. Authentication via bearer token, with customizable response codes and headers.</span>,
+		image: '/img/money-pages/script-for-endpoint.webp',
+		docLink: '/docs/core_concepts/webhooks',
+	},
+	{
+		icon: CalendarClock,
+		title: '20+ ways to trigger your scripts',
+		subtitle: 'Schedules, webhooks, Kafka, Postgres CDC, emails, and more.',
+		desc: <span>Every script can be <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">scheduled</Link> with extended cron syntax, triggered via <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks</Link>, or fired from <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Kafka, Postgres CDC, SQS, NATS, MQTT, WebSockets, emails</Link> and more. Error and recovery handlers fire automatically on failure. No external scheduler, no crontab on a VM, no Lambda + EventBridge glue.</span>,
+		docLink: '/docs/getting_started/triggers',
+		showTriggerGrid: true,
+	},
+	{
+		icon: History,
+		title: 'Versioning that stays out of your way',
+		subtitle: 'Every save is a new immutable version. Nothing is ever lost.',
+		desc: <span>Scripts are never overwritten. Each save creates a new <Link to="/docs/core_concepts/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">version with a unique hash</Link> — like a git commit SHA. Previous versions stay deployed and accessible. Fork any prior version, revert in one click, or pin integrations to a specific hash while the path URL always routes to the latest.</span>,
+		image: '/img/money-pages/deployment-history.webp',
+		docLink: '/docs/core_concepts/versioning',
+	},
+	{
+		icon: KeyRound,
+		title: 'Credentials and config, inline',
+		subtitle: 'Secrets resolved at runtime. Never exposed in code.',
+		desc: <span>Credentials live in Windmill's <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource system</Link>. Declare a parameter as a resource type and the generated UI shows a dropdown of configured connections. Secrets are resolved at runtime by the worker, never exposed in script code. <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">Variables</Link> work the same way — pass them as parameters or fetch them programmatically.</span>,
+		image: '/img/money-pages/resource.webp',
+		docLink: '/docs/core_concepts/resources_and_types',
+	},
+];
+
+export function FeatureSection({ feature, reverse }) {
+	const hasImage = !!feature.image;
+	return (
+		<div>
+			<motion.div
+				{...fadeIn}
+				className={hasImage ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : ''}
+			>
+				{/* Text */}
+				<div className={hasImage && reverse ? 'lg:order-2' : ''}>
+					<div className="flex items-center gap-3 mb-4">
+						<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+							<feature.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+						</div>
+						<h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">{feature.title}</h3>
+					</div>
+					<p className="text-lg font-medium text-gray-500 dark:text-gray-400 mb-4">{feature.subtitle}</p>
+					<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">{feature.desc}</p>
+					{feature.docLink && (
+						<Link
+							to={feature.docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				{/* Image */}
+				{hasImage && (
+					<div className={reverse ? 'lg:order-1' : ''}>
+						<img
+							src={feature.image}
+							alt={feature.title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					</div>
+				)}
+			</motion.div>
+			{feature.showTriggerGrid && (
+				<div className="mt-8">
+					<TriggerGrid title={null} subtitle={null} />
+				</div>
+			)}
+		</div>
+	);
+}
+
+
+{/* ── Main page ── */}
+
+export default function ScriptEditorContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Write a script. Get an app, an API, and a scheduled job.
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Write a <code className="text-base bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">main</code> function in TypeScript, Python, Go, Bash, or SQL. Windmill infers the input schema from the type signature and gives you a generated UI, a webhook endpoint, and scheduling — no framework, no boilerplate, no YAML.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/script_editor"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<HeroAnimation />
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Core features ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						What you get from every script
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						A single function gives you dependency management, a generated UI, an API endpoint, scheduling, versioning, and secret management — all built in.
+					</p>
+				</motion.div>
+
+				<div className="flex flex-col gap-24">
+					{coreFeatures.map((feature, i) => (
+						<FeatureSection key={feature.title} feature={feature} reverse={i % 2 === 1} />
+					))}
+				</div>
+			</div>
+
+			{/* ═══════════════ Language support ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-8">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Write in the language you already know
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						TypeScript on Bun, Node.js, or Deno. Python with auto-resolved pip dependencies. Go with modules. Bash for system-level tasks. SQL that runs directly against your configured databases. Every language gets LSP-backed autocompletion, syntax highlighting, and linting in the web editor.
+					</p>
+				</motion.div>
+
+				<motion.div {...stagger(0.1)}>
+					<LanguageTabs />
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What languages does Windmill support?', textAnswer: 'TypeScript (Bun, Node.js, Deno), Python, Go, Bash, PowerShell, Nushell, SQL (PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake), and REST/GraphQL. You can also run any language inside Docker containers.' },
+				{ question: 'How does dependency management work?', textAnswer: 'Windmill parses your top-level imports and automatically resolves packages from npm (TypeScript), PyPI (Python), or Go modules (Go). A lockfile is generated per script so every execution uses the same dependency versions. No package.json or requirements.txt to maintain.' },
+				{ question: 'Can I develop scripts locally?', textAnswer: 'Yes. Windmill has a CLI and a VS Code extension for local development. Scripts are stored as code files with a companion YAML metadata file and a lockfile. You can use Git-based workflows with GitHub or GitLab sync.' },
+				{ question: 'How do auto-generated UIs work?', textAnswer: 'Windmill analyzes your main function signature and generates a JSON Schema from the parameter types. This schema drives an auto-rendered form: strings become text inputs, numbers become number fields, booleans become toggles, and resource types become connection pickers. You can customize labels, descriptions, defaults, and constraints.' },
+				{ question: 'Are scripts versioned?', textAnswer: 'Yes. Scripts are never overwritten. Each save creates a new version with a unique hash, similar to a git commit SHA. You can view the full history, fork any version, or revert. Hash-based webhook URLs let you pin integrations to a specific version.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source and can be self-hosted on your own infrastructure, including air-gapped deployments. The Community Edition is free. Enterprise features like SSO, audit logs, and priority support require a paid plan.' },
+			]} />
+
+			{/* ═══════════════ Transition to Workflow Editor ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Scripts are the atoms. Workflows are the molecules.</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Chain scripts together with branching, retries, error handling, and approval steps — all without glue code.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<Link
+							to="/product/workflow-editor"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Explore the workflow editor
+							<ArrowRight className="w-4 h-4" />
+						</Link>
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							Try Windmill free
+						</a>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}

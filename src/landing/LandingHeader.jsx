@@ -25,9 +25,8 @@ import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
 import {
 	Bot, Landmark, HeartPulse,
-	Code, GitFork, Plug, Bot as BotIcon,
-	Cpu, LayoutDashboard, Container, GitBranch,
-	Activity, ShieldCheck,
+	Code, GitFork, LayoutDashboard, Bot as BotIcon, GitBranch, Terminal,
+	Activity, ShieldCheck, Container, Scaling, Server,
 } from 'lucide-react';
 import Banner from './Banner';
 import Link from '@docusaurus/Link';
@@ -43,16 +42,16 @@ const productCategories = [
 				icon: Code,
 			},
 			{
-				name: 'Workflow engine',
+				name: 'Workflow editor',
 				description: 'Connect scripts into flows with no glue code.',
-				href: '/product/workflow-engine',
+				href: '/product/workflow-editor',
 				icon: GitFork,
 			},
 			{
-				name: 'Integrations',
-				description: 'Connect to any API, database or service.',
-				href: '/product/integrations',
-				icon: Plug,
+				name: 'Frontend builder',
+				description: 'Connect backend logic to React & Svelte frontends.',
+				href: '/product/frontend-builder',
+				icon: LayoutDashboard,
 			},
 			{
 				name: 'AI',
@@ -60,39 +59,22 @@ const productCategories = [
 				href: '/product/ai',
 				icon: BotIcon,
 			},
-		],
-	},
-	{
-		title: 'Deploy',
-		items: [
-			{
-				name: 'Workers',
-				description: 'Run backend logic on scalable worker groups.',
-				href: '/product/workers',
-				icon: Cpu,
-			},
-			{
-				name: 'Frontend',
-				description: 'Connect backend logic to React & Svelte frontends.',
-				href: '/product/frontend',
-				icon: LayoutDashboard,
-			},
-			{
-				name: 'Sandboxes',
-				description: 'Run AI agents in isolated environments with predefined tools.',
-				href: '/product/sandboxes',
-				icon: Container,
-			},
 			{
 				name: 'Versioning',
 				description: 'Sync with Git, stage workspaces and deploy via CI/CD.',
 				href: '/product/versioning',
 				icon: GitBranch,
 			},
+			{
+				name: 'Local dev',
+				description: 'Develop and test locally with the Windmill CLI.',
+				href: '/product/local-dev',
+				icon: Terminal,
+			},
 		],
 	},
 	{
-		title: 'Monitor',
+		title: 'Run',
 		items: [
 			{
 				name: 'Observability',
@@ -101,10 +83,28 @@ const productCategories = [
 				icon: Activity,
 			},
 			{
-				name: 'Security & governance',
-				description: 'Enforce RBAC, audit logs, secrets and compliance controls.',
-				href: '/product/security-governance',
+				name: 'RBAC',
+				description: 'Enforce role-based access, audit logs and secrets.',
+				href: '/product/rbac',
 				icon: ShieldCheck,
+			},
+			{
+				name: 'Sandboxes',
+				description: 'Run AI agents in isolated environments with predefined tools.',
+				href: '/product/sandboxes',
+				icon: Container,
+			},
+			{
+				name: 'Scale infinitely',
+				description: 'Auto-scale workers across any infrastructure.',
+				href: '/product/scale',
+				icon: Scaling,
+			},
+			{
+				name: 'No-ops self-host',
+				description: 'Deploy Windmill on your infra with zero maintenance.',
+				href: '/product/self-host',
+				icon: Server,
 			},
 		],
 	},
@@ -266,7 +266,7 @@ export default function LandingHeader() {
 										<Popover.Panel className="absolute left-0 z-10 mt-3 w-screen max-w-2xl transform px-2 sm:px-0">
 											<div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
 												<div className="bg-white dark:bg-gray-800 p-6">
-													<div className="grid grid-cols-3 gap-6">
+													<div className="grid grid-cols-2 gap-6">
 														{productCategories.map((category) => (
 															<div key={category.title}>
 																<p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2 px-3">

@@ -1,0 +1,39 @@
+# Project display name in the dashboard
+name: windmilldocs
+
+# Each service defines a port env var that webmux injects into .env.local
+# when creating a worktree. Ports are auto-assigned: base + (slot × step).
+# Use `source .env.local` in your .workmux.yaml pane commands to pick them up.
+services:
+  - name: app
+    portEnv: PORT
+    portStart: 3000       # Port for the main branch (slot 0)
+    portStep: 10          # Increment per worktree (3010, 3020, ...)
+
+# Agent profiles determine how AI agents run in worktrees
+profiles:
+  default:
+    name: default
+
+  # --- Sandbox profile (uncomment to enable) ---
+  # Runs agents in Docker containers for full isolation.
+  # Requires: docker + a built image.
+  # sandbox:
+  #   name: sandbox
+  #   image: my-project-sandbox
+  #   envPassthrough:            # Env vars forwarded into the container
+  #     - DATABASE_URL
+  #   systemPrompt: >
+  #     You are running inside a sandboxed container.
+  #     Start the dev server with: npm run dev
+
+# --- Linked repos (uncomment to enable) ---
+# Monitor PRs from related repos in the dashboard.
+# linkedRepos:
+#   - repo: org/other-repo
+#     alias: other
+
+# --- Startup environment variables ---
+# These will appear as configurable fields in the UI when creating a worktree.
+# startupEnvs:
+#   NODE_ENV: development
