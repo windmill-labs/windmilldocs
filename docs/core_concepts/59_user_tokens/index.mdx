@@ -121,7 +121,7 @@ https://your-windmill-instance.com/api/w/<workspace>/jobs/run/p/<script_path>?to
 
 ### From scripts
 
-Within Windmill scripts, the ephemeral token for the current job is available as the `WM_TOKEN` environment variable. See [add resources and variables to code](../../code_editor/add_variables_resources.mdx) for details.
+Within Windmill scripts, an ephemeral token for the current job is available as the `WM_TOKEN` environment variable. It can be used to call the Windmill API directly, for example to fetch [variables](../2_variables_and_secrets/index.mdx) or [resources](../3_resources_and_types/index.mdx). The [TypeScript](../../advanced/2_clients/ts_client.mdx), [Python](../../advanced/2_clients/python_client.md), and [Rust](../../advanced/2_clients/rust_client.mdx) client libraries load it automatically, so you typically don't need to handle it yourself.
 
 ## Managing tokens
 
