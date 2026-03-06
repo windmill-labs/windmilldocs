@@ -6,7 +6,13 @@ description: "How do I write scripts in Windmill? Write a function, get an auto-
 import React, { useState, useEffect, useRef } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Code2, Terminal, FileCode, Play, BookOpen, Clock, Globe, Lock, Layers, GitBranch, Puzzle, Braces, Package, Webhook, CalendarClock, History, KeyRound, Cpu } from 'lucide-react';
+import { ArrowRight, Code2, Terminal, FileCode, Play, BookOpen, Clock, Globe, Lock, Layers, GitBranch, Puzzle, Braces, Package, Webhook, CalendarClock, History, KeyRound, Cpu, ChevronDown, ScrollText, AlertTriangle, Shield, Activity } from 'lucide-react';
+import {
+	SiTypescript, SiPython, SiGo, SiGnubash, SiGraphql, SiPhp, SiRust, SiDocker,
+	SiCsharp, SiRuby, SiAnsible, SiPowershell, SiOracle, SiDeno
+} from 'react-icons/si';
+import { FaJava } from 'react-icons/fa';
+import CodeBlock from '@theme/CodeBlock';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import TriggerGrid from '../../components/use-cases/TriggerGrid';
 import GithubStarCount from '../../landing/GithubStarCount';
@@ -151,7 +157,7 @@ export function HeroAnimation() {
 {/* ── Language tabs ── */}
 
 export const languages = [
-	{ id: 'typescript', label: 'TypeScript', icon: '🟦', runtime: 'Bun (default), Node.js, or Deno', deps: 'npm — auto-resolved from imports', lsp: 'Deno LSP, formatting, autocomplete', snippet:
+	{ id: 'typescript-bun', label: 'TypeScript (Bun)', icon: SiTypescript, lang: 'typescript', runtime: 'Bun — fastest cold starts, default runtime', deps: 'npm — auto-resolved from imports', lsp: 'LSP, formatting, autocomplete', quickstart: '/docs/getting_started/scripts_quickstart/typescript', snippet:
 `import { WebClient } from "@slack/web-api";
 
 type Slack = { token: string };
@@ -164,7 +170,7 @@ export async function main(
   const web = new WebClient(slack.token);
   await web.chat.postMessage({ channel, text: message });
 }` },
-	{ id: 'python', label: 'Python', icon: '🐍', runtime: 'Python 3.11+ with uv/pip', deps: 'PyPI — parsed from top-level imports', lsp: 'Ruff, Black, Pyright', snippet:
+	{ id: 'python', label: 'Python', icon: SiPython, lang: 'python', runtime: 'Python 3.11+ with uv/pip', deps: 'PyPI — parsed from top-level imports', lsp: 'Ruff, Black, Pyright', quickstart: '/docs/getting_started/scripts_quickstart/python', snippet:
 `import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
@@ -172,16 +178,22 @@ nltk.download("vader_lexicon")
 
 def main(text: str = "Windmill is great"):
     return SentimentIntensityAnalyzer().polarity_scores(text)` },
-	{ id: 'sql', label: 'SQL', icon: '🗄️', runtime: 'PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', snippet:
-`-- @param {resource} db: postgresql
--- @param {string} status: active
+	{ id: 'typescript-deno', label: 'TypeScript (Deno)', icon: SiDeno, lang: 'typescript', runtime: 'Deno — strictest sandboxing', deps: 'npm — auto-resolved from imports', lsp: 'Deno LSP, formatting, autocomplete', quickstart: '/docs/getting_started/scripts_quickstart/typescript', snippet:
+`import { DB } from "https://deno.land/x/sqlite/mod.ts";
 
-SELECT id, name, email
-FROM users
-WHERE status = $1
-ORDER BY created_at DESC
-LIMIT 100;` },
-	{ id: 'go', label: 'Go', icon: '🔵', runtime: 'Go 1.21+', deps: 'Go modules — resolved from imports', lsp: 'Go LSP', snippet:
+export async function main(query: string = "SELECT 1") {
+  const db = new DB(":memory:");
+  const rows = db.query(query);
+  db.close();
+  return rows;
+}` },
+	{ id: 'bash', label: 'Bash', icon: SiGnubash, lang: 'bash', runtime: 'Native shell', deps: 'System packages via pre-install script', lsp: 'shellcheck', quickstart: '/docs/getting_started/scripts_quickstart/bash', snippet:
+`# Arguments are passed as environment variables
+
+echo "Hello $1"
+curl -s "https://api.example.com/data" \\
+  -H "Authorization: Bearer $WM_TOKEN"` },
+	{ id: 'go', label: 'Go', icon: SiGo, lang: 'go', runtime: 'Go 1.21+', deps: 'Go modules — resolved from imports', lsp: 'Go LSP', quickstart: '/docs/getting_started/scripts_quickstart/go', snippet:
 `package inner
 
 import (
@@ -193,13 +205,198 @@ func main(name string, age int) (interface{}, error) {
   fmt.Printf("Hello %s, you are %d\\n", name, age)
   return map[string]interface{}{"name": name, "age": age}, nil
 }` },
-	{ id: 'bash', label: 'Bash', icon: '💻', runtime: 'Native shell, PowerShell, Nushell', deps: 'System packages via pre-install script', lsp: 'shellcheck', snippet:
-`# Arguments are passed as environment variables
-# ARG_NAME for string args
+	{ id: 'postgresql', label: 'PostgreSQL', logo: '/third_party_logos/postgres.svg', lang: 'sql', runtime: 'PostgreSQL via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: postgresql
+-- @param {string} status: active
 
-echo "Hello $1"
-curl -s "https://api.example.com/data" \\
-  -H "Authorization: Bearer $WM_TOKEN"` },
+SELECT id, name, email
+FROM users
+WHERE status = $1
+ORDER BY created_at DESC
+LIMIT 100;` },
+	{ id: 'mysql', label: 'MySQL', logo: '/third_party_logos/mysql.svg', lang: 'sql', runtime: 'MySQL via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: mysql
+-- @param {string} department
+
+SELECT employee_id, name, role
+FROM employees
+WHERE department = ?
+ORDER BY name ASC;` },
+	{ id: 'snowflake', label: 'Snowflake', logo: '/third_party_logos/snowflake.svg', lang: 'sql', runtime: 'Snowflake via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: snowflake
+-- @param {string} date_from
+
+SELECT DATE_TRUNC('day', event_time) AS day,
+       COUNT(*) AS events
+FROM analytics.events
+WHERE event_time >= :1
+GROUP BY day
+ORDER BY day;` },
+	{ id: 'mssql', label: 'MS SQL Server', logo: '/third_party_logos/mssql.svg', lang: 'sql', runtime: 'MS SQL Server via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: ms_sql_server
+-- @param {string} status
+
+SELECT TOP 50 OrderId, CustomerName, Total
+FROM dbo.Orders
+WHERE Status = @p1
+ORDER BY CreatedAt DESC;` },
+	{ id: 'bigquery', label: 'BigQuery', logo: '/third_party_logos/bigquery.svg', lang: 'sql', runtime: 'BigQuery via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: bigquery
+-- @param {string} dataset
+
+SELECT table_id, row_count, size_bytes
+FROM \`project.dataset.__TABLES__\`
+WHERE row_count > 0
+ORDER BY size_bytes DESC
+LIMIT 20;` },
+	{ id: 'graphql', label: 'GraphQL', icon: SiGraphql, lang: 'graphql', runtime: 'GraphQL via configured resource', deps: 'None — runs against a configured endpoint', lsp: 'GraphQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/rest_grapqhql', snippet:
+`query($userId: ID!) {
+  user(id: $userId) {
+    name
+    email
+    posts(last: 5) {
+      title
+      createdAt
+    }
+  }
+}` },
+	{ id: 'powershell', label: 'PowerShell', icon: SiPowershell, lang: 'powershell', runtime: 'PowerShell', deps: 'System packages via pre-install script', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/bash', snippet:
+`param(
+  [string]$Name = "World",
+  [int]$Count = 3
+)
+
+1..$Count | ForEach-Object {
+  Write-Output "Hello, $Name! (iteration $_)"
+}` },
+	{ id: 'php', label: 'PHP', icon: SiPhp, lang: 'php', runtime: 'PHP', deps: 'Composer — via require comments', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/php', snippet:
+`<?php
+// require: monolog/monolog@3.6.0
+
+function main(
+  string $name = "World",
+  int $count = 3,
+  bool $uppercase = false
+) {
+  $greeting = "Hello, $name!";
+  if ($uppercase) $greeting = strtoupper($greeting);
+  return ["message" => $greeting, "count" => $count];
+}` },
+	{ id: 'docker', label: 'Docker', icon: SiDocker, lang: 'bash', runtime: 'Any language via Docker containers', deps: 'Any — defined in Dockerfile or image', lsp: 'Bash shellcheck', quickstart: '/docs/getting_started/scripts_quickstart/docker', snippet:
+`# shellcheck shell=bash
+# docker
+
+msg="\${1:-world}"
+IMAGE="alpine:latest"
+
+docker pull $IMAGE
+docker run --rm --name $WM_JOB_ID \\
+  $IMAGE /bin/echo "Hello $msg"` },
+	{ id: 'rest', label: 'REST', icon: Globe, lang: 'typescript', runtime: 'Bun TypeScript (native fetch)', deps: 'None — stdlib JavaScript only', lsp: 'TypeScript LSP', quickstart: '/docs/getting_started/scripts_quickstart/rest_grapqhql', snippet:
+`//native
+
+export async function main(todo_id: number = 3) {
+  const res = await fetch(
+    \`https://jsonplaceholder.typicode.com/todos/\${todo_id}\`,
+    { headers: { "Content-Type": "application/json" } }
+  );
+  return res.json();
+}` },
+	{ id: 'rust', label: 'Rust', icon: SiRust, lang: 'rust', runtime: 'Rust (compiled binary)', deps: 'Cargo — via inline manifest comments', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/rust', snippet:
+`//! [dependencies]
+//! serde = { version = "1", features = ["derive"] }
+//! rand = "0.7.2"
+
+use rand::seq::SliceRandom;
+use serde::Serialize;
+
+#[derive(Serialize)]
+struct Ret { msg: String, pick: i8 }
+
+fn main(name: String, numbers: Vec<i8>) -> anyhow::Result<Ret> {
+  let pick = *numbers.choose(&mut rand::thread_rng())
+    .ok_or(anyhow::anyhow!("empty"))?;
+  Ok(Ret { msg: format!("Hello {}!", name), pick })
+}` },
+	{ id: 'ansible', label: 'Ansible', icon: SiAnsible, lang: 'yaml', runtime: 'Ansible (full distribution)', deps: 'Galaxy collections, pip packages', lsp: 'YAML highlighting', quickstart: '/docs/getting_started/scripts_quickstart/ansible', snippet:
+`---
+inventory:
+  - resource_type: ansible_inventory
+extra_vars:
+  target:
+    type: string
+---
+- name: Health check
+  hosts: "{{ target }}"
+  tasks:
+  - name: Ping host
+    ping:
+  - name: Get uptime
+    command: uptime` },
+	{ id: 'oracle', label: 'Oracle Database', icon: SiOracle, lang: 'sql', runtime: 'Oracle via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: oracle
+-- @param {string} department
+
+SELECT employee_id, first_name, last_name
+FROM hr.employees
+WHERE department_name = :1
+ORDER BY last_name
+FETCH FIRST 50 ROWS ONLY;` },
+	{ id: 'csharp', label: 'C#', icon: SiCsharp, lang: 'csharp', runtime: '.NET (C#)', deps: 'NuGet — via #r directives', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/csharp', snippet:
+`#r "nuget: Humanizer, 2.14.1"
+
+using System;
+using Humanizer;
+
+class Script {
+  public static string Main(
+    string word = "order",
+    int quantity = 3
+  ) {
+    return $"{quantity} {"item".ToQuantity(quantity)}";
+  }
+}` },
+	{ id: 'nu', label: 'Nushell', icon: Terminal, lang: 'bash', runtime: 'Nushell', deps: 'System packages via pre-install script', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/bash', snippet:
+`def main [name: string = "World", count: int = 3] {
+  1..$count | each { |i|
+    $"Hello, ($name)! \\(iteration ($i)\\)"
+  }
+}` },
+	{ id: 'java', label: 'Java', icon: FaJava, lang: 'java', runtime: 'Java (Coursier for deps)', deps: 'Maven/Ivy — via requirements comments', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/java', snippet:
+`//requirements:
+//com.google.code.gson:gson:2.8.9
+
+import com.google.gson.Gson;
+
+public class Main {
+  public static Object main(String name, int count) {
+    var gson = new Gson();
+    var data = java.util.Map.of("name", name, "count", count);
+    return gson.toJson(data);
+  }
+}` },
+	{ id: 'duckdb', label: 'DuckDB', logo: '/third_party_logos/duckdb.svg', lang: 'sql', runtime: 'DuckDB via S3 or local files', deps: 'None — runs against configured S3 resources', lsp: 'SQL syntax highlighting', quickstart: '/docs/integrations/duckdb', snippet:
+`-- @param {resource} db: s3
+-- @param {string} path: data/events.parquet
+
+SELECT DATE_TRUNC('hour', timestamp) AS hour,
+       COUNT(*) AS count
+FROM read_parquet('{path}')
+GROUP BY hour
+ORDER BY hour DESC
+LIMIT 24;` },
+	{ id: 'ruby', label: 'Ruby', icon: SiRuby, lang: 'ruby', runtime: 'Ruby', deps: 'Bundler — via gemfile block', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/ruby', snippet:
+`require 'windmill/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+  gem 'httparty'
+end
+
+def main(url: "https://httpbin.org/get", msg: "Hello!")
+  response = HTTParty.get(url, query: { message: msg })
+  { status: response.code, body: JSON.parse(response.body) }
+end` },
 ];
 
 export function LanguageTabs() {
@@ -208,18 +405,22 @@ export function LanguageTabs() {
 	return (
 		<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
 			{/* Tab bar */}
-			<div className="flex border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
+			<div className="flex flex-wrap gap-1 p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
 				{languages.map((l, i) => (
 					<button
 						key={l.id}
 						onClick={() => setActive(i)}
-						className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap -mb-px ${
+						className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap ${
 							i === active
-								? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+								? 'bg-blue-600 text-white'
+								: 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
 						}`}
 					>
-						<span>{l.icon}</span>
+						{l.logo ? (
+							<img src={l.logo} alt="" className="w-3.5 h-3.5 object-contain" />
+						) : l.icon ? (
+							<l.icon className="w-3.5 h-3.5" />
+						) : null}
 						{l.label}
 					</button>
 				))}
@@ -227,8 +428,10 @@ export function LanguageTabs() {
 			{/* Content */}
 			<div className="grid grid-cols-1 lg:grid-cols-2">
 				{/* Left: code */}
-				<div className="bg-gray-950 p-6 font-mono text-[12px] leading-relaxed overflow-x-auto border-r border-gray-800 lg:border-r-gray-700">
-					<pre className="text-gray-300 whitespace-pre">{lang.snippet}</pre>
+				<div className="overflow-x-auto lg:border-r border-gray-200 dark:border-gray-700" style={{ '--ifm-leading': '1.4' }}>
+					<div style={{ margin: 0 }} className="[&>div]:!rounded-none [&>div]:!mb-0 [&>div]:!shadow-none [&>div]:!border-0">
+						<CodeBlock language={lang.lang}>{lang.snippet}</CodeBlock>
+					</div>
 				</div>
 				{/* Right: details */}
 				<motion.div
@@ -251,7 +454,7 @@ export function LanguageTabs() {
 						<p className="text-base text-gray-900 dark:text-white mt-1">{lang.lsp}</p>
 					</div>
 					<Link
-						to="/docs/getting_started/scripts_quickstart"
+						to={lang.quickstart}
 						className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline mt-auto"
 					>
 						<BookOpen className="w-4 h-4" /> Quickstart guide
@@ -262,6 +465,196 @@ export function LanguageTabs() {
 	);
 }
 
+
+{/* ── Resend-style language showcase ── */}
+
+export const iconColors = {
+	'typescript-bun': '#3178C6', 'python': '#3776AB', 'typescript-deno': '#70ffaf',
+	'bash': '#4EAA25', 'go': '#00ADD8', 'graphql': '#E10098',
+	'powershell': '#5391FE', 'php': '#777BB4', 'docker': '#2496ED',
+	'rust': '#DEA584', 'ansible': '#EE0000', 'oracle': '#F80000',
+	'csharp': '#239120', 'java': '#ED8B00', 'ruby': '#CC342D',
+	'rest': '#3B82F6', 'nu': '#3AA675',
+};
+
+export function LanguageShowcase() {
+	const [active, setActive] = useState(0);
+	const lang = languages[active];
+	return (
+		<div className="flex flex-col items-center">
+			{/* Icon carousel */}
+			<div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 mb-8 justify-items-center">
+				{languages.map((l, i) => (
+					<button
+						key={l.id}
+						onClick={() => setActive(i)}
+						className={`group flex flex-col items-center gap-2 transition-all duration-200 ${
+							i === active ? 'opacity-100' : 'opacity-50 hover:opacity-80'
+						}`}
+					>
+						<div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-200 ${
+							i === active
+								? 'bg-white dark:bg-gray-800 shadow-lg ring-2 ring-blue-500 dark:ring-blue-400'
+								: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
+						}`}>
+							{l.logo ? (
+								<img src={l.logo} alt="" className="w-6 h-6 object-contain" />
+							) : l.icon ? (
+								<l.icon className="w-6 h-6" style={{ color: iconColors[l.id] || '#3B82F6' }} />
+							) : null}
+						</div>
+						<span className={`text-[11px] font-medium whitespace-nowrap ${
+							i === active ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'
+						}`}>{l.label}</span>
+					</button>
+				))}
+			</div>
+
+			{/* Code block */}
+			<motion.div
+				key={lang.id}
+				initial={{ opacity: 0, y: 8 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.25 }}
+				className="w-full rounded-2xl overflow-hidden bg-gray-950 border border-gray-800"
+			>
+				{/* Header bar */}
+				<div className="flex items-center justify-between px-4 py-3 border-b border-gray-800">
+					<div className="flex items-center gap-2">
+						{lang.logo ? (
+							<img src={lang.logo} alt="" className="w-4 h-4 object-contain" />
+						) : lang.icon ? (
+							<lang.icon className="w-4 h-4 text-gray-400" />
+						) : null}
+						<span className="text-sm font-medium text-gray-300">{lang.label}</span>
+					</div>
+					<Link
+						to={lang.quickstart}
+						className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 transition-colors !no-underline"
+					>
+						<BookOpen className="w-3.5 h-3.5" /> Docs
+					</Link>
+				</div>
+				{/* Code */}
+				<div style={{ '--ifm-leading': '1.5' }}>
+					<div className="[&>div]:!rounded-none [&>div]:!mb-0 [&>div]:!shadow-none [&>div]:!border-0 [&>div]:!bg-transparent [&_pre]:!bg-transparent">
+						<CodeBlock language={lang.lang} showLineNumbers>{lang.snippet}</CodeBlock>
+					</div>
+				</div>
+				{/* Footer */}
+				<div className="flex items-center gap-6 px-4 py-3 border-t border-gray-800">
+					<div className="flex items-center gap-4 text-xs text-gray-500">
+						<span><span className="text-gray-400 font-medium">Runtime:</span> {lang.runtime}</span>
+						<span className="hidden sm:inline"><span className="text-gray-400 font-medium">Deps:</span> {lang.deps}</span>
+					</div>
+				</div>
+			</motion.div>
+		</div>
+	);
+}
+
+{/* ── Code editor with tab bar ── */}
+
+export const primaryLangIds = ['typescript-bun', 'python', 'go', 'bash', 'postgresql', 'rest', 'php', 'rust', 'docker', 'ruby', 'java'];
+
+export function CodeEditor() {
+	const primaryLangs = primaryLangIds.map(id => languages.find(l => l.id === id));
+	const otherLangs = languages.filter(l => !primaryLangIds.includes(l.id));
+	const [active, setActive] = useState(0);
+	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const dropdownRef = useRef(null);
+	const allDisplayed = [...primaryLangs, ...otherLangs];
+	const lang = allDisplayed[active];
+
+	useEffect(() => {
+		const handleClick = (e) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setDropdownOpen(false);
+		};
+		document.addEventListener('mousedown', handleClick);
+		return () => document.removeEventListener('mousedown', handleClick);
+	}, []);
+
+	const renderIcon = (l, size = 'w-4 h-4') => l.logo
+		? <img src={l.logo} alt="" className={`${size} object-contain`} />
+		: l.icon
+			? <l.icon className={size} style={{ color: iconColors[l.id] || '#94a3b8' }} />
+			: null;
+
+	return (
+		<div className="rounded-2xl overflow-hidden bg-gray-950 border border-gray-800">
+			{/* Tab bar */}
+			<div className="flex items-center border-b border-gray-800 bg-gray-900/80">
+				{primaryLangs.map((l, i) => (
+					<button
+						key={l.id}
+						onClick={() => { setActive(i); setDropdownOpen(false); }}
+						className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap ${
+							i === active
+								? 'border-blue-500 text-white bg-gray-950/50'
+								: 'border-transparent text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'
+						}`}
+					>
+						{renderIcon(l)} {l.label}
+					</button>
+				))}
+				{/* More dropdown */}
+				<div className="relative ml-auto mr-2" ref={dropdownRef}>
+					<button
+						onClick={() => setDropdownOpen(!dropdownOpen)}
+						className={`flex items-center gap-1.5 px-3 py-3 text-sm font-medium transition-colors whitespace-nowrap ${
+							active >= primaryLangs.length
+								? 'text-white'
+								: 'text-gray-400 hover:text-gray-200'
+						}`}
+					>
+						{active >= primaryLangs.length && renderIcon(lang)}
+						{active >= primaryLangs.length ? lang.label : 'More'}
+						<ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+					</button>
+					{dropdownOpen && (
+						<div className="absolute right-0 top-full mt-1 w-52 rounded-xl bg-gray-900 border border-gray-700 shadow-2xl z-50 py-1 max-h-72 overflow-y-auto">
+							{otherLangs.map((l) => {
+								const idx = allDisplayed.indexOf(l);
+								return (
+									<button
+										key={l.id}
+										onClick={() => { setActive(idx); setDropdownOpen(false); }}
+										className={`flex items-center gap-2.5 w-full px-3 py-2 text-sm text-left transition-colors ${
+											idx === active
+												? 'bg-gray-800 text-white'
+												: 'text-gray-400 hover:bg-gray-800/60 hover:text-gray-200'
+										}`}
+									>
+										{renderIcon(l)} {l.label}
+									</button>
+								);
+							})}
+						</div>
+					)}
+				</div>
+			</div>
+			{/* Code area — fixed height */}
+			<div className="h-[360px] overflow-y-auto" style={{ '--ifm-leading': '1.5' }}>
+				<div className="[&>div]:!rounded-none [&>div]:!mb-0 [&>div]:!shadow-none [&>div]:!border-0 [&>div]:!bg-transparent [&_pre]:!bg-transparent">
+					<CodeBlock language={lang.lang} showLineNumbers>{lang.snippet}</CodeBlock>
+				</div>
+			</div>
+			{/* Footer */}
+			<div className="flex items-center gap-6 px-4 py-3 border-t border-gray-800">
+				<div className="flex items-center gap-4 text-xs text-gray-500">
+					<span><span className="text-gray-400 font-medium">Runtime:</span> {lang.runtime}</span>
+					<span className="hidden sm:inline"><span className="text-gray-400 font-medium">Deps:</span> {lang.deps}</span>
+				</div>
+				<Link
+					to={lang.quickstart}
+					className="ml-auto inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 transition-colors !no-underline"
+				>
+					<BookOpen className="w-3.5 h-3.5" /> Quickstart
+				</Link>
+			</div>
+		</div>
+	);
+}
 
 {/* ── Core features — individual sections ── */}
 
@@ -314,7 +707,75 @@ export const coreFeatures = [
 		image: '/img/money-pages/resource.webp',
 		docLink: '/docs/core_concepts/resources_and_types',
 	},
+	{
+		icon: Cpu,
+		title: 'Five layers of monitoring, built in',
+		subtitle: 'From live logs to OpenTelemetry traces — every execution is observable.',
+		desc: <span>Every <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">job</Link> is tracked end-to-end. No external tooling required to get full visibility into what ran, when, why it failed, and who triggered it.</span>,
+		docLink: '/docs/core_concepts/monitor_past_and_future_runs',
+		showMonitoringGrid: true,
+	},
 ];
+
+export const monitoringLayers = [
+	{ icon: ScrollText, label: 'Real-time logs', desc: 'Every job streams stdout and stderr live to the UI while it executes. Watch output appear line by line — no SSH, no log files, no external collector.', link: '/docs/core_concepts/jobs', image: '/img/money-pages/monitoring.webp' },
+	{ icon: Braces, label: 'Structured results', desc: 'Each completed job stores its JSON result, input arguments, execution duration, worker ID, and memory usage. Results are queryable via the API and displayable in apps.', link: '/docs/core_concepts/jobs#result', image: '/img/money-pages/monitoring.webp' },
+	{ icon: History, label: 'Runs page', desc: 'A unified view of all past and scheduled runs. Filter by datetime, user, path, worker, status, or concurrency key. Visualize success/failure as a time series with duration or concurrency graphs.', link: '/docs/core_concepts/monitor_past_and_future_runs', image: '/img/money-pages/monitoring.webp' },
+	{ icon: AlertTriangle, label: 'Error handlers', desc: 'Attach error handlers at the schedule, flow, or workspace level. Built-in handlers for Slack, Microsoft Teams, and email. Or write a custom script that receives the failed job metadata and routes alerts however you want.', link: '/docs/core_concepts/error_handling', image: '/img/money-pages/error-handler.webp' },
+	{ icon: Shield, label: 'Audit logs', desc: 'Every side-effect operation — create, update, delete, execute — is recorded with the user, timestamp, and operation details. Filter by action type, user, or date range. Enterprise only.', link: '/docs/core_concepts/audit_logs', image: '/img/money-pages/auditlogs.webp' },
+	{ icon: Activity, label: 'OpenTelemetry', desc: 'Export traces, spans, and metrics to Jaeger, Grafana Tempo, Datadog, or any OTEL-compatible backend. Each job becomes a span with full context for centralized observability.', link: '/docs/misc/guides/otel', image: '/img/money-pages/monitoring.webp' },
+];
+
+export function MonitoringTabs() {
+	const [active, setActive] = useState(0);
+	const layer = monitoringLayers[active];
+	return (
+		<div className="mt-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
+			{/* Tab bar */}
+			<div className="flex flex-wrap gap-1 p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+				{monitoringLayers.map((l, i) => {
+					const Icon = l.icon;
+					return (
+						<button
+							key={l.label}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap ${
+								i === active
+									? 'bg-blue-600 text-white'
+									: 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<Icon className="w-3.5 h-3.5" /> {l.label}
+						</button>
+					);
+				})}
+			</div>
+			{/* Content */}
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
+				<div className="flex flex-col justify-center">
+					<div className="flex items-center gap-2 mb-3">
+						<layer.icon className="w-5 h-5 text-blue-500" />
+						<h4 className="text-lg font-semibold text-gray-900 dark:text-white">{layer.label}</h4>
+					</div>
+					<p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4">{layer.desc}</p>
+					<Link
+						to={layer.link}
+						className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline w-fit"
+					>
+						<BookOpen className="w-3.5 h-3.5" /> Read the docs
+					</Link>
+				</div>
+				<div>
+					<img
+						src={layer.image}
+						alt={layer.label}
+						className="rounded-xl border border-gray-200 dark:border-gray-700 w-full shadow-sm"
+					/>
+				</div>
+			</div>
+		</div>
+	);
+}
 
 export function FeatureSection({ feature, reverse }) {
 	const hasImage = !!feature.image;
@@ -326,12 +787,7 @@ export function FeatureSection({ feature, reverse }) {
 			>
 				{/* Text */}
 				<div className={hasImage && reverse ? 'lg:order-2' : ''}>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-							<feature.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-						</div>
-						<h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">{feature.title}</h3>
-					</div>
+					<h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">{feature.title}</h3>
 					<p className="text-lg font-medium text-gray-500 dark:text-gray-400 mb-4">{feature.subtitle}</p>
 					<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">{feature.desc}</p>
 					{feature.docLink && (
@@ -359,6 +815,7 @@ export function FeatureSection({ feature, reverse }) {
 					<TriggerGrid title={null} subtitle={null} />
 				</div>
 			)}
+			{feature.showMonitoringGrid && <MonitoringTabs />}
 		</div>
 	);
 }
@@ -405,6 +862,22 @@ export default function ScriptEditorContent({ title, description }) {
 				</div>
 			</div>
 
+			{/* ═══════════════ Code editor ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-8">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Write in the language you already know
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						TypeScript on Bun, Node.js, or Deno. Python with auto-resolved pip dependencies. Go with modules. Bash for system-level tasks. SQL that runs directly against your configured databases. Every language gets LSP-backed autocompletion, syntax highlighting, and linting in the web editor.
+					</p>
+				</motion.div>
+
+				<motion.div {...stagger(0.1)}>
+					<CodeEditor />
+				</motion.div>
+			</div>
+
 			{/* ═══════════════ Core features ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="mb-16">
@@ -421,22 +894,6 @@ export default function ScriptEditorContent({ title, description }) {
 						<FeatureSection key={feature.title} feature={feature} reverse={i % 2 === 1} />
 					))}
 				</div>
-			</div>
-
-			{/* ═══════════════ Language support ═══════════════ */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-8">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Write in the language you already know
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						TypeScript on Bun, Node.js, or Deno. Python with auto-resolved pip dependencies. Go with modules. Bash for system-level tasks. SQL that runs directly against your configured databases. Every language gets LSP-backed autocompletion, syntax highlighting, and linting in the web editor.
-					</p>
-				</motion.div>
-
-				<motion.div {...stagger(0.1)}>
-					<LanguageTabs />
-				</motion.div>
 			</div>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
