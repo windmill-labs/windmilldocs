@@ -1,7 +1,7 @@
 export const versioningProduct = {
 	slug: 'versioning',
 	name: 'Versioning',
-	headline: 'Git-native deployment',
-	description: 'Git sync, staging workspaces, and CI/CD integration for your entire platform.',
+	headline: 'Git-native versioning and deployment',
+	description: 'Draft, deploy, and promote changes across workspaces with full history, Git sync, and team collaboration.',
 	link: '/product/versioning',
 };
