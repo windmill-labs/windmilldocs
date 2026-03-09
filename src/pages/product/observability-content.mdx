@@ -1,14 +1,310 @@
 ---
-title: "Observability"
-description: "How do I monitor Windmill? Real-time logs, job metrics, run history, and alerting across scripts and flows."
+title: "Full observability"
+description: "How do I monitor Windmill? Real-time logs, run history, queue metrics, critical alerts, OpenTelemetry, and Prometheus — see everything across your platform."
 ---
 
-import React from 'react';
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, BookOpen, Activity, Search, Bell, BarChart3, FileText, AlertTriangle, Database, Radio, Gauge, RefreshCw } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
-{/* Placeholder: product page content will be added here */}
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
 
-<div className="max-w-4xl mx-auto pt-32 pb-16 px-4">
-<h1 className="text-4xl font-bold mb-4 dark:text-white">Observability</h1>
-<p className="text-xl text-gray-600 dark:text-gray-400">Full visibility into runs.</p>
-<p className="mt-8 text-gray-500 dark:text-gray-400">This page is under construction.</p>
-</div>
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, reverse, children }) {
+	const hasImage = !!image;
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className={hasImage ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : ''}
+			>
+				<div className={hasImage && reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				{hasImage && (
+					<div className={reverse ? 'lg:order-1' : ''}>
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					</div>
+				)}
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Tab section ── */}
+
+export function TabSection({ title, subtitle, features }) {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn} className="mb-16">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					{title}
+				</h2>
+				{subtitle && (
+					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
+				)}
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+				<div className="flex flex-col gap-2">
+					{features.map((feat, i) => (
+						<button
+							key={feat.label || feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon
+								className={`w-5 h-5 flex-shrink-0 ${
+									i === active ? 'text-white' : 'text-blue-500'
+								}`}
+							/>
+							<span className="font-medium text-sm">
+								{feat.label || feat.title}
+							</span>
+						</button>
+					))}
+				</div>
+
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{features.map((feat, i) => (
+						<div
+							key={feat.label || feat.title}
+							className={`transition-opacity duration-200 ${
+								i === active
+									? 'opacity-100 relative'
+									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
+							}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
+									{feat.title}
+								</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
+								{feat.desc}
+							</p>
+							{feat.content ? (
+								feat.content
+							) : feat.image ? (
+								<img
+									src={feat.image}
+									alt={feat.title}
+									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
+								/>
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">
+										Screenshot coming soon
+									</span>
+								</div>
+							)}
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link
+										to={feat.docLink}
+										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+									>
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── Alerting and metrics tab data ── */}
+
+export const alertingFeatures = [
+	{
+		icon: Bell,
+		label: 'Critical alerts',
+		title: 'Critical alerts',
+		desc: <span>Get notified on script crashes, queue depth thresholds, and <Link to="/docs/core_concepts/critical_alerts" className="text-blue-600 dark:text-blue-400 hover:underline">worker health issues</Link>. Send alerts to Email, Slack, or Microsoft Teams. Configure per-workspace alert channels.</span>,
+		docLink: '/docs/core_concepts/critical_alerts',
+	},
+	{
+		icon: BarChart3,
+		label: 'Queue metrics',
+		title: 'Queue metrics',
+		desc: <span>Monitor <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">real-time queue depth</Link> and worker utilization from the Windmill UI. See how many jobs are waiting, running, and completed across worker groups.</span>,
+		docLink: '/docs/core_concepts/monitor_past_and_future_runs',
+	},
+	{
+		icon: Gauge,
+		label: 'Prometheus',
+		title: 'Prometheus metrics',
+		desc: <span>Workers expose <Link to="/docs/advanced/instance_settings#prometheus" className="text-blue-600 dark:text-blue-400 hover:underline">Prometheus metrics</Link> on port 8001. Scrape job counts, durations, queue depth, and worker status. Build Grafana dashboards for infrastructure-wide visibility.</span>,
+		docLink: '/docs/advanced/instance_settings#prometheus',
+	},
+	{
+		icon: Radio,
+		label: 'OpenTelemetry',
+		title: 'OpenTelemetry',
+		desc: <span>Export traces and metrics via <Link to="/docs/misc/guides/otel" className="text-blue-600 dark:text-blue-400 hover:underline">OpenTelemetry</Link> to Jaeger, Datadog, Grafana, or any OTLP-compatible backend. Trace job execution across flows and sub-flows.</span>,
+		docLink: '/docs/misc/guides/otel',
+	},
+];
+
+{/* ── Main page ── */}
+
+export default function ObservabilityContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Full observability
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Real-time logs, run history, queue metrics, critical alerts, and OpenTelemetry — see everything that happens across your platform.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/core_concepts/monitor_past_and_future_runs"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<img
+							src="/img/money-pages/monitoring.webp"
+							alt="Full observability"
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Run history ═══════════════ */}
+			<Section
+				title="Run history"
+				desc={<span>Search all <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">past and future runs</Link> across your workspace. Filter by status, user, script, or duration. Inspect inputs, outputs, and logs for any job. Restart failed flows from any step without re-running the entire workflow.</span>}
+				image="/img/money-pages/monitoring.webp"
+				docLink="/docs/core_concepts/monitor_past_and_future_runs"
+			/>
+
+			{/* ═══════════════ Service logs ═══════════════ */}
+			<Section
+				title="Service logs"
+				desc={<span>View centralized <Link to="/docs/core_concepts/service_logs" className="text-blue-600 dark:text-blue-400 hover:underline">worker and server logs</Link> from the Windmill UI. Full-text search (Enterprise) across all service logs. Logs are stored on disk or S3 with configurable retention — 2 weeks by default.</span>}
+				docLink="/docs/core_concepts/service_logs"
+				reverse
+			>
+				{/* Placeholder: screenshot of service logs viewer with full-text search filtering server and worker logs, ~1200x800px, save as /static/img/money-pages/service-logs.webp */}
+			</Section>
+
+			{/* ═══════════════ Alerting and metrics ═══════════════ */}
+			<TabSection
+				title="Alerting and metrics"
+				subtitle={<span>Get alerted on failures and monitor infrastructure health. <Link to="/docs/core_concepts/critical_alerts" className="text-blue-600 dark:text-blue-400 hover:underline">Critical alerts</Link> notify your team, while Prometheus and OpenTelemetry integrate with your existing observability stack.</span>}
+				features={alertingFeatures}
+			/>
+
+			{/* ═══════════════ Audit logs ═══════════════ */}
+			<Section
+				title="Audit logs"
+				desc={<span>Every deployment, permission change, resource modification, and login is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>. Filter by user, action type, or time range. Export logs for compliance reviews and security investigations.</span>}
+				image="/img/money-pages/auditlogs.webp"
+				docLink="/docs/core_concepts/audit_logs"
+			/>
+
+			{/* ═══════════════ Error handling ═══════════════ */}
+			<Section
+				title="Error handling"
+				desc={<span>Define <Link to="/docs/core_concepts/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handlers</Link> at the flow, schedule, or workspace level. Recovery flows run automatically on failure. Configure retry policies with exponential backoff. Get notified on every failure through your alert channels.</span>}
+				image="/img/money-pages/error-handler.webp"
+				docLink="/docs/core_concepts/error_handling"
+				reverse
+			/>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'Can I send alerts to Slack or PagerDuty?', textAnswer: 'Yes. Critical alerts can be sent to Email, Slack, and Microsoft Teams natively. For PagerDuty, Opsgenie, or other services, use a webhook-based error handler that calls their API on failure.' },
+				{ question: 'Does Windmill support OpenTelemetry?', textAnswer: 'Yes. Windmill exports traces and metrics via OpenTelemetry Protocol (OTLP). Configure an OTLP endpoint to send data to Jaeger, Datadog, Grafana Tempo, or any compatible backend. Traces span flow steps and sub-flows.' },
+				{ question: 'How long are logs retained?', textAnswer: 'Job logs are stored in PostgreSQL and retained indefinitely by default. Service logs are stored on disk or S3 with a default 2-week retention. Both retention periods are configurable via environment variables.' },
+				{ question: 'Can I export Prometheus metrics?', textAnswer: 'Yes. Each worker exposes a Prometheus metrics endpoint on port 8001. Metrics include job counts, durations, queue depth, and worker status. Scrape these endpoints with your existing Prometheus setup and visualize with Grafana.' },
+				{ question: 'What is the difference between service logs and job logs?', textAnswer: 'Job logs are the stdout/stderr output of individual script executions — they appear in the run detail view. Service logs are the internal logs of the Windmill server and worker processes themselves, useful for debugging infrastructure issues, startup errors, and connectivity problems.' },
+			]} />
+
+			{/* ═══════════════ Transition CTA ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Control who can access what</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Five built-in roles, folder-based permissions, encrypted secrets, and SSO — with full audit logging.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<Link
+							to="/product/rbac"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Explore RBAC
+							<ArrowRight className="w-4 h-4" />
+						</Link>
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							Try Windmill free
+						</a>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
