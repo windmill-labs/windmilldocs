@@ -1,14 +1,277 @@
 ---
 title: "No-ops self-host"
-description: "How do I self-host Windmill? Deploy on your own infrastructure with zero maintenance and no ops overhead."
+description: "How do I self-host Windmill? Deploy on your own infrastructure with Docker Compose, Kubernetes, or Helm — with zero maintenance and automatic upgrades."
 ---
 
-import React from 'react';
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, BookOpen, Server, Database, Globe, Settings, Shield, Container, Cloud, Terminal } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
-{/* Placeholder: product page content will be added here */}
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
 
-<div className="max-w-4xl mx-auto pt-32 pb-16 px-4">
-<h1 className="text-4xl font-bold mb-4 dark:text-white">No-ops self-host</h1>
-<p className="text-xl text-gray-600 dark:text-gray-400">Deploy on your infrastructure with zero maintenance.</p>
-<p className="mt-8 text-gray-500 dark:text-gray-400">This page is under construction.</p>
-</div>
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, reverse, children }) {
+	const hasImage = !!image;
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className={hasImage ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : ''}
+			>
+				<div className={hasImage && reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				{hasImage && (
+					<div className={reverse ? 'lg:order-1' : ''}>
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					</div>
+				)}
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Tab section ── */}
+
+export function TabSection({ title, subtitle, features }) {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn} className="mb-16">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					{title}
+				</h2>
+				{subtitle && (
+					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
+				)}
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+				<div className="flex flex-col gap-2">
+					{features.map((feat, i) => (
+						<button
+							key={feat.label || feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon
+								className={`w-5 h-5 flex-shrink-0 ${
+									i === active ? 'text-white' : 'text-blue-500'
+								}`}
+							/>
+							<span className="font-medium text-sm">
+								{feat.label || feat.title}
+							</span>
+						</button>
+					))}
+				</div>
+
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{features.map((feat, i) => (
+						<div
+							key={feat.label || feat.title}
+							className={`transition-opacity duration-200 ${
+								i === active
+									? 'opacity-100 relative'
+									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
+							}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
+									{feat.title}
+								</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
+								{feat.desc}
+							</p>
+							{feat.content ? (
+								feat.content
+							) : feat.image ? (
+								<img
+									src={feat.image}
+									alt={feat.title}
+									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
+								/>
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">
+										Screenshot coming soon
+									</span>
+								</div>
+							)}
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link
+										to={feat.docLink}
+										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+									>
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── Main page ── */}
+
+export default function SelfHostContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							No-ops self-host
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Deploy Windmill on your infrastructure in minutes. Docker Compose, Kubernetes, or cloud-managed — with zero maintenance.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/advanced/self_host"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						{/* Placeholder: architecture diagram showing server, workers, PostgreSQL, and LSP components connected, ~1200x800px, save as /static/img/money-pages/self-host-architecture.webp */}
+						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Architecture diagram coming soon</span>
+						</div>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ One-command Docker deploy ═══════════════ */}
+			<Section
+				title="One-command Docker deploy"
+				desc={<span>Run <code>docker compose up -d</code> to start the <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">full Windmill stack</Link>: server, workers, PostgreSQL, and LSP for language intelligence. Database migrations run automatically on startup. Caddy handles TLS termination out of the box.</span>}
+				docLink="/docs/advanced/self_host"
+			>
+				{/* Placeholder: terminal screenshot showing docker compose up output with all services starting, ~1200x800px, save as /static/img/money-pages/self-host-docker.webp */}
+			</Section>
+
+			{/* ═══════════════ Kubernetes and Helm ═══════════════ */}
+			<Section
+				title="Kubernetes and Helm"
+				desc={<span>Deploy with the official <Link to="/docs/advanced/self_host/aws_eks_ecs" className="text-blue-600 dark:text-blue-400 hover:underline">Helm chart</Link> that provisions server, worker, and LSP deployments. ConfigMaps manage environment variables. Guides are available for EKS, ECS, GCP, and Azure.</span>}
+				docLink="/docs/advanced/self_host/aws_eks_ecs"
+				reverse
+			>
+				{/* Placeholder: Kubernetes deployment diagram showing Helm chart components (server, worker, LSP pods), ~1200x800px, save as /static/img/money-pages/self-host-k8s.webp */}
+			</Section>
+
+			{/* ═══════════════ Architecture ═══════════════ */}
+			<Section
+				title="Architecture"
+				desc={<span>The <Link to="/docs/misc/architecture" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill architecture</Link> is simple: the server handles the API, UI, and job scheduling. Workers pull jobs from a PostgreSQL queue independently. The LSP provides language intelligence for the editors. All components are stateless except the database — scale any layer horizontally.</span>}
+				docLink="/docs/misc/architecture"
+			>
+				{/* Placeholder: architecture diagram showing server → PostgreSQL ← workers data flow with LSP sidecar, ~1200x800px, save as /static/img/money-pages/self-host-architecture-detail.webp */}
+			</Section>
+
+			{/* ═══════════════ 60+ environment variables ═══════════════ */}
+			<Section
+				title="60+ environment variables"
+				desc={<span>Configure <code>DATABASE_URL</code>, <code>NUM_WORKERS</code>, <code>WORKER_TAGS</code>, <code>BASE_URL</code>, and <Link to="/docs/core_concepts/environment_variables" className="text-blue-600 dark:text-blue-400 hover:underline">dozens more</Link> to customize your deployment. The instance settings UI lets you change runtime configuration without restarting services.</span>}
+				docLink="/docs/core_concepts/environment_variables"
+				reverse
+			/>
+
+			{/* ═══════════════ Enterprise on your infrastructure ═══════════════ */}
+			<Section
+				title="Enterprise on your infrastructure"
+				desc={<span>Self-hosted Enterprise includes <Link to="/docs/misc/plans_details" className="text-blue-600 dark:text-blue-400 hover:underline">SAML/SCIM authentication</Link>, S3 dependency caching, dedicated workers, extended audit log retention, and access to the private Hub. All the same features available on Windmill Cloud, running on your own infrastructure.</span>}
+				docLink="/docs/misc/plans_details"
+			/>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What are the minimum hardware requirements?', textAnswer: 'Windmill requires minimal resources to get started. A single machine with 2 CPU cores, 4 GB RAM, and 20 GB disk can run the full stack. For production, allocate more resources to workers based on the workloads they execute.' },
+				{ question: 'Can I deploy in an air-gapped environment?', textAnswer: 'Yes. Windmill Docker images can be pulled and transferred offline. The only external dependency is PostgreSQL. Dependencies can be pre-installed or served from an internal registry.' },
+				{ question: 'Does Windmill auto-update?', textAnswer: 'Windmill does not auto-update. You control upgrades by pulling new Docker images and restarting containers. Database migrations run automatically on startup. The upgrade process requires no manual steps beyond updating the image tag.' },
+				{ question: 'What is the difference between Community Edition and Enterprise?', textAnswer: 'Community Edition is open-source and free. It includes scripts, flows, apps, scheduling, and the full API. Enterprise adds SAML/SCIM, Git Sync, dedicated workers, audit log retention, multiplayer editing, S3 dependency caching, and priority support.' },
+				{ question: 'Can I use an external PostgreSQL database?', textAnswer: 'Yes. Set the DATABASE_URL environment variable to point to any PostgreSQL 14+ instance. Managed databases like RDS, Cloud SQL, and Azure Database for PostgreSQL are fully supported.' },
+			]} />
+
+			{/* ═══════════════ Transition CTA ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Write scripts in 20+ languages</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						TypeScript, Python, Go, Bash, SQL, and more — with auto-generated UIs, built-in AI assistance, and instant deployment.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<Link
+							to="/product/script-editor"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Explore the script editor
+							<ArrowRight className="w-4 h-4" />
+						</Link>
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							Try Windmill free
+						</a>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
