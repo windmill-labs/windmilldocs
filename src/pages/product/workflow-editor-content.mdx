@@ -6,7 +6,7 @@ description: "How do I build workflows in Windmill? Orchestrate scripts into DAG
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, BookOpen, Code2, GitBranch, RotateCcw, ShieldCheck, Timer, Layers, Zap, GitFork, CheckCircle2, Code, Repeat, Split, Clock, Pause, AlertTriangle, Shield, Gauge, Database, RefreshCw, Eye, Sparkles, FileCode, Terminal, Plug, Workflow, BarChart3 } from 'lucide-react';
+import { ArrowRight, BookOpen, Code2, GitBranch, RotateCcw, ShieldCheck, Timer, Layers, Zap, GitFork, CheckCircle2, Code, Repeat, Split, Clock, Pause, AlertTriangle, Shield, Gauge, Database, RefreshCw, Eye, Sparkles, FileCode, Plug } from 'lucide-react';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import TriggerGrid from '../../components/use-cases/TriggerGrid';
@@ -390,14 +390,6 @@ export const stepFeatures = [
 	{ icon: Gauge, label: 'Priority', title: 'Priority', desc: <span>Set <Link to="/docs/flows/priority" className="text-blue-600 dark:text-blue-400 hover:underline">execution priority</Link> so critical flows are picked up by workers before lower-priority jobs in the queue.</span>, docLink: '/docs/flows/priority' },
 ];
 
-{/* ── Use case cards data ── */}
-
-export const useCases = [
-	{ icon: Workflow, label: 'Production workflows', desc: 'Orchestrate multi-step business processes with approval gates, error handling, and audit trails.', link: '/use-cases/workflows' },
-	{ icon: BarChart3, label: 'Data pipelines', desc: 'Extract, transform, and load data across sources with parallel execution and retry logic.', link: '/use-cases/data-pipelines' },
-	{ icon: Sparkles, label: 'AI agents', desc: 'Chain LLM calls, tool use, and human-in-the-loop steps into reliable agent workflows.', link: '/use-cases/ai-agents' },
-	{ icon: Terminal, label: 'Internal tools', desc: 'Build scripts and flows that power internal dashboards, admin panels, and automation.', link: '/use-cases/internal-tools' },
-];
 
 
 {/* ── Main page ── */}
@@ -494,43 +486,6 @@ export default function WorkflowEditorContent({ title, description }) {
 				docLink="/docs/core_concepts/jobs"
 				reverse
 			/>
-
-			{/* ═══════════════ Built for production workloads ═══════════════ */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-12">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Built for production workloads
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Teams use Windmill flows to power critical business processes at scale.
-					</p>
-				</motion.div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-					{useCases.map((uc) => {
-						const Icon = uc.icon;
-						return (
-							<Link
-								key={uc.label}
-								to={uc.link}
-								className="group flex flex-col gap-3 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-lg transition-all !no-underline"
-							>
-								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-									<Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-								</div>
-								<span className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-									{uc.label}
-								</span>
-								<span className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-									{uc.desc}
-								</span>
-								<span className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400 mt-auto">
-									Learn more <ArrowRight className="w-3.5 h-3.5" />
-								</span>
-							</Link>
-						);
-					})}
-				</div>
-			</div>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[

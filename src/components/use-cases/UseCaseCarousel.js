@@ -18,7 +18,7 @@ const allUseCases = [
 	{ label: 'Triggers', subtitle: 'Trigger scripts and flows from schedules, webhooks, Kafka, Postgres, websockets, emails and more.', to: '/use-cases/triggers', cover: '/img/money-pages/cron-schedules-card.webp' },
 ];
 
-export default function UseCaseCarousel({ current, subtitle }) {
+export default function UseCaseCarousel({ current, title, subtitle }) {
 	const carouselRef = useRef(null);
 	const useCases = allUseCases.filter((uc) => uc.to !== `/use-cases/${current}`);
 
@@ -33,7 +33,7 @@ export default function UseCaseCarousel({ current, subtitle }) {
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div {...fadeIn} className="mb-8">
 				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					More you can build on Windmill
+					{title || 'More you can build on Windmill'}
 				</h2>
 				{subtitle && (
 					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
