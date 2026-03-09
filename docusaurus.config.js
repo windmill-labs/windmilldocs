@@ -146,7 +146,6 @@ const config = {
 							{ label: 'Script editor', href: '/product/script-editor' },
 							{ label: 'Workflow editor', href: '/product/workflow-editor' },
 							{ label: 'Frontend builder', href: '/product/frontend-builder' },
-							{ label: 'AI', href: '/product/ai' },
 							{ label: 'Versioning', href: '/product/versioning' },
 							{ label: 'Local dev', href: '/product/local-dev' },
 							{ label: 'Observability', href: '/product/observability' },

@@ -2,7 +2,6 @@
 export { scriptEditorProduct } from './script-editor';
 export { workflowEditorProduct } from './workflow-editor';
 export { frontendBuilderProduct } from './frontend-builder';
-export { aiProduct } from './ai';
 export { versioningProduct } from './versioning';
 export { localDevProduct } from './local-dev';
 

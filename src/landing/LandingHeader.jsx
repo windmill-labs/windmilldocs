@@ -25,7 +25,7 @@ import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
 import {
 	Bot, Landmark, HeartPulse,
-	Code, GitFork, LayoutDashboard, Bot as BotIcon, GitBranch, Terminal,
+	Code, GitFork, LayoutDashboard, GitBranch, Terminal,
 	Activity, ShieldCheck, Container, Scaling, Server,
 } from 'lucide-react';
 import Banner from './Banner';
@@ -52,12 +52,6 @@ const productCategories = [
 				description: 'Connect backend logic to React & Svelte frontends.',
 				href: '/product/frontend-builder',
 				icon: LayoutDashboard,
-			},
-			{
-				name: 'AI',
-				description: 'Generate and iterate on code with AI assistance.',
-				href: '/product/ai',
-				icon: BotIcon,
 			},
 			{
 				name: 'Versioning',
