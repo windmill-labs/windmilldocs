@@ -836,6 +836,13 @@ export default function ScriptEditorContent({ title, description }) {
 				reverse
 			/>
 
+			{/* ═══════════════ Dedicated workers ═══════════════ */}
+			<Section
+				title="Runs on dedicated workers"
+				desc={<span>Each script runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> that uses the full CPU and memory available to it. Workers pull jobs from a queue, execute one at a time, and stream logs back. Scale horizontally by adding workers, or assign <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> to high-throughput scripts to eliminate cold starts entirely.</span>}
+				docLink="/docs/core_concepts/worker_groups"
+			/>
+
 			{/* ═══════════════ Triggers ═══════════════ */}
 			<Section
 				title="Trigger via webhooks, schedules, CLI, Slack, email, and more"

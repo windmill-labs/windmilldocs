@@ -1,14 +1,573 @@
 ---
-title: "Workflow editor"
-description: "How do I build workflows in Windmill? Connect scripts into flows with branching, retries and approval steps — no glue code."
+title: "Visual workflow engine with full code flexibility"
+description: "How do I build workflows in Windmill? Orchestrate scripts into DAG-based flows with branching, loops, retries, approval steps, and full observability."
 ---
 
-import React from 'react';
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, BookOpen, Code2, GitBranch, RotateCcw, ShieldCheck, Timer, Layers, Zap, GitFork, CheckCircle2, Code, Repeat, Split, Clock, Pause, AlertTriangle, Shield, Gauge, Database, RefreshCw, Eye, Sparkles, FileCode, Terminal, Plug, Workflow, BarChart3 } from 'lucide-react';
+import { SiTypescript } from 'react-icons/si';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import TriggerGrid from '../../components/use-cases/TriggerGrid';
 
-{/* Placeholder: product page content will be added here */}
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
 
-<div className="max-w-4xl mx-auto pt-32 pb-16 px-4">
-<h1 className="text-4xl font-bold mb-4 dark:text-white">Workflow editor</h1>
-<p className="text-xl text-gray-600 dark:text-gray-400">Connect scripts into flows with no glue code.</p>
-<p className="mt-8 text-gray-500 dark:text-gray-400">This page is under construction.</p>
-</div>
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, reverse, children }) {
+	const hasImage = !!image;
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className={hasImage ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : ''}
+			>
+				<div className={hasImage && reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				{hasImage && (
+					<div className={reverse ? 'lg:order-1' : ''}>
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					</div>
+				)}
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Tab section with optional custom content per tab ── */}
+
+export function TabSection({ title, subtitle, features }) {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn} className="mb-16">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					{title}
+				</h2>
+				{subtitle && (
+					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
+				)}
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+				<div className="flex flex-col gap-2">
+					{features.map((feat, i) => (
+						<button
+							key={feat.label || feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon
+								className={`w-5 h-5 flex-shrink-0 ${
+									i === active ? 'text-white' : 'text-blue-500'
+								}`}
+							/>
+							<span className="font-medium text-sm">
+								{feat.label || feat.title}
+							</span>
+						</button>
+					))}
+				</div>
+
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{features.map((feat, i) => (
+						<div
+							key={feat.label || feat.title}
+							className={`transition-opacity duration-200 ${
+								i === active
+									? 'opacity-100 relative'
+									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
+							}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
+									{feat.title}
+								</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
+								{feat.desc}
+							</p>
+							{feat.content ? (
+								feat.content
+							) : feat.image ? (
+								<img
+									src={feat.image}
+									alt={feat.title}
+									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
+								/>
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">
+										Screenshot coming soon
+									</span>
+								</div>
+							)}
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link
+										to={feat.docLink}
+										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+									>
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── DAG workflow hero animation ── */}
+
+export function PythonColored({ className }) {
+	return (
+		<svg viewBox="0 0 256 255" className={className} xmlns="http://www.w3.org/2000/svg">
+			<defs>
+				<linearGradient id="pyA" x1="12.96%" y1="12.07%" x2="79.64%" y2="78.8%">
+					<stop offset="0%" stopColor="#387EB8" />
+					<stop offset="100%" stopColor="#366994" />
+				</linearGradient>
+				<linearGradient id="pyB" x1="19.13%" y1="20.58%" x2="90.43%" y2="88.01%">
+					<stop offset="0%" stopColor="#FFE052" />
+					<stop offset="100%" stopColor="#FFC331" />
+				</linearGradient>
+			</defs>
+			<path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072ZM92.802 19.66a11.12 11.12 0 1 1 0 22.24 11.12 11.12 0 0 1 0-22.24Z" fill="url(#pyA)" />
+			<path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897Zm34.114-19.586a11.12 11.12 0 1 1 0-22.24 11.12 11.12 0 0 1 0 22.24Z" fill="url(#pyB)" />
+		</svg>
+	);
+}
+
+export const CX = 240;
+export const NH = 40;
+
+export const dagNodes = [
+	{ id: 'trigger',   label: 'Trigger',              x: CX,       y: 40,   w: 230, icon: Zap,         color: 'bg-blue-50',     borderColor: 'border-blue-200',     iconColor: 'text-blue-500',    textColor: 'text-gray-700' },
+	{ id: 'input',     label: 'Input',                x: CX,       y: 120,  w: 230, icon: null,        color: 'bg-gray-50',     borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-600' },
+	{ id: 'create',    label: 'Create AWS resources',  x: CX,       y: 210,  w: 230, icon: SiTypescript,        color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: 'text-[#3178C6]',   textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'branch-a',  label: 'Setup permissions',    x: CX - 120, y: 320, w: 230, icon: PythonColored,   color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'branch-b',  label: 'Configure database',   x: CX + 120, y: 320, w: 230, icon: PythonColored,   color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'merge',     label: 'Collect results',      x: CX,       y: 430, w: 230, icon: GitFork,      color: 'bg-violet-50', borderColor: 'border-violet-200', iconColor: 'text-violet-500',  textColor: 'text-gray-700' },
+	{ id: 'email',     label: 'Send welcome email',   x: CX,       y: 520, w: 230, icon: SiTypescript,        color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: 'text-[#3178C6]',   textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'result',    label: 'Result',               x: CX,       y: 610, w: 230, icon: null,         color: 'bg-gray-50',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-600', delayedIcon: CheckCircle2 },
+];
+
+export const dagEdges = [
+	{ src: 'trigger',   dst: 'input' },
+	{ src: 'input',     dst: 'create' },
+	{ src: 'create',    dst: 'branch-a' },
+	{ src: 'create',    dst: 'branch-b' },
+	{ src: 'branch-a',  dst: 'merge' },
+	{ src: 'branch-b',  dst: 'merge' },
+	{ src: 'merge',     dst: 'email' },
+	{ src: 'email',     dst: 'result' },
+];
+
+export const dagNodeMap = Object.fromEntries(dagNodes.map(n => [n.id, n]));
+
+export function edgePath(e) {
+	const s = dagNodeMap[e.src];
+	const d = dagNodeMap[e.dst];
+	const sy = s.y + NH / 2;
+	const dy = d.y - NH / 2;
+	if (s.x === d.x) return `M${s.x},${sy} L${d.x},${dy}`;
+	const midY = (sy + dy) / 2;
+	return `M${s.x},${sy} C${s.x},${midY} ${d.x},${midY} ${d.x},${dy}`;
+}
+
+export const topPath = "M240,60 L240,100 L240,140 L240,190 L240,230";
+export const leftBranchPath = "M240,230 C240,265 120,265 120,300 L120,340 C120,375 240,375 240,410";
+export const rightBranchPath = "M240,230 C240,265 360,265 360,300 L360,340 C360,375 240,375 240,410";
+export const bottomPath = "M240,410 L240,450 L240,500 L240,540 L240,590";
+
+export const stepOutputs = {
+	trigger:    { text: 'Webhook received', detail: 'POST /api/provision' },
+	input:      { text: 'Validated input', detail: '{ customer: "Acme" }' },
+	create:     { text: 'Resources created', detail: 'ec2-i-0a3b, vpc-7f2e' },
+	'branch-b': { text: 'run 2 branches', detail: 'permissions + database' },
+	merge:      { text: '2/2 branches done', detail: '1.2s total' },
+	email:      { text: 'Email sent', detail: 'from : welcome@windmill.com' },
+	result:     { text: 'Success', detail: 'Provisioned in 4.8s' },
+};
+
+export const topDur = 1.9;
+export const branchDur = 1.6;
+export const bottomDur = 1.6;
+export const totalCycleDur = topDur + branchDur + bottomDur + 1;
+
+export const initDelay = 1.5;
+export const stepTimings = {
+	trigger:    initDelay + 0,
+	input:      initDelay + 0.65,
+	create:     initDelay + 1.65,
+	'branch-a': initDelay + 2.7,
+	'branch-b': initDelay + 2.7,
+	merge:      initDelay + 3.7,
+	email:      initDelay + 4.5,
+	result:     initDelay + 5.1,
+};
+
+export function StepOutput({ nodeId, delay }) {
+	const output = stepOutputs[nodeId];
+	if (!output) return null;
+	return (
+		<div className="absolute left-full ml-2 z-30 top-1/2" style={{ transform: 'translateY(-50%)' }}>
+			<motion.div
+				initial={{ opacity: 0, scale: 0.8 }}
+				animate={{ opacity: [0, 0, 1], scale: [0.8, 0.8, 1] }}
+				transition={{ duration: 0.6, delay, times: [0, 0.01, 1], ease: 'easeOut' }}
+			>
+				<div className="rounded-lg border border-green-800 bg-gray-900/95 backdrop-blur-sm shadow-sm px-3 py-2 overflow-hidden" style={{ width: 210 }}>
+					<div className="flex items-center gap-1.5">
+						<span className="text-green-400 text-sm">{String.fromCharCode(10003)}</span>
+						<span className="text-[12px] font-medium text-white">{output.text}</span>
+					</div>
+					<div className="text-[11px] font-mono text-white mt-0.5">{output.detail}</div>
+				</div>
+			</motion.div>
+		</div>
+	);
+}
+
+export function HeroAnimation() {
+	return (
+		<div className="relative w-[520px] h-[650px]">
+			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+				{dagEdges.map((e, i) => (
+					<path key={`edge-${i}`} d={edgePath(e)}
+						className="stroke-gray-300" strokeWidth={1.5} fill="none" />
+				))}
+				<path id="wfTopRoute" d={topPath} fill="none" stroke="none" />
+				<path id="wfLeftBranch" d={leftBranchPath} fill="none" stroke="none" />
+				<path id="wfRightBranch" d={rightBranchPath} fill="none" stroke="none" />
+				<path id="wfBottomRoute" d={bottomPath} fill="none" stroke="none" />
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${topDur}s`} repeatCount="1" begin={`${initDelay}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#wfTopRoute" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;1;1;0;0;0;0;0" keyTimes={`0;0.01;${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+0.3)/totalCycleDur};0.7;0.9;1`} />
+				</circle>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#wfLeftBranch" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
+				</circle>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#wfRightBranch" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
+				</circle>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${bottomDur}s`} repeatCount="1" begin={`${initDelay + topDur+branchDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#wfBottomRoute" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0" keyTimes={`0;${(topDur+branchDur-0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};${(topDur+branchDur+bottomDur)/totalCycleDur};${(topDur+branchDur+bottomDur+0.01)/totalCycleDur};1`} />
+				</circle>
+			</svg>
+
+			{dagNodes.map((node, i) => (
+				<div key={node.id} className="absolute"
+					style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
+				>
+				<motion.div
+					initial={{ opacity: 0, scale: 0.85 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.45, delay: i * 0.1, ease: 'easeOut' }}
+					className="relative"
+				>
+					<motion.div
+						className="absolute -inset-1 rounded-xl bg-blue-400/20"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: [0, 0, 1, 1, 0] }}
+						transition={{ duration: 3, delay: stepTimings[node.id], times: [0, 0.01, 0.1, 0.7, 1], ease: 'easeOut' }}
+					/>
+					<div className="relative" style={{ width: node.w, height: NH }}>
+						<div
+							className={`absolute inset-0 px-4 py-2 rounded-xl border ${node.borderColor} shadow-sm ${node.color} flex items-center gap-2.5`}
+							style={{ justifyContent: 'center' }}
+						>
+							{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+							<span className={`text-sm font-medium ${node.textColor} whitespace-nowrap`}>{node.label}</span>
+						</div>
+						{node.turnsGreen && <motion.div
+							className="absolute inset-0 px-4 py-2 rounded-xl border border-green-300 shadow-sm bg-green-50 flex items-center gap-2.5"
+							style={{ justifyContent: 'center' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [0, 0, 1] }}
+							transition={{ duration: 0.5, delay: stepTimings[node.id] + 0.2, times: [0, 0.01, 1], ease: 'easeOut' }}
+						>
+							{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+							<span className="text-sm font-medium text-green-700 whitespace-nowrap">{node.label}</span>
+						</motion.div>}
+						{node.delayedIcon && <motion.div
+							className="absolute inset-0 px-4 py-2 rounded-xl border border-emerald-200 shadow-sm bg-emerald-50 flex items-center gap-2.5"
+							style={{ justifyContent: 'center' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [0, 0, 1] }}
+							transition={{ duration: 0.5, delay: stepTimings[node.id] + 0.2, times: [0, 0.01, 1], ease: 'easeOut' }}
+						>
+							<node.delayedIcon className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+							<span className="text-sm font-medium text-gray-700 whitespace-nowrap">{node.label}</span>
+						</motion.div>}
+					</div>
+					<StepOutput nodeId={node.id} delay={stepTimings[node.id]} />
+				</motion.div>
+				</div>
+			))}
+		</div>
+	);
+}
+
+{/* ── Step types data ── */}
+
+export const stepTypes = [
+	{ icon: Code, label: 'Script', title: 'Script', desc: <span>Run a script in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any supported language</Link>. Each step gets the same <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script editor</Link> with LSP autocompletion, auto-generated UI, and dependency management.</span>, image: '/img/money-pages/scripts-preview.webp', docLink: '/docs/flows/flow_editor' },
+	{ icon: Repeat, label: 'For loop', title: 'For loop', desc: <span>Iterate over a list and run one or more steps per item. Items can be processed <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">sequentially or in parallel</Link>.</span>, docLink: '/docs/flows/flow_loops' },
+	{ icon: RefreshCw, label: 'While loop', title: 'While loop', desc: <span>Repeat steps until a <Link to="/docs/flows/while_loops" className="text-blue-600 dark:text-blue-400 hover:underline">condition evaluates to false</Link>. Useful for polling, pagination, or convergence logic.</span>, docLink: '/docs/flows/while_loops' },
+	{ icon: Split, label: 'Branches', title: 'Branches', desc: <span>Route execution through <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">conditional or parallel branches</Link>. Parallel branches run concurrently and merge before the next step.</span>, image: '/img/money-pages/parallel-branches.webp', docLink: '/docs/flows/flow_branches' },
+	{ icon: ShieldCheck, label: 'Approval', title: 'Approval', desc: <span>Pause the flow and wait for <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">human approval</Link> via email, Slack, or the Windmill UI. Supports timeouts and multiple approvers.</span>, docLink: '/docs/flows/flow_approval' },
+	{ icon: Zap, label: 'Trigger', title: 'Trigger', desc: <span>Start a flow from <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">any external event</Link>: schedules, webhooks, message queues, database changes, emails, and more.</span>, content: <TriggerGrid title={null} subtitle={null} />, docLink: '/docs/getting_started/triggers' },
+	{ icon: AlertTriangle, label: 'Error handler', title: 'Error handler', desc: <span>Catch failures and run <Link to="/docs/flows/flow_error_handler" className="text-blue-600 dark:text-blue-400 hover:underline">custom recovery logic</Link>. Error handlers receive the failed step's context and can notify, retry, or clean up.</span>, image: '/img/money-pages/error-handler.webp', docLink: '/docs/flows/flow_error_handler' },
+	{ icon: Pause, label: 'Sleep / Suspend', title: 'Sleep / Suspend', desc: <span>Pause execution for a <Link to="/docs/flows/sleep" className="text-blue-600 dark:text-blue-400 hover:underline">fixed duration or until an external event</Link> resumes the flow. The worker is freed while the flow is suspended.</span>, docLink: '/docs/flows/sleep' },
+	{ icon: Sparkles, label: 'AI flow builder', title: 'AI flow builder', desc: <span>Describe a workflow in plain language and Windmill <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">generates a complete multi-step flow</Link> with the right step types, connections, and error handling. Edit individual steps or regenerate sections.</span>, image: '/img/money-pages/ai-dag.webp', docLink: '/docs/core_concepts/ai_generation' },
+];
+
+{/* ── Step features data ── */}
+
+export const stepFeatures = [
+	{ icon: RotateCcw, label: 'Retries', title: 'Retries', desc: <span>Configure <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">automatic retries</Link> with a fixed or exponential backoff delay. Set the maximum number of attempts per step.</span>, docLink: '/docs/flows/retries' },
+	{ icon: Layers, label: 'Concurrency limits', title: 'Concurrency limits', desc: <span>Control how many <Link to="/docs/flows/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">runs execute in parallel</Link> for a given flow or step. Prevent overloading external APIs or databases.</span>, docLink: '/docs/flows/concurrency_limit' },
+	{ icon: Database, label: 'Result caching', title: 'Result caching', desc: <span><Link to="/docs/flows/cache" className="text-blue-600 dark:text-blue-400 hover:underline">Cache step results</Link> for a configurable TTL. Identical inputs return the cached output without re-executing the step.</span>, docLink: '/docs/flows/cache' },
+	{ icon: Shield, label: 'Early stop', title: 'Early stop', desc: <span><Link to="/docs/flows/early_stop" className="text-blue-600 dark:text-blue-400 hover:underline">Skip downstream steps</Link> based on a JavaScript expression evaluated against the step's output.</span>, docLink: '/docs/flows/early_stop' },
+	{ icon: Clock, label: 'Timeout', title: 'Timeout', desc: <span>Set a maximum execution time per step. If a step exceeds its timeout, it is terminated and the <Link to="/docs/flows/flow_error_handler" className="text-blue-600 dark:text-blue-400 hover:underline">error handler</Link> runs.</span>, docLink: '/docs/flows/flow_editor' },
+	{ icon: Eye, label: 'Step mocking', title: 'Step mocking', desc: <span>Replace a step's output with <Link to="/docs/flows/step_mocking" className="text-blue-600 dark:text-blue-400 hover:underline">mock data</Link> during development. Test downstream logic without calling external services.</span>, docLink: '/docs/flows/step_mocking' },
+	{ icon: Gauge, label: 'Priority', title: 'Priority', desc: <span>Set <Link to="/docs/flows/priority" className="text-blue-600 dark:text-blue-400 hover:underline">execution priority</Link> so critical flows are picked up by workers before lower-priority jobs in the queue.</span>, docLink: '/docs/flows/priority' },
+];
+
+{/* ── Use case cards data ── */}
+
+export const useCases = [
+	{ icon: Workflow, label: 'Production workflows', desc: 'Orchestrate multi-step business processes with approval gates, error handling, and audit trails.', link: '/use-cases/workflows' },
+	{ icon: BarChart3, label: 'Data pipelines', desc: 'Extract, transform, and load data across sources with parallel execution and retry logic.', link: '/use-cases/data-pipelines' },
+	{ icon: Sparkles, label: 'AI agents', desc: 'Chain LLM calls, tool use, and human-in-the-loop steps into reliable agent workflows.', link: '/use-cases/ai-agents' },
+	{ icon: Terminal, label: 'Internal tools', desc: 'Build scripts and flows that power internal dashboards, admin panels, and automation.', link: '/use-cases/internal-tools' },
+];
+
+
+{/* ── Main page ── */}
+
+export default function WorkflowEditorContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Visual workflow engine with full code flexibility
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Orchestrate scripts into DAG-based flows with branching, loops, retries, and approval steps. 20ms overhead per step.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/flows/flow_editor"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<HeroAnimation />
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Every step is a script ═══════════════ */}
+			<Section
+				title="Every step is a script"
+				desc={<span>Workflow steps are scripts written in any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">supported language</Link>. Each step uses the same <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script editor</Link> with LSP autocompletion, auto-generated UI, and resource access.</span>}
+				image="/img/money-pages/scripts-preview.webp"
+				docLink="/docs/getting_started/scripts_quickstart"
+			/>
+
+			{/* ═══════════════ Link steps with dynamic expressions ═══════════════ */}
+			<Section
+				title="Link steps using dynamic expressions"
+				desc={<span>Reference previous step outputs with <code>results.step_name</code> or write JavaScript expressions. The editor provides <Link to="/docs/flows/editor_components" className="text-blue-600 dark:text-blue-400 hover:underline">autocompletion</Link> for available variables and validates expressions before running.</span>}
+				image="/img/money-pages/flow-preview.webp"
+				docLink="/docs/flows/editor_components"
+				reverse
+			/>
+
+			{/* ═══════════════ Orchestrate scripts into workflows (tabs) ═══════════════ */}
+			<TabSection
+				title="Orchestrate scripts into high-performance workflows"
+				subtitle={<span>Build <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link> by chaining steps in a visual DAG editor. Each step type serves a specific purpose in your workflow.</span>}
+				features={stepTypes}
+			/>
+
+			{/* ═══════════════ Connect to 300+ integrations ═══════════════ */}
+			<Section
+				title="Connect to 300+ integrations"
+				desc={<span>Declare a parameter as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource type</Link> and the UI shows a dropdown of configured connections. Credentials are centrally managed, encrypted at rest, and injected at runtime. Supports OAuth2, API keys, and database connections with typed schemas.</span>}
+				image="/img/money-pages/resource.webp"
+				docLink="/docs/core_concepts/resources_and_types"
+			/>
+
+			{/* ═══════════════ Retries, concurrency, caching (tabs) ═══════════════ */}
+			<TabSection
+				title="Retries, concurrency, caching and error handling"
+				subtitle={<span>Configure step-level reliability features directly from the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link>. Each feature is opt-in per step.</span>}
+				features={stepFeatures}
+			/>
+
+			{/* ═══════════════ Dedicated workers ═══════════════ */}
+			<Section
+				title="Runs on dedicated workers"
+				desc={<span>Each flow step runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> that uses the full CPU and memory available to it. Workers execute one job at a time, with roughly 20ms of overhead between steps. Scale horizontally by adding workers, or assign <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> to high-throughput flows to eliminate cold starts entirely.</span>}
+				docLink="/docs/core_concepts/worker_groups"
+			/>
+
+			{/* ═══════════════ Full observability ═══════════════ */}
+			<Section
+				title="Full observability"
+				desc={<span>Stream logs in real time, inspect inputs and outputs at every step, and <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">restart from any step</Link> without replaying the full run. View <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">run history</Link> with filters for status, duration, and user.</span>}
+				image="/img/money-pages/monitoring.webp"
+				docLink="/docs/core_concepts/jobs"
+				reverse
+			/>
+
+			{/* ═══════════════ Built for production workloads ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Built for production workloads
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Teams use Windmill flows to power critical business processes at scale.
+					</p>
+				</motion.div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+					{useCases.map((uc) => {
+						const Icon = uc.icon;
+						return (
+							<Link
+								key={uc.label}
+								to={uc.link}
+								className="group flex flex-col gap-3 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-lg transition-all !no-underline"
+							>
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<span className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+									{uc.label}
+								</span>
+								<span className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+									{uc.desc}
+								</span>
+								<span className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400 mt-auto">
+									Learn more <ArrowRight className="w-3.5 h-3.5" />
+								</span>
+							</Link>
+						);
+					})}
+				</div>
+			</div>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What is the overhead per step?', textAnswer: 'Windmill adds roughly 20ms of overhead per step. The rest of execution time is your code running on dedicated workers.' },
+				{ question: 'Can I mix languages in a single flow?', textAnswer: 'Yes. Each step can use a different language. A flow can combine TypeScript, Python, SQL, Go, Bash, and any other supported language.' },
+				{ question: 'How do approval steps work?', textAnswer: 'An approval step pauses the flow and sends a notification (email, Slack, or custom). The flow resumes only after a user approves or rejects it. Approvals can have timeouts and multiple approvers.' },
+				{ question: 'Can I develop flows locally?', textAnswer: 'Yes. Flows are stored as YAML files. Use the Windmill CLI or VS Code extension to edit, test, and push flows from your local environment. Git sync works bidirectionally.' },
+				{ question: 'What triggers are supported?', textAnswer: 'Schedules (cron), webhooks, Kafka, SQS, NATS, MQTT, GCP Pub/Sub, PostgreSQL CDC, emails, WebSockets, HTTP routes, CLI, and auto-generated UIs.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source and can be self-hosted with Docker or Kubernetes, including air-gapped environments. Enterprise features require a paid plan.' },
+			]} />
+
+			{/* ═══════════════ Transition to Frontend Builder ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Build frontends for your workflows</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Create dashboards, forms, and approval UIs that connect directly to your flows.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<Link
+							to="/product/frontend-builder"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Explore the frontend builder
+							<ArrowRight className="w-4 h-4" />
+						</Link>
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							Try Windmill free
+						</a>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
