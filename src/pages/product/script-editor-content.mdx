@@ -1,6 +1,6 @@
 ---
-title: "Script editor"
-description: "How do I write scripts in Windmill? Write a function, get an auto-generated UI, a webhook endpoint, and triggers with zero config."
+title: "Code editor with built-in infrastructure"
+description: "How do I write scripts in Windmill? Write a function, get an auto-generated UI, an API endpoint, triggers, and resource access with zero config."
 ---
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -756,7 +756,7 @@ export default function ScriptEditorContent({ title, description }) {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Code editor with auto-generated UI and prebuilt triggers
+							Code editor with built-in infrastructure
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 							Write a function in TypeScript, Python, Go, Bash, or SQL. Windmill gives you a UI, an API endpoint, triggers, and resource access automatically.
