@@ -1,7 +1,7 @@
 export const workflowEditorProduct = {
 	slug: 'workflow-editor',
 	name: 'Workflow editor',
-	headline: 'Connect scripts into flows',
-	description: 'Connect scripts into flows with branching, retries and approval steps — no glue code.',
+	headline: 'Visual workflow engine with full code flexibility',
+	description: 'Orchestrate scripts into DAG-based flows with branching, loops, retries, approval steps, and full observability.',
 	link: '/product/workflow-editor',
 };
