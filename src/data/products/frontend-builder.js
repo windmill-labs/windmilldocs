@@ -2,6 +2,6 @@ export const frontendBuilderProduct = {
 	slug: 'frontend-builder',
 	name: 'Frontend builder',
 	headline: 'Full-code frontends connected to your backend',
-	description: 'Build apps and dashboards in React or Svelte, connected to your Windmill backend logic.',
+	description: 'Build custom UIs in React or Svelte with an auto-generated, type-safe API to backend runnables in 20+ languages.',
 	link: '/product/frontend-builder',
 };
