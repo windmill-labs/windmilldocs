@@ -1,7 +1,7 @@
 export const localDevProduct = {
 	slug: 'local-dev',
 	name: 'Local dev',
-	headline: 'Develop and test locally',
-	description: 'Develop and test locally with the Windmill CLI, then push to production seamlessly.',
+	headline: 'Develop locally, deploy to Windmill',
+	description: 'Use the CLI, VS Code extension, and AI coding assistants to build scripts and flows from your own environment.',
 	link: '/product/local-dev',
 };
