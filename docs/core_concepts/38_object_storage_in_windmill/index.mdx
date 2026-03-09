@@ -390,7 +390,7 @@ Learn more about it in the [Data pipelines](../27_data_pipelines/index.mdx) sect
 
 ### Dynamic S3 object access in public apps
 
-For security reasons, dynamic S3 objects are not accessible by default in public apps when users aren't logged in.
+For security reasons, dynamic S3 objects are not accessible by default in [public apps](../../apps/8_public_apps.mdx) when users aren't logged in.
 To make them publicly accessible, you need to sign S3 objects using Windmill's built-in helpers:
 
 - TypeScript: `wmill.signS3Object()` (single) / `wmill.signS3Objects()` (multiple)
