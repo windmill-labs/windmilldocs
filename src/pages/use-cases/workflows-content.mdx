@@ -1,0 +1,545 @@
+---
+title: "How to automate workflows with Windmill"
+description: "How do I automate production workflows? Windmill orchestrates DAG-based flows with branching, retries, approval steps, error handling and full audit trails at scale."
+---
+
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2, BookOpen, Code2, Code, AlertTriangle, Rocket, Eye, Plug } from 'lucide-react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
+import { useColorMode } from '@docusaurus/theme-common';
+import { Switch } from '@headlessui/react';
+import classNames from 'classnames';
+import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
+import { SiTypescript } from 'react-icons/si';
+import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import LogoClouds from '../../landing/LogoClouds';
+import GithubStarCount from '../../landing/GithubStarCount';
+
+export function PythonColored({ className }) {
+	return (
+		<svg viewBox="0 0 256 255" className={className} xmlns="http://www.w3.org/2000/svg">
+			<defs>
+				<linearGradient id="pyA" x1="12.96%" y1="12.07%" x2="79.64%" y2="78.8%">
+					<stop offset="0%" stopColor="#387EB8" />
+					<stop offset="100%" stopColor="#366994" />
+				</linearGradient>
+				<linearGradient id="pyB" x1="19.13%" y1="20.58%" x2="90.43%" y2="88.01%">
+					<stop offset="0%" stopColor="#FFE052" />
+					<stop offset="100%" stopColor="#FFC331" />
+				</linearGradient>
+			</defs>
+			<path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072ZM92.802 19.66a11.12 11.12 0 1 1 0 22.24 11.12 11.12 0 0 1 0-22.24Z" fill="url(#pyA)" />
+			<path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897Zm34.114-19.586a11.12 11.12 0 1 1 0-22.24 11.12 11.12 0 0 1 0 22.24Z" fill="url(#pyB)" />
+		</svg>
+	);
+}
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── DAG workflow hero animation ── */}
+
+export const CX = 240;
+export const NH = 40;
+
+export const dagNodes = [
+	{ id: 'trigger',   label: 'Trigger',              x: CX,       y: 40,   w: 230, icon: Zap,         color: 'bg-blue-50',     borderColor: 'border-blue-200',     iconColor: 'text-blue-500',    textColor: 'text-gray-700' },
+	{ id: 'input',     label: 'Input',                x: CX,       y: 120,  w: 230, icon: null,        color: 'bg-gray-50',     borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-600' },
+	{ id: 'create',    label: 'Create AWS resources',  x: CX,       y: 210,  w: 230, icon: SiTypescript,        color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: 'text-[#3178C6]',   textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'branch-a',  label: 'Setup permissions',    x: CX - 120, y: 320, w: 230, icon: PythonColored,   color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'branch-b',  label: 'Configure database',   x: CX + 120, y: 320, w: 230, icon: PythonColored,   color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'merge',     label: 'Collect results',      x: CX,       y: 430, w: 230, icon: GitFork,      color: 'bg-violet-50', borderColor: 'border-violet-200', iconColor: 'text-violet-500',  textColor: 'text-gray-700' },
+	{ id: 'email',     label: 'Send welcome email',   x: CX,       y: 520, w: 230, icon: SiTypescript,        color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: 'text-[#3178C6]',   textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'result',    label: 'Result',               x: CX,       y: 610, w: 230, icon: null,         color: 'bg-gray-50',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-600', delayedIcon: CheckCircle2 },
+];
+
+export const dagEdges = [
+	{ src: 'trigger',   dst: 'input' },
+	{ src: 'input',     dst: 'create' },
+	{ src: 'create',    dst: 'branch-a' },
+	{ src: 'create',    dst: 'branch-b' },
+	{ src: 'branch-a',  dst: 'merge' },
+	{ src: 'branch-b',  dst: 'merge' },
+	{ src: 'merge',     dst: 'email' },
+	{ src: 'email',     dst: 'result' },
+];
+
+export const dagNodeMap = Object.fromEntries(dagNodes.map(n => [n.id, n]));
+
+export function edgePath(e) {
+	const s = dagNodeMap[e.src];
+	const d = dagNodeMap[e.dst];
+	const sy = s.y + NH / 2;
+	const dy = d.y - NH / 2;
+	if (s.x === d.x) return `M${s.x},${sy} L${d.x},${dy}`;
+	const midY = (sy + dy) / 2;
+	return `M${s.x},${sy} C${s.x},${midY} ${d.x},${midY} ${d.x},${dy}`;
+}
+
+export const topPath = "M240,60 L240,100 L240,140 L240,190 L240,230";
+export const leftBranchPath = "M240,230 C240,265 120,265 120,300 L120,340 C120,375 240,375 240,410";
+export const rightBranchPath = "M240,230 C240,265 360,265 360,300 L360,340 C360,375 240,375 240,410";
+export const bottomPath = "M240,410 L240,450 L240,500 L240,540 L240,590";
+
+export const stepOutputs = {
+	trigger:    { text: 'Webhook received', detail: 'POST /api/provision' },
+	input:      { text: 'Validated input', detail: '{ customer: "Acme" }' },
+	create:     { text: 'Resources created', detail: 'ec2-i-0a3b, vpc-7f2e' },
+	'branch-b': { text: 'run 2 branches', detail: 'permissions + database' },
+	merge:      { text: '2/2 branches done', detail: '1.2s total' },
+	email:      { text: 'Email sent', detail: 'from : welcome@windmill.com' },
+	result:     { text: 'Success', detail: 'Provisioned in 4.8s' },
+};
+
+export const topDur = 1.9;
+export const branchDur = 1.6;
+export const bottomDur = 1.6;
+export const totalCycleDur = topDur + branchDur + bottomDur + 1;
+
+export const initDelay = 1.5;
+export const stepTimings = {
+	trigger:    initDelay + 0,
+	input:      initDelay + 0.65,
+	create:     initDelay + 1.65,
+	'branch-a': initDelay + 2.7,
+	'branch-b': initDelay + 2.7,
+	merge:      initDelay + 3.7,
+	email:      initDelay + 4.5,
+	result:     initDelay + 5.1,
+};
+
+export const activeSequence = ['trigger', 'input', 'create', 'branch-a', 'branch-b', 'merge', 'email', 'result'];
+
+export function StepOutput({ nodeId, delay }) {
+	const output = stepOutputs[nodeId];
+	if (!output) return null;
+	return (
+		<div className="absolute left-full ml-2 z-30 top-1/2" style={{ transform: 'translateY(-50%)' }}>
+			<motion.div
+				initial={{ opacity: 0, scale: 0.8 }}
+				animate={{ opacity: [0, 0, 1], scale: [0.8, 0.8, 1] }}
+				transition={{ duration: 0.6, delay, times: [0, 0.01, 1], ease: 'easeOut' }}
+			>
+				<div className="rounded-lg border border-green-800 bg-gray-900/95 backdrop-blur-sm shadow-sm px-3 py-2 overflow-hidden" style={{ width: 210 }}>
+					<div className="flex items-center gap-1.5">
+						<span className="text-green-400 text-sm">{String.fromCharCode(10003)}</span>
+						<span className="text-[12px] font-medium text-white">{output.text}</span>
+					</div>
+					<div className="text-[11px] font-mono text-white mt-0.5">{output.detail}</div>
+				</div>
+			</motion.div>
+		</div>
+	);
+}
+
+export function HeroAnimation() {
+	return (
+		<div className="relative w-[520px] h-[650px]">
+			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+				{dagEdges.map((e, i) => (
+					<path key={`edge-${i}`} d={edgePath(e)}
+						className="stroke-gray-300" strokeWidth={1.5} fill="none" />
+				))}
+				<path id="topRoute" d={topPath} fill="none" stroke="none" />
+				<path id="leftBranch" d={leftBranchPath} fill="none" stroke="none" />
+				<path id="rightBranch" d={rightBranchPath} fill="none" stroke="none" />
+				<path id="bottomRoute" d={bottomPath} fill="none" stroke="none" />
+				{/* Single ball: Trigger → Create AWS resources */}
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${topDur}s`} repeatCount="1" begin={`${initDelay}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#topRoute" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;1;1;0;0;0;0;0" keyTimes={`0;0.01;${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+0.3)/totalCycleDur};0.7;0.9;1`} />
+				</circle>
+				{/* Left branch ball */}
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#leftBranch" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
+				</circle>
+				{/* Right branch ball */}
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#rightBranch" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
+				</circle>
+				{/* Single ball: Collect results → Result */}
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${bottomDur}s`} repeatCount="1" begin={`${initDelay + topDur+branchDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#bottomRoute" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0" keyTimes={`0;${(topDur+branchDur-0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};${(topDur+branchDur+bottomDur)/totalCycleDur};${(topDur+branchDur+bottomDur+0.01)/totalCycleDur};1`} />
+				</circle>
+			</svg>
+
+			{dagNodes.map((node, i) => (
+				<div key={node.id} className="absolute"
+					style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
+				>
+				<motion.div
+					initial={{ opacity: 0, scale: 0.85 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.45, delay: i * 0.1, ease: 'easeOut' }}
+					className="relative"
+				>
+					{/* Node glow */}
+					<motion.div
+						className="absolute -inset-1 rounded-xl bg-blue-400/20"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: [0, 0, 1, 1, 0] }}
+						transition={{ duration: 3, delay: stepTimings[node.id], times: [0, 0.01, 0.1, 0.7, 1], ease: 'easeOut' }}
+					/>
+					{/* Node box */}
+					<div className="relative" style={{ width: node.w, height: NH }}>
+						{/* Initial state */}
+						<div
+							className={`absolute inset-0 px-4 py-2 rounded-xl border ${node.borderColor} shadow-sm ${node.color} flex items-center gap-2.5`}
+							style={{ justifyContent: 'center' }}
+						>
+							{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+							<span className={`text-sm font-medium ${node.textColor} whitespace-nowrap`}>{node.label}</span>
+						</div>
+						{/* Success state - fades in */}
+						{node.turnsGreen && <motion.div
+							className="absolute inset-0 px-4 py-2 rounded-xl border border-green-300 shadow-sm bg-green-50 flex items-center gap-2.5"
+							style={{ justifyContent: 'center' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [0, 0, 1] }}
+							transition={{ duration: 0.5, delay: stepTimings[node.id] + 0.2, times: [0, 0.01, 1], ease: 'easeOut' }}
+						>
+							{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+							<span className="text-sm font-medium text-green-700 whitespace-nowrap">{node.label}</span>
+						</motion.div>}
+						{/* Result node - delayed icon + success colors */}
+						{node.delayedIcon && <motion.div
+							className="absolute inset-0 px-4 py-2 rounded-xl border border-emerald-200 shadow-sm bg-emerald-50 flex items-center gap-2.5"
+							style={{ justifyContent: 'center' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [0, 0, 1] }}
+							transition={{ duration: 0.5, delay: stepTimings[node.id] + 0.2, times: [0, 0.01, 1], ease: 'easeOut' }}
+						>
+							<node.delayedIcon className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+							<span className="text-sm font-medium text-gray-700 whitespace-nowrap">{node.label}</span>
+						</motion.div>}
+					</div>
+					{/* Step output panel */}
+					<StepOutput nodeId={node.id} delay={stepTimings[node.id]} />
+				</motion.div>
+				</div>
+			))}
+		</div>
+	);
+}
+
+export const workflowFeatures = [
+	{
+		id: 'steps-as-code',
+		icon: Code,
+		label: 'Steps as code',
+		title: 'Steps as code',
+		desc: <span>Write each workflow step in the language that fits best. <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, SQL, Go, Bash</Link>, Rust, PHP and 20+ more. Mix and match freely within a single flow.</span>,
+		image: '/img/money-pages/workflow-code.webp',
+		docLink: '/docs/getting_started/scripts_quickstart',
+	},
+	{
+		id: 'dag-workflow',
+		icon: Layers,
+		label: 'DAG visualizer',
+		title: 'DAG visualizer',
+		desc: <span>See your entire workflow as an interactive graph. Inspect inputs and outputs at each node, follow data as it flows between <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">steps</Link>, spot bottlenecks at a glance and restart from any step without replaying the full run.</span>,
+		image: '/img/money-pages/dag-workflow.webp',
+		docLink: '/docs/flows/flow_editor',
+	},
+	{
+		id: 'resources',
+		icon: Plug,
+		label: 'Resources',
+		title: 'Connect to any service',
+		desc: <span>Connect to <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">databases, APIs and third-party services</Link> using typed <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Credentials are stored centrally and injected at runtime. Share connections across scripts and flows without duplicating secrets.</span>,
+		image: '/img/money-pages/resource.webp',
+		docLink: '/docs/core_concepts/resources_and_types',
+	},
+	{
+		id: 'control-flow',
+		icon: GitBranch,
+		label: 'Branching, loops & approvals',
+		title: 'Branching, loops & approvals',
+		desc: <span>Use <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">branching</Link> (if/else, parallel fan-out), <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">for-loops</Link> with configurable parallelism, while-loops for polling, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">and approval steps</Link> that suspend until someone approves.</span>,
+		image: '/img/money-pages/parallel-branches.webp',
+		docLink: '/docs/flows/flow_editor',
+	},
+	{
+		id: 'error-handling',
+		icon: AlertTriangle,
+		label: 'Error handling & retry',
+		title: 'Error handling and retry that don\'t fail silently',
+		desc: <span>Each step can have its own <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> strategy and configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with exponential backoff. Run a custom script on failure (send a Slack alert, create a ticket, trigger a rollback), stop the flow early based on a predicate, or mark non-critical steps to continue on error.</span>,
+		image: '/img/money-pages/error-handler.webp',
+		docLink: '/docs/flows/error_handling',
+	},
+	{
+		id: 'triggers',
+		icon: Zap,
+		label: 'Triggers',
+		title: 'Trigger from anywhere',
+		desc: <span>Start flows from <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedules</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks</Link>, Slack commands, emails, <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Postgres CDC, Kafka, SQS</Link>, or manually from the UI. Combine multiple trigger types on the same flow.</span>,
+		image: '/img/money-pages/triggers.webp',
+		docLink: '/docs/getting_started/triggers',
+	},
+	{
+		id: 'deploy-and-version',
+		icon: Rocket,
+		label: 'Deploy & version control',
+		title: 'Deploy & version control',
+		desc: <span>Promote flows from <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">draft to production</Link> in one click with full deployment history and instant rollbacks. Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link>, use your existing code review workflows and deploy via the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">CI/CD pipelines</Link>.</span>,
+		image: '/img/money-pages/deploy-workflow.webp',
+		docLink: '/docs/advanced/git_sync',
+	},
+	{
+		id: 'observability',
+		icon: Eye,
+		label: 'Observability',
+		title: 'Full observability out of the box',
+		desc: <span>Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">logs</Link> and re-run with one click. Track resource usage, monitor <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> and set up alerts for failures.</span>,
+		image: '/img/money-pages/monitoring.webp',
+		docLink: '/docs/core_concepts/jobs',
+	},
+];
+
+export function ScaleAndSpeedSection() {
+	const { colorMode } = useColorMode();
+	const [chart, setChart] = useState('short');
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn} className="mb-12">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					Run at any scale with best performance
+				</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300">
+					Engineered to be the fastest workflow engine in the industry. From a single-node VPS to 1,000-node Kubernetes clusters, auto-scale on demand or isolate critical tasks with dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link>.
+				</p>
+			</motion.div>
+
+			<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 p-6">
+				<div className="flex flex-row gap-2 items-center justify-end mb-4">
+					<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+						10 long tasks
+					</span>
+					<Switch
+						checked={chart === 'short'}
+						title="Switch between short and long running tasks"
+						onChange={() => setChart(chart === 'long' ? 'short' : 'long')}
+						className={`${
+							chart === 'short' ? 'bg-blue-500 dark:bg-blue-900' : 'bg-gray-200 dark:bg-gray-800'
+						} relative inline-flex h-[24px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+					>
+						<span
+							aria-hidden="true"
+							className={`${
+								chart === 'short' ? 'translate-x-6' : 'translate-x-0'
+							} pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+						/>
+					</Switch>
+					<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
+						40 lightweight tasks
+					</span>
+				</div>
+				<div
+					className={classNames(
+						colorMode === 'dark' ? 'bg-black' : 'bg-gray-100',
+						'w-full p-4 md:p-8 bg-opacity-40 rounded-xl benchmark-chart-container'
+					)}
+					data-theme={colorMode}
+				>
+					<BrowserOnly fallback={<div className="h-64" />}>
+						{() => (
+							<div className="grid">
+								{chart === 'short' ? (
+									<div key="short">
+										<BenchmarkVisualization
+											usecase="fibonacci_40_10"
+											language="python"
+											engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
+											workers={1}
+											title="40 lightweight tasks comparison"
+											maintainAspectRatio={false}
+											shouldAnimate={true}
+										/>
+									</div>
+								) : (
+									<div key="long">
+										<BenchmarkVisualization
+											usecase="fibonacci_10_33"
+											language="python"
+											engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
+											workers={1}
+											title="10 long running tasks comparison"
+											maintainAspectRatio={false}
+											shouldAnimate={true}
+										/>
+									</div>
+								)}
+							</div>
+						)}
+					</BrowserOnly>
+				</div>
+				<div className="flex justify-end mt-3">
+					<Link to="/docs/misc/benchmarks/competitors" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+						<BookOpen className="w-4 h-4" /> See benchmarks
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+}
+
+export default function WorkflowAutomationContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* Hero */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Build production-grade workflows
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							For engineering teams who need to build workflows with production-grade observability, scalability and security.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/flows/flow_editor"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Write workflow steps in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline">Python, TypeScript, SQL, and 20+ languages</Link></span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Connect steps with the <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">fastest workflow engine</Link> built for enterprise scale</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Enterprise-ready with <Link to="/docs/misc/setup_oauth" className="text-blue-500 hover:underline">SSO</Link>, <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-500 hover:underline">RBAC</Link>, <Link to="/docs/core_concepts/audit_logs" className="text-blue-500 hover:underline">audit logs</Link>, <Link to="/docs/advanced/git_sync" className="text-blue-500 hover:underline">Git sync</Link> and <Link to="/docs/advanced/self_host" className="text-blue-500 hover:underline">self-hosting</Link></span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Everything built-in from <Link to="/docs/getting_started/triggers" className="text-blue-500 hover:underline">triggers</Link> and <Link to="/docs/flows/retries" className="text-blue-500 hover:underline">retries</Link> to <Link to="/docs/flows/flow_approval" className="text-blue-500 hover:underline">approval steps</Link>, <Link to="/docs/flows/error_handling" className="text-blue-500 hover:underline">error handling</Link> and <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-500 hover:underline">secrets</Link></span>
+							</div>
+						</div>
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<HeroAnimation />
+					</div>
+				</div>
+			</div>
+
+			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
+
+			<TabFeatureSection
+			title="Everything you need in a workflow engine"
+			subtitle={<>Write each step in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link> or any supported language, and connect them in the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link> with built-in error handling, retries and observability.</>}
+			features={workflowFeatures}
+		/>
+
+			<ScaleAndSpeedSection />
+
+			{/* Case study */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
+				<CaseStudyBanner
+					logo="/images/brands/panther-light.svg"
+					logoDark="/images/brands/panther-dark.svg"
+					title="How Panther Labs runs customer provisioning workflows in production with Windmill"
+					description="Panther Labs uses Windmill to orchestrate customer provisioning, AWS account management and infrastructure deployment across their cybersecurity platform."
+					link="/case-studies/panther-labs"
+					from="workflows"
+				/>
+			</div>
+
+			{/* More use cases */}
+			<UseCaseCarousel
+				current="workflows"
+				subtitle="Workflows are just one use case. The same platform powers internal tools, data pipelines, AI agents and triggers."
+			/>
+
+			{/* FAQ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'How is Windmill different from Airflow?', textAnswer: 'Windmill replaces Airflow with a simpler developer experience: no DAG-as-code boilerplate, a built-in code editor with AI assistance, a visual flow editor with branching, loops and approval steps, and native support for 20+ languages. Workflows run on lightweight workers instead of a complex Celery/Kubernetes setup. You get built-in error handling, retries, observability and version control out of the box.' },
+				{ question: 'How is Windmill different from Temporal?', textAnswer: 'Temporal requires you to define workflows and activities in code with a specific SDK. Windmill lets you write plain scripts in any language and compose them visually or as code. You get a built-in UI for monitoring, a visual flow editor, approval steps, and auto-generated forms for each workflow input. No separate worker infrastructure to manage.' },
+				{ question: 'Can I write workflow steps in different languages?', textAnswer: 'Yes. Each step in a Windmill flow can be written in a different language — TypeScript, Python, SQL, Go, Bash, Rust, PHP and more. Steps pass data to each other automatically. You can mix and match languages freely within a single workflow.' },
+				{ question: 'What triggers can start a workflow?', textAnswer: 'Windmill workflows can be triggered by cron schedules, webhooks, Slack commands, emails, Postgres CDC, Kafka topics, SQS queues, or manually from the UI. You can combine multiple trigger types on the same flow.' },
+				{ question: 'Does Windmill support approval steps and human-in-the-loop?', textAnswer: 'Yes. Approval steps suspend a workflow until a human approves or rejects via the UI, email or Slack. You can add approval gates at any point in a flow, with configurable timeouts and escalation logic.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source (AGPLv3) and can be self-hosted on your own infrastructure, from a single-node VPS to large Kubernetes clusters. The Community Edition is free. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
+			]} />
+
+			{/* CTA */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start automating workflows today</h2>
+					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+						Get started for free on Windmill Cloud or self-host the open-source version.
+					</p>
+					<div className="flex flex-col sm:flex-row gap-4 justify-center">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/pricing"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							View pricing
+						</Link>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
