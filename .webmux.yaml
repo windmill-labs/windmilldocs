@@ -1,0 +1,38 @@
+# Project display name in the dashboard
+name: windmilldocs
+
+workspace:
+  mainBranch: main
+  worktreeRoot: ../windmilldocs__worktrees
+  defaultAgent: claude
+
+auto_name:
+  provider: claude
+  model: haiku
+
+# Each service defines a port env var that webmux injects into pane and agent
+# process environments when creating a worktree. Ports are auto-assigned:
+# base + (slot x step).
+services:
+  - name: app
+    portEnv: PORT
+    portStart: 3100
+    portStep: 10
+
+profiles:
+  default:
+    runtime: host
+    yolo: true
+    envPassthrough: []
+    panes:
+      - id: agent
+        kind: agent
+        focus: true
+      - id: app
+        kind: command
+        split: right
+        command: npm install && npm run start -- --no-open
+
+integrations:
+  linear:
+    enabled: true
