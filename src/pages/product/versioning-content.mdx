@@ -1,12 +1,12 @@
 ---
-title: "Git-native versioning and deployment"
-description: "How do I version and deploy scripts and flows in Windmill? Draft, deploy, sync to Git, and promote changes across workspaces with full history and collaboration."
+title: "Deploy in one click. Version with Git."
+description: "How do I version and deploy scripts and flows in Windmill? Deploy in one click with built-in versioning, or connect Git for source control, local development, and CI/CD pipelines."
 ---
 
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import Link from '@docusaurus/Link';
-import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, GitBranch, GitFork, GitMerge, History, Lock, Users, FileCode, Terminal, Filter, ShieldCheck, Eye, Layers } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, BookOpen, PenLine, Rocket, History, GitBranch, ChevronRight, Terminal, Monitor, Github } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
 export const fadeIn = {
@@ -16,10 +16,196 @@ export const fadeIn = {
 	transition: { duration: 0.5 }
 };
 
-export const stagger = (delay = 0) => ({
-	...fadeIn,
-	transition: { duration: 0.5, delay }
-});
+{/* ── Hero animation: Edit → Deploy → Versioned → Synced to Git ── */}
+
+export function HeroTimeline() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-40px" });
+	const d = 0.3;
+	const steps = [
+		{ icon: PenLine, label: 'Edit in UI or locally' },
+		{ icon: Rocket, label: 'Deploy' },
+		{ icon: History, label: 'Versioned' },
+		{ icon: GitBranch, label: 'Synced to Git' },
+	];
+	return (
+		<div ref={ref} className="mt-12 mb-4">
+			{/* Desktop */}
+			<div className="hidden sm:flex items-center justify-center gap-0">
+				{steps.map((step, i) => (
+					<React.Fragment key={step.label}>
+						<motion.div
+							initial={{ opacity: 0, y: 12 }}
+							animate={isInView ? { opacity: 1, y: 0 } : {}}
+							transition={{ duration: 0.3, delay: d + i * 0.15 }}
+							className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
+						>
+							<step.icon className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+							<span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">{step.label}</span>
+						</motion.div>
+						{i < steps.length - 1 && (
+							<motion.div
+								initial={{ opacity: 0, scaleX: 0 }}
+								animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
+								transition={{ duration: 0.15, delay: d + i * 0.15 + 0.1 }}
+								className="mx-1 origin-left"
+							>
+								<ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+							</motion.div>
+						)}
+					</React.Fragment>
+				))}
+			</div>
+			{/* Mobile */}
+			<div className="sm:hidden flex flex-wrap justify-center gap-2">
+				{steps.map((step, i) => (
+					<motion.div
+						key={step.label}
+						initial={{ opacity: 0, y: 8 }}
+						animate={isInView ? { opacity: 1, y: 0 } : {}}
+						transition={{ duration: 0.25, delay: d + i * 0.1 }}
+						className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
+					>
+						<step.icon className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+						<span className="text-xs font-medium text-gray-700 dark:text-gray-300">{step.label}</span>
+					</motion.div>
+				))}
+			</div>
+		</div>
+	);
+}
+
+{/* ── Sync flow animations ── */}
+
+export function SyncFlowStep({ icon: Icon, label, auto, isInView, delay }) {
+	return (
+		<motion.div
+			initial={{ opacity: 0, scale: 0.8 }}
+			animate={isInView ? { opacity: 1, scale: 1 } : {}}
+			transition={{ duration: 0.3, delay }}
+			className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
+		>
+			<Icon className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+			<span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">{label}</span>
+			{auto && (
+				<span className="ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded flex-shrink-0 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20">
+					auto
+				</span>
+			)}
+		</motion.div>
+	);
+}
+
+export function SyncFlowArrow({ isInView, delay }) {
+	return (
+		<motion.div
+			initial={{ opacity: 0, scaleX: 0 }}
+			animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
+			transition={{ duration: 0.15, delay }}
+			className="mx-0.5 origin-left flex-shrink-0"
+		>
+			<ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+		</motion.div>
+	);
+}
+
+export function SyncFlows() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-40px" });
+	const d = 0.2;
+	const flows = [
+		{
+			label: 'From local to production',
+			steps: [
+				{ icon: Terminal, label: 'wmill sync push', auto: false },
+			],
+			parallel: [
+				{ icon: Rocket, label: 'Deploy on Windmill', auto: true },
+				{ icon: GitBranch, label: 'Commit to Git', auto: true },
+			],
+			after: [
+				{ icon: Monitor, label: 'Available on the UI', auto: true },
+			],
+		},
+		{
+			label: 'From UI to local',
+			steps: [
+				{ icon: Monitor, label: 'Deploy from the UI', auto: false },
+				{ icon: GitBranch, label: 'Commit to Git', auto: true },
+				{ icon: Terminal, label: 'wmill sync pull', auto: false },
+				{ icon: PenLine, label: 'Files updated locally', auto: true },
+			],
+		},
+	];
+	return (
+		<div ref={ref} className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+			{flows.map((flow, fi) => {
+				const baseDelay = d + fi * 0.4;
+				return (
+					<motion.div
+						key={flow.label}
+						initial={{ opacity: 0, y: 12 }}
+						animate={isInView ? { opacity: 1, y: 0 } : {}}
+						transition={{ duration: 0.35, delay: baseDelay }}
+						className="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
+					>
+						<p className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
+							{flow.label}
+						</p>
+						<div className="flex flex-col gap-1.5">
+							{flow.steps.map((step, i) => (
+								<React.Fragment key={step.label}>
+									<SyncFlowStep {...step} isInView={isInView} delay={baseDelay + 0.1 + i * 0.12} />
+									{(i < flow.steps.length - 1 || flow.parallel) && (
+										<div className="flex justify-center">
+											<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400 dark:text-gray-500">
+												<path d="M6 2 L6 10 M3 7 L6 10 L9 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+											</svg>
+										</div>
+									)}
+								</React.Fragment>
+							))}
+							{flow.parallel && (
+								<div className="relative">
+									{/* Split curves */}
+									<svg className="w-full" height="32" viewBox="0 0 200 32" preserveAspectRatio="xMidYMid meet">
+										<path d="M100,0 L100,4 C100,18 50,18 50,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600" />
+										<path d="M100,0 L100,4 C100,18 150,18 150,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600" />
+									</svg>
+									<div className="flex gap-2">
+										{flow.parallel.map((step, i) => (
+											<div key={step.label} className="flex-1">
+												<SyncFlowStep {...step} isInView={isInView} delay={baseDelay + 0.1 + flow.steps.length * 0.12 + i * 0.08} />
+											</div>
+										))}
+									</div>
+									{flow.after && (
+										<>
+											{/* Merge curves */}
+											<svg className="w-full" height="32" viewBox="0 0 200 32" preserveAspectRatio="xMidYMid meet">
+												<path d="M50,0 C50,14 100,14 100,28 L100,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600" />
+												<path d="M150,0 C150,14 100,14 100,28 L100,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600" />
+											</svg>
+											{/* Arrow pointing down */}
+											<div className="flex justify-center -mt-1">
+												<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400 dark:text-gray-500">
+													<path d="M6 2 L6 10 M3 7 L6 10 L9 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+												</svg>
+											</div>
+										</>
+									)}
+								</div>
+							)}
+							{flow.after && flow.after.map((step, i) => (
+								<SyncFlowStep key={step.label} {...step} isInView={isInView} delay={baseDelay + 0.1 + (flow.steps.length + flow.parallel.length) * 0.12 + i * 0.08} />
+							))}
+						</div>
+					</motion.div>
+				);
+			})}
+		</div>
+	);
+}
 
 {/* ── Section helper ── */}
 
@@ -58,250 +244,96 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 	);
 }
 
-{/* ── Tab section ── */}
-
-export function TabSection({ title, subtitle, features }) {
-	const [active, setActive] = useState(0);
-	return (
-		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-			<motion.div {...fadeIn} className="mb-16">
-				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					{title}
-				</h2>
-				{subtitle && (
-					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
-				)}
-			</motion.div>
-
-			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
-				<div className="flex flex-col gap-2">
-					{features.map((feat, i) => (
-						<button
-							key={feat.label || feat.title}
-							onClick={() => setActive(i)}
-							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
-								i === active
-									? 'bg-blue-600 text-white border-blue-600'
-									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-							}`}
-						>
-							<feat.icon
-								className={`w-5 h-5 flex-shrink-0 ${
-									i === active ? 'text-white' : 'text-blue-500'
-								}`}
-							/>
-							<span className="font-medium text-sm">
-								{feat.label || feat.title}
-							</span>
-						</button>
-					))}
-				</div>
-
-				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
-					{features.map((feat, i) => (
-						<div
-							key={feat.label || feat.title}
-							className={`transition-opacity duration-200 ${
-								i === active
-									? 'opacity-100 relative'
-									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
-							}`}
-						>
-							<div className="flex items-center gap-3 mb-4">
-								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-									{feat.title}
-								</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
-								{feat.desc}
-							</p>
-							{feat.content ? (
-								feat.content
-							) : feat.image ? (
-								<img
-									src={feat.image}
-									alt={feat.title}
-									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
-								/>
-							) : (
-								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-									<span className="text-gray-400 dark:text-gray-500 text-sm">
-										Screenshot coming soon
-									</span>
-								</div>
-							)}
-							{feat.docLink && (
-								<div className="flex justify-end mt-3">
-									<Link
-										to={feat.docLink}
-										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
-									>
-										<BookOpen className="w-4 h-4" /> Read the docs
-									</Link>
-								</div>
-							)}
-						</div>
-					))}
-				</div>
-			</div>
-		</div>
-	);
-}
-
-{/* ── Git sync tabs data ── */}
-
-export const gitSyncFeatures = [
-	{
-		icon: GitBranch,
-		label: 'Auto-commit on deploy',
-		title: 'Auto-commit on deploy',
-		desc: <span>Every <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">deployment</Link> automatically creates a commit in your connected Git repository. Your repo always reflects the current state of your workspace without manual syncing.</span>,
-		image: '/img/money-pages/gitsync.webp',
-		docLink: '/docs/advanced/git_sync',
-	},
-	{
-		icon: FileCode,
-		label: 'Pull from Git',
-		title: 'Pull from Git',
-		desc: <span>Use the <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub Action or GitLab CI</Link> to pull your repository contents into a workspace. CI/CD pipelines become the deployment mechanism, with Git as the source of truth.</span>,
-		docLink: '/docs/advanced/git_sync',
-	},
-	{
-		icon: ShieldCheck,
-		label: 'GitHub App',
-		title: 'GitHub App (Enterprise)',
-		desc: <span>Authenticate with a <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub App</Link> instead of personal tokens. Scoped repository permissions and organization-wide installation simplify setup for teams.</span>,
-		docLink: '/docs/advanced/git_sync',
-	},
-	{
-		icon: Filter,
-		label: 'Path filters',
-		title: 'Path filters',
-		desc: <span>Include or exclude specific paths from sync using <Link to="/docs/advanced/git_sync#path-filters" className="text-blue-600 dark:text-blue-400 hover:underline">glob patterns</Link>. Sync only production scripts, exclude drafts, or limit sync to specific folders.</span>,
-		docLink: '/docs/advanced/git_sync',
-	},
-];
-
-{/* ── Deploy across workspaces tabs data ── */}
-
-export const deployFeatures = [
-	{
-		icon: GitFork,
-		label: 'Workspace forks',
-		title: 'Workspace forks (Enterprise)',
-		desc: <span>Create <Link to="/docs/advanced/workspace_forks" className="text-blue-600 dark:text-blue-400 hover:underline">independent copies</Link> of a workspace for parallel development. A merge UI shows differences between workspaces with conflict detection, letting you selectively merge changes back.</span>,
-		image: '/img/money-pages/deploy-workflow.webp',
-		docLink: '/docs/advanced/workspace_forks',
-	},
-	{
-		icon: GitMerge,
-		label: 'Git promotion',
-		title: 'Git promotion (Enterprise)',
-		desc: <span>Deploy from staging to production through <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">pull requests</Link>. Each staging deploy creates a PR against the production branch. Merging the PR triggers a CI action that applies changes to the production workspace.</span>,
-		docLink: '/docs/advanced/deploy_gh_gl',
-	},
-	{
-		icon: Layers,
-		label: 'Deploy to prod UI',
-		title: 'Deploy to prod UI (Enterprise)',
-		desc: <span>Deploy items directly from one workspace to another using the <Link to="/docs/advanced/deploy_to_prod" className="text-blue-600 dark:text-blue-400 hover:underline">built-in UI</Link>. Select scripts, flows, or apps and push them to a target workspace without leaving Windmill.</span>,
-		docLink: '/docs/advanced/deploy_to_prod',
-	},
-	{
-		icon: Terminal,
-		label: 'CLI sync',
-		title: 'CLI sync',
-		desc: <span>Use the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">wmill CLI</Link> to push and pull workspace content to local files. Develop with your preferred editor, commit to Git, and sync changes back to Windmill.</span>,
-		docLink: '/docs/advanced/cli',
-	},
-];
-
 {/* ── Main page ── */}
 
 export default function VersioningContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			{/* ═══════════════ Hero ═══════════════ */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-					<motion.div {...fadeIn}>
-						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Git-native versioning and deployment
-						</h1>
-						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							Draft, deploy, and promote changes across workspaces with full history, Git sync, and team collaboration built in.
-						</p>
-						<div className="flex flex-col sm:flex-row gap-4">
-							<a
-								href="https://app.windmill.dev"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-							>
-								Try Windmill free
-								<ArrowRight className="w-4 h-4" />
-							</a>
-							<Link
-								to="/docs/advanced/version_control"
-								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-							>
-								Read the docs
-							</Link>
-						</div>
-					</motion.div>
-
-					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						<img
-							src="/img/money-pages/deploy-workflow.webp"
-							alt="Deploy workflow"
-							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						/>
-					</motion.div>
-				</div>
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-4">
+				<motion.div {...fadeIn} className="text-center max-w-4xl mx-auto">
+					<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+						Deploy in one click. Version with Git.
+					</h1>
+					<p className="text-xl text-gray-600 dark:text-gray-100 mb-0 max-w-3xl mx-auto">
+						Every script, flow, and app in Windmill is versioned on every deployment. Use the built-in UI to deploy and track changes, or connect a Git repository for full source control, local development, and CI/CD pipelines.
+					</p>
+					<HeroTimeline />
+					<div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+						<a
+							href="https://app.windmill.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+						>
+							Try Windmill free
+							<ArrowRight className="w-4 h-4" />
+						</a>
+						<Link
+							to="/docs/advanced/version_control"
+							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+						>
+							Read the docs
+						</Link>
+					</div>
+				</motion.div>
 			</div>
 
-			{/* ═══════════════ Draft, review, deploy ═══════════════ */}
+			{/* ═══════════════ Deploy in one click ═══════════════ */}
 			<Section
-				title="Draft, review, deploy"
-				desc={<span>Windmill uses a three-tier saving model: local edits persist in your browser, <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">drafts</Link> are saved server-side and visible to your team, and deployments create the authoritative version that runs in production. A built-in diff viewer lets you compare any two versions before deploying, and each deployment can include a message describing the change.</span>}
+				title="Deploy in one click"
+				desc={<span><Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">Scripts</Link>, <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link>, and <Link to="/docs/getting_started/apps_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">apps</Link> can be written, tested, and deployed from the browser. Each deployment creates a new immutable version. All three support draft mode to iterate without affecting production.</span>}
 				image="/img/money-pages/deployment-history.webp"
 				docLink="/docs/core_concepts/draft_and_deploy"
 			/>
 
-			{/* ═══════════════ Every script is immutable ═══════════════ */}
+			{/* ═══════════════ Deployment history ═══════════════ */}
 			<Section
-				title="Every script is immutable"
-				desc={<span>Each deployment creates a new <Link to="/docs/core_concepts/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">immutable hash</Link>. Paths always point to the latest version, but every previous version is preserved. You can view the full deployment history, restore any version, or fork from a past deployment to start a new iteration.</span>}
+				title="Deployment history"
+				desc={<span>Every deployment is tracked with a message, a unique hash (similar to a git commit SHA), and a side-by-side <Link to="/docs/core_concepts/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">diff viewer</Link>. Any past version can be forked or restored. Hash-based webhook URLs let you pin integrations to a specific version.</span>}
 				image="/img/money-pages/deploy.webp"
 				docLink="/docs/core_concepts/versioning"
 				reverse
 			/>
 
-			{/* ═══════════════ Sync your workspace to Git ═══════════════ */}
-			<TabSection
-				title="Sync your workspace to Git"
-				subtitle={<span>Keep your <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git repository</Link> in sync with your Windmill workspace. Push changes on deploy, pull from CI/CD, or use both directions simultaneously. Git Sync requires Cloud or Self-Hosted Enterprise.</span>}
-				features={gitSyncFeatures}
-			/>
+			{/* ═══════════════ Visual break ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="border-t border-gray-200 dark:border-gray-800" />
+			</div>
 
-			{/* ═══════════════ Deploy across workspaces ═══════════════ */}
-			<TabSection
-				title="Deploy across workspaces"
-				subtitle={<span>Use <Link to="/docs/advanced/deploy_to_prod" className="text-blue-600 dark:text-blue-400 hover:underline">staging and production workspaces</Link> with multiple deployment strategies. Develop in staging, review changes, and promote to production through Git, the UI, or the CLI.</span>}
-				features={deployFeatures}
-			/>
-
-			{/* ═══════════════ Collaborate in real time ═══════════════ */}
+			{/* ═══════════════ Git sync ═══════════════ */}
 			<Section
-				title="Collaborate in real time"
-				desc={<span>Multiplayer editing (Enterprise) lets multiple users edit the same script or flow simultaneously. <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">Groups and folders</Link> control who can view, edit, and deploy each resource. <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">Audit logs</Link> track every action for compliance and debugging.</span>}
-				image="/img/money-pages/auditlogs.webp"
-				docLink="/docs/core_concepts/audit_logs"
+				title="Git sync"
+				desc={<span>When connected to a <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git repository</Link>, every deployment is automatically committed. Changes can also be pulled from Git, making the repository the single source of truth. Works with GitHub, GitLab, Bitbucket, and Azure DevOps.</span>}
+				image="/img/money-pages/gitsync.webp"
+				docLink="/docs/advanced/git_sync"
+			/>
+
+			{/* ═══════════════ Workspace forks ═══════════════ */}
+			<Section
+				title="Workspace forks"
+				desc={<span><Link to="/docs/advanced/workspace_forks" className="text-blue-600 dark:text-blue-400 hover:underline">Workspace forks</Link> (Enterprise) are independent copies of a workspace for parallel development. Scripts, flows, apps, resources, variables, and schedules are all included. Teams can work on features or experiments in a fork without affecting the production workspace. Each fork can track its own Git branch, and changes from the parent workspace can be pulled into the fork to stay up to date.</span>}
+				docLink="/docs/advanced/workspace_forks"
 				reverse
 			/>
+			{/* TODO: add screenshot of workspace fork creation or fork banner */}
+
+			{/* ═══════════════ Merge UI ═══════════════ */}
+			<Section
+				title="Merge UI"
+				desc={<span>Forks can be merged back to their parent workspace from the UI with conflict detection. For more granular resolution, a <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">Git-based merge workflow</Link> is also available.</span>}
+				image="/img/money-pages/deploy-workflow.webp"
+				docLink="/docs/advanced/workspace_forks"
+			/>
+
+			{/* ═══════════════ Local development with the CLI ═══════════════ */}
+			<Section
+				title="Local development with the CLI"
+				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Whether you deploy from the CLI or from the UI, changes are committed to your Git repository. Both paths keep your Git repo, your workspace, and your local files in sync.</span>}
+				docLink="/docs/advanced/cli"
+			>
+				<SyncFlows />
+			</Section>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[
