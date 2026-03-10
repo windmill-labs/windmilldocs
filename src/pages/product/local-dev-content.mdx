@@ -46,52 +46,131 @@ export function CopySnippet({ text }) {
 
 {/* ── Hero animation: terminal showing wmill sync pull ── */}
 
-export function HeroTerminal() {
+export function HeroSteps() {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, margin: "-40px" });
-	const d = 0.3;
-	const lines = [
-		{ type: 'prompt', text: '$ wmill sync pull' },
-		{ type: 'output', text: 'Pulling workspace prod...' },
-		{ type: 'file', text: '  f/process_order/' },
-		{ type: 'file', text: '    process_order.flow.yaml' },
-		{ type: 'file', text: '    validate_input.inline_script.ts' },
-		{ type: 'file', text: '    charge_payment.inline_script.py' },
-		{ type: 'file', text: '  u/alice/' },
-		{ type: 'file', text: '    fetch_orders.ts' },
-		{ type: 'file', text: '    fetch_orders.script.yaml' },
-		{ type: 'file', text: '    transform.py' },
-		{ type: 'file', text: '    transform.script.yaml' },
-		{ type: 'output', text: '' },
-		{ type: 'success', text: 'Done. 6 scripts, 1 flow pulled.' },
-		{ type: 'prompt', text: '$ _' },
-	];
-	const colors = {
-		prompt: 'text-green-400 dark:text-green-400',
-		output: 'text-gray-500 dark:text-gray-500',
-		file: 'text-gray-300 dark:text-gray-400',
-		success: 'text-green-300 dark:text-green-400',
-	};
+	const [phase, setPhase] = useState(0);
+	React.useEffect(() => {
+		if (!isInView) return;
+		const t1 = setTimeout(() => setPhase(1), 2500);
+		const t2 = setTimeout(() => setPhase(2), 5000);
+		return () => { clearTimeout(t1); clearTimeout(t2); };
+	}, [isInView]);
+	const stepLabels = ['1. Pull', '2. Edit', '3. Deploy'];
 	return (
-		<div ref={ref} className="rounded-xl border border-gray-700 dark:border-gray-700 overflow-hidden bg-gray-900 dark:bg-gray-950 shadow-lg font-mono text-[11px] leading-5">
-			<div className="flex items-center gap-1.5 px-3 py-2 bg-gray-800 dark:bg-gray-900 border-b border-gray-700">
-				<div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-				<div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-				<div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-				<span className="ml-2 text-[10px] text-gray-500">Terminal</span>
+		<div ref={ref} className="rounded-xl border border-gray-700 overflow-hidden bg-gray-900 dark:bg-gray-950 shadow-lg">
+			{/* Step indicators */}
+			<div className="flex items-center gap-0 bg-gray-800 dark:bg-gray-900 border-b border-gray-700">
+				{stepLabels.map((label, i) => (
+					<div
+						key={label}
+						className={`flex-1 text-center py-2 text-[10px] font-medium uppercase tracking-wider transition-colors duration-300 ${
+							i === phase
+								? 'text-white bg-gray-700/50'
+								: i < phase
+									? 'text-green-400/60'
+									: 'text-gray-600'
+						} ${i > 0 ? 'border-l border-gray-700' : ''}`}
+					>
+						{i < phase ? '✓ ' : ''}{label}
+					</div>
+				))}
 			</div>
-			<div className="p-3">
-				{lines.map((line, i) => (
+			{/* Content area */}
+			<div className="relative h-[300px] overflow-hidden">
+				{/* Phase 0: Pull */}
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: phase === 0 ? 1 : 0, x: phase === 0 ? 0 : -20 }}
+					transition={{ duration: 0.3 }}
+					className="absolute inset-0 p-3 font-mono text-sm leading-7"
+				>
+					<div className="text-green-400">$ wmill sync pull</div>
 					<motion.div
-						key={i}
 						initial={{ opacity: 0 }}
 						animate={isInView ? { opacity: 1 } : {}}
-						transition={{ duration: 0.12, delay: d + i * 0.06 }}
-						className={colors[line.type]}
-					>
-						{line.text || '\u00A0'}
-					</motion.div>
-				))}
+						transition={{ delay: 0.5 }}
+						className="text-gray-500"
+					>Pulling workspace prod...</motion.div>
+					{['u/alice/fetch_orders.ts', 'u/alice/fetch_orders.script.yaml', 'u/alice/transform.py', 'u/alice/transform.script.yaml'].map((f, i) => (
+						<motion.div
+							key={f}
+							initial={{ opacity: 0 }}
+							animate={isInView ? { opacity: 1 } : {}}
+							transition={{ delay: 0.8 + i * 0.15 }}
+							className="text-gray-400"
+						>  {f}</motion.div>
+					))}
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={isInView ? { opacity: 1 } : {}}
+						transition={{ delay: 1.6 }}
+						className="text-green-300 mt-1"
+					>Done. 4 files pulled.</motion.div>
+				</motion.div>
+				{/* Phase 1: Edit */}
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: phase === 1 ? 1 : 0, x: phase === 1 ? 0 : phase < 1 ? 20 : -20 }}
+					transition={{ duration: 0.3 }}
+					className="absolute inset-0 p-3 font-mono text-sm leading-7"
+				>
+					<div className="text-gray-600 mb-1">fetch_orders.ts</div>
+					<div className="text-gray-500">import {'{'} getResource {'}'} from "windmill-client";</div>
+					<div className="text-gray-500">&nbsp;</div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={phase >= 1 ? { opacity: 1 } : {}}
+						transition={{ delay: 0.4 }}
+						className="bg-red-950/40 text-red-400 -mx-3 px-3"
+					>- export async function main(limit = 100) {'{'}</motion.div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={phase >= 1 ? { opacity: 1 } : {}}
+						transition={{ delay: 0.7 }}
+						className="bg-green-950/40 text-green-400 -mx-3 px-3"
+					>+ export async function main(limit = 100, offset = 0) {'{'}</motion.div>
+					<div className="text-gray-500">  const db = await getResource("f/orders/pg");</div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={phase >= 1 ? { opacity: 1 } : {}}
+						transition={{ delay: 1.0 }}
+						className="bg-red-950/40 text-red-400 -mx-3 px-3"
+					>-   `SELECT * FROM orders LIMIT $1`, [limit]</motion.div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={phase >= 1 ? { opacity: 1 } : {}}
+						transition={{ delay: 1.3 }}
+						className="bg-green-950/40 text-green-400 -mx-3 px-3"
+					>+   `SELECT * FROM orders LIMIT $1 OFFSET $2`, [limit, offset]</motion.div>
+				</motion.div>
+				{/* Phase 2: Push */}
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: phase === 2 ? 1 : 0, x: phase === 2 ? 0 : 20 }}
+					transition={{ duration: 0.3 }}
+					className="absolute inset-0 p-3 font-mono text-sm leading-7"
+				>
+					<div className="text-green-400">$ wmill sync push</div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={phase >= 2 ? { opacity: 1 } : {}}
+						transition={{ delay: 0.4 }}
+						className="text-gray-500"
+					>Pushing to workspace prod...</motion.div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={phase >= 2 ? { opacity: 1 } : {}}
+						transition={{ delay: 0.7 }}
+						className="text-green-400"
+					>  + u/alice/fetch_orders.ts (modified)</motion.div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={phase >= 2 ? { opacity: 1 } : {}}
+						transition={{ delay: 1.0 }}
+						className="text-green-300 mt-1"
+					>Done. 1 script deployed.</motion.div>
+				</motion.div>
 			</div>
 		</div>
 	);
@@ -170,7 +249,7 @@ export default function LocalDevContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						<HeroTerminal />
+						<HeroSteps />
 					</motion.div>
 				</div>
 			</div>
