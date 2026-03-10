@@ -150,6 +150,23 @@ Specify the topics the trigger should listen to.
 The group id is automatically filled in from the current workspace and the trigger path. You can change it if necessary.
 It indicates the consumer group to which the trigger belongs. This garantees that even if the trigger stops listening for a while, it will receive the messages it missed when it starts listening again.
 
+
+### Initial offset
+
+The 'Initial offset' setting controls where the consumer starts reading when the consumer group has no committed offset (i.e. the first time the trigger is created or when using a new group ID):
+
+- Latest (default): Only new messages produced after the trigger starts will be consumed.
+- Earliest: All existing messages in the topic will be consumed from the beginning.
+
+This corresponds to Kafka's `auto.offset.reset` configuration. It has no effect once the consumer group has a committed offset.
+
+### Reset offset to earliest
+
+For existing triggers, you can force the consumer to re-read all messages from the beginning of the topic by clicking the'*Reset offset to earliest' button in the trigger editor. A confirmation modal will appear since this is a destructive action — the consumer will restart and re-process all messages from the beginning.
+
+After the reset, normal consumption resumes from committed offsets on subsequent restarts.
+
+### Runnable configuration
 Once the Kafka resource and settings are set, select the runnable that should be triggered by this trigger.
 The received webhook base64 encoded payload will be passed to the runnable as a string argument called `payload`.
 
