@@ -78,3 +78,21 @@ This can be useful for non-admin (for example, operators) to share a page to pro
 ![Shareable page](./shareable_page.png.webp 'Shareable page')
 
 > This page then allows users with the right permissions to deploy the given items.
+
+## Run on behalf of
+
+When deploying a script, flow, app, or trigger to another workspace, the **"run on behalf of"** selector lets you choose which user the item will execute as in the target workspace. This is useful for controlling execution permissions across environments.
+
+There are three options:
+
+- **Keep the target workspace's existing setting** — the item continues running as whatever user was previously configured in the target workspace. This is the default for items that already exist there.
+- **Use yourself** — the item will run as your own user in the target workspace.
+- **Pick any user from the target workspace** — select a specific user (e.g. a dedicated service account) for the item to run as.
+
+Selecting a user other than yourself requires **admin** rights or membership in the **`wm_deployers`** group in the target workspace.
+
+:::tip Virtual users for fine-grained permissions
+
+For production workspaces, consider creating dedicated virtual users scoped to specific responsibilities. See [Permission compartmentalization with virtual users](../16_roles_and_permissions/index.mdx#permission-compartmentalization-with-virtual-users) for the recommended pattern.
+
+:::

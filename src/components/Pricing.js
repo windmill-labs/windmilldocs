@@ -71,7 +71,7 @@ const pricing = {
 					monthly: 20,
 					default: 1,
 					min: 1,
-					max: 1000
+					max: 10000
 				}
 			},
 			price_nonprofit: {
@@ -93,7 +93,7 @@ const pricing = {
 					monthly: 8,
 					default: 1,
 					min: 1,
-					max: 1000
+					max: 10000
 				}
 			},
 			price_pro: {
@@ -306,7 +306,7 @@ const pricing = {
 					monthly: 40,
 					default: 1,
 					min: 1,
-					max: 1000
+					max: 10000
 				}
 			},
 			minPrice: 840,

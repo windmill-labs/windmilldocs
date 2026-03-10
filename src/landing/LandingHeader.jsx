@@ -47,39 +47,33 @@ const products = [
 
 const solutionsByUseCase = [
 	{
-		name: 'Internal tools',
-		description: 'Build admin panels, dashboards and back-office apps.',
-		href: '/use-cases/internal-tools',
-		icon: WrenchScrewdriverIcon,
-	},
-	// {
-	// 	name: 'Workflow automation',
-	// 	description: 'Orchestrate multi-step processes across services.',
-	// 	href: '/use-cases/workflow-automation',
-	// 	icon: ArrowPathIcon,
-	// },
-	{
-		name: 'Data pipelines',
-		description: 'ETL, syncs and scheduled data jobs.',
-		href: '/use-cases/data-pipelines',
-		icon: CircleStackIcon,
-	},
-	// {
-	// 	name: 'Scripts & endpoints',
-	// 	description: 'Deploy scripts as APIs or cron jobs instantly.',
-	// 	href: '/use-cases/scripts-and-endpoints',
-	// 	icon: CodeBracketIcon,
-	// },
-	{
 		name: 'AI agents',
 		description: 'Build and orchestrate AI agents with tools.',
 		href: '/use-cases/ai-agents',
 		icon: Bot,
 	},
 	{
-		name: 'Scheduled tasks',
-		description: 'Cron jobs, polling and background processing.',
-		href: '/use-cases/scheduled-tasks',
+		name: 'Workflows',
+		description: 'Orchestrate multi-step processes across services.',
+		href: '/use-cases/workflows',
+		icon: ArrowPathIcon,
+	},
+	{
+		name: 'Internal tools',
+		description: 'Build admin panels, dashboards and back-office apps.',
+		href: '/use-cases/internal-tools',
+		icon: WrenchScrewdriverIcon,
+	},
+	{
+		name: 'Data pipelines',
+		description: 'ETL, syncs and scheduled data jobs.',
+		href: '/use-cases/data-pipelines',
+		icon: CircleStackIcon,
+	},
+	{
+		name: 'Triggers',
+		description: 'Schedules, webhooks, Kafka, Postgres and more.',
+		href: '/use-cases/triggers',
 		icon: ClockIcon,
 	},
 ];
