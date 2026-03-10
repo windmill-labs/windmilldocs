@@ -4,6 +4,8 @@ description: How do I deploy items from a staging workspace to production using 
 
 # Deploy to prod using the UI
 
+## Per item Deployment UI
+
 From a workspace in Windmill, you can deploy a item and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 :::info Deploy to prod
@@ -27,7 +29,7 @@ The [Draft and deploy](../0_draft_and_deploy/index.mdx) is another feature that 
 
 :::
 
-## How it works
+### How it works
 
 For users with admin rights on the source workspace, in the `Workspace` settings, go to the "Deployment UI" tab and pick a workspace for "Workspace to link to".
 
@@ -64,7 +66,7 @@ Items are called:
 ![Diff menu](./diff_menu.png'Diff menu')
 ![Diff menu2](./diff_menu2.png'Diff menu2')
 
-## Shareable page
+### Shareable page
 
 A static page is created for each potential deployment to Staging/Prod.
 
@@ -79,6 +81,16 @@ This can be useful for non-admin (for example, operators) to share a page to pro
 ![Shareable page](./shareable_page.png'Shareable page')
 
 > This page then allows users with the right permissions to deploy the given items.
+
+## Merge UI for merging changes done in workspace forks
+
+If you are on a workspace fork, the first thing to know is that it will be preconfigured to set the parent workspace as the target for this same UI. Also, a fork-specific Merge UI is available, showing you exactly the items that were modified and letting you deploy but also update.
+
+
+![Merge UI](./merge_ui.png 'Merge UI')
+
+Learn more about [merging forks through Merge UI](../../advanced/20_workspace_forks/index.mdx#merge-workspaces-from-the-ui)
+
 
 ## Run on behalf of
 
