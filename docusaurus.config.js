@@ -144,7 +144,7 @@ const config = {
 						position: 'left',
 						items: [
 							{ label: 'Script editor', href: '/product/script-editor' },
-							{ label: 'Workflow editor', href: '/product/workflow-editor' },
+							{ label: 'Flow editor', href: '/product/flow-editor' },
 							{ label: 'Frontend builder', href: '/product/frontend-builder' },
 							{ label: 'Versioning', href: '/product/versioning' },
 							{ label: 'Local dev', href: '/product/local-dev' },

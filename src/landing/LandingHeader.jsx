@@ -42,9 +42,9 @@ const productCategories = [
 				icon: Code,
 			},
 			{
-				name: 'Workflow editor',
+				name: 'Flow editor',
 				description: 'Connect scripts into flows with no glue code.',
-				href: '/product/workflow-editor',
+				href: '/product/flow-editor',
 				icon: GitFork,
 			},
 			{
@@ -263,9 +263,6 @@ export default function LandingHeader() {
 													<div className="grid grid-cols-2 gap-6">
 														{productCategories.map((category) => (
 															<div key={category.title}>
-																<p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2 px-3">
-																	{category.title}
-																</p>
 																<div className="space-y-1">
 																	{category.items.map((item) => (
 																		<Link
@@ -568,9 +565,6 @@ export default function LandingHeader() {
 								<div className="md:hidden mt-4 space-y-4">
 									{productCategories.map((category) => (
 										<div key={category.title}>
-											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
-												{category.title}
-											</div>
 											<div className="grid grid-cols-2 gap-2">
 												{category.items.map((item) => (
 													<a
