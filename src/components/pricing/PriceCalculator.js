@@ -207,10 +207,15 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 
 	// This effect ensures that seat values are clamped to the new tier's limits
 	useEffect(() => {
-		if (pricing.seat && developers > pricing.seat.max) {
-			setDevelopers(pricing.seat.max);
+		if (pricing.seat) {
+			if (developers > pricing.seat.max) {
+				setDevelopers(pricing.seat.max);
+			}
+			if (operators > pricing.seat.max * 2) {
+				setOperators(pricing.seat.max * 2);
+			}
 		}
-	}, [pricing, developers]);
+	}, [pricing, developers, operators]);
 
 	// Replace the existing computeTotalPrice function
 	function computeTotalPrice() {
