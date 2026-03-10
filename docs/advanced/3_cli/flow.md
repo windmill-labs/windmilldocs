@@ -59,7 +59,7 @@ wmill flow bootstrap f/flows/flashy_flow
 
 ## Running a flow
 
-Running a flow by its path s done using the `wmill flow run` command.
+Running a flow by its path is done using the `wmill flow run` command.
 
 ```bash
 wmill flow run <remote_path> [options]
