@@ -100,8 +100,6 @@ Each worktree can define services with allocated ports. Webmux periodically heal
 
 We use [Linear](https://linear.app/) for issue tracking at Windmill, and Webmux brings it right into the dashboard. Your assigned issues show up in a collapsible sidebar panel — browse your backlog, search by title, preview the full issue details, and hit **Implement** to spin up a worktree for it in one click. The branch name is derived from the Linear issue automatically, so everything stays consistent from issue to branch to PR.
 
-Once agents are running, Webmux matches worktree branches back to their Linear issues. Each worktree card shows a small badge with the issue identifier and status color, so you always know which issue each agent is working on. The whole flow — pick an issue, let an agent implement it, review the PR inline, merge — happens without leaving the dashboard.
-
 ## Architecture
 
 The stack is intentionally simple:
