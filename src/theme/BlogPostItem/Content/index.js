@@ -18,7 +18,7 @@ export default function BlogPostItemContent({ children, className }) {
 			{isBlogPostPage && windmillPromo && (
 				<div className="flex items-start bg-blue-50 rounded-md mt-12 p-4">
 					<img
-						src="https://hub.windmill.dev/icons/integrations/windmill.svg"
+						src="https://www.windmill.dev/img/windmill.svg"
 						width="48"
 						height="48"
 						alt="Windmill Logo"
