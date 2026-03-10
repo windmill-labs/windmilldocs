@@ -153,16 +153,16 @@ It indicates the consumer group to which the trigger belongs. This garantees tha
 
 ### Initial offset
 
-The **Initial offset** setting controls where the consumer starts reading when the consumer group has no committed offset (i.e. the first time the trigger is created or when using a new group ID):
+The 'Initial offset' setting controls where the consumer starts reading when the consumer group has no committed offset (i.e. the first time the trigger is created or when using a new group ID):
 
-- **Latest** (default): Only new messages produced after the trigger starts will be consumed.
-- **Earliest**: All existing messages in the topic will be consumed from the beginning.
+- Latest (default): Only new messages produced after the trigger starts will be consumed.
+- Earliest: All existing messages in the topic will be consumed from the beginning.
 
 This corresponds to Kafka's `auto.offset.reset` configuration. It has no effect once the consumer group has a committed offset.
 
 ### Reset offset to earliest
 
-For existing triggers, you can force the consumer to re-read all messages from the beginning of the topic by clicking the **Reset offset to earliest** button in the trigger editor. A confirmation modal will appear since this is a destructive action — the consumer will restart and re-process all messages from the beginning.
+For existing triggers, you can force the consumer to re-read all messages from the beginning of the topic by clicking the'*Reset offset to earliest' button in the trigger editor. A confirmation modal will appear since this is a destructive action — the consumer will restart and re-process all messages from the beginning.
 
 After the reset, normal consumption resumes from committed offsets on subsequent restarts.
 
