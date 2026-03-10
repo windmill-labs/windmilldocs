@@ -391,6 +391,7 @@ const sidebars = {
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
+				'core_concepts/user_tokens/index',
 				'core_concepts/error_handling/index',
 				'core_concepts/jobs/index',
 				'core_concepts/monitor_past_and_future_runs/index',
@@ -958,7 +959,11 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/instance_settings/index', 'core_concepts/infrastructure_as_code/index', 'advanced/self_host/aws_eks_ecs']
+					items: [
+						'advanced/instance_settings/index',
+						'core_concepts/infrastructure_as_code/index',
+						'advanced/self_host/aws_eks_ecs'
+					]
 				},
 				{
 					type: 'category',
