@@ -10,7 +10,7 @@ title: 'Webmux: a web dashboard for parallel AI coding agents'
 
 Every engineer at Windmill runs multiple AI coding agents in parallel throughout the day. An agent implementing a new API endpoint, another fixing a frontend bug, a third refactoring a service — each in its own git worktree, each with its own dev servers, each producing PRs that need monitoring. Managing all of this across scattered terminal windows and browser tabs was painful.
 
-So we built **Webmux**, a web dashboard that lets you create, monitor, and manage parallel AI agents from a single browser tab. It is directly inspired by [workmux](https://workmux.raine.dev/), the excellent terminal-first CLI tool by [Raine](https://github.com/raine) that pioneered the git-worktree-per-agent workflow. We loved the core idea — one worktree, one tmux session, one agent per task — and wanted to bring it to a web interface with richer visuals, embedded terminals, and integrated PR/CI monitoring.
+So we built **Webmux**, a web dashboard that lets you create, monitor, and manage parallel AI agents from a single browser tab. It is directly inspired by [workmux](https://workmux.raine.dev/), the excellent terminal-first CLI tool by [Raine](https://github.com/raine). We loved the core idea, one worktree, one tmux session, one agent per task. We wanted to bring it to a web interface with richer visuals, embedded terminals, and integrated PR/CI monitoring.
 
 <!--truncate-->
 
@@ -92,11 +92,15 @@ Webmux polls GitHub via the `gh` CLI to track PRs for each worktree's branch. Wh
 - CI check status and details — click through to see failed test logs.
 - Review comments displayed inline, so you can read code review feedback without leaving the dashboard.
 
-Results are cached with ETags to avoid hitting GitHub's rate limits.
-
 ### Service health
 
 Each worktree can define services with allocated ports. Webmux periodically health-checks these ports and displays badges: green if the dev server is up, red if it crashed. At a glance, you know which worktrees have healthy environments and which need attention.
+
+### Linear integration
+
+We use [Linear](https://linear.app/) for issue tracking at Windmill, and Webmux brings it right into the dashboard. Your assigned issues show up in a collapsible sidebar panel — browse your backlog, search by title, preview the full issue details, and hit **Implement** to spin up a worktree for it in one click. The branch name is derived from the Linear issue automatically, so everything stays consistent from issue to branch to PR.
+
+Once agents are running, Webmux matches worktree branches back to their Linear issues. Each worktree card shows a small badge with the issue identifier and status color, so you always know which issue each agent is working on. The whole flow — pick an issue, let an agent implement it, review the PR inline, merge — happens without leaving the dashboard.
 
 ## Architecture
 
@@ -104,25 +108,9 @@ The stack is intentionally simple:
 
 - **Backend**: A single [Bun](https://bun.sh/) server that orchestrates git, tmux, Docker, and the GitHub CLI. Clean adapter/service/domain layering — adapters handle I/O (git commands, tmux sessions, Docker containers), services implement business logic (lifecycle management, PR monitoring, reconciliation), and the domain layer holds pure types and policies.
 - **Frontend**: [Svelte 5](https://svelte.dev/) with xterm.js for terminal rendering.
-- **State**: A reconciliation service periodically scans git worktrees and tmux sessions, syncing the in-memory state with reality. If you delete a worktree from the command line, the dashboard reflects it on the next poll.
 
-No database. No external services beyond GitHub. The entire state is derived from git and tmux.
+No database. The only external services are GitHub (for PRs and CI) and optionally Linear (for issue tracking). The entire state is derived from git and tmux.
 
 ## How we use it at Windmill
 
-Every engineer at Windmill uses Webmux daily. A typical workflow:
-
-1. Open the dashboard, create 3-5 worktrees for different tasks.
-2. Each worktree gets a `full` profile: agent pane + backend dev server + frontend dev server, all on auto-allocated ports.
-3. Write a prompt describing the task, hit create. The agent starts working.
-4. Monitor progress across all agents from a single tab. When an agent opens a PR, review the CI status and comments inline.
-5. For experimental or potentially destructive work, use the `sandbox` profile — the agent runs in a Docker container with only the environment variables it needs.
-6. When a task is done, merge and delete the worktree. Lifecycle hooks handle cleanup.
-
-We also integrate with [Linear](https://linear.app/) for issue tracking. Webmux can list your assigned issues and auto-generate branch names from them, closing the loop from issue to worktree to PR.
-
-## Credit where it's due
-
-Webmux would not exist without [workmux](https://workmux.raine.dev/). The core insight — that git worktrees are the natural isolation boundary for parallel AI agents, and that tmux is the right abstraction for managing their terminal sessions — comes directly from workmux. We added a web layer on top, but the foundation is theirs.
-
-If you prefer a terminal-first workflow, use workmux. If you want a browser dashboard with embedded terminals and GitHub integration, give Webmux a try.
+Every engineer at Windmill uses Webmux daily. A typical session involves 3-5 worktrees running in parallel — each with its own agent, dev servers, and allocated ports. Pick issues from the Linear sidebar, let agents work, monitor PRs and CI inline, merge when ready, delete the worktree. The entire cycle from issue to merged PR happens in one tab.
