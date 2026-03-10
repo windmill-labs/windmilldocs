@@ -129,7 +129,7 @@ wmill script show f/scripts/test
 
 ## Running a script
 
-Running a script by its path s done using the `wmill script run` command.
+Running a script by its path is done using the `wmill script run` command.
 
 ```bash
 wmill script run <remote_path> [options]

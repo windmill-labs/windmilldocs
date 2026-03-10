@@ -11,6 +11,7 @@ import {
 	Monitor
 } from 'lucide-react';
 import { VolumeX } from 'lucide-react';
+import ProductionTabs, { defaultTabs } from './components/ProductionTabs';
 
 const videoTabs = [
 	{
@@ -108,7 +109,7 @@ export default function HeroExample() {
 								Learn Windmill's core features through hands-on video tutorials covering scripts, workflows, apps, and local dev.
 							</p>
 						</div>
-						<div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 mt-6">
+						<div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
 							<div className="flex flex-col gap-2">
 								{videoTabs.map((tab, idx) => {
 									const Icon = tab.icon;
