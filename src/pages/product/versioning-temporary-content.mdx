@@ -77,7 +77,7 @@ export function HeroTimeline() {
 
 {/* ── Sync flow animations ── */}
 
-export function SyncFlowStep({ icon: Icon, label, isInView, delay }) {
+export function SyncFlowStep({ icon: Icon, label, auto, isInView, delay }) {
 	return (
 		<motion.div
 			initial={{ opacity: 0, scale: 0.8 }}
@@ -87,6 +87,11 @@ export function SyncFlowStep({ icon: Icon, label, isInView, delay }) {
 		>
 			<Icon className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
 			<span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">{label}</span>
+			{auto && (
+				<span className="ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded flex-shrink-0 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20">
+					auto
+				</span>
+			)}
 		</motion.div>
 	);
 }
@@ -112,23 +117,23 @@ export function SyncFlows() {
 		{
 			label: 'From local to production',
 			steps: [
-				{ icon: Terminal, label: 'wmill sync push' },
+				{ icon: Terminal, label: 'wmill sync push', auto: false },
 			],
 			parallel: [
-				{ icon: Rocket, label: 'Deploy on Windmill' },
-				{ icon: GitBranch, label: 'Commit to Git' },
+				{ icon: Rocket, label: 'Deploy on Windmill', auto: true },
+				{ icon: GitBranch, label: 'Commit to Git', auto: true },
 			],
 			after: [
-				{ icon: Monitor, label: 'New version on the UI' },
+				{ icon: Monitor, label: 'Available on the UI', auto: true },
 			],
 		},
 		{
 			label: 'From UI to local',
 			steps: [
-				{ icon: Monitor, label: 'Deploy from the UI' },
-				{ icon: GitBranch, label: 'Commit to Git' },
-				{ icon: Terminal, label: 'wmill sync pull' },
-				{ icon: PenLine, label: 'Update locally' },
+				{ icon: Monitor, label: 'Deploy from the UI', auto: false },
+				{ icon: GitBranch, label: 'Commit to Git', auto: true },
+				{ icon: Terminal, label: 'wmill sync pull', auto: false },
+				{ icon: PenLine, label: 'Files updated locally', auto: true },
 			],
 		},
 	];
@@ -198,6 +203,164 @@ export function SyncFlows() {
 					</motion.div>
 				);
 			})}
+		</div>
+	);
+}
+
+{/* ── Option A: Three-way sync triangle ── */}
+
+export function ThreeWaySync() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-60px" });
+	const d = 0.3;
+	const nodes = [
+		{ icon: Terminal, label: 'Local files', x: 150, y: 20 },
+		{ icon: Rocket, label: 'Windmill', x: 30, y: 160 },
+		{ icon: GitBranch, label: 'Git repo', x: 270, y: 160 },
+	];
+	return (
+		<div ref={ref} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+			<p className="text-xs font-medium text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-2 text-center">Option A: Three-way sync</p>
+			<div className="max-w-xs mx-auto">
+				<svg viewBox="0 0 300 200" className="w-full">
+					{/* Animated connection lines */}
+					<motion.path
+						d="M150,55 L55,140"
+						fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600"
+						initial={{ pathLength: 0 }} animate={isInView ? { pathLength: 1 } : {}} transition={{ duration: 0.4, delay: d + 0.3 }}
+					/>
+					<motion.path
+						d="M150,55 L245,140"
+						fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600"
+						initial={{ pathLength: 0 }} animate={isInView ? { pathLength: 1 } : {}} transition={{ duration: 0.4, delay: d + 0.4 }}
+					/>
+					<motion.path
+						d="M80,165 L220,165"
+						fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600"
+						initial={{ pathLength: 0 }} animate={isInView ? { pathLength: 1 } : {}} transition={{ duration: 0.4, delay: d + 0.5 }}
+					/>
+					{/* Arrow hints on lines */}
+					<motion.polygon points="90,137 97,143 84,143" fill="currentColor" className="text-gray-400 dark:text-gray-500"
+						initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: d + 0.5 }} />
+					<motion.polygon points="210,137 216,143 203,143" fill="currentColor" className="text-gray-400 dark:text-gray-500"
+						initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: d + 0.6 }} />
+					<motion.polygon points="155,165 149,158 149,172" fill="currentColor" className="text-gray-400 dark:text-gray-500"
+						initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: d + 0.7 }} />
+					{/* Nodes */}
+					{nodes.map((node, i) => (
+						<motion.g key={node.label}
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={isInView ? { opacity: 1, scale: 1 } : {}}
+							transition={{ duration: 0.3, delay: d + i * 0.12 }}
+						>
+							<rect x={node.x - 20} y={node.y} width="40" height="40" rx="10"
+								className="fill-gray-100 dark:fill-gray-800 stroke-gray-200 dark:stroke-gray-700" strokeWidth="1" />
+							<text x={node.x} y={node.y + 62} textAnchor="middle"
+								className="fill-gray-700 dark:fill-gray-300 text-[11px] font-medium">{node.label}</text>
+						</motion.g>
+					))}
+				</svg>
+				{/* Labels below */}
+				<p className="text-xs text-gray-400 dark:text-gray-500 text-center mt-2">All three stay in sync regardless of where changes originate</p>
+			</div>
+		</div>
+	);
+}
+
+{/* ── Option B: File tree animation ── */}
+
+export function FileTreeAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-60px" });
+	const d = 0.3;
+	const files = [
+		{ name: 'f/', indent: 0, type: 'folder' },
+		{ name: 'process_order/', indent: 1, type: 'folder' },
+		{ name: 'process_order.flow.yaml', indent: 2, type: 'yaml' },
+		{ name: 'step_1.inline_script.ts', indent: 2, type: 'ts' },
+		{ name: 'step_2.inline_script.py', indent: 2, type: 'py' },
+		{ name: 'u/', indent: 0, type: 'folder' },
+		{ name: 'alice/', indent: 1, type: 'folder' },
+		{ name: 'fetch_data.ts', indent: 2, type: 'ts' },
+		{ name: 'fetch_data.script.yaml', indent: 2, type: 'yaml' },
+		{ name: 'transform.py', indent: 2, type: 'py' },
+		{ name: 'transform.script.yaml', indent: 2, type: 'yaml' },
+	];
+	const typeColors = {
+		folder: 'text-blue-500 dark:text-blue-400',
+		ts: 'text-blue-600 dark:text-blue-300',
+		py: 'text-green-600 dark:text-green-400',
+		yaml: 'text-gray-500 dark:text-gray-400',
+	};
+	return (
+		<div ref={ref} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+			<p className="text-xs font-medium text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-4 text-center">Option B: What wmill sync pull produces</p>
+			<div className="max-w-sm mx-auto p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 font-mono text-sm">
+				<p className="text-xs text-gray-400 dark:text-gray-500 mb-3 font-sans">$ wmill sync pull</p>
+				{files.map((file, i) => (
+					<motion.div
+						key={i}
+						initial={{ opacity: 0, x: -8 }}
+						animate={isInView ? { opacity: 1, x: 0 } : {}}
+						transition={{ duration: 0.2, delay: d + i * 0.06 }}
+						style={{ paddingLeft: `${file.indent * 16}px` }}
+						className="py-0.5"
+					>
+						<span className={typeColors[file.type]}>
+							{file.type === 'folder' ? '📁 ' : ''}{file.name}
+						</span>
+					</motion.div>
+				))}
+			</div>
+		</div>
+	);
+}
+
+{/* ── Option C: Sync event timeline ── */}
+
+export function SyncTimeline() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-60px" });
+	const d = 0.3;
+	const events = [
+		{ time: '10:02', actor: 'Alice', action: 'deploys from the UI', icon: Monitor },
+		{ time: '10:02', actor: 'Git sync', action: 'commits to repository', icon: GitBranch },
+		{ time: '10:05', actor: 'Bob', action: 'runs wmill sync pull', icon: Terminal },
+		{ time: '10:05', actor: 'Local files', action: 'updated with latest version', icon: PenLine },
+	];
+	return (
+		<div ref={ref} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+			<p className="text-xs font-medium text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-4 text-center">Option C: Sync event timeline</p>
+			<div className="max-w-md mx-auto">
+				{events.map((event, i) => (
+					<motion.div
+						key={i}
+						initial={{ opacity: 0, x: -12 }}
+						animate={isInView ? { opacity: 1, x: 0 } : {}}
+						transition={{ duration: 0.3, delay: d + i * 0.2 }}
+						className="flex items-center gap-3 py-2"
+					>
+						<span className="text-xs font-mono text-gray-400 dark:text-gray-500 w-10 flex-shrink-0">{event.time}</span>
+						<div className="relative flex-shrink-0">
+							<div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+								<event.icon className="w-3.5 h-3.5 text-gray-600 dark:text-gray-400" />
+							</div>
+							{i < events.length - 1 && (
+								<motion.div
+									initial={{ scaleY: 0 }}
+									animate={isInView ? { scaleY: 1 } : {}}
+									transition={{ duration: 0.2, delay: d + i * 0.2 + 0.15 }}
+									className="absolute left-1/2 top-full w-px h-2 bg-gray-200 dark:bg-gray-700 origin-top -translate-x-1/2"
+								/>
+							)}
+						</div>
+						<div>
+							<span className="text-sm font-medium text-gray-900 dark:text-white">{event.actor}</span>
+							<span className="text-sm text-gray-500 dark:text-gray-400"> {event.action}</span>
+						</div>
+					</motion.div>
+				))}
+			</div>
 		</div>
 	);
 }
