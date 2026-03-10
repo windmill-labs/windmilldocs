@@ -16,61 +16,70 @@ export const fadeIn = {
 	transition: { duration: 0.5 }
 };
 
-{/* ── Hero animation: Edit → Deploy → Versioned → Synced to Git ── */}
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
 
-export function HeroTimeline() {
+{/* ── Hero animation: diff view ── */}
+
+export function HeroDiff() {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, margin: "-40px" });
 	const d = 0.3;
-	const steps = [
-		{ icon: PenLine, label: 'Edit in UI or locally' },
-		{ icon: Rocket, label: 'Deploy' },
-		{ icon: History, label: 'Versioned' },
-		{ icon: GitBranch, label: 'Synced to Git' },
+	const lines = [
+		{ type: 'header', text: 'fetch_orders.ts — v12 → v13' },
+		{ type: 'context', num: [3, 3], text: 'import { getResource } from "windmill-client";' },
+		{ type: 'context', num: [4, 4], text: '' },
+		{ type: 'removed', num: [5, null], text: 'export async function main(limit = 100) {' },
+		{ type: 'added', num: [null, 5], text: 'export async function main(limit = 100, offset = 0) {' },
+		{ type: 'context', num: [6, 6], text: '  const db = await getResource("f/orders/pg");' },
+		{ type: 'removed', num: [7, null], text: '  const rows = await db.query(' },
+		{ type: 'removed', num: [8, null], text: '    `SELECT * FROM orders LIMIT $1`,' },
+		{ type: 'removed', num: [9, null], text: '    [limit]' },
+		{ type: 'removed', num: [10, null], text: '  );' },
+		{ type: 'added', num: [null, 7], text: '  const rows = await db.query(' },
+		{ type: 'added', num: [null, 8], text: '    `SELECT * FROM orders LIMIT $1 OFFSET $2`,' },
+		{ type: 'added', num: [null, 9], text: '    [limit, offset]' },
+		{ type: 'added', num: [null, 10], text: '  );' },
+		{ type: 'context', num: [11, 11], text: '  return rows;' },
+		{ type: 'context', num: [12, 12], text: '}' },
 	];
+	const colors = {
+		header: 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700',
+		context: 'text-gray-600 dark:text-gray-400',
+		removed: 'bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300',
+		added: 'bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-300',
+	};
+	const prefix = { context: ' ', removed: '-', added: '+' };
 	return (
-		<div ref={ref} className="mt-12 mb-4">
-			{/* Desktop */}
-			<div className="hidden sm:flex items-center justify-center gap-0">
-				{steps.map((step, i) => (
-					<React.Fragment key={step.label}>
-						<motion.div
-							initial={{ opacity: 0, y: 12 }}
-							animate={isInView ? { opacity: 1, y: 0 } : {}}
-							transition={{ duration: 0.3, delay: d + i * 0.15 }}
-							className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
-						>
-							<step.icon className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-							<span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">{step.label}</span>
-						</motion.div>
-						{i < steps.length - 1 && (
-							<motion.div
-								initial={{ opacity: 0, scaleX: 0 }}
-								animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
-								transition={{ duration: 0.15, delay: d + i * 0.15 + 0.1 }}
-								className="mx-1 origin-left"
-							>
-								<ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-							</motion.div>
-						)}
-					</React.Fragment>
-				))}
-			</div>
-			{/* Mobile */}
-			<div className="sm:hidden flex flex-wrap justify-center gap-2">
-				{steps.map((step, i) => (
-					<motion.div
-						key={step.label}
-						initial={{ opacity: 0, y: 8 }}
-						animate={isInView ? { opacity: 1, y: 0 } : {}}
-						transition={{ duration: 0.25, delay: d + i * 0.1 }}
-						className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
-					>
-						<step.icon className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-						<span className="text-xs font-medium text-gray-700 dark:text-gray-300">{step.label}</span>
-					</motion.div>
-				))}
-			</div>
+		<div ref={ref} className="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-gray-950 shadow-lg font-mono text-[11px] leading-5">
+			{lines.map((line, i) => (
+				<motion.div
+					key={i}
+					initial={{ opacity: 0 }}
+					animate={isInView ? { opacity: 1 } : {}}
+					transition={{ duration: 0.15, delay: d + i * 0.04 }}
+					className={`flex ${colors[line.type]} ${line.type === 'header' ? 'px-3 py-1.5 font-medium text-xs' : 'px-0'}`}
+				>
+					{line.type === 'header' ? (
+						<span>{line.text}</span>
+					) : (
+						<>
+							<span className="w-8 text-right pr-1 text-gray-400 dark:text-gray-600 select-none flex-shrink-0">
+								{line.num[0] ?? ''}
+							</span>
+							<span className="w-8 text-right pr-1 text-gray-400 dark:text-gray-600 select-none flex-shrink-0">
+								{line.num[1] ?? ''}
+							</span>
+							<span className="w-4 text-center select-none flex-shrink-0 text-gray-400 dark:text-gray-500">
+								{prefix[line.type]}
+							</span>
+							<span className="pr-3 whitespace-pre">{line.text}</span>
+						</>
+					)}
+				</motion.div>
+			))}
 		</div>
 	);
 }
@@ -250,33 +259,38 @@ export default function VersioningContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			{/* ═══════════════ Hero ═══════════════ */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-4">
-				<motion.div {...fadeIn} className="text-center max-w-4xl mx-auto">
-					<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-						Deploy in one click. Version with Git.
-					</h1>
-					<p className="text-xl text-gray-600 dark:text-gray-100 mb-0 max-w-3xl mx-auto">
-						Every script, flow, and app in Windmill is versioned on every deployment. Use the built-in UI to deploy and track changes, or connect a Git repository for full source control, local development, and CI/CD pipelines.
-					</p>
-					<HeroTimeline />
-					<div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-						<a
-							href="https://app.windmill.dev"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-						>
-							Try Windmill free
-							<ArrowRight className="w-4 h-4" />
-						</a>
-						<Link
-							to="/docs/advanced/version_control"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-						>
-							Read the docs
-						</Link>
-					</div>
-				</motion.div>
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Deploy in one click. Version with Git.
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Every script, flow, and app in Windmill is versioned on every deployment. Use the built-in UI to deploy and track changes, or connect a Git repository for full source control, local development, and CI/CD pipelines.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4">
+							<a
+								href="https://app.windmill.dev"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
+							>
+								Try Windmill free
+								<ArrowRight className="w-4 h-4" />
+							</a>
+							<Link
+								to="/docs/advanced/version_control"
+								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
+							>
+								Read the docs
+							</Link>
+						</div>
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<HeroDiff />
+					</motion.div>
+				</div>
 			</div>
 
 			{/* ═══════════════ Deploy in one click ═══════════════ */}
