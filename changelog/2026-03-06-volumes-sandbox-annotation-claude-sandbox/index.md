@@ -13,4 +13,5 @@ features:
   - 'Volumes UI in the Assets page for browsing, exploring, and deleting volumes.'
   - 'Community Edition volume limits: max 20 volumes per workspace, 50 MB per file.'
 docs: /docs/core_concepts/ai_sandbox
+version: v1.651.0
 ---
