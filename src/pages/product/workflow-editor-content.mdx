@@ -1,12 +1,12 @@
 ---
-title: "Visual workflow engine with full code flexibility"
+title: "Workflow builder with built-in infrastructure"
 description: "How do I build workflows in Windmill? Orchestrate scripts into DAG-based flows with branching, loops, retries, approval steps, and full observability."
 ---
 
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, BookOpen, Code2, GitBranch, RotateCcw, ShieldCheck, Timer, Layers, Zap, GitFork, CheckCircle2, Code, Repeat, Split, Clock, Pause, AlertTriangle, Shield, Gauge, Database, RefreshCw, Eye, Sparkles, FileCode, Plug, Bot } from 'lucide-react';
+import { ArrowRight, BookOpen, GitBranch, RotateCcw, ShieldCheck, Layers, Zap, GitFork, CheckCircle2, Code, Repeat, Split, Clock, Pause, AlertTriangle, Shield, Gauge, Database, RefreshCw, Eye, Sparkles, Bot } from 'lucide-react';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import TriggerGrid from '../../components/use-cases/TriggerGrid';
@@ -431,7 +431,7 @@ export default function WorkflowEditorContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						{/* Placeholder: screenshot of the flow editor, ~1200x800px, save as /static/img/money-pages/deploy-workflow.webp */}
+						{/* Placeholder: screenshot of the flow editor showing a multi-step DAG with branching, ~1200x800px, save as /static/img/money-pages/flow-editor-hero.webp */}
 						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
 							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
 						</div>
@@ -444,7 +444,7 @@ export default function WorkflowEditorContent({ title, description }) {
 				<motion.div {...fadeIn}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Every step is a script</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The flow editor lets you chain <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> into multi-step workflows using a visual DAG builder. Each step is a real script in TypeScript, Python, or any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">supported language</Link>, with the same editor, LSP autocompletion, and resource access. Windmill handles execution, error propagation, and observability. Flows run on the same <Link to="/product/workers" className="text-blue-600 dark:text-blue-400 hover:underline">worker infrastructure</Link> as standalone scripts, with 20ms overhead per step.
+						Each step in a flow is a real script in TypeScript, Python, or any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">supported language</Link>, with the same <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">editor</Link>, LSP autocompletion, and resource access. Windmill handles execution, error propagation, and observability. If you prefer code over drag-and-drop, <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> lets you define the same logic in a single Python or TypeScript file.
 					</p>
 				</motion.div>
 			</div>
@@ -452,36 +452,36 @@ export default function WorkflowEditorContent({ title, description }) {
 			{/* ═══════════════ Link steps with dynamic expressions ═══════════════ */}
 			<Section
 				title="Link steps using dynamic expressions"
-				desc={<span>Reference previous step outputs with <code>results.step_name</code> or write JavaScript expressions. The editor provides <Link to="/docs/flows/editor_components" className="text-blue-600 dark:text-blue-400 hover:underline">autocompletion</Link> for available variables and validates expressions before running.</span>}
+				desc={<span>Steps are linked by referencing previous outputs with <code>results.step_name</code> or JavaScript expressions. The editor provides <Link to="/docs/flows/editor_components" className="text-blue-600 dark:text-blue-400 hover:underline">autocompletion</Link> for available variables and validates expressions before running.</span>}
 				docLink="/docs/flows/editor_components"
 				reverse
 			/>
 
 			{/* ═══════════════ Orchestrate scripts into workflows (tabs) ═══════════════ */}
 			<TabSection
-				title="Orchestrate scripts into high-performance workflows"
-				subtitle={<span>Build <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link> by chaining steps in a visual DAG editor. Each step type serves a specific purpose in your workflow.</span>}
+				title="Step types"
+				subtitle={<span>Each <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">step type</Link> serves a specific purpose in your workflow.</span>}
 				features={stepTypes}
 			/>
 
 			{/* ═══════════════ Connect to 300+ integrations ═══════════════ */}
 			<Section
 				title="Connect to 300+ integrations"
-				desc={<span>Declare a parameter as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource type</Link> and the UI shows a dropdown of configured connections. Credentials are centrally managed, encrypted at rest, and injected at runtime. Supports OAuth2, API keys, and database connections with typed schemas.</span>}
+				desc={<span>Parameters declared as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource type</Link> show a dropdown of configured connections in the UI. Credentials are centrally managed, encrypted at rest, and injected at runtime. OAuth2, API keys, and database connections are supported with typed schemas.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
 			/>
 
 			{/* ═══════════════ Retries, concurrency, caching (tabs) ═══════════════ */}
 			<TabSection
-				title="Retries, concurrency, caching and error handling"
-				subtitle={<span>Configure step-level reliability features directly from the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link>. Each feature is opt-in per step.</span>}
+				title="Step-level reliability"
+				subtitle={<span>Retries, concurrency limits, caching, and error handling are configured per step from the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link>.</span>}
 				features={stepFeatures}
 			/>
 
 			{/* ═══════════════ Dedicated workers ═══════════════ */}
 			<Section
 				title="Runs on dedicated workers"
-				desc={<span>Each flow step runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> that uses the full CPU and memory available to it. Workers execute one job at a time, with roughly 20ms of overhead between steps. Scale horizontally by adding workers, or assign <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> to high-throughput flows to eliminate cold starts entirely.</span>}
+				desc={<span>Each flow step runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> with the full CPU and memory available to it. Workers execute one job at a time, with roughly 20ms of overhead between steps. <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Dedicated workers</Link> can be assigned to high-throughput flows to eliminate cold starts entirely.</span>}
 				docLink="/docs/core_concepts/worker_groups"
 			/>
 
@@ -496,7 +496,7 @@ export default function WorkflowEditorContent({ title, description }) {
 			{/* ═══════════════ Full observability ═══════════════ */}
 			<Section
 				title="Built-in granular monitoring"
-				desc={<span>Stream logs in real time, inspect inputs and outputs at every step, and <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">restart from any step</Link> without replaying the full run. View <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">run history</Link> with filters for status, duration, and user.</span>}
+				desc={<span>Logs stream in real time. Inputs and outputs are inspectable at every step. Runs can be <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">restarted from any step</Link> without replaying the full flow. <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">Run history</Link> is filterable by status, duration, and user.</span>}
 				docLink="/docs/core_concepts/jobs"
 			/>
 
