@@ -501,27 +501,32 @@ export default function WorkflowEditorContent({ title, description }) {
 				reverse
 			/>
 
-			{/* ═══════════════ Deployment and versioning ═══════════════ */}
-			<Section
-				title="Deployment and versioning"
-				desc={<span>Each deployment creates a new immutable version. View history, compare diffs, and restore any previous version. With <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git Sync</Link>, every deployment is automatically committed. Use <Link to="/product/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">workspace forks</Link> and promotion workflows to move flows from staging to production.</span>}
-				docLink="/docs/core_concepts/draft_and_deploy"
-			/>
-
-			{/* ═══════════════ Dedicated workers ═══════════════ */}
-			<Section
-				title="Runs on dedicated workers"
-				desc={<span>Each flow step runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> with the full CPU and memory available to it. Workers execute one job at a time, with roughly 20ms of overhead between steps. <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Dedicated workers</Link> can be assigned to high-throughput flows to eliminate cold starts entirely.</span>}
-				docLink="/docs/core_concepts/worker_groups"
-				reverse
-			/>
-
-			{/* ═══════════════ Full observability ═══════════════ */}
-			<Section
-				title="Built-in granular monitoring"
-				desc={<span>Logs stream in real time. Inputs and outputs are inspectable at every step. Runs can be <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">restarted from any step</Link> without replaying the full flow. <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">Run history</Link> is filterable by status, duration, and user.</span>}
-				docLink="/docs/core_concepts/jobs"
-			/>
+			{/* ═══════════════ Versioning, workers & observability ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Deployment and versioning</h3>
+						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each deployment creates a new immutable version. View history, compare diffs, and promote flows from staging to production.</p>
+						<Link to="/product/versioning" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+							Check our versioning dedicated page <ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Runs on dedicated workers</h3>
+						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each flow step runs on an isolated worker with roughly 20ms of overhead between steps. Assign dedicated workers to eliminate cold starts.</p>
+						<Link to="/product/workers" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+							Check our workers dedicated page <ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Built-in granular monitoring</h3>
+						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Logs stream in real time. Inputs and outputs are inspectable at every step. Runs can be restarted from any step.</p>
+						<Link to="/product/observability" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+							Check our observability dedicated page <ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+				</motion.div>
+			</div>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[

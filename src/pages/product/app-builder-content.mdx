@@ -427,20 +427,25 @@ export default function FrontendBuilderContent({ title, description }) {
 				reverse
 			/>
 
-			{/* ═══════════════ Deploy, version, and share ═══════════════ */}
-			<Section
-				title="Deploy, version, and share"
-				desc={<span>Deploy with <code>wmill sync push</code> or from the browser editor. Each deployment is versioned. Sync to Git with <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git Sync</Link> and promote across <Link to="/product/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">staging and production workspaces</Link>. Apps can be public, have custom URL paths, or use <Link to="/docs/full_code_apps/deployment" className="text-blue-600 dark:text-blue-400 hover:underline">execution policies</Link>.</span>}
-				docLink="/docs/full_code_apps/deployment"
-			/>
-
-			{/* ═══════════════ Observability ═══════════════ */}
-			<Section
-				title="Observability"
-				desc={<span>Every backend runnable call is logged as a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">job</Link> with its inputs, outputs, duration, and status. The run history is searchable and filterable. Failed jobs show full error traces. <Link to="/docs/core_concepts/critical_alert_channels" className="text-blue-600 dark:text-blue-400 hover:underline">Critical alerts</Link> can notify on failures, and <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link> track every action across the workspace.</span>}
-				docLink="/docs/core_concepts/monitor_past_and_future_runs"
-				reverse
-			/>
+			{/* ═══════════════ Versioning & observability ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Deploy, version, and share</h3>
+						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Deploy from the browser or CLI. Each deployment is versioned and can be synced to Git. Promote across staging and production workspaces.</p>
+						<Link to="/product/versioning" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+							Check our versioning dedicated page <ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Observability</h3>
+						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Every backend runnable call is logged with its inputs, outputs, duration, and status. Run history is searchable, failed jobs show full error traces.</p>
+						<Link to="/product/observability" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+							Check our observability dedicated page <ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+				</motion.div>
+			</div>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[
