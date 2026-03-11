@@ -371,25 +371,20 @@ export default function FrontendBuilderContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* ═══════════════ Backend runnables intro ═══════════════ */}
+			{/* ═══════════════ What is the app builder ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn}>
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Your backend logic runs on Windmill</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-						Windmill executes backend functions ("runnables") on isolated workers in 20+ languages. Full-code apps connect your frontend to these runnables through a typed API.
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">React and Svelte apps on top of Windmill</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						The <Link to="/docs/full_code_apps" className="text-blue-600 dark:text-blue-400 hover:underline">app builder</Link> lets you write a React or Svelte frontend that calls <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> and <Link to="/product/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link>, also referenced as 'backend runnables'. Windmill handles execution, authentication, and hosting. You keep full control over the UI and can develop from the <Link to="/docs/full_code_apps/ui_editor" className="text-blue-600 dark:text-blue-400 hover:underline">browser editor</Link> or <Link to="/docs/full_code_apps/cli_workflow" className="text-blue-600 dark:text-blue-400 hover:underline">locally from the CLI</Link>.
 					</p>
 				</motion.div>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
 					<motion.div {...stagger(0.1)}>
 						<div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 h-full">
-							<div className="flex items-center gap-3 mb-2">
-								<div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
-									<FileCode className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-									<Link to="/product/script-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Scripts</Link>
-								</h3>
-							</div>
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+								<Link to="/product/script-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Scripts</Link>
+							</h3>
 							<p className="text-sm text-gray-600 dark:text-gray-300">
 								Single functions in TypeScript, Python, Go, SQL, Bash, and 15+ other languages. Each script runs on an isolated worker.
 							</p>
@@ -397,14 +392,9 @@ export default function FrontendBuilderContent({ title, description }) {
 					</motion.div>
 					<motion.div {...stagger(0.2)}>
 						<div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 h-full">
-							<div className="flex items-center gap-3 mb-2">
-								<div className="w-9 h-9 rounded-lg bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center flex-shrink-0">
-									<Layers className="w-4 h-4 text-violet-600 dark:text-violet-400" />
-								</div>
-								<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-									<Link to="/product/flow-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Flows</Link>
-								</h3>
-							</div>
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+								<Link to="/product/flow-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Flows</Link>
+							</h3>
 							<p className="text-sm text-gray-600 dark:text-gray-300">
 								Multi-step workflows that chain scripts into DAGs with branching, loops, retries, and approval steps.
 							</p>
@@ -413,38 +403,10 @@ export default function FrontendBuilderContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* ═══════════════ Full-code apps concept ═══════════════ */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-					<div>
-						<div className="flex items-center gap-4 mb-4">
-							<SiReact className="w-7 h-7 text-[#61DAFB]" />
-							<SiSvelte className="w-7 h-7 text-[#FF3E00]" />
-						</div>
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Full-code apps: custom frontends on the Windmill platform</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
-							Windmill's <Link to="/docs/full_code_apps" className="text-blue-600 dark:text-blue-400 hover:underline">full-code app builder</Link> lets you write a React or Svelte frontend that connects to these runnables and runs on the Windmill platform. Full control over the UI, while Windmill handles execution, auth, and hosting. Build from the <Link to="/docs/full_code_apps/ui_editor" className="text-blue-600 dark:text-blue-400 hover:underline">browser editor</Link> or <Link to="/docs/full_code_apps/cli_workflow" className="text-blue-600 dark:text-blue-400 hover:underline">locally from the CLI</Link>.
-						</p>
-						<Link
-							to="/docs/full_code_apps"
-							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
-						>
-							<BookOpen className="w-4 h-4" /> Read the docs
-						</Link>
-					</div>
-					<div>
-						{/* Placeholder: screenshot of full-code apps on Windmill, ~1200x800px, save as /static/img/money-pages/frontend.webp */}
-						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
-					</div>
-				</motion.div>
-			</div>
-
 			{/* ═══════════════ Typed backend API ═══════════════ */}
 			<Section
-				title="Auto-generated typed API"
-				desc={<span>Adding a script to the <code>backend/</code> folder makes it callable from the frontend. Windmill generates a <code>wmill.d.ts</code> with typed signatures inferred from your code, giving your editor autocomplete and type checking for <code>backend.my_runnable()</code> calls. Runnables execute on <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> and stream results back via WebSocket.</span>}
+				title="Backend runnables"
+				desc={<span>The frontend is served by the Windmill platform. When you add backend runnables to your app, Windmill auto-generates a typed <code>wmill.ts</code> file that makes them callable from the frontend. Your editor gets full autocomplete and type checking out of the box. Runnables execute on <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> and stream results back to the UI in real time.</span>}
 				docLink="/docs/full_code_apps/frontend"
 				reverse
 			/>
@@ -452,13 +414,18 @@ export default function FrontendBuilderContent({ title, description }) {
 			{/* ═══════════════ Datatables ═══════════════ */}
 			<Section
 				title="Datatables"
-				desc={<span><Link to="/docs/core_concepts/persistent_storage/within_windmill#datatables" className="text-blue-600 dark:text-blue-400 hover:underline">Datatables</Link> are a layer on top of your own database (added as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link>) that provides schema management, SQL runnables, and shared access across scripts, flows, and apps. Tables and schemas are accessible from backend runnables. The CLI auto-generates a <code>DATATABLES.md</code> context file so AI assistants understand the schema.</span>}
+				desc={<span><Link to="/docs/core_concepts/persistent_storage/within_windmill#datatables" className="text-blue-600 dark:text-blue-400 hover:underline">Datatables</Link> are a managed layer on top of your own database that your app's backend runnables can read and write to. Windmill handles schema management and generates a <code>DATATABLES.md</code> context file so AI assistants understand the data model when building your frontend.</span>}
 				docLink="/docs/core_concepts/persistent_storage/within_windmill#datatables"
 			/>
 			{/* TODO: screenshot of the datatables UI showing a table with columns, rows, and the schema editor. Save as static/img/money-pages/datatables.webp (approx 1200x800px) */}
 
-			{/* ═══════════════ Develop from UI or locally (switch) ═══════════════ */}
-			<DevModeSection />
+			{/* ═══════════════ Develop from UI or locally ═══════════════ */}
+			<Section
+				title="Develop from the Windmill UI or locally"
+				desc={<span>Build from the <Link to="/docs/full_code_apps/ui_editor" className="text-blue-600 dark:text-blue-400 hover:underline">browser editor</Link> or locally with the <Link to="/docs/full_code_apps/cli_workflow" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>, which provides scaffolding, hot reload, and <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">AI context generation</Link> for tools like Claude Code and Cursor.</span>}
+				docLink="/docs/full_code_apps/cli_workflow"
+				reverse
+			/>
 
 			{/* ═══════════════ Deploy, version, and share ═══════════════ */}
 			<Section
@@ -477,8 +444,7 @@ export default function FrontendBuilderContent({ title, description }) {
 
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[
-				{ question: 'What is the difference between full-code and low-code apps?', textAnswer: 'Full-code apps give you complete control over the frontend with React or Svelte, using the full framework ecosystem. Low-code apps use a drag-and-drop editor with pre-built components. Full-code apps are better for custom UIs and complex interactions. Low-code apps are faster for simple dashboards, forms, and CRUD interfaces.' },
-				{ question: 'Can I use any npm package?', textAnswer: 'Yes. Full-code apps use standard package.json for dependencies. Install any npm package and use it in your frontend code. The CLI bundles everything with esbuild for deployment.' },
+	{ question: 'Can I use any npm package?', textAnswer: 'Yes. Full-code apps use standard package.json for dependencies. Install any npm package and use it in your frontend code. The CLI bundles everything with esbuild for deployment.' },
 				{ question: 'How does the backend execute?', textAnswer: 'Backend runnables execute on Windmill workers, not in the browser. The frontend communicates with Windmill via WebSocket. Each call creates a job that runs on an isolated worker with full CPU and memory. Results stream back to the frontend in real time.' },
 				{ question: 'Can I use Tailwind CSS?', textAnswer: 'Yes. You can add Tailwind or any CSS framework to your project. The frontend is standard React or Svelte with full control over styling.' },
 				{ question: 'Can I build with AI coding assistants?', textAnswer: 'Yes. Running wmill app generate-agents creates AGENTS.md and DATATABLES.md context files that teach AI assistants the project structure, available runnables, and data table schemas. AI tools like Claude Code or Cursor can write valid frontend and backend code using these context files.' },
