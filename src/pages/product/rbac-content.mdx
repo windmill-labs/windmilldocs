@@ -3,10 +3,10 @@ title: "Role-based access control"
 description: "How does Windmill handle access control? Five built-in roles, folder-based permissions, encrypted secrets, SSO, SAML/SCIM, and full audit logging."
 ---
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Shield, Users, FolderLock, Key, Lock, UserCheck, FileText, Globe, ShieldCheck, Fingerprint } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
 export const fadeIn = {
@@ -58,171 +58,14 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 	);
 }
 
-{/* ── Tab section ── */}
+{/* ── Roles data ── */}
 
-export function TabSection({ title, subtitle, features }) {
-	const [active, setActive] = useState(0);
-	return (
-		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-			<motion.div {...fadeIn} className="mb-16">
-				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					{title}
-				</h2>
-				{subtitle && (
-					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
-				)}
-			</motion.div>
-
-			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
-				<div className="flex flex-col gap-2">
-					{features.map((feat, i) => (
-						<button
-							key={feat.label || feat.title}
-							onClick={() => setActive(i)}
-							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
-								i === active
-									? 'bg-blue-600 text-white border-blue-600'
-									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-							}`}
-						>
-							<feat.icon
-								className={`w-5 h-5 flex-shrink-0 ${
-									i === active ? 'text-white' : 'text-blue-500'
-								}`}
-							/>
-							<span className="font-medium text-sm">
-								{feat.label || feat.title}
-							</span>
-						</button>
-					))}
-				</div>
-
-				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
-					{features.map((feat, i) => (
-						<div
-							key={feat.label || feat.title}
-							className={`transition-opacity duration-200 ${
-								i === active
-									? 'opacity-100 relative'
-									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
-							}`}
-						>
-							<div className="flex items-center gap-3 mb-4">
-								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-									{feat.title}
-								</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
-								{feat.desc}
-							</p>
-							{feat.content ? (
-								feat.content
-							) : feat.image ? (
-								<img
-									src={feat.image}
-									alt={feat.title}
-									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
-								/>
-							) : (
-								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-									<span className="text-gray-400 dark:text-gray-500 text-sm">
-										Screenshot coming soon
-									</span>
-								</div>
-							)}
-							{feat.docLink && (
-								<div className="flex justify-end mt-3">
-									<Link
-										to={feat.docLink}
-										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
-									>
-										<BookOpen className="w-4 h-4" /> Read the docs
-									</Link>
-								</div>
-							)}
-						</div>
-					))}
-				</div>
-			</div>
-		</div>
-	);
-}
-
-{/* ── Roles tab data ── */}
-
-export const roleFeatures = [
-	{
-		icon: ShieldCheck,
-		label: 'Superadmin',
-		title: 'Superadmin',
-		desc: <span>Instance-level access across all <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">workspaces</Link>. Manages instance settings, creates workspaces, and controls global configuration. Typically reserved for platform administrators.</span>,
-		docLink: '/docs/core_concepts/roles_and_permissions',
-	},
-	{
-		icon: Shield,
-		label: 'Devops',
-		title: 'Devops',
-		desc: <span>Instance-level role with read access to all workspaces and the ability to manage <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link>, view service logs, and monitor infrastructure. Cannot modify workspace content.</span>,
-		docLink: '/docs/core_concepts/roles_and_permissions',
-	},
-	{
-		icon: UserCheck,
-		label: 'Admin',
-		title: 'Admin',
-		desc: <span>Workspace-level administrator. Full control over scripts, flows, apps, resources, <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">groups, and folders</Link> within their workspace. Can manage workspace members and settings.</span>,
-		docLink: '/docs/core_concepts/roles_and_permissions',
-	},
-	{
-		icon: Users,
-		label: 'Developer',
-		title: 'Developer',
-		desc: <span>Can create and edit scripts, flows, and apps. Access to resources and <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> is scoped by folder permissions. Cannot manage workspace settings or members.</span>,
-		docLink: '/docs/core_concepts/roles_and_permissions',
-	},
-	{
-		icon: Globe,
-		label: 'Operator',
-		title: 'Operator',
-		desc: <span>Run-only access. Can execute scripts, flows, and apps but cannot view or edit source code. Ideal for <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">business users</Link> who need to trigger workflows without accessing implementation details.</span>,
-		docLink: '/docs/core_concepts/roles_and_permissions',
-	},
-];
-
-{/* ── SSO tab data ── */}
-
-export const ssoFeatures = [
-	{
-		icon: Globe,
-		label: 'OAuth / SSO',
-		title: 'OAuth / SSO',
-		desc: <span>Authenticate with <Link to="/docs/misc/setup_oauth" className="text-blue-600 dark:text-blue-400 hover:underline">Google, GitHub, Azure AD, Okta, GitLab</Link>, and any OpenID Connect provider. Configure multiple providers simultaneously. Users are auto-provisioned on first login.</span>,
-		image: '/img/money-pages/sso.webp',
-		docLink: '/docs/misc/setup_oauth',
-	},
-	{
-		icon: Shield,
-		label: 'SAML / SCIM (Enterprise)',
-		title: 'SAML / SCIM (Enterprise)',
-		desc: <span><Link to="/docs/misc/saml_and_scim" className="text-blue-600 dark:text-blue-400 hover:underline">SAML SSO</Link> for enterprise identity providers. SCIM provisioning automatically syncs users and groups from your identity provider to Windmill — no manual user management required.</span>,
-		docLink: '/docs/misc/saml_and_scim',
-	},
-	{
-		icon: Key,
-		label: 'JWT external auth (Enterprise)',
-		title: 'JWT external auth (Enterprise)',
-		desc: <span>Authenticate API calls with <Link to="/docs/advanced/external_auth_with_jwt" className="text-blue-600 dark:text-blue-400 hover:underline">external JWT tokens</Link>. Embed Windmill apps in existing portals or call the API from custom frontends using your own identity provider's tokens.</span>,
-		docLink: '/docs/advanced/external_auth_with_jwt',
-	},
-	{
-		icon: Fingerprint,
-		label: 'OIDC tokens (Enterprise)',
-		title: 'OIDC tokens (Enterprise)',
-		desc: <span>Windmill can issue <Link to="/docs/core_concepts/oidc" className="text-blue-600 dark:text-blue-400 hover:underline">OIDC identity tokens</Link> for running jobs. Use these tokens to authenticate with cloud providers (AWS, GCP, Azure) without storing long-lived credentials.</span>,
-		docLink: '/docs/core_concepts/oidc',
-	},
+export const roles = [
+	{ name: 'Superadmin', scope: 'Instance', desc: 'Full access across all workspaces. Manages instance settings and global configuration.' },
+	{ name: 'Devops', scope: 'Instance', desc: 'Read access to all workspaces. Manages workers and service logs.' },
+	{ name: 'Admin', scope: 'Workspace', desc: 'Full control over workspace content, members, and settings.' },
+	{ name: 'Developer', scope: 'Workspace', desc: 'Creates and edits scripts, flows, and apps. Access scoped by folder permissions.' },
+	{ name: 'Operator', scope: 'Workspace', desc: 'Run-only access. Executes scripts and apps without viewing source code.' },
 ];
 
 {/* ── Main page ── */}
@@ -235,10 +78,10 @@ export default function RbacContent({ title, description }) {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Role-based access control
+							Fine-grained access control
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							Five built-in roles, folder-based permissions, encrypted secrets, SSO, and full audit logging.
+							Roles, folder-based ACLs, and encrypted secrets with OAuth, SAML, and SCIM. Every action is recorded in the audit log.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -269,43 +112,97 @@ export default function RbacContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* ═══════════════ Five roles, one permission model ═══════════════ */}
-			<TabSection
-				title="Five roles, one permission model"
-				subtitle={<span>Windmill provides five <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">built-in roles</Link> that cover the full spectrum from platform administration to run-only access. No custom role configuration needed.</span>}
-				features={roleFeatures}
-			/>
+			{/* ═══════════════ Five built-in roles ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Five built-in roles</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+						Windmill provides five <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">built-in roles</Link> that cover the full spectrum from platform administration to run-only access. No custom role configuration needed.
+					</p>
+				</motion.div>
+				<motion.div {...stagger(0.1)} className="overflow-x-auto">
+					<table className="w-full text-left border-collapse">
+						<thead>
+							<tr className="border-b border-gray-200 dark:border-gray-700">
+								<th className="py-3 px-4 text-sm font-semibold text-gray-900 dark:text-white">Role</th>
+								<th className="py-3 px-4 text-sm font-semibold text-gray-900 dark:text-white">Scope</th>
+								<th className="py-3 px-4 text-sm font-semibold text-gray-900 dark:text-white">Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							{roles.map((role, i) => (
+								<tr key={role.name} className="border-b border-gray-100 dark:border-gray-800">
+									<td className="py-3 px-4 font-medium text-gray-900 dark:text-white">{role.name}</td>
+									<td className="py-3 px-4">
+										<span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+											role.scope === 'Instance'
+												? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
+												: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
+										}`}>
+											{role.scope}
+										</span>
+									</td>
+									<td className="py-3 px-4 text-gray-600 dark:text-gray-300">{role.desc}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</motion.div>
+			</div>
 
 			{/* ═══════════════ Groups and folders ═══════════════ */}
 			<Section
 				title="Groups and folders"
 				desc={<span>Organize users into <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">groups</Link> and assign folder-level permissions: viewer, writer, or admin. Subfolders inherit parent permissions. SCIM-synced instance groups (Enterprise) automatically map identity provider groups to Windmill groups.</span>}
+				image="/img/money-pages/groups-folders.webp"
 				docLink="/docs/core_concepts/groups_and_folders"
-			>
-				{/* Placeholder: screenshot of folder permissions UI showing groups with viewer/writer/admin access on nested folders, ~1200x800px, save as /static/img/money-pages/groups-folders.webp */}
-			</Section>
+			/>
+			{/* Placeholder image: screenshot of folder permissions UI showing groups with viewer/writer/admin access on nested folders, ~1200x800px, save as /static/img/money-pages/groups-folders.webp */}
+
+			{/* ═══════════════ Path-based ACLs ═══════════════ */}
+			<Section
+				title="Path-based access control lists"
+				desc={<span>Every script, flow, resource, variable, and schedule is identified by a <Link to="/docs/core_concepts/roles_and_permissions#path" className="text-blue-600 dark:text-blue-400 hover:underline">unique path</Link>. Each path has an owner and explicit read/write permissions for users and groups. Items in user space (<code>u/alice/my_script</code>) are private by default. Items in folders (<code>f/team/my_script</code>) inherit the folder's group permissions.</span>}
+				image="/img/money-pages/acl.webp"
+				docLink="/docs/core_concepts/roles_and_permissions#permissions-and-access-control"
+				reverse
+			/>
+			{/* Placeholder image: screenshot of the share/permissions dialog on a script showing owner, group permissions (viewer/writer), and path, ~1200x800px, save as /static/img/money-pages/acl.webp */}
 
 			{/* ═══════════════ Encrypted secrets ═══════════════ */}
 			<Section
 				title="Encrypted secrets"
-				desc={<span>All <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> are encrypted at the workspace level with symmetric encryption. Values are injected at runtime only — never exposed in logs, UI, or API responses. Manual key rotation is available on Enterprise. Reference secrets in scripts with <code>$var:</code> and <code>$res:</code> prefixes.</span>}
+				desc={<span>All <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> are encrypted at the workspace level. Values are injected at runtime only and never exposed in logs, UI, or API responses. Manual key rotation is available on Enterprise.</span>}
+				image="/img/money-pages/secrets.webp"
 				docLink="/docs/core_concepts/variables_and_secrets"
+			/>
+			{/* Placeholder image: screenshot of secrets management UI showing encrypted variables with visibility toggles, ~1200x800px, save as /static/img/money-pages/secrets.webp */}
+
+			{/* ═══════════════ SSO and OAuth ═══════════════ */}
+			<Section
+				title="SSO and OAuth"
+				desc={<span>Authenticate with <Link to="/docs/misc/setup_oauth" className="text-blue-600 dark:text-blue-400 hover:underline">Google, GitHub, Azure AD, Okta, GitLab</Link>, and any OpenID Connect provider. Configure multiple providers simultaneously. Users are auto-provisioned on first login.</span>}
+				image="/img/money-pages/sso.webp"
+				docLink="/docs/misc/setup_oauth"
 				reverse
 			/>
 
-			{/* ═══════════════ Authentication and SSO ═══════════════ */}
-			<TabSection
-				title="Authentication and SSO"
-				subtitle={<span>Authenticate users with <Link to="/docs/misc/setup_oauth" className="text-blue-600 dark:text-blue-400 hover:underline">OAuth, SAML, JWT, or OIDC</Link>. Configure multiple providers. Enterprise adds SAML/SCIM, JWT external auth, and OIDC token issuance.</span>}
-				features={ssoFeatures}
-			/>
-
-			{/* ═══════════════ Audit logs and compliance ═══════════════ */}
+			{/* ═══════════════ SAML and SCIM ═══════════════ */}
 			<Section
-				title="Audit logs and compliance"
-				desc={<span>Every action is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>: deployments, permission changes, resource modifications, logins, and job executions. Windmill is SOC 2 Type II certified, runs a bug bounty program, and offers a 3-hour Enterprise SLA for critical issues.</span>}
+				title="SAML and SCIM (Enterprise)"
+				desc={<span><Link to="/docs/misc/saml_and_scim" className="text-blue-600 dark:text-blue-400 hover:underline">SAML SSO</Link> for enterprise identity providers. SCIM provisioning automatically syncs users and groups from your identity provider to Windmill. No manual user management required.</span>}
+				image="/img/money-pages/saml-scim.webp"
+				docLink="/docs/misc/saml_and_scim"
+			/>
+			{/* Placeholder image: screenshot of SAML/SCIM configuration page showing identity provider settings and group mappings, ~1200x800px, save as /static/img/money-pages/saml-scim.webp */}
+
+			{/* ═══════════════ Audit logs ═══════════════ */}
+			<Section
+				title="Audit logs"
+				desc={<span>Every action is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>: deployments, permission changes, resource modifications, logins, and job executions. Filter by user, action type, or time range. Windmill is SOC 2 Type II certified.</span>}
 				image="/img/money-pages/auditlogs.webp"
 				docLink="/docs/core_concepts/audit_logs"
+				reverse
 			/>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
@@ -314,7 +211,8 @@ export default function RbacContent({ title, description }) {
 				{ question: 'Can I create custom roles?', textAnswer: 'Windmill does not support custom roles. The five built-in roles combined with folder-based group permissions cover most access control needs. Groups and folders provide the granularity to scope access per team, project, or environment.' },
 				{ question: 'Which SSO providers are supported?', textAnswer: 'Windmill supports Google, GitHub, Azure AD, Okta, GitLab, and any OpenID Connect provider via OAuth. Enterprise adds SAML SSO and SCIM provisioning for identity providers like Okta, Azure AD, and OneLogin.' },
 				{ question: 'Are secrets visible in logs or API responses?', textAnswer: 'No. Secrets are encrypted at rest and injected at runtime only. They are never exposed in logs, the UI, or API responses. Workers receive decrypted values in memory only during script execution.' },
-				{ question: 'Which features require Enterprise?', textAnswer: 'SAML/SCIM, JWT external auth, OIDC tokens, secret key rotation, and SCIM-synced instance groups require Enterprise. OAuth SSO, the five built-in roles, groups, folders, encrypted secrets, and audit logs are available on all plans.' },
+				{ question: 'Can I authenticate API calls with external tokens?', textAnswer: 'Yes. Enterprise supports JWT external auth to embed Windmill apps in existing portals or call the API with your own identity provider tokens. Windmill can also issue OIDC tokens for running jobs, allowing authentication with cloud providers (AWS, GCP, Azure) without storing long-lived credentials.' },
+				{ question: 'Which features require Enterprise?', textAnswer: 'SAML/SCIM, JWT external auth, OIDC tokens, and secret key rotation require Enterprise. OAuth SSO, the five built-in roles, groups, folders, encrypted secrets, and audit logs are available on all plans.' },
 				{ question: 'Is Windmill SOC 2 certified?', textAnswer: 'Yes. Windmill holds SOC 2 Type II certification. The audit log records all actions for compliance. Enterprise customers get a 3-hour SLA for critical issues and access to the security team via a dedicated channel.' },
 			]} />
 
