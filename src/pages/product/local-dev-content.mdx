@@ -272,6 +272,13 @@ export default function LocalDevContent({ title, description }) {
 				reverse
 			/>
 
+			{/* ═══════════════ Built-in skills and AGENTS.md ═══════════════ */}
+			<Section
+				title="Built-in skills and AGENTS.md"
+				desc={<span>Run <code>wmill init</code> to generate <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">context files</Link> and skill files for Claude Code, Cursor, and other AI tools. The generated <code>AGENTS.md</code> teaches assistants Windmill's file structure, script conventions, and deployment workflow. AI tools can also connect to a workspace through the <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP server</Link> to execute scripts, manage resources, and monitor jobs directly.</span>}
+				docLink="/docs/misc/guides/local_dev_with_ai"
+			/>
+
 			{/* ═══════════════ Create scripts, flows, and apps ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn}>
@@ -339,18 +346,6 @@ export default function LocalDevContent({ title, description }) {
 				desc={<span>Execute Windmill scripts on your machine with access to remote <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> and state. Set <code>WM_TOKEN</code> and <code>BASE_INTERNAL_URL</code> to connect to a running instance, or use <Link to="/docs/advanced/local_development#mocked-api-files" className="text-blue-600 dark:text-blue-400 hover:underline">mocked API files</Link> to work offline. Debug with VS Code breakpoints or JetBrains run configurations.</span>}
 				docLink="/docs/advanced/local_development/run_locally"
 				reverse
-			/>
-
-			{/* ═══════════════ Visual break ═══════════════ */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div className="border-t border-gray-200 dark:border-gray-800" />
-			</div>
-
-			{/* ═══════════════ Built-in skills and AGENTS.md ═══════════════ */}
-			<Section
-				title="Built-in skills and AGENTS.md"
-				desc={<span>Run <code>wmill init</code> to generate <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">context files</Link> and skill files for Claude Code, Cursor, and other AI tools. The generated <code>AGENTS.md</code> teaches assistants Windmill's file structure, script conventions, and deployment workflow. AI tools can also connect to a workspace through the <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP server</Link> to execute scripts, manage resources, and monitor jobs directly.</span>}
-				docLink="/docs/misc/guides/local_dev_with_ai"
 			/>
 
 			{/* ═══════════════ Git integration ═══════════════ */}
