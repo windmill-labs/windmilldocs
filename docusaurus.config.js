@@ -151,7 +151,7 @@ const config = {
 							{ label: 'Workers', href: '/product/workers' },
 							{ label: 'Observability', href: '/product/observability' },
 							{ label: 'RBAC', href: '/product/rbac' },
-							{ label: 'Sandboxes', href: '/product/sandboxes' },
+							{ label: 'AI sandboxes', href: '/product/sandboxes' },
 							{ label: 'No-ops self-host', href: '/product/self-host' },
 						]
 					},

@@ -1,12 +1,12 @@
 ---
-title: "Sandboxed execution"
-description: "How do I run AI agents safely in Windmill? Isolated sandboxes with pre-configured tools, persistent storage, MCP access, and security boundaries."
+title: "AI sandboxes"
+description: "How do I run AI agents safely in Windmill? Isolated sandboxes for Claude Code, Codex, or custom agents with persistent storage and pre-configured tools."
 ---
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Shield, Lock, HardDrive, Wrench, Package, Bot, Server, Globe, Layers } from 'lucide-react';
+import { ArrowRight, BookOpen, Shield, Lock, Bot, Server } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
 export const fadeIn = {
@@ -21,7 +21,7 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
-{/* ── Section helper ── */}
+{/* Section helper */}
 
 export function Section({ title, desc, docLink, image, reverse, children }) {
 	return (
@@ -61,139 +61,20 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 	);
 }
 
-{/* ── Tab section ── */}
-
-export function TabSection({ title, subtitle, features }) {
-	const [active, setActive] = useState(0);
-	return (
-		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-			<motion.div {...fadeIn} className="mb-16">
-				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					{title}
-				</h2>
-				{subtitle && (
-					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
-				)}
-			</motion.div>
-
-			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
-				<div className="flex flex-col gap-2">
-					{features.map((feat, i) => (
-						<button
-							key={feat.label || feat.title}
-							onClick={() => setActive(i)}
-							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
-								i === active
-									? 'bg-blue-600 text-white border-blue-600'
-									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-							}`}
-						>
-							<feat.icon
-								className={`w-5 h-5 flex-shrink-0 ${
-									i === active ? 'text-white' : 'text-blue-500'
-								}`}
-							/>
-							<span className="font-medium text-sm">
-								{feat.label || feat.title}
-							</span>
-						</button>
-					))}
-				</div>
-
-				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
-					{features.map((feat, i) => (
-						<div
-							key={feat.label || feat.title}
-							className={`transition-opacity duration-200 ${
-								i === active
-									? 'opacity-100 relative'
-									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
-							}`}
-						>
-							<div className="flex items-center gap-3 mb-4">
-								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-									{feat.title}
-								</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
-								{feat.desc}
-							</p>
-							{feat.content ? (
-								feat.content
-							) : feat.image ? (
-								<img
-									src={feat.image}
-									alt={feat.title}
-									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
-								/>
-							) : (
-								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-									<span className="text-gray-400 dark:text-gray-500 text-sm">
-										Screenshot coming soon
-									</span>
-								</div>
-							)}
-							{feat.docLink && (
-								<div className="flex justify-end mt-3">
-									<Link
-										to={feat.docLink}
-										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
-									>
-										<BookOpen className="w-4 h-4" /> Read the docs
-									</Link>
-								</div>
-							)}
-						</div>
-					))}
-				</div>
-			</div>
-		</div>
-	);
-}
-
-{/* ── Security isolation tabs ── */}
-
-export const isolationFeatures = [
-	{
-		icon: Shield,
-		label: 'PID namespace',
-		title: 'PID namespace isolation',
-		desc: <span>The default isolation mode. Each job runs in its own <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">PID namespace</Link>, preventing processes from seeing or interfering with other jobs. Lightweight and fast with minimal overhead.</span>,
-		docLink: '/docs/advanced/security_isolation',
-	},
-	{
-		icon: Lock,
-		label: 'NSJAIL',
-		title: 'NSJAIL isolation',
-		desc: <span><Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">NSJAIL</Link> adds filesystem isolation, network restrictions, and resource limits (CPU, memory, disk) on top of PID namespace isolation. Ideal for running untrusted code or multi-tenant environments.</span>,
-		docLink: '/docs/advanced/security_isolation',
-	},
-	{
-		icon: Server,
-		label: 'Agent workers (Enterprise)',
-		title: 'Agent workers (Enterprise)',
-		desc: <span><Link to="/docs/core_concepts/agent_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Agent workers</Link> connect over HTTP only — no direct database access. Deploy them in isolated network segments, behind firewalls, or in separate cloud accounts for maximum security isolation.</span>,
-		docLink: '/docs/core_concepts/agent_workers',
-	},
-];
-
-{/* ── Main page ── */}
+{/* Main page */}
 
 export default function SandboxesContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
-			{/* ═══════════════ Hero ═══════════════ */}
+			{/* Hero */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Sandboxed execution
+							AI sandboxes
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							Run AI agents and untrusted code in isolated environments with pre-configured tools, persistent storage, and security boundaries.
+							Run Claude Code, Codex, or custom agents in isolated environments with persistent storage and pre-configured tools.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -215,7 +96,7 @@ export default function SandboxesContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						{/* Placeholder: screenshot of sandboxed execution, ~1200x800px, save as /static/img/money-pages/security.webp */}
+						{/* Placeholder: screenshot of AI sandbox configuration showing Claude Code running in an isolated environment, ~1200x800px, save as /static/img/money-pages/ai-sandbox-hero.webp */}
 						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
 							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
 						</div>
@@ -223,57 +104,68 @@ export default function SandboxesContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* ═══════════════ AI sandbox ═══════════════ */}
-			<Section
-				title="AI sandbox"
-				desc={<span>Run <Link to="/docs/core_concepts/ai_sandbox" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code, Codex, or custom agents</Link> in isolated sandboxes with pre-configured tools and workspace access via MCP. Persistent volumes maintain agent state across sessions. Define tool sets, resource limits, and permissions per sandbox.</span>}
-				docLink="/docs/core_concepts/ai_sandbox"
-			>
-				{/* Placeholder: screenshot of AI sandbox configuration showing tool selection, volume mount, and MCP access settings, ~1200x800px, save as /static/img/money-pages/ai-sandbox.webp */}
-			</Section>
+			{/* What are AI sandboxes */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">What are AI sandboxes</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						AI sandboxes combine two Windmill features to create secure, persistent environments for AI coding agents. Any <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link> can become a sandbox with two annotations: <code>// sandbox</code> for process isolation via <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">NSJAIL</Link>, and <code>// volume: name path</code> for <Link to="/docs/core_concepts/volumes" className="text-blue-600 dark:text-blue-400 hover:underline">persistent storage</Link> across runs. This pattern works for any agent that operates on a local filesystem: Claude Code, Codex, OpenCode, or custom agents.
+					</p>
+				</motion.div>
+			</div>
 
-			{/* ═══════════════ Security isolation ═══════════════ */}
-			<TabSection
-				title="Security isolation"
-				subtitle={<span>Choose the right <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">isolation level</Link> for each workload. From lightweight PID namespace isolation to full NSJAIL sandboxing with filesystem, network, and resource limits.</span>}
-				features={isolationFeatures}
+			{/* Claude Code */}
+			<Section
+				title="Claude Code"
+				desc={<span>Windmill includes a built-in <Link to="/docs/core_concepts/ai_sandbox" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code template</Link> using <code>@anthropic-ai/claude-agent-sdk</code>. Select it from the script editor to get a pre-configured sandbox with session persistence: the session ID is stored in the volume so the agent resumes where it left off. Pass instructions and skill files as input parameters to give the agent project-specific context.</span>}
+				docLink="/docs/core_concepts/ai_sandbox"
 			/>
 
-			{/* ═══════════════ Persistent volumes ═══════════════ */}
+			{/* Codex and custom agents */}
+			<Section
+				title="Codex and custom agents"
+				desc={<span>The same pattern works for <Link to="/docs/core_concepts/ai_sandbox" className="text-blue-600 dark:text-blue-400 hover:underline">OpenAI Codex (CLI)</Link> or any agent that operates on a local filesystem. Two annotations are all you need: <code>// sandbox</code> for isolation, and <code>// volume: name path</code> for persistence.</span>}
+				docLink="/docs/core_concepts/ai_sandbox"
+				reverse
+			/>
+
+			{/* Persistent volumes */}
 			<Section
 				title="Persistent volumes"
-				desc={<span>Attach <Link to="/docs/core_concepts/volumes" className="text-blue-600 dark:text-blue-400 hover:underline">persistent volumes</Link> for dependency caching, agent state, or shared data. Volumes support exclusive leasing to prevent concurrent writes. Compatible with NSJAIL isolation for secure persistent storage.</span>}
+				desc={<span>Files are synced to <Link to="/docs/core_concepts/volumes" className="text-blue-600 dark:text-blue-400 hover:underline">workspace object storage</Link> (S3, Azure Blob, GCS). Exclusive leasing prevents concurrent writes. Use dynamic volume names with <code>{'$workspace'}</code> or <code>{'$args[userId]'}</code> to scope storage per user or workspace. Up to 10 volumes per script, with an LRU cache up to 10 GB per worker.</span>}
 				docLink="/docs/core_concepts/volumes"
-				reverse
-			>
-				{/* Placeholder: screenshot of volume configuration showing mount path, size, and leasing options, ~1200x800px, save as /static/img/money-pages/volumes.webp */}
-			</Section>
-
-			{/* ═══════════════ MCP tool access ═══════════════ */}
-			<Section
-				title="MCP tool access"
-				desc={<span>Agents call scripts, read resources, and execute flows through the <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">Model Context Protocol</Link>. Permissions are scoped by the caller's RBAC role, so agents can only access what their user is authorized to use.</span>}
-				docLink="/docs/core_concepts/mcp"
 			/>
 
-			{/* ═══════════════ Dependency isolation ═══════════════ */}
+			{/* Process isolation */}
 			<Section
-				title="Dependency isolation"
-				desc={<span>Each script has its own <Link to="/docs/advanced/dependencies_in_typescript" className="text-blue-600 dark:text-blue-400 hover:underline">lockfile</Link> and dependency tree. An LRU cache avoids redundant installs. S3 distributed caching (Enterprise) shares resolved dependencies across workers. Workspace-level pinned dependencies enforce version consistency.</span>}
-				docLink="/docs/advanced/dependencies_in_typescript"
+				title="Process isolation"
+				desc={<span>Sandboxes use <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">NSJAIL</Link> for filesystem isolation, network restrictions, and resource limits (CPU, memory, disk). The <code>// sandbox</code> annotation enables it per script, or it can be forced instance-wide for all jobs. For lighter workloads, <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">PID namespace isolation</Link> is available as a faster alternative with lower overhead.</span>}
+				docLink="/docs/advanced/security_isolation"
 				reverse
 			/>
 
-			{/* ═══════════════ FAQ ═══════════════ */}
+			{/* Resources and permissions */}
+			<Section
+				title="Resources and permissions"
+				desc={<span>API keys and credentials are injected through <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill resources</Link>, so secrets never appear in code. <Link to="/product/rbac" className="text-blue-600 dark:text-blue-400 hover:underline">RBAC permissions</Link> control which scripts, flows, and resources each agent can access, and volume permissions (owner, read-only, read-write) scope storage access.</span>}
+			/>
+
+			{/* Observability */}
+			<Section
+				title="Observability"
+				desc={<span>Every agent run is tracked with full <Link to="/product/observability" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link>: logs, execution history, and token usage for cost monitoring. Set up <Link to="/docs/core_concepts/critical_alert_channels" className="text-blue-600 dark:text-blue-400 hover:underline">alerts</Link> on failures or cost thresholds, and audit agent activity across workspaces.</span>}
+				docLink="/product/observability"
+				reverse
+			/>
+
+			{/* FAQ */}
 			<UseCaseFAQ faqs={[
-				{ question: 'What is the difference between PID namespace and NSJAIL isolation?', textAnswer: 'PID namespace isolation prevents processes from seeing other jobs but shares the host filesystem and network. NSJAIL adds filesystem isolation (read-only root with explicit mount points), network restrictions, and resource limits (CPU, memory, disk). Use PID namespace for trusted internal scripts and NSJAIL for untrusted or multi-tenant code.' },
-				{ question: 'Can I use Docker containers as sandboxes?', textAnswer: 'Windmill workers already run as containers. NSJAIL provides stronger isolation than Docker-in-Docker by restricting filesystem, network, and resource access at the OS level without the complexity and security concerns of nested containers.' },
-				{ question: 'How does MCP resource access work?', textAnswer: 'Agents access Windmill resources through MCP tool calls. Each call is authorized against the RBAC permissions of the user who started the sandbox. Agents can only read resources, execute scripts, and trigger flows that the user has access to.' },
-				{ question: 'Do persistent volumes survive worker restarts?', textAnswer: 'Yes. Persistent volumes are stored on the host filesystem or network-attached storage. They survive worker restarts, scaling events, and redeployments. Exclusive leasing prevents data corruption from concurrent writes.' },
-				{ question: 'Can I restrict which tools an agent can use?', textAnswer: 'Yes. Sandbox configurations define the available tool set. You can limit agents to specific scripts, flows, and resources. Combined with RBAC folder permissions, you have fine-grained control over what each agent can access.' },
+				{ question: 'Which AI agents are supported?', textAnswer: 'Claude Code and OpenAI Codex (CLI) have first-class support with dedicated templates. Any agent that operates on a local filesystem can run in a sandbox using the // sandbox and // volume annotations.' },
+				{ question: 'How does session persistence work?', textAnswer: 'Each sandbox can attach a persistent volume. For Claude Code, the session ID is stored in the volume so the agent resumes from where it left off. Files are synced to object storage (S3, Azure Blob, GCS) between runs.' },
+				{ question: 'What isolation does the sandbox provide?', textAnswer: 'Sandboxes use NSJAIL for filesystem isolation, network restrictions, and resource limits. The agent cannot see or access the host filesystem, other jobs, or the network beyond what is explicitly allowed. PID namespace isolation is available as a lighter alternative.' },
 			]} />
 
-			{/* ═══════════════ Transition CTA ═══════════════ */}
+			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
 					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Scale to millions of jobs</h2>
