@@ -26,7 +26,7 @@ import ThemeToggleButton from './ThemeToggleButton';
 import {
 	Bot, Landmark, HeartPulse,
 	Code, GitFork, LayoutDashboard, Database, GitBranch, Terminal,
-	Activity, ShieldCheck, Container, Cpu, Server,
+	Activity, ShieldCheck, Container, Cpu, Server, Zap,
 } from 'lucide-react';
 import Banner from './Banner';
 import Link from '@docusaurus/Link';
@@ -54,6 +54,12 @@ const productCategories = [
 				icon: LayoutDashboard,
 			},
 			{
+				name: 'Triggers',
+				description: 'Schedules, webhooks, Kafka, Postgres CDC and more.',
+				href: '/product/triggers',
+				icon: Zap,
+			},
+			{
 				name: 'Data tables',
 				description: 'Store and query relational data with managed SQL.',
 				href: '/product/datatables',
@@ -65,22 +71,28 @@ const productCategories = [
 				href: '/product/versioning',
 				icon: GitBranch,
 			},
-			{
-				name: 'Local dev',
-				description: 'Develop and test locally with the Windmill CLI.',
-				href: '/product/local-dev',
-				icon: Terminal,
-			},
 		],
 	},
 	{
 		title: 'Run',
 		items: [
 			{
+				name: 'Local dev',
+				description: 'Develop and test locally with the Windmill CLI.',
+				href: '/product/local-dev',
+				icon: Terminal,
+			},
+			{
 				name: 'Workers',
 				description: 'Isolated workers that pull from a shared queue.',
 				href: '/product/workers',
 				icon: Cpu,
+			},
+			{
+				name: 'AI sandboxes',
+				description: 'Run Claude Code, Codex, or custom agents in isolated environments.',
+				href: '/product/sandboxes',
+				icon: Container,
 			},
 			{
 				name: 'Observability',
@@ -93,12 +105,6 @@ const productCategories = [
 				description: 'Enforce role-based access, audit logs and secrets.',
 				href: '/product/rbac',
 				icon: ShieldCheck,
-			},
-			{
-				name: 'AI sandboxes',
-				description: 'Run Claude Code, Codex, or custom agents in isolated environments.',
-				href: '/product/sandboxes',
-				icon: Container,
 			},
 			{
 				name: 'No-ops self-host',
