@@ -26,14 +26,13 @@ export const stagger = (delay = 0) => ({
 {/* ── Section helper ── */}
 
 export function Section({ title, desc, docLink, image, reverse, children }) {
-	const hasImage = !!image;
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
 				{...fadeIn}
-				className={hasImage ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : ''}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
 			>
-				<div className={hasImage && reverse ? 'lg:order-2' : ''}>
+				<div className={reverse ? 'lg:order-2' : ''}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
 					{docLink && (
@@ -45,15 +44,19 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 						</Link>
 					)}
 				</div>
-				{hasImage && (
-					<div className={reverse ? 'lg:order-1' : ''}>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{image ? (
 						<img
 							src={image}
 							alt={title}
 							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
 						/>
-					</div>
-				)}
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
 			</motion.div>
 			{children}
 		</div>
@@ -367,16 +370,16 @@ export function HeroAnimation() {
 {/* ── Step types data ── */}
 
 export const stepTypes = [
-	{ icon: Code, label: 'Script', title: 'Script', desc: <span>Run a script in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any supported language</Link>. Each step gets the same <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script editor</Link> with LSP autocompletion, auto-generated UI, and dependency management.</span>, image: '/img/money-pages/scripts-preview.webp', docLink: '/docs/flows/flow_editor' },
+	{ icon: Code, label: 'Script', title: 'Script', desc: <span>Run a script in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any supported language</Link>. Each step gets the same <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script editor</Link> with LSP autocompletion, auto-generated UI, and dependency management.</span>, docLink: '/docs/flows/flow_editor' },
 	{ icon: Repeat, label: 'For loop', title: 'For loop', desc: <span>Iterate over a list and run one or more steps per item. Items can be processed <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">sequentially or in parallel</Link>.</span>, docLink: '/docs/flows/flow_loops' },
 	{ icon: RefreshCw, label: 'While loop', title: 'While loop', desc: <span>Repeat steps until a <Link to="/docs/flows/while_loops" className="text-blue-600 dark:text-blue-400 hover:underline">condition evaluates to false</Link>. Useful for polling, pagination, or convergence logic.</span>, docLink: '/docs/flows/while_loops' },
-	{ icon: Bot, label: 'AI agent', title: 'AI agent', desc: <span>Add an <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">AI agent step</Link> that reasons in a loop, calling Windmill scripts or <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">MCP servers</Link> as tools until it reaches a result. Supports streaming, structured output, image input, conversation memory, and <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">chat mode</Link>. Run <Link to="/docs/core_concepts/ai_sandbox" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex</Link> in sandboxed containers with persistent storage.</span>, image: '/img/money-pages/ai-agent-card.webp', docLink: '/docs/core_concepts/ai_agents' },
-	{ icon: Split, label: 'Branches', title: 'Branches', desc: <span>Route execution through <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">conditional or parallel branches</Link>. Parallel branches run concurrently and merge before the next step.</span>, image: '/img/money-pages/parallel-branches.webp', docLink: '/docs/flows/flow_branches' },
+	{ icon: Bot, label: 'AI agent', title: 'AI agent', desc: <span>Add an <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">AI agent step</Link> that reasons in a loop, calling Windmill scripts or <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">MCP servers</Link> as tools until it reaches a result. Supports streaming, structured output, image input, conversation memory, and <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">chat mode</Link>. Run <Link to="/docs/core_concepts/ai_sandbox" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex</Link> in sandboxed containers with persistent storage.</span>, docLink: '/docs/core_concepts/ai_agents' },
+	{ icon: Split, label: 'Branches', title: 'Branches', desc: <span>Route execution through <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">conditional or parallel branches</Link>. Parallel branches run concurrently and merge before the next step.</span>, docLink: '/docs/flows/flow_branches' },
 	{ icon: ShieldCheck, label: 'Approval', title: 'Approval', desc: <span>Pause the flow and wait for <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">human approval</Link> via email, Slack, or the Windmill UI. Supports timeouts and multiple approvers.</span>, docLink: '/docs/flows/flow_approval' },
 	{ icon: Zap, label: 'Trigger', title: 'Trigger', desc: <span>Start a flow from <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">any external event</Link>: schedules, webhooks, message queues, database changes, emails, and more.</span>, content: <TriggerGrid title={null} subtitle={null} />, docLink: '/docs/getting_started/triggers' },
-	{ icon: AlertTriangle, label: 'Error handler', title: 'Error handler', desc: <span>Catch failures and run <Link to="/docs/flows/flow_error_handler" className="text-blue-600 dark:text-blue-400 hover:underline">custom recovery logic</Link>. Error handlers receive the failed step's context and can notify, retry, or clean up.</span>, image: '/img/money-pages/error-handler.webp', docLink: '/docs/flows/flow_error_handler' },
+	{ icon: AlertTriangle, label: 'Error handler', title: 'Error handler', desc: <span>Catch failures and run <Link to="/docs/flows/flow_error_handler" className="text-blue-600 dark:text-blue-400 hover:underline">custom recovery logic</Link>. Error handlers receive the failed step's context and can notify, retry, or clean up.</span>, docLink: '/docs/flows/flow_error_handler' },
 	{ icon: Pause, label: 'Sleep / Suspend', title: 'Sleep / Suspend', desc: <span>Pause execution for a <Link to="/docs/flows/sleep" className="text-blue-600 dark:text-blue-400 hover:underline">fixed duration or until an external event</Link> resumes the flow. The worker is freed while the flow is suspended.</span>, docLink: '/docs/flows/sleep' },
-	{ icon: Sparkles, label: 'AI flow builder', title: 'AI flow builder', desc: <span>Describe a workflow in plain language and Windmill <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">generates a complete multi-step flow</Link> with the right step types, connections, and error handling. Edit individual steps or regenerate sections.</span>, image: '/img/money-pages/ai-dag.webp', docLink: '/docs/core_concepts/ai_generation' },
+	{ icon: Sparkles, label: 'AI flow builder', title: 'AI flow builder', desc: <span>Describe a workflow in plain language and Windmill <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">generates a complete multi-step flow</Link> with the right step types, connections, and error handling. Edit individual steps or regenerate sections.</span>, docLink: '/docs/core_concepts/ai_generation' },
 ];
 
 {/* ── Step features data ── */}
@@ -428,11 +431,10 @@ export default function WorkflowEditorContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						<img
-							src="/img/money-pages/deploy-workflow.webp"
-							alt="Workflow editor"
-							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						/>
+						{/* Placeholder: screenshot of the flow editor, ~1200x800px, save as /static/img/money-pages/deploy-workflow.webp */}
+						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
 					</motion.div>
 				</div>
 			</div>
@@ -441,7 +443,6 @@ export default function WorkflowEditorContent({ title, description }) {
 			<Section
 				title="Every step is a script"
 				desc={<span>Workflow steps are scripts written in any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">supported language</Link>. Each step uses the same <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script editor</Link> with LSP autocompletion, auto-generated UI, and resource access.</span>}
-				image="/img/money-pages/scripts-preview.webp"
 				docLink="/docs/getting_started/scripts_quickstart"
 			/>
 
@@ -449,7 +450,6 @@ export default function WorkflowEditorContent({ title, description }) {
 			<Section
 				title="Link steps using dynamic expressions"
 				desc={<span>Reference previous step outputs with <code>results.step_name</code> or write JavaScript expressions. The editor provides <Link to="/docs/flows/editor_components" className="text-blue-600 dark:text-blue-400 hover:underline">autocompletion</Link> for available variables and validates expressions before running.</span>}
-				image="/img/money-pages/flow-preview.webp"
 				docLink="/docs/flows/editor_components"
 				reverse
 			/>
@@ -465,7 +465,6 @@ export default function WorkflowEditorContent({ title, description }) {
 			<Section
 				title="Connect to 300+ integrations"
 				desc={<span>Declare a parameter as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource type</Link> and the UI shows a dropdown of configured connections. Credentials are centrally managed, encrypted at rest, and injected at runtime. Supports OAuth2, API keys, and database connections with typed schemas.</span>}
-				image="/img/money-pages/resource.webp"
 				docLink="/docs/core_concepts/resources_and_types"
 			/>
 
@@ -487,7 +486,6 @@ export default function WorkflowEditorContent({ title, description }) {
 			<Section
 				title="Deployment and versioning"
 				desc={<span>Each deployment creates a new immutable version. View history, compare diffs, and restore any previous version. With <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git Sync</Link>, every deployment is automatically committed. Use <Link to="/product/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">workspace forks</Link> and promotion workflows to move flows from staging to production.</span>}
-				image="/img/money-pages/deploy.webp"
 				docLink="/docs/core_concepts/draft_and_deploy"
 				reverse
 			/>
@@ -496,7 +494,6 @@ export default function WorkflowEditorContent({ title, description }) {
 			<Section
 				title="Full observability"
 				desc={<span>Stream logs in real time, inspect inputs and outputs at every step, and <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">restart from any step</Link> without replaying the full run. View <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">run history</Link> with filters for status, duration, and user.</span>}
-				image="/img/money-pages/monitoring.webp"
 				docLink="/docs/core_concepts/jobs"
 			/>
 

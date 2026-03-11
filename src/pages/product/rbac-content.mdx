@@ -24,14 +24,13 @@ export const stagger = (delay = 0) => ({
 {/* ── Section helper ── */}
 
 export function Section({ title, desc, docLink, image, reverse, children }) {
-	const hasImage = !!image;
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
 				{...fadeIn}
-				className={hasImage ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : ''}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
 			>
-				<div className={hasImage && reverse ? 'lg:order-2' : ''}>
+				<div className={reverse ? 'lg:order-2' : ''}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
 					{docLink && (
@@ -43,15 +42,19 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 						</Link>
 					)}
 				</div>
-				{hasImage && (
-					<div className={reverse ? 'lg:order-1' : ''}>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{image ? (
 						<img
 							src={image}
 							alt={title}
 							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
 						/>
-					</div>
-				)}
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
 			</motion.div>
 			{children}
 		</div>
@@ -103,11 +106,10 @@ export default function RbacContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						<img
-							src="/img/money-pages/sso.webp"
-							alt="Role-based access control"
-							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						/>
+						{/* Placeholder: screenshot of SSO/RBAC configuration, ~1200x800px, save as /static/img/money-pages/sso.webp */}
+						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
 					</motion.div>
 				</div>
 			</div>
@@ -154,7 +156,6 @@ export default function RbacContent({ title, description }) {
 			<Section
 				title="Groups and folders"
 				desc={<span>Organize users into <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">groups</Link> and assign folder-level permissions: viewer, writer, or admin. Subfolders inherit parent permissions. SCIM-synced instance groups (Enterprise) automatically map identity provider groups to Windmill groups.</span>}
-				image="/img/money-pages/groups-folders.webp"
 				docLink="/docs/core_concepts/groups_and_folders"
 			/>
 			{/* Placeholder image: screenshot of folder permissions UI showing groups with viewer/writer/admin access on nested folders, ~1200x800px, save as /static/img/money-pages/groups-folders.webp */}
@@ -163,7 +164,6 @@ export default function RbacContent({ title, description }) {
 			<Section
 				title="Path-based access control lists"
 				desc={<span>Every script, flow, resource, variable, and schedule is identified by a <Link to="/docs/core_concepts/roles_and_permissions#path" className="text-blue-600 dark:text-blue-400 hover:underline">unique path</Link>. Each path has an owner and explicit read/write permissions for users and groups. Items in user space (<code>u/alice/my_script</code>) are private by default. Items in folders (<code>f/team/my_script</code>) inherit the folder's group permissions.</span>}
-				image="/img/money-pages/acl.webp"
 				docLink="/docs/core_concepts/roles_and_permissions#permissions-and-access-control"
 				reverse
 			/>
@@ -173,7 +173,6 @@ export default function RbacContent({ title, description }) {
 			<Section
 				title="Encrypted secrets"
 				desc={<span>All <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> are encrypted at the workspace level. Values are injected at runtime only and never exposed in logs, UI, or API responses. Manual key rotation is available on Enterprise.</span>}
-				image="/img/money-pages/secrets.webp"
 				docLink="/docs/core_concepts/variables_and_secrets"
 			/>
 			{/* Placeholder image: screenshot of secrets management UI showing encrypted variables with visibility toggles, ~1200x800px, save as /static/img/money-pages/secrets.webp */}
@@ -182,7 +181,6 @@ export default function RbacContent({ title, description }) {
 			<Section
 				title="SSO and OAuth"
 				desc={<span>Authenticate with <Link to="/docs/misc/setup_oauth" className="text-blue-600 dark:text-blue-400 hover:underline">Google, GitHub, Azure AD, Okta, GitLab</Link>, and any OpenID Connect provider. Configure multiple providers simultaneously. Users are auto-provisioned on first login.</span>}
-				image="/img/money-pages/sso.webp"
 				docLink="/docs/misc/setup_oauth"
 				reverse
 			/>
@@ -191,7 +189,6 @@ export default function RbacContent({ title, description }) {
 			<Section
 				title="SAML and SCIM (Enterprise)"
 				desc={<span><Link to="/docs/misc/saml_and_scim" className="text-blue-600 dark:text-blue-400 hover:underline">SAML SSO</Link> for enterprise identity providers. SCIM provisioning automatically syncs users and groups from your identity provider to Windmill. No manual user management required.</span>}
-				image="/img/money-pages/saml-scim.webp"
 				docLink="/docs/misc/saml_and_scim"
 			/>
 			{/* Placeholder image: screenshot of SAML/SCIM configuration page showing identity provider settings and group mappings, ~1200x800px, save as /static/img/money-pages/saml-scim.webp */}
@@ -200,7 +197,6 @@ export default function RbacContent({ title, description }) {
 			<Section
 				title="Audit logs"
 				desc={<span>Every action is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>: deployments, permission changes, resource modifications, logins, and job executions. Filter by user, action type, or time range. Windmill is SOC 2 Type II certified.</span>}
-				image="/img/money-pages/auditlogs.webp"
 				docLink="/docs/core_concepts/audit_logs"
 				reverse
 			/>
