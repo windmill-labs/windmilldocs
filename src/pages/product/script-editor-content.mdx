@@ -606,7 +606,7 @@ export function LanguageShowcase() {
 
 {/* ── Code editor with tab bar ── */}
 
-export const primaryLangIds = ['typescript-bun', 'python', 'go', 'bash', 'postgresql', 'rest', 'php', 'rust', 'docker'];
+export const primaryLangIds = ['typescript-bun', 'python', 'bash', 'go'];
 
 export function CodeEditor() {
 	const primaryLangs = primaryLangIds.map(id => languages.find(l => l.id === id));
@@ -685,8 +685,8 @@ export function CodeEditor() {
 				</div>
 			</div>
 			{/* Code area — fixed height */}
-			<div className="h-[360px] overflow-y-auto" style={{ '--ifm-leading': '1.5' }}>
-				<div className="[&>div]:!rounded-none [&>div]:!mb-0 [&>div]:!shadow-none [&>div]:!border-0 [&>div]:!bg-transparent [&_pre]:!bg-transparent">
+			<div className="h-[360px] overflow-hidden" style={{ '--ifm-leading': '1.5' }}>
+				<div className="[&>div]:!rounded-none [&>div]:!mb-0 [&>div]:!shadow-none [&>div]:!border-0 [&>div]:!bg-transparent [&_pre]:!bg-transparent [&_code]:!text-[0.8rem]">
 					<CodeBlock language={lang.lang} showLineNumbers>{lang.snippet}</CodeBlock>
 				</div>
 			</div>
@@ -710,7 +710,7 @@ export function CodeEditor() {
 {/* ── Section helper ── */}
 
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, visual, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -730,7 +730,7 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{visual ? visual : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -762,7 +762,7 @@ export default function ScriptEditorContent({ title, description }) {
 							Code editor with built-in infrastructure
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							Write a function in TypeScript, Python, Go, Bash, or SQL. Windmill gives you a UI, an API endpoint, triggers, and resource access automatically.
+							Every function you write gets a parameters UI, an API endpoint, triggers, one-click deployment, and monitoring out of the box.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -789,71 +789,76 @@ export default function ScriptEditorContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* ═══════════════ Code in 20+ languages ═══════════════ */}
+			{/* ═══════════════ What is the code editor ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-8">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Code in 20+ languages
-					</h2>
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Write code, get infrastructure</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Full Monaco editor in the browser with LSP autocompletion, linting, and formatting. TypeScript (Bun, Deno), Python, Go, Bash, SQL, and more.
+						Windmill's code editor is a full Monaco editor in the browser with LSP autocompletion, linting, and formatting. Write a function, and Windmill turns it into a production-ready script with a UI, an API endpoint, and managed infrastructure.
 					</p>
-				</motion.div>
-
-				<motion.div {...stagger(0.1)}>
-					<CodeEditor />
 				</motion.div>
 			</div>
 
-			{/* ═══════════════ Import any package ═══════════════ */}
+			{/* ═══════════════ What you can build ═══════════════ */}
 			<Section
-				title="Import any package, including your private repositories"
-				desc={<span>Windmill parses your imports, resolves packages from npm, PyPI, or Go modules, and generates a per-script <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">lockfile</Link>. Workers cache dependencies for fast execution.</span>}
+				title="Standalone scripts"
+				desc={<span>A single function in TypeScript (Bun, Deno), Python, Go, Bash, SQL, or <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ other languages</Link> becomes a <Link to="/docs/script_editor" className="text-blue-600 dark:text-blue-400 hover:underline">standalone script</Link> with its own auto-generated UI, API endpoint, webhook, and schedule. Each script is versioned, testable from the editor, and deployable in one click.</span>}
+				docLink="/docs/script_editor"
+				visual={<CodeEditor />}
+			/>
+
+			<Section
+				title="Workflows as code"
+				desc={<span>For multi-step logic, Windmill supports <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> in Python and TypeScript. Annotate functions with <code>@task</code> and each one runs as a distinct job with its own logs and timeline. The result is the same as a visual flow, with full observability, but written entirely in the code editor.</span>}
+				docLink="/docs/core_concepts/workflows_as_code"
+				reverse
+			/>
+
+			{/* ═══════════════ Built-in infrastructure ═══════════════ */}
+			<Section
+				title="Managed dependencies"
+				desc={<span>Windmill parses your imports, resolves packages from npm, PyPI, or Go modules, and generates a per-script <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">lockfile</Link>. Workers cache dependencies for fast execution. Private repositories are supported.</span>}
 				docLink="/docs/advanced/imports"
 			/>
 
-			{/* ═══════════════ Auto-generated UIs ═══════════════ */}
 			<Section
-				title="Auto-generate UIs from your script parameters"
+				title="Auto-generated UIs"
 				desc={<span>Every script gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link> from its function signature. Strings become text inputs, numbers become sliders, resource types become connection pickers.</span>}
 				docLink="/docs/core_concepts/auto_generated_uis"
 				reverse
 			/>
 
-			{/* ═══════════════ Resources ═══════════════ */}
 			<Section
-				title="Connect to your resources"
+				title="Shared resources"
 				desc={<span>Declare a parameter as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource type</Link> and the UI shows a dropdown of configured connections. Secrets are resolved at runtime, never exposed in code.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
 			/>
 
-			{/* ═══════════════ Real-time logs ═══════════════ */}
 			<Section
-				title="Real-time logs and instant test results"
-				desc="Test your scripts directly from the editor. Logs stream in real-time and results are displayed instantly."
+				title="Real-time logs and instant testing"
+				desc="Scripts can be tested directly from the editor. Logs stream in real-time and results are displayed instantly."
 				docLink="/docs/core_concepts/jobs"
 				reverse
 			/>
 
-			{/* ═══════════════ Dedicated workers ═══════════════ */}
-			<Section
-				title="Runs on dedicated workers"
-				desc={<span>Each script runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> that uses the full CPU and memory available to it. Workers pull jobs from a queue, execute one at a time, and stream logs back. Scale horizontally by adding workers, or assign <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> to high-throughput scripts to eliminate cold starts entirely.</span>}
-				docLink="/docs/core_concepts/worker_groups"
-			/>
-
 			{/* ═══════════════ Triggers ═══════════════ */}
-			<Section
-				title="Trigger via webhooks, schedules, CLI, Slack, email, and more"
-				desc={<span>Attach any <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">trigger</Link> to a script: <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">schedules</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks</Link>, message queues, database changes, emails, and more.</span>}
-				docLink="/docs/getting_started/triggers"
-			>
-				<div className="mt-8">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Triggers</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">Any script or workflow can be triggered by <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">schedules</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks</Link>, message queues, database changes, emails, and <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">more</Link>.</p>
+					<Link
+						to="/docs/getting_started/triggers"
+						className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+					>
+						<BookOpen className="w-4 h-4" /> Read the docs
+					</Link>
+				</motion.div>
+				<div className="-mx-4 sm:-mx-6 lg:-mx-8 [&>div]:!py-4">
 					<TriggerGrid title={null} subtitle={null} />
 				</div>
-			</Section>
+			</div>
 
-			{/* ═══════════════ One click deploy & versioning ═══════════════ */}
+			{/* ═══════════════ Deployment & execution ═══════════════ */}
 			<Section
 				title="One click deployment and versioning"
 				desc={<span>Deploy and your script is immediately available to every <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">workspace</Link> member. Each save creates a new immutable version with a unique hash. View history, fork, or revert any version.</span>}
@@ -861,11 +866,17 @@ export default function ScriptEditorContent({ title, description }) {
 				reverse
 			/>
 
-			{/* ═══════════════ Observability ═══════════════ */}
+			<Section
+				title="Dedicated workers"
+				desc={<span>Each script runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> that uses the full CPU and memory available to it. Workers pull jobs from a queue, execute one at a time, and stream logs back. Scale horizontally by adding workers, or assign <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> to high-throughput scripts to eliminate cold starts entirely.</span>}
+				docLink="/docs/core_concepts/worker_groups"
+			/>
+
 			<Section
 				title="Built-in granular monitoring"
-				desc={<span>Every script execution is logged as a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">job</Link> with its inputs, outputs, duration, and status. The run history is searchable and filterable by script, user, or status. Failed runs show full error traces. <Link to="/docs/core_concepts/critical_alert_channels" className="text-blue-600 dark:text-blue-400 hover:underline">Critical alerts</Link> can notify on failures, and <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link> track every action across the workspace.</span>}
+				desc={<span>Every execution is logged as a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">job</Link> with its inputs, outputs, duration, and status. The run history is searchable and filterable by script, user, or status. Failed runs show full error traces. <Link to="/docs/core_concepts/critical_alert_channels" className="text-blue-600 dark:text-blue-400 hover:underline">Critical alerts</Link> can notify on failures, and <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link> track every action across the workspace.</span>}
 				docLink="/docs/core_concepts/monitor_past_and_future_runs"
+				reverse
 			/>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
