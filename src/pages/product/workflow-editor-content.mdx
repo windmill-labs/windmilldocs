@@ -428,7 +428,11 @@ export default function WorkflowEditorContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						<HeroAnimation />
+						<img
+							src="/img/money-pages/deploy-workflow.webp"
+							alt="Workflow editor"
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
 					</motion.div>
 				</div>
 			</div>
@@ -479,13 +483,21 @@ export default function WorkflowEditorContent({ title, description }) {
 				docLink="/docs/core_concepts/worker_groups"
 			/>
 
+			{/* ═══════════════ Deployment and versioning ═══════════════ */}
+			<Section
+				title="Deployment and versioning"
+				desc={<span>Each deployment creates a new immutable version. View history, compare diffs, and restore any previous version. With <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git Sync</Link>, every deployment is automatically committed. Use <Link to="/product/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">workspace forks</Link> and promotion workflows to move flows from staging to production.</span>}
+				image="/img/money-pages/deploy.webp"
+				docLink="/docs/core_concepts/draft_and_deploy"
+				reverse
+			/>
+
 			{/* ═══════════════ Full observability ═══════════════ */}
 			<Section
 				title="Full observability"
 				desc={<span>Stream logs in real time, inspect inputs and outputs at every step, and <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">restart from any step</Link> without replaying the full run. View <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">run history</Link> with filters for status, duration, and user.</span>}
 				image="/img/money-pages/monitoring.webp"
 				docLink="/docs/core_concepts/jobs"
-				reverse
 			/>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
