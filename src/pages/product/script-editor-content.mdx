@@ -847,26 +847,44 @@ export default function ScriptEditorContent({ title, description }) {
 			{/* ═══════════════ Deployment, workers & observability ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
-						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">One click deployment and versioning</h3>
-						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Deploy and your script is immediately available. Each save creates a new immutable version with a unique hash.</p>
-						<Link to="/product/versioning" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
-							Check our versioning dedicated page <ArrowRight className="w-4 h-4" />
-						</Link>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the version history panel showing diffs between script versions, ~800x400px, save as /static/img/money-pages/card-versioning.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">One click deployment and versioning</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Deploy and your script is immediately available. Each save creates a new immutable version with a unique hash.</p>
+							<Link to="/product/versioning" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our versioning dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
 					</div>
-					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
-						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Dedicated workers</h3>
-						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each script runs on an isolated worker with the full CPU and memory available to it. Scale horizontally and eliminate cold starts.</p>
-						<Link to="/product/workers" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
-							Check our workers dedicated page <ArrowRight className="w-4 h-4" />
-						</Link>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the worker groups page showing active workers and queue stats, ~800x400px, save as /static/img/money-pages/card-workers.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Dedicated workers</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each script runs on an isolated worker with the full CPU and memory available to it. Scale horizontally and eliminate cold starts.</p>
+							<Link to="/product/workers" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our workers dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
 					</div>
-					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
-						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Built-in granular monitoring</h3>
-						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Every execution is logged with its inputs, outputs, duration, and status. Run history is searchable and filterable.</p>
-						<Link to="/product/observability" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
-							Check our observability dedicated page <ArrowRight className="w-4 h-4" />
-						</Link>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the runs page showing job list with status, duration, and filters, ~800x400px, save as /static/img/money-pages/card-observability.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Built-in granular monitoring</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Every execution is logged with its inputs, outputs, duration, and status. Run history is searchable and filterable.</p>
+							<Link to="/product/observability" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our observability dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
 					</div>
 				</motion.div>
 			</div>
