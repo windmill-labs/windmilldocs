@@ -1,5 +1,5 @@
 ---
-title: "16+ ways to trigger scripts and flows"
+title: "Built in triggers for your scripts and flows"
 description: "How do I trigger scripts and flows in Windmill? Schedules, webhooks, Kafka, Postgres CDC, WebSockets, emails, and more."
 ---
 
@@ -72,7 +72,7 @@ export default function TriggersContent({ title, description }) {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							16+ ways to trigger scripts and flows
+							Built in triggers for your scripts and flows
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 							Schedules, webhooks, message queues, database changes, emails, WebSockets, and more. Every script and flow in Windmill can be triggered by any combination of these sources with no extra configuration.
@@ -100,6 +100,38 @@ export default function TriggersContent({ title, description }) {
 						{/* Placeholder: screenshot of the triggers panel in the Windmill UI showing multiple trigger types configured, ~1200x800px, save as /static/img/money-pages/triggers-hero.webp */}
 						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
 							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Triggers for scripts and flows ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Triggers for scripts and flows</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Every trigger type works with both <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> and <Link to="/product/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link>. Attach one or many triggers to any runnable. A single script can be scheduled on a cron, exposed via webhook, and listening on a Kafka topic at the same time.
+					</p>
+				</motion.div>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+					<motion.div {...stagger(0.1)}>
+						<div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 h-full">
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+								<Link to="/product/script-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Scripts</Link>
+							</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-300">
+								Single functions in TypeScript, Python, Go, SQL, Bash, and other languages. Attach any trigger to run them on events, schedules, or API calls.
+							</p>
+						</div>
+					</motion.div>
+					<motion.div {...stagger(0.2)}>
+						<div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 h-full">
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+								<Link to="/product/flow-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Flows</Link>
+							</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-300">
+								Multi-step workflows that chain scripts into DAGs with branching, loops, retries, and approval steps. Triggered the same way as scripts.
+							</p>
 						</div>
 					</motion.div>
 				</div>
@@ -203,7 +235,7 @@ export default function TriggersContent({ title, description }) {
 
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[
-				{ question: 'Can I combine multiple triggers on one script?', textAnswer: 'Yes. A single script or flow can have multiple triggers simultaneously — for example, a cron schedule and a webhook. Each trigger type is configured independently.' },
+				{ question: 'Can I combine multiple triggers on one script?', textAnswer: 'Yes. A single script or flow can have multiple triggers simultaneously, for example a cron schedule and a webhook. Each trigger type is configured independently.' },
 				{ question: 'Do triggers work for both scripts and flows?', textAnswer: 'Yes. Every trigger type works identically for standalone scripts and multi-step flows.' },
 				{ question: 'How do webhook preprocessors work?', textAnswer: 'A preprocessor is a lightweight script that runs before the main script or flow. It can validate, transform, or filter the incoming request. If the preprocessor returns early, the main execution is skipped.' },
 				{ question: 'Is Kafka available on the open-source edition?', textAnswer: 'Kafka, NATS, SQS, MQTT, GCP Pub/Sub, and other message queue triggers require the Enterprise edition. Schedules, webhooks, and HTTP routes are available in all editions.' },
