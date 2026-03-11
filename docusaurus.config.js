@@ -148,10 +148,10 @@ const config = {
 							{ label: 'App builder', href: '/product/app-builder' },
 							{ label: 'Versioning', href: '/product/versioning' },
 							{ label: 'Local dev', href: '/product/local-dev' },
+							{ label: 'Workers', href: '/product/workers' },
 							{ label: 'Observability', href: '/product/observability' },
 							{ label: 'RBAC', href: '/product/rbac' },
 							{ label: 'Sandboxes', href: '/product/sandboxes' },
-							{ label: 'Workers', href: '/product/workers' },
 							{ label: 'No-ops self-host', href: '/product/self-host' },
 						]
 					},
