@@ -442,14 +442,23 @@ export default function FrontendBuilderContent({ title, description }) {
 				</motion.div>
 			</div>
 
-			{/* ═══════════════ Typed API ═══════════════ */}
+			{/* ═══════════════ Typed backend API ═══════════════ */}
 			<Section
-				title="Call runnables from your frontend with a typed API"
-				desc={<span>Windmill generates a <code>wmill.ts</code> module with typed functions for every runnable in your <code>backend/</code> folder. Import it and call runnables like regular async functions. Windmill executes them on workers and streams results back via WebSocket.</span>}
+				title="Auto-generated typed API"
+				desc={<span>Adding a script to the <code>backend/</code> folder makes it callable from the frontend. Windmill generates a <code>wmill.d.ts</code> with typed signatures inferred from your code, giving your editor autocomplete and type checking for <code>backend.my_runnable()</code> calls. Runnables execute on <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> and stream results back via WebSocket.</span>}
 				image="/img/money-pages/workflow-code.webp"
 				docLink="/docs/full_code_apps/frontend"
+			/>
+
+			{/* ═══════════════ Datatables ═══════════════ */}
+			<Section
+				title="Datatables"
+				desc={<span><Link to="/docs/core_concepts/persistent_storage/within_windmill#datatables" className="text-blue-600 dark:text-blue-400 hover:underline">Datatables</Link> are a layer on top of your own database (added as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link>) that provides schema management, SQL runnables, and shared access across scripts, flows, and apps. Tables and schemas are accessible from backend runnables. The CLI auto-generates a <code>DATATABLES.md</code> context file so AI assistants understand the schema.</span>}
+				image="/img/money-pages/datatables.webp"
+				docLink="/docs/core_concepts/persistent_storage/within_windmill#datatables"
 				reverse
 			/>
+			{/* TODO: screenshot of the datatables UI showing a table with columns, rows, and the schema editor. Save as static/img/money-pages/datatables.webp (approx 1200x800px) */}
 
 			{/* ═══════════════ Develop from UI or locally (switch) ═══════════════ */}
 			<DevModeSection />
@@ -460,6 +469,15 @@ export default function FrontendBuilderContent({ title, description }) {
 				desc={<span>Deploy with <code>wmill sync push</code> or from the browser editor. Each deployment is versioned. Sync to Git with <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git Sync</Link> and promote across <Link to="/product/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">staging and production workspaces</Link>. Apps can be public, have custom URL paths, or use <Link to="/docs/full_code_apps/deployment" className="text-blue-600 dark:text-blue-400 hover:underline">execution policies</Link>.</span>}
 				image="/img/money-pages/gitsync.webp"
 				docLink="/docs/full_code_apps/deployment"
+			/>
+
+			{/* ═══════════════ Observability ═══════════════ */}
+			<Section
+				title="Observability"
+				desc={<span>Every backend runnable call is logged as a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">job</Link> with its inputs, outputs, duration, and status. The run history is searchable and filterable. Failed jobs show full error traces. <Link to="/docs/core_concepts/critical_alert_channels" className="text-blue-600 dark:text-blue-400 hover:underline">Critical alerts</Link> can notify on failures, and <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link> track every action across the workspace.</span>}
+				image="/img/money-pages/monitoring.webp"
+				docLink="/docs/core_concepts/monitor_past_and_future_runs"
+				reverse
 			/>
 
 			{/* ═══════════════ FAQ ═══════════════ */}

@@ -863,6 +863,14 @@ export default function ScriptEditorContent({ title, description }) {
 				reverse
 			/>
 
+			{/* ═══════════════ Observability ═══════════════ */}
+			<Section
+				title="Observability"
+				desc={<span>Every script execution is logged as a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">job</Link> with its inputs, outputs, duration, and status. The run history is searchable and filterable by script, user, or status. Failed runs show full error traces. <Link to="/docs/core_concepts/critical_alert_channels" className="text-blue-600 dark:text-blue-400 hover:underline">Critical alerts</Link> can notify on failures, and <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link> track every action across the workspace.</span>}
+				image="/img/money-pages/monitoring.webp"
+				docLink="/docs/core_concepts/monitor_past_and_future_runs"
+			/>
+
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[
 				{ question: 'What languages does Windmill support?', textAnswer: 'TypeScript (Bun, Deno), Python, Go, Bash, PowerShell, Nushell, SQL (PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake), REST/GraphQL, and any language via Docker.' },
