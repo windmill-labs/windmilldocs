@@ -25,7 +25,7 @@ import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
 import {
 	Bot, Landmark, HeartPulse,
-	Code, GitFork, LayoutDashboard, GitBranch, Terminal,
+	Code, GitFork, LayoutDashboard, Database, GitBranch, Terminal,
 	Activity, ShieldCheck, Container, Cpu, Server,
 } from 'lucide-react';
 import Banner from './Banner';
@@ -52,6 +52,12 @@ const productCategories = [
 				description: 'Connect backend logic to React & Svelte frontends.',
 				href: '/product/app-builder',
 				icon: LayoutDashboard,
+			},
+			{
+				name: 'Data tables',
+				description: 'Store and query relational data with managed SQL.',
+				href: '/product/datatables',
+				icon: Database,
 			},
 			{
 				name: 'Versioning',
