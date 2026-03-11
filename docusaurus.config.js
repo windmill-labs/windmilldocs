@@ -151,7 +151,7 @@ const config = {
 							{ label: 'Observability', href: '/product/observability' },
 							{ label: 'RBAC', href: '/product/rbac' },
 							{ label: 'Sandboxes', href: '/product/sandboxes' },
-							{ label: 'Scale infinitely', href: '/product/scale' },
+							{ label: 'Workers', href: '/product/workers' },
 							{ label: 'No-ops self-host', href: '/product/self-host' },
 						]
 					},

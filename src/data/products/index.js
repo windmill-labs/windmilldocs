@@ -9,5 +9,5 @@ export { localDevProduct } from './local-dev';
 export { observabilityProduct } from './observability';
 export { rbacProduct } from './rbac';
 export { sandboxesProduct } from './sandboxes';
-export { scaleProduct } from './scale';
+export { workersProduct } from './workers';
 export { selfHostProduct } from './self-host';

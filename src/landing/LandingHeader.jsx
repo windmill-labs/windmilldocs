@@ -89,9 +89,9 @@ const productCategories = [
 				icon: Container,
 			},
 			{
-				name: 'Scale infinitely',
-				description: 'Auto-scale workers across any infrastructure.',
-				href: '/product/scale',
+				name: 'Workers',
+				description: 'Isolated workers that pull from a shared queue.',
+				href: '/product/workers',
 				icon: Scaling,
 			},
 			{

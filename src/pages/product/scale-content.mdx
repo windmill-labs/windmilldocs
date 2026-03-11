@@ -1,12 +1,12 @@
 ---
-title: "Scale infinitely"
-description: "How does Windmill scale? Add workers to scale linearly — each worker pulls jobs independently from PostgreSQL with no coordination overhead."
+title: "Workers"
+description: "How do Windmill workers work? Each worker pulls jobs from a shared PostgreSQL queue. Route workloads by tag, scale horizontally, and deploy workers anywhere."
 ---
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Cpu, Layers, Zap, Settings, BarChart3, Users, Server, Terminal, Gauge, TrendingUp } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 
 export const fadeIn = {
@@ -21,17 +21,16 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
-{/* ── Section helper ── */}
+{/* Section helper */}
 
 export function Section({ title, desc, docLink, image, reverse, children }) {
-	const hasImage = !!image;
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
 				{...fadeIn}
-				className={hasImage ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : ''}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
 			>
-				<div className={hasImage && reverse ? 'lg:order-2' : ''}>
+				<div className={reverse ? 'lg:order-2' : ''}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
 					{docLink && (
@@ -43,161 +42,39 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 						</Link>
 					)}
 				</div>
-				{hasImage && (
-					<div className={reverse ? 'lg:order-1' : ''}>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{image ? (
 						<img
 							src={image}
 							alt={title}
 							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
 						/>
-					</div>
-				)}
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
 			</motion.div>
 			{children}
 		</div>
 	);
 }
 
-{/* ── Tab section ── */}
+{/* Main page */}
 
-export function TabSection({ title, subtitle, features }) {
-	const [active, setActive] = useState(0);
-	return (
-		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-			<motion.div {...fadeIn} className="mb-16">
-				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					{title}
-				</h2>
-				{subtitle && (
-					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
-				)}
-			</motion.div>
-
-			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
-				<div className="flex flex-col gap-2">
-					{features.map((feat, i) => (
-						<button
-							key={feat.label || feat.title}
-							onClick={() => setActive(i)}
-							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
-								i === active
-									? 'bg-blue-600 text-white border-blue-600'
-									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-							}`}
-						>
-							<feat.icon
-								className={`w-5 h-5 flex-shrink-0 ${
-									i === active ? 'text-white' : 'text-blue-500'
-								}`}
-							/>
-							<span className="font-medium text-sm">
-								{feat.label || feat.title}
-							</span>
-						</button>
-					))}
-				</div>
-
-				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
-					{features.map((feat, i) => (
-						<div
-							key={feat.label || feat.title}
-							className={`transition-opacity duration-200 ${
-								i === active
-									? 'opacity-100 relative'
-									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
-							}`}
-						>
-							<div className="flex items-center gap-3 mb-4">
-								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-									{feat.title}
-								</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
-								{feat.desc}
-							</p>
-							{feat.content ? (
-								feat.content
-							) : feat.image ? (
-								<img
-									src={feat.image}
-									alt={feat.title}
-									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
-								/>
-							) : (
-								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-									<span className="text-gray-400 dark:text-gray-500 text-sm">
-										Screenshot coming soon
-									</span>
-								</div>
-							)}
-							{feat.docLink && (
-								<div className="flex justify-end mt-3">
-									<Link
-										to={feat.docLink}
-										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
-									>
-										<BookOpen className="w-4 h-4" /> Read the docs
-									</Link>
-								</div>
-							)}
-						</div>
-					))}
-				</div>
-			</div>
-		</div>
-	);
-}
-
-{/* ── Worker types tab data ── */}
-
-export const workerFeatures = [
-	{
-		icon: Users,
-		label: 'Worker groups',
-		title: 'Worker groups',
-		desc: <span>Assign <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">tags to workers</Link> and route jobs to specific groups. Create custom worker groups for different workloads — GPU jobs, high-memory scripts, or environment-specific tasks.</span>,
-		docLink: '/docs/core_concepts/worker_groups',
-	},
-	{
-		icon: Zap,
-		label: 'Dedicated workers (Enterprise)',
-		title: 'Dedicated workers (Enterprise)',
-		desc: <span>Pin a <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated worker</Link> to a single script. The runtime stays warm permanently, eliminating cold starts entirely. Execution overhead drops to ~12ms per job.</span>,
-		docLink: '/docs/core_concepts/dedicated_workers',
-	},
-	{
-		icon: Server,
-		label: 'Agent workers (Enterprise)',
-		title: 'Agent workers (Enterprise)',
-		desc: <span><Link to="/docs/core_concepts/agent_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Agent workers</Link> connect to the server over HTTP only — no direct database access required. Deploy workers behind firewalls, in remote data centers, or on edge infrastructure while the server remains centralized.</span>,
-		docLink: '/docs/core_concepts/agent_workers',
-	},
-	{
-		icon: Terminal,
-		label: 'Init scripts',
-		title: 'Init scripts',
-		desc: <span>Run <Link to="/docs/core_concepts/worker_groups#init-scripts" className="text-blue-600 dark:text-blue-400 hover:underline">init scripts</Link> at worker startup to pre-install dependencies, configure tools, or warm caches. Workers are ready to execute jobs immediately after initialization.</span>,
-		docLink: '/docs/core_concepts/worker_groups#init-scripts',
-	},
-];
-
-{/* ── Main page ── */}
-
-export default function ScaleContent({ title, description }) {
+export default function WorkersContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
-			{/* ═══════════════ Hero ═══════════════ */}
+			{/* Hero */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Scale infinitely
+							Workers
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							Add workers, not complexity. Each worker pulls jobs independently — throughput scales linearly with no coordination overhead.
+							Windmill executes jobs on isolated workers that pull from a shared queue. Route workloads by tag, scale horizontally, and deploy workers anywhere.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a
@@ -210,7 +87,7 @@ export default function ScaleContent({ title, description }) {
 								<ArrowRight className="w-4 h-4" />
 							</a>
 							<Link
-								to="/docs/advanced/scaling"
+								to="/docs/core_concepts/worker_groups"
 								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
 							>
 								Read the docs
@@ -219,70 +96,97 @@ export default function ScaleContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						{/* Placeholder: diagram showing multiple workers pulling from a PostgreSQL queue independently, ~1200x800px, save as /static/img/money-pages/scale-workers.webp */}
+						{/* Placeholder: diagram showing multiple workers pulling from a PostgreSQL queue independently, ~1200x800px, save as /static/img/money-pages/workers-hero.webp */}
 						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Worker scaling diagram coming soon</span>
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Worker architecture diagram coming soon</span>
 						</div>
 					</motion.div>
 				</div>
 			</div>
 
-			{/* ═══════════════ Workers are the unit of scale ═══════════════ */}
+			{/* How workers work */}
 			<Section
-				title="Workers are the unit of scale"
-				desc={<span>Windmill uses a <Link to="/docs/advanced/scaling" className="text-blue-600 dark:text-blue-400 hover:underline">pull model</Link>: each worker independently grabs one job at a time from the PostgreSQL queue. No coordinator, no message broker, no scheduling overhead. A single worker handles ~26M jobs/month at ~100ms per job. Add more workers for more throughput — scaling is linear.</span>}
-				docLink="/docs/advanced/scaling"
+				title="How workers work"
+				desc={<span>Windmill uses a <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">pull model</Link>: each worker independently grabs one job at a time from the PostgreSQL queue. No coordinator, no message broker. A single worker handles ~26M jobs/month at ~100ms per job. Add more workers for more throughput, scaling is linear.</span>}
+				docLink="/docs/core_concepts/worker_groups"
+				image={null}
 			/>
 
-			{/* ═══════════════ Worker types ═══════════════ */}
-			<TabSection
-				title="Worker types"
-				subtitle={<span>Choose the right <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker type</Link> for each workload. Route jobs by tags, eliminate cold starts with dedicated workers, or deploy behind firewalls with agent workers.</span>}
-				features={workerFeatures}
+			{/* Worker groups */}
+			<Section
+				title="Worker groups"
+				desc={<span>Assign <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">tags to workers</Link> and route jobs to specific groups. Default groups include "default" for language jobs and "native" for SQL/API calls with 8 subworkers. Create custom groups for GPU, high-memory, or environment-specific workloads. Use dynamic tags like <code>$workspace</code> or <code>{'$args[argName]'}</code> for flexible routing.</span>}
+				docLink="/docs/core_concepts/worker_groups"
+				image={null}
+				reverse
 			/>
 
-			{/* ═══════════════ Autoscaling ═══════════════ */}
+			{/* Dedicated workers */}
+			<Section
+				title="Dedicated workers"
+				desc={<span><Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Dedicated workers</Link> pin a worker to a single script so the runtime stays warm permanently (Enterprise). Supported for TypeScript (Bun/Deno), Python, and nativets. Execution overhead drops to ~12ms per job versus ~50ms for standard workers, making them 1.35x faster than AWS Lambda for lightweight tasks.</span>}
+				docLink="/docs/core_concepts/dedicated_workers"
+				image={null}
+			/>
+
+			{/* Agent workers */}
+			<Section
+				title="Agent workers"
+				desc={<span><Link to="/docs/core_concepts/agent_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Agent workers</Link> connect to the server over HTTP only, with no direct database access (Enterprise). Deploy workers behind firewalls, in remote data centers, or on edge infrastructure. Run on Linux, Windows, or macOS without Docker.</span>}
+				docLink="/docs/core_concepts/agent_workers"
+				image={null}
+				reverse
+			/>
+
+			{/* Init scripts */}
+			<Section
+				title="Init scripts"
+				desc={<span>Run <Link to="/docs/core_concepts/worker_groups#init-scripts" className="text-blue-600 dark:text-blue-400 hover:underline">init scripts</Link> at worker startup to pre-install dependencies, configure tools, or warm caches. Periodic scripts run maintenance tasks at regular intervals. Configured through the Worker Management UI.</span>}
+				docLink="/docs/core_concepts/worker_groups#init-scripts"
+				image={null}
+			/>
+
+			{/* Autoscaling */}
 			<Section
 				title="Autoscaling"
-				desc={<span>Scale workers automatically based on queue depth. <Link to="/docs/core_concepts/autoscaling" className="text-blue-600 dark:text-blue-400 hover:underline">Kubernetes-native autoscaling</Link>, ECS autoscaling, and custom script-based scaling are all supported. Occupancy-based thresholds (e.g. 25% to scale in, 75% to scale out) with configurable cooldown periods. Scale to zero when idle.</span>}
+				desc={<span>Scale workers automatically based on queue depth. <Link to="/docs/core_concepts/autoscaling" className="text-blue-600 dark:text-blue-400 hover:underline">Kubernetes-native autoscaling</Link> (auto-discovers namespace/credentials), ECS, and custom script-based scaling are all supported. Occupancy-based thresholds: 75% to scale out, 25% to scale in, with configurable cooldown. Checks every 30 seconds and supports scale to zero when idle.</span>}
 				docLink="/docs/core_concepts/autoscaling"
+				image={null}
 				reverse
-			>
-				{/* Placeholder: autoscaling dashboard showing worker count adjusting with queue depth over time, ~1200x800px, save as /static/img/money-pages/autoscaling.webp */}
-			</Section>
-
-			{/* ═══════════════ Concurrency and priority ═══════════════ */}
-			<Section
-				title="Concurrency and priority"
-				desc={<span>Set <Link to="/docs/script_editor/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">global concurrency limits</Link> to prevent API overload from parallel executions. Assign priority levels from 1 to 100 so critical jobs always run first. Use custom concurrency keys to scope limits per user, resource, or any dynamic value.</span>}
-				docLink="/docs/script_editor/concurrency_limit"
 			/>
 
-			{/* ═══════════════ Benchmarks ═══════════════ */}
+			{/* Concurrency and priority */}
+			<Section
+				title="Concurrency and priority"
+				desc={<span>Set <Link to="/docs/script_editor/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">global concurrency limits</Link> per script to avoid API rate limits. Configure time windows, max executions, and custom concurrency keys. Assign priority levels from 1 to 100 so critical jobs always run first.</span>}
+				docLink="/docs/script_editor/concurrency_limit"
+				image={null}
+			/>
+
+			{/* Benchmarks */}
 			<Section
 				title="Benchmarks"
-				desc={<span>Windmill scales linearly to <Link to="/docs/misc/benchmarks" className="text-blue-600 dark:text-blue-400 hover:underline">100+ workers</Link> with near-theoretical throughput. Dedicated workers are faster than AWS Lambda for sustained workloads. Benchmark data is publicly available and reproducible.</span>}
+				desc={<span>Windmill scales linearly to <Link to="/docs/misc/benchmarks" className="text-blue-600 dark:text-blue-400 hover:underline">100+ workers</Link> with near-theoretical throughput. 100 workers achieve 981 jobs/sec on 100ms jobs. Dedicated workers run fibonacci in 54ms versus Lambda's 73ms. Benchmark data is publicly available and reproducible.</span>}
 				docLink="/docs/misc/benchmarks"
+				image={null}
 				reverse
-			>
-				{/* Placeholder: chart showing linear throughput scaling from 1 to 100+ workers, ~1200x800px, save as /static/img/money-pages/benchmarks.webp */}
-			</Section>
+			/>
 
-			{/* ═══════════════ FAQ ═══════════════ */}
+			{/* FAQ */}
 			<UseCaseFAQ faqs={[
-				{ question: 'How many jobs can one worker handle?', textAnswer: 'A single worker handles approximately 26 million jobs per month at ~100ms per job. Actual throughput depends on job duration — shorter jobs mean higher throughput, longer jobs mean lower throughput but the same linear scaling applies.' },
+				{ question: 'How many jobs can one worker handle?', textAnswer: 'A single worker handles approximately 26 million jobs per month at ~100ms per job. Actual throughput depends on job duration. Shorter jobs mean higher throughput, longer jobs mean lower throughput but the same linear scaling applies.' },
 				{ question: 'Can Windmill scale to zero?', textAnswer: 'Yes. Autoscaling supports scale-to-zero configurations. When the job queue is empty and the cooldown period expires, workers are terminated. New workers spin up automatically when jobs arrive.' },
 				{ question: 'What is the overhead per job?', textAnswer: 'Standard workers have approximately 50ms of overhead per job for pulling from the queue and setting up the execution environment. Dedicated workers reduce this to ~12ms by keeping the runtime warm.' },
 				{ question: 'Can I mix different worker sizes?', textAnswer: 'Yes. Worker groups let you run different instance types with different tags. Route GPU jobs to GPU instances, memory-intensive scripts to high-memory workers, and lightweight scripts to smaller instances.' },
 				{ question: 'What is the difference between dedicated and regular workers?', textAnswer: 'Regular workers execute any job matching their tags, with a cold start for each execution. Dedicated workers are pinned to a single script and keep the runtime warm permanently, eliminating cold starts and reducing overhead to ~12ms. Dedicated workers require Enterprise.' },
 			]} />
 
-			{/* ═══════════════ Transition CTA ═══════════════ */}
+			{/* CTA */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
 					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Deploy on your own infrastructure</h2>
 					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
-						Docker Compose, Kubernetes, or cloud-managed — deploy Windmill in minutes with zero maintenance.
+						Docker Compose, Kubernetes, or cloud-managed. Deploy Windmill in minutes with zero maintenance.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
 						<Link
