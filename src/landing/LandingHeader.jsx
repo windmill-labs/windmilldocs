@@ -48,9 +48,9 @@ const productCategories = [
 				icon: GitFork,
 			},
 			{
-				name: 'Frontend builder',
+				name: 'App builder',
 				description: 'Connect backend logic to React & Svelte frontends.',
-				href: '/product/frontend-builder',
+				href: '/product/app-builder',
 				icon: LayoutDashboard,
 			},
 			{

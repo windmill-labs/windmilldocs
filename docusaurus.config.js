@@ -145,7 +145,7 @@ const config = {
 						items: [
 							{ label: 'Script editor', href: '/product/script-editor' },
 							{ label: 'Flow editor', href: '/product/flow-editor' },
-							{ label: 'Frontend builder', href: '/product/frontend-builder' },
+							{ label: 'App builder', href: '/product/app-builder' },
 							{ label: 'Versioning', href: '/product/versioning' },
 							{ label: 'Local dev', href: '/product/local-dev' },
 							{ label: 'Observability', href: '/product/observability' },
