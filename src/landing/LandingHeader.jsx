@@ -26,7 +26,7 @@ import ThemeToggleButton from './ThemeToggleButton';
 import {
 	Bot, Landmark, HeartPulse,
 	Code, GitFork, LayoutDashboard, GitBranch, Terminal,
-	Activity, ShieldCheck, Container, Scaling, Server,
+	Activity, ShieldCheck, Container, Cpu, Server,
 } from 'lucide-react';
 import Banner from './Banner';
 import Link from '@docusaurus/Link';
@@ -71,6 +71,12 @@ const productCategories = [
 		title: 'Run',
 		items: [
 			{
+				name: 'Workers',
+				description: 'Isolated workers that pull from a shared queue.',
+				href: '/product/workers',
+				icon: Cpu,
+			},
+			{
 				name: 'Observability',
 				description: 'Monitor logs, metrics and alerts in real time.',
 				href: '/product/observability',
@@ -87,12 +93,6 @@ const productCategories = [
 				description: 'Run AI agents in isolated environments with predefined tools.',
 				href: '/product/sandboxes',
 				icon: Container,
-			},
-			{
-				name: 'Workers',
-				description: 'Isolated workers that pull from a shared queue.',
-				href: '/product/workers',
-				icon: Scaling,
 			},
 			{
 				name: 'No-ops self-host',
