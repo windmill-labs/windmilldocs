@@ -14,7 +14,7 @@ import {
 import { FaJava } from 'react-icons/fa';
 import CodeBlock from '@theme/CodeBlock';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
-import TriggerGrid from '../../components/use-cases/TriggerGrid';
+import TriggerSection from '../../components/use-cases/TriggerSection';
 import GithubStarCount from '../../landing/GithubStarCount';
 
 export const fadeIn = {
@@ -830,7 +830,7 @@ export default function ScriptEditorContent({ title, description }) {
 
 			<Section
 				title="Shared resources"
-				desc={<span>Declare a parameter as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource type</Link> and the UI shows a dropdown of configured connections. Secrets are resolved at runtime, never exposed in code.</span>}
+				desc={<span>Parameters typed as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> show a dropdown of configured connections in the UI. Credentials are centrally managed, encrypted at rest, and injected at runtime. A database, API key, or OAuth2 connection is configured once and reused across any script that needs it.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
 			/>
 
@@ -842,21 +842,7 @@ export default function ScriptEditorContent({ title, description }) {
 			/>
 
 			{/* ═══════════════ Triggers ═══════════════ */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn}>
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Triggers</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">Any script or workflow can be triggered by <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">schedules</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks</Link>, message queues, database changes, emails, and <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">more</Link>.</p>
-					<Link
-						to="/docs/getting_started/triggers"
-						className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
-					>
-						<BookOpen className="w-4 h-4" /> Read the docs
-					</Link>
-				</motion.div>
-				<div className="-mx-4 sm:-mx-6 lg:-mx-8 [&>div]:!py-4">
-					<TriggerGrid title={null} subtitle={null} />
-				</div>
-			</div>
+			<TriggerSection />
 
 			{/* ═══════════════ Deployment & execution ═══════════════ */}
 			<Section

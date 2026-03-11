@@ -6,10 +6,10 @@ description: "How do I build workflows in Windmill? Orchestrate scripts into DAG
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, BookOpen, GitBranch, RotateCcw, ShieldCheck, Layers, Zap, GitFork, CheckCircle2, Code, Repeat, Split, Clock, Pause, AlertTriangle, Shield, Gauge, Database, RefreshCw, Eye, Sparkles, Bot } from 'lucide-react';
+import { ArrowRight, BookOpen, GitBranch, RotateCcw, ShieldCheck, Layers, Zap, GitFork, CheckCircle2, Code, Repeat, Split, Clock, Pause, AlertTriangle, Shield, Gauge, Database, RefreshCw, Eye, Sparkles, Bot, Radio, CornerDownRight } from 'lucide-react';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
-import TriggerGrid from '../../components/use-cases/TriggerGrid';
+import TriggerSection from '../../components/use-cases/TriggerSection';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -370,16 +370,15 @@ export function HeroAnimation() {
 {/* ── Step types data ── */}
 
 export const stepTypes = [
-	{ icon: Code, label: 'Script', title: 'Script', desc: <span>Run a script in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any supported language</Link>. Each step gets the same <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script editor</Link> with LSP autocompletion, auto-generated UI, and dependency management.</span>, docLink: '/docs/flows/flow_editor' },
-	{ icon: Repeat, label: 'For loop', title: 'For loop', desc: <span>Iterate over a list and run one or more steps per item. Items can be processed <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">sequentially or in parallel</Link>.</span>, docLink: '/docs/flows/flow_loops' },
-	{ icon: RefreshCw, label: 'While loop', title: 'While loop', desc: <span>Repeat steps until a <Link to="/docs/flows/while_loops" className="text-blue-600 dark:text-blue-400 hover:underline">condition evaluates to false</Link>. Useful for polling, pagination, or convergence logic.</span>, docLink: '/docs/flows/while_loops' },
-	{ icon: Bot, label: 'AI agent', title: 'AI agent', desc: <span>Add an <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">AI agent step</Link> that reasons in a loop, calling Windmill scripts or <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">MCP servers</Link> as tools until it reaches a result. Supports streaming, structured output, image input, conversation memory, and <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">chat mode</Link>. Run <Link to="/docs/core_concepts/ai_sandbox" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex</Link> in sandboxed containers with persistent storage.</span>, docLink: '/docs/core_concepts/ai_agents' },
-	{ icon: Split, label: 'Branches', title: 'Branches', desc: <span>Route execution through <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">conditional or parallel branches</Link>. Parallel branches run concurrently and merge before the next step.</span>, docLink: '/docs/flows/flow_branches' },
-	{ icon: ShieldCheck, label: 'Approval', title: 'Approval', desc: <span>Pause the flow and wait for <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">human approval</Link> via email, Slack, or the Windmill UI. Supports timeouts and multiple approvers.</span>, docLink: '/docs/flows/flow_approval' },
-	{ icon: Zap, label: 'Trigger', title: 'Trigger', desc: <span>Start a flow from <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">any external event</Link>: schedules, webhooks, message queues, database changes, emails, and more.</span>, content: <TriggerGrid title={null} subtitle={null} />, docLink: '/docs/getting_started/triggers' },
-	{ icon: AlertTriangle, label: 'Error handler', title: 'Error handler', desc: <span>Catch failures and run <Link to="/docs/flows/flow_error_handler" className="text-blue-600 dark:text-blue-400 hover:underline">custom recovery logic</Link>. Error handlers receive the failed step's context and can notify, retry, or clean up.</span>, docLink: '/docs/flows/flow_error_handler' },
-	{ icon: Pause, label: 'Sleep / Suspend', title: 'Sleep / Suspend', desc: <span>Pause execution for a <Link to="/docs/flows/sleep" className="text-blue-600 dark:text-blue-400 hover:underline">fixed duration or until an external event</Link> resumes the flow. The worker is freed while the flow is suspended.</span>, docLink: '/docs/flows/sleep' },
-	{ icon: Sparkles, label: 'AI flow builder', title: 'AI flow builder', desc: <span>Describe a workflow in plain language and Windmill <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">generates a complete multi-step flow</Link> with the right step types, connections, and error handling. Edit individual steps or regenerate sections.</span>, docLink: '/docs/core_concepts/ai_generation' },
+	{ icon: Repeat, label: 'For loop', shortDesc: 'Iterate over a list and run steps per item. Items can be processed sequentially or in parallel.', docLink: '/docs/flows/flow_loops' },
+	{ icon: RefreshCw, label: 'While loop', shortDesc: 'Repeat steps until a predicate returns false. Useful for polling, pagination, or convergence logic.', docLink: '/docs/flows/while_loops' },
+	{ icon: Bot, label: 'AI agent step', shortDesc: 'LLM reasoning loop that calls Windmill scripts or MCP servers as tools until it reaches a result.', docLink: '/docs/core_concepts/ai_agents' },
+	{ icon: Split, label: 'Branches', shortDesc: 'Route execution through conditional or parallel paths. Parallel branches run concurrently and merge before the next step.', docLink: '/docs/flows/flow_branches' },
+	{ icon: ShieldCheck, label: 'Approval', shortDesc: 'Pause the flow and wait for human approval via email, Slack, or the UI. Supports timeouts and multiple approvers.', docLink: '/docs/flows/flow_approval' },
+	{ icon: AlertTriangle, label: 'Error handler', shortDesc: 'Catch failures and run recovery logic. Receives the failed step context to notify, retry, or clean up.', docLink: '/docs/flows/flow_error_handler' },
+	{ icon: Pause, label: 'Sleep / Suspend', shortDesc: 'Pause for a fixed duration or until an external event resumes the flow. The worker is freed while suspended.', docLink: '/docs/flows/sleep' },
+	{ icon: Radio, label: 'Trigger script', shortDesc: 'Pull data from external sources with persistent state. Runs on a schedule and only triggers downstream when new data arrives.', docLink: '/docs/flows/flow_trigger' },
+	{ icon: CornerDownRight, label: 'Early return', shortDesc: 'Return a response to the caller immediately while the rest of the flow continues running asynchronously.', docLink: '/docs/flows/early_return' },
 ];
 
 {/* ── Step features data ── */}
@@ -457,19 +456,42 @@ export default function WorkflowEditorContent({ title, description }) {
 				reverse
 			/>
 
-			{/* ═══════════════ Orchestrate scripts into workflows (tabs) ═══════════════ */}
-			<TabSection
-				title="Step types"
-				subtitle={<span>Each <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">step type</Link> serves a specific purpose in your workflow.</span>}
-				features={stepTypes}
-			/>
+			{/* ═══════════════ Step types (grid) ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-6">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Prebuilt nodes</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">Beyond scripts, the flow editor provides <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">built-in nodes</Link> for common control flow patterns.</p>
+				</motion.div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+					{stepTypes.map((step) => (
+						<Link
+							key={step.label}
+							to={step.docLink}
+							className="group flex flex-col gap-2 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all !no-underline"
+						>
+							<div className="flex items-center gap-2.5">
+								<step.icon className="w-5 h-5 text-blue-500 shrink-0" />
+								<span className="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+									{step.label}
+								</span>
+							</div>
+							<span className="text-xs text-gray-500 dark:text-gray-400">
+								{step.shortDesc}
+							</span>
+						</Link>
+					))}
+				</div>
+			</div>
 
-			{/* ═══════════════ Connect to 300+ integrations ═══════════════ */}
+			{/* ═══════════════ Shared resources ═══════════════ */}
 			<Section
-				title="Connect to 300+ integrations"
-				desc={<span>Parameters declared as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource type</Link> show a dropdown of configured connections in the UI. Credentials are centrally managed, encrypted at rest, and injected at runtime. OAuth2, API keys, and database connections are supported with typed schemas.</span>}
+				title="Shared resources"
+				desc={<span>Flow steps share the same <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> system as standalone scripts. Declare a parameter as a resource type and the UI shows a dropdown of configured connections. Credentials are centrally managed, encrypted at rest, and injected at runtime. A single database or API connection is configured once and reused across every step that needs it.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
 			/>
+
+			{/* ═══════════════ Triggers ═══════════════ */}
+			<TriggerSection />
 
 			{/* ═══════════════ Retries, concurrency, caching (tabs) ═══════════════ */}
 			<TabSection
