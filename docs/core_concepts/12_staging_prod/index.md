@@ -55,7 +55,7 @@ This can be done by users with both View rights on the deployed-from workspace a
 
 You can deploy one by one flows, scripts (including each script within flow), variables and resources. Or toggle more than one and "Deploy all".
 
-![Deploy to staging/prod](./deploy_to_staging_prod.png'Deploy to staging/prod')
+![Deploy to staging/prod](./deploy_to_staging_prod.png 'Deploy to staging/prod')
 
 Items are called:
 
@@ -63,8 +63,8 @@ Items are called:
 - "New" if the item will be created with the deployment.
 - "diff" if the item was already deployed previously. This opens a difference viewer tab where you can see differences with the previous version.
 
-![Diff menu](./diff_menu.png'Diff menu')
-![Diff menu2](./diff_menu2.png'Diff menu2')
+![Diff menu](./diff_menu.png 'Diff menu')
+![Diff menu2](./diff_menu2.png 'Diff menu2')
 
 ### Shareable page
 
@@ -72,13 +72,13 @@ A static page is created for each potential deployment to Staging/Prod.
 
 This can be useful for non-admin (for example, operators) to share a page to properly-permissioned users to have them review or do the deployment.
 
-![Shareable link](./shareable_link.png'Shareable link')
+![Shareable link](./shareable_link.png 'Shareable link')
 
 > Even users who are not admin can see the "Deploy to staging/prod", from where they can get the link of the shareable page.
 
 <br/>
 
-![Shareable page](./shareable_page.png'Shareable page')
+![Shareable page](./shareable_page.png 'Shareable page')
 
 > This page then allows users with the right permissions to deploy the given items.
 
@@ -89,7 +89,7 @@ If you are on a workspace fork, the first thing to know is that it will be preco
 
 ![Merge UI](./merge_ui.png 'Merge UI')
 
-Learn more about [merging forks through Merge UI](../../advanced/20_workspace_forks/index.mdx#merge-workspaces-from-the-ui)
+Learn more about [merging forks through Merge UI](../../advanced/20_workspace_forks/index.mdx#merge-workspaces-from-the-ui-merge-ui)
 
 
 ## Run on behalf of
