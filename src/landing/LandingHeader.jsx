@@ -89,8 +89,8 @@ const productCategories = [
 				icon: ShieldCheck,
 			},
 			{
-				name: 'Sandboxes',
-				description: 'Run AI agents in isolated environments with predefined tools.',
+				name: 'AI sandboxes',
+				description: 'Run Claude Code, Codex, or custom agents in isolated environments.',
 				href: '/product/sandboxes',
 				icon: Container,
 			},
