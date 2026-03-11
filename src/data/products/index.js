@@ -2,6 +2,7 @@
 export { scriptEditorProduct } from './script-editor';
 export { workflowEditorProduct } from './flow-editor';
 export { appBuilderProduct } from './app-builder';
+export { datatablesProduct } from './datatables';
 export { versioningProduct } from './versioning';
 export { localDevProduct } from './local-dev';
 
