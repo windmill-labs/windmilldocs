@@ -844,26 +844,32 @@ export default function ScriptEditorContent({ title, description }) {
 			{/* ═══════════════ Triggers ═══════════════ */}
 			<TriggerSection />
 
-			{/* ═══════════════ Deployment & execution ═══════════════ */}
-			<Section
-				title="One click deployment and versioning"
-				desc={<span>Deploy and your script is immediately available to every <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">workspace</Link> member. Each save creates a new immutable version with a unique hash. View history, fork, or revert any version.</span>}
-				docLink="/docs/core_concepts/draft_and_deploy"
-				reverse
-			/>
-
-			<Section
-				title="Dedicated workers"
-				desc={<span>Each script runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> that uses the full CPU and memory available to it. Workers pull jobs from a queue, execute one at a time, and stream logs back. Scale horizontally by adding workers, or assign <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> to high-throughput scripts to eliminate cold starts entirely.</span>}
-				docLink="/docs/core_concepts/worker_groups"
-			/>
-
-			<Section
-				title="Built-in granular monitoring"
-				desc={<span>Every execution is logged as a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">job</Link> with its inputs, outputs, duration, and status. The run history is searchable and filterable by script, user, or status. Failed runs show full error traces. <Link to="/docs/core_concepts/critical_alert_channels" className="text-blue-600 dark:text-blue-400 hover:underline">Critical alerts</Link> can notify on failures, and <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link> track every action across the workspace.</span>}
-				docLink="/docs/core_concepts/monitor_past_and_future_runs"
-				reverse
-			/>
+			{/* ═══════════════ Deployment, workers & observability ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">One click deployment and versioning</h3>
+						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Deploy and your script is immediately available. Each save creates a new immutable version with a unique hash.</p>
+						<Link to="/product/versioning" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+							Check our versioning dedicated page <ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Dedicated workers</h3>
+						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each script runs on an isolated worker with the full CPU and memory available to it. Scale horizontally and eliminate cold starts.</p>
+						<Link to="/product/workers" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+							Check our workers dedicated page <ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+						<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Built-in granular monitoring</h3>
+						<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Every execution is logged with its inputs, outputs, duration, and status. Run history is searchable and filterable.</p>
+						<Link to="/product/observability" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+							Check our observability dedicated page <ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+				</motion.div>
+			</div>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[
