@@ -446,6 +446,7 @@ export default function FrontendBuilderContent({ title, description }) {
 				title="Auto-generated typed API"
 				desc={<span>Adding a script to the <code>backend/</code> folder makes it callable from the frontend. Windmill generates a <code>wmill.d.ts</code> with typed signatures inferred from your code, giving your editor autocomplete and type checking for <code>backend.my_runnable()</code> calls. Runnables execute on <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> and stream results back via WebSocket.</span>}
 				docLink="/docs/full_code_apps/frontend"
+				reverse
 			/>
 
 			{/* ═══════════════ Datatables ═══════════════ */}
@@ -453,7 +454,6 @@ export default function FrontendBuilderContent({ title, description }) {
 				title="Datatables"
 				desc={<span><Link to="/docs/core_concepts/persistent_storage/within_windmill#datatables" className="text-blue-600 dark:text-blue-400 hover:underline">Datatables</Link> are a layer on top of your own database (added as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link>) that provides schema management, SQL runnables, and shared access across scripts, flows, and apps. Tables and schemas are accessible from backend runnables. The CLI auto-generates a <code>DATATABLES.md</code> context file so AI assistants understand the schema.</span>}
 				docLink="/docs/core_concepts/persistent_storage/within_windmill#datatables"
-				reverse
 			/>
 			{/* TODO: screenshot of the datatables UI showing a table with columns, rows, and the schema editor. Save as static/img/money-pages/datatables.webp (approx 1200x800px) */}
 
