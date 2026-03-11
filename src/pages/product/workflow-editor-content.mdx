@@ -493,18 +493,12 @@ export default function WorkflowEditorContent({ title, description }) {
 			{/* ═══════════════ Triggers ═══════════════ */}
 			<TriggerSection />
 
-			{/* ═══════════════ Retries, concurrency, caching (tabs) ═══════════════ */}
-			<TabSection
-				title="Step-level reliability"
-				subtitle={<span>Retries, concurrency limits, caching, and error handling are configured per step from the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link>.</span>}
-				features={stepFeatures}
-			/>
-
-			{/* ═══════════════ Dedicated workers ═══════════════ */}
+			{/* ═══════════════ Step-level reliability ═══════════════ */}
 			<Section
-				title="Runs on dedicated workers"
-				desc={<span>Each flow step runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> with the full CPU and memory available to it. Workers execute one job at a time, with roughly 20ms of overhead between steps. <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Dedicated workers</Link> can be assigned to high-throughput flows to eliminate cold starts entirely.</span>}
-				docLink="/docs/core_concepts/worker_groups"
+				title="Step-level reliability"
+				desc={<span>Each step can be configured independently with <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> (fixed or exponential backoff), <Link to="/docs/flows/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">concurrency limits</Link>, <Link to="/docs/flows/cache" className="text-blue-600 dark:text-blue-400 hover:underline">result caching</Link>, timeouts, <Link to="/docs/flows/early_stop" className="text-blue-600 dark:text-blue-400 hover:underline">early stop conditions</Link>, <Link to="/docs/flows/priority" className="text-blue-600 dark:text-blue-400 hover:underline">priority</Link>, and <Link to="/docs/flows/step_mocking" className="text-blue-600 dark:text-blue-400 hover:underline">step mocking</Link> for development. All settings are opt-in per step from the flow editor.</span>}
+				docLink="/docs/flows/flow_editor"
+				reverse
 			/>
 
 			{/* ═══════════════ Deployment and versioning ═══════════════ */}
@@ -512,6 +506,13 @@ export default function WorkflowEditorContent({ title, description }) {
 				title="Deployment and versioning"
 				desc={<span>Each deployment creates a new immutable version. View history, compare diffs, and restore any previous version. With <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git Sync</Link>, every deployment is automatically committed. Use <Link to="/product/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">workspace forks</Link> and promotion workflows to move flows from staging to production.</span>}
 				docLink="/docs/core_concepts/draft_and_deploy"
+			/>
+
+			{/* ═══════════════ Dedicated workers ═══════════════ */}
+			<Section
+				title="Runs on dedicated workers"
+				desc={<span>Each flow step runs on an isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker</Link> with the full CPU and memory available to it. Workers execute one job at a time, with roughly 20ms of overhead between steps. <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Dedicated workers</Link> can be assigned to high-throughput flows to eliminate cold starts entirely.</span>}
+				docLink="/docs/core_concepts/worker_groups"
 				reverse
 			/>
 
