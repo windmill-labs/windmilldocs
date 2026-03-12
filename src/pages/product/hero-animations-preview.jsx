@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FileCode, Zap, Mail, Database, Calendar, Webhook, Radio, Rss, Globe, Cloud, MessageSquare, Waypoints, Route, MonitorPlay, Plug, RefreshCw } from 'lucide-react';
-import { SiTypescript } from 'react-icons/si';
+import { Table2, Check, Search } from 'lucide-react';
 
 import LandingHeader from '../../landing/LandingHeader';
 import Footer from '../../landing/Footer';
 import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
-import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import DatatablesHeroAnimation from '../../components/products/DatatablesHeroAnimation';
 
 const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -16,298 +15,46 @@ const fadeIn = {
 	transition: { duration: 0.5 }
 };
 
-
 // ══════════════════════════════════════════════════════
-// TRIGGER ANIMATIONS
+// Shared data
 // ══════════════════════════════════════════════════════
 
-const triggerTypes = [
-	// Column 1
-	{ id: 'schedule',   label: 'Schedule',      icon: Calendar,       color: 'text-blue-500' },
-	{ id: 'webhook',    label: 'Webhook',       icon: Webhook,        color: 'text-orange-500' },
-	{ id: 'http',       label: 'HTTP routes',   icon: Route,          color: 'text-cyan-500' },
-	{ id: 'kafka',      label: 'Kafka',         icon: Waypoints,      color: 'text-emerald-500' },
-	{ id: 'postgres',   label: 'Postgres CDC',  icon: Database,       color: 'text-violet-500' },
-	{ id: 'websocket',  label: 'WebSocket',     icon: Radio,          color: 'text-pink-500' },
-	{ id: 'email',      label: 'Email',         icon: Mail,           color: 'text-amber-500' },
-	{ id: 'nats',       label: 'NATS',          icon: MessageSquare,  color: 'text-green-500' },
-	// Column 2
-	{ id: 'sqs',        label: 'SQS',              icon: Cloud,          color: 'text-orange-400' },
-	{ id: 'mqtt',       label: 'MQTT',             icon: Rss,            color: 'text-teal-500' },
-	{ id: 'gcppubsub',  label: 'GCP Pub/Sub',      icon: Cloud,          color: 'text-blue-400' },
-	{ id: 'native',     label: 'Native triggers',  icon: Globe,          color: 'text-indigo-500' },
-	{ id: 'ui',         label: 'Auto-generated UIs',icon: MonitorPlay,   color: 'text-purple-500' },
-	{ id: 'cli',        label: 'CLI & API',        icon: Zap,            color: 'text-gray-500' },
-	{ id: 'mcp',        label: 'MCP',              icon: Plug,           color: 'text-rose-500' },
-	{ id: 'polls',      label: 'Scheduled polls',  icon: RefreshCw,      color: 'text-sky-500' },
+const tableRows = [
+	{ id: 1, customer: 'Alice Martin', amount: '$1,250.00', status: 'pending', date: '2025-03-10' },
+	{ id: 2, customer: 'Bob Chen', amount: '$890.00', status: 'active', date: '2025-03-09' },
+	{ id: 3, customer: 'Carol Smith', amount: '$2,100.00', status: 'active', date: '2025-03-08' },
+	{ id: 4, customer: 'Dan Wilson', amount: '$450.00', status: 'pending', date: '2025-03-07' },
+	{ id: 5, customer: 'Eva Lopez', amount: '$3,200.00', status: 'active', date: '2025-03-06' },
 ];
 
-// ── Trigger Concept 1: Trigger carousel ──
-// Triggers fly in from the left one by one and connect to a central script card
+const columns = ['id', 'customer', 'amount', 'status', 'date'];
 
-function TriggerConcept1() {
+// ══════════════════════════════════════════════════════
+// Concept 1: Spreadsheet that comes alive
+// ══════════════════════════════════════════════════════
+
+function SpreadsheetAnimation() {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, amount: 0.3 });
-	const [visibleCount, setVisibleCount] = useState(0);
-
-	useEffect(() => {
-		if (!isInView) return;
-		const timers = triggerTypes.map((_, i) =>
-			setTimeout(() => setVisibleCount(i + 1), 800 + i * 500)
-		);
-		return () => timers.forEach(clearTimeout);
-	}, [isInView]);
-
-	const scriptX = 360;
-	const scriptY = 180;
-
-	return (
-		<div ref={ref} className="relative" style={{ height: 400 }}>
-			<div className="relative overflow-hidden h-full">
-				{/* Connection lines */}
-				<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
-					{triggerTypes.map((t, i) => {
-						const ty = 60 + i * 56;
-						const visible = i < visibleCount;
-						return (
-							<motion.line
-								key={t.id}
-								x1={190} y1={ty} x2={scriptX - 100} y2={scriptY}
-								stroke="#94a3b8"
-								strokeWidth={1.5}
-								strokeDasharray="4 4"
-								initial={{ opacity: 0, pathLength: 0 }}
-								animate={visible ? { opacity: 0.6, pathLength: 1 } : {}}
-								transition={{ duration: 0.4, delay: 0.2 }}
-							/>
-						);
-					})}
-				</svg>
-
-				{/* Trigger chips */}
-				{triggerTypes.map((t, i) => {
-					const ty = 60 + i * 56;
-					const visible = i < visibleCount;
-					return (
-						<motion.div
-							key={t.id}
-							className="absolute"
-							style={{ left: 20, top: ty, transform: 'translateY(-50%)' }}
-							initial={{ opacity: 0, x: -40 }}
-							animate={visible ? { opacity: 1, x: 0 } : {}}
-							transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-						>
-							<div className={`px-4 py-2 rounded-xl border ${t.border} ${t.bg} flex items-center gap-2.5 shadow-sm`}
-								style={{ width: 170, height: 40 }}>
-								<t.icon className={`w-4 h-4 ${t.color} flex-shrink-0`} />
-								<span className="text-sm font-medium text-gray-700 whitespace-nowrap">{t.label}</span>
-							</div>
-						</motion.div>
-					);
-				})}
-
-				{/* Script card */}
-				<motion.div
-					className="absolute"
-					style={{ left: scriptX - 100, top: scriptY, transform: 'translateY(-50%)' }}
-					initial={{ opacity: 0, scale: 0.9 }}
-					animate={isInView ? { opacity: 1, scale: 1 } : {}}
-					transition={{ duration: 0.5, delay: 0.3 }}
-				>
-					<div className="px-5 py-3 rounded-xl border border-gray-200 bg-white shadow-lg flex items-center gap-3"
-						style={{ width: 200, height: 52 }}>
-						<FileCode className="w-5 h-5 text-[#3178C6] flex-shrink-0" />
-						<div>
-							<span className="text-sm font-semibold text-gray-800 block">process_order</span>
-							<span className="text-[11px] text-gray-400">TypeScript</span>
-						</div>
-					</div>
-				</motion.div>
-
-				{/* Active triggers counter */}
-				{visibleCount > 0 && (
-					<motion.div
-						className="absolute"
-						style={{ left: scriptX - 100, top: scriptY + 40 }}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.3 }}
-					>
-						<motion.span
-							key={visibleCount}
-							className="text-xs font-medium text-blue-500"
-							initial={{ opacity: 0, y: 5 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.2 }}
-						>
-							{visibleCount} trigger{visibleCount > 1 ? 's' : ''} active
-						</motion.span>
-					</motion.div>
-				)}
-			</div>
-		</div>
-	);
-}
-
-
-// ── Trigger Concept 2: Stacking triggers with pulsing connections ──
-// Script on the right, triggers stack on the left with animated pulse lines
-
-function TriggerConcept2() {
-	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, amount: 0.3 });
-	const [visibleCount, setVisibleCount] = useState(0);
-
-	useEffect(() => {
-		if (!isInView) return;
-		const timers = triggerTypes.map((_, i) =>
-			setTimeout(() => setVisibleCount(i + 1), 600 + i * 600)
-		);
-		return () => timers.forEach(clearTimeout);
-	}, [isInView]);
-
-	return (
-		<div ref={ref} className="relative" style={{ height: 420 }}>
-			<div className="relative overflow-hidden h-full flex items-center justify-center">
-				{/* Script card (right side) */}
-				<motion.div
-					className="absolute"
-					style={{ right: 40, top: '50%', transform: 'translateY(-50%)' }}
-					initial={{ opacity: 0, x: 30 }}
-					animate={isInView ? { opacity: 1, x: 0 } : {}}
-					transition={{ duration: 0.5 }}
-				>
-					<div className="rounded-2xl border border-gray-200 bg-white shadow-xl p-5" style={{ width: 220 }}>
-						<div className="flex items-center gap-3 mb-3">
-							<div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-								<FileCode className="w-4 h-4 text-[#3178C6]" />
-							</div>
-							<div>
-								<div className="text-sm font-semibold text-gray-800">process_order</div>
-								<div className="text-[11px] text-gray-400">TypeScript</div>
-							</div>
-						</div>
-						{/* Mini code preview */}
-						<div className="rounded-lg bg-gray-50 border border-gray-100 p-2.5 font-mono text-[10px] text-gray-500 leading-relaxed">
-							<div><span className="text-blue-500">export async function</span> main(</div>
-							<div className="pl-3">order_id: <span className="text-amber-600">string</span>,</div>
-							<div className="pl-3">amount: <span className="text-amber-600">number</span></div>
-							<div>) {'{'}</div>
-							<div className="pl-3 text-gray-400">// process order...</div>
-							<div>{'}'}</div>
-						</div>
-					</div>
-				</motion.div>
-
-				{/* Triggers stacking on the left */}
-				{triggerTypes.map((t, i) => {
-					const visible = i < visibleCount;
-					const yOffset = -((triggerTypes.length - 1) * 25) + i * 50;
-					return (
-						<React.Fragment key={t.id}>
-							{/* Connection line with pulse */}
-							{visible && (
-								<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
-									<motion.line
-										x1={200} y1={210 + yOffset}
-										x2={310} y2={210}
-										stroke="#3b82f6"
-										strokeWidth={1.5}
-										initial={{ opacity: 0 }}
-										animate={{ opacity: [0, 0.5, 0.3] }}
-										transition={{ duration: 0.8, delay: 0.1 }}
-									/>
-									{/* Pulse dot traveling along line */}
-									<motion.circle
-										r={3}
-										fill="#3b82f6"
-										initial={{ opacity: 0 }}
-										animate={{
-											cx: [200, 310],
-											cy: [210 + yOffset, 210],
-											opacity: [0, 1, 1, 0],
-										}}
-										transition={{
-											duration: 1.2,
-											delay: 0.2,
-											repeat: Infinity,
-											repeatDelay: 2,
-											ease: 'linear',
-										}}
-									/>
-								</svg>
-							)}
-							{/* Trigger chip */}
-							<motion.div
-								className="absolute"
-								style={{ left: 30, top: `calc(50% + ${yOffset}px)`, transform: 'translateY(-50%)' }}
-								initial={{ opacity: 0, x: -50, scale: 0.8 }}
-								animate={visible ? { opacity: 1, x: 0, scale: 1 } : {}}
-								transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-							>
-								<div className={`px-3 py-2 rounded-xl border ${t.border} ${t.bg} flex items-center gap-2 shadow-sm`}
-									style={{ width: 160, height: 38 }}>
-									<t.icon className={`w-4 h-4 ${t.color} flex-shrink-0`} />
-									<span className="text-[13px] font-medium text-gray-700 whitespace-nowrap">{t.label}</span>
-								</div>
-							</motion.div>
-						</React.Fragment>
-					);
-				})}
-			</div>
-		</div>
-	);
-}
-
-
-// ── Trigger Concept 3: Trigger panel build-up ──
-// Mimics the Windmill UI: a script panel + trigger sidebar sliding in
-
-function TriggerConcept3() {
-	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, amount: 0.3 });
-	const [phase, setPhase] = useState(0); // 0=nothing, 1=card visible, 2=triggers appear, 3=schedule on, 4=kafka on
+	const [phase, setPhase] = useState(0);
 
 	useEffect(() => {
 		if (!isInView) return;
 		const timers = [
-			setTimeout(() => setPhase(1), 400),
-			setTimeout(() => setPhase(2), 1000),
-			setTimeout(() => setPhase(3), 1800),
-			setTimeout(() => setPhase(4), 2400),
+			setTimeout(() => setPhase(1), 400),   // card appears
+			setTimeout(() => setPhase(2), 1000),   // headers appear
+			setTimeout(() => setPhase(3), 1500),   // row 1
+			setTimeout(() => setPhase(4), 1800),   // row 2
+			setTimeout(() => setPhase(5), 2100),   // row 3
+			setTimeout(() => setPhase(6), 2400),   // row 4
+			setTimeout(() => setPhase(7), 2700),   // row 5
+			setTimeout(() => setPhase(8), 3400),   // edit: pending → active on row 1
 		];
 		return () => timers.forEach(clearTimeout);
 	}, [isInView]);
 
-	const activeOrder = ['schedule', 'kafka'];
-	const col1 = triggerTypes.slice(0, 8);
-	const col2 = triggerTypes.slice(8);
-
-	function TriggerRow({ t, i }) {
-		const activeIdx = activeOrder.indexOf(t.id);
-		const isOn = activeIdx >= 0 && phase >= 3 + activeIdx;
-		return (
-			<motion.div
-				key={t.id}
-				className="flex items-center justify-between py-1.5 px-2 rounded-lg mb-0.5"
-				initial={{ opacity: 0, x: 20 }}
-				animate={phase >= 2 ? { opacity: 1, x: 0 } : {}}
-				transition={{ duration: 0.3, delay: 0.05 + i * 0.04 }}
-			>
-				<div className="flex items-center gap-2">
-					<t.icon className={`w-3.5 h-3.5 ${isOn ? t.color : 'text-gray-400'}`} />
-					<span className={`text-[11px] font-medium ${isOn ? 'text-gray-700' : 'text-gray-400'} whitespace-nowrap`}>{t.label}</span>
-				</div>
-				<div className={`w-7 h-[16px] rounded-full relative transition-colors duration-300 ${isOn ? 'bg-blue-500' : 'bg-gray-200'}`}>
-					<motion.div
-						className="absolute top-[2px] w-[12px] h-[12px] rounded-full bg-white shadow-sm"
-						animate={{ left: isOn ? 13 : 2 }}
-						transition={{ duration: 0.2 }}
-					/>
-				</div>
-			</motion.div>
-		);
-	}
+	const visibleRows = tableRows.slice(0, Math.max(0, phase - 2));
+	const editedRow = phase >= 8 ? 0 : -1;
 
 	return (
 		<div ref={ref} className="relative" style={{ height: 420 }}>
@@ -316,14 +63,14 @@ function TriggerConcept3() {
 					initial={{ opacity: 0, y: 20 }}
 					animate={phase >= 1 ? { opacity: 1, y: 0 } : {}}
 					transition={{ duration: 0.5 }}
-					style={{ width: 460 }}
+					style={{ width: 520 }}
 				>
 					<div className="rounded-2xl border border-gray-200 bg-white shadow-lg p-5">
 						<div className="flex items-center gap-3 mb-4">
-							<div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
-								<SiTypescript className="w-4 h-4 text-[#3178C6]" />
+							<div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center">
+								<Table2 className="w-4 h-4 text-emerald-600" />
 							</div>
-							<div className="text-sm font-semibold text-gray-800">process_order.ts</div>
+							<div className="text-sm font-semibold text-gray-800">orders</div>
 						</div>
 
 						<motion.div
@@ -332,21 +79,57 @@ function TriggerConcept3() {
 							transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
 							style={{ overflow: 'hidden' }}
 						>
-							<div className="border-t border-gray-100 pt-3">
-								<div className="flex items-center gap-2 mb-3">
-									<Zap className="w-3.5 h-3.5 text-blue-500" />
-									<span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Triggers</span>
-								</div>
-
-								<div className="grid grid-cols-2 gap-x-4">
-									<div>
-										{col1.map((t, i) => <TriggerRow key={t.id} t={t} i={i} />)}
+							{/* Header row */}
+							<div className="grid grid-cols-5 gap-0 border-b border-gray-200 pb-2 mb-1">
+								{columns.map((col) => (
+									<div key={col} className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider px-2">
+										{col}
 									</div>
-									<div>
-										{col2.map((t, i) => <TriggerRow key={t.id} t={t} i={i + 8} />)}
-									</div>
-								</div>
+								))}
 							</div>
+
+							{/* Data rows */}
+							{visibleRows.map((row, i) => {
+								const isEdited = i === editedRow;
+								const status = isEdited ? 'active' : row.status;
+								return (
+									<motion.div
+										key={row.id}
+										className="grid grid-cols-5 gap-0 py-1.5 border-b border-gray-50"
+										initial={{ opacity: 0, x: -10 }}
+										animate={{ opacity: 1, x: 0 }}
+										transition={{ duration: 0.3 }}
+									>
+										<div className="text-[11px] text-gray-500 px-2">{row.id}</div>
+										<div className="text-[11px] text-gray-700 font-medium px-2">{row.customer}</div>
+										<div className="text-[11px] text-gray-600 px-2">{row.amount}</div>
+										<div className="px-2 relative">
+											<motion.span
+												className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full inline-block ${
+													status === 'active'
+														? 'bg-green-100 text-green-700'
+														: 'bg-yellow-100 text-yellow-700'
+												}`}
+												animate={isEdited ? { scale: [1, 1.15, 1] } : {}}
+												transition={{ duration: 0.4 }}
+											>
+												{status}
+											</motion.span>
+											{isEdited && (
+												<motion.div
+													className="absolute -right-1 -top-1"
+													initial={{ opacity: 0, scale: 0 }}
+													animate={{ opacity: 1, scale: 1 }}
+													transition={{ duration: 0.3, delay: 0.2 }}
+												>
+													<Check className="w-3 h-3 text-green-500" />
+												</motion.div>
+											)}
+										</div>
+										<div className="text-[11px] text-gray-500 px-2">{row.date}</div>
+									</motion.div>
+								);
+							})}
 						</motion.div>
 					</div>
 				</motion.div>
@@ -355,10 +138,151 @@ function TriggerConcept3() {
 	);
 }
 
+// ══════════════════════════════════════════════════════
+// Concept 2: SQL query to table
+// ══════════════════════════════════════════════════════
+
+const sqlQuery = "SELECT * FROM orders WHERE status = 'active'";
+
+function SqlQueryAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, amount: 0.3 });
+	const [phase, setPhase] = useState(0);
+	const [typedChars, setTypedChars] = useState(0);
+
+	useEffect(() => {
+		if (!isInView) return;
+		const timers = [
+			setTimeout(() => setPhase(1), 400),   // query card appears
+			setTimeout(() => setPhase(2), 800),    // start typing
+			setTimeout(() => setPhase(3), 2800),   // table appears
+			setTimeout(() => setPhase(4), 3400),   // count badge
+		];
+		return () => timers.forEach(clearTimeout);
+	}, [isInView]);
+
+	useEffect(() => {
+		if (phase < 2) return;
+		if (typedChars >= sqlQuery.length) return;
+		const timer = setTimeout(() => {
+			setTypedChars((c) => c + 1);
+		}, 35);
+		return () => clearTimeout(timer);
+	}, [phase, typedChars]);
+
+	const activeRows = tableRows.filter((r) => r.status === 'active');
+
+	return (
+		<div ref={ref} className="relative" style={{ height: 420 }}>
+			<div className="relative overflow-hidden h-full flex items-center justify-center">
+				<div style={{ width: 520 }} className="space-y-3">
+					{/* SQL query card */}
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={phase >= 1 ? { opacity: 1, y: 0 } : {}}
+						transition={{ duration: 0.5 }}
+					>
+						<div className="rounded-xl border border-gray-200 bg-white shadow-lg p-4">
+							<div className="flex items-center gap-2 mb-3">
+								<Search className="w-3.5 h-3.5 text-blue-500" />
+								<span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Query</span>
+							</div>
+							<div className="bg-gray-50 rounded-lg p-3 font-mono text-[12px] text-gray-700 min-h-[36px]">
+								{sqlQuery.slice(0, typedChars)}
+								{phase >= 2 && typedChars < sqlQuery.length && (
+									<motion.span
+										className="inline-block w-[2px] h-[14px] bg-blue-500 ml-[1px] align-middle"
+										animate={{ opacity: [1, 0] }}
+										transition={{ duration: 0.6, repeat: Infinity }}
+									/>
+								)}
+							</div>
+						</div>
+					</motion.div>
+
+					{/* Results table */}
+					<motion.div
+						initial={{ opacity: 0, y: 15, height: 0 }}
+						animate={phase >= 3 ? { opacity: 1, y: 0, height: 'auto' } : {}}
+						transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+						style={{ overflow: 'hidden' }}
+					>
+						<div className="rounded-xl border border-gray-200 bg-white shadow-lg p-4">
+							<div className="flex items-center justify-between mb-3">
+								<div className="flex items-center gap-2">
+									<Table2 className="w-3.5 h-3.5 text-emerald-500" />
+									<span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Results</span>
+								</div>
+								{phase >= 4 && (
+									<motion.span
+										className="text-[10px] font-semibold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full"
+										initial={{ opacity: 0, scale: 0.8 }}
+										animate={{ opacity: 1, scale: 1 }}
+										transition={{ duration: 0.3 }}
+									>
+										{activeRows.length} rows
+									</motion.span>
+								)}
+							</div>
+
+							{/* Header */}
+							<div className="grid grid-cols-5 gap-0 border-b border-gray-200 pb-2 mb-1">
+								{columns.map((col) => (
+									<div key={col} className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider px-2">
+										{col}
+									</div>
+								))}
+							</div>
+
+							{/* Rows */}
+							{activeRows.map((row, i) => (
+								<motion.div
+									key={row.id}
+									className="grid grid-cols-5 gap-0 py-1.5 border-b border-gray-50"
+									initial={{ opacity: 0, y: 8 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ duration: 0.3, delay: i * 0.1 }}
+								>
+									<div className="text-[11px] text-gray-500 px-2">{row.id}</div>
+									<div className="text-[11px] text-gray-700 font-medium px-2">{row.customer}</div>
+									<div className="text-[11px] text-gray-600 px-2">{row.amount}</div>
+									<div className="px-2">
+										<span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">
+											{row.status}
+										</span>
+									</div>
+									<div className="text-[11px] text-gray-500 px-2">{row.date}</div>
+								</motion.div>
+							))}
+						</div>
+					</motion.div>
+				</div>
+			</div>
+		</div>
+	);
+}
 
 // ══════════════════════════════════════════════════════
 // Preview page
 // ══════════════════════════════════════════════════════
+
+const concepts = [
+	{
+		title: 'Concept 1: Spreadsheet that comes alive',
+		description: 'A mini datatable fades in with headers, rows populate one by one, then a status cell gets edited inline from "pending" to "active".',
+		Component: SpreadsheetAnimation,
+	},
+	{
+		title: 'Concept 2: SQL query to table',
+		description: 'A SQL query types out character by character, then a result table materializes below with matching rows and a count badge.',
+		Component: SqlQueryAnimation,
+	},
+	{
+		title: 'Concept 3: Script execution to Database Studio',
+		description: 'A script runs and inserts a new row. The Database Studio panel appears and the new row slides in highlighted, showing the link between script execution and data.',
+		Component: DatatablesHeroAnimation,
+	},
+];
 
 export default function HeroAnimationsPreview() {
 	return (
@@ -370,79 +294,21 @@ export default function HeroAnimationsPreview() {
 					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-16">
 						<motion.div {...fadeIn} className="text-center mb-16">
 							<h1 className="!text-4xl sm:!text-5xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-4">
-								Triggers hero animation
+								Datatables hero animation preview
 							</h1>
 						</motion.div>
 
-						{/* Trigger Concept 1: Carousel */}
-						<div className="mb-32">
-							<motion.div {...fadeIn} className="mb-8">
-								<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Trigger Concept 1: Trigger carousel</h2>
-								<p className="text-gray-600 dark:text-gray-300">Triggers fly in from the left one by one, each connecting to a central script card with dashed lines. A counter shows active triggers.</p>
-							</motion.div>
-							<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-								<motion.div {...fadeIn}>
-									<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Triggers</p>
-									<h1 className="!text-4xl sm:!text-5xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-										Every way to start a script or flow
-									</h1>
-									<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-										Schedules, webhooks, Kafka, Postgres CDC, WebSockets, emails, and more. No extra configuration needed.
-									</p>
-									<HeroCTAButtons />
-								</motion.div>
-								<div className="hidden lg:block">
-									<TriggerConcept1 />
+						<div className="space-y-24">
+							{concepts.map(({ title, description, Component }) => (
+								<div key={title}>
+									<motion.div {...fadeIn} className="text-center mb-8">
+										<h2 className="!text-2xl !font-semibold text-gray-900 dark:text-white mb-2">{title}</h2>
+										<p className="text-gray-500 text-sm max-w-lg mx-auto">{description}</p>
+									</motion.div>
+									<Component />
 								</div>
-							</div>
+							))}
 						</div>
-
-						{/* Trigger Concept 2: Stacking with pulse */}
-						<div className="mb-32">
-							<motion.div {...fadeIn} className="mb-8">
-								<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Trigger Concept 2: Stacking triggers with pulse</h2>
-								<p className="text-gray-600 dark:text-gray-300">Script card on the right with a code preview. Trigger chips stack on the left with pulsing dots traveling along connection lines.</p>
-							</motion.div>
-							<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-								<motion.div {...fadeIn}>
-									<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Triggers</p>
-									<h1 className="!text-4xl sm:!text-5xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-										Every way to start a script or flow
-									</h1>
-									<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-										Schedules, webhooks, Kafka, Postgres CDC, WebSockets, emails, and more. No extra configuration needed.
-									</p>
-									<HeroCTAButtons />
-								</motion.div>
-								<div className="hidden lg:block">
-									<TriggerConcept2 />
-								</div>
-							</div>
-						</div>
-
-						{/* Trigger Concept 3: Panel build-up */}
-						<div className="mb-32">
-							<motion.div {...fadeIn} className="mb-8">
-								<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Trigger Concept 3: UI panel build-up</h2>
-								<p className="text-gray-600 dark:text-gray-300">Mimics the Windmill UI. Script panel appears, then a triggers sidebar slides in from the right. Each trigger row toggles on one by one.</p>
-							</motion.div>
-							<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-								<motion.div {...fadeIn}>
-									<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Triggers</p>
-									<h1 className="!text-4xl sm:!text-5xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-										Every way to start a script or flow
-									</h1>
-									<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-										Schedules, webhooks, Kafka, Postgres CDC, WebSockets, emails, and more. No extra configuration needed.
-									</p>
-									<HeroCTAButtons />
-								</motion.div>
-								<div className="hidden lg:block">
-									<TriggerConcept3 />
-								</div>
-							</div>
-						</div>
-
 					</div>
 				</div>
 				<Footer />
