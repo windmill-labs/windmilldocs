@@ -299,6 +299,16 @@ export default function VersioningContent({ title, description }) {
 				</div>
 			</div>
 
+			{/* ═══════════════ What is versioning in Windmill ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">What is versioning in Windmill</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Windmill keeps an immutable history of every <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link>, <Link to="/product/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>, and <Link to="/product/app-builder" className="text-blue-600 dark:text-blue-400 hover:underline">app</Link> deployment. Compare any two versions side by side, roll back in one click, or sync everything to Git.
+					</p>
+				</motion.div>
+			</div>
+
 			{/* ═══════════════ Deploy in one click ═══════════════ */}
 			<Section
 				title="Deploy in one click"
@@ -342,10 +352,10 @@ export default function VersioningContent({ title, description }) {
 				docLink="/docs/advanced/workspace_forks"
 			/>
 
-			{/* ═══════════════ Local development with the CLI ═══════════════ */}
+			{/* ═══════════════ Deploy from the CLI ═══════════════ */}
 			<Section
-				title="Local development with the CLI"
-				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Whether you deploy from the CLI or from the UI, changes are committed to your Git repository. Both paths keep your Git repo, your workspace, and your local files in sync.</span>}
+				title="Deploy from the CLI"
+				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Push changes from your terminal or deploy from the UI. Either way, changes are committed to your Git repository. See the <Link to="/product/local-dev" className="text-blue-600 dark:text-blue-400 hover:underline">local development</Link> page for the full local workflow.</span>}
 				docLink="/docs/advanced/cli"
 			>
 				<SyncFlows />
