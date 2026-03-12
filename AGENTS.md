@@ -19,7 +19,7 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 - Use proper heading hierarchy (# for main title, ## for sections, etc.)
 - Include relevant imports at the top of the file
 - Use code blocks with appropriate language specification (`ts, `python, etc.)
-- Avoid bold font, unless already used in the document
+- Don't use bold font, unless you're adding to content already using it.
 - Titles, subtiles and docs in general follow sentence case ('Like this')
 - On docs, nothing shouldfollow title case ('Like This')
 

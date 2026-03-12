@@ -98,7 +98,7 @@ You can generate tokens for your own account in the
 **Account Settings menu** in the app. Open it by
 clicking your username on the side menu, then select "Account settings".
 
-Labels are only used to allow users to easily distinguish keys.
+Labels are only used to allow users to easily distinguish keys. Tokens can also be created with [granular scopes](../59_user_tokens/index.mdx) to restrict access to specific resources and actions.
 
 :::caution
 
@@ -106,6 +106,8 @@ You can only see the token once, when it's created. Make sure to store it
 securely!
 
 :::
+
+When [SMTP](../../advanced/18_instance_settings/index.mdx#smtp) is configured, token owners automatically receive an email notification 7 days before a token expires, and again when the token is deleted after expiry. The tokens table in user settings also shows color-coded expiration badges for tokens expiring within 30 days. For more details, see [Token expiration notifications](../37_critical_alerts/index.mdx#token-expiration-notifications).
 
 ![Create new tokens](./tokens.png.webp)
 
@@ -468,6 +470,20 @@ Connect your Windmill workspace to an external service to sync or get notified a
 From workspace settings, go to the "Webhooks" tab and fill an URL under "URL to send requests to".
 
 ![Workspace Webhook](./workspace_webhook.png 'Workspace Webhook')
+
+The following event types are sent to the workspace webhook:
+
+| Event type | Description |
+|-----------|-------------|
+| `CreateScript`, `UpdateScript`, `DeleteScript`, `DeleteScriptPath` | Script lifecycle events |
+| `CreateFlow`, `UpdateFlow`, `ArchiveFlow`, `DeleteFlow` | Flow lifecycle events |
+| `CreateApp`, `UpdateApp`, `DeleteApp` | App lifecycle events |
+| `CreateResource`, `UpdateResource`, `DeleteResource` | Resource lifecycle events |
+| `CreateResourceType`, `UpdateResourceType`, `DeleteResourceType` | Resource type lifecycle events |
+| `CreateVariable`, `UpdateVariable`, `DeleteVariable` | Variable lifecycle events |
+| `CreateFolder`, `UpdateFolder`, `DeleteFolder` | Folder lifecycle events |
+| `TokenExpiringSoon` | An API token is expiring within 7 days |
+| `TokenExpired` | An API token has expired and been deleted |
 
 <!-- Resources -->
 

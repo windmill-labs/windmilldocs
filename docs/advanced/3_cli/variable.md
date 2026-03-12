@@ -17,7 +17,7 @@ wmill variable
 The `wmill variable add` command allows you to add a new variable to the remote workspace.
 
 ```bash
-wmill add <remote_path:string> --value=<value:string> [--secret] [--description=<description:string>] [--account=<account:number>] [--oauth]
+wmill variable add <remote_path:string> --value=<value:string> [--secret] [--description=<description:string>] [--account=<account:number>] [--oauth]
 ```
 
 ### Arguments
@@ -30,9 +30,9 @@ wmill add <remote_path:string> --value=<value:string> [--secret] [--description=
 
 | Option            | parameter       | Description                                                              |
 | ----------------- | --------------- | ------------------------------------------------------------------------ |
-| `--value`         | `<value>`       | The value of the variable.                                               |
-| `--plain-secrets` | None            | (Optional) Specifies whether the variable is plain and not a secret      |
-| `--description`   | `<description>` | (Optional) A description of the variable.                                |
+| `--value`         | `<value>`       | The value of the variable.                                              |
+| `--secret`        | None            | (Optional) Specifies whether the variable is a secret.                  |
+| `--description`   | `<description>` | (Optional) A description of the variable.                               |
 | `--account`       | `<account>`     | (Optional) The account associated with the variable.                     |
 | `--oauth`         | None            | (Optional) Specifies whether the variable requires OAuth authentication. |
 
@@ -41,15 +41,15 @@ wmill add <remote_path:string> --value=<value:string> [--secret] [--description=
 This command adds a new variable with the path "my_variable" to the remote workspace. The value is set to "12345", marked as a secret, and associated with account number 1. A description is also provided for the variable.
 
 ```bash
-wmill add my_variable --value=12345 --secret --description="My secret variable" --account=1
+wmill variable add my_variable --value=12345 --secret --description="My secret variable" --account=1
 ```
 
 ## Pushing a variable
 
-The cli push command allows you to push a local variable spec to the remote workspace, overriding any existing remote versions.
+The `wmill variable push` command allows you to push a local variable spec to the remote workspace, overriding any existing remote versions.
 
 ```bash
-wmill push <file_path:string> <remote_path:string> [--plain-secrets]
+wmill variable push <file_path:string> <remote_path:string> [--plain-secrets]
 ```
 
 ### Arguments

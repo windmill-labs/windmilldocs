@@ -10,7 +10,7 @@ The Flow Builder has the following major components we will detail below:
 
 - [Toolbar](#toolbar): the toolbar allows you to export the flow, configure the flow settings, and test the flow.
 - [Settings](#settings): configure the flow settings.
-- [Static Inputs](#static-inputs): view all flow static inputs.
+- [Flow Env Variables](#flow-env-variables): define flow-level variables accessible from any step.
 - [Flow Inputs](#flow-inputs): view all flow inputs.
 - [Action](#flow-actions): steps are the building blocks of a flow. They are the actions that will be executed when the flow is run.
 - [Action editor](#action-editor): configure the action.
@@ -208,9 +208,23 @@ At last, you can directly [test a step](#test-this-step).
 	/>
 </div>
 
-## Static inputs
+## Flow env variables
 
-This menu centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly. It is especially useful when forking a flow to get an overview of all the variables to parametrize that are not exposed directly as flow inputs.
+Flow env variables are flow-level constants that can be referenced in any step input using `flow_env.VARIABLE_NAME` or `flow_env["VARIABLE_NAME"]`. They are accessible from the `$` icon in the toolbar.
+
+![Flow env variables](./flow_env_types.png)
+
+They are useful for values shared across multiple steps that should not be exposed as flow inputs, such as configuration constants or shared credentials.
+
+Each variable has a name and a type:
+
+- **String** - plain text values. String values can link to [workspace variables](../core_concepts/2_variables_and_secrets/index.mdx) using the `$` button.
+- **JSON** - structured data as JSON objects.
+- **Resource** - references to [workspace resources](../core_concepts/3_resources_and_types/index.mdx) resolved at runtime.
+
+Flow env variables are available in the property picker and can be used in JavaScript expressions and input bindings.
+
+![Flow env variables in property picker](./flow_env_property_picker.png)
 
 ## Flow inputs
 
