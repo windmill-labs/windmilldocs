@@ -1,92 +1,297 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
-	FileCode, ArrowLeftRight, Terminal, Check, Plus, Pencil,
-	Code2, MessageSquare, Zap, ChevronRight, Play, CheckCircle, Loader2,
-	GitBranch, Upload, Download, Bot, RefreshCcw
+	Database, Server, CheckCircle, Loader2, TrendingUp,
+	Code, Cpu, Zap
 } from 'lucide-react';
-import { SiTypescript, SiVisualstudiocode } from 'react-icons/si';
 
 import LandingHeader from '../../landing/LandingHeader';
 import Footer from '../../landing/Footer';
 import RadialBlur from '../../landing/RadialBlur';
 import LayoutProvider from '@theme/Layout/Provider';
 
-// ─── Animation 1: SyncBridge ───────────────────────────────────────────────────
+// ─── Animation 1: Queue Drain ─────────────────────────────────────────────────
 
-const initialRemoteFiles = [
-	{ name: 'process_orders.ts', type: 'script' },
-	{ name: 'slack_notify.ts', type: 'script' },
-	{ name: 'daily_report.yaml', type: 'flow' },
-	{ name: 'onboarding.yaml', type: 'flow' },
+const jobQueue = [
+	{ name: 'process_orders', tag: 'default', color: 'blue' },
+	{ name: 'train_model', tag: 'dedicated', color: 'purple' },
+	{ name: 'sync_inventory', tag: 'default', color: 'blue' },
+	{ name: 'pg_migrate', tag: 'native', color: 'green' },
+	{ name: 'send_invoices', tag: 'default', color: 'blue' },
+	{ name: 'resize_images', tag: 'dedicated', color: 'purple' },
+	{ name: 'aggregate_logs', tag: 'native', color: 'green' },
+	{ name: 'daily_report', tag: 'default', color: 'blue' },
 ];
 
+const tagColors = {
+	blue: 'bg-blue-500/20 text-blue-400',
+	purple: 'bg-purple-500/20 text-purple-400',
+	green: 'bg-green-500/20 text-green-400',
+};
 
-function FileRow({ name, badge, animateFrom, delay = 0, dark = false }) {
-	const badgeStyles = dark ? {
-		modified: 'bg-yellow-900/40 text-yellow-400',
-		new: 'bg-green-900/40 text-green-400',
-		synced: 'bg-blue-900/40 text-blue-400',
-		pushed: 'bg-green-900/40 text-green-400',
-	} : {
-		modified: 'bg-yellow-100 text-yellow-700',
-		new: 'bg-green-100 text-green-700',
-		synced: 'bg-blue-100 text-blue-700',
-		pushed: 'bg-green-100 text-green-700',
-	};
-
-	return (
-		<motion.div
-			className="flex items-center gap-2.5 py-2 px-3 rounded-md"
-			initial={{ opacity: 0, x: animateFrom === 'left' ? -20 : animateFrom === 'right' ? 20 : 0, y: animateFrom ? 0 : 5 }}
-			animate={{ opacity: 1, x: 0, y: 0 }}
-			transition={{ duration: 0.3, delay }}
-		>
-			<FileCode className={`w-3.5 h-3.5 flex-shrink-0 ${dark ? 'text-gray-500' : 'text-gray-400'}`} />
-			<span className={`text-xs truncate ${dark ? 'text-gray-300' : 'text-gray-600'}`}>{name}</span>
-			{badge && (
-				<motion.span
-					className={`text-[10px] font-medium px-2 py-0.5 rounded-full ml-auto flex-shrink-0 ${badgeStyles[badge] || ''}`}
-					initial={{ opacity: 0, scale: 0.8 }}
-					animate={{ opacity: 1, scale: 1 }}
-					transition={{ duration: 0.2, delay: delay + 0.1 }}
-				>
-					{badge}
-				</motion.span>
-			)}
-		</motion.div>
-	);
-}
-
-function SyncBridgeAnimation() {
+function QueueDrainAnimation() {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, amount: 0.3 });
 	const [phase, setPhase] = useState(0);
+	const [cycle, setCycle] = useState(0);
 
-	// Phases:
-	// 1 - Cards fade in. Windmill has 4 files. Local is empty.
-	// 2 - Pull sync (spinner in Local card).
-	// 3 - Pull done: files appear in Local (file list visible).
-	// 4 - File opens: code snippet (original) replaces file list.
-	// 5 - Code edit: old line → new line, file gets "modified" badge.
-	// 6 - Snippet closes, file list returns.
-	// 7 - Push sync (spinner in Windmill card).
-	// 8 - Done: Windmill shows "updated" badge, checkmark.
+	useEffect(() => {
+		if (!isInView) return;
+		const CYCLE_DURATION = 8600;
+		const timers = [
+			setTimeout(() => setPhase(1), 400),
+			setTimeout(() => setPhase(2), 1000),
+			setTimeout(() => setPhase(3), 2000),
+			setTimeout(() => setPhase(4), 3200),
+			setTimeout(() => setPhase(5), 4800),
+			setTimeout(() => setPhase(6), 6200),
+			setTimeout(() => setPhase(7), 7400),
+			setTimeout(() => {
+				setPhase(0);
+				setCycle(c => c + 1);
+			}, CYCLE_DURATION),
+		];
+		return () => timers.forEach(clearTimeout);
+	}, [isInView, cycle]);
+
+	// Phase 3: W1 grabs job 0
+	// Phase 4: W1 done 0, grabs 2. W2 grabs 1.
+	// Phase 5: W3 appears. W1 grabs 4, W2 grabs 3, W3 grabs 5.
+	// Phase 6: W1 grabs 7, W2 grabs 6. W3 finishing 5.
+	// Phase 7: All 8 done.
+
+	// Build worker states per phase
+	const workerStates = (() => {
+		if (phase < 1) return [];
+		const w = [
+			{ id: 'W1', status: 'idle', job: null, result: null },
+			{ id: 'W2', status: 'idle', job: null, result: null },
+		];
+
+		if (phase >= 3) {
+			w[0] = { id: 'W1', status: 'processing', job: 0, result: null };
+		}
+		if (phase >= 4) {
+			w[0] = { id: 'W1', status: 'processing', job: 2, result: null };
+			w[1] = { id: 'W2', status: 'processing', job: 1, result: null };
+		}
+		if (phase >= 5) {
+			w[0] = { id: 'W1', status: 'processing', job: 4, result: null };
+			w[1] = { id: 'W2', status: 'processing', job: 3, result: null };
+			w.push({ id: 'W3', status: 'processing', job: 5, result: null });
+		}
+		if (phase >= 6) {
+			w[0] = { id: 'W1', status: 'processing', job: 7, result: null };
+			w[1] = { id: 'W2', status: 'processing', job: 6, result: null };
+			w[2] = { id: 'W3', status: 'done', job: 5, result: '87ms' };
+		}
+		if (phase >= 7) {
+			w[0] = { id: 'W1', status: 'done', job: null, result: '98ms' };
+			w[1] = { id: 'W2', status: 'done', job: null, result: '112ms' };
+			w[2] = { id: 'W3', status: 'done', job: null, result: '91ms' };
+		}
+		return w;
+	})();
+
+	// Jobs visible in queue (not yet grabbed)
+	const grabbedJobs = new Set();
+	if (phase >= 3) grabbedJobs.add(0);
+	if (phase >= 4) { grabbedJobs.add(1); grabbedJobs.add(2); }
+	if (phase >= 5) { grabbedJobs.add(3); grabbedJobs.add(4); grabbedJobs.add(5); }
+	if (phase >= 6) { grabbedJobs.add(6); grabbedJobs.add(7); }
+
+	const visibleJobs = jobQueue.map((j, i) => ({ ...j, index: i })).filter(j => !grabbedJobs.has(j.index));
+
+	return (
+		<div ref={ref} className="relative" style={{ height: 420 }}>
+			<div className="relative h-full flex items-center justify-center">
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={phase >= 1 ? { opacity: 1, y: 0 } : {}}
+					transition={{ duration: 0.5 }}
+					style={{ width: 540 }}
+				>
+					<div className="rounded-xl border border-gray-700 bg-gray-950 shadow-lg overflow-hidden">
+						{/* Header */}
+						<div className="px-5 py-3.5 border-b border-gray-800 flex items-center gap-2">
+							<Database className="w-4 h-4 text-gray-500" />
+							<span className="text-sm font-semibold text-gray-300">Job execution</span>
+							{phase >= 7 && (
+								<motion.span
+									className="ml-auto text-[10px] text-gray-500 font-mono"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+								>
+									8 jobs · 97ms avg
+								</motion.span>
+							)}
+						</div>
+
+						{/* Content: Queue | Workers */}
+						<div className="flex" style={{ height: 320 }}>
+							{/* Left: Queue */}
+							<div className="flex-1 border-r border-gray-800 px-4 py-3 overflow-hidden">
+								<div className="text-[10px] uppercase tracking-wider text-gray-600 mb-3 flex items-center gap-1.5">
+									<Database className="w-3 h-3" />
+									Queue
+								</div>
+								<div className="space-y-1.5">
+									<AnimatePresence mode="popLayout">
+										{phase >= 2 && visibleJobs.map((job, i) => (
+											<motion.div
+												key={job.name + job.index}
+												layout
+												className="flex items-center gap-2 rounded-full px-3 py-1.5 bg-gray-900 border border-gray-800"
+												initial={{ opacity: 0, y: -8 }}
+												animate={{ opacity: 1, y: 0 }}
+												exit={{ opacity: 0, x: 80, transition: { duration: 0.3 } }}
+												transition={{ duration: 0.25, delay: i * 0.06 }}
+											>
+												<span className="text-[10px] font-mono text-gray-400 truncate">{job.name}</span>
+												<span className={`text-[9px] font-medium px-1.5 py-0.5 rounded-full ml-auto flex-shrink-0 ${tagColors[job.color]}`}>
+													{job.tag}
+												</span>
+											</motion.div>
+										))}
+									</AnimatePresence>
+									{phase >= 7 && visibleJobs.length === 0 && (
+										<motion.div
+											className="text-[10px] text-gray-700 italic text-center py-4"
+											initial={{ opacity: 0 }}
+											animate={{ opacity: 1 }}
+										>
+											empty
+										</motion.div>
+									)}
+								</div>
+							</div>
+
+							{/* Right: Workers */}
+							<div className="flex-1 px-4 py-3 overflow-hidden">
+								<div className="text-[10px] uppercase tracking-wider text-gray-600 mb-3 flex items-center gap-1.5">
+									<Server className="w-3 h-3" />
+									Workers
+								</div>
+								<div className="space-y-2">
+									<AnimatePresence>
+										{workerStates.map((w, i) => (
+											<motion.div
+												key={w.id}
+												className={`rounded-lg border p-3 flex items-center gap-2.5 transition-colors duration-300 ${
+													w.status === 'processing'
+														? 'border-blue-500/50 bg-gray-900 shadow-[0_0_12px_rgba(59,130,246,0.1)]'
+														: w.status === 'done'
+														? 'border-green-500/30 bg-gray-900'
+														: 'border-gray-700 bg-gray-900'
+												}`}
+												initial={{ opacity: 0, scale: 0.9 }}
+												animate={{ opacity: 1, scale: 1 }}
+												transition={{ duration: 0.3, delay: i === 2 ? 0.1 : 0 }}
+											>
+												<Server className={`w-3.5 h-3.5 flex-shrink-0 ${
+													w.status === 'processing' ? 'text-blue-400' :
+													w.status === 'done' ? 'text-green-400' : 'text-gray-600'
+												}`} />
+												<span className="text-[11px] font-mono text-gray-400">{w.id}</span>
+												<div className="ml-auto flex items-center gap-1.5">
+													{w.status === 'processing' && (
+														<>
+															<motion.div
+																animate={{ rotate: 360 }}
+																transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+															>
+																<Loader2 className="w-3 h-3 text-blue-400" />
+															</motion.div>
+															{w.job !== null && (
+																<span className="text-[9px] font-mono text-gray-600">{jobQueue[w.job]?.name}</span>
+															)}
+														</>
+													)}
+													{w.status === 'done' && (
+														<motion.div
+															className="flex items-center gap-1"
+															initial={{ opacity: 0, scale: 0.8 }}
+															animate={{ opacity: 1, scale: 1 }}
+														>
+															<CheckCircle className="w-3 h-3 text-green-400" />
+															{w.result && <span className="text-[9px] font-mono text-green-400/70">{w.result}</span>}
+														</motion.div>
+													)}
+													{w.status === 'idle' && (
+														<span className="text-[9px] text-gray-700">idle</span>
+													)}
+												</div>
+											</motion.div>
+										))}
+									</AnimatePresence>
+								</div>
+							</div>
+						</div>
+					</div>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
+
+// ─── Animation 2: Tag Router ──────────────────────────────────────────────────
+
+const routerJobs = [
+	{ name: 'process_orders', tag: 'default', color: 'blue', group: 0 },
+	{ name: 'train_model', tag: 'dedicated', color: 'purple', group: 1 },
+	{ name: 'pg_query', tag: 'native', color: 'green', group: 2 },
+];
+
+const workerGroups = [
+	{ tag: 'default', icon: Code, color: 'blue', borderColor: 'border-l-blue-500', count: '1x' },
+	{ tag: 'dedicated', icon: Cpu, color: 'purple', borderColor: 'border-l-purple-500', count: '1x' },
+	{ tag: 'native', icon: Zap, color: 'green', borderColor: 'border-l-green-500', count: '1x' },
+];
+
+const groupTagColors = {
+	blue: 'text-blue-400',
+	purple: 'text-purple-400',
+	green: 'text-green-400',
+};
+
+const groupBgColors = {
+	blue: 'bg-blue-500/10',
+	purple: 'bg-purple-500/10',
+	green: 'bg-green-500/10',
+};
+
+function TagRouterAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, amount: 0.3 });
+	const [phase, setPhase] = useState(0);
+	const svgRef = useRef(null);
 
 	useEffect(() => {
 		if (!isInView) return;
 		const timers = [
 			setTimeout(() => setPhase(1), 400),
-			setTimeout(() => setPhase(2), 1400),
-			setTimeout(() => setPhase(3), 2800),
-			setTimeout(() => setPhase(4), 4200),
-			setTimeout(() => setPhase(5), 5200),
-			setTimeout(() => setPhase(6), 6400),
-			setTimeout(() => setPhase(7), 7200),
-			setTimeout(() => setPhase(8), 8200),
+			setTimeout(() => setPhase(2), 1200),
+			setTimeout(() => setPhase(3), 2200),
+			setTimeout(() => setPhase(4), 3800),
+			setTimeout(() => setPhase(5), 5500),
 		];
 		return () => timers.forEach(clearTimeout);
 	}, [isInView]);
+
+	// Group states
+	const groupStates = workerGroups.map((g, i) => {
+		if (phase < 2) return { ...g, status: 'dim', count: g.count };
+		if (phase >= 5) return { ...g, status: 'done', count: i === 0 ? '3x' : g.count };
+		if (phase >= 4) {
+			if (i === 0) return { ...g, status: 'done', count: '3x' };
+			if (i === 1) return { ...g, status: 'processing', count: g.count };
+			if (i === 2) return { ...g, status: 'processing', count: g.count };
+		}
+		if (phase >= 3) {
+			if (i === 0) return { ...g, status: 'processing', count: g.count };
+		}
+		return { ...g, status: 'ready', count: g.count };
+	});
 
 	return (
 		<div ref={ref} className="relative" style={{ height: 460 }}>
@@ -95,194 +300,198 @@ function SyncBridgeAnimation() {
 					initial={{ opacity: 0, y: 20 }}
 					animate={phase >= 1 ? { opacity: 1, y: 0 } : {}}
 					transition={{ duration: 0.5 }}
-					style={{ width: 560 }}
+					style={{ width: 540 }}
 				>
-					{/* ── Two columns: Windmill | Local ── */}
-					<div className="flex items-stretch gap-4">
-						{/* Left card: Windmill workspace */}
-						<div className="flex-1 min-w-0">
-							<div className="rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden" style={{ height: 320 }}>
-								<div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
-									<img src="/img/windmill.svg" alt="Windmill" className="w-4 h-4" />
-									<span className="text-sm font-semibold text-gray-700">Windmill</span>
-								</div>
-								<div className="px-3 py-3">
-									{/* Push syncing: spinner inside Windmill card */}
-									{phase === 7 ? (
-										<div className="flex flex-col items-center justify-center" style={{ minHeight: 160 }}>
-											<motion.div
-												initial={{ opacity: 0 }}
-												animate={{ opacity: 1 }}
-												transition={{ duration: 0.2 }}
-											>
-												<motion.div
-													animate={{ rotate: 360 }}
-													transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-												>
-													<RefreshCcw className="w-6 h-6 text-blue-400" />
-												</motion.div>
-											</motion.div>
-											<span className="text-[10px] text-gray-400 mt-2">Syncing...</span>
-										</div>
-									) : (
-										<div className="space-y-0.5">
-											{initialRemoteFiles.map((f, i) => (
-												<motion.div
-													key={f.name}
-													className="flex items-center gap-2.5 py-2 px-3 rounded-md"
-													initial={{ opacity: 0 }}
-													animate={phase >= 1 ? { opacity: 1 } : {}}
-													transition={{ duration: 0.3, delay: i * 0.08 }}
-												>
-													<FileCode className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-													<span className="text-xs text-gray-600 truncate">{f.name}</span>
-													{phase >= 8 && i === 0 && (
-														<motion.span
-															className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 ml-auto flex-shrink-0"
-															initial={{ opacity: 0, scale: 0.8 }}
-															animate={{ opacity: 1, scale: 1 }}
-															transition={{ duration: 0.2 }}
-														>
-															new version
-														</motion.span>
-													)}
-												</motion.div>
-											))}
-										</div>
+					<div className="rounded-xl border border-gray-700 bg-gray-950 shadow-lg overflow-hidden">
+						{/* Queue bar */}
+						<div className="px-5 py-3 bg-gray-900 border-b border-gray-800 flex items-center gap-2">
+							<Database className="w-4 h-4 text-gray-500" />
+							<span className="text-sm font-semibold text-gray-300">Job queue</span>
+						</div>
+
+						{/* Queue contents */}
+						<div className="px-5 py-3 border-b border-gray-800 relative" style={{ minHeight: 48 }}>
+							<div className="flex items-center gap-2 flex-wrap">
+								<AnimatePresence>
+									{phase >= 3 && phase < 5 && (
+										<motion.div
+											key="job-default"
+											className="flex items-center gap-1.5 rounded-full px-2.5 py-1 bg-gray-900 border border-gray-700"
+											initial={{ opacity: 0, y: -8 }}
+											animate={{ opacity: 1, y: 0 }}
+											exit={{ opacity: 0, y: 20, transition: { duration: 0.4 } }}
+											transition={{ duration: 0.25 }}
+										>
+											<span className="text-[10px] font-mono text-gray-400">process_orders</span>
+											<span className={`text-[9px] font-medium px-1.5 py-0.5 rounded-full ${tagColors.blue}`}>default</span>
+										</motion.div>
 									)}
-								</div>
+									{phase >= 4 && phase < 5 && (
+										<>
+											<motion.div
+												key="job-dedicated"
+												className="flex items-center gap-1.5 rounded-full px-2.5 py-1 bg-gray-900 border border-gray-700"
+												initial={{ opacity: 0, y: -8 }}
+												animate={{ opacity: 1, y: 0 }}
+												exit={{ opacity: 0, y: 20, transition: { duration: 0.4 } }}
+												transition={{ duration: 0.25 }}
+											>
+												<span className="text-[10px] font-mono text-gray-400">train_model</span>
+												<span className={`text-[9px] font-medium px-1.5 py-0.5 rounded-full ${tagColors.purple}`}>dedicated</span>
+											</motion.div>
+											<motion.div
+												key="job-native"
+												className="flex items-center gap-1.5 rounded-full px-2.5 py-1 bg-gray-900 border border-gray-700"
+												initial={{ opacity: 0, y: -8 }}
+												animate={{ opacity: 1, y: 0 }}
+												exit={{ opacity: 0, y: 20, transition: { duration: 0.4 } }}
+												transition={{ duration: 0.25, delay: 0.1 }}
+											>
+												<span className="text-[10px] font-mono text-gray-400">pg_query</span>
+												<span className={`text-[9px] font-medium px-1.5 py-0.5 rounded-full ${tagColors.green}`}>native</span>
+											</motion.div>
+										</>
+									)}
+								</AnimatePresence>
+								{phase < 3 && (
+									<span className="text-[10px] text-gray-700 italic">waiting for jobs...</span>
+								)}
+								{phase >= 5 && (
+									<motion.span
+										className="text-[10px] text-gray-700 italic"
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+									>
+										empty
+									</motion.span>
+								)}
 							</div>
 						</div>
 
-						{/* Right card: Local (dark terminal style) */}
-						<div className="flex-1 min-w-0">
-							<div className="rounded-xl border border-gray-700 bg-gray-950 shadow-lg overflow-hidden" style={{ height: 320 }}>
-								<div className="px-4 py-3 border-b border-gray-800 flex items-center gap-2">
-									<img src="/img/cursor-white.svg" alt="Cursor" className="w-4 h-4" />
-									<span className="text-sm font-semibold text-gray-300">Local</span>
-								</div>
-								<div className="px-3 py-3">
-									{phase < 2 ? (
-										<div className="flex items-center justify-center h-full">
-											<span className="text-[11px] text-gray-600 italic">empty</span>
-										</div>
-									) : phase === 2 ? (
-										/* Pull syncing: spinner inside Local card */
-										<div className="flex flex-col items-center justify-center" style={{ minHeight: 160 }}>
-											<motion.div
-												initial={{ opacity: 0 }}
-												animate={{ opacity: 1 }}
-												transition={{ duration: 0.2 }}
-											>
-												<motion.div
-													animate={{ rotate: 360 }}
-													transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-												>
-													<RefreshCcw className="w-6 h-6 text-emerald-400" />
-												</motion.div>
-											</motion.div>
-											<span className="text-[10px] text-gray-500 mt-2">Syncing...</span>
-										</div>
-									) : (
-										<div className="space-y-0.5">
-											{initialRemoteFiles.map((f, i) => {
-												// When snippet is open (phases 4–5), only show the edited file
-												if (phase >= 4 && phase <= 5 && i > 0) return null;
-												return (
-													<FileRow
-														key={f.name}
-														name={f.name}
-														badge={phase >= 5 && i === 0 ? (phase >= 8 ? 'pushed' : 'modified') : null}
-														animateFrom="right"
-														delay={i * 0.08}
-														dark
-													/>
-												);
-											})}
+						{/* Routing area with SVG lines */}
+						<div className="relative px-5 py-4" ref={svgRef}>
+							{/* SVG routing lines */}
+							<svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
+								{phase >= 3 && phase < 5 && (
+									<motion.line
+										x1="110" y1="0" x2="110" y2="28"
+										stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 3" opacity={0.5}
+										initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4 }}
+									/>
+								)}
+								{phase >= 4 && phase < 5 && (
+									<>
+										<motion.line
+											x1="270" y1="0" x2="270" y2="28"
+											stroke="#a855f7" strokeWidth="1.5" strokeDasharray="4 3" opacity={0.5}
+											initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4 }}
+										/>
+										<motion.line
+											x1="430" y1="0" x2="430" y2="28"
+											stroke="#22c55e" strokeWidth="1.5" strokeDasharray="4 3" opacity={0.5}
+											initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4, delay: 0.1 }}
+										/>
+									</>
+								)}
+							</svg>
 
-											{/* Inline code editor: opens on phase 4, closes after phase 5 */}
-											<AnimatePresence>
-											{phase >= 4 && phase <= 5 && (
-												<motion.div
-													key="code-snippet"
-													className="mt-2 mx-1 rounded-md border border-gray-700 bg-gray-900 overflow-hidden"
-													initial={{ opacity: 0, height: 0 }}
-													animate={{ opacity: 1, height: 'auto' }}
-													exit={{ opacity: 0, height: 0 }}
-													transition={{ duration: 0.3 }}
-												>
-													{/* File tab */}
-													<div className="flex items-center gap-1.5 px-2.5 py-1.5 border-b border-gray-800">
-														<FileCode className="w-3 h-3 text-gray-500" />
-														<span className="text-[10px] text-gray-400 font-mono">process_orders.ts</span>
-													</div>
-													{/* Code lines */}
-													<div className="px-2.5 py-2 font-mono text-[10px] leading-[1.7]">
-														<div className="text-gray-500">
-															<span className="text-gray-600 select-none mr-2">3</span>
-															<span className="text-purple-400">export async function </span>
-															<span className="text-blue-300">main</span>
-															<span>(limit) {'{'}</span>
-														</div>
-														{phase < 5 ? (
-															<div className="text-gray-500">
-																<span className="text-gray-600 select-none mr-2">4</span>
-																<span>{'  '}const rows = db.query(q, [limit]);</span>
-															</div>
-														) : (
-															<motion.div
-																initial={{ opacity: 0 }}
-																animate={{ opacity: 1 }}
-																transition={{ duration: 0.3 }}
-															>
-																<div className="text-red-400/60 line-through">
-																	<span className="text-gray-600 select-none mr-2">4</span>
-																	<span>{'  '}const rows = db.query(q, [limit]);</span>
-																</div>
-																<div className="text-green-400 bg-green-950/30 rounded-sm">
-																	<span className="text-gray-600 select-none mr-2">4</span>
-																	<span>{'  '}const rows = db.query(q, [limit, offset]);</span>
-																</div>
-															</motion.div>
-														)}
-														<div className="text-gray-500">
-															<span className="text-gray-600 select-none mr-2">5</span>
-															<span>{'  '}return rows;</span>
-														</div>
-													</div>
-												</motion.div>
-											)}
-											</AnimatePresence>
-										</div>
-									)}
-								</div>
+							{/* Worker groups */}
+							<div className="grid grid-cols-3 gap-3">
+								{groupStates.map((g, i) => {
+									const Icon = g.icon;
+									return (
+										<motion.div
+											key={g.tag}
+											className={`rounded-lg border border-gray-700 bg-gray-900 border-l-4 ${g.borderColor} p-3 transition-all duration-300 ${
+												g.status === 'dim' ? 'opacity-40' : ''
+											}`}
+											initial={{ opacity: 0, y: 10 }}
+											animate={phase >= 2 ? { opacity: g.status === 'dim' ? 0.4 : 1, y: 0 } : { opacity: 0 }}
+											transition={{ duration: 0.3, delay: i * 0.1 }}
+										>
+											<div className="flex items-center gap-2 mb-2">
+												<Icon className={`w-3.5 h-3.5 ${groupTagColors[g.color]}`} />
+												<span className={`text-[11px] font-semibold ${groupTagColors[g.color]}`}>{g.tag}</span>
+											</div>
+											<div className="flex items-center justify-between">
+												<span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${groupBgColors[g.color]} ${groupTagColors[g.color]}`}>
+													{g.count}
+												</span>
+												{g.status === 'processing' && (
+													<motion.div
+														animate={{ rotate: 360 }}
+														transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+													>
+														<Loader2 className={`w-3 h-3 ${groupTagColors[g.color]}`} />
+													</motion.div>
+												)}
+												{g.status === 'done' && (
+													<motion.div
+														initial={{ opacity: 0, scale: 0.8 }}
+														animate={{ opacity: 1, scale: 1 }}
+													>
+														<CheckCircle className="w-3 h-3 text-green-400" />
+													</motion.div>
+												)}
+											</div>
+										</motion.div>
+									);
+								})}
 							</div>
 						</div>
+
+						{/* Summary */}
+						{phase >= 5 && (
+							<motion.div
+								className="px-5 py-2.5 border-t border-gray-800 flex items-center justify-center gap-4"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.3 }}
+							>
+								<span className="text-[10px] text-blue-400/70 font-mono">default: 2 jobs</span>
+								<span className="text-[10px] text-gray-700">·</span>
+								<span className="text-[10px] text-purple-400/70 font-mono">dedicated: 1 job</span>
+								<span className="text-[10px] text-gray-700">·</span>
+								<span className="text-[10px] text-green-400/70 font-mono">native: 1 job</span>
+							</motion.div>
+						)}
 					</div>
-
-					{/* Sync complete bar */}
-					{phase >= 8 && (
-						<motion.div
-							className="mt-3 mx-auto flex items-center justify-center gap-2 text-[11px] text-gray-500"
-							initial={{ opacity: 0, y: 5 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.3 }}
-						>
-							<Check className="w-3.5 h-3.5 text-green-500" />
-							<span>Workspaces in sync</span>
-						</motion.div>
-					)}
 				</motion.div>
 			</div>
 		</div>
 	);
 }
 
-// ─── Animation 2: DevToolkit ────────────────────────────────────────────────────
+// ─── Animation 3: Scale Up ────────────────────────────────────────────────────
 
-const cliFiles = ['process_orders.ts', 'process_orders.script.yaml', 'process_orders.schema.json'];
+function AnimatedCounter({ from, to, duration = 0.8 }) {
+	const [value, setValue] = useState(from);
+	const animating = useRef(false);
 
-function DevToolkitAnimation() {
+	useEffect(() => {
+		if (animating.current && from === value) return;
+		animating.current = true;
+		const start = performance.now();
+		const startVal = from;
+		const diff = to - startVal;
+
+		function tick(now) {
+			const elapsed = (now - start) / (duration * 1000);
+			if (elapsed >= 1) {
+				setValue(to);
+				animating.current = false;
+				return;
+			}
+			setValue(Math.round(startVal + diff * elapsed));
+			requestAnimationFrame(tick);
+		}
+		requestAnimationFrame(tick);
+	}, [to]);
+
+	return <span>{value}</span>;
+}
+
+function ScaleUpAnimation() {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, amount: 0.3 });
 	const [phase, setPhase] = useState(0);
@@ -292,370 +501,100 @@ function DevToolkitAnimation() {
 		const timers = [
 			setTimeout(() => setPhase(1), 400),
 			setTimeout(() => setPhase(2), 1000),
-			setTimeout(() => setPhase(3), 1800),
-			setTimeout(() => setPhase(4), 2600),
-			setTimeout(() => setPhase(5), 3200),
+			setTimeout(() => setPhase(3), 2200),
+			setTimeout(() => setPhase(4), 3400),
+			setTimeout(() => setPhase(5), 4800),
+			setTimeout(() => setPhase(6), 6500),
 		];
 		return () => timers.forEach(clearTimeout);
 	}, [isInView]);
 
-	return (
-		<div ref={ref} className="relative" style={{ height: 480 }}>
-			<div className="relative overflow-hidden h-full flex items-center justify-center">
-				<div className="relative" style={{ width: 520, height: 420 }}>
-					{/* Central script card */}
-					<motion.div
-						className="absolute left-1/2 -translate-x-1/2 top-0 z-10"
-						initial={{ opacity: 0, scale: 0.9 }}
-						animate={phase >= 1 ? { opacity: 1, scale: 1 } : {}}
-						transition={{ duration: 0.4 }}
-					>
-						<div className="rounded-xl border border-gray-200 bg-white shadow-lg px-5 py-3 flex items-center gap-3">
-							<div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-								<SiTypescript className="w-4 h-4 text-[#3178C6]" />
-							</div>
-							<div>
-								<div className="text-sm font-semibold text-gray-800">process_orders.ts</div>
-								<div className="text-[10px] text-gray-400">f/orders/process_orders</div>
-							</div>
-							{phase >= 5 && (
-								<motion.span
-									className="ml-3 text-[10px] font-medium px-2 py-0.5 rounded-full bg-green-100 text-green-700 flex items-center gap-1"
-									initial={{ opacity: 0, scale: 0.8 }}
-									animate={{ opacity: 1, scale: [0.8, 1.1, 1] }}
-									transition={{ duration: 0.4 }}
-								>
-									<Check className="w-2.5 h-2.5" /> deployed
-								</motion.span>
-							)}
-						</div>
-					</motion.div>
-
-					{/* Connecting lines */}
-					{phase >= 5 && (
-						<svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ overflow: 'visible' }}>
-							<motion.line x1="260" y1="60" x2="120" y2="130" stroke="#e5e7eb" strokeWidth="1.5" strokeDasharray="4 3"
-								initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 0.4 }} />
-							<motion.line x1="260" y1="60" x2="260" y2="130" stroke="#e5e7eb" strokeWidth="1.5" strokeDasharray="4 3"
-								initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 0.4, delay: 0.1 }} />
-							<motion.line x1="260" y1="60" x2="400" y2="130" stroke="#e5e7eb" strokeWidth="1.5" strokeDasharray="4 3"
-								initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 0.4, delay: 0.2 }} />
-						</svg>
-					)}
-
-					{/* CLI card */}
-					<motion.div
-						className="absolute left-0 z-10"
-						style={{ top: 130, width: 170 }}
-						initial={{ opacity: 0, x: -30 }}
-						animate={phase >= 2 ? { opacity: 1, x: 0 } : {}}
-						transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-					>
-						<div className="rounded-xl border border-blue-200 bg-white shadow-md overflow-hidden">
-							<div className="bg-blue-50 px-3 py-2 flex items-center gap-2 border-b border-blue-100">
-								<Terminal className="w-3.5 h-3.5 text-blue-500" />
-								<span className="text-[11px] font-semibold text-blue-700">CLI</span>
-							</div>
-							<div className="px-3 py-2.5 bg-gray-900 font-mono text-[10px] leading-relaxed">
-								<div className="text-gray-400">$ wmill script bootstrap</div>
-								<div className="text-green-400 mt-1">Created:</div>
-								{cliFiles.map((f, i) => (
-									<motion.div
-										key={f}
-										className="text-gray-300 pl-2"
-										initial={{ opacity: 0 }}
-										animate={phase >= 2 ? { opacity: 1 } : {}}
-										transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
-									>
-										{f}
-									</motion.div>
-								))}
-							</div>
-						</div>
-					</motion.div>
-
-					{/* VS Code card */}
-					<motion.div
-						className="absolute left-1/2 -translate-x-1/2 z-10"
-						style={{ top: 130, width: 180 }}
-						initial={{ opacity: 0, y: 30 }}
-						animate={phase >= 3 ? { opacity: 1, y: 0 } : {}}
-						transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-					>
-						<div className="rounded-xl border border-purple-200 bg-white shadow-md overflow-hidden">
-							<div className="bg-purple-50 px-3 py-2 flex items-center gap-2 border-b border-purple-100">
-								<SiVisualstudiocode className="w-3.5 h-3.5 text-purple-500" />
-								<span className="text-[11px] font-semibold text-purple-700">VS Code</span>
-							</div>
-							<div className="px-3 py-2.5 text-[10px]">
-								{/* Mini code */}
-								<div className="bg-gray-50 rounded p-2 font-mono text-[9px] leading-relaxed mb-2">
-									<span className="text-purple-500">export async function </span>
-									<span className="text-blue-600">main</span>
-									<span className="text-gray-500">(</span>
-									<br />
-									<span className="text-gray-500">  limit: </span>
-									<span className="text-green-600">number</span>
-									<span className="text-gray-500">)</span>
-								</div>
-								{/* Preview */}
-								<div className="border border-gray-200 rounded p-2 flex items-center gap-2">
-									<div className="flex-1">
-										<div className="text-[9px] text-gray-400 mb-0.5">limit</div>
-										<div className="bg-gray-100 rounded px-1.5 py-0.5 text-[9px] text-gray-600">100</div>
-									</div>
-									<motion.div
-										className="w-6 h-6 rounded-md bg-blue-500 flex items-center justify-center"
-										animate={phase >= 3 ? { scale: [1, 1.1, 1] } : {}}
-										transition={{ duration: 0.5, delay: 0.3 }}
-									>
-										<Play className="w-3 h-3 text-white" fill="white" />
-									</motion.div>
-								</div>
-							</div>
-						</div>
-					</motion.div>
-
-					{/* AI card */}
-					<motion.div
-						className="absolute right-0 z-10"
-						style={{ top: 130, width: 170 }}
-						initial={{ opacity: 0, x: 30 }}
-						animate={phase >= 4 ? { opacity: 1, x: 0 } : {}}
-						transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-					>
-						<div className="rounded-xl border border-amber-200 bg-white shadow-md overflow-hidden">
-							<div className="bg-amber-50 px-3 py-2 flex items-center gap-2 border-b border-amber-100">
-								<Bot className="w-3.5 h-3.5 text-amber-600" />
-								<span className="text-[11px] font-semibold text-amber-700">AI assistant</span>
-							</div>
-							<div className="px-3 py-2.5 space-y-2">
-								<div className="bg-gray-100 rounded-lg rounded-tl-none px-2.5 py-1.5 text-[10px] text-gray-600">
-									Add pagination to process_orders
-								</div>
-								<motion.div
-									className="bg-amber-50 rounded-lg rounded-tr-none px-2.5 py-1.5 text-[10px] text-amber-800 flex items-start gap-1.5"
-									initial={{ opacity: 0, y: 5 }}
-									animate={phase >= 4 ? { opacity: 1, y: 0 } : {}}
-									transition={{ duration: 0.3, delay: 0.3 }}
-								>
-									<Check className="w-3 h-3 text-amber-600 mt-0.5 flex-shrink-0" />
-									<span>Added offset param & updated query</span>
-								</motion.div>
-							</div>
-						</div>
-					</motion.div>
-				</div>
-			</div>
-		</div>
-	);
-}
-
-// ─── Animation 3: LocalLoop ────────────────────────────────────────────────────
-
-const pipelineSteps = [
-	{
-		label: 'Initialize',
-		detail: 'wmill init && wmill sync pull',
-		icon: Download,
-		color: 'blue',
-	},
-	{
-		label: 'Edit locally',
-		detail: null, // inline diff
-		icon: Pencil,
-		color: 'purple',
-	},
-	{
-		label: 'Test',
-		detail: '{ orders: 42 }',
-		icon: Play,
-		color: 'emerald',
-	},
-	{
-		label: 'Deploy',
-		detail: 'wmill sync push',
-		icon: Upload,
-		color: 'orange',
-	},
-];
-
-const colorMap = {
-	blue: { bg: 'bg-blue-50', text: 'text-blue-600', ring: 'ring-blue-200', activeBg: 'bg-blue-500' },
-	purple: { bg: 'bg-purple-50', text: 'text-purple-600', ring: 'ring-purple-200', activeBg: 'bg-purple-500' },
-	emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600', ring: 'ring-emerald-200', activeBg: 'bg-emerald-500' },
-	orange: { bg: 'bg-orange-50', text: 'text-orange-600', ring: 'ring-orange-200', activeBg: 'bg-orange-500' },
-};
-
-const miniDiff = [
-	{ type: 'ctx', text: 'export async function main(limit = 100) {' },
-	{ type: 'del', text: '  const rows = await db.query(q, [limit]);' },
-	{ type: 'add', text: '  const rows = await db.query(q, [limit, offset]);' },
-];
-
-function LocalLoopAnimation() {
-	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, amount: 0.3 });
-	const [phase, setPhase] = useState(0);
-
-	useEffect(() => {
-		if (!isInView) return;
-		const timers = [
-			setTimeout(() => setPhase(1), 300),
-			setTimeout(() => setPhase(2), 800),
-			setTimeout(() => setPhase(3), 1600),
-			setTimeout(() => setPhase(4), 2400),
-			setTimeout(() => setPhase(5), 3200),
-			setTimeout(() => setPhase(6), 3800),
-		];
-		return () => timers.forEach(clearTimeout);
-	}, [isInView]);
-
-	// step i is active at phase i+2
-	const activeStep = phase >= 2 ? Math.min(phase - 2, 3) : -1;
+	const throughput = phase >= 5 ? 80 : phase >= 4 ? 40 : phase >= 3 ? 20 : phase >= 2 ? 10 : 0;
+	const prevThroughput = phase >= 5 ? 40 : phase >= 4 ? 20 : phase >= 3 ? 10 : 0;
+	const barPercent = phase >= 5 ? 100 : phase >= 4 ? 50 : phase >= 3 ? 25 : phase >= 2 ? 12.5 : 0;
+	const workerCount = phase >= 5 ? 8 : phase >= 4 ? 4 : phase >= 3 ? 2 : phase >= 2 ? 1 : 0;
 
 	return (
-		<div ref={ref} className="relative" style={{ height: 480 }}>
-			<div className="relative overflow-hidden h-full flex items-center justify-center">
+		<div ref={ref} className="relative" style={{ height: 420 }}>
+			<div className="relative h-full flex items-center justify-center">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={phase >= 1 ? { opacity: 1, y: 0 } : {}}
 					transition={{ duration: 0.5 }}
-					style={{ width: 500 }}
+					style={{ width: 540 }}
 				>
-					<div className="rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
-						<div className="px-5 py-3.5 border-b border-gray-100 flex items-center gap-2">
-							<img src="/img/windmill.svg" alt="Windmill" className="w-4 h-4" />
-							<span className="text-sm font-semibold text-gray-800">Local development workflow</span>
+					<div className="rounded-xl border border-gray-700 bg-gray-950 shadow-lg overflow-hidden">
+						{/* Header with counter */}
+						<div className="px-5 py-4 border-b border-gray-800">
+							<div className="flex items-center gap-3">
+								<div className="text-3xl font-bold text-white font-mono">
+									<AnimatedCounter from={prevThroughput} to={throughput} duration={0.8} />
+									<span className="text-lg text-gray-500 ml-1">jobs/sec</span>
+								</div>
+								{phase >= 5 && (
+									<motion.div
+										className="flex items-center gap-1 ml-auto"
+										initial={{ opacity: 0, x: -10 }}
+										animate={{ opacity: 1, x: 0 }}
+										transition={{ duration: 0.4 }}
+									>
+										<TrendingUp className="w-4 h-4 text-blue-400" />
+										<span className="text-[11px] text-blue-400 font-medium">Linear scaling</span>
+									</motion.div>
+								)}
+							</div>
+
+							{/* Progress bar */}
+							<div className="mt-3 h-1.5 rounded-full bg-gray-800 overflow-hidden">
+								<motion.div
+									className="h-full rounded-full bg-blue-500"
+									initial={{ width: '0%' }}
+									animate={{ width: `${barPercent}%` }}
+									transition={{ duration: 0.8, ease: 'easeOut' }}
+								/>
+							</div>
 						</div>
 
-						<div className="px-5 py-4 space-y-0">
-							{pipelineSteps.map((step, i) => {
-								const colors = colorMap[step.color];
-								const state = i < activeStep ? 'done' : i === activeStep ? 'active' : 'pending';
-								const Icon = step.icon;
+						{/* Workers grid */}
+						<div className="px-5 py-4">
+							<div className="text-[10px] uppercase tracking-wider text-gray-600 mb-3 flex items-center gap-1.5">
+								<Server className="w-3 h-3" />
+								Workers
+							</div>
+							<div className="grid grid-cols-4 gap-2">
+								{Array.from({ length: 8 }).map((_, i) => {
+									const isActive = i < workerCount;
+									return (
+										<AnimatePresence key={i}>
+											{isActive ? (
+												<motion.div
+													className="w-full aspect-square rounded-lg border border-blue-500/50 bg-gray-900 flex flex-col items-center justify-center gap-1 shadow-[0_0_12px_rgba(59,130,246,0.08)]"
+													initial={{ opacity: 0, scale: 0.7 }}
+													animate={{ opacity: 1, scale: 1 }}
+													transition={{ duration: 0.3, delay: i < 4 ? 0 : (i - 4) * 0.05 }}
+												>
+													<Server className="w-4 h-4 text-blue-400" />
+													<span className="text-[9px] font-mono text-gray-500">W{i + 1}</span>
+												</motion.div>
+											) : (
+												<div className="w-full aspect-square rounded-lg border border-gray-800 bg-gray-900/50 border-dashed" />
+											)}
+										</AnimatePresence>
+									);
+								})}
+							</div>
 
-								return (
-									<div key={step.label}>
-										<motion.div
-											className={`flex items-start gap-3 p-3 rounded-lg transition-colors duration-300 ${
-												state === 'active' ? colors.bg : ''
-											}`}
-											initial={{ opacity: 0.3 }}
-											animate={phase >= 1 ? { opacity: state === 'pending' ? 0.4 : 1 } : {}}
-											transition={{ duration: 0.3 }}
-										>
-											{/* Icon circle */}
-											<div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-300 ${
-												state === 'done' ? 'bg-green-500' : state === 'active' ? colors.activeBg : 'bg-gray-200'
-											}`}>
-												{state === 'done' ? (
-													<Check className="w-3.5 h-3.5 text-white" />
-												) : state === 'active' ? (
-													<motion.div
-														animate={{ rotate: 360 }}
-														transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-													>
-														<Loader2 className="w-3.5 h-3.5 text-white" />
-													</motion.div>
-												) : (
-													<Icon className="w-3.5 h-3.5 text-gray-400" />
-												)}
-											</div>
-
-											{/* Content */}
-											<div className="flex-1 min-w-0">
-												<div className="flex items-center gap-2">
-													<span className={`text-[12px] font-semibold ${
-														state === 'pending' ? 'text-gray-400' : 'text-gray-800'
-													}`}>
-														{step.label}
-													</span>
-													{state === 'done' && (
-														<motion.span
-															className="text-[9px] font-medium text-green-600"
-															initial={{ opacity: 0 }}
-															animate={{ opacity: 1 }}
-														>
-															done
-														</motion.span>
-													)}
-													{/* Deploy badge */}
-													{i === 3 && phase >= 5 && (
-														<motion.span
-															className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-green-100 text-green-700"
-															initial={{ opacity: 0, scale: 0.8 }}
-															animate={{ opacity: 1, scale: 1 }}
-															transition={{ duration: 0.3 }}
-														>
-															v14 deployed
-														</motion.span>
-													)}
-												</div>
-
-												{/* Detail content */}
-												{state !== 'pending' && (
-													<motion.div
-														initial={{ opacity: 0, height: 0 }}
-														animate={{ opacity: 1, height: 'auto' }}
-														transition={{ duration: 0.3 }}
-														className="overflow-hidden"
-													>
-														{i === 1 ? (
-															/* Inline diff */
-															<div className="mt-1.5 rounded bg-gray-950 p-2 font-mono text-[10px] leading-relaxed">
-																{miniDiff.map((line, j) => (
-																	<div key={j} className={
-																		line.type === 'del' ? 'text-red-400 bg-red-950/30' :
-																		line.type === 'add' ? 'text-green-400 bg-green-950/30' :
-																		'text-gray-400'
-																	}>
-																		<span className="select-none mr-2 text-gray-600">
-																			{line.type === 'del' ? '-' : line.type === 'add' ? '+' : ' '}
-																		</span>
-																		{line.text}
-																	</div>
-																))}
-															</div>
-														) : i === 2 ? (
-															<div className="mt-1.5 flex items-center gap-2">
-																<code className="text-[10px] bg-gray-100 rounded px-2 py-1 text-gray-700 font-mono">
-																	result: {step.detail}
-																</code>
-																<span className="text-[9px] text-gray-400 bg-gray-50 rounded px-1.5 py-0.5">200ms</span>
-															</div>
-														) : (
-															<code className="text-[10px] text-gray-500 font-mono mt-0.5 block">{step.detail}</code>
-														)}
-													</motion.div>
-												)}
-											</div>
-										</motion.div>
-
-										{/* Connecting line */}
-										{i < pipelineSteps.length - 1 && (
-											<div className="ml-[18px] w-px h-2 bg-gray-200" />
-										)}
-									</div>
-								);
-							})}
+							{/* Summary */}
+							{phase >= 6 && (
+								<motion.div
+									className="mt-3 text-center text-[10px] text-gray-600 font-mono"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+								>
+									8 workers · ~26M jobs/month each
+								</motion.div>
+							)}
 						</div>
-
-						{/* Git bar */}
-						{phase >= 6 && (
-							<motion.div
-								className="border-t border-gray-100 px-5 py-2.5 flex items-center gap-2 bg-gray-50"
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								transition={{ duration: 0.3 }}
-							>
-								<GitBranch className="w-3 h-3 text-gray-400" />
-								<span className="text-[10px] text-gray-500 font-mono">main</span>
-								<span className="text-[10px] text-gray-400">·</span>
-								<span className="text-[10px] text-gray-500">synced with workspace</span>
-								<Check className="w-3 h-3 text-green-500 ml-auto" />
-							</motion.div>
-						)}
 					</div>
 				</motion.div>
 			</div>
@@ -674,29 +613,29 @@ export default function HeroAnimationsPreview() {
 				<div className="pt-32 max-w-full">
 					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-16">
 						<h1 className="!text-4xl sm:!text-5xl !font-semibold !tracking-tight text-gray-900 mb-4 text-center">
-							Hero animation proposals
+							Workers hero animation proposals
 						</h1>
-						<p className="text-gray-500 text-center mb-16">Local development page hero candidates</p>
+						<p className="text-gray-500 text-center mb-16">Workers page hero candidates</p>
 
 						{/* Animation 1 */}
 						<section className="mb-24">
-							<h2 className="!text-2xl !font-semibold text-gray-800 text-center mb-2">1. SyncBridge</h2>
-							<p className="text-sm text-gray-500 text-center mb-8">Two-panel workspace sync</p>
-							<SyncBridgeAnimation />
+							<h2 className="!text-2xl !font-semibold text-gray-800 text-center mb-2">1. Queue Drain</h2>
+							<p className="text-sm text-gray-500 text-center mb-8">Workers pull jobs from a PostgreSQL queue</p>
+							<QueueDrainAnimation />
 						</section>
 
 						{/* Animation 2 */}
 						<section className="mb-24">
-							<h2 className="!text-2xl !font-semibold text-gray-800 text-center mb-2">2. DevToolkit</h2>
-							<p className="text-sm text-gray-500 text-center mb-8">Three-tool card fan</p>
-							<DevToolkitAnimation />
+							<h2 className="!text-2xl !font-semibold text-gray-800 text-center mb-2">2. Tag Router</h2>
+							<p className="text-sm text-gray-500 text-center mb-8">Jobs route to worker groups by tag</p>
+							<TagRouterAnimation />
 						</section>
 
 						{/* Animation 3 */}
 						<section className="mb-24">
-							<h2 className="!text-2xl !font-semibold text-gray-800 text-center mb-2">3. LocalLoop</h2>
-							<p className="text-sm text-gray-500 text-center mb-8">Vertical pipeline</p>
-							<LocalLoopAnimation />
+							<h2 className="!text-2xl !font-semibold text-gray-800 text-center mb-2">3. Scale Up</h2>
+							<p className="text-sm text-gray-500 text-center mb-8">More workers, linear throughput scaling</p>
+							<ScaleUpAnimation />
 						</section>
 					</div>
 				</div>
