@@ -8,6 +8,7 @@ import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import ProductCTA from '../../components/products/ProductCTA';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -192,32 +193,7 @@ export default function WorkersContent({ title, description }) {
 				{ question: 'What is the difference between dedicated and regular workers?', textAnswer: 'Regular workers execute any job matching their tags, with a cold start for each execution. Dedicated workers are pinned to a single script and keep the runtime warm permanently, eliminating cold starts and reducing overhead to ~12ms. Dedicated workers require Enterprise.' },
 			]} />
 
-			{/* CTA */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
-					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Deploy on your own infrastructure</h2>
-					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
-						Docker Compose, Kubernetes, or cloud-managed. Deploy Windmill in minutes with zero maintenance.
-					</p>
-					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<Link
-							to="/product/self-host"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-						>
-							Explore self-hosting
-							<ArrowRight className="w-4 h-4" />
-						</Link>
-						<a
-							href="https://app.windmill.dev"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-						>
-							Try Windmill free
-						</a>
-					</div>
-				</motion.div>
-			</div>
+			<ProductCTA />
 		</div>
 	);
 }
