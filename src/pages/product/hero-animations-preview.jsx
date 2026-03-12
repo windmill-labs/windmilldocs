@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
-	FolderOpen, FileCode, ArrowLeftRight, Terminal, Check, Plus, Pencil,
+	FileCode, ArrowLeftRight, Terminal, Check, Plus, Pencil,
 	Code2, MessageSquare, Zap, ChevronRight, Play, CheckCircle, Loader2,
 	GitBranch, Upload, Download, Bot, RefreshCcw
 } from 'lucide-react';
@@ -158,7 +158,7 @@ function SyncBridgeAnimation() {
 						<div className="flex-1 min-w-0">
 							<div className="rounded-xl border border-gray-700 bg-gray-950 shadow-lg overflow-hidden" style={{ height: 320 }}>
 								<div className="px-4 py-3 border-b border-gray-800 flex items-center gap-2">
-									<FolderOpen className="w-4 h-4 text-blue-400" />
+									<img src="/img/cursor-white.svg" alt="Cursor" className="w-4 h-4" />
 									<span className="text-sm font-semibold text-gray-300">Local</span>
 								</div>
 								<div className="px-3 py-3">
