@@ -31,7 +31,7 @@ const people = [
     description: 'CloudShapers is a Dutch cloud consultancy specializing in automation for MSPs and enterprise platform teams. We implemented Windmill at Axians and other customers, building multi-tenant orchestration platforms with hundreds of users and thousands of daily executions.',
     roles: ['Common tree'],
     email: 'thierry.vanzantvoort@cloudshapers.nl',
-    profile: 'https://www.linkedin.com/company/cloudshapers/',
+    profile: 'https://www.linkedin.com/company/cloudshapers-b-v/',
     imageUrl: '/images/partners/cloudshapers.webp'
   },
   {
