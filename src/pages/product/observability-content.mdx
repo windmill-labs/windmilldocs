@@ -108,14 +108,12 @@ export function HeroAnimation() {
 					<span className="text-[11px] text-gray-500">Concurrency</span>
 				</div>
 				<div className="relative w-full" style={{ height: chartH }}>
-					{/* Y axis */}
 					{yTicks.map((tick) => (
 						<div key={tick} className="absolute left-0 right-0 flex items-center" style={{ top: yPos(tick) }}>
 							<span className="text-[10px] text-gray-500 tabular-nums w-10 text-right shrink-0">{tick >= 1000 ? `${tick/1000} 000` : tick}</span>
 							<div className="ml-2 h-px bg-gray-800 flex-1" />
 						</div>
 					))}
-					{/* Dots */}
 					<svg className="absolute top-0 bottom-0" style={{ left: 48, right: 0, width: 'calc(100% - 48px)', height: chartH }}>
 						{scatterPoints.map((pt, i) => (
 							<motion.circle
