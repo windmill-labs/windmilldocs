@@ -483,25 +483,39 @@ The index will query new service logs peridically and write them on the index. T
 
 ## Telemetry
 
-Anonymous usage data is collected to help improve Windmill. Telemetry data is sent as a HTTPS request to https://stats.windmill.dev. Stats are sent once a day. Stats only contain the size of workers, their uptime and number of seats used.
+Anonymous usage data is collected to help improve Windmill. Telemetry data is sent as a HTTPS request to https://stats.windmill.dev once a day.
 
 ![Telemetry](./telemetry.png "Telemetry")
 
+The data collected differs between Community Edition and [Enterprise Edition](/pricing):
+
+### Community Edition
+
 The following information is collected:
-- version of your instances
+- version of your instance
 - instance base URL
-- job usage per language (count, total duration)
-- per-workspace job counts
+- job usage (language, total duration, count)
 - login type usage (login type, count)
-- worker usage (worker, worker instance, vCPUs, memory, occupancy rates at 15s/5m/30m)
-- user usage per workspace (active author count, operator count)
-- superadmin email address
-- vCPU usage
-- memory usage
+- worker usage (worker, worker instance, vCPUs, memory)
+- user usage (author count, operator count)
 - development instance status
 
-From the instance settings, you can manually disable telemetry or "Send usage" to send usage data to Windmill and monitor it from the [Customer portal](../../misc/7_plans_details/index.mdx#windmill-customer-portal).
+Telemetry can be fully disabled from the instance settings using the "Disable telemetry" toggle.
 
-On [Enterprise Edition](/pricing), you can also "Download usage" to get an encrypted copy of the telemetry data as a `.enc` file. This is useful for air-gapped instances that cannot send telemetry directly — the encrypted file can be sent manually to Windmill.
+### Enterprise Edition
 
-Under [Enterprise Edition](/pricing) (self-hosted), telemetry is mandatory to ensure usage correctly matches the subscription.
+On [Enterprise Edition](/pricing), telemetry is required for [license compliance](../../misc/19_enterprise_onboarding/index.mdx#billing) and cannot be fully disabled. You can toggle "Minimal telemetry" to reduce the data sent to only what is needed for license compliance.
+
+When minimal telemetry is enabled, the following is sent:
+- version of your instance
+- instance base URL
+- login type usage (login type, count)
+- worker usage (worker, worker instance, vCPUs, memory)
+- user usage (author count, operator count)
+- superadmin email addresses
+- development instance status
+
+When minimal telemetry is disabled, the following is also collected:
+- job usage (language, total duration, count)
+
+You can "Send usage" to manually send usage data to Windmill and monitor it from the [Customer portal](../../misc/7_plans_details/index.mdx#windmill-customer-portal). You can also "Download usage" to get an encrypted copy of the telemetry data as a `.enc` file. This is useful for air-gapped instances that cannot send telemetry directly — the encrypted file can be sent manually to Windmill.
