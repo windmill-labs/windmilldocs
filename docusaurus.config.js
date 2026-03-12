@@ -148,7 +148,7 @@ const config = {
 							{ label: 'App builder', href: '/product/app-builder' },
 							{ label: 'Triggers', href: '/product/triggers' },
 							{ label: 'Data tables', href: '/product/datatables' },
-							{ label: 'Versioning', href: '/product/versioning' },
+							{ label: 'Deployment & versioning', href: '/product/deployment-versioning' },
 							{ label: 'Local dev', href: '/product/local-dev' },
 							{ label: 'Workers', href: '/product/workers' },
 							{ label: 'AI sandboxes', href: '/product/sandboxes' },

@@ -66,9 +66,9 @@ const productCategories = [
 				icon: Database,
 			},
 			{
-				name: 'Versioning',
+				name: 'Deployment & versioning',
 				description: 'Sync with Git, stage workspaces and deploy via CI/CD.',
-				href: '/product/versioning',
+				href: '/product/deployment-versioning',
 				icon: GitBranch,
 			},
 		],
@@ -338,9 +338,9 @@ export default function LandingHeader() {
 													<div>
 														{/* Use cases */}
 														<div>
-															<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3 px-3">
+															{/* <p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3 px-3">
 																By use case
-															</p>
+															</p> */}
 															<div className="space-y-1">
 																{solutionsByUseCase.map((item) => (
 																	<Link
@@ -582,7 +582,7 @@ export default function LandingHeader() {
 								{/* Solutions section in mobile menu */}
 								<div className="md:hidden mt-4 space-y-4">
 									{[
-										{ title: 'By use case', items: solutionsByUseCase },
+										{ title: '' /* 'By use case' */, items: solutionsByUseCase },
 										// { title: 'By role', items: solutionsByRole },
 										// { title: 'By industry', items: solutionsByIndustry },
 										// { title: 'Compare', items: solutionsCompare },
