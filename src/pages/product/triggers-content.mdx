@@ -11,6 +11,7 @@ import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import TriggerGrid from '../../components/use-cases/TriggerGrid';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import TriggerHeroAnimation from '../../components/products/TriggerHeroAnimation';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -84,10 +85,7 @@ export default function TriggersContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						{/* Placeholder: screenshot of the triggers panel in the Windmill UI showing multiple trigger types configured, ~1200x800px, save as /static/img/money-pages/triggers-hero.webp */}
-						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<TriggerHeroAnimation />
 					</motion.div>
 				</div>
 			</div>
