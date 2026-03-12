@@ -4,6 +4,7 @@ authors: [farhadgoulamabasse]
 tags: ['ai', 'developer-tools', 'open-source', 'agents']
 description: 'Webmux is the web dashboard every engineer at Windmill uses to run parallel AI coding agents across git worktrees.'
 title: 'Webmux: a web dashboard for parallel AI coding agents'
+image: ./thumbnail.webp
 ---
 
 # Webmux: a web dashboard for parallel AI coding agents
