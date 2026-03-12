@@ -166,6 +166,12 @@ const solutionsByUseCase = [
 
 const resources = [
 	{
+		name: 'Hub',
+		description: 'Browse community scripts, flows, and apps.',
+		href: 'https://hub.windmill.dev',
+		newtab: true
+	},
+	{
 		name: 'OpenAPI',
 		description: 'Explore our API specs.',
 		href: 'https://app.windmill.dev/openapi.html',
@@ -378,13 +384,6 @@ export default function LandingHeader() {
 							Pricing
 						</Link>
 
-						<a
-							href="https://hub.windmill.dev"
-							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
-						>
-							Hub
-						</a>
-
 						<Link
 							to="/case-studies"
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300 whitespace-nowrap"
@@ -440,6 +439,9 @@ export default function LandingHeader() {
 														</a>
 													))}
 												</div>
+												<div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-5 py-4 sm:px-8">
+													<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
+												</div>
 											</div>
 										</Popover.Panel>
 									</Transition>
@@ -449,8 +451,6 @@ export default function LandingHeader() {
 					</Popover.Group>
 
 					<div className="hidden items-center justify-end lg:flex lg:flex-1 gap-4 ml-8">
-						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
-
 						<a
 							href="https://github.com/windmill-labs/windmill"
 							data-analytics='"github"'
@@ -540,13 +540,6 @@ export default function LandingHeader() {
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
 										Pricing
-									</a>
-
-									<a
-										href="https://hub.windmill.dev"
-										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-									>
-										Hub
 									</a>
 
 									<a
