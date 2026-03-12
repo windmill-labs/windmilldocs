@@ -3,10 +3,11 @@ title: "Deploy in one click. Version with Git."
 description: "How do I version and deploy scripts and flows in Windmill? Deploy in one click with built-in versioning, or connect Git for source control, local development, and CI/CD pipelines."
 ---
 
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, BookOpen, PenLine, Rocket, History, GitBranch, ChevronRight, Terminal, Monitor, Github } from 'lucide-react';
+import { ArrowRight, BookOpen, PenLine, Rocket, History, GitBranch, ChevronRight, Terminal, Monitor, Github, CheckCircle2 } from 'lucide-react';
+import { SiTypescript } from 'react-icons/si';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
@@ -23,65 +24,210 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
-{/* ── Hero animation: diff view ── */}
+{/* ── Hero animation: deploy lifecycle ── */}
 
-export function HeroDiff() {
+export const diffLines = [
+	{ type: 'ctx', text: 'import { getResource } from "windmill-client";' },
+	{ type: 'ctx', text: '' },
+	{ type: 'del', text: 'export async function main(limit = 100) {' },
+	{ type: 'add', text: 'export async function main(limit = 100, offset = 0) {' },
+	{ type: 'ctx', text: '  const db = await getResource("f/orders/pg");' },
+	{ type: 'del', text: '  const rows = await db.query(' },
+	{ type: 'del', text: '    `SELECT * FROM orders LIMIT $1`,' },
+	{ type: 'del', text: '    [limit]' },
+	{ type: 'del', text: '  );' },
+	{ type: 'add', text: '  const rows = await db.query(' },
+	{ type: 'add', text: '    `SELECT * FROM orders LIMIT $1 OFFSET $2`,' },
+	{ type: 'add', text: '    [limit, offset]' },
+	{ type: 'add', text: '  );' },
+	{ type: 'ctx', text: '  return rows;' },
+	{ type: 'ctx', text: '}' },
+];
+
+export function DeployLifecycle() {
 	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, margin: "-40px" });
-	const d = 0.3;
-	const lines = [
-		{ type: 'header', text: 'fetch_orders.ts — v12 → v13' },
-		{ type: 'context', num: [3, 3], text: 'import { getResource } from "windmill-client";' },
-		{ type: 'context', num: [4, 4], text: '' },
-		{ type: 'removed', num: [5, null], text: 'export async function main(limit = 100) {' },
-		{ type: 'added', num: [null, 5], text: 'export async function main(limit = 100, offset = 0) {' },
-		{ type: 'context', num: [6, 6], text: '  const db = await getResource("f/orders/pg");' },
-		{ type: 'removed', num: [7, null], text: '  const rows = await db.query(' },
-		{ type: 'removed', num: [8, null], text: '    `SELECT * FROM orders LIMIT $1`,' },
-		{ type: 'removed', num: [9, null], text: '    [limit]' },
-		{ type: 'removed', num: [10, null], text: '  );' },
-		{ type: 'added', num: [null, 7], text: '  const rows = await db.query(' },
-		{ type: 'added', num: [null, 8], text: '    `SELECT * FROM orders LIMIT $1 OFFSET $2`,' },
-		{ type: 'added', num: [null, 9], text: '    [limit, offset]' },
-		{ type: 'added', num: [null, 10], text: '  );' },
-		{ type: 'context', num: [11, 11], text: '  return rows;' },
-		{ type: 'context', num: [12, 12], text: '}' },
-	];
-	const colors = {
-		header: 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700',
-		context: 'text-gray-600 dark:text-gray-400',
-		removed: 'bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300',
-		added: 'bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-300',
-	};
-	const prefix = { context: ' ', removed: '-', added: '+' };
+	const isInView = useInView(ref, { once: true, amount: 0.3 });
+	const [phase, setPhase] = useState(0);
+
+	useEffect(() => {
+		if (!isInView) return;
+		const timers = [
+			setTimeout(() => setPhase(1), 400),
+			setTimeout(() => setPhase(2), 1400),
+			setTimeout(() => setPhase(3), 2000),
+		];
+		return () => timers.forEach(clearTimeout);
+	}, [isInView]);
+
+	const version = phase >= 3 ? 'v13' : null;
+	const isDraft = phase >= 1 && phase < 2;
+	const isDeploying = phase === 2;
+	const showDiff = phase >= 3;
+
 	return (
-		<div ref={ref} className="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-gray-950 shadow-lg font-mono text-[11px] leading-5">
-			{lines.map((line, i) => (
+		<div ref={ref} className="relative" style={{ height: 480 }}>
+			<div className="relative overflow-hidden h-full flex items-center justify-center">
 				<motion.div
-					key={i}
-					initial={{ opacity: 0 }}
-					animate={isInView ? { opacity: 1 } : {}}
-					transition={{ duration: 0.15, delay: d + i * 0.04 }}
-					className={`flex ${colors[line.type]} ${line.type === 'header' ? 'px-3 py-1.5 font-medium text-xs' : 'px-0'}`}
+					style={{ width: 560 }}
+					initial={{ opacity: 0, y: 20 }}
+					animate={phase >= 1 ? { opacity: 1, y: 0 } : {}}
+					transition={{ duration: 0.5 }}
 				>
-					{line.type === 'header' ? (
-						<span>{line.text}</span>
-					) : (
-						<>
-							<span className="w-8 text-right pr-1 text-gray-400 dark:text-gray-600 select-none flex-shrink-0">
-								{line.num[0] ?? ''}
-							</span>
-							<span className="w-8 text-right pr-1 text-gray-400 dark:text-gray-600 select-none flex-shrink-0">
-								{line.num[1] ?? ''}
-							</span>
-							<span className="w-4 text-center select-none flex-shrink-0 text-gray-400 dark:text-gray-500">
-								{prefix[line.type]}
-							</span>
-							<span className="pr-3 whitespace-pre">{line.text}</span>
-						</>
-					)}
+					<div className="rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+						{/* Title bar */}
+						<div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
+							<div className="flex items-center gap-2.5">
+								<SiTypescript className="w-4 h-4 text-[#3178C6] flex-shrink-0" />
+								<span className="text-sm font-semibold text-gray-800">fetch_orders.ts</span>
+								{version && (
+									<motion.span
+										className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700"
+										initial={{ opacity: 0, scale: 0.8 }}
+										animate={{ opacity: 1, scale: 1 }}
+										key={version}
+										transition={{ duration: 0.3 }}
+									>
+										{version}
+									</motion.span>
+								)}
+								{isDraft && (
+									<motion.span
+										className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-yellow-100 text-yellow-700"
+										initial={{ opacity: 0, scale: 0.8 }}
+										animate={{ opacity: 1, scale: 1 }}
+										transition={{ duration: 0.3 }}
+									>
+										Draft
+									</motion.span>
+								)}
+							</div>
+							{/* Right side: buttons or diff label */}
+							{showDiff ? (
+								<motion.div
+									className="flex items-center gap-2"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{ duration: 0.3 }}
+								>
+									<span className="text-[11px] font-semibold text-gray-600">v12 → v13</span>
+									<span className="text-red-500 font-mono text-[10px]">-4</span>
+									<span className="text-green-500 font-mono text-[10px]">+5</span>
+								</motion.div>
+							) : (
+								<motion.div
+									className={`px-3 py-1 rounded-lg text-[11px] font-semibold ${
+										isDeploying
+											? 'bg-blue-600 text-white'
+											: 'bg-blue-500 text-white'
+									}`}
+									animate={isDeploying ? { scale: [1, 0.92, 1] } : {}}
+									transition={{ duration: 0.3 }}
+								>
+									<div className="flex items-center gap-1.5">
+										<Rocket className="w-3 h-3" />
+										Deploy
+									</div>
+								</motion.div>
+							)}
+						</div>
+
+						{/* Content: code or diff */}
+						<div className="relative overflow-hidden" style={{ height: 340 }}>
+							{/* Code view */}
+							<motion.div
+								className="px-4 py-3 font-mono text-[11px] leading-6 text-gray-600 space-y-0"
+								animate={showDiff ? { opacity: 0, position: 'absolute', pointerEvents: 'none' } : { opacity: 1 }}
+								transition={{ duration: 0.3 }}
+							>
+								<div><span className="text-purple-600">import</span> {'{ getResource }'} <span className="text-purple-600">from</span> <span className="text-green-700">"windmill-client"</span>;</div>
+								<div className="h-3" />
+								<div><span className="text-purple-600">export async function</span> <span className="text-blue-600">main</span>(limit = 100, offset = 0) {'{'}</div>
+								<div>{'  '}<span className="text-purple-600">const</span> db = <span className="text-purple-600">await</span> getResource(<span className="text-green-700">"f/orders/pg"</span>);</div>
+								<div>{'  '}<span className="text-purple-600">const</span> rows = <span className="text-purple-600">await</span> db.query(</div>
+								<div>{'    '}<span className="text-green-700">`SELECT * FROM orders LIMIT $1 OFFSET $2`</span>,</div>
+								<div>{'    '}[limit, offset]</div>
+								<div>{'  '});</div>
+								<div>{'  '}<span className="text-purple-600">return</span> rows;</div>
+								<div>{'}'}</div>
+							</motion.div>
+
+							{/* Diff view (replaces code) */}
+							{showDiff && (
+								<motion.div
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{ duration: 0.4, delay: 0.15 }}
+								>
+									<div className="font-mono text-[10px] leading-[20px]">
+										{diffLines.map((line, i) => (
+											<motion.div
+												key={i}
+												className={`flex ${
+													line.type === 'del' ? 'bg-red-50' :
+													line.type === 'add' ? 'bg-green-50' :
+													''
+												}`}
+												initial={{ opacity: 0 }}
+												animate={{ opacity: 1 }}
+												transition={{ duration: 0.1, delay: 0.2 + i * 0.04 }}
+											>
+												<span className={`w-6 text-right pr-1 select-none flex-shrink-0 ${
+													line.type === 'del' ? 'text-red-300' :
+													line.type === 'add' ? 'text-green-300' :
+													'text-gray-300'
+												}`}>
+													{line.type !== 'add' ? i + 1 : ''}
+												</span>
+												<span className={`w-6 text-right pr-1 select-none flex-shrink-0 ${
+													line.type === 'del' ? 'text-red-300' :
+													line.type === 'add' ? 'text-green-300' :
+													'text-gray-300'
+												}`}>
+													{line.type !== 'del' ? i + 1 : ''}
+												</span>
+												<span className={`w-4 text-center select-none flex-shrink-0 ${
+													line.type === 'del' ? 'text-red-400' :
+													line.type === 'add' ? 'text-green-400' :
+													'text-gray-300'
+												}`}>
+													{line.type === 'del' ? '-' : line.type === 'add' ? '+' : ' '}
+												</span>
+												<span className={`pr-3 whitespace-pre ${
+													line.type === 'del' ? 'text-red-700' :
+													line.type === 'add' ? 'text-green-700' :
+													'text-gray-500'
+												}`}>{line.text}</span>
+											</motion.div>
+										))}
+									</div>
+								</motion.div>
+							)}
+						</div>
+
+						{/* Status bar */}
+						{phase >= 3 && (
+							<motion.div
+								className="flex items-center justify-between px-4 py-2 border-t border-gray-100 bg-gray-50"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.3 }}
+							>
+								<div className="flex items-center gap-2">
+									<CheckCircle2 className="w-3 h-3 text-green-500" />
+									<span className="text-[10px] text-green-600 font-medium">Deployed</span>
+									<motion.span
+										className="text-[10px] font-mono text-gray-400"
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+									>
+										a3f7c2e
+									</motion.span>
+								</div>
+							</motion.div>
+						)}
+					</div>
 				</motion.div>
-			))}
+			</div>
 		</div>
 	);
 }
@@ -96,10 +242,10 @@ export function SyncFlowStep({ icon: Icon, label, auto, isInView, delay }) {
 			transition={{ duration: 0.3, delay }}
 			className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
 		>
-			<Icon className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+			<Icon className="w-4 h-4 text-gray-500 flex-shrink-0" />
 			<span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">{label}</span>
 			{auto && (
-				<span className="ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded flex-shrink-0 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20">
+				<span className="ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded flex-shrink-0 text-green-600 bg-green-50 dark:bg-green-900/20">
 					auto
 				</span>
 			)}
@@ -115,7 +261,7 @@ export function SyncFlowArrow({ isInView, delay }) {
 			transition={{ duration: 0.15, delay }}
 			className="mx-0.5 origin-left flex-shrink-0"
 		>
-			<ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+			<ChevronRight className="w-4 h-4 text-gray-400" />
 		</motion.div>
 	);
 }
@@ -160,7 +306,7 @@ export function SyncFlows() {
 						transition={{ duration: 0.35, delay: baseDelay }}
 						className="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
 					>
-						<p className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
+						<p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">
 							{flow.label}
 						</p>
 						<div className="flex flex-col gap-1.5">
@@ -169,7 +315,7 @@ export function SyncFlows() {
 									<SyncFlowStep {...step} isInView={isInView} delay={baseDelay + 0.1 + i * 0.12} />
 									{(i < flow.steps.length - 1 || flow.parallel) && (
 										<div className="flex justify-center">
-											<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400 dark:text-gray-500">
+											<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400">
 												<path d="M6 2 L6 10 M3 7 L6 10 L9 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 											</svg>
 										</div>
@@ -180,8 +326,8 @@ export function SyncFlows() {
 								<div className="relative">
 									{/* Split curves */}
 									<svg className="w-full" height="32" viewBox="0 0 200 32" preserveAspectRatio="xMidYMid meet">
-										<path d="M100,0 L100,4 C100,18 50,18 50,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600" />
-										<path d="M100,0 L100,4 C100,18 150,18 150,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600" />
+										<path d="M100,0 L100,4 C100,18 50,18 50,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+										<path d="M100,0 L100,4 C100,18 150,18 150,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
 									</svg>
 									<div className="flex gap-2">
 										{flow.parallel.map((step, i) => (
@@ -194,12 +340,12 @@ export function SyncFlows() {
 										<>
 											{/* Merge curves */}
 											<svg className="w-full" height="32" viewBox="0 0 200 32" preserveAspectRatio="xMidYMid meet">
-												<path d="M50,0 C50,14 100,14 100,28 L100,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600" />
-												<path d="M150,0 C150,14 100,14 100,28 L100,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300 dark:text-gray-600" />
+												<path d="M50,0 C50,14 100,14 100,28 L100,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+												<path d="M150,0 C150,14 100,14 100,28 L100,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
 											</svg>
 											{/* Arrow pointing down */}
 											<div className="flex justify-center -mt-1">
-												<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400 dark:text-gray-500">
+												<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400">
 													<path d="M6 2 L6 10 M3 7 L6 10 L9 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 												</svg>
 											</div>
@@ -233,7 +379,7 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					{docLink && (
 						<Link
 							to={docLink}
-							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+							className="inline-flex items-center gap-1.5 text-blue-600 text-sm font-medium hover:underline !no-underline"
 						>
 							<BookOpen className="w-4 h-4" /> Read the docs
 						</Link>
@@ -249,7 +395,7 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 							/>
 						) : (
 							<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-								<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+								<span className="text-gray-400 text-sm">Screenshot coming soon</span>
 							</div>
 						)}
 					</div>
@@ -269,7 +415,7 @@ export default function VersioningContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
-						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Deployment & versioning</p>
+						<p className="text-sm font-medium text-blue-600 mb-2 tracking-wide uppercase">Deployment & versioning</p>
 						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
 							Deploy in one click. Version with Git.
 						</h1>
@@ -279,9 +425,9 @@ export default function VersioningContent({ title, description }) {
 						<HeroCTAButtons />
 					</motion.div>
 
-					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						<HeroDiff />
-					</motion.div>
+					<div className="hidden lg:block">
+						<DeployLifecycle />
+					</div>
 				</div>
 			</div>
 
@@ -290,7 +436,7 @@ export default function VersioningContent({ title, description }) {
 				<motion.div {...fadeIn}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">What is versioning in Windmill</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Windmill keeps an immutable history of every <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link>, <Link to="/product/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>, and <Link to="/product/app-builder" className="text-blue-600 dark:text-blue-400 hover:underline">app</Link> deployment. Compare any two versions side by side, roll back in one click, or sync everything to Git.
+						Windmill keeps an immutable history of every <Link to="/product/script-editor" className="text-blue-600 hover:underline">script</Link>, <Link to="/product/flow-editor" className="text-blue-600 hover:underline">flow</Link>, and <Link to="/product/app-builder" className="text-blue-600 hover:underline">app</Link> deployment. Compare any two versions side by side, roll back in one click, or sync everything to Git.
 					</p>
 				</motion.div>
 			</div>
@@ -298,14 +444,14 @@ export default function VersioningContent({ title, description }) {
 			{/* ═══════════════ Deploy in one click ═══════════════ */}
 			<Section
 				title="Deploy in one click"
-				desc={<span><Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">Scripts</Link>, <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link>, and <Link to="/docs/getting_started/apps_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">apps</Link> can be written, tested, and deployed from the browser. Each deployment creates a new immutable version. All three support draft mode to iterate without affecting production.</span>}
+				desc={<span><Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 hover:underline">Scripts</Link>, <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 hover:underline">flows</Link>, and <Link to="/docs/getting_started/apps_quickstart" className="text-blue-600 hover:underline">apps</Link> can be written, tested, and deployed from the browser. Each deployment creates a new immutable version. All three support draft mode to iterate without affecting production.</span>}
 				docLink="/docs/core_concepts/draft_and_deploy"
 			/>
 
 			{/* ═══════════════ Deployment history ═══════════════ */}
 			<Section
 				title="Deployment history"
-				desc={<span>Every deployment is tracked with a message, a unique hash (similar to a git commit SHA), and a side-by-side <Link to="/docs/core_concepts/versioning" className="text-blue-600 dark:text-blue-400 hover:underline">diff viewer</Link>. Any past version can be forked or restored. Hash-based webhook URLs let you pin integrations to a specific version.</span>}
+				desc={<span>Every deployment is tracked with a message, a unique hash (similar to a git commit SHA), and a side-by-side <Link to="/docs/core_concepts/versioning" className="text-blue-600 hover:underline">diff viewer</Link>. Any past version can be forked or restored. Hash-based webhook URLs let you pin integrations to a specific version.</span>}
 				docLink="/docs/core_concepts/versioning"
 				reverse
 			/>
@@ -318,14 +464,14 @@ export default function VersioningContent({ title, description }) {
 			{/* ═══════════════ Git sync ═══════════════ */}
 			<Section
 				title="Git sync"
-				desc={<span>When connected to a <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git repository</Link>, every deployment is automatically committed. Changes can also be pulled from Git, making the repository the single source of truth. Works with GitHub, GitLab, Bitbucket, and Azure DevOps.</span>}
+				desc={<span>When connected to a <Link to="/docs/advanced/git_sync" className="text-blue-600 hover:underline">Git repository</Link>, every deployment is automatically committed. Changes can also be pulled from Git, making the repository the single source of truth. Works with GitHub, GitLab, Bitbucket, and Azure DevOps.</span>}
 				docLink="/docs/advanced/git_sync"
 			/>
 
 			{/* ═══════════════ Workspace forks ═══════════════ */}
 			<Section
 				title="Workspace forks"
-				desc={<span><Link to="/docs/advanced/workspace_forks" className="text-blue-600 dark:text-blue-400 hover:underline">Workspace forks</Link> (Enterprise) are independent copies of a workspace for parallel development. Scripts, flows, apps, resources, variables, and schedules are all included. Teams can work on features or experiments in a fork without affecting the production workspace. Each fork can track its own Git branch, and changes from the parent workspace can be pulled into the fork to stay up to date.</span>}
+				desc={<span><Link to="/docs/advanced/workspace_forks" className="text-blue-600 hover:underline">Workspace forks</Link> (Enterprise) are independent copies of a workspace for parallel development. Scripts, flows, apps, resources, variables, and schedules are all included. Teams can work on features or experiments in a fork without affecting the production workspace. Each fork can track its own Git branch, and changes from the parent workspace can be pulled into the fork to stay up to date.</span>}
 				docLink="/docs/advanced/workspace_forks"
 				reverse
 			/>
@@ -334,14 +480,14 @@ export default function VersioningContent({ title, description }) {
 			{/* ═══════════════ Merge UI ═══════════════ */}
 			<Section
 				title="Merge UI"
-				desc={<span>Forks can be merged back to their parent workspace from the UI with conflict detection. For more granular resolution, a <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">Git-based merge workflow</Link> is also available.</span>}
+				desc={<span>Forks can be merged back to their parent workspace from the UI with conflict detection. For more granular resolution, a <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 hover:underline">Git-based merge workflow</Link> is also available.</span>}
 				docLink="/docs/advanced/workspace_forks"
 			/>
 
 			{/* ═══════════════ Deploy from the CLI ═══════════════ */}
 			<Section
 				title="Deploy from the CLI"
-				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Push changes from your terminal or deploy from the UI. Either way, changes are committed to your Git repository. See the <Link to="/product/local-dev" className="text-blue-600 dark:text-blue-400 hover:underline">local development</Link> page for the full local workflow.</span>}
+				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Push changes from your terminal or deploy from the UI. Either way, changes are committed to your Git repository. See the <Link to="/product/local-dev" className="text-blue-600 hover:underline">local development</Link> page for the full local workflow.</span>}
 				docLink="/docs/advanced/cli"
 			>
 				<SyncFlows />
