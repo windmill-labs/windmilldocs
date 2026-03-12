@@ -141,12 +141,6 @@ const solutionsByUseCase = [
 		href: '/use-cases/data-pipelines',
 		icon: CircleStackIcon,
 	},
-	{
-		name: 'Triggers',
-		description: 'Schedules, webhooks, Kafka, Postgres and more.',
-		href: '/use-cases/triggers',
-		icon: ClockIcon,
-	},
 ];
 
 // const solutionsByRole = [

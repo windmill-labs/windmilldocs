@@ -1,6 +1,6 @@
 ---
 title: "Full-code frontend builder"
-description: "How do I build custom frontends with Windmill? Write React or Svelte apps connected to backend runnables in 20+ languages, with local dev, type safety, and one-command deploy."
+description: "How do I build custom frontends with Windmill? Build React or Svelte UIs on top of your backend scripts and flows through an auto-generated, type-safe API."
 ---
 
 import React, { useState } from 'react';
@@ -10,6 +10,7 @@ import { ArrowRight, BookOpen, Terminal, FileCode, Layers, Play, Plug, Database,
 import { SiReact, SiSvelte } from 'react-icons/si';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -342,23 +343,7 @@ export default function FrontendBuilderContent({ title, description }) {
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 							Build custom UIs in React or Svelte on top of your backend scripts and flows through an auto-generated, type-safe API.
 						</p>
-						<div className="flex flex-col sm:flex-row gap-4">
-							<a
-								href="https://app.windmill.dev"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-							>
-								Try Windmill free
-								<ArrowRight className="w-4 h-4" />
-							</a>
-							<Link
-								to="/docs/getting_started/full_code_apps_quickstart"
-								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-							>
-								Read the docs
-							</Link>
-						</div>
+						<HeroCTAButtons />
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
