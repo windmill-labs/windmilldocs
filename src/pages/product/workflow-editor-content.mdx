@@ -179,7 +179,7 @@ export function PythonColored({ className }) {
 	);
 }
 
-export const CX = 240;
+export const CX = 180;
 export const NH = 40;
 
 export const dagNodes = [
@@ -216,10 +216,10 @@ export function edgePath(e) {
 	return `M${s.x},${sy} C${s.x},${midY} ${d.x},${midY} ${d.x},${dy}`;
 }
 
-export const topPath = "M240,60 L240,100 L240,140 L240,190 L240,230";
-export const leftBranchPath = "M240,230 C240,265 120,265 120,300 L120,340 C120,375 240,375 240,410";
-export const rightBranchPath = "M240,230 C240,265 360,265 360,300 L360,340 C360,375 240,375 240,410";
-export const bottomPath = "M240,410 L240,450 L240,500 L240,540 L240,590";
+export const topPath = "M180,60 L180,100 L180,140 L180,190 L180,230";
+export const leftBranchPath = "M180,230 C180,265 60,265 60,300 L60,340 C60,375 180,375 180,410";
+export const rightBranchPath = "M180,230 C180,265 300,265 300,300 L300,340 C300,375 180,375 180,410";
+export const bottomPath = "M180,410 L180,450 L180,500 L180,540 L180,590";
 
 export const stepOutputs = {
 	trigger:    { text: 'Webhook received', detail: 'POST /api/provision' },
@@ -272,7 +272,7 @@ export function StepOutput({ nodeId, delay }) {
 
 export function HeroAnimation() {
 	return (
-		<div className="relative w-[520px] h-[650px]">
+		<div className="relative w-[520px] h-[650px]" style={{ transform: 'scale(0.8)', transformOrigin: 'top center' }}>
 			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
 				{dagEdges.map((e, i) => (
 					<path key={`edge-${i}`} d={edgePath(e)}
@@ -416,12 +416,9 @@ export default function WorkflowEditorContent({ title, description }) {
 						<HeroCTAButtons />
 					</motion.div>
 
-					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						{/* Placeholder: screenshot of the flow editor showing a multi-step DAG with branching, ~1200x800px, save as /static/img/money-pages/flow-editor-hero.webp */}
-						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
-					</motion.div>
+					<div className="hidden lg:block" style={{ height: 540, overflow: 'hidden' }}>
+						<HeroAnimation />
+					</div>
 				</div>
 			</div>
 
