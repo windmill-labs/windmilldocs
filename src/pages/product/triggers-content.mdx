@@ -71,11 +71,12 @@ export default function TriggersContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Triggers</p>
 						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Built in triggers for your scripts and flows
+							Every way to start a script or flow
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							Schedules, webhooks, message queues, database changes, emails, WebSockets, and more. Every script and flow in Windmill can be triggered by any combination of these sources with no extra configuration.
+							Schedules, webhooks, Kafka, Postgres CDC, WebSockets, emails, and more. No extra configuration needed.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<a

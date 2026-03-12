@@ -758,6 +758,7 @@ export default function ScriptEditorContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Script editor</p>
 						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
 							Code editor with built-in infrastructure
 						</h1>
@@ -784,7 +785,10 @@ export default function ScriptEditorContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						<HeroAnimation />
+						{/* Placeholder: screenshot of the script editor showing a TypeScript script with auto-generated UI, ~1200x800px, save as /static/img/product/script-editor-hero.webp */}
+						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
 					</motion.div>
 				</div>
 			</div>
