@@ -362,21 +362,22 @@ A Seat is a user who is active on the platform. A regular user counts as one Sea
 
 ### Telemetry and usage tracking
 
-On self-hosted instances, Windmill does not deal with any customer data. Just some lightweight telemetry is collected:
+On self-hosted instances, Windmill does not deal with any customer data. Lightweight telemetry is collected for [license compliance](../../misc/19_enterprise_onboarding/index.mdx#billing). The telemetry endpoint is `stats.windmill.dev`.
 
-- version of the instances
+On Enterprise Edition, telemetry cannot be fully disabled but can be reduced using the "Minimal telemetry" toggle in [Instance settings](../../advanced/18_instance_settings/index.mdx#telemetry). When minimal telemetry is enabled, only the following is sent:
+
+- version of your instance
 - instance base URL
-- job usage (language, total duration, count)
 - login type usage (login type, count)
-- worker usage (worker, worker instance, vCPUs, memory, occupancy rates at 15s/5m/30m)
-- user usage per workspace (active author count, operator count)
-- per-workspace job counts
-- superadmin email address
-- vCPU usage
-- memory usage
+- worker usage (worker, worker instance, vCPUs, memory)
+- user usage (author count, operator count)
+- superadmin email addresses
 - development instance status
 
-This telemetry is collected automatically and is used to track usage and billing. The telemetry endpoint is `stats.windmill.dev`. Mark dev/staging instances as "Non-prod" in [Instance settings](../../advanced/18_instance_settings/index.mdx#non-prod-instance) so they don't count toward compute usage.
+When minimal telemetry is disabled, the following is also collected:
+- job usage (language, total duration, count)
+
+Mark dev/staging instances as "Non-prod" in [Instance settings](../../advanced/18_instance_settings/index.mdx#non-prod-instance) so they don't count toward compute usage.
 
 You can manually send usage from [Instance settings](../../advanced/18_instance_settings/index.mdx#telemetry) > Telemetry > "Send usage" and check how it converts into Compute Units from the [Customer Portal](#customer-portal) ('Last report').
 
