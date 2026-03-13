@@ -10,6 +10,7 @@ import { ArrowRight, BookOpen, Shield, Lock, Bot, Server } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import SandboxesHeroAnimation from '../../components/products/SandboxesHeroAnimation';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -83,10 +84,7 @@ export default function SandboxesContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						{/* Placeholder: screenshot of AI sandbox configuration showing Claude Code running in an isolated environment, ~1200x800px, save as /static/img/money-pages/ai-sandbox-hero.webp */}
-						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<SandboxesHeroAnimation />
 					</motion.div>
 				</div>
 			</div>
