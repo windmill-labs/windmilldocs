@@ -436,7 +436,7 @@ export default function VersioningContent({ title, description }) {
 				<motion.div {...fadeIn}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">What is versioning in Windmill</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Windmill keeps an immutable history of every <Link to="/product/script-editor" className="text-blue-600 hover:underline">script</Link>, <Link to="/product/flow-editor" className="text-blue-600 hover:underline">flow</Link>, and <Link to="/product/app-builder" className="text-blue-600 hover:underline">app</Link> deployment. Compare any two versions side by side, roll back in one click, or sync everything to Git.
+						Windmill keeps an immutable history of every <Link to="/platform/script-editor" className="text-blue-600 hover:underline">script</Link>, <Link to="/platform/flow-editor" className="text-blue-600 hover:underline">flow</Link>, and <Link to="/platform/app-builder" className="text-blue-600 hover:underline">app</Link> deployment. Compare any two versions side by side, roll back in one click, or sync everything to Git.
 					</p>
 				</motion.div>
 			</div>
@@ -487,7 +487,7 @@ export default function VersioningContent({ title, description }) {
 			{/* ═══════════════ Deploy from the CLI ═══════════════ */}
 			<Section
 				title="Deploy from the CLI"
-				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Push changes from your terminal or deploy from the UI. Either way, changes are committed to your Git repository. See the <Link to="/product/local-dev" className="text-blue-600 hover:underline">local development</Link> page for the full local workflow.</span>}
+				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Push changes from your terminal or deploy from the UI. Either way, changes are committed to your Git repository. See the <Link to="/platform/local-dev" className="text-blue-600 hover:underline">local development</Link> page for the full local workflow.</span>}
 				docLink="/docs/advanced/cli"
 			>
 				<SyncFlows />

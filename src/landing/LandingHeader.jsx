@@ -38,37 +38,37 @@ const productCategories = [
 			{
 				name: 'Script editor',
 				description: 'Write scripts in TypeScript, Python, Go, Bash or SQL.',
-				href: '/product/script-editor',
+				href: '/platform/script-editor',
 				icon: Code,
 			},
 			{
 				name: 'Flow editor',
 				description: 'Connect scripts into flows with no glue code.',
-				href: '/product/flow-editor',
+				href: '/platform/flow-editor',
 				icon: GitFork,
 			},
 			{
 				name: 'App builder',
 				description: 'Connect backend logic to React & Svelte frontends.',
-				href: '/product/app-builder',
+				href: '/platform/app-builder',
 				icon: LayoutDashboard,
 			},
 			{
 				name: 'Triggers',
 				description: 'Schedules, webhooks, Kafka, Postgres CDC and more.',
-				href: '/product/triggers',
+				href: '/platform/triggers',
 				icon: Zap,
 			},
 			{
 				name: 'Data tables',
 				description: 'Store and query relational data with managed SQL.',
-				href: '/product/datatables',
+				href: '/platform/datatables',
 				icon: Database,
 			},
 			{
 				name: 'Deployment & versioning',
 				description: 'Sync with Git, stage workspaces and deploy via CI/CD.',
-				href: '/product/deployment-versioning',
+				href: '/platform/deployment-versioning',
 				icon: GitBranch,
 			},
 		],
@@ -79,37 +79,37 @@ const productCategories = [
 			{
 				name: 'Local dev',
 				description: 'Develop and test locally with the Windmill CLI.',
-				href: '/product/local-dev',
+				href: '/platform/local-dev',
 				icon: Terminal,
 			},
 			{
 				name: 'Workers',
 				description: 'Isolated workers that pull from a shared queue.',
-				href: '/product/workers',
+				href: '/platform/workers',
 				icon: Cpu,
 			},
 			{
 				name: 'AI sandboxes',
 				description: 'Run Claude Code, Codex, or custom agents in isolated environments.',
-				href: '/product/sandboxes',
+				href: '/platform/sandboxes',
 				icon: Container,
 			},
 			{
 				name: 'Observability',
 				description: 'Monitor logs, metrics and alerts in real time.',
-				href: '/product/observability',
+				href: '/platform/observability',
 				icon: Activity,
 			},
 			{
 				name: 'RBAC',
 				description: 'Enforce role-based access, audit logs and secrets.',
-				href: '/product/rbac',
+				href: '/platform/rbac',
 				icon: ShieldCheck,
 			},
 			{
 				name: 'No-ops self-host',
 				description: 'Deploy Windmill on your infra with zero maintenance.',
-				href: '/product/self-host',
+				href: '/platform/self-host',
 				icon: Server,
 			},
 		],
@@ -250,7 +250,7 @@ export default function LandingHeader() {
 											'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-offset-1 dark:focus:ring-offset-gray-800 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300'
 										)}
 									>
-										<span>Products</span>
+										<span>Platform</span>
 										<ChevronDownIcon
 											className={classNames(
 												open ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400',

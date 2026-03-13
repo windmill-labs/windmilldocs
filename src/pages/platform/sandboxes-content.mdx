@@ -94,7 +94,7 @@ export default function SandboxesContent({ title, description }) {
 				<motion.div {...fadeIn}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">What are AI sandboxes</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						AI sandboxes combine two Windmill features to create secure, persistent environments for AI coding agents. Any <Link to="/product/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link> can become a sandbox with two annotations: <code>// sandbox</code> for process isolation via <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">NSJAIL</Link>, and <code>// volume: name path</code> for <Link to="/docs/core_concepts/volumes" className="text-blue-600 dark:text-blue-400 hover:underline">persistent storage</Link> across runs. This pattern works for any agent that operates on a local filesystem: Claude Code, Codex, OpenCode, or custom agents.
+						AI sandboxes combine two Windmill features to create secure, persistent environments for AI coding agents. Any <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link> can become a sandbox with two annotations: <code>// sandbox</code> for process isolation via <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">NSJAIL</Link>, and <code>// volume: name path</code> for <Link to="/docs/core_concepts/volumes" className="text-blue-600 dark:text-blue-400 hover:underline">persistent storage</Link> across runs. This pattern works for any agent that operates on a local filesystem: Claude Code, Codex, OpenCode, or custom agents.
 					</p>
 				</motion.div>
 			</div>
@@ -132,14 +132,14 @@ export default function SandboxesContent({ title, description }) {
 			{/* Resources and permissions */}
 			<Section
 				title="Resources and permissions"
-				desc={<span>API keys and credentials are injected through <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill resources</Link>, so secrets never appear in code. <Link to="/product/rbac" className="text-blue-600 dark:text-blue-400 hover:underline">RBAC permissions</Link> control which scripts, flows, and resources each agent can access, and volume permissions (owner, read-only, read-write) scope storage access.</span>}
+				desc={<span>API keys and credentials are injected through <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill resources</Link>, so secrets never appear in code. <Link to="/platform/rbac" className="text-blue-600 dark:text-blue-400 hover:underline">RBAC permissions</Link> control which scripts, flows, and resources each agent can access, and volume permissions (owner, read-only, read-write) scope storage access.</span>}
 			/>
 
 			{/* Observability */}
 			<Section
 				title="Observability"
-				desc={<span>Every agent run is tracked with full <Link to="/product/observability" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link>: logs, execution history, and token usage for cost monitoring. Set up <Link to="/docs/core_concepts/critical_alerts" className="text-blue-600 dark:text-blue-400 hover:underline">alerts</Link> on failures or cost thresholds, and audit agent activity across workspaces.</span>}
-				docLink="/product/observability"
+				desc={<span>Every agent run is tracked with full <Link to="/platform/observability" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link>: logs, execution history, and token usage for cost monitoring. Set up <Link to="/docs/core_concepts/critical_alerts" className="text-blue-600 dark:text-blue-400 hover:underline">alerts</Link> on failures or cost thresholds, and audit agent activity across workspaces.</span>}
+				docLink="/platform/observability"
 				reverse
 			/>
 

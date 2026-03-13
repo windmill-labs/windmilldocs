@@ -60,6 +60,54 @@ const config = {
 					{
 						to: '/terms/2025-12-01',
 						from: '/terms'
+					},
+					{
+						to: '/platform/script-editor',
+						from: '/product/script-editor'
+					},
+					{
+						to: '/platform/flow-editor',
+						from: '/product/flow-editor'
+					},
+					{
+						to: '/platform/app-builder',
+						from: '/product/app-builder'
+					},
+					{
+						to: '/platform/triggers',
+						from: '/product/triggers'
+					},
+					{
+						to: '/platform/datatables',
+						from: '/product/datatables'
+					},
+					{
+						to: '/platform/deployment-versioning',
+						from: '/product/deployment-versioning'
+					},
+					{
+						to: '/platform/local-dev',
+						from: '/product/local-dev'
+					},
+					{
+						to: '/platform/workers',
+						from: '/product/workers'
+					},
+					{
+						to: '/platform/sandboxes',
+						from: '/product/sandboxes'
+					},
+					{
+						to: '/platform/observability',
+						from: '/product/observability'
+					},
+					{
+						to: '/platform/rbac',
+						from: '/product/rbac'
+					},
+					{
+						to: '/platform/self-host',
+						from: '/product/self-host'
 					}
 				]
 			}
@@ -140,21 +188,21 @@ const config = {
 				items: [
 					{
 						type: 'dropdown',
-						label: 'Products',
+						label: 'Platform',
 						position: 'left',
 						items: [
-							{ label: 'Script editor', href: '/product/script-editor' },
-							{ label: 'Flow editor', href: '/product/flow-editor' },
-							{ label: 'App builder', href: '/product/app-builder' },
-							{ label: 'Triggers', href: '/product/triggers' },
-							{ label: 'Data tables', href: '/product/datatables' },
-							{ label: 'Deployment & versioning', href: '/product/deployment-versioning' },
-							{ label: 'Local dev', href: '/product/local-dev' },
-							{ label: 'Workers', href: '/product/workers' },
-							{ label: 'AI sandboxes', href: '/product/sandboxes' },
-							{ label: 'Observability', href: '/product/observability' },
-							{ label: 'RBAC', href: '/product/rbac' },
-							{ label: 'No-ops self-host', href: '/product/self-host' },
+							{ label: 'Script editor', href: '/platform/script-editor' },
+							{ label: 'Flow editor', href: '/platform/flow-editor' },
+							{ label: 'App builder', href: '/platform/app-builder' },
+							{ label: 'Triggers', href: '/platform/triggers' },
+							{ label: 'Data tables', href: '/platform/datatables' },
+							{ label: 'Deployment & versioning', href: '/platform/deployment-versioning' },
+							{ label: 'Local dev', href: '/platform/local-dev' },
+							{ label: 'Workers', href: '/platform/workers' },
+							{ label: 'AI sandboxes', href: '/platform/sandboxes' },
+							{ label: 'Observability', href: '/platform/observability' },
+							{ label: 'RBAC', href: '/platform/rbac' },
+							{ label: 'No-ops self-host', href: '/platform/self-host' },
 						]
 					},
 					{

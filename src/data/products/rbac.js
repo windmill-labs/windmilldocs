@@ -3,5 +3,5 @@ export const rbacProduct = {
 	name: 'RBAC',
 	headline: 'Role-based access controls',
 	description: 'Enforce role-based access, audit logs, secret management and compliance controls.',
-	link: '/product/rbac',
+	link: '/platform/rbac',
 };
