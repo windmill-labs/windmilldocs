@@ -6,7 +6,7 @@ description: "How do I monitor Windmill? Real-time logs, run history, queue metr
 import React, { useState, useEffect, useRef } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, BookOpen, CheckCircle2, XCircle, Calendar, Clock } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle2, XCircle, Calendar, Clock, Webhook, Radio } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
@@ -42,7 +42,7 @@ export const scatterPoints = [
 	{ x: 0.96, y: 900, ok: true },  { x: 0.99, y: 1020, ok: true },
 ];
 
-export const yTicks = [500, 1000, 2000, 5000];
+export const yTicks = [500, 2000, 5000];
 export const chartH = 100;
 export const yMax = 5500;
 
@@ -53,13 +53,13 @@ export function yPos(val) {
 {/* ── Job runs ── */}
 
 export const jobRuns = [
-	{ id: 'j1', ok: true,  ended: 'Ended 169s ago', duration: '0,87s', path: 'f/devops/scheduled_depl...', triggeredBy: 'f/devops/cloud_deplo...', tag: 'flow' },
-	{ id: 'j2', ok: true,  ended: 'Ended 469s ago', duration: '1,05s', path: 'f/devops/scheduled_depl...', triggeredBy: 'f/devops/cloud_deplo...', tag: 'flow' },
-	{ id: 'j3', ok: false, ended: '12/03 00:15',    duration: '0,83s', path: 'f/billing/sync_invoices',    triggeredBy: 'f/billing/check_aws_...',  tag: 'flow' },
-	{ id: 'j4', ok: true,  ended: '12/03 00:10',    duration: '0,70s', path: 'f/devops/scheduled_depl...', triggeredBy: 'f/devops/cloud_deplo...', tag: 'flow' },
-	{ id: 'j5', ok: true,  ended: '12/03 00:05',    duration: '0,77s', path: 'f/devops/scheduled_depl...', triggeredBy: 'f/devops/cloud_deplo...', tag: 'flow' },
-	{ id: 'j6', ok: false, ended: '12/03 00:00',    duration: '3,35s', path: 'f/billing/mark_aws_mp_i...', triggeredBy: 'f/billing/check_aws_...',  tag: 'flow' },
-	{ id: 'j7', ok: true,  ended: '12/03 00:00',    duration: '1,30s', path: 'f/devops/scheduled_depl...', triggeredBy: 'f/devops/cloud_deplo...', tag: 'flow' },
+	{ id: 'j1', ok: true,  ended: 'Ended 169s ago', duration: '0,87s', name: 'f/devops/deploy_staging',   triggeredBy: 'Schedule', tag: 'flow' },
+	{ id: 'j2', ok: true,  ended: 'Ended 469s ago', duration: '1,05s', name: 'f/devops/deploy_staging',   triggeredBy: 'Schedule', tag: 'flow' },
+	{ id: 'j3', ok: false, ended: '12/03 00:15',    duration: '0,83s', name: 'f/billing/sync_invoices',   triggeredBy: 'Webhook',  tag: 'flow' },
+	{ id: 'j4', ok: true,  ended: '12/03 00:10',    duration: '0,70s', name: 'f/data/ingest_events',      triggeredBy: 'Kafka',    tag: 'flow' },
+	{ id: 'j5', ok: true,  ended: '12/03 00:05',    duration: '0,77s', name: 'f/data/ingest_events',      triggeredBy: 'Kafka',    tag: 'flow' },
+	{ id: 'j6', ok: false, ended: '12/03 00:00',    duration: '3,35s', name: 'f/billing/charge_customer', triggeredBy: 'Webhook',  tag: 'flow' },
+	{ id: 'j7', ok: true,  ended: '12/03 00:00',    duration: '1,30s', name: 'f/devops/deploy_staging',   triggeredBy: 'Schedule', tag: 'flow' },
 ];
 
 {/* ── Hero animation ── */}
@@ -90,30 +90,30 @@ export function HeroAnimation() {
 	}, [isInView]);
 
 	return (
-		<div ref={ref} className="rounded-2xl border border-gray-700 bg-gray-950 overflow-hidden shadow-lg">
+		<div ref={ref} className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-lg">
 			{/* Toolbar */}
-			<div className="flex items-center gap-2 px-4 py-2 border-b border-gray-800">
-				<span className="text-sm font-bold text-white">Runs</span>
-				<span className="px-2 py-0.5 rounded bg-blue-600/20 text-blue-400 text-[10px] font-medium">All</span>
-				<span className="text-[10px] text-gray-500">Runs</span>
-				<span className="text-[10px] text-gray-500">Deps</span>
+			<div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200">
+				<span className="text-sm font-bold text-gray-900">Runs</span>
+				<span className="px-2 py-0.5 rounded bg-blue-600/20 text-blue-600 text-[10px] font-medium">All</span>
+				<span className="text-[10px] text-gray-400">Runs</span>
+				<span className="text-[10px] text-gray-400">Deps</span>
 				<div className="flex-1" />
-				<CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+				<CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
 				<XCircle className="w-3.5 h-3.5 text-red-400/60" />
-				<Clock className="w-3.5 h-3.5 text-gray-600" />
+				<Clock className="w-3.5 h-3.5 text-gray-400" />
 			</div>
 
 			{/* Scatter chart */}
-			<div className="px-4 pt-2 pb-2 border-b border-gray-800">
+			<div className="px-4 pt-2 pb-2">
 				<div className="flex items-center gap-3 mb-2">
-					<span className="text-[11px] font-medium text-white">Duration</span>
-					<span className="text-[11px] text-gray-500">Concurrency</span>
+					<span className="text-[11px] font-medium text-gray-900">Duration</span>
+					<span className="text-[11px] text-gray-400">Concurrency</span>
 				</div>
 				<div className="relative w-full" style={{ height: chartH }}>
 					{yTicks.map((tick) => (
 						<div key={tick} className="absolute left-0 right-0 flex items-center" style={{ top: yPos(tick) }}>
-							<span className="text-[10px] text-gray-500 tabular-nums w-10 text-right shrink-0">{tick >= 1000 ? `${tick/1000} 000` : tick}</span>
-							<div className="ml-2 h-px bg-gray-800 flex-1" />
+							<span className="text-[10px] text-gray-400 tabular-nums w-10 text-right shrink-0">{tick >= 1000 ? `${tick/1000} 000` : tick}</span>
+							<div className="ml-2 h-px bg-gray-200 flex-1" />
 						</div>
 					))}
 					<svg className="absolute top-0 bottom-0" style={{ left: 48, right: 0, width: 'calc(100% - 48px)', height: chartH }}>
@@ -122,7 +122,7 @@ export function HeroAnimation() {
 								key={i}
 								cx={`${pt.x * 100}%`}
 								cy={yPos(pt.y)}
-								className={pt.ok ? 'fill-emerald-400' : 'fill-red-400'}
+								className={pt.ok ? 'fill-emerald-500' : 'fill-red-500'}
 								initial={{ opacity: 0, r: 0 }}
 								animate={i < visibleDots ? { opacity: 0.85, r: 4 } : { opacity: 0, r: 0 }}
 								transition={{ duration: 0.15 }}
@@ -133,45 +133,43 @@ export function HeroAnimation() {
 			</div>
 
 			{/* Table header */}
-			<div className="grid px-4 py-1.5 border-b border-gray-800 text-[10px] text-gray-500 font-medium" style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}>
-				<span></span>
-				<span>25+ jobs</span>
-				<span>Duration</span>
-				<span>Triggered by</span>
-				<span>Tag</span>
-			</div>
-
-			{/* Date header */}
 			<motion.div
-				className="px-4 py-1 bg-gray-900 border-b border-gray-800 text-[10px] font-semibold text-gray-300"
+				className="grid px-4 py-1 mt-2 bg-gray-100 border-b border-gray-200 text-[10px] font-medium text-gray-500"
+				style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}
 				initial={{ opacity: 0 }}
 				animate={visibleRows > 0 ? { opacity: 1 } : { opacity: 0 }}
 				transition={{ duration: 0.3 }}
 			>
-				March 12, 2026
+				<span></span>
+				<span>Path</span>
+				<span>Duration</span>
+				<span>Triggered by</span>
+				<span>Tag</span>
 			</motion.div>
 
 			{/* Rows */}
 			{jobRuns.map((job, i) => (
 				<motion.div
 					key={job.id}
-					className="grid px-4 py-1.5 border-b border-gray-800/50 items-center"
+					className="grid px-4 py-1.5 border-b border-gray-100 items-center"
 					style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}
 					initial={{ opacity: 0, y: 5 }}
 					animate={i < visibleRows ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
 					transition={{ duration: 0.2 }}
 				>
 					{job.ok
-						? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-						: <XCircle className="w-3.5 h-3.5 text-red-400" />
+						? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+						: <XCircle className="w-3.5 h-3.5 text-red-500" />
 					}
-					<span className="text-[10px] text-gray-400 truncate">{job.ended}</span>
-					<span className="text-[10px] text-gray-300 tabular-nums">{job.duration}</span>
+					<span className="text-[10px] text-gray-700 truncate font-mono">{job.name}</span>
+					<span className="text-[10px] text-gray-700 tabular-nums">{job.duration}</span>
 					<div className="flex items-center gap-1 truncate">
-						<Calendar className="w-2.5 h-2.5 text-gray-600 shrink-0" />
-						<span className="text-[10px] text-gray-400 truncate font-mono">{job.triggeredBy}</span>
+						{job.triggeredBy === 'Schedule' && <Calendar className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						{job.triggeredBy === 'Webhook' && <Webhook className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						{job.triggeredBy === 'Kafka' && <Radio className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						<span className="text-[10px] text-gray-500 truncate font-mono">{job.triggeredBy}</span>
 					</div>
-					<span className="text-[10px] text-gray-500">{job.tag}</span>
+					<span className="text-[10px] text-gray-400">{job.tag}</span>
 				</motion.div>
 			))}
 		</div>
