@@ -27,7 +27,7 @@ export const stagger = (delay = 0) => ({
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, visual, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -47,7 +47,7 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{visual ? visual : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -127,6 +127,16 @@ export default function TriggersContent({ title, description }) {
 				title="Schedules"
 				desc={<span>Run any script or flow on a <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedule</Link>. Use the visual cron builder to set intervals from every minute to custom expressions. Schedules can be toggled on or off, have error handlers, and support recovery flows for missed runs.</span>}
 				docLink="/docs/core_concepts/scheduling"
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/triggers/platform-triggers-schedules.webm"
+					/>
+				}
 			/>
 
 			{/* ═══════════════ Webhooks & HTTP routes ═══════════════ */}
@@ -135,6 +145,16 @@ export default function TriggersContent({ title, description }) {
 				desc={<span>Every script and flow automatically gets a <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook endpoint</Link> (sync and async). For more control, <Link to="/docs/core_concepts/http_routing" className="text-blue-600 dark:text-blue-400 hover:underline">HTTP routes</Link> let you define custom REST endpoints with path parameters, method routing, and <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">preprocessors</Link> to transform incoming requests before execution.</span>}
 				docLink="/docs/core_concepts/webhooks"
 				reverse
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/triggers/platform-triggers-webhooks.webm"
+					/>
+				}
 			/>
 
 			{/* ═══════════════ Message queues & streaming ═══════════════ */}
@@ -178,6 +198,16 @@ export default function TriggersContent({ title, description }) {
 				desc={<span><Link to="/docs/core_concepts/postgres_triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Postgres triggers</Link> let you run a script or flow whenever a row is inserted, updated, or deleted. Windmill uses logical replication (CDC) to capture changes in real time without polling. Configure which tables and operations to watch from the UI.</span>}
 				docLink="/docs/core_concepts/postgres_triggers"
 				reverse
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/triggers/platform-triggers-postgres.webm"
+					/>
+				}
 			/>
 
 			{/* ═══════════════ Other triggers ═══════════════ */}
