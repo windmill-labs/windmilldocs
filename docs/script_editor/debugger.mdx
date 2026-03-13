@@ -1,0 +1,55 @@
+---
+description: How do I debug scripts in Windmill? Use the built-in debugger for Python and TypeScript (Bun) with breakpoints, variable inspection, call stack, and console.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Script debugger
+
+Windmill's [script editor](./index.mdx) includes a built-in debugger for [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [Bun (TypeScript)](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) scripts. It lets you set breakpoints, step through code, inspect variables, view the call stack, and evaluate expressions in an interactive console.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/debugger.mp4"
+/>
+
+## Starting a debug session
+
+1. Open a Python or TypeScript (Bun) script in the script editor.
+2. Click the **Debug** button in the toolbar (next to the run controls).
+3. The editor enters debug mode, indicated by the **Exit Debug** button and debug controls appearing in the toolbar.
+
+## Breakpoints
+
+Click the gutter (left margin) next to a line number to toggle a breakpoint. A red dot appears to indicate an active breakpoint. When the script execution reaches a breakpoint, it pauses and the current line is highlighted.
+
+## Debug controls
+
+Once paused at a breakpoint, use the toolbar controls to:
+
+- **Continue** — resume execution until the next breakpoint or end of script.
+- **Step over** — execute the current line and move to the next one.
+- **Step into** — enter a function call on the current line.
+- **Step out** — run until the current function returns.
+- **Stop** — terminate the debug session.
+
+## Variables
+
+The **Variables** panel displays all local and global variables in the current scope. Values update in real time as you step through code. Use the filter input to search for specific variables.
+
+## Call stack
+
+The **Call Stack** panel shows the current execution stack, listing each function frame with its file and line number. Click a frame to navigate to that location in the editor.
+
+## Console
+
+The **Console** panel at the bottom of the editor allows you to evaluate expressions in the current scope while paused. Type an expression and press Enter to see its result. Use the up arrow to recall previous expressions.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Script editor"
+		description="Write and manage scripts in Windmill's editor with support for TypeScript, Python, Go, PHP, Bash, SQL, and more."
+		href="/docs/script_editor"
+	/>
+</div>
