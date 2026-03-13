@@ -66,3 +66,20 @@ The JWT token associated to your GitHub app installation is sensitive and has th
 	controls
 	src="/videos/github_app_installation.mp4"
 />
+
+### GitHub Enterprise Server
+
+Organizations using GitHub Enterprise Server (or any self-hosted GitHub instance) can register their own GitHub App instead of using the Windmill-managed one. This removes the dependency on `stats.windmill.dev` — tokens are exchanged directly with your GHES instance using self-managed JWT token generation.
+
+This feature is [Enterprise Edition](/pricing) only and is configured at the instance level by a [superadmin](../core_concepts/16_roles_and_permissions/index.mdx#superadmin).
+
+To set up a self-managed GitHub App for GHES:
+
+1. Register a new GitHub App on your GitHub Enterprise Server instance
+2. In Windmill [Instance Settings](../advanced/18_instance_settings/index.mdx#github-enterprise-app), go to **Advanced > GitHub Enterprise App** and enable "Self-managed GitHub App (for GHES or custom GitHub App)"
+3. Fill in the app details: Base URL, App ID, App Slug, Client ID, and Private Key (PEM)
+4. Install the GitHub App to your organization on your GHES instance
+
+Once configured, the GHES GitHub App can be used for [Git sync](../advanced/11_git_sync/index.mdx) authentication in the same way as the managed GitHub App. Host-based installation filtering ensures tokens are scoped to the correct GitHub instance, preventing token leakage across instances.
+
+![GitHub Enterprise App settings](./ghes_app_settings.png.webp)

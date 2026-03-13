@@ -519,3 +519,19 @@ When minimal telemetry is disabled, the following is also collected:
 - job usage (language, total duration, count)
 
 You can "Send usage" to manually send usage data to Windmill and monitor it from the [Customer portal](../../misc/7_plans_details/index.mdx#windmill-customer-portal). You can also "Download usage" to get an encrypted copy of the telemetry data as a `.enc` file. This is useful for air-gapped instances that cannot send telemetry directly — the encrypted file can be sent manually to Windmill.
+
+## GitHub Enterprise App
+
+Configure a self-managed GitHub App for GitHub Enterprise Server (or any self-hosted GitHub instance) to enable [Git sync](../11_git_sync/index.mdx) without relying on the Windmill-managed GitHub App via `stats.windmill.dev`.
+
+This setting is found under **Advanced > GitHub Enterprise App** in Instance Settings and is only available on [Enterprise Edition](/pricing).
+
+| Field | Description |
+|-------|-------------|
+| Base URL | The base URL of your GitHub Enterprise Server instance |
+| App ID | The ID of your registered GitHub App |
+| App Slug | The slug of your GitHub App |
+| Client ID | The client ID of your GitHub App |
+| Private Key (PEM) | The private key generated for your GitHub App |
+
+For setup instructions, see [GitHub Enterprise Server](../../integrations/git_repository.mdx#github-enterprise-server).
