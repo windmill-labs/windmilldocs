@@ -10,6 +10,7 @@ import { ArrowRight, BookOpen, Copy, Check } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import SelfHostHeroAnimation from '../../components/products/SelfHostHeroAnimationA';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -123,10 +124,7 @@ export default function SelfHostContent({ title, description }) {
 					</motion.div>
 
 					<motion.div {...stagger(0.2)} className="hidden lg:block">
-						{/* Placeholder: architecture diagram showing server, workers, PostgreSQL, and LSP components connected, ~1200x800px, save as /static/img/money-pages/self-host-architecture.webp */}
-						<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Architecture diagram coming soon</span>
-						</div>
+						<SelfHostHeroAnimation />
 					</motion.div>
 				</div>
 			</div>
