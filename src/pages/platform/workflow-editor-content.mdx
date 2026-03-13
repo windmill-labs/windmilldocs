@@ -501,6 +501,23 @@ export default function WorkflowEditorContent({ title, description }) {
 				}
 			/>
 
+			<Section
+				title="Real-time logs and instant testing"
+				desc={<span>Flows can be tested directly from the editor. Each step streams its <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">logs</Link> in real time, and you can inspect inputs and outputs at every step. Failed runs can be restarted from any step without re-running the entire flow.</span>}
+				docLink="/docs/core_concepts/jobs"
+				reverse
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/workflow-editor/platform-flow-realtime-logs.webm"
+					/>
+				}
+			/>
+
 			{/* ═══════════════ Triggers ═══════════════ */}
 			<TriggerSection />
 
