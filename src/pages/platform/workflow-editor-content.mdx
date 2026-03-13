@@ -27,7 +27,7 @@ export const stagger = (delay = 0) => ({
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, visual, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -47,7 +47,7 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{visual ? visual : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -423,14 +423,21 @@ export default function WorkflowEditorContent({ title, description }) {
 			</div>
 
 			{/* ═══════════════ Every step is a script ═══════════════ */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn}>
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Every step is a script</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Each step in a flow is a real script in TypeScript, Python, or any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">supported language</Link>, with the same <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">editor</Link>, LSP autocompletion, and resource access. Windmill handles execution, error propagation, and observability. If you prefer code over drag-and-drop, <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> lets you define the same logic in a single Python or TypeScript file.
-					</p>
-				</motion.div>
-			</div>
+			<Section
+				title="Every step is a script"
+				desc={<span>Each step in a flow is a real script in TypeScript, Python, or any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">supported language</Link>, with the same <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">editor</Link>, LSP autocompletion, and resource access. Windmill handles execution, error propagation, and observability. If you prefer code over drag-and-drop, <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> lets you define the same logic in a single Python or TypeScript file.</span>}
+				docLink="/docs/getting_started/scripts_quickstart"
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm"
+					/>
+				}
+			/>
 
 			{/* ═══════════════ Link steps with dynamic expressions ═══════════════ */}
 			<Section
@@ -438,6 +445,16 @@ export default function WorkflowEditorContent({ title, description }) {
 				desc={<span>Steps are linked by referencing previous outputs with <code>results.step_name</code> or JavaScript expressions. The editor provides <Link to="/docs/flows/editor_components" className="text-blue-600 dark:text-blue-400 hover:underline">autocompletion</Link> for available variables and validates expressions before running.</span>}
 				docLink="/docs/flows/editor_components"
 				reverse
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/workflow-editor/platform-flow-dynamic-expressions.webm"
+					/>
+				}
 			/>
 
 			{/* ═══════════════ Step types (grid) ═══════════════ */}
@@ -472,6 +489,16 @@ export default function WorkflowEditorContent({ title, description }) {
 				title="Shared resources"
 				desc={<span>Flow steps share the same <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> system as standalone scripts. Declare a parameter as a resource type and the UI shows a dropdown of configured connections. Credentials are centrally managed, encrypted at rest, and injected at runtime. A single database or API connection is configured once and reused across every step that needs it.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/workflow-editor/platform-flow-shared-resources.webm"
+					/>
+				}
 			/>
 
 			{/* ═══════════════ Triggers ═══════════════ */}
@@ -483,16 +510,23 @@ export default function WorkflowEditorContent({ title, description }) {
 				desc={<span>Each step can be configured independently with <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> (fixed or exponential backoff), <Link to="/docs/flows/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">concurrency limits</Link>, <Link to="/docs/flows/cache" className="text-blue-600 dark:text-blue-400 hover:underline">result caching</Link>, timeouts, <Link to="/docs/flows/early_stop" className="text-blue-600 dark:text-blue-400 hover:underline">early stop conditions</Link>, <Link to="/docs/flows/priority" className="text-blue-600 dark:text-blue-400 hover:underline">priority</Link>, and <Link to="/docs/flows/step_mocking" className="text-blue-600 dark:text-blue-400 hover:underline">step mocking</Link> for development. All settings are opt-in per step from the flow editor.</span>}
 				docLink="/docs/flows/flow_editor"
 				reverse
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/workflow-editor/platform-flow-step-level-reliability.webm"
+					/>
+				}
 			/>
 
 			{/* ═══════════════ Versioning, workers & observability ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-8">
 					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-						{/* Placeholder: screenshot of the version history panel showing diffs between flow versions, ~800x400px, save as /static/img/money-pages/card-versioning.webp */}
-						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<img src="/img/money-pages/deployment-history.webp" alt="Deployment and versioning" className="w-full h-40 object-cover" />
 						<div className="flex flex-col p-6 flex-1">
 							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Deployment and versioning</h3>
 							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each deployment creates a new immutable version. View history, compare diffs, and promote flows from staging to production.</p>
@@ -515,10 +549,7 @@ export default function WorkflowEditorContent({ title, description }) {
 						</div>
 					</div>
 					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-						{/* Placeholder: screenshot of the runs page showing flow execution with step-level logs and status, ~800x400px, save as /static/img/money-pages/card-observability.webp */}
-						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<img src="/img/money-pages/monitoring.webp" alt="Built-in granular monitoring" className="w-full h-40 object-cover" />
 						<div className="flex flex-col p-6 flex-1">
 							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Built-in granular monitoring</h3>
 							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Logs stream in real time. Inputs and outputs are inspectable at every step. Runs can be restarted from any step.</p>
