@@ -1,0 +1,162 @@
+---
+slug: webmux
+authors: [farhadgoulamabasse]
+tags: ['ai', 'developer-tools', 'open-source', 'agents']
+description: 'Webmux is the web dashboard every engineer at Windmill uses to run parallel AI coding agents across git worktrees.'
+title: 'Webmux: a web dashboard for parallel AI coding agents'
+image: ./thumbnail.webp
+---
+
+import createVideo from './create.mp4';
+import commentsAndCiVideo from './ci.mp4';
+import healthVideo from './health.mp4';
+import demoVideo from './demo.mp4';
+import linearVideo from './linear.mp4';
+
+
+# Webmux: a web dashboard for parallel AI coding agents
+
+Every engineer at Windmill runs multiple AI coding agents in parallel throughout the day. An agent implementing a new API endpoint, another fixing a frontend bug, a third refactoring a service, each in its own git worktree, each with its own dev servers, each producing PRs that need monitoring. Managing all of this across scattered terminal windows and browser tabs was painful.
+
+So we built [**Webmux**](https://webmux.dev/), an open-source web dashboard that lets you create, monitor, and manage parallel AI agents from a single browser tab. It is directly inspired by [workmux](https://workmux.raine.dev/), the excellent terminal-first CLI tool by [Raine](https://github.com/raine). We loved the core idea, one worktree, one tmux session, one agent per task. We wanted to bring it to a web interface with richer visuals, embedded terminals, and integrated PR/CI monitoring.
+
+Webmux is open source, check it out on [GitHub](https://github.com/windmill-labs/webmux) or visit [webmux.dev](https://webmux.dev/) to get started.
+
+<!--truncate-->
+
+## Why a web UI
+
+Workmux gets the fundamentals right. Each task gets an isolated git worktree, a dedicated tmux session, automatic lifecycle management, and optional sandboxing. It's a great tool if you live in the terminal.
+
+But as the number of parallel agents grew, we kept running into the same friction points:
+
+- **Switching context** between tmux windows to check agent progress.
+- **Opening GitHub** in a separate tab to see if a PR was opened, if CI passed, if there were review comments.
+- **Checking service health** manually, did the dev server in worktree #3 crash again?
+- **Losing track** of which agent was doing what across 5+ concurrent worktrees.
+
+Webmux solves this by putting everything in one browser tab: live terminals, PR status, CI results, service health, and notifications.
+
+## How it works
+
+### One-click worktree creation
+
+Pick a profile, name a branch, write a prompt. Webmux handles the rest:
+
+<video
+    controls
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="w-full rounded-lg border-2 dark:border-gray-800 my-4"
+>
+    <source src={createVideo} />
+    Your browser does not support the video tag.
+    <a href={createVideo}>Download the video</a>.
+</video>
+
+1. Creates a [git worktree](https://git-scm.com/docs/git-worktree).
+2. Allocates ports for dev servers (backend, frontend, etc.).
+3. Spins up a tmux session with the configured pane layout.
+4. Starts the AI agent (Claude, Codex, or others) with the prompt and environment variables.
+5. Runs any `postCreate` lifecycle hook (install dependencies, seed data, etc.).
+
+All of this is driven by a single `.webmux.yaml` config file at the root of your project.
+
+### PR and CI monitoring
+
+Webmux polls GitHub to track PRs for each worktree's branch. When an agent opens a PR, you see it immediately in the dashboard with:
+
+<video
+    controls
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="w-full rounded-lg border-2 dark:border-gray-800 my-4"
+>
+    <source src={commentsAndCiVideo} />
+    Your browser does not support the video tag.
+    <a href={commentsAndCiVideo}>Download the video</a>.
+</video>
+
+- PR state (open, merged, closed).
+- CI check status and details: click through to see failed test logs.
+- Review comments displayed inline, so you can read code review feedback without leaving the dashboard.
+
+### Service health
+
+Each worktree can define services with allocated ports. Webmux periodically health-checks these ports and displays badges: green if the dev server is up, red if it crashed. At a glance, you know which worktrees have healthy environments and which need attention.
+
+<video
+    controls
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="w-full rounded-lg border-2 dark:border-gray-800 my-4"
+>
+    <source src={healthVideo} />
+    Your browser does not support the video tag.
+    <a href={healthVideo}>Download the video</a>.
+</video>
+
+### Sandboxed agents
+
+The `sandbox` profile runs agents inside Docker containers instead of on the host. Set `runtime: docker` in your profile and Webmux handles the rest:
+
+- Mounts git credentials (`~/.gitconfig`, `~/.ssh`, `~/.config/gh`) read-only so the agent can push and open PRs.
+- Mounts AI credentials (`~/.claude`, `~/.claude.json`, `~/.codex`) so Claude Code and Codex work out of the box.
+- Forwards service ports on loopback (`127.0.0.1`) so dev servers are accessible from the browser without being exposed externally.
+- Runs as your host UID/GID so file ownership stays consistent across host and container.
+- Passes environment variables listed in `envPassthrough` (API keys, cloud credentials, etc.).
+
+This gives agents full autonomy (install packages, run servers, execute tests) without risking your host environment.
+
+### Linear integration
+
+We use [Linear](https://linear.app/) for issue tracking at Windmill, and Webmux brings it right into the dashboard. Your can browse your backlog, search by title, preview the full issue details, and hit **Implement** to spin up a worktree for it in one click.
+
+<video
+    controls
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="w-full rounded-lg border-2 dark:border-gray-800 my-4"
+>
+    <source src={linearVideo} />
+    Your browser does not support the video tag.
+    <a href={linearVideo}>Download the video</a>.
+</video>
+
+## Architecture
+
+The stack is intentionally simple:
+
+- **Backend**: A single [Bun](https://bun.sh/) server that orchestrates git, tmux, Docker, and the GitHub CLI. Clean adapter/service/domain layering: adapters handle I/O (git commands, tmux sessions, Docker containers), services implement business logic (lifecycle management, PR monitoring, reconciliation), and the domain layer holds pure types and policies.
+- **Frontend**: [Svelte 5](https://svelte.dev/) with xterm.js for terminal rendering.
+
+No database. The only external services are GitHub (for PRs and CI) and optionally Linear (for issue tracking). The entire state is derived from git and tmux.
+
+Everything is configured through a single `.webmux.yaml` at the root of your project. Key fields include: `services` to declare dev servers with auto-allocated ports, `profiles` to define pane layouts and choose between `runtime: host` or `runtime: docker`, and `lifecycleHooks` (`postCreate`, `preRemove`) to run setup and teardown scripts per worktree.
+
+## How we use it at Windmill
+
+Windmill has specific infrastructure needs: each worktree requires its own isolated database so agents never collide. The `postCreate` hook in `.webmux.yaml` handles this: it provisions a fresh Postgres database per worktree and runs migrations automatically. We also have profiles that clone an already-seeded database (with test data, sample flows, pre-configured workspaces) versus starting from a blank slate. This way each engineer picks the exact starting point they need for a given task through the profile selector, without any manual setup.
+
+<video
+    controls
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="w-full rounded-lg border-2 dark:border-gray-800 my-4"
+>
+    <source src={demoVideo} />
+    Your browser does not support the video tag.
+    <a href={demoVideo}>Download the video</a>.
+</video>
+
+Webmux is open source. Check it out on [GitHub](https://github.com/windmill-labs/webmux) or visit [webmux.dev](https://webmux.dev/) to get started.
