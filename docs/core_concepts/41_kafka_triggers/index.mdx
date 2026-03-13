@@ -174,7 +174,7 @@ When auto-commit is disabled:
 - If the trigger restarts before you commit, unacknowledged messages will be re-delivered.
 - You must call the SDK helper from your script to commit offsets.
 
-The preprocessor event payload includes `trigger_path`, `partition` and `offset` fields that you pass to the commit function. The SDK call stores the offset in the database and returns immediately. Every 5 seconds, the trigger's consumer picks up stored offsets and commits the highest one for each topic/partition pair to Kafka.
+The [preprocessor](../43_preprocessors/index.mdx) event payload includes `trigger_path`, `partition` and `offset` fields that you pass to the commit function. The SDK call stores the offset in the database and returns immediately. Every 5 seconds, the trigger's consumer picks up stored offsets and commits the highest one for each topic/partition pair to Kafka.
 
 <Tabs>
 <TabItem value="TypeScript (Bun)">
