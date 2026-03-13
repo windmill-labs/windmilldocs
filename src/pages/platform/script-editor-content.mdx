@@ -795,45 +795,90 @@ export default function ScriptEditorContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Write code, get infrastructure</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Windmill's code editor is a full Monaco editor in the browser with LSP autocompletion, linting, and formatting. Write a function, and Windmill turns it into a production-ready script with a UI, an API endpoint, and managed infrastructure.
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
+						Windmill provides a full-featured <Link to="/docs/script_editor" className="text-blue-600 dark:text-blue-400 hover:underline">code editor</Link> in the browser where you write scripts like in a classic IDE. Built on Monaco, it includes LSP autocompletion, linting, and formatting.
 					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+						From a single script, Windmill automatically generates the infrastructure to make it production-ready:
+					</p>
+					<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+						{[
+							{ icon: Braces, label: 'Auto-generated UI' },
+							{ icon: Globe, label: 'API endpoint' },
+							{ icon: CalendarClock, label: 'Triggers' },
+							{ icon: Play, label: 'Instant testing' },
+							{ icon: Rocket, label: 'One-click deployment' },
+							{ icon: GitBranch, label: 'Versioning' },
+							{ icon: Server, label: 'Dedicated workers' },
+							{ icon: Activity, label: 'Monitoring' },
+						].map((item) => (
+							<div key={item.label} className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 p-3">
+								<div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+									<item.icon className="w-4 h-4 text-blue-500" />
+								</div>
+								<p className="text-sm font-medium text-gray-900 dark:text-white">{item.label}</p>
+							</div>
+						))}
+					</div>
 				</motion.div>
 			</div>
 
 			{/* ═══════════════ What you can build ═══════════════ */}
 			<Section
-				title="Standalone scripts"
-				desc={<span>A single function in TypeScript (Bun, Deno), Python, Go, Bash, SQL, or <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ other languages</Link> becomes a <Link to="/docs/script_editor" className="text-blue-600 dark:text-blue-400 hover:underline">standalone script</Link> with its own auto-generated UI, API endpoint, webhook, and schedule. Each script is versioned, testable from the editor, and deployable in one click.</span>}
-				docLink="/docs/script_editor"
-				visual={<CodeEditor />}
+				title="Write in any language"
+				desc={<span>Write your logic in TypeScript (Bun, Deno), Python, Go, Bash, SQL, or <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ other languages</Link>. Windmill handles <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">dependencies</Link> under the hood: it parses your imports, resolves packages from npm, PyPI, or Go modules, and generates a per-script lockfile. Workers cache dependencies so execution stays fast.</span>}
+				docLink="/docs/getting_started/scripts_quickstart"
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/script-editor/platform-script-20languages.webm"
+					/>
+				}
 			/>
 
-			<Section
+			{/* <Section
 				title="Workflows as code"
 				desc={<span>For multi-step logic, Windmill supports <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> in Python and TypeScript. Annotate functions with <code>@task</code> and each one runs as a distinct job with its own logs and timeline. The result is the same as a visual flow, with full observability, but written entirely in the code editor.</span>}
 				docLink="/docs/core_concepts/workflows_as_code"
 				reverse
-			/>
+			/> */}
 
 			{/* ═══════════════ Built-in infrastructure ═══════════════ */}
-			<Section
-				title="Managed dependencies"
-				desc={<span>Windmill parses your imports, resolves packages from npm, PyPI, or Go modules, and generates a per-script <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">lockfile</Link>. Workers cache dependencies for fast execution. Private repositories are supported.</span>}
-				docLink="/docs/advanced/imports"
-			/>
-
 			<Section
 				title="Auto-generated UIs"
 				desc={<span>Every script gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link> from its function signature. Strings become text inputs, numbers become sliders, resource types become connection pickers.</span>}
 				docLink="/docs/core_concepts/auto_generated_uis"
 				reverse
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/script-editor/platform-script-auto-generated-ui.webm"
+					/>
+				}
 			/>
 
 			<Section
 				title="Shared resources"
 				desc={<span>Parameters typed as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> show a dropdown of configured connections in the UI. Credentials are centrally managed, encrypted at rest, and injected at runtime. A database, API key, or OAuth2 connection is configured once and reused across any script that needs it.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/script-editor/platform-script-shared-resources.webm"
+					/>
+				}
 			/>
 
 			<Section
@@ -841,19 +886,42 @@ export default function ScriptEditorContent({ title, description }) {
 				desc="Scripts can be tested directly from the editor. Logs stream in real-time and results are displayed instantly."
 				docLink="/docs/core_concepts/jobs"
 				reverse
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/script-editor/platform-script-realtime-logs.webm"
+					/>
+				}
 			/>
 
 			{/* ═══════════════ Triggers ═══════════════ */}
 			<TriggerSection />
 
+			<Section
+				title="API endpoint for every script"
+				desc={<span>Every deployed script is automatically exposed as a <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">REST endpoint</Link>. Call any script programmatically with a simple HTTP request, authenticate with tokens, and integrate Windmill scripts into any external system or CI/CD pipeline without extra configuration.</span>}
+				docLink="/docs/core_concepts/webhooks"
+				visual={
+					<video
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						autoPlay
+						loop
+						muted
+						playsInline
+						src="/img/platform/script-editor/platform-script-api-endpoint.webm"
+					/>
+				}
+			/>
+
 			{/* ═══════════════ Deployment, workers & observability ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-8">
 					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-						{/* Placeholder: screenshot of the version history panel showing diffs between script versions, ~800x400px, save as /static/img/money-pages/card-versioning.webp */}
-						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<img src="/img/money-pages/deployment-history.webp" alt="Deployment and versioning" className="w-full h-40 object-cover" />
 						<div className="flex flex-col p-6 flex-1">
 							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">One click deployment and versioning</h3>
 							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Deploy and your script is immediately available. Each save creates a new immutable version with a unique hash.</p>
@@ -876,10 +944,7 @@ export default function ScriptEditorContent({ title, description }) {
 						</div>
 					</div>
 					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-						{/* Placeholder: screenshot of the runs page showing job list with status, duration, and filters, ~800x400px, save as /static/img/money-pages/card-observability.webp */}
-						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<img src="/img/money-pages/monitoring.webp" alt="Built-in granular monitoring" className="w-full h-40 object-cover" />
 						<div className="flex flex-col p-6 flex-1">
 							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Built-in granular monitoring</h3>
 							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Every execution is logged with its inputs, outputs, duration, and status. Run history is searchable and filterable.</p>
