@@ -1,0 +1,238 @@
+---
+title: "Local development"
+description: "How do I develop Windmill scripts and flows locally? Use the CLI, VS Code extension, and AI coding assistants to build and test from your own environment."
+---
+
+import React, { useRef, useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, BookOpen, Terminal, FileCode, FolderSync, Plug, ChevronRight, Code2, Workflow, LayoutDashboard, Copy, Check } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LocalDevHeroAnimation from '../../components/products/LocalDevHeroAnimation';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Copy snippet ── */}
+
+export function CopySnippet({ text }) {
+	const [copied, setCopied] = useState(false);
+	const handleCopy = () => {
+		navigator.clipboard.writeText(text);
+		setCopied(true);
+		setTimeout(() => setCopied(false), 2000);
+	};
+	return (
+		<div className="mb-6 inline-flex items-center gap-2 rounded-lg bg-gray-900 dark:bg-gray-900 border border-gray-700 dark:border-gray-700 px-4 py-2.5 font-mono text-sm text-gray-200">
+			<Terminal className="w-4 h-4 text-gray-500 flex-shrink-0" />
+			<span>{text}</span>
+			<button onClick={handleCopy} className="ml-2 p-1 rounded hover:bg-gray-700 transition-colors flex-shrink-0" aria-label="Copy to clipboard">
+				{copied
+					? <Check className="w-3.5 h-3.5 text-green-400" />
+					: <Copy className="w-3.5 h-3.5 text-gray-500 hover:text-gray-300" />
+				}
+			</button>
+		</div>
+	);
+}
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, reverse, children }) {
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+			>
+				<div className={reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{image ? (
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Main page ── */}
+
+export default function LocalDevContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Local development</p>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Develop locally, deploy to Windmill
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-6">
+							The Windmill CLI syncs your workspace to a local folder. Edit scripts and flows in any editor, push changes back with one command.
+						</p>
+						<CopySnippet text="npm install -g windmill-cli" />
+						<HeroCTAButtons />
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<LocalDevHeroAnimation />
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Local development for Windmill ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Local development for Windmill</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Write and test scripts in your own editor, IDE, or AI coding assistant. The Windmill CLI keeps your local files and remote workspace in sync.
+					</p>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ Sync pull / push ═══════════════ */}
+			<Section
+				title="Sync your workspace to a local folder"
+				desc={<span><code>wmill sync pull</code> downloads your entire workspace as plain files: scripts, <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link>, apps, resources, triggers, and variables. Edit anything locally, then <code>wmill sync push</code> to deploy. Both commands support <Link to="/docs/advanced/cli/sync" className="text-blue-600 dark:text-blue-400 hover:underline">path filters</Link> to sync specific folders.</span>}
+				docLink="/docs/advanced/cli/sync"
+			/>
+
+			{/* ═══════════════ VS Code extension ═══════════════ */}
+			<Section
+				title="VS Code extension"
+				desc={<span>The Windmill <Link to="/docs/cli_local_dev/vscode-extension" className="text-blue-600 dark:text-blue-400 hover:underline">VS Code extension</Link> previews auto-generated UIs while you write scripts, tests scripts and flows from the editor, and validates flow YAML in real time. Bidirectional editing lets you switch between the YAML file and a visual flow editor.</span>}
+				docLink="/docs/cli_local_dev/vscode-extension"
+				reverse
+			/>
+
+			{/* ═══════════════ Built-in skills and AGENTS.md ═══════════════ */}
+			<Section
+				title="Built-in skills and AGENTS.md"
+				desc={<span>Run <code>wmill init</code> to generate <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">context files</Link> and skill files for Claude Code, Cursor, and other AI tools. The generated <code>AGENTS.md</code> teaches assistants Windmill's file structure, script conventions, and deployment workflow. AI tools can also connect to a workspace through the <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP server</Link> to execute scripts, manage resources, and monitor jobs directly.</span>}
+				docLink="/docs/misc/guides/local_dev_with_ai"
+			/>
+
+			{/* ═══════════════ Create scripts, flows, and apps ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Create scripts, flows, and apps from the CLI</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">Scaffold new items locally with one command. The CLI generates the file structure Windmill needs for deployment.</p>
+				</motion.div>
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+					{[
+						{
+							icon: Code2,
+							title: 'Script',
+							command: 'wmill script bootstrap <path> <lang>',
+							files: ['fetch_orders.py', 'fetch_orders.script.yaml', 'fetch_orders.lock'],
+							desc: <span>Scaffold a script in any of <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ languages</Link> with its metadata and lockfile.</span>,
+							docLink: '/docs/advanced/cli/script',
+						},
+						{
+							icon: Workflow,
+							title: 'Flow',
+							command: 'wmill flow bootstrap <path>',
+							files: ['flow.yaml', 'step_1.inline_script.ts', 'step_2.inline_script.py'],
+							desc: <span>Scaffold a <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> folder with a YAML definition and inline scripts.</span>,
+							docLink: '/docs/advanced/cli/flow',
+						},
+						{
+							icon: LayoutDashboard,
+							title: 'Full-code app',
+							command: 'wmill app new',
+							files: ['App.tsx', 'raw_app.yaml', 'backend/get_users.ts'],
+							desc: <span>Scaffold a <Link to="/docs/getting_started/full_code_apps_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">React or Svelte app</Link> with backend runnables and a dev server.</span>,
+							docLink: '/docs/full_code_apps/cli_workflow',
+						},
+					].map((item, i) => (
+						<motion.div
+							key={item.title}
+							{...fadeIn}
+							transition={{ duration: 0.5, delay: i * 0.1 }}
+							className="flex flex-col p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950"
+						>
+							<div className="flex items-center gap-2.5 mb-3">
+								<item.icon className="w-5 h-5 text-blue-500" />
+								<h3 className="text-lg font-semibold text-gray-900 dark:text-white">{item.title}</h3>
+							</div>
+							<div className="rounded-lg bg-gray-900 dark:bg-gray-900 px-3 py-2 mb-3 font-mono text-[11px] text-green-400 whitespace-nowrap overflow-x-auto">
+								<span className="text-gray-500">$ </span>{item.command}
+							</div>
+							<div className="mb-3 font-mono text-[11px] text-gray-500 dark:text-gray-400 space-y-0.5">
+								{item.files.map(f => <div key={f}>  {f}</div>)}
+							</div>
+							<p className="text-sm text-gray-600 dark:text-gray-300 mb-3 flex-1">{item.desc}</p>
+							<Link
+								to={item.docLink}
+								className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline mt-auto"
+							>
+								<BookOpen className="w-3.5 h-3.5" /> Read the docs
+							</Link>
+						</motion.div>
+					))}
+				</div>
+			</div>
+
+			{/* ═══════════════ Run locally ═══════════════ */}
+			<Section
+				title="Run and debug locally"
+				desc={<span>Execute Windmill scripts on your machine with access to remote <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> and state. Set <code>WM_TOKEN</code> and <code>BASE_INTERNAL_URL</code> to connect to a running instance, or use <Link to="/docs/advanced/local_development#mocked-api-files" className="text-blue-600 dark:text-blue-400 hover:underline">mocked API files</Link> to work offline. Debug with VS Code breakpoints or JetBrains run configurations.</span>}
+				docLink="/docs/advanced/local_development/run_locally"
+				reverse
+			/>
+
+			{/* ═══════════════ Git integration ═══════════════ */}
+			<Section
+				title="Deploy and sync to Git"
+				desc={<span><code>wmill sync push</code> deploys to your Windmill workspace and, when <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git Sync</Link> is enabled, automatically commits the changes to your repository. Changes can also be pulled from Git via CI/CD pipelines, making Git the single source of truth. For staging and production workflows, see <Link to="/platform/deployment-versioning" className="text-blue-600 dark:text-blue-400 hover:underline">versioning and deployment</Link>.</span>}
+				docLink="/docs/advanced/git_sync"
+				reverse
+			/>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'Do I need the CLI to develop locally?', textAnswer: 'The CLI is the primary tool for syncing a workspace to a local folder. Once synced, you can edit files in any editor. The VS Code extension adds previews and testing on top.' },
+				{ question: 'Which editors are supported?', textAnswer: 'Any text editor works for editing scripts and flows as files. The VS Code extension provides the richest experience with live previews, YAML validation, and direct testing. Cursor is also supported.' },
+				{ question: 'Can AI assistants create flows?', textAnswer: 'Yes. The wmill init command generates skill files that teach AI assistants how to write valid flow YAML. Combined with the VS Code YAML linter, AI tools can create and iterate on flows with real-time validation feedback.' },
+				{ question: 'How does the MCP server differ from the CLI?', textAnswer: 'The CLI syncs files between your local directory and a workspace. The MCP server gives AI tools direct API access to a workspace: executing scripts, managing resources, and monitoring jobs. They complement each other.' },
+				{ question: 'Can I run scripts locally without a Windmill instance?', textAnswer: 'You can run script code locally like any regular script. To access Windmill features like resources and state, you need a running instance or can use mocked API files to simulate the Windmill environment.' },
+				{ question: 'How do I set up a local development workflow?', textAnswer: 'Install the CLI with npm install -g windmill-cli, run wmill workspace add to connect to your instance, then wmill sync pull to clone the workspace. Optionally run wmill init for AI context files and install the VS Code extension.' },
+			]} />
+
+			<ProductCTA />
+		</div>
+	);
+}

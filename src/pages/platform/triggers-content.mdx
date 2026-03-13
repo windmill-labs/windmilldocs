@@ -1,0 +1,234 @@
+---
+title: "Built in triggers for your scripts and flows"
+description: "How do I trigger scripts and flows in Windmill? Schedules, webhooks, Kafka, Postgres CDC, WebSockets, emails, and more."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, BookOpen, Calendar, Webhook, Mail, Route, Radio, Database, Waypoints, MessageSquare, Cloud, Rss, Globe, Plug, Zap } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import TriggerGrid from '../../components/use-cases/TriggerGrid';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import TriggerHeroAnimation from '../../components/products/TriggerHeroAnimation';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, reverse, children }) {
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+			>
+				<div className={reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{image ? (
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Main page ── */}
+
+export default function TriggersContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Triggers</p>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Every way to start a script or flow
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Schedules, webhooks, Kafka, Postgres CDC, WebSockets, emails, and more. No extra configuration needed.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<TriggerHeroAnimation />
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Triggers for scripts and flows ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Triggers for scripts and flows</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Every trigger type works with both <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> and <Link to="/platform/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link>. Attach one or many triggers to any runnable. A single script can be scheduled on a cron, exposed via webhook, and listening on a Kafka topic at the same time.
+					</p>
+				</motion.div>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+					<motion.div {...stagger(0.1)}>
+						<div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 h-full">
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+								<Link to="/platform/script-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Scripts</Link>
+							</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-300">
+								Single functions in TypeScript, Python, Go, SQL, Bash, and other languages. Attach any trigger to run them on events, schedules, or API calls.
+							</p>
+						</div>
+					</motion.div>
+					<motion.div {...stagger(0.2)}>
+						<div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 h-full">
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+								<Link to="/platform/flow-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Flows</Link>
+							</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-300">
+								Multi-step workflows that chain scripts into DAGs with branching, loops, retries, and approval steps. Triggered the same way as scripts.
+							</p>
+						</div>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Schedules ═══════════════ */}
+			<Section
+				title="Schedules"
+				desc={<span>Run any script or flow on a <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedule</Link>. Use the visual cron builder to set intervals from every minute to custom expressions. Schedules can be toggled on or off, have error handlers, and support recovery flows for missed runs.</span>}
+				docLink="/docs/core_concepts/scheduling"
+			/>
+
+			{/* ═══════════════ Webhooks & HTTP routes ═══════════════ */}
+			<Section
+				title="Webhooks and HTTP routes"
+				desc={<span>Every script and flow automatically gets a <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook endpoint</Link> (sync and async). For more control, <Link to="/docs/core_concepts/http_routing" className="text-blue-600 dark:text-blue-400 hover:underline">HTTP routes</Link> let you define custom REST endpoints with path parameters, method routing, and <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">preprocessors</Link> to transform incoming requests before execution.</span>}
+				docLink="/docs/core_concepts/webhooks"
+				reverse
+			/>
+
+			{/* ═══════════════ Message queues & streaming ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-6">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Message queues and streaming</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Consume events from message brokers and streaming platforms. Each message triggers a script or flow execution with the message payload as input.
+					</p>
+				</motion.div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+					{[
+						{ icon: Waypoints, label: 'Kafka', desc: 'Consume from Kafka topics with configurable consumer groups and offset management.', link: '/docs/core_concepts/kafka_triggers' },
+						{ icon: MessageSquare, label: 'NATS', desc: 'Subscribe to NATS subjects for lightweight, high-performance messaging.', link: '/docs/core_concepts/nats_triggers' },
+						{ icon: Cloud, label: 'SQS', desc: 'Process messages from AWS SQS queues with automatic acknowledgement.', link: '/docs/core_concepts/sqs_triggers' },
+						{ icon: Rss, label: 'MQTT', desc: 'Subscribe to MQTT topics for IoT and event-driven workloads.', link: '/docs/core_concepts/mqtt_triggers' },
+						{ icon: Cloud, label: 'GCP Pub/Sub', desc: 'Consume events from Google Cloud Pub/Sub subscriptions.', link: '/docs/core_concepts/gcp_triggers' },
+					].map((item) => (
+						<Link
+							key={item.label}
+							to={item.link}
+							className="group flex flex-col gap-2 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all !no-underline"
+						>
+							<div className="flex items-center gap-2.5">
+								<item.icon className="w-5 h-5 text-blue-500 shrink-0" />
+								<span className="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+									{item.label}
+								</span>
+							</div>
+							<span className="text-xs text-gray-500 dark:text-gray-400">
+								{item.desc}
+							</span>
+						</Link>
+					))}
+				</div>
+			</div>
+
+			{/* ═══════════════ Database triggers ═══════════════ */}
+			<Section
+				title="Database triggers"
+				desc={<span><Link to="/docs/core_concepts/postgres_triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Postgres triggers</Link> let you run a script or flow whenever a row is inserted, updated, or deleted. Windmill uses logical replication (CDC) to capture changes in real time without polling. Configure which tables and operations to watch from the UI.</span>}
+				docLink="/docs/core_concepts/postgres_triggers"
+				reverse
+			/>
+
+			{/* ═══════════════ Other triggers ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-6">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">More trigger types</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Beyond the core trigger types, Windmill supports several additional ways to start executions.
+					</p>
+				</motion.div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+					{[
+						{ icon: Mail, label: 'Emails', desc: 'Trigger scripts when an email arrives at a Windmill-managed address. The email body and attachments are passed as input.', link: '/docs/getting_started/triggers#emails' },
+						{ icon: Radio, label: 'WebSockets', desc: 'Listen for real-time bidirectional events over WebSocket connections.', link: '/docs/core_concepts/websocket_triggers' },
+						{ icon: Globe, label: 'Native triggers', desc: 'Built-in integrations for Nextcloud, Google Drive, and Google Calendar that watch for changes without polling.', link: '/docs/core_concepts/native_triggers' },
+						{ icon: Plug, label: 'MCP', desc: 'Expose scripts as tools for LLM clients via the Model Context Protocol.', link: '/docs/core_concepts/mcp' },
+						{ icon: Zap, label: 'CLI and API', desc: 'Trigger any script or flow programmatically from the Windmill CLI, REST API, or CI/CD pipelines.', link: '/docs/getting_started/triggers#trigger-from-api' },
+					].map((item) => (
+						<Link
+							key={item.label}
+							to={item.link}
+							className="group flex flex-col gap-2 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all !no-underline"
+						>
+							<div className="flex items-center gap-2.5">
+								<item.icon className="w-5 h-5 text-blue-500 shrink-0" />
+								<span className="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+									{item.label}
+								</span>
+							</div>
+							<span className="text-xs text-gray-500 dark:text-gray-400">
+								{item.desc}
+							</span>
+						</Link>
+					))}
+				</div>
+			</div>
+
+			{/* ═══════════════ Full trigger grid ═══════════════ */}
+			<TriggerGrid title="All trigger types at a glance" />
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'Can I combine multiple triggers on one script?', textAnswer: 'Yes. A single script or flow can have multiple triggers simultaneously, for example a cron schedule and a webhook. Each trigger type is configured independently.' },
+				{ question: 'Do triggers work for both scripts and flows?', textAnswer: 'Yes. Every trigger type works identically for standalone scripts and multi-step flows.' },
+				{ question: 'How do webhook preprocessors work?', textAnswer: 'A preprocessor is a lightweight script that runs before the main script or flow. It can validate, transform, or filter the incoming request. If the preprocessor returns early, the main execution is skipped.' },
+				{ question: 'Is Kafka available on the open-source edition?', textAnswer: 'Kafka, NATS, SQS, MQTT, GCP Pub/Sub, and other message queue triggers require the Enterprise edition. Schedules, webhooks, and HTTP routes are available in all editions.' },
+				{ question: 'How does Postgres CDC work under the hood?', textAnswer: 'Windmill uses PostgreSQL logical replication to stream row-level changes. A replication slot captures inserts, updates, and deletes in real time without polling the database.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source and can be self-hosted with Docker or Kubernetes, including air-gapped environments. Enterprise features require a paid plan.' },
+			]} />
+
+			<ProductCTA />
+		</div>
+	);
+}

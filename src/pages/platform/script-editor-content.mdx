@@ -1,0 +1,907 @@
+---
+title: "Code editor with built-in infrastructure"
+description: "How do I write scripts in Windmill? Write a function, get an auto-generated UI, an API endpoint, triggers, and resource access with zero config."
+---
+
+import React, { useState, useEffect, useRef } from 'react';
+import Link from '@docusaurus/Link';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, Code2, Terminal, FileCode, Play, BookOpen, Clock, Globe, Lock, Layers, GitBranch, Puzzle, Braces, Package, Webhook, CalendarClock, History, KeyRound, ChevronDown, Rocket, Server, Activity } from 'lucide-react';
+import {
+	SiTypescript, SiPython, SiGo, SiGnubash, SiGraphql, SiPhp, SiRust, SiDocker,
+	SiCsharp, SiRuby, SiAnsible, SiPowershell, SiOracle, SiDeno
+} from 'react-icons/si';
+import { FaJava } from 'react-icons/fa';
+import CodeBlock from '@theme/CodeBlock';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import TriggerSection from '../../components/use-cases/TriggerSection';
+import GithubStarCount from '../../landing/GithubStarCount';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Hero animation: typing code → auto-generated outputs ── */}
+
+export const heroCodeLines = [
+	{ tokens: [{ text: 'import ', color: 'text-purple-400' }, { text: '{ Client } ', color: 'text-blue-300' }, { text: 'from ', color: 'text-purple-400' }, { text: "'pg'", color: 'text-amber-300' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'type ', color: 'text-purple-400' }, { text: 'Postgresql ', color: 'text-emerald-300' }, { text: '= { ', color: 'text-gray-400' }, { text: 'host', color: 'text-orange-300' }, { text: ': string; ... }', color: 'text-gray-400' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'export async function ', color: 'text-purple-400' }, { text: 'main', color: 'text-blue-300' }, { text: '(', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  db', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'Postgresql', color: 'text-emerald-300' }, { text: ',', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  query', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'string', color: 'text-emerald-300' }, { text: ',', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  limit', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'number', color: 'text-emerald-300' }, { text: ' = ', color: 'text-gray-400' }, { text: '100', color: 'text-amber-300' }] },
+	{ tokens: [{ text: ') {', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  const ', color: 'text-purple-400' }, { text: 'client ', color: 'text-blue-300' }, { text: '= ', color: 'text-gray-400' }, { text: 'new ', color: 'text-purple-400' }, { text: 'Client', color: 'text-blue-300' }, { text: '(db)', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  return ', color: 'text-purple-400' }, { text: 'client', color: 'text-blue-300' }, { text: '.query(query, [limit])', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '}', color: 'text-gray-400' }] },
+];
+
+export const heroInfraCards = [
+	{ icon: Braces, label: 'Auto-generated UI' },
+	{ icon: Globe, label: 'API endpoint' },
+	{ icon: CalendarClock, label: 'Triggers' },
+	{ icon: Rocket, label: '1-click deployment' },
+	{ icon: GitBranch, label: 'Versioning' },
+	{ icon: Server, label: 'Dedicated workers' },
+	{ icon: Activity, label: 'Monitoring' },
+];
+
+export function HeroAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, amount: 0.3 });
+	const [typedChars, setTypedChars] = useState(0);
+	const [showCards, setShowCards] = useState(false);
+
+	const allText = heroCodeLines.map((line) => line.tokens.map((t) => t.text).join('') || ' ').join('\n');
+	const totalChars = allText.length;
+
+	useEffect(() => {
+		if (!isInView) return;
+		const speed = 10;
+		const interval = setInterval(() => {
+			setTypedChars((prev) => {
+				if (prev >= totalChars) {
+					clearInterval(interval);
+					setTimeout(() => setShowCards(true), 400);
+					return totalChars;
+				}
+				return prev + 1;
+			});
+		}, speed);
+		return () => clearInterval(interval);
+	}, [isInView, totalChars]);
+
+	const renderTypedLines = () => {
+		let charsSoFar = 0;
+		return heroCodeLines.map((line, i) => {
+			const lineText = line.tokens.map((t) => t.text).join('') || ' ';
+			const lineStart = charsSoFar;
+			charsSoFar += lineText.length + 1;
+			const lineCharsShown = Math.max(0, Math.min(lineText.length, typedChars - lineStart));
+			if (typedChars <= lineStart) return (
+				<div key={i} className="flex h-[1.5em]">
+					<span className="text-gray-600 w-5 text-right mr-2 select-none opacity-0 text-[10px]">{i + 1}</span>
+				</div>
+			);
+			let tokCharsSoFar = 0;
+			const rendered = [];
+			for (const token of line.tokens) {
+				if (tokCharsSoFar >= lineCharsShown) break;
+				const visibleLen = Math.min(token.text.length, lineCharsShown - tokCharsSoFar);
+				rendered.push(
+					<span key={rendered.length} className={token.color} style={{ whiteSpace: 'pre' }}>{token.text.slice(0, visibleLen)}</span>
+				);
+				tokCharsSoFar += token.text.length;
+			}
+			return (
+				<div key={i} className="flex">
+					<span className="text-gray-600 w-5 text-right mr-2 select-none text-[10px]">{i + 1}</span>
+					{line.tokens.length === 0 ? <span>&nbsp;</span> : rendered}
+					{lineCharsShown < lineText.length && (
+						<span className="inline-block w-[2px] h-[1.1em] bg-gray-300 ml-[1px] animate-pulse" />
+					)}
+				</div>
+			);
+		});
+	};
+
+	return (
+		<div ref={ref}>
+			<div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-950 overflow-hidden">
+				{/* Title bar */}
+				<div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800 bg-gray-900">
+					<motion.img
+						src="/img/windmill.svg"
+						alt="Windmill"
+						className="w-4 h-4"
+						animate={{ rotate: 360 }}
+						transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+					/>
+					<span className="text-[10px] font-medium text-gray-400">query_db.ts</span>
+				</div>
+				{/* Content area: code left, cards right */}
+				<div className="flex" style={{ minHeight: 340 }}>
+					{/* Code */}
+					<div className={`flex-1 p-4 font-mono text-[13px] leading-relaxed ${showCards ? 'border-r border-gray-800' : ''}`}>
+						{renderTypedLines()}
+					</div>
+					{/* Cards panel */}
+					<motion.div
+						className="flex-shrink-0 flex flex-col gap-1.5 p-2.5 bg-gray-900/50 justify-center"
+						initial={{ width: 0, opacity: 0 }}
+						animate={showCards ? { width: 180, opacity: 1 } : { width: 0, opacity: 0 }}
+						transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+						style={{ overflow: 'hidden' }}
+					>
+						{showCards && heroInfraCards.map((card, i) => (
+							<motion.div
+								key={card.label}
+								className="rounded-md border border-blue-500/25 bg-gray-900/80 px-2.5 py-2 flex items-center gap-2"
+								initial={{ opacity: 0, x: 20 }}
+								animate={{ opacity: 1, x: 0 }}
+								transition={{
+									duration: 0.35,
+									delay: i * 0.07,
+									ease: [0.22, 1, 0.36, 1],
+								}}
+							>
+								<div className="w-5 h-5 rounded bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+									<card.icon className="w-2.5 h-2.5 text-blue-400" />
+								</div>
+								<span className="text-[10px] font-medium text-gray-300 whitespace-nowrap leading-tight">{card.label}</span>
+							</motion.div>
+						))}
+					</motion.div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+
+{/* ── Language tabs ── */}
+
+export const languages = [
+	{ id: 'typescript-bun', label: 'TypeScript (Bun)', icon: SiTypescript, lang: 'typescript', runtime: 'Bun — fastest cold starts, default runtime', deps: 'npm — auto-resolved from imports', lsp: 'LSP, formatting, autocomplete', quickstart: '/docs/getting_started/scripts_quickstart/typescript', snippet:
+`import { WebClient } from "@slack/web-api";
+
+type Slack = { token: string };
+
+export async function main(
+  slack: Slack,
+  channel: string,
+  message: string
+) {
+  const web = new WebClient(slack.token);
+  await web.chat.postMessage({ channel, text: message });
+}` },
+	{ id: 'python', label: 'Python', icon: SiPython, lang: 'python', runtime: 'Python 3.11+ with uv/pip', deps: 'PyPI — parsed from top-level imports', lsp: 'Ruff, Black, Pyright', quickstart: '/docs/getting_started/scripts_quickstart/python', snippet:
+`import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+nltk.download("vader_lexicon")
+
+def main(text: str = "Windmill is great"):
+    return SentimentIntensityAnalyzer().polarity_scores(text)` },
+	{ id: 'typescript-deno', label: 'TypeScript (Deno)', icon: SiDeno, lang: 'typescript', runtime: 'Deno — strictest sandboxing', deps: 'npm — auto-resolved from imports', lsp: 'Deno LSP, formatting, autocomplete', quickstart: '/docs/getting_started/scripts_quickstart/typescript', snippet:
+`import { DB } from "https://deno.land/x/sqlite/mod.ts";
+
+export async function main(query: string = "SELECT 1") {
+  const db = new DB(":memory:");
+  const rows = db.query(query);
+  db.close();
+  return rows;
+}` },
+	{ id: 'bash', label: 'Bash', icon: SiGnubash, lang: 'bash', runtime: 'Native shell', deps: 'System packages via pre-install script', lsp: 'shellcheck', quickstart: '/docs/getting_started/scripts_quickstart/bash', snippet:
+`# Arguments are passed as environment variables
+
+echo "Hello $1"
+curl -s "https://api.example.com/data" \\
+  -H "Authorization: Bearer $WM_TOKEN"` },
+	{ id: 'go', label: 'Go', icon: SiGo, lang: 'go', runtime: 'Go 1.21+', deps: 'Go modules — resolved from imports', lsp: 'Go LSP', quickstart: '/docs/getting_started/scripts_quickstart/go', snippet:
+`package inner
+
+import (
+  "fmt"
+  wmill "github.com/windmill-labs/windmill-go-client"
+)
+
+func main(name string, age int) (interface{}, error) {
+  fmt.Printf("Hello %s, you are %d\\n", name, age)
+  return map[string]interface{}{"name": name, "age": age}, nil
+}` },
+	{ id: 'postgresql', label: 'PostgreSQL', logo: '/third_party_logos/postgres.svg', lang: 'sql', runtime: 'PostgreSQL via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: postgresql
+-- @param {string} status: active
+
+SELECT id, name, email
+FROM users
+WHERE status = $1
+ORDER BY created_at DESC
+LIMIT 100;` },
+	{ id: 'mysql', label: 'MySQL', logo: '/third_party_logos/mysql.svg', lang: 'sql', runtime: 'MySQL via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: mysql
+-- @param {string} department
+
+SELECT employee_id, name, role
+FROM employees
+WHERE department = ?
+ORDER BY name ASC;` },
+	{ id: 'snowflake', label: 'Snowflake', logo: '/third_party_logos/snowflake.svg', lang: 'sql', runtime: 'Snowflake via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: snowflake
+-- @param {string} date_from
+
+SELECT DATE_TRUNC('day', event_time) AS day,
+       COUNT(*) AS events
+FROM analytics.events
+WHERE event_time >= :1
+GROUP BY day
+ORDER BY day;` },
+	{ id: 'mssql', label: 'MS SQL Server', logo: '/third_party_logos/mssql.svg', lang: 'sql', runtime: 'MS SQL Server via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: ms_sql_server
+-- @param {string} status
+
+SELECT TOP 50 OrderId, CustomerName, Total
+FROM dbo.Orders
+WHERE Status = @p1
+ORDER BY CreatedAt DESC;` },
+	{ id: 'bigquery', label: 'BigQuery', logo: '/third_party_logos/bigquery.svg', lang: 'sql', runtime: 'BigQuery via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: bigquery
+-- @param {string} dataset
+
+SELECT table_id, row_count, size_bytes
+FROM \`project.dataset.__TABLES__\`
+WHERE row_count > 0
+ORDER BY size_bytes DESC
+LIMIT 20;` },
+	{ id: 'graphql', label: 'GraphQL', icon: SiGraphql, lang: 'graphql', runtime: 'GraphQL via configured resource', deps: 'None — runs against a configured endpoint', lsp: 'GraphQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/rest_grapqhql', snippet:
+`query($userId: ID!) {
+  user(id: $userId) {
+    name
+    email
+    posts(last: 5) {
+      title
+      createdAt
+    }
+  }
+}` },
+	{ id: 'powershell', label: 'PowerShell', icon: SiPowershell, lang: 'powershell', runtime: 'PowerShell', deps: 'System packages via pre-install script', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/bash', snippet:
+`param(
+  [string]$Name = "World",
+  [int]$Count = 3
+)
+
+1..$Count | ForEach-Object {
+  Write-Output "Hello, $Name! (iteration $_)"
+}` },
+	{ id: 'php', label: 'PHP', icon: SiPhp, lang: 'php', runtime: 'PHP', deps: 'Composer — via require comments', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/php', snippet:
+`<?php
+// require: monolog/monolog@3.6.0
+
+function main(
+  string $name = "World",
+  int $count = 3,
+  bool $uppercase = false
+) {
+  $greeting = "Hello, $name!";
+  if ($uppercase) $greeting = strtoupper($greeting);
+  return ["message" => $greeting, "count" => $count];
+}` },
+	{ id: 'docker', label: 'Docker', icon: SiDocker, lang: 'bash', runtime: 'Any language via Docker containers', deps: 'Any — defined in Dockerfile or image', lsp: 'Bash shellcheck', quickstart: '/docs/getting_started/scripts_quickstart/docker', snippet:
+`# shellcheck shell=bash
+# docker
+
+msg="\${1:-world}"
+IMAGE="alpine:latest"
+
+docker pull $IMAGE
+docker run --rm --name $WM_JOB_ID \\
+  $IMAGE /bin/echo "Hello $msg"` },
+	{ id: 'rest', label: 'REST', icon: Globe, lang: 'typescript', runtime: 'Bun TypeScript (native fetch)', deps: 'None — stdlib JavaScript only', lsp: 'TypeScript LSP', quickstart: '/docs/getting_started/scripts_quickstart/rest_grapqhql', snippet:
+`//native
+
+export async function main(todo_id: number = 3) {
+  const res = await fetch(
+    \`https://jsonplaceholder.typicode.com/todos/\${todo_id}\`,
+    { headers: { "Content-Type": "application/json" } }
+  );
+  return res.json();
+}` },
+	{ id: 'rust', label: 'Rust', icon: SiRust, lang: 'rust', runtime: 'Rust (compiled binary)', deps: 'Cargo — via inline manifest comments', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/rust', snippet:
+`//! [dependencies]
+//! serde = { version = "1", features = ["derive"] }
+//! rand = "0.7.2"
+
+use rand::seq::SliceRandom;
+use serde::Serialize;
+
+#[derive(Serialize)]
+struct Ret { msg: String, pick: i8 }
+
+fn main(name: String, numbers: Vec<i8>) -> anyhow::Result<Ret> {
+  let pick = *numbers.choose(&mut rand::thread_rng())
+    .ok_or(anyhow::anyhow!("empty"))?;
+  Ok(Ret { msg: format!("Hello {}!", name), pick })
+}` },
+	{ id: 'ansible', label: 'Ansible', icon: SiAnsible, lang: 'yaml', runtime: 'Ansible (full distribution)', deps: 'Galaxy collections, pip packages', lsp: 'YAML highlighting', quickstart: '/docs/getting_started/scripts_quickstart/ansible', snippet:
+`---
+inventory:
+  - resource_type: ansible_inventory
+extra_vars:
+  target:
+    type: string
+---
+- name: Health check
+  hosts: "{{ target }}"
+  tasks:
+  - name: Ping host
+    ping:
+  - name: Get uptime
+    command: uptime` },
+	{ id: 'oracle', label: 'Oracle Database', icon: SiOracle, lang: 'sql', runtime: 'Oracle via configured resource', deps: 'None — runs against a configured resource', lsp: 'SQL syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/sql', snippet:
+`-- @param {resource} db: oracle
+-- @param {string} department
+
+SELECT employee_id, first_name, last_name
+FROM hr.employees
+WHERE department_name = :1
+ORDER BY last_name
+FETCH FIRST 50 ROWS ONLY;` },
+	{ id: 'csharp', label: 'C#', icon: SiCsharp, lang: 'csharp', runtime: '.NET (C#)', deps: 'NuGet — via #r directives', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/csharp', snippet:
+`#r "nuget: Humanizer, 2.14.1"
+
+using System;
+using Humanizer;
+
+class Script {
+  public static string Main(
+    string word = "order",
+    int quantity = 3
+  ) {
+    return $"{quantity} {"item".ToQuantity(quantity)}";
+  }
+}` },
+	{ id: 'nu', label: 'Nushell', icon: Terminal, lang: 'bash', runtime: 'Nushell', deps: 'System packages via pre-install script', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/bash', snippet:
+`def main [name: string = "World", count: int = 3] {
+  1..$count | each { |i|
+    $"Hello, ($name)! \\(iteration ($i)\\)"
+  }
+}` },
+	{ id: 'java', label: 'Java', icon: FaJava, lang: 'java', runtime: 'Java (Coursier for deps)', deps: 'Maven/Ivy — via requirements comments', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/java', snippet:
+`//requirements:
+//com.google.code.gson:gson:2.8.9
+
+import com.google.gson.Gson;
+
+public class Main {
+  public static Object main(String name, int count) {
+    var gson = new Gson();
+    var data = java.util.Map.of("name", name, "count", count);
+    return gson.toJson(data);
+  }
+}` },
+	{ id: 'duckdb', label: 'DuckDB', logo: '/third_party_logos/duckdb.svg', lang: 'sql', runtime: 'DuckDB via S3 or local files', deps: 'None — runs against configured S3 resources', lsp: 'SQL syntax highlighting', quickstart: '/docs/integrations/duckdb', snippet:
+`-- @param {resource} db: s3
+-- @param {string} path: data/events.parquet
+
+SELECT DATE_TRUNC('hour', timestamp) AS hour,
+       COUNT(*) AS count
+FROM read_parquet('{path}')
+GROUP BY hour
+ORDER BY hour DESC
+LIMIT 24;` },
+	{ id: 'ruby', label: 'Ruby', icon: SiRuby, lang: 'ruby', runtime: 'Ruby', deps: 'Bundler — via gemfile block', lsp: 'Syntax highlighting', quickstart: '/docs/getting_started/scripts_quickstart/ruby', snippet:
+`require 'windmill/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+  gem 'httparty'
+end
+
+def main(url: "https://httpbin.org/get", msg: "Hello!")
+  response = HTTParty.get(url, query: { message: msg })
+  { status: response.code, body: JSON.parse(response.body) }
+end` },
+];
+
+export function LanguageTabs() {
+	const [active, setActive] = useState(0);
+	const lang = languages[active];
+	return (
+		<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
+			{/* Tab bar */}
+			<div className="flex flex-wrap gap-1 p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+				{languages.map((l, i) => (
+					<button
+						key={l.id}
+						onClick={() => setActive(i)}
+						className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap ${
+							i === active
+								? 'bg-blue-600 text-white'
+								: 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+						}`}
+					>
+						{l.logo ? (
+							<img src={l.logo} alt="" className="w-3.5 h-3.5 object-contain" />
+						) : l.icon ? (
+							<l.icon className="w-3.5 h-3.5" />
+						) : null}
+						{l.label}
+					</button>
+				))}
+			</div>
+			{/* Content */}
+			<div className="grid grid-cols-1 lg:grid-cols-2">
+				{/* Left: code */}
+				<div className="overflow-x-auto lg:border-r border-gray-200 dark:border-gray-700" style={{ '--ifm-leading': '1.4' }}>
+					<div style={{ margin: 0 }} className="[&>div]:!rounded-none [&>div]:!mb-0 [&>div]:!shadow-none [&>div]:!border-0">
+						<CodeBlock language={lang.lang}>{lang.snippet}</CodeBlock>
+					</div>
+				</div>
+				{/* Right: details */}
+				<motion.div
+					key={lang.id}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.25 }}
+					className="p-6 flex flex-col gap-4"
+				>
+					<div>
+						<span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Runtime</span>
+						<p className="text-base text-gray-900 dark:text-white mt-1">{lang.runtime}</p>
+					</div>
+					<div>
+						<span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Dependencies</span>
+						<p className="text-base text-gray-900 dark:text-white mt-1">{lang.deps}</p>
+					</div>
+					<div>
+						<span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Editor support</span>
+						<p className="text-base text-gray-900 dark:text-white mt-1">{lang.lsp}</p>
+					</div>
+					<Link
+						to={lang.quickstart}
+						className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline mt-auto"
+					>
+						<BookOpen className="w-4 h-4" /> Quickstart guide
+					</Link>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
+
+
+{/* ── Resend-style language showcase ── */}
+
+export const iconColors = {
+	'typescript-bun': '#3178C6', 'python': '#3776AB', 'typescript-deno': '#70ffaf',
+	'bash': '#4EAA25', 'go': '#00ADD8', 'graphql': '#E10098',
+	'powershell': '#5391FE', 'php': '#777BB4', 'docker': '#2496ED',
+	'rust': '#DEA584', 'ansible': '#EE0000', 'oracle': '#F80000',
+	'csharp': '#239120', 'java': '#ED8B00', 'ruby': '#CC342D',
+	'rest': '#3B82F6', 'nu': '#3AA675',
+};
+
+export const PRIMARY_LANG_COUNT = 9;
+
+export function LanguageShowcase() {
+	const [active, setActive] = useState(0);
+	const [moreOpen, setMoreOpen] = useState(false);
+	const moreRef = useRef(null);
+	const lang = languages[active];
+
+	const primaryLangs = languages.slice(0, PRIMARY_LANG_COUNT);
+	const overflowLangs = languages.slice(PRIMARY_LANG_COUNT);
+	const activeInOverflow = active >= PRIMARY_LANG_COUNT;
+
+	useEffect(() => {
+		if (!moreOpen) return;
+		function handleClick(e) {
+			if (moreRef.current && !moreRef.current.contains(e.target)) setMoreOpen(false);
+		}
+		document.addEventListener('mousedown', handleClick);
+		return () => document.removeEventListener('mousedown', handleClick);
+	}, [moreOpen]);
+
+	const LangButton = ({ l, i, small }) => (
+		<button
+			key={l.id}
+			onClick={() => { setActive(i); setMoreOpen(false); }}
+			className={`group flex ${small ? 'flex-row items-center gap-2 px-3 py-2 rounded-lg w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700' : 'flex-col items-center gap-2'} transition-all duration-200 ${
+				i === active ? 'opacity-100' : 'opacity-50 hover:opacity-80'
+			}`}
+		>
+			<div className={`${small ? 'w-8 h-8' : 'w-12 h-12 sm:w-14 sm:h-14'} rounded-xl flex items-center justify-center transition-all duration-200 ${
+				i === active
+					? 'bg-white dark:bg-gray-800 shadow-lg ring-2 ring-blue-500 dark:ring-blue-400'
+					: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
+			}`}>
+				{l.logo ? (
+					<img src={l.logo} alt="" className={`${small ? 'w-4 h-4' : 'w-6 h-6'} object-contain`} />
+				) : l.icon ? (
+					<l.icon className={`${small ? 'w-4 h-4' : 'w-6 h-6'}`} style={{ color: iconColors[l.id] || '#3B82F6' }} />
+				) : null}
+			</div>
+			<span className={`${small ? 'text-xs' : 'text-[11px]'} font-medium whitespace-nowrap ${
+				i === active ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'
+			}`}>{l.label}</span>
+		</button>
+	);
+
+	return (
+		<div className="flex flex-col items-center">
+			{/* Icon carousel */}
+			<div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 items-start">
+				{primaryLangs.map((l, i) => (
+					<LangButton key={l.id} l={l} i={i} />
+				))}
+				{/* More dropdown */}
+				{overflowLangs.length > 0 && (
+					<div className="relative" ref={moreRef}>
+						<button
+							onClick={() => setMoreOpen(!moreOpen)}
+							className={`group flex flex-col items-center gap-2 transition-all duration-200 ${
+								activeInOverflow ? 'opacity-100' : 'opacity-50 hover:opacity-80'
+							}`}
+						>
+							<div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-200 ${
+								activeInOverflow
+									? 'bg-white dark:bg-gray-800 shadow-lg ring-2 ring-blue-500 dark:ring-blue-400'
+									: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
+							}`}>
+								<ChevronDown className={`w-5 h-5 transition-transform ${moreOpen ? 'rotate-180' : ''} ${activeInOverflow ? 'text-blue-500' : 'text-gray-400'}`} />
+							</div>
+							<span className={`text-[11px] font-medium whitespace-nowrap ${
+								activeInOverflow ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'
+							}`}>+{overflowLangs.length} more</span>
+						</button>
+						{moreOpen && (
+							<div className="absolute top-full mt-2 right-0 z-50 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 min-w-[200px] max-h-[300px] overflow-y-auto">
+								{overflowLangs.map((l, i) => (
+									<LangButton key={l.id} l={l} i={i + PRIMARY_LANG_COUNT} small />
+								))}
+							</div>
+						)}
+					</div>
+				)}
+			</div>
+
+			{/* Code block */}
+			<motion.div
+				key={lang.id}
+				initial={{ opacity: 0, y: 8 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.25 }}
+				className="w-full rounded-2xl overflow-hidden bg-gray-950 border border-gray-800"
+			>
+				{/* Header bar */}
+				<div className="flex items-center justify-between px-4 py-3 border-b border-gray-800">
+					<div className="flex items-center gap-2">
+						{lang.logo ? (
+							<img src={lang.logo} alt="" className="w-4 h-4 object-contain" />
+						) : lang.icon ? (
+							<lang.icon className="w-4 h-4 text-gray-400" />
+						) : null}
+						<span className="text-sm font-medium text-gray-300">{lang.label}</span>
+					</div>
+					<Link
+						to={lang.quickstart}
+						className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 transition-colors !no-underline"
+					>
+						<BookOpen className="w-3.5 h-3.5" /> Docs
+					</Link>
+				</div>
+				{/* Code */}
+				<div style={{ '--ifm-leading': '1.5' }}>
+					<div className="[&>div]:!rounded-none [&>div]:!mb-0 [&>div]:!shadow-none [&>div]:!border-0 [&>div]:!bg-transparent [&_pre]:!bg-transparent">
+						<CodeBlock language={lang.lang} showLineNumbers>{lang.snippet}</CodeBlock>
+					</div>
+				</div>
+				{/* Footer */}
+				<div className="flex items-center gap-6 px-4 py-3 border-t border-gray-800">
+					<div className="flex items-center gap-4 text-xs text-gray-500">
+						<span><span className="text-gray-400 font-medium">Runtime:</span> {lang.runtime}</span>
+						<span className="hidden sm:inline"><span className="text-gray-400 font-medium">Deps:</span> {lang.deps}</span>
+					</div>
+				</div>
+			</motion.div>
+		</div>
+	);
+}
+
+{/* ── Code editor with tab bar ── */}
+
+export const primaryLangIds = ['typescript-bun', 'python', 'bash', 'go'];
+
+export function CodeEditor() {
+	const primaryLangs = primaryLangIds.map(id => languages.find(l => l.id === id));
+	const otherLangs = languages.filter(l => !primaryLangIds.includes(l.id));
+	const [active, setActive] = useState(0);
+	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const dropdownRef = useRef(null);
+	const allDisplayed = [...primaryLangs, ...otherLangs];
+	const lang = allDisplayed[active];
+
+	useEffect(() => {
+		const handleClick = (e) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setDropdownOpen(false);
+		};
+		document.addEventListener('mousedown', handleClick);
+		return () => document.removeEventListener('mousedown', handleClick);
+	}, []);
+
+	const renderIcon = (l, size = 'w-4 h-4') => l.logo
+		? <img src={l.logo} alt="" className={`${size} object-contain`} />
+		: l.icon
+			? <l.icon className={size} style={{ color: iconColors[l.id] || '#94a3b8' }} />
+			: null;
+
+	return (
+		<div className="rounded-2xl overflow-hidden bg-gray-950 border border-gray-800">
+			{/* Tab bar */}
+			<div className="flex items-center border-b border-gray-800 bg-gray-900/80">
+				{primaryLangs.map((l, i) => (
+					<button
+						key={l.id}
+						onClick={() => { setActive(i); setDropdownOpen(false); }}
+						className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap ${
+							i === active
+								? 'border-blue-500 text-white bg-gray-950/50'
+								: 'border-transparent text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'
+						}`}
+					>
+						{renderIcon(l)} {l.label}
+					</button>
+				))}
+				{/* More dropdown */}
+				<div className="relative ml-auto mr-2" ref={dropdownRef}>
+					<button
+						onClick={() => setDropdownOpen(!dropdownOpen)}
+						className={`flex items-center gap-1.5 px-3 py-3 text-sm font-medium transition-colors whitespace-nowrap ${
+							active >= primaryLangs.length
+								? 'text-white'
+								: 'text-gray-400 hover:text-gray-200'
+						}`}
+					>
+						{active >= primaryLangs.length && renderIcon(lang)}
+						{active >= primaryLangs.length ? lang.label : 'More'}
+						<ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+					</button>
+					{dropdownOpen && (
+						<div className="absolute right-0 top-full mt-1 w-52 rounded-xl bg-gray-900 border border-gray-700 shadow-2xl z-50 py-1 max-h-72 overflow-y-auto">
+							{otherLangs.map((l) => {
+								const idx = allDisplayed.indexOf(l);
+								return (
+									<button
+										key={l.id}
+										onClick={() => { setActive(idx); setDropdownOpen(false); }}
+										className={`flex items-center gap-2.5 w-full px-3 py-2 text-sm text-left transition-colors ${
+											idx === active
+												? 'bg-gray-800 text-white'
+												: 'text-gray-400 hover:bg-gray-800/60 hover:text-gray-200'
+										}`}
+									>
+										{renderIcon(l)} {l.label}
+									</button>
+								);
+							})}
+						</div>
+					)}
+				</div>
+			</div>
+			{/* Code area — fixed height */}
+			<div className="h-[360px] overflow-hidden" style={{ '--ifm-leading': '1.5' }}>
+				<div className="[&>div]:!rounded-none [&>div]:!mb-0 [&>div]:!shadow-none [&>div]:!border-0 [&>div]:!bg-transparent [&_pre]:!bg-transparent [&_code]:!text-[0.8rem]">
+					<CodeBlock language={lang.lang} showLineNumbers>{lang.snippet}</CodeBlock>
+				</div>
+			</div>
+			{/* Footer */}
+			<div className="flex items-center gap-6 px-4 py-3 border-t border-gray-800">
+				<div className="flex items-center gap-4 text-xs text-gray-500">
+					<span><span className="text-gray-400 font-medium">Runtime:</span> {lang.runtime}</span>
+					<span className="hidden sm:inline"><span className="text-gray-400 font-medium">Deps:</span> {lang.deps}</span>
+				</div>
+				<Link
+					to={lang.quickstart}
+					className="ml-auto inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 transition-colors !no-underline"
+				>
+					<BookOpen className="w-3.5 h-3.5" /> Quickstart
+				</Link>
+			</div>
+		</div>
+	);
+}
+
+{/* ── Section helper ── */}
+
+
+export function Section({ title, desc, docLink, image, visual, reverse, children }) {
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+			>
+				<div className={reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{visual ? visual : image ? (
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+
+{/* ── Main page ── */}
+
+export default function ScriptEditorContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Script editor</p>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Code editor with built-in infrastructure
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Every function you write gets a parameters UI, an API endpoint, triggers, one-click deployment, and monitoring out of the box.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<HeroAnimation />
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ What is the code editor ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Write code, get infrastructure</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Windmill's code editor is a full Monaco editor in the browser with LSP autocompletion, linting, and formatting. Write a function, and Windmill turns it into a production-ready script with a UI, an API endpoint, and managed infrastructure.
+					</p>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ What you can build ═══════════════ */}
+			<Section
+				title="Standalone scripts"
+				desc={<span>A single function in TypeScript (Bun, Deno), Python, Go, Bash, SQL, or <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ other languages</Link> becomes a <Link to="/docs/script_editor" className="text-blue-600 dark:text-blue-400 hover:underline">standalone script</Link> with its own auto-generated UI, API endpoint, webhook, and schedule. Each script is versioned, testable from the editor, and deployable in one click.</span>}
+				docLink="/docs/script_editor"
+				visual={<CodeEditor />}
+			/>
+
+			<Section
+				title="Workflows as code"
+				desc={<span>For multi-step logic, Windmill supports <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> in Python and TypeScript. Annotate functions with <code>@task</code> and each one runs as a distinct job with its own logs and timeline. The result is the same as a visual flow, with full observability, but written entirely in the code editor.</span>}
+				docLink="/docs/core_concepts/workflows_as_code"
+				reverse
+			/>
+
+			{/* ═══════════════ Built-in infrastructure ═══════════════ */}
+			<Section
+				title="Managed dependencies"
+				desc={<span>Windmill parses your imports, resolves packages from npm, PyPI, or Go modules, and generates a per-script <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">lockfile</Link>. Workers cache dependencies for fast execution. Private repositories are supported.</span>}
+				docLink="/docs/advanced/imports"
+			/>
+
+			<Section
+				title="Auto-generated UIs"
+				desc={<span>Every script gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link> from its function signature. Strings become text inputs, numbers become sliders, resource types become connection pickers.</span>}
+				docLink="/docs/core_concepts/auto_generated_uis"
+				reverse
+			/>
+
+			<Section
+				title="Shared resources"
+				desc={<span>Parameters typed as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> show a dropdown of configured connections in the UI. Credentials are centrally managed, encrypted at rest, and injected at runtime. A database, API key, or OAuth2 connection is configured once and reused across any script that needs it.</span>}
+				docLink="/docs/core_concepts/resources_and_types"
+			/>
+
+			<Section
+				title="Real-time logs and instant testing"
+				desc="Scripts can be tested directly from the editor. Logs stream in real-time and results are displayed instantly."
+				docLink="/docs/core_concepts/jobs"
+				reverse
+			/>
+
+			{/* ═══════════════ Triggers ═══════════════ */}
+			<TriggerSection />
+
+			{/* ═══════════════ Deployment, workers & observability ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the version history panel showing diffs between script versions, ~800x400px, save as /static/img/money-pages/card-versioning.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">One click deployment and versioning</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Deploy and your script is immediately available. Each save creates a new immutable version with a unique hash.</p>
+							<Link to="/platform/deployment-versioning" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our versioning dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the worker groups page showing active workers and queue stats, ~800x400px, save as /static/img/money-pages/card-workers.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Dedicated workers</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each script runs on an isolated worker with the full CPU and memory available to it. Scale horizontally and eliminate cold starts.</p>
+							<Link to="/platform/workers" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our workers dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the runs page showing job list with status, duration, and filters, ~800x400px, save as /static/img/money-pages/card-observability.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Built-in granular monitoring</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Every execution is logged with its inputs, outputs, duration, and status. Run history is searchable and filterable.</p>
+							<Link to="/platform/observability" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our observability dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
+					</div>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What languages does Windmill support?', textAnswer: 'TypeScript (Bun, Deno), Python, Go, Bash, PowerShell, Nushell, SQL (PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake), REST/GraphQL, and any language via Docker.' },
+				{ question: 'How does dependency management work?', textAnswer: 'Windmill parses your imports and resolves packages from npm, PyPI, or Go modules. A lockfile is generated per script for reproducible execution.' },
+				{ question: 'Can I develop scripts locally?', textAnswer: 'Yes. Windmill has a CLI and VS Code extension. Scripts sync with GitHub or GitLab.' },
+				{ question: 'How do auto-generated UIs work?', textAnswer: 'Windmill generates a form from your function signature. Parameter types map to UI components: strings to text inputs, numbers to sliders, resource types to connection pickers.' },
+				{ question: 'Are scripts versioned?', textAnswer: 'Yes. Each save creates a new immutable version with a unique hash. You can view history, fork, or revert any version.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source and can be self-hosted, including air-gapped. Enterprise features require a paid plan.' },
+			]} />
+
+			<ProductCTA />
+		</div>
+	);
+}

@@ -1,0 +1,7 @@
+export const scriptEditorProduct = {
+	slug: 'script-editor',
+	name: 'Script editor',
+	headline: 'Code editor with built-in infrastructure',
+	description: 'Write a function in TypeScript, Python, Go, Bash, or SQL. Windmill gives you a UI, an API endpoint, triggers, and resource access automatically.',
+	link: '/platform/script-editor',
+};

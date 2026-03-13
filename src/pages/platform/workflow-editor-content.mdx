@@ -1,0 +1,546 @@
+---
+title: "Workflow builder with built-in infrastructure"
+description: "How do I build workflows in Windmill? Orchestrate scripts into DAG-based flows with branching, loops, retries, approval steps, and full observability."
+---
+
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, BookOpen, GitBranch, RotateCcw, ShieldCheck, Layers, Zap, GitFork, CheckCircle2, Code, Repeat, Split, Clock, Pause, AlertTriangle, Shield, Gauge, Database, RefreshCw, Eye, Sparkles, Bot, Radio, CornerDownRight } from 'lucide-react';
+import { SiTypescript } from 'react-icons/si';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import TriggerSection from '../../components/use-cases/TriggerSection';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, reverse, children }) {
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+			>
+				<div className={reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{image ? (
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Tab section with optional custom content per tab ── */}
+
+export function TabSection({ title, subtitle, features }) {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn} className="mb-16">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					{title}
+				</h2>
+				{subtitle && (
+					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
+				)}
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+				<div className="flex flex-col gap-2">
+					{features.map((feat, i) => (
+						<button
+							key={feat.label || feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon
+								className={`w-5 h-5 flex-shrink-0 ${
+									i === active ? 'text-white' : 'text-blue-500'
+								}`}
+							/>
+							<span className="font-medium text-sm">
+								{feat.label || feat.title}
+							</span>
+						</button>
+					))}
+				</div>
+
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{features.map((feat, i) => (
+						<div
+							key={feat.label || feat.title}
+							className={`transition-opacity duration-200 ${
+								i === active
+									? 'opacity-100 relative'
+									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
+							}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
+									{feat.title}
+								</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
+								{feat.desc}
+							</p>
+							{feat.content ? (
+								feat.content
+							) : feat.image ? (
+								<img
+									src={feat.image}
+									alt={feat.title}
+									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
+								/>
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">
+										Screenshot coming soon
+									</span>
+								</div>
+							)}
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link
+										to={feat.docLink}
+										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+									>
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── DAG workflow hero animation ── */}
+
+export function PythonColored({ className }) {
+	return (
+		<svg viewBox="0 0 256 255" className={className} xmlns="http://www.w3.org/2000/svg">
+			<defs>
+				<linearGradient id="pyA" x1="12.96%" y1="12.07%" x2="79.64%" y2="78.8%">
+					<stop offset="0%" stopColor="#387EB8" />
+					<stop offset="100%" stopColor="#366994" />
+				</linearGradient>
+				<linearGradient id="pyB" x1="19.13%" y1="20.58%" x2="90.43%" y2="88.01%">
+					<stop offset="0%" stopColor="#FFE052" />
+					<stop offset="100%" stopColor="#FFC331" />
+				</linearGradient>
+			</defs>
+			<path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072ZM92.802 19.66a11.12 11.12 0 1 1 0 22.24 11.12 11.12 0 0 1 0-22.24Z" fill="url(#pyA)" />
+			<path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897Zm34.114-19.586a11.12 11.12 0 1 1 0-22.24 11.12 11.12 0 0 1 0 22.24Z" fill="url(#pyB)" />
+		</svg>
+	);
+}
+
+export const CX = 180;
+export const NH = 40;
+
+export const dagNodes = [
+	{ id: 'trigger',   label: 'Trigger',              x: CX,       y: 40,   w: 230, icon: Zap,         color: 'bg-blue-50',     borderColor: 'border-blue-200',     iconColor: 'text-blue-500',    textColor: 'text-gray-700' },
+	{ id: 'input',     label: 'Input',                x: CX,       y: 120,  w: 230, icon: null,        color: 'bg-gray-50',     borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-600' },
+	{ id: 'create',    label: 'Create AWS resources',  x: CX,       y: 210,  w: 230, icon: SiTypescript,        color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: 'text-[#3178C6]',   textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'branch-a',  label: 'Setup permissions',    x: CX - 120, y: 320, w: 230, icon: PythonColored,   color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'branch-b',  label: 'Configure database',   x: CX + 120, y: 320, w: 230, icon: PythonColored,   color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'merge',     label: 'Collect results',      x: CX,       y: 430, w: 230, icon: GitFork,      color: 'bg-violet-50', borderColor: 'border-violet-200', iconColor: 'text-violet-500',  textColor: 'text-gray-700' },
+	{ id: 'email',     label: 'Send welcome email',   x: CX,       y: 520, w: 230, icon: SiTypescript,        color: 'bg-white',       borderColor: 'border-gray-200',     iconColor: 'text-[#3178C6]',   textColor: 'text-gray-700', turnsGreen: true },
+	{ id: 'result',    label: 'Result',               x: CX,       y: 610, w: 230, icon: null,         color: 'bg-gray-50',       borderColor: 'border-gray-200',     iconColor: '',                 textColor: 'text-gray-600', delayedIcon: CheckCircle2 },
+];
+
+export const dagEdges = [
+	{ src: 'trigger',   dst: 'input' },
+	{ src: 'input',     dst: 'create' },
+	{ src: 'create',    dst: 'branch-a' },
+	{ src: 'create',    dst: 'branch-b' },
+	{ src: 'branch-a',  dst: 'merge' },
+	{ src: 'branch-b',  dst: 'merge' },
+	{ src: 'merge',     dst: 'email' },
+	{ src: 'email',     dst: 'result' },
+];
+
+export const dagNodeMap = Object.fromEntries(dagNodes.map(n => [n.id, n]));
+
+export function edgePath(e) {
+	const s = dagNodeMap[e.src];
+	const d = dagNodeMap[e.dst];
+	const sy = s.y + NH / 2;
+	const dy = d.y - NH / 2;
+	if (s.x === d.x) return `M${s.x},${sy} L${d.x},${dy}`;
+	const midY = (sy + dy) / 2;
+	return `M${s.x},${sy} C${s.x},${midY} ${d.x},${midY} ${d.x},${dy}`;
+}
+
+export const topPath = "M180,60 L180,100 L180,140 L180,190 L180,230";
+export const leftBranchPath = "M180,230 C180,265 60,265 60,300 L60,340 C60,375 180,375 180,410";
+export const rightBranchPath = "M180,230 C180,265 300,265 300,300 L300,340 C300,375 180,375 180,410";
+export const bottomPath = "M180,410 L180,450 L180,500 L180,540 L180,590";
+
+export const stepOutputs = {
+	trigger:    { text: 'Webhook received', detail: 'POST /api/provision' },
+	input:      { text: 'Validated input', detail: '{ customer: "Acme" }' },
+	create:     { text: 'Resources created', detail: 'ec2-i-0a3b, vpc-7f2e' },
+	'branch-b': { text: 'run 2 branches', detail: 'permissions + database' },
+	merge:      { text: '2/2 branches done', detail: '1.2s total' },
+	email:      { text: 'Email sent', detail: 'from : welcome@windmill.com' },
+	result:     { text: 'Success', detail: 'Provisioned in 4.8s' },
+};
+
+export const topDur = 1.9;
+export const branchDur = 1.6;
+export const bottomDur = 1.6;
+export const totalCycleDur = topDur + branchDur + bottomDur + 1;
+
+export const initDelay = 1.5;
+export const stepTimings = {
+	trigger:    initDelay + 0,
+	input:      initDelay + 0.65,
+	create:     initDelay + 1.65,
+	'branch-a': initDelay + 2.7,
+	'branch-b': initDelay + 2.7,
+	merge:      initDelay + 3.7,
+	email:      initDelay + 4.5,
+	result:     initDelay + 5.1,
+};
+
+export function StepOutput({ nodeId, delay }) {
+	const output = stepOutputs[nodeId];
+	if (!output) return null;
+	return (
+		<div className="absolute left-full ml-2 z-30 top-1/2" style={{ transform: 'translateY(-50%)' }}>
+			<motion.div
+				initial={{ opacity: 0, scale: 0.8 }}
+				animate={{ opacity: [0, 0, 1], scale: [0.8, 0.8, 1] }}
+				transition={{ duration: 0.6, delay, times: [0, 0.01, 1], ease: 'easeOut' }}
+			>
+				<div className="rounded-lg border border-green-800 bg-gray-900/95 backdrop-blur-sm shadow-sm px-3 py-2 overflow-hidden" style={{ width: 210 }}>
+					<div className="flex items-center gap-1.5">
+						<span className="text-green-400 text-sm">{String.fromCharCode(10003)}</span>
+						<span className="text-[12px] font-medium text-white">{output.text}</span>
+					</div>
+					<div className="text-[11px] font-mono text-white mt-0.5">{output.detail}</div>
+				</div>
+			</motion.div>
+		</div>
+	);
+}
+
+export function HeroAnimation() {
+	return (
+		<div className="relative w-[520px] h-[650px]" style={{ transform: 'scale(0.8)', transformOrigin: 'top center' }}>
+			<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+				{dagEdges.map((e, i) => (
+					<path key={`edge-${i}`} d={edgePath(e)}
+						className="stroke-gray-300" strokeWidth={1.5} fill="none" />
+				))}
+				<path id="wfTopRoute" d={topPath} fill="none" stroke="none" />
+				<path id="wfLeftBranch" d={leftBranchPath} fill="none" stroke="none" />
+				<path id="wfRightBranch" d={rightBranchPath} fill="none" stroke="none" />
+				<path id="wfBottomRoute" d={bottomPath} fill="none" stroke="none" />
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${topDur}s`} repeatCount="1" begin={`${initDelay}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#wfTopRoute" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;1;1;0;0;0;0;0" keyTimes={`0;0.01;${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+0.3)/totalCycleDur};0.7;0.9;1`} />
+				</circle>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#wfLeftBranch" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
+				</circle>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${branchDur}s`} repeatCount="1" begin={`${initDelay + topDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#wfRightBranch" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0;0" keyTimes={`0;${(topDur-0.01)/totalCycleDur};${topDur/totalCycleDur};${(topDur+0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};0.9;1`} />
+				</circle>
+				<circle r={6} opacity="0" className="fill-blue-400" style={{ filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.9))' }}>
+					<animateMotion dur={`${bottomDur}s`} repeatCount="1" begin={`${initDelay + topDur+branchDur}s`} fill="freeze"
+						keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+						<mpath href="#wfBottomRoute" />
+					</animateMotion>
+					<animate attributeName="opacity" begin={`${initDelay}s`} dur={`${totalCycleDur}s`} repeatCount="1" fill="freeze"
+						values="0;0;0;1;1;0;0" keyTimes={`0;${(topDur+branchDur-0.01)/totalCycleDur};${(topDur+branchDur)/totalCycleDur};${(topDur+branchDur+0.01)/totalCycleDur};${(topDur+branchDur+bottomDur)/totalCycleDur};${(topDur+branchDur+bottomDur+0.01)/totalCycleDur};1`} />
+				</circle>
+			</svg>
+
+			{dagNodes.map((node, i) => (
+				<div key={node.id} className="absolute"
+					style={{ left: node.x, top: node.y, transform: 'translate(-50%, -50%)' }}
+				>
+				<motion.div
+					initial={{ opacity: 0, scale: 0.85 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.45, delay: i * 0.1, ease: 'easeOut' }}
+					className="relative"
+				>
+					<motion.div
+						className="absolute -inset-1 rounded-xl bg-blue-400/20"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: [0, 0, 1, 1, 0] }}
+						transition={{ duration: 3, delay: stepTimings[node.id], times: [0, 0.01, 0.1, 0.7, 1], ease: 'easeOut' }}
+					/>
+					<div className="relative" style={{ width: node.w, height: NH }}>
+						<div
+							className={`absolute inset-0 px-4 py-2 rounded-xl border ${node.borderColor} shadow-sm ${node.color} flex items-center gap-2.5`}
+							style={{ justifyContent: 'center' }}
+						>
+							{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+							<span className={`text-sm font-medium ${node.textColor} whitespace-nowrap`}>{node.label}</span>
+						</div>
+						{node.turnsGreen && <motion.div
+							className="absolute inset-0 px-4 py-2 rounded-xl border border-green-300 shadow-sm bg-green-50 flex items-center gap-2.5"
+							style={{ justifyContent: 'center' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [0, 0, 1] }}
+							transition={{ duration: 0.5, delay: stepTimings[node.id] + 0.2, times: [0, 0.01, 1], ease: 'easeOut' }}
+						>
+							{node.icon && <node.icon className={`w-4 h-4 ${node.iconColor} flex-shrink-0`} />}
+							<span className="text-sm font-medium text-green-700 whitespace-nowrap">{node.label}</span>
+						</motion.div>}
+						{node.delayedIcon && <motion.div
+							className="absolute inset-0 px-4 py-2 rounded-xl border border-emerald-200 shadow-sm bg-emerald-50 flex items-center gap-2.5"
+							style={{ justifyContent: 'center' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [0, 0, 1] }}
+							transition={{ duration: 0.5, delay: stepTimings[node.id] + 0.2, times: [0, 0.01, 1], ease: 'easeOut' }}
+						>
+							<node.delayedIcon className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+							<span className="text-sm font-medium text-gray-700 whitespace-nowrap">{node.label}</span>
+						</motion.div>}
+					</div>
+					<StepOutput nodeId={node.id} delay={stepTimings[node.id]} />
+				</motion.div>
+				</div>
+			))}
+		</div>
+	);
+}
+
+{/* ── Step types data ── */}
+
+export const stepTypes = [
+	{ icon: Repeat, label: 'For loop', shortDesc: 'Iterate over a list and run steps per item. Items can be processed sequentially or in parallel.', docLink: '/docs/flows/flow_loops' },
+	{ icon: RefreshCw, label: 'While loop', shortDesc: 'Repeat steps until a predicate returns false. Useful for polling, pagination, or convergence logic.', docLink: '/docs/flows/while_loops' },
+	{ icon: Bot, label: 'AI agent step', shortDesc: 'LLM reasoning loop that calls Windmill scripts or MCP servers as tools until it reaches a result.', docLink: '/docs/core_concepts/ai_agents' },
+	{ icon: Split, label: 'Branches', shortDesc: 'Route execution through conditional or parallel paths. Parallel branches run concurrently and merge before the next step.', docLink: '/docs/flows/flow_branches' },
+	{ icon: ShieldCheck, label: 'Approval', shortDesc: 'Pause the flow and wait for human approval via email, Slack, or the UI. Supports timeouts and multiple approvers.', docLink: '/docs/flows/flow_approval' },
+	{ icon: AlertTriangle, label: 'Error handler', shortDesc: 'Catch failures and run recovery logic. Receives the failed step context to notify, retry, or clean up.', docLink: '/docs/flows/flow_error_handler' },
+	{ icon: Pause, label: 'Sleep / Suspend', shortDesc: 'Pause for a fixed duration or until an external event resumes the flow. The worker is freed while suspended.', docLink: '/docs/flows/sleep' },
+	{ icon: Radio, label: 'Trigger script', shortDesc: 'Pull data from external sources with persistent state. Runs on a schedule and only triggers downstream when new data arrives.', docLink: '/docs/flows/flow_trigger' },
+	{ icon: CornerDownRight, label: 'Early return', shortDesc: 'Return a response to the caller immediately while the rest of the flow continues running asynchronously.', docLink: '/docs/flows/early_return' },
+];
+
+{/* ── Step features data ── */}
+
+export const stepFeatures = [
+	{ icon: RotateCcw, label: 'Retries', title: 'Retries', desc: <span>Configure <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">automatic retries</Link> with a fixed or exponential backoff delay. Set the maximum number of attempts per step.</span>, docLink: '/docs/flows/retries' },
+	{ icon: Layers, label: 'Concurrency limits', title: 'Concurrency limits', desc: <span>Control how many <Link to="/docs/flows/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">runs execute in parallel</Link> for a given flow or step. Prevent overloading external APIs or databases.</span>, docLink: '/docs/flows/concurrency_limit' },
+	{ icon: Database, label: 'Result caching', title: 'Result caching', desc: <span><Link to="/docs/flows/cache" className="text-blue-600 dark:text-blue-400 hover:underline">Cache step results</Link> for a configurable TTL. Identical inputs return the cached output without re-executing the step.</span>, docLink: '/docs/flows/cache' },
+	{ icon: Shield, label: 'Early stop', title: 'Early stop', desc: <span><Link to="/docs/flows/early_stop" className="text-blue-600 dark:text-blue-400 hover:underline">Skip downstream steps</Link> based on a JavaScript expression evaluated against the step's output.</span>, docLink: '/docs/flows/early_stop' },
+	{ icon: Clock, label: 'Timeout', title: 'Timeout', desc: <span>Set a maximum execution time per step. If a step exceeds its timeout, it is terminated and the <Link to="/docs/flows/flow_error_handler" className="text-blue-600 dark:text-blue-400 hover:underline">error handler</Link> runs.</span>, docLink: '/docs/flows/flow_editor' },
+	{ icon: Eye, label: 'Step mocking', title: 'Step mocking', desc: <span>Replace a step's output with <Link to="/docs/flows/step_mocking" className="text-blue-600 dark:text-blue-400 hover:underline">mock data</Link> during development. Test downstream logic without calling external services.</span>, docLink: '/docs/flows/step_mocking' },
+	{ icon: Gauge, label: 'Priority', title: 'Priority', desc: <span>Set <Link to="/docs/flows/priority" className="text-blue-600 dark:text-blue-400 hover:underline">execution priority</Link> so critical flows are picked up by workers before lower-priority jobs in the queue.</span>, docLink: '/docs/flows/priority' },
+];
+
+
+
+{/* ── Main page ── */}
+
+export default function WorkflowEditorContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Flow editor</p>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Workflow builder with built-in infrastructure
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Chain scripts into multi-step workflows with branching, loops, retries, approval gates, and full observability.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<div className="hidden lg:block" style={{ height: 540, overflow: 'hidden' }}>
+						<HeroAnimation />
+					</div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Every step is a script ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Every step is a script</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Each step in a flow is a real script in TypeScript, Python, or any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">supported language</Link>, with the same <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">editor</Link>, LSP autocompletion, and resource access. Windmill handles execution, error propagation, and observability. If you prefer code over drag-and-drop, <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> lets you define the same logic in a single Python or TypeScript file.
+					</p>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ Link steps with dynamic expressions ═══════════════ */}
+			<Section
+				title="Link steps using dynamic expressions"
+				desc={<span>Steps are linked by referencing previous outputs with <code>results.step_name</code> or JavaScript expressions. The editor provides <Link to="/docs/flows/editor_components" className="text-blue-600 dark:text-blue-400 hover:underline">autocompletion</Link> for available variables and validates expressions before running.</span>}
+				docLink="/docs/flows/editor_components"
+				reverse
+			/>
+
+			{/* ═══════════════ Step types (grid) ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-6">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Prebuilt nodes</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">Beyond scripts, the flow editor provides <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">built-in nodes</Link> for common control flow patterns.</p>
+				</motion.div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+					{stepTypes.map((step) => (
+						<Link
+							key={step.label}
+							to={step.docLink}
+							className="group flex flex-col gap-2 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all !no-underline"
+						>
+							<div className="flex items-center gap-2.5">
+								<step.icon className="w-5 h-5 text-blue-500 shrink-0" />
+								<span className="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+									{step.label}
+								</span>
+							</div>
+							<span className="text-xs text-gray-500 dark:text-gray-400">
+								{step.shortDesc}
+							</span>
+						</Link>
+					))}
+				</div>
+			</div>
+
+			{/* ═══════════════ Shared resources ═══════════════ */}
+			<Section
+				title="Shared resources"
+				desc={<span>Flow steps share the same <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> system as standalone scripts. Declare a parameter as a resource type and the UI shows a dropdown of configured connections. Credentials are centrally managed, encrypted at rest, and injected at runtime. A single database or API connection is configured once and reused across every step that needs it.</span>}
+				docLink="/docs/core_concepts/resources_and_types"
+			/>
+
+			{/* ═══════════════ Triggers ═══════════════ */}
+			<TriggerSection />
+
+			{/* ═══════════════ Step-level reliability ═══════════════ */}
+			<Section
+				title="Step-level reliability"
+				desc={<span>Each step can be configured independently with <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> (fixed or exponential backoff), <Link to="/docs/flows/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">concurrency limits</Link>, <Link to="/docs/flows/cache" className="text-blue-600 dark:text-blue-400 hover:underline">result caching</Link>, timeouts, <Link to="/docs/flows/early_stop" className="text-blue-600 dark:text-blue-400 hover:underline">early stop conditions</Link>, <Link to="/docs/flows/priority" className="text-blue-600 dark:text-blue-400 hover:underline">priority</Link>, and <Link to="/docs/flows/step_mocking" className="text-blue-600 dark:text-blue-400 hover:underline">step mocking</Link> for development. All settings are opt-in per step from the flow editor.</span>}
+				docLink="/docs/flows/flow_editor"
+				reverse
+			/>
+
+			{/* ═══════════════ Versioning, workers & observability ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the version history panel showing diffs between flow versions, ~800x400px, save as /static/img/money-pages/card-versioning.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Deployment and versioning</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each deployment creates a new immutable version. View history, compare diffs, and promote flows from staging to production.</p>
+							<Link to="/platform/deployment-versioning" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our versioning dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the worker groups page showing active workers pulling flow jobs, ~800x400px, save as /static/img/money-pages/card-workers.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Runs on dedicated workers</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each flow step runs on an isolated worker with roughly 20ms of overhead between steps. Assign dedicated workers to eliminate cold starts.</p>
+							<Link to="/platform/workers" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our workers dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						{/* Placeholder: screenshot of the runs page showing flow execution with step-level logs and status, ~800x400px, save as /static/img/money-pages/card-observability.webp */}
+						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Built-in granular monitoring</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Logs stream in real time. Inputs and outputs are inspectable at every step. Runs can be restarted from any step.</p>
+							<Link to="/platform/observability" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our observability dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
+					</div>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What is the overhead per step?', textAnswer: 'Windmill adds roughly 20ms of overhead per step. The rest of execution time is your code running on dedicated workers.' },
+				{ question: 'Can I mix languages in a single flow?', textAnswer: 'Yes. Each step can use a different language. A flow can combine TypeScript, Python, SQL, Go, Bash, and any other supported language.' },
+				{ question: 'How do approval steps work?', textAnswer: 'An approval step pauses the flow and sends a notification (email, Slack, or custom). The flow resumes only after a user approves or rejects it. Approvals can have timeouts and multiple approvers.' },
+				{ question: 'Can I develop flows locally?', textAnswer: 'Yes. Flows are stored as YAML files. Use the Windmill CLI or VS Code extension to edit, test, and push flows from your local environment. Git sync works bidirectionally.' },
+				{ question: 'What triggers are supported?', textAnswer: 'Schedules (cron), webhooks, Kafka, SQS, NATS, MQTT, GCP Pub/Sub, PostgreSQL CDC, emails, WebSockets, HTTP routes, CLI, and auto-generated UIs.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source and can be self-hosted with Docker or Kubernetes, including air-gapped environments. Enterprise features require a paid plan.' },
+			]} />
+
+			<ProductCTA />
+		</div>
+	);
+}
