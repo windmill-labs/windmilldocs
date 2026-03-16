@@ -18,7 +18,9 @@ import linearVideo from './linear.mp4';
 
 Every engineer at Windmill runs multiple AI coding agents in parallel throughout the day. An agent implementing a new API endpoint, another fixing a frontend bug, a third refactoring a service, each in its own git worktree, each with its own dev servers, each producing PRs that need monitoring. Managing all of this across scattered terminal windows and browser tabs was painful.
 
-So we built [**Webmux**](https://webmux.dev/), an open-source web dashboard that lets you create, monitor, and manage parallel AI agents from a single browser tab. It is directly inspired by [workmux](https://workmux.raine.dev/), the excellent terminal-first CLI tool by [Raine](https://github.com/raine). We loved the core idea, one worktree, one tmux session, one agent per task. We wanted to bring it to a web interface with richer visuals, embedded terminals, and integrated PR/CI monitoring.
+So we built [**Webmux**](https://webmux.dev/), an open-source tool that lets you create, monitor, and manage parallel AI agents. It ships as both a web dashboard and a CLI.
+
+Webmux is directly inspired by [workmux](https://workmux.raine.dev/), the excellent terminal-first CLI tool by [Raine](https://github.com/raine). We loved the core idea, one worktree, one tmux session, one agent per task. We wanted to bring it to a web interface with richer visuals, embedded terminals, and integrated PR/CI monitoring.
 
 Webmux is open source, check it out on [GitHub](https://github.com/windmill-labs/webmux) or visit [webmux.dev](https://webmux.dev/) to get started.
 
@@ -63,6 +65,17 @@ All of this is driven by a single `.webmux.yaml` config file at the root of your
     <a href={createVideo}>Download the video</a>.
 </video>
 
+
+### CLI
+
+Everything you can do from the web UI is also available from the command line:
+
+- `webmux create` — create a worktree with a profile and prompt.
+- `webmux list` — list active worktrees with their status.
+- `webmux remove` — tear down a worktree and run cleanup hooks.
+- `webmux attach` — attach to a worktree's tmux session.
+
+Since tmux is the source of truth, changes from the CLI and the web UI are always in sync.
 
 ### PR and CI monitoring
 
@@ -131,6 +144,12 @@ We use [Linear](https://linear.app/) for issue tracking at Windmill, and Webmux 
     <a href={linearVideo}>Download the video</a>.
 </video>
 
+### Mobile friendly
+
+The web UI is fully responsive. On a phone you can check which agents are running, read PR comments and CI results, monitor service health, and create or remove worktrees. Combined with a Tailscale setup on a remote machine, you can supervise your agents from anywhere without needing a laptop.
+
+<!-- placeholder: screenshot of webmux on mobile, showing the worktree list with PR status badges -->
+
 ## Architecture
 
 The stack is intentionally simple:
@@ -143,6 +162,8 @@ No database. The only external services are GitHub (for PRs and CI) and optional
 Everything is configured through a single `.webmux.yaml` at the root of your project. Key fields include: `services` to declare dev servers with auto-allocated ports, `profiles` to define pane layouts and choose between `runtime: host` or `runtime: docker`, and `lifecycleHooks` (`postCreate`, `preRemove`) to run setup and teardown scripts per worktree.
 
 ## How we use it at Windmill
+
+Webmux works fine on a local laptop, but it really shines on a powerful remote machine. Windmill is a large Rust codebase, each agent compiling in its own worktree is CPU and memory intensive. We run Webmux as an always-on service on a beefy remote server behind [Tailscale](https://tailscale.com/), so it's accessible from anywhere: laptop, tablet, or phone.
 
 Windmill has specific infrastructure needs: for example, each worktree requires its own isolated database so agents never collide. The `postCreate` hook in `.webmux.yaml` handles this: it provisions a fresh Postgres database per worktree and runs migrations automatically. We also have profiles that clone an already-seeded database (with test data, sample flows, pre-configured workspaces) versus starting from a blank slate. This way each engineer picks the exact starting point they need for a given task through the profile selector, without any manual setup.
 
