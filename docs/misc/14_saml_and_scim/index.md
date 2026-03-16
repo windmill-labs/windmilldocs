@@ -150,6 +150,17 @@ When SCIM is properly configured, groups from your identity provider will be aut
 
 Instance groups appear in your Windmill groups interface with a special designation, and can be assigned permissions to folders and resources just like regular groups. This eliminates the need for manual group management while maintaining full integration with Windmill's permission system.
 
+### Instance-level roles
+
+Instance groups can be assigned an **instance-level role** (superadmin or devops) from the instance group editor. When set, all members of the group automatically receive that role. This allows you to manage instance-level access through your identity provider — for example, assigning devops access to an "infrastructure" group or superadmin access to a "platform-admins" group.
+
+Role changes propagate automatically when:
+- A user is added to or removed from the group via SCIM
+- The group's instance role is changed
+- The group is deleted
+
+Manually elevated roles always take precedence — if a superadmin promotes a user manually, group changes won't demote them. For full precedence rules, see [Roles and Permissions](../../core_concepts/16_roles_and_permissions/index.mdx#instance-level-roles-via-instance-groups).
+
 ### Workspace auto-assignment
 
 Instance groups can be automatically mapped to workspaces with specific role assignments. This powerful feature allows you to:
