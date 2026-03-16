@@ -108,7 +108,7 @@ export default function DatatablesContent({ title, description }) {
 			{/* ═══════════════ Query from any language ═══════════════ */}
 			<Section
 				title="One line to connect"
-				desc={<span>Call <code>wmill.datatable()</code> from any script to get a database connection, then query with TypeScript, Python, DuckDB, or raw SQL. String interpolation is automatically converted to <Link to="/docs/core_concepts/persistent_storage/data_tables#security" className="text-blue-600 dark:text-blue-400 hover:underline">parameterized queries</Link> to prevent SQL injection.</span>}
+				desc={<span>Call <code>wmill.datatable()</code> from any script to get a database connection, then query with TypeScript, Python, DuckDB, or raw SQL. String interpolation is automatically converted to <Link to="/docs/core_concepts/persistent_storage/data_tables#permissions" className="text-blue-600 dark:text-blue-400 hover:underline">parameterized queries</Link> to prevent SQL injection.</span>}
 				docLink="/docs/core_concepts/persistent_storage/data_tables"
 				video="/img/platform/datatables/platform-datatables-query-any-language.webm"
 			/>
@@ -133,7 +133,7 @@ export default function DatatablesContent({ title, description }) {
 			{/* ═══════════════ Schema organization ═══════════════ */}
 			<Section
 				title="Schema organization"
-				desc={<span>Use schemas to organize tables within a datatable. Set a default <Link to="/docs/core_concepts/persistent_storage/data_tables#schemas" className="text-blue-600 dark:text-blue-400 hover:underline">search path</Link> per script or use <code>schema.table</code> syntax. Typically one or a few datatables per workspace, with schemas for logical separation.</span>}
+				desc={<span>Use schemas to organize tables within a datatable. Set a default <Link to="/docs/core_concepts/persistent_storage/data_tables#usage" className="text-blue-600 dark:text-blue-400 hover:underline">search path</Link> per script or use <code>schema.table</code> syntax. Typically one or a few datatables per workspace, with schemas for logical separation.</span>}
 				docLink="/docs/core_concepts/persistent_storage/data_tables"
 				video="/img/platform/datatables/platform-datatables-schema-organization.webm"
 				reverse
