@@ -11,6 +11,7 @@ import { SiTypescript } from 'react-icons/si';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -417,12 +418,8 @@ export function Section({ title, desc, docLink, image, video, reverse, children 
 				{!children && (
 					<div className={reverse ? 'lg:order-1' : ''}>
 						{video ? (
-							<video
+							<LazyVideo
 								className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-								autoPlay
-								loop
-								muted
-								playsInline
 								src={video}
 							/>
 						) : image ? (

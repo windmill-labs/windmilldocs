@@ -18,6 +18,7 @@ import TriggerSection from '../../components/use-cases/TriggerSection';
 import GithubStarCount from '../../landing/GithubStarCount';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -829,12 +830,8 @@ export default function ScriptEditorContent({ title, description }) {
 				desc={<span>Write your logic in TypeScript (Bun, Deno), Python, Go, Bash, SQL, or <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ other languages</Link>. Windmill handles <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">dependencies</Link> under the hood: it parses your imports, resolves packages from npm, PyPI, or Go modules, and generates a per-script lockfile. Workers cache dependencies so execution stays fast.</span>}
 				docLink="/docs/getting_started/scripts_quickstart"
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/script-editor/platform-script-20languages.webm"
 					/>
 				}
@@ -854,12 +851,8 @@ export default function ScriptEditorContent({ title, description }) {
 				docLink="/docs/core_concepts/auto_generated_uis"
 				reverse
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/script-editor/platform-script-auto-generated-ui.webm"
 					/>
 				}
@@ -870,12 +863,8 @@ export default function ScriptEditorContent({ title, description }) {
 				desc={<span>Parameters typed as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> show a dropdown of configured connections in the UI. Credentials are centrally managed, encrypted at rest, and injected at runtime. A database, API key, or OAuth2 connection is configured once and reused across any script that needs it.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/script-editor/platform-script-shared-resources.webm"
 					/>
 				}
@@ -887,12 +876,8 @@ export default function ScriptEditorContent({ title, description }) {
 				docLink="/docs/core_concepts/jobs"
 				reverse
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/script-editor/platform-script-realtime-logs.webm"
 					/>
 				}
@@ -906,12 +891,8 @@ export default function ScriptEditorContent({ title, description }) {
 				desc={<span>Every deployed script is automatically exposed as a <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">REST endpoint</Link>. Call any script programmatically with a simple HTTP request, authenticate with tokens, and integrate Windmill scripts into any external system or CI/CD pipeline without extra configuration.</span>}
 				docLink="/docs/core_concepts/webhooks"
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/script-editor/platform-script-api-endpoint.webm"
 					/>
 				}

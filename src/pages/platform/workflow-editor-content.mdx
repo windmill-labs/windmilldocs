@@ -12,6 +12,7 @@ import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import TriggerSection from '../../components/use-cases/TriggerSection';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -428,12 +429,8 @@ export default function WorkflowEditorContent({ title, description }) {
 				desc={<span>Each step in a flow is a real script in TypeScript, Python, or any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">supported language</Link>, with the same <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">editor</Link>, LSP autocompletion, and resource access. Windmill handles execution, error propagation, and observability. If you prefer code over drag-and-drop, <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> lets you define the same logic in a single Python or TypeScript file.</span>}
 				docLink="/docs/getting_started/scripts_quickstart"
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm"
 					/>
 				}
@@ -446,12 +443,8 @@ export default function WorkflowEditorContent({ title, description }) {
 				docLink="/docs/flows/editor_components"
 				reverse
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/workflow-editor/platform-flow-dynamic-expressions.webm"
 					/>
 				}
@@ -490,12 +483,8 @@ export default function WorkflowEditorContent({ title, description }) {
 				desc={<span>Flow steps share the same <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> system as standalone scripts. Declare a parameter as a resource type and the UI shows a dropdown of configured connections. Credentials are centrally managed, encrypted at rest, and injected at runtime. A single database or API connection is configured once and reused across every step that needs it.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/workflow-editor/platform-flow-shared-resources.webm"
 					/>
 				}
@@ -507,12 +496,8 @@ export default function WorkflowEditorContent({ title, description }) {
 				docLink="/docs/core_concepts/jobs"
 				reverse
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/workflow-editor/platform-flow-realtime-logs.webm"
 					/>
 				}
@@ -528,12 +513,8 @@ export default function WorkflowEditorContent({ title, description }) {
 				docLink="/docs/flows/flow_editor"
 				reverse
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/workflow-editor/platform-flow-step-level-reliability.webm"
 					/>
 				}

@@ -12,6 +12,7 @@ import TriggerGrid from '../../components/use-cases/TriggerGrid';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 import TriggerHeroAnimation from '../../components/products/TriggerHeroAnimation';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -128,12 +129,8 @@ export default function TriggersContent({ title, description }) {
 				desc={<span>Run any script or flow on a <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedule</Link>. Use the visual cron builder to set intervals from every minute to custom expressions. Schedules can be toggled on or off, have error handlers, and support recovery flows for missed runs.</span>}
 				docLink="/docs/core_concepts/scheduling"
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/triggers/platform-triggers-schedules.webm"
 					/>
 				}
@@ -146,12 +143,8 @@ export default function TriggersContent({ title, description }) {
 				docLink="/docs/core_concepts/webhooks"
 				reverse
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/triggers/platform-triggers-webhooks.webm"
 					/>
 				}
@@ -199,12 +192,8 @@ export default function TriggersContent({ title, description }) {
 				docLink="/docs/core_concepts/postgres_triggers"
 				reverse
 				visual={
-					<video
+					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						autoPlay
-						loop
-						muted
-						playsInline
 						src="/img/platform/triggers/platform-triggers-postgres.webm"
 					/>
 				}

@@ -10,6 +10,7 @@ import { ArrowRight, BookOpen, CheckCircle2, XCircle, Calendar, Clock, Webhook, 
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -178,7 +179,7 @@ export function HeroAnimation() {
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -198,7 +199,12 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{video ? (
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src={video}
+						/>
+					) : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -257,6 +263,7 @@ export default function ObservabilityContent({ title, description }) {
 				title="Script execution logs"
 				desc={<span>Every <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">script execution</Link> records full stdout/stderr logs, typed inputs, returned outputs, duration, and status. View the complete trace of any run: what went in, what came out, and what happened in between.</span>}
 				docLink="/docs/core_concepts/jobs"
+				video="/img/platform/observability/platform-observability-script-execution-logs.webm"
 			/>
 			{/* Placeholder image: screenshot of a script run detail view showing inputs on the left, logs in the center, and JSON output on the right, ~1200x800px, save as /static/img/money-pages/script-run-detail.webp */}
 
@@ -264,6 +271,7 @@ export default function ObservabilityContent({ title, description }) {
 			<Section
 				title="Flow execution logs"
 				desc={<span>Inspect each step of a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow execution</Link> individually with inputs, outputs, logs, duration, and status per node. The visual timeline shows which steps succeeded, failed, or were skipped. Restart from any failed step without replaying the entire flow.</span>}
+				video="/img/platform/observability/platform-observability-flow-execution-logs.webm"
 				reverse
 			/>
 			{/* Placeholder image: screenshot of a flow run detail showing the DAG with step statuses (green/red), one step selected with its inputs/outputs/logs panel open, ~1200x800px, save as /static/img/money-pages/flow-run-detail.webp */}
