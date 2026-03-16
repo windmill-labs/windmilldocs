@@ -10,6 +10,7 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
 import RbacHeroAnimation from '../../components/products/RbacHeroAnimation';
 
 export const fadeIn = {
@@ -26,7 +27,7 @@ export const stagger = (delay = 0) => ({
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -46,7 +47,12 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{video ? (
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src={video}
+						/>
+					) : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -152,14 +158,16 @@ export default function RbacContent({ title, description }) {
 				title="Groups and folders"
 				desc={<span>Organize users into <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">groups</Link> and assign folder-level permissions: viewer, writer, or admin. Subfolders inherit parent permissions. SCIM-synced instance groups (Enterprise) automatically map identity provider groups to Windmill groups.</span>}
 				docLink="/docs/core_concepts/groups_and_folders"
+				video="/img/platform/rbac/platform-rbac-folders-groups.webm"
 			/>
 			{/* Placeholder image: screenshot of folder permissions UI showing groups with viewer/writer/admin access on nested folders, ~1200x800px, save as /static/img/money-pages/groups-folders.webp */}
 
 			{/* ═══════════════ Path-based ACLs ═══════════════ */}
 			<Section
 				title="Path-based access control lists"
-				desc={<span>Every script, flow, resource, variable, and schedule is identified by a <Link to="/docs/core_concepts/roles_and_permissions#path" className="text-blue-600 dark:text-blue-400 hover:underline">unique path</Link>. Each path has an owner and explicit read/write permissions for users and groups. Items in user space (<code>u/alice/my_script</code>) are private by default. Items in folders (<code>f/team/my_script</code>) inherit the folder's group permissions.</span>}
+				desc={<span>Every script, flow, resource, variable, and trigger is identified by a <Link to="/docs/core_concepts/roles_and_permissions#path" className="text-blue-600 dark:text-blue-400 hover:underline">unique path</Link>. Each path has an owner and explicit read/write permissions for users and groups. Items in user space (<code>u/alice/my_script</code>) are private by default. Items in folders (<code>f/team/my_script</code>) inherit the folder's group permissions.</span>}
 				docLink="/docs/core_concepts/roles_and_permissions#permissions-and-access-control"
+				video="/img/platform/rbac/platform-rbac-path-based-acl.webm"
 				reverse
 			/>
 			{/* Placeholder image: screenshot of the share/permissions dialog on a script showing owner, group permissions (viewer/writer), and path, ~1200x800px, save as /static/img/money-pages/acl.webp */}
@@ -169,6 +177,7 @@ export default function RbacContent({ title, description }) {
 				title="Encrypted secrets"
 				desc={<span>All <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> are encrypted at the workspace level. Values are injected at runtime only and never exposed in logs, UI, or API responses. Manual key rotation is available on Enterprise.</span>}
 				docLink="/docs/core_concepts/variables_and_secrets"
+				video="/img/platform/rbac/platform-rbac-encrypted-secrets.webm"
 			/>
 			{/* Placeholder image: screenshot of secrets management UI showing encrypted variables with visibility toggles, ~1200x800px, save as /static/img/money-pages/secrets.webp */}
 
@@ -177,6 +186,7 @@ export default function RbacContent({ title, description }) {
 				title="SSO and OAuth"
 				desc={<span>Authenticate with <Link to="/docs/misc/setup_oauth" className="text-blue-600 dark:text-blue-400 hover:underline">Google, GitHub, Azure AD, Okta, GitLab</Link>, and any OpenID Connect provider. Configure multiple providers simultaneously. Users are auto-provisioned on first login.</span>}
 				docLink="/docs/misc/setup_oauth"
+				video="/img/platform/rbac/platform-rbac-sso-oauth.webm"
 				reverse
 			/>
 
@@ -185,6 +195,7 @@ export default function RbacContent({ title, description }) {
 				title="SAML and SCIM (Enterprise)"
 				desc={<span><Link to="/docs/misc/saml_and_scim" className="text-blue-600 dark:text-blue-400 hover:underline">SAML SSO</Link> for enterprise identity providers. SCIM provisioning automatically syncs users and groups from your identity provider to Windmill. No manual user management required.</span>}
 				docLink="/docs/misc/saml_and_scim"
+				video="/img/platform/rbac/platform-rbac-saml-scim.webm"
 			/>
 			{/* Placeholder image: screenshot of SAML/SCIM configuration page showing identity provider settings and group mappings, ~1200x800px, save as /static/img/money-pages/saml-scim.webp */}
 
@@ -193,6 +204,7 @@ export default function RbacContent({ title, description }) {
 				title="Audit logs"
 				desc={<span>Every action is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>: deployments, permission changes, resource modifications, logins, and job executions. Filter by user, action type, or time range. Windmill is SOC 2 Type II certified.</span>}
 				docLink="/docs/core_concepts/audit_logs"
+				video="/img/platform/rbac/platform-rbac-audit-logs.webm"
 				reverse
 			/>
 
