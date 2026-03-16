@@ -15,11 +15,9 @@ const scriptLines = [
 	{ tokens: [{ text: 'export async function ', color: 'text-purple-400' }, { text: 'main', color: 'text-blue-300' }, { text: '(', color: 'text-gray-400' }] },
 	{ tokens: [{ text: '  name', color: 'text-orange-300' }, { text: ': string, ', color: 'text-gray-400' }, { text: 'amount', color: 'text-orange-300' }, { text: ': number', color: 'text-gray-400' }] },
 	{ tokens: [{ text: ') {', color: 'text-gray-400' }] },
-	{ tokens: [{ text: '  const ', color: 'text-purple-400' }, { text: 'db ', color: 'text-blue-300' }, { text: '= ', color: 'text-gray-400' }, { text: 'wmill', color: 'text-blue-300' }, { text: '.getResource(', color: 'text-gray-400' }, { text: "'pg'", color: 'text-amber-300' }, { text: ')', color: 'text-gray-400' }] },
-	{ tokens: [{ text: '  await ', color: 'text-purple-400' }, { text: 'db', color: 'text-blue-300' }, { text: '.query(', color: 'text-gray-400' }] },
-	{ tokens: [{ text: "    `INSERT INTO orders (name, amount)", color: 'text-amber-300' }] },
-	{ tokens: [{ text: "     VALUES ($1, $2)`", color: 'text-amber-300' }, { text: ', [name, amount]', color: 'text-gray-400' }] },
-	{ tokens: [{ text: '  )', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  const ', color: 'text-purple-400' }, { text: 'sql ', color: 'text-blue-300' }, { text: '= ', color: 'text-gray-400' }, { text: 'wmill', color: 'text-blue-300' }, { text: '.datatable()', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  await ', color: 'text-purple-400' }, { text: 'sql', color: 'text-blue-300' }, { text: '`INSERT INTO orders (name, amount)', color: 'text-amber-300' }] },
+	{ tokens: [{ text: "     VALUES (", color: 'text-amber-300' }, { text: '${name}', color: 'text-orange-300' }, { text: ', ', color: 'text-amber-300' }, { text: '${amount}', color: 'text-orange-300' }, { text: ')`', color: 'text-amber-300' }] },
 	{ tokens: [{ text: '}', color: 'text-gray-400' }] },
 ];
 

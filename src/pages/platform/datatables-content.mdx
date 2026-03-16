@@ -26,7 +26,7 @@ export const stagger = (delay = 0) => ({
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -46,7 +46,16 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{video ? (
+						<video
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							autoPlay
+							loop
+							muted
+							playsInline
+							src={video}
+						/>
+					) : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -101,17 +110,10 @@ export default function DatatablesContent({ title, description }) {
 
 			{/* ═══════════════ Query from any language ═══════════════ */}
 			<Section
-				title="Query from any language"
-				desc={<span>TypeScript, Python, DuckDB, and raw SQL are supported. In TypeScript, string interpolation is automatically converted to <Link to="/docs/core_concepts/persistent_storage/data_tables#security" className="text-blue-600 dark:text-blue-400 hover:underline">parameterized queries</Link> to prevent SQL injection. Python uses positional arguments for the same purpose.</span>}
+				title="One line to connect"
+				desc={<span>Call <code>wmill.datatable()</code> from any script to get a database connection, then query with TypeScript, Python, DuckDB, or raw SQL. String interpolation is automatically converted to <Link to="/docs/core_concepts/persistent_storage/data_tables#security" className="text-blue-600 dark:text-blue-400 hover:underline">parameterized queries</Link> to prevent SQL injection.</span>}
 				docLink="/docs/core_concepts/persistent_storage/data_tables"
-			/>
-
-			{/* ═══════════════ Schema organization ═══════════════ */}
-			<Section
-				title="Schema organization"
-				desc={<span>Use schemas to organize tables within a datatable. Set a default <Link to="/docs/core_concepts/persistent_storage/data_tables#schemas" className="text-blue-600 dark:text-blue-400 hover:underline">search path</Link> per script or use <code>schema.table</code> syntax. Typically one or a few datatables per workspace, with schemas for logical separation.</span>}
-				docLink="/docs/core_concepts/persistent_storage/data_tables"
-				reverse
+				video="/img/platform/datatables/platform-datatables-query-any-language.webm"
 			/>
 
 			{/* ═══════════════ Asset tracking and data lineage ═══════════════ */}
@@ -119,21 +121,33 @@ export default function DatatablesContent({ title, description }) {
 				title="Asset tracking and data lineage"
 				desc={<span>Windmill auto-detects datatable usage in scripts and shows them as <Link to="/docs/core_concepts/assets" className="text-blue-600 dark:text-blue-400 hover:underline">asset nodes</Link> in flows. Read vs write mode is detected automatically. Click through to the Database Explorer to inspect schemas and data.</span>}
 				docLink="/docs/core_concepts/assets"
-			/>
-
-			{/* ═══════════════ Full-code apps integration ═══════════════ */}
-			<Section
-				title="Full-code apps integration"
-				desc={<span>Whitelist tables in <code>raw_app.yaml</code> and query them from backend runnables with SQL. The CLI generates a <code>DATATABLES.md</code> context file so AI coding assistants understand the data model.</span>}
-				docLink="/docs/full_code_apps/data_tables"
+				video="/img/platform/datatables/platform-datatables-asset-tracking.webm"
 				reverse
 			/>
 
 			{/* ═══════════════ Database Studio ═══════════════ */}
 			<Section
 				title="Database Studio"
-				desc={<span>A built-in <Link to="/docs/apps/app_configuration_settings/database_studio" className="text-blue-600 dark:text-blue-400 hover:underline">app component</Link> for browsing, editing, and managing tables visually. Available in both the app editor and as a standalone tool.</span>}
+				desc={<span>The <Link to="/docs/apps/app_configuration_settings/database_studio" className="text-blue-600 dark:text-blue-400 hover:underline">Database Studio</Link> is a visual interface for exploring table data, editing rows, and managing schemas. Available in both the app editor and as a standalone tool.</span>}
 				docLink="/docs/apps/app_configuration_settings/database_studio"
+				video="/img/platform/datatables/platform-datatables-database-studio.webm"
+			/>
+
+			{/* ═══════════════ Schema organization ═══════════════ */}
+			<Section
+				title="Schema organization"
+				desc={<span>Use schemas to organize tables within a datatable. Set a default <Link to="/docs/core_concepts/persistent_storage/data_tables#schemas" className="text-blue-600 dark:text-blue-400 hover:underline">search path</Link> per script or use <code>schema.table</code> syntax. Typically one or a few datatables per workspace, with schemas for logical separation.</span>}
+				docLink="/docs/core_concepts/persistent_storage/data_tables"
+				video="/img/platform/datatables/platform-datatables-schema-organization.webm"
+				reverse
+			/>
+
+			{/* ═══════════════ Full-code apps integration ═══════════════ */}
+			<Section
+				title="Full-code apps integration"
+				desc={<span>Data tables are fully integrated with <Link to="/docs/full_code_apps" className="text-blue-600 dark:text-blue-400 hover:underline">full-code apps</Link> on Windmill. Query them directly from backend runnables with SQL and build complete data-driven applications.</span>}
+				docLink="/docs/full_code_apps/data_tables"
+				video="/img/platform/datatables/platform-datatables-full-code-apps.webm"
 			/>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
@@ -141,7 +155,7 @@ export default function DatatablesContent({ title, description }) {
 				{ question: 'What databases are supported?', textAnswer: 'PostgreSQL. Attach any PostgreSQL instance as a workspace resource.' },
 				{ question: 'Are queries safe from SQL injection?', textAnswer: 'Yes. TypeScript string interpolation is converted to parameterized queries. Python uses positional arguments.' },
 				{ question: 'Who can access data tables?', textAnswer: 'All workspace members. Credentials are managed internally and never exposed.' },
-				{ question: 'Can I use data tables from full-code apps?', textAnswer: 'Yes. Whitelist tables in raw_app.yaml and query them from backend runnables.' },
+				{ question: 'Can I use data tables from full-code apps?', textAnswer: 'Yes. Data tables are fully integrated with full-code apps. Query them directly from backend runnables with SQL.' },
 				{ question: 'Can I use DuckDB with data tables?', textAnswer: 'Yes. DuckDB scripts can ATTACH a datatable and query it with standard SQL.' },
 			]} />
 
