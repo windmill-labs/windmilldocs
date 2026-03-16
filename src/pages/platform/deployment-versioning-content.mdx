@@ -266,32 +266,76 @@ export function SyncFlowArrow({ isInView, delay }) {
 	);
 }
 
+export function DownArrow() {
+	return (
+		<div className="flex justify-center">
+			<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400">
+				<path d="M6 2 L6 10 M3 7 L6 10 L9 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+			</svg>
+		</div>
+	);
+}
+
+export function BranchColumn({ label, steps, alignBottom, isInView, baseDelay }) {
+	return (
+		<div className="flex-1 flex flex-col gap-1.5">
+			<span className="text-[10px] font-semibold uppercase tracking-wider text-center text-gray-400 mb-1">{label}</span>
+			{alignBottom && <div className="flex-1" />}
+			{steps.map((step, i) => (
+				<React.Fragment key={step.label}>
+					<SyncFlowStep {...step} isInView={isInView} delay={baseDelay + i * 0.12} />
+					{i < steps.length - 1 && <DownArrow />}
+				</React.Fragment>
+			))}
+		</div>
+	);
+}
+
 export function SyncFlows() {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, margin: "-40px" });
 	const d = 0.2;
 	const flows = [
 		{
-			label: 'From local to production',
-			steps: [
-				{ icon: Terminal, label: 'wmill sync push', auto: false },
+			label: 'From local to remote',
+			first: { icon: PenLine, label: 'Change locally', auto: false },
+			branches: [
+				{
+					label: 'Git sync on',
+					steps: [
+						{ icon: GitBranch, label: 'git commit & push', auto: false },
+						{ icon: Github, label: 'GitHub Action: wmill sync push', auto: true },
+					],
+				},
+				{
+					label: 'No git sync',
+					steps: [
+						{ icon: Terminal, label: 'wmill sync push', auto: false },
+					],
+				},
 			],
-			parallel: [
-				{ icon: Rocket, label: 'Deploy on Windmill', auto: true },
-				{ icon: GitBranch, label: 'Commit to Git', auto: true },
-			],
-			after: [
-				{ icon: Monitor, label: 'Available on the UI', auto: true },
-			],
+			last: { icon: Rocket, label: 'Deployed on Windmill', auto: true },
 		},
 		{
-			label: 'From UI to local',
-			steps: [
-				{ icon: Monitor, label: 'Deploy from the UI', auto: false },
-				{ icon: GitBranch, label: 'Commit to Git', auto: true },
-				{ icon: Terminal, label: 'wmill sync pull', auto: false },
-				{ icon: PenLine, label: 'Files updated locally', auto: true },
+			label: 'From remote to local',
+			first: { icon: Monitor, label: 'Deploy from the UI', auto: false },
+			branches: [
+				{
+					label: 'Git sync on',
+					steps: [
+						{ icon: GitBranch, label: 'Commit to Git', auto: true },
+						{ icon: Terminal, label: 'git pull', auto: false },
+					],
+				},
+				{
+					label: 'No git sync',
+					alignBottom: true,
+					steps: [
+						{ icon: Terminal, label: 'wmill sync pull', auto: false },
+					],
+				},
 			],
+			last: { icon: PenLine, label: 'Files updated locally', auto: true },
 		},
 	];
 	return (
@@ -310,52 +354,37 @@ export function SyncFlows() {
 							{flow.label}
 						</p>
 						<div className="flex flex-col gap-1.5">
-							{flow.steps.map((step, i) => (
-								<React.Fragment key={step.label}>
-									<SyncFlowStep {...step} isInView={isInView} delay={baseDelay + 0.1 + i * 0.12} />
-									{(i < flow.steps.length - 1 || flow.parallel) && (
-										<div className="flex justify-center">
-											<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400">
-												<path d="M6 2 L6 10 M3 7 L6 10 L9 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-											</svg>
-										</div>
-									)}
-								</React.Fragment>
-							))}
-							{flow.parallel && (
-								<div className="relative">
-									{/* Split curves */}
-									<svg className="w-full" height="32" viewBox="0 0 200 32" preserveAspectRatio="xMidYMid meet">
-										<path d="M100,0 L100,4 C100,18 50,18 50,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
-										<path d="M100,0 L100,4 C100,18 150,18 150,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
-									</svg>
-									<div className="flex gap-2">
-										{flow.parallel.map((step, i) => (
-											<div key={step.label} className="flex-1">
-												<SyncFlowStep {...step} isInView={isInView} delay={baseDelay + 0.1 + flow.steps.length * 0.12 + i * 0.08} />
-											</div>
-										))}
-									</div>
-									{flow.after && (
-										<>
-											{/* Merge curves */}
-											<svg className="w-full" height="32" viewBox="0 0 200 32" preserveAspectRatio="xMidYMid meet">
-												<path d="M50,0 C50,14 100,14 100,28 L100,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
-												<path d="M150,0 C150,14 100,14 100,28 L100,32" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
-											</svg>
-											{/* Arrow pointing down */}
-											<div className="flex justify-center -mt-1">
-												<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400">
-													<path d="M6 2 L6 10 M3 7 L6 10 L9 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-												</svg>
-											</div>
-										</>
-									)}
-								</div>
-							)}
-							{flow.after && flow.after.map((step, i) => (
-								<SyncFlowStep key={step.label} {...step} isInView={isInView} delay={baseDelay + 0.1 + (flow.steps.length + flow.parallel.length) * 0.12 + i * 0.08} />
-							))}
+							{/* Shared first step */}
+							<SyncFlowStep {...flow.first} isInView={isInView} delay={baseDelay + 0.1} />
+
+							{/* Split curves */}
+							<svg className="w-full" height="28" viewBox="0 0 400 28" preserveAspectRatio="xMidYMid meet">
+								<path d="M200,0 L200,4 C200,16 100,16 100,28" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+								<path d="M200,0 L200,4 C200,16 300,16 300,28" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+							</svg>
+
+							{/* Two branches side by side */}
+							<div className="flex gap-2">
+								{flow.branches.map((branch, bi) => (
+									<BranchColumn
+										key={branch.label}
+										label={branch.label}
+										steps={branch.steps}
+										alignBottom={branch.alignBottom}
+										isInView={isInView}
+										baseDelay={baseDelay + 0.22 + bi * 0.08}
+									/>
+								))}
+							</div>
+
+							{/* Merge curves */}
+							<svg className="w-full" height="28" viewBox="0 0 400 28" preserveAspectRatio="xMidYMid meet">
+								<path d="M100,0 C100,12 200,12 200,24 L200,28" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+								<path d="M300,0 C300,12 200,12 200,24 L200,28" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+							</svg>
+
+							{/* Shared last step */}
+							<SyncFlowStep {...flow.last} isInView={isInView} delay={baseDelay + 0.5} />
 						</div>
 					</motion.div>
 				);
@@ -366,7 +395,7 @@ export function SyncFlows() {
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -387,7 +416,16 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 				</div>
 				{!children && (
 					<div className={reverse ? 'lg:order-1' : ''}>
-						{image ? (
+						{video ? (
+							<video
+								className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+								autoPlay
+								loop
+								muted
+								playsInline
+								src={video}
+							/>
+						) : image ? (
 							<img
 								src={image}
 								alt={title}
@@ -446,6 +484,7 @@ export default function VersioningContent({ title, description }) {
 				title="Deploy in one click"
 				desc={<span><Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 hover:underline">Scripts</Link>, <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 hover:underline">flows</Link>, and <Link to="/docs/getting_started/apps_quickstart" className="text-blue-600 hover:underline">apps</Link> can be written, tested, and deployed from the browser. Each deployment creates a new immutable version. All three support draft mode to iterate without affecting production.</span>}
 				docLink="/docs/core_concepts/draft_and_deploy"
+				video="/img/platform/deployment-versioning/platform-deployment-deploy-in-one-click.webm"
 			/>
 
 			{/* ═══════════════ Deployment history ═══════════════ */}
@@ -453,6 +492,7 @@ export default function VersioningContent({ title, description }) {
 				title="Deployment history"
 				desc={<span>Every deployment is tracked with a message, a unique hash (similar to a git commit SHA), and a side-by-side <Link to="/docs/core_concepts/versioning" className="text-blue-600 hover:underline">diff viewer</Link>. Any past version can be forked or restored. Hash-based webhook URLs let you pin integrations to a specific version.</span>}
 				docLink="/docs/core_concepts/versioning"
+				video="/img/platform/deployment-versioning/platform-deployment-deployment-history.webm"
 				reverse
 			/>
 
@@ -464,7 +504,7 @@ export default function VersioningContent({ title, description }) {
 			{/* ═══════════════ Git sync ═══════════════ */}
 			<Section
 				title="Git sync"
-				desc={<span>When connected to a <Link to="/docs/advanced/git_sync" className="text-blue-600 hover:underline">Git repository</Link>, every deployment is automatically committed. Changes can also be pulled from Git, making the repository the single source of truth. Works with GitHub, GitLab, Bitbucket, and Azure DevOps.</span>}
+				desc={<span>When connected to a <Link to="/docs/advanced/git_sync" className="text-blue-600 hover:underline">Git repository</Link>, every deployment is automatically committed. Changes can also be pulled from Git, making the repository the single source of truth. Works with GitHub, GitLab, Bitbucket, and Azure DevOps. See the <a href="https://github.com/windmill-labs/windmill-sync-example" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">sync example repository</a> for a complete setup.</span>}
 				docLink="/docs/advanced/git_sync"
 			/>
 
@@ -473,9 +513,9 @@ export default function VersioningContent({ title, description }) {
 				title="Workspace forks"
 				desc={<span><Link to="/docs/advanced/workspace_forks" className="text-blue-600 hover:underline">Workspace forks</Link> (Enterprise) are independent copies of a workspace for parallel development. Scripts, flows, apps, resources, variables, and schedules are all included. Teams can work on features or experiments in a fork without affecting the production workspace. Each fork can track its own Git branch, and changes from the parent workspace can be pulled into the fork to stay up to date.</span>}
 				docLink="/docs/advanced/workspace_forks"
+				video="/img/platform/deployment-versioning/platform-deployment-workspace-forks.webm"
 				reverse
 			/>
-			{/* TODO: add screenshot of workspace fork creation or fork banner */}
 
 			{/* ═══════════════ Merge UI ═══════════════ */}
 			<Section
@@ -487,7 +527,7 @@ export default function VersioningContent({ title, description }) {
 			{/* ═══════════════ Deploy from the CLI ═══════════════ */}
 			<Section
 				title="Deploy from the CLI"
-				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Push changes from your terminal or deploy from the UI. Either way, changes are committed to your Git repository. See the <Link to="/platform/local-dev" className="text-blue-600 hover:underline">local development</Link> page for the full local workflow.</span>}
+				desc={<span>The <Link to="/docs/advanced/cli" className="text-blue-600 hover:underline">Windmill CLI</Link> syncs a workspace to a local folder. Push changes from your terminal or deploy from the UI. When <Link to="/docs/advanced/git_sync" className="text-blue-600 hover:underline">Git sync</Link> is enabled, changes are automatically committed to your Git repository. See the <Link to="/platform/local-dev" className="text-blue-600 hover:underline">local development</Link> page for the full local workflow.</span>}
 				docLink="/docs/advanced/cli"
 			>
 				<SyncFlows />
