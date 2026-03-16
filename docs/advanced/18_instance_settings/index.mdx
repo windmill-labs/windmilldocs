@@ -422,6 +422,16 @@ When creating a workspace, you have the option to invite automatically everyone 
 	src="/videos/new_workspace.mp4"
 />
 
+## Webhooks
+
+### Instance events webhook
+
+URL to receive POST requests for instance events such as user added, OAuth signup, user invited to workspace, or user joined workspace.
+
+Configure it from **Instance settings > Monitoring > Webhooks**.
+
+Alternatively, you can set the `INSTANCE_EVENTS_WEBHOOK` environment variable. The environment variable takes precedence over the DB setting. The DB value is cached for 60 seconds.
+
 ## Open Telemetry & Prometheus
 
 ![Open Telemetry & Prometheus](./otel_prometheus.png)
