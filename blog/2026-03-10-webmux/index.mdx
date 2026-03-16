@@ -42,6 +42,13 @@ Webmux solves this by putting everything in one browser tab: live terminals, PR 
 ### One-click worktree creation
 
 Pick a profile, name a branch, write a prompt. Webmux handles the rest:
+1. Creates a [git worktree](https://git-scm.com/docs/git-worktree).
+2. Allocates ports for dev servers (backend, frontend, etc.).
+3. Spins up a tmux session with the configured pane layout.
+4. Starts the AI agent (Claude, Codex, or others) with the prompt and environment variables.
+5. Runs any `postCreate` lifecycle hook (install dependencies, seed data, etc.).
+
+All of this is driven by a single `.webmux.yaml` config file at the root of your project.
 
 <video
     controls
@@ -56,17 +63,14 @@ Pick a profile, name a branch, write a prompt. Webmux handles the rest:
     <a href={createVideo}>Download the video</a>.
 </video>
 
-1. Creates a [git worktree](https://git-scm.com/docs/git-worktree).
-2. Allocates ports for dev servers (backend, frontend, etc.).
-3. Spins up a tmux session with the configured pane layout.
-4. Starts the AI agent (Claude, Codex, or others) with the prompt and environment variables.
-5. Runs any `postCreate` lifecycle hook (install dependencies, seed data, etc.).
-
-All of this is driven by a single `.webmux.yaml` config file at the root of your project.
 
 ### PR and CI monitoring
 
 Webmux polls GitHub to track PRs for each worktree's branch. When an agent opens a PR, you see it immediately in the dashboard with:
+- PR state (open, merged, closed).
+- CI check status and details: click through to see failed test logs.
+- Review comments displayed inline, so you can read code review feedback without leaving the dashboard.
+
 
 <video
     controls
@@ -80,10 +84,6 @@ Webmux polls GitHub to track PRs for each worktree's branch. When an agent opens
     Your browser does not support the video tag.
     <a href={commentsAndCiVideo}>Download the video</a>.
 </video>
-
-- PR state (open, merged, closed).
-- CI check status and details: click through to see failed test logs.
-- Review comments displayed inline, so you can read code review feedback without leaving the dashboard.
 
 ### Service health
 
@@ -144,7 +144,7 @@ Everything is configured through a single `.webmux.yaml` at the root of your pro
 
 ## How we use it at Windmill
 
-Windmill has specific infrastructure needs: each worktree requires its own isolated database so agents never collide. The `postCreate` hook in `.webmux.yaml` handles this: it provisions a fresh Postgres database per worktree and runs migrations automatically. We also have profiles that clone an already-seeded database (with test data, sample flows, pre-configured workspaces) versus starting from a blank slate. This way each engineer picks the exact starting point they need for a given task through the profile selector, without any manual setup.
+Windmill has specific infrastructure needs: for example, each worktree requires its own isolated database so agents never collide. The `postCreate` hook in `.webmux.yaml` handles this: it provisions a fresh Postgres database per worktree and runs migrations automatically. We also have profiles that clone an already-seeded database (with test data, sample flows, pre-configured workspaces) versus starting from a blank slate. This way each engineer picks the exact starting point they need for a given task through the profile selector, without any manual setup.
 
 <video
     controls
