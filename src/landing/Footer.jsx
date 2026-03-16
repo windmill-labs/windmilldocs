@@ -29,7 +29,8 @@ const navigation = [
 			{ name: 'Blog', href: '/blog' },
 			{ name: 'Documentation', href: '/docs/intro' },
 			{ name: 'Changelog', href: '/changelog' },
-			{ name: 'Roadmap', href: '/roadmap' }
+{ name: 'Roadmap', href: '/roadmap' },
+			{ name: 'Examples', href: '/examples' }
 		],
 		title: 'Resources'
 	},

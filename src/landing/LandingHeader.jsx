@@ -422,7 +422,7 @@ export default function LandingHeader() {
 									</a>
 
 									<a
-										href="/case-studies"
+href="/case-studies"
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
 										Case studies

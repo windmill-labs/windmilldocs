@@ -15,6 +15,8 @@ export interface TabConfig {
 	description: string;
 	video: string;
 	localDevVideo: string;
+	poster?: string;
+	localDevPoster?: string;
 	youtubeUrl?: string;
 }
 
@@ -34,9 +36,9 @@ export interface ProductionTabsProps {
 
 // Default tabs configuration
 export const defaultTabs: TabConfig[] = [
-	{ id: 'scripts', label: 'Scripts', icon: 'Server', description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm', localDevVideo: '/videos/landingscripts-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=QRf8C8qF7CY' },
-	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm', localDevVideo: '/videos/landingflows-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=yE-eDNWTj3g' },
-	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm', localDevVideo: '/videos/landingapps-local.webm', youtubeUrl: 'https://www.youtube.com/watch?v=CNtRLDXbfOE' },
+	{ id: 'scripts', label: 'Scripts', icon: 'Server', description: 'Write scripts in 20+ languages (Python, TS, Go...) with full LSP support, auto-generated UI, managed dependencies and turn them into instant endpoints or hooks for pubsub events.', video: '/videos/landingscripts-ui.webm', localDevVideo: '/videos/landingscripts-local.webm', poster: '/videos/posters/landingscripts-ui.jpg', localDevPoster: '/videos/posters/landingscripts-local.jpg', youtubeUrl: 'https://www.youtube.com/watch?v=QRf8C8qF7CY' },
+	{ id: 'flows', label: 'Flows', icon: 'Server', description: 'Orchestrate your scripts into high-performance flows with full code flexibility, AI assistance, and sub-20ms overhead.', video: '/videos/landingflows-ui.webm', localDevVideo: '/videos/landingflows-local.webm', poster: '/videos/posters/landingflows-ui.jpg', localDevPoster: '/videos/posters/landingflows-local.jpg', youtubeUrl: 'https://www.youtube.com/watch?v=yE-eDNWTj3g' },
+	{ id: 'apps', label: 'Apps', icon: 'Monitor', description: 'Build powerful full-stack apps using Windmill as a backend and any framework as frontend.', video: '/videos/landingapps-ui.webm', localDevVideo: '/videos/landingapps-local.webm', poster: '/videos/posters/landingapps-ui.jpg', localDevPoster: '/videos/posters/landingapps-local.jpg', youtubeUrl: 'https://www.youtube.com/watch?v=CNtRLDXbfOE' },
 ];
 
 // Default subtitles configuration for Windmill UI videos
@@ -448,6 +450,10 @@ export default function ProductionTabs({
 		return videoMode === 'ui' ? tab.video : tab.localDevVideo;
 	};
 
+	const getPosterSrc = (tab: TabConfig) => {
+		return videoMode === 'ui' ? tab.poster : tab.localDevPoster;
+	};
+
 	const getCurrentSubtitles = () => {
 		return videoMode === 'ui' ? subtitles : localDevSubtitles;
 	};
@@ -512,11 +518,12 @@ export default function ProductionTabs({
 								<video
 									key={`${tab.id}-${videoMode}`}
 									ref={(el) => { videoRefs.current[`${tab.id}-${videoMode}`] = el; }}
-									className="w-full object-cover"
+									className="w-full aspect-video object-cover"
 									loop
 									muted
 									playsInline
 									preload="auto"
+									poster={getPosterSrc(tab)}
 								>
 									<source
 										src={getVideoSrc(tab)}
