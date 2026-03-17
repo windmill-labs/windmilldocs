@@ -1,75 +1,974 @@
 ---
-description: How do I write workflows as code in Windmill? Use TypeScript or Python as an alternative to the visual flow editor for complex logic.
+description: How do I write workflows as code in Windmill? Use TypeScript or Python with checkpoint-based orchestration as an alternative to the visual flow editor.
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import DocCard from '@site/src/components/DocCard';
 
 # Workflows as code
 
-[Flows](../../flows/1_flow_editor.mdx) are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as workflows as code.
+[Flows](../../flows/1_flow_editor.mdx) are not the only way to write distributed programs that execute distinct jobs. Workflows as code let you define orchestration logic directly in [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) or [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), using familiar language constructs like functions, conditionals, and loops, while Windmill handles checkpointing, parallelism, and fault tolerance.
 
-![Script in python executing workflow as code](./python_editor.png 'Script in python executing workflow as code')
+{/* Placeholder image: screenshot of WAC script in the Windmill editor showing the code alongside the timeline panel. Should show a TypeScript or Python WAC script on the left and the job timeline on the right. */}
 
-One way of doing this is to use the [API of Windmill](https://app.windmill.dev/openapi.html) itself, to run jobs imperatively, using run_script and run_flow (their sync or async counterparts). This is a powerful way to define workflows, but it can be complex and verbose.
+Each `task()` call runs as a separate [job](../20_jobs/index.mdx) with its own logs, resources, and timeline entry. The workflow suspends between tasks (releasing its [worker](../9_worker_groups/index.mdx) slot entirely) and resumes from a checkpoint when child jobs complete. This means a single worker can run workflows with any number of parallel tasks without deadlocking.
 
-It also requires to define the different jobs in different scripts. This is why Windmill supports defining workflows as code in a single script in both [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) using intuitive and lightweight syntax.
+Workflows as code can be [synced with git](../../advanced/11_git_sync/index.mdx) and the [CLI](../../advanced/11_git_sync/cli_sync.mdx) like any other script.
 
-The syntax is highlighted in the below examples, note that the subtask are indeed executed as distinct jobs, with their own logs, and their relationship with their parent task is recorded which allows for the timeline of each task to be displayed in the UI.
+## Quickstart
 
-To have some steps refer to other scripts and flows not in this file, use the normal functions `run_script` from the Windmill SDK. The script below is a normal script and does not need special consideration. As such, it will already work with all the features of normal script and can be [synced with the git](../../advanced/11_git_sync/index.mdx) and the [CLI](../../advanced/11_git_sync/cli_sync.mdx).
+Wrap your orchestration function with `workflow()` and annotate task functions with `task()`:
 
 <Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, step, workflow, sleep, parallel } from 'windmill-client';
+
+async function fetchData(url: string) {
+  const resp = await fetch(url);
+  return resp.json();
+}
+
+async function transform(data: any) {
+  return { count: data.length, summary: data.slice(0, 5) };
+}
+
+async function notify(message: string) {
+  console.log(`Sending notification: ${message}`);
+  return 'sent';
+}
+
+export const main = workflow(async (url: string) => {
+  // step() persists lightweight inline results (timestamps, IDs, config)
+  const startedAt = await step('started_at', () => new Date().toISOString());
+
+  // task() runs each function as a separate Windmill job
+  const data = await task(fetchData)(url);
+  const result = await task(transform)(data);
+
+  // sleep() suspends the workflow server-side without holding a worker
+  await sleep(5);
+
+  await task(notify)(`Processed ${result.count} items since ${startedAt}`);
+  return result;
+});
+```
+
+</TabItem>
 <TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
-from wmill import task
-
-import pandas as pd
-import numpy as np
-
-@task()
-# You can specify tag to run the task on a specific type of worker, e.g. @task(tag="custom_tag")
-def heavy_compute(n: int):
-    df = pd.DataFrame(np.random.randn(100, 4), columns=list('ABCD'))
-    return df.sum().sum()
-
+import wmill
+from wmill import task, step, workflow, sleep, parallel
 
 @task
-def send_result(res: int, email: str):
-    # logs of the subtask are available in the main task logs
-    print(f"Sending result {res} to {email}")
-    return "OK"
+async def fetch_data(url: str):
+    import httpx
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+        return resp.json()
 
-def main(n: int):
-    l = []
+@task
+async def transform(data: list):
+    return {"count": len(data), "summary": data[:5]}
 
-    # to run things in parallel, simply use multiprocessing Pool map instead: https://docs.python.org/3/library/multiprocessing.html
-    for i in range(n):
-        l.append(heavy_compute(i))
-    print(l)
-    return send_result(sum(l), "example@example.com")
+@task
+async def notify(message: str):
+    print(f"Sending notification: {message}")
+    return "sent"
 
-```
+@workflow
+async def main(url: str):
+    # step() persists lightweight inline results (timestamps, IDs, config)
+    started_at = await step("started_at", lambda: datetime.now().isoformat())
 
-> **Note**: When using multiprocessing or multithreading with the Windmill client, create a separate client instance per thread/process using `wmill.Windmill()` as the client is not thread-safe.
+    # task() runs each function as a separate Windmill job
+    data = await fetch_data(url)
+    result = await transform(data)
 
-</TabItem>
-<TabItem value="deno" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+    # sleep() suspends the workflow server-side without holding a worker
+    await sleep(5)
 
-```typescript
-import { task } from 'windmill-client';
-
-export async function hello(name: string) {
-	return 'Hello:' + name;
-}
-
-export async function main() {
-	//It's the function itself that needs to be wrapped with task, and it's always a promise even
-	await task(hello)('BAR');
-	return await task(hello)('FOO');
-}
+    await notify(f"Processed {result['count']} items since {started_at}")
+    return result
 ```
 
 </TabItem>
 </Tabs>
+
+{/* Placeholder image: screenshot of the Windmill UI showing the timeline for the quickstart example above. Should display the parent workflow job with child jobs for fetch_data, transform, and notify visible as separate entries in the timeline, each with their own duration bars. */}
+
+## How it works
+
+Workflows as code use a **checkpoint/replay** model:
+
+1. The workflow script runs until it hits a `task()` or `step()` call that isn't cached yet
+2. The script exits, and Windmill saves the checkpoint (all completed step results) to the database
+3. For `task()`: a child job is created and dispatched to a worker. When the child completes, the parent workflow resumes
+4. For `step()`: the inline result is persisted immediately, and the workflow is re-picked up
+5. On replay, all previously completed steps return their cached results instantly, and execution continues from where it left off
+
+This design means the parent workflow process is **never alive while child jobs run**. It only occupies a worker during the brief moments between checkpoints.
+
+## Core primitives
+
+### `workflow()`
+
+Marks a function as a workflow entry point. Required for using `task()`, `step()`, `sleep()`, `waitForApproval()`, and `parallel()`.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { workflow } from 'windmill-client';
+
+export const main = workflow(async (x: number, y: number) => {
+  // orchestration logic here
+  return x + y;
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import workflow
+
+@workflow
+async def main(x: int, y: int):
+    # orchestration logic here
+    return x + y
+```
+
+</TabItem>
+</Tabs>
+
+### `task()`
+
+Wraps a function so that each call runs as a **separate child job**. The child gets its own logs, timeline entry, and can run on a different worker.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, workflow } from 'windmill-client';
+
+// Basic usage: task wraps the function, then you call it with arguments
+async function double(n: number) {
+  return n * 2;
+}
+
+async function add(a: number, b: number) {
+  return a + b;
+}
+
+export const main = workflow(async () => {
+  const a = await task(double)(5);     // runs as child job, returns 10
+  const b = await task(double)(3);     // runs as child job, returns 6
+  return await task(add)(a, b);        // runs as child job, returns 16
+});
+```
+
+With options:
+
+```typescript
+// With explicit path and options
+const result = await task('f/my_folder/heavy_script', double, {
+  timeout: 600,
+  tag: 'gpu',
+  cache_ttl: 3600,
+  priority: 10,
+  concurrency_limit: 5,
+  concurrency_key: 'my_key',
+  concurrency_time_window_s: 60
+})(42);
+
+// With options only (no path override)
+const result2 = await task(double, { timeout: 300, tag: 'highmem' })(42);
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task, workflow
+
+# Basic usage: @task decorator
+@task
+async def double(n: int):
+    return n * 2
+
+@task
+async def add(a: int, b: int):
+    return a + b
+
+@workflow
+async def main():
+    a = await double(5)     # runs as child job, returns 10
+    b = await double(3)     # runs as child job, returns 6
+    return await add(a, b)  # runs as child job, returns 16
+```
+
+With options:
+
+```python
+@task(
+    path="f/my_folder/heavy_script",
+    timeout=600,
+    tag="gpu",
+    cache_ttl=3600,
+    priority=10,
+    concurrency_limit=5,
+    concurrency_key="my_key",
+    concurrency_time_window_s=60,
+)
+async def heavy_compute(data: list):
+    return sum(data)
+```
+
+</TabItem>
+</Tabs>
+
+### `step()`
+
+Executes a lightweight function **inline** (in the parent process) and persists the result to the database. On replay, the cached value is returned without re-executing.
+
+Use `step()` for non-deterministic operations that must return the same value across replays: timestamps, random IDs, config reads, or any cheap computation whose result must be stable.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { step, task, workflow } from 'windmill-client';
+import { randomUUID } from 'crypto';
+
+async function processOrder(orderId: string, ts: string) {
+  console.log(`Processing order ${orderId} created at ${ts}`);
+  return { orderId, ts, status: 'processed' };
+}
+
+export const main = workflow(async () => {
+  // These values are computed once and cached across replays
+  const orderId = await step('order_id', () => randomUUID());
+  const timestamp = await step('timestamp', () => new Date().toISOString());
+
+  return await task(processOrder)(orderId, timestamp);
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import step, task, workflow
+import uuid
+from datetime import datetime
+
+@task
+async def process_order(order_id: str, ts: str):
+    print(f"Processing order {order_id} created at {ts}")
+    return {"order_id": order_id, "ts": ts, "status": "processed"}
+
+@workflow
+async def main():
+    # These values are computed once and cached across replays
+    order_id = await step("order_id", lambda: str(uuid.uuid4()))
+    timestamp = await step("timestamp", lambda: datetime.now().isoformat())
+
+    return await process_order(order_id, timestamp)
+```
+
+</TabItem>
+</Tabs>
+
+:::tip When to use `step()` vs `task()`
+- **`task()`**: heavy computation, external API calls, anything that benefits from being a separate job (own logs, own worker, parallelizable)
+- **`step()`**: lightweight deterministic-must-be-stable operations like generating IDs, reading timestamps, config lookups. No separate job overhead, but the result is persisted so replays are consistent
+:::
+
+### `task()` vs `step()` comparison
+
+| | `task()` | `step()` |
+|---|---|---|
+| Execution | Separate child job (own process) | Inline in parent process |
+| Overhead | Full job lifecycle | Function call + one DB write |
+| Parallelism | Yes (`Promise.all` / `asyncio.gather`) | No, sequential only |
+| Use case | Heavy compute, external APIs | Timestamps, random IDs, config reads |
+| Logs | Own log stream | Part of parent logs |
+| Timeline | Separate timeline entry | Not a separate entry |
+
+## Parallel execution
+
+### Using `Promise.all` / `asyncio.gather`
+
+Tasks wrapped with `task()` return promises/awaitables, so you can run them in parallel with standard language constructs:
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, workflow } from 'windmill-client';
+
+async function fetchUser(id: number) {
+  return { id, name: `User ${id}` };
+}
+
+async function enrichUser(user: any) {
+  return { ...user, enriched: true };
+}
+
+export const main = workflow(async () => {
+  // All three fetches dispatch as child jobs simultaneously
+  const [user1, user2, user3] = await Promise.all([
+    task(fetchUser)(1),
+    task(fetchUser)(2),
+    task(fetchUser)(3),
+  ]);
+
+  // Enrich in parallel too
+  const [e1, e2, e3] = await Promise.all([
+    task(enrichUser)(user1),
+    task(enrichUser)(user2),
+    task(enrichUser)(user3),
+  ]);
+
+  return [e1, e2, e3];
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import asyncio
+from wmill import task, workflow
+
+@task
+async def fetch_user(id: int):
+    return {"id": id, "name": f"User {id}"}
+
+@task
+async def enrich_user(user: dict):
+    return {**user, "enriched": True}
+
+@workflow
+async def main():
+    # All three fetches dispatch as child jobs simultaneously
+    user1, user2, user3 = await asyncio.gather(
+        fetch_user(1),
+        fetch_user(2),
+        fetch_user(3),
+    )
+
+    # Enrich in parallel too
+    e1, e2, e3 = await asyncio.gather(
+        enrich_user(user1),
+        enrich_user(user2),
+        enrich_user(user3),
+    )
+
+    return [e1, e2, e3]
+```
+
+</TabItem>
+</Tabs>
+
+{/* Placeholder image: screenshot of the Windmill UI timeline showing parallel task execution. Should display 3 fetchUser child jobs running simultaneously (overlapping time bars), followed by 3 enrichUser child jobs also running simultaneously. */}
+
+### Using `parallel()`
+
+The `parallel()` utility provides a higher-level API for processing a list of items with optional concurrency control:
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, parallel, workflow } from 'windmill-client';
+
+async function processItem(item: number) {
+  return item * 2;
+}
+
+export const main = workflow(async () => {
+  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  // Process all items in parallel (default: all at once)
+  const results = await parallel(items, (item) => task(processItem)(item));
+
+  // With concurrency control: process at most 3 at a time
+  const batched = await parallel(
+    items,
+    (item) => task(processItem)(item),
+    { concurrency: 3 },
+  );
+
+  return { results, batched };
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task, parallel, workflow
+
+@task
+async def process_item(item: int):
+    return item * 2
+
+@workflow
+async def main():
+    items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    # Process all items in parallel (default: all at once)
+    results = await parallel(items, lambda item: process_item(item))
+
+    # With concurrency control: process at most 3 at a time
+    batched = await parallel(
+        items,
+        lambda item: process_item(item),
+        concurrency=3,
+    )
+
+    return {"results": results, "batched": batched}
+```
+
+</TabItem>
+</Tabs>
+
+## Sleep
+
+`sleep()` suspends the workflow **server-side** for a given number of seconds. The workflow releases its worker slot during the sleep, unlike a regular `time.sleep()` or `setTimeout()` which would block a worker.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, sleep, workflow } from 'windmill-client';
+
+async function sendReminder(email: string) {
+  console.log(`Reminder sent to ${email}`);
+}
+
+export const main = workflow(async (email: string) => {
+  await task(sendReminder)(email);
+
+  // Suspend for 1 hour without holding a worker
+  await sleep(3600);
+
+  await task(sendReminder)(email);
+  return 'done';
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task, sleep, workflow
+
+@task
+async def send_reminder(email: str):
+    print(f"Reminder sent to {email}")
+
+@workflow
+async def main(email: str):
+    await send_reminder(email)
+
+    # Suspend for 1 hour without holding a worker
+    await sleep(3600)
+
+    await send_reminder(email)
+    return "done"
+```
+
+</TabItem>
+</Tabs>
+
+The minimum sleep duration is 1 second. Values are rounded to the nearest integer.
+
+## Approval / human-in-the-loop
+
+`waitForApproval()` suspends the workflow and waits for a human to approve or reject it from the Windmill UI, similar to [approval steps in flows](../../flows/11_flow_approval.mdx).
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, waitForApproval, workflow } from 'windmill-client';
+
+async function deploy(env: string) {
+  console.log(`Deploying to ${env}`);
+  return `deployed to ${env}`;
+}
+
+export const main = workflow(async (env: string) => {
+  // Wait for human approval (default timeout: 1800s)
+  const approval = await waitForApproval({ timeout: 3600 });
+  // approval contains: { value: any, approver: string, approved: boolean }
+
+  if (!approval.approved) {
+    return `Deployment rejected by ${approval.approver}`;
+  }
+
+  return await task(deploy)(env);
+});
+```
+
+With a form:
+
+```typescript
+const approval = await waitForApproval({
+  timeout: 7200,
+  form: {
+    type: 'object',
+    properties: {
+      reason: { type: 'string', description: 'Approval reason' },
+      environment: { type: 'string', enum: ['staging', 'production'] },
+    },
+  },
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task, wait_for_approval, workflow
+
+@task
+async def deploy(env: str):
+    print(f"Deploying to {env}")
+    return f"deployed to {env}"
+
+@workflow
+async def main(env: str):
+    # Wait for human approval (default timeout: 1800s)
+    approval = await wait_for_approval(timeout=3600)
+    # approval contains: {"value": ..., "approver": "...", "approved": True/False}
+
+    if not approval["approved"]:
+        return f"Deployment rejected by {approval['approver']}"
+
+    return await deploy(env)
+```
+
+With a form:
+
+```python
+approval = await wait_for_approval(
+    timeout=7200,
+    form={
+        "type": "object",
+        "properties": {
+            "reason": {"type": "string", "description": "Approval reason"},
+            "environment": {"type": "string", "enum": ["staging", "production"]},
+        },
+    },
+)
+```
+
+</TabItem>
+</Tabs>
+
+## Referencing external scripts and flows
+
+Use `taskScript()` and `taskFlow()` to dispatch to existing Windmill [scripts](../../script_editor/index.mdx) and [flows](../../flows/1_flow_editor.mdx) by path, rather than defining the logic inline.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { taskScript, taskFlow, workflow } from 'windmill-client';
+
+export const main = workflow(async () => {
+  // Run an existing script by path
+  const data = await taskScript('f/data_team/extract_users')({ limit: 100 });
+
+  // Run an existing flow by path
+  const result = await taskFlow('f/data_team/etl_pipeline')({ data });
+
+  // With options
+  const heavy = await taskScript('f/ml/train_model', {
+    timeout: 3600,
+    tag: 'gpu',
+  })({ dataset: data });
+
+  return { result, heavy };
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task_script, task_flow, workflow
+
+@workflow
+async def main():
+    # Run an existing script by path
+    data = await task_script("f/data_team/extract_users")(limit=100)
+
+    # Run an existing flow by path
+    result = await task_flow("f/data_team/etl_pipeline")(data=data)
+
+    # With options
+    heavy = await task_script(
+        "f/ml/train_model",
+        timeout=3600,
+        tag="gpu",
+    )(dataset=data)
+
+    return {"result": result, "heavy": heavy}
+```
+
+</TabItem>
+</Tabs>
+
+## Script modules
+
+Workflow-as-code scripts support **companion module files** stored in a `__mod/` folder alongside the main script. This lets you split task functions into separate files while keeping them part of the same script.
+
+Two layout options:
+
+**Flat layout:**
+```
+f/my_folder/
+├── my_workflow.ts              # main script
+└── my_workflow__mod/
+    ├── extract.ts              # module
+    └── transform.ts            # module
+```
+
+**Folder layout:**
+```
+f/my_folder/
+└── my_workflow__mod/
+    ├── script.ts               # main script (entry point)
+    ├── extract.ts              # module
+    └── transform.ts            # module
+```
+
+Modules can be imported with relative paths and referenced via `taskScript()`:
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+// my_workflow.ts (main script)
+import { taskScript, workflow } from 'windmill-client';
+
+export const main = workflow(async (url: string) => {
+  const data = await taskScript('./extract.ts')({ url });
+  const result = await taskScript('./transform.ts')({ data });
+  return result;
+});
+```
+
+```typescript
+// my_workflow__mod/extract.ts
+export async function main(url: string) {
+  const resp = await fetch(url);
+  return resp.json();
+}
+```
+
+```typescript
+// my_workflow__mod/transform.ts
+export async function main(data: any) {
+  return { count: data.length, items: data };
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+# my_workflow.py (main script)
+from wmill import task_script, workflow
+
+@workflow
+async def main(url: str):
+    data = await task_script("./extract.py")(url=url)
+    result = await task_script("./transform.py")(data=data)
+    return result
+```
+
+```python
+# my_workflow__mod/extract.py
+def main(url: str):
+    import httpx
+    return httpx.get(url).json()
+```
+
+```python
+# my_workflow__mod/transform.py
+def main(data: list):
+    return {"count": len(data), "items": data}
+```
+
+</TabItem>
+</Tabs>
+
+Modules are synced with the CLI and included in the script hash for proper versioning. Each module can have its own dependencies, and locks are tracked per-module.
+
+{/* Placeholder image: screenshot of the Windmill script editor showing the module tab system. Should display the main WAC script open with tabs for the different module files (e.g., "script.ts", "extract.ts", "transform.ts") and the add/rename/delete module controls visible. */}
+
+## Task options
+
+All task types (`task()`, `taskScript()`, `taskFlow()`) accept the following options:
+
+| Option | Type | Description |
+|---|---|---|
+| `timeout` | `number` | Maximum execution time in seconds |
+| `tag` | `string` | [Worker tag](../9_worker_groups/index.mdx) to route the task to specific workers |
+| `cache_ttl` | `number` | [Cache](../24_caching/index.md) the result for this many seconds |
+| `priority` | `number` | [Priority](../../flows/20_priority.md) in the job queue (higher = picked up sooner) |
+| `concurrency_limit` | `number` | Max concurrent executions for this task |
+| `concurrency_key` | `string` | Key for grouping [concurrency limits](../21_concurrency_limits/index.md) |
+| `concurrency_time_window_s` | `number` | Time window in seconds for the concurrency limit |
+
+## Error handling
+
+When a child task fails, the error is propagated to the parent workflow. You can catch errors with standard try/catch or try/except:
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, workflow } from 'windmill-client';
+
+async function riskyOperation(data: string) {
+  if (data === 'bad') throw new Error('Invalid data');
+  return `processed: ${data}`;
+}
+
+async function fallback(error: string) {
+  return `fallback result for: ${error}`;
+}
+
+export const main = workflow(async (data: string) => {
+  try {
+    return await task(riskyOperation)(data);
+  } catch (e) {
+    console.log(`Task failed: ${e.message}`);
+    return await task(fallback)(e.message);
+  }
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task, workflow
+from wmill.client import TaskError
+
+@task
+async def risky_operation(data: str):
+    if data == "bad":
+        raise Exception("Invalid data")
+    return f"processed: {data}"
+
+@task
+async def fallback(error: str):
+    return f"fallback result for: {error}"
+
+@workflow
+async def main(data: str):
+    try:
+        return await risky_operation(data)
+    except TaskError as e:
+        print(f"Task failed: {e}")
+        return await fallback(str(e))
+```
+
+</TabItem>
+</Tabs>
+
+In Python, task errors raise `TaskError` which includes `step_key`, `child_job_id`, and `result` attributes for detailed inspection.
+
+## Complete example
+
+Here is a full example combining multiple primitives:
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import {
+  task, step, workflow, sleep, parallel, waitForApproval, taskScript
+} from 'windmill-client';
+
+async function fetchPage(url: string) {
+  const resp = await fetch(url);
+  return resp.json();
+}
+
+async function processChunk(items: any[]) {
+  return items.map((item: any) => ({ ...item, processed: true }));
+}
+
+async function saveResults(results: any[]) {
+  console.log(`Saved ${results.length} results`);
+  return { saved: results.length };
+}
+
+export const main = workflow(async (baseUrl: string, pageCount: number) => {
+  // Persist run metadata
+  const runId = await step('run_id', () => crypto.randomUUID());
+  const startedAt = await step('started_at', () => new Date().toISOString());
+
+  // Fetch all pages in parallel
+  const pages = await parallel(
+    Array.from({ length: pageCount }, (_, i) => i + 1),
+    (page) => task(fetchPage)(`${baseUrl}?page=${page}`),
+    { concurrency: 5 },
+  );
+
+  // Process each page's data in parallel
+  const processed = await parallel(
+    pages,
+    (pageData) => task(processChunk)(pageData),
+    { concurrency: 3 },
+  );
+
+  // Request approval before saving
+  const approval = await waitForApproval({ timeout: 3600 });
+  if (!approval.approved) {
+    return { runId, status: 'rejected', approver: approval.approver };
+  }
+
+  // Save with an existing script
+  const flat = processed.flat();
+  const saveResult = await task(saveResults)(flat);
+
+  // Brief delay before cleanup
+  await sleep(5);
+
+  return {
+    runId,
+    startedAt,
+    ...saveResult,
+    approvedBy: approval.approver,
+  };
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import uuid
+from datetime import datetime
+from wmill import (
+    task, step, workflow, sleep, parallel, wait_for_approval, task_script
+)
+
+@task
+async def fetch_page(url: str):
+    import httpx
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url)
+        return resp.json()
+
+@task
+async def process_chunk(items: list):
+    return [{**item, "processed": True} for item in items]
+
+@task
+async def save_results(results: list):
+    print(f"Saved {len(results)} results")
+    return {"saved": len(results)}
+
+@workflow
+async def main(base_url: str, page_count: int):
+    # Persist run metadata
+    run_id = await step("run_id", lambda: str(uuid.uuid4()))
+    started_at = await step("started_at", lambda: datetime.now().isoformat())
+
+    # Fetch all pages in parallel
+    pages = await parallel(
+        list(range(1, page_count + 1)),
+        lambda page: fetch_page(f"{base_url}?page={page}"),
+        concurrency=5,
+    )
+
+    # Process each page's data in parallel
+    processed = await parallel(
+        pages,
+        lambda page_data: process_chunk(page_data),
+        concurrency=3,
+    )
+
+    # Request approval before saving
+    approval = await wait_for_approval(timeout=3600)
+    if not approval["approved"]:
+        return {"run_id": run_id, "status": "rejected", "approver": approval["approver"]}
+
+    # Save results
+    flat = [item for sublist in processed for item in sublist]
+    save_result = await save_results(flat)
+
+    # Brief delay before cleanup
+    await sleep(5)
+
+    return {
+        "run_id": run_id,
+        "started_at": started_at,
+        **save_result,
+        "approved_by": approval["approver"],
+    }
+```
+
+</TabItem>
+</Tabs>
+
+{/* Placeholder image: screenshot of the Windmill UI timeline for the complete example above. Should show the full execution timeline with: step nodes for run_id and started_at, parallel fetch_page tasks (5 at a time), parallel process_chunk tasks (3 at a time), an approval suspension point, the save_results task, a sleep period, and the final result. This is the most important timeline screenshot to include. */}
+
+## CLI sync
+
+Workflow-as-code scripts and their modules are fully supported by the [Windmill CLI](../../advanced/11_git_sync/cli_sync.mdx):
+
+```bash
+# Push a WAC script with its modules
+wmill script push f/my_folder/my_workflow
+
+# Pull WAC scripts (modules are written to __mod/ folders)
+wmill sync pull
+
+# Preview a WAC script locally (modules are automatically included)
+wmill script preview f/my_folder/my_workflow
+```
+
+The CLI tracks per-module hashes in `wmill-lock.yaml` and only regenerates locks for modules that changed.
+
+## API reference
+
+### TypeScript (`windmill-client`)
+
+| Function | Signature | Description |
+|---|---|---|
+| `workflow` | `workflow(fn)` | Mark function as workflow entry point |
+| `task` | `task(fn)`, `task(fn, options)`, `task(path, fn)`, `task(path, fn, options)` | Wrap function for child job dispatch |
+| `taskScript` | `taskScript(path, options?)` | Dispatch to existing Windmill script |
+| `taskFlow` | `taskFlow(path, options?)` | Dispatch to existing Windmill flow |
+| `step` | `step(name, fn)` | Inline checkpoint for deterministic values |
+| `sleep` | `sleep(seconds)` | Server-side suspend |
+| `waitForApproval` | `waitForApproval({ timeout?, form? })` | Suspend for human approval |
+| `parallel` | `parallel(items, fn, { concurrency? })` | Parallel map with optional batching |
+
+### Python (`wmill`)
+
+| Function | Signature | Description |
+|---|---|---|
+| `@workflow` | `@workflow` | Mark function as workflow entry point |
+| `@task` | `@task`, `@task()`, `@task(path=, tag=, timeout=, ...)` | Wrap function for child job dispatch |
+| `task_script` | `task_script(path, timeout=, tag=, ...)` | Dispatch to existing Windmill script |
+| `task_flow` | `task_flow(path, timeout=, tag=, ...)` | Dispatch to existing Windmill flow |
+| `step` | `await step(name, fn)` | Inline checkpoint for deterministic values |
+| `sleep` | `await sleep(seconds)` | Server-side suspend |
+| `wait_for_approval` | `await wait_for_approval(timeout=, form=)` | Suspend for human approval |
+| `parallel` | `await parallel(items, fn, concurrency=)` | Parallel map with optional batching |
