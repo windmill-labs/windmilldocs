@@ -6,10 +6,11 @@ description: "How do I develop Windmill scripts and flows locally? Use the CLI, 
 import React, { useRef, useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, BookOpen, Terminal, FileCode, FolderSync, Plug, ChevronRight, Code2, Workflow, LayoutDashboard, Copy, Check } from 'lucide-react';
+import { ArrowRight, BookOpen, Terminal, FileCode, FolderSync, Plug, ChevronRight, Code2, Workflow, LayoutDashboard, Copy, Check, PenLine, Rocket, GitBranch, Monitor, Github } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
 import LocalDevHeroAnimation from '../../components/products/LocalDevHeroAnimation';
 
 export const fadeIn = {
@@ -49,12 +50,12 @@ export function CopySnippet({ text }) {
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
 				{...fadeIn}
-				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+				className={`grid grid-cols-1 ${!children ? 'lg:grid-cols-2' : ''} gap-12 items-center`}
 			>
 				<div className={reverse ? 'lg:order-2' : ''}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
@@ -68,19 +69,26 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 						</Link>
 					)}
 				</div>
-				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
-						<img
-							src={image}
-							alt={title}
-							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						/>
-					) : (
-						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
-					)}
-				</div>
+				{!children && (
+					<div className={reverse ? 'lg:order-1' : ''}>
+						{video ? (
+							<LazyVideo
+								className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+								src={video}
+							/>
+						) : image ? (
+							<img
+								src={image}
+								alt={title}
+								className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							/>
+						) : (
+							<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+								<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+							</div>
+						)}
+					</div>
+				)}
 			</motion.div>
 			{children}
 		</div>
@@ -88,6 +96,144 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 }
 
 {/* ── Main page ── */}
+
+
+export function SyncFlowStep({ icon: Icon, label, auto, isInView, delay }) {
+	return (
+		<motion.div
+			initial={{ opacity: 0, scale: 0.8 }}
+			animate={isInView ? { opacity: 1, scale: 1 } : {}}
+			transition={{ duration: 0.3, delay }}
+			className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
+		>
+			<Icon className="w-4 h-4 text-gray-500 flex-shrink-0" />
+			<span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">{label}</span>
+			{auto && (
+				<span className="ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded flex-shrink-0 text-green-600 bg-green-50 dark:bg-green-900/20">
+					auto
+				</span>
+			)}
+		</motion.div>
+	);
+}
+
+export function DownArrow() {
+	return (
+		<div className="flex justify-center">
+			<svg width="12" height="12" viewBox="0 0 12 12" className="text-gray-400">
+				<path d="M6 2 L6 10 M3 7 L6 10 L9 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+			</svg>
+		</div>
+	);
+}
+
+export function BranchColumn({ label, steps, alignBottom, isInView, baseDelay }) {
+	return (
+		<div className="flex-1 flex flex-col gap-1.5">
+			<span className="text-[10px] font-semibold uppercase tracking-wider text-center text-gray-400 mb-1">{label}</span>
+			{alignBottom && <div className="flex-1" />}
+			{steps.map((step, i) => (
+				<React.Fragment key={step.label}>
+					<SyncFlowStep {...step} isInView={isInView} delay={baseDelay + i * 0.12} />
+					{i < steps.length - 1 && <DownArrow />}
+				</React.Fragment>
+			))}
+		</div>
+	);
+}
+
+export function SyncFlows() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-40px" });
+	const d = 0.2;
+	const flows = [
+		{
+			label: 'From local to remote',
+			first: { icon: PenLine, label: 'Change locally', auto: false },
+			branches: [
+				{
+					label: 'Git sync on',
+					steps: [
+						{ icon: GitBranch, label: 'git commit & push', auto: false },
+						{ icon: Github, label: 'GitHub Action: wmill sync push', auto: true },
+					],
+				},
+				{
+					label: 'No git sync',
+					steps: [
+						{ icon: Terminal, label: 'wmill sync push', auto: false },
+					],
+				},
+			],
+			last: { icon: Rocket, label: 'Deployed on Windmill', auto: true },
+		},
+		{
+			label: 'From remote to local',
+			first: { icon: Monitor, label: 'Deploy from the UI', auto: false },
+			branches: [
+				{
+					label: 'Git sync on',
+					steps: [
+						{ icon: GitBranch, label: 'Commit to Git', auto: true },
+						{ icon: Terminal, label: 'git pull', auto: false },
+					],
+				},
+				{
+					label: 'No git sync',
+					alignBottom: true,
+					steps: [
+						{ icon: Terminal, label: 'wmill sync pull', auto: false },
+					],
+				},
+			],
+			last: { icon: PenLine, label: 'Files updated locally', auto: true },
+		},
+	];
+	return (
+		<div ref={ref} className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+			{flows.map((flow, fi) => {
+				const baseDelay = d + fi * 0.4;
+				return (
+					<motion.div
+						key={flow.label}
+						initial={{ opacity: 0, y: 12 }}
+						animate={isInView ? { opacity: 1, y: 0 } : {}}
+						transition={{ duration: 0.35, delay: baseDelay }}
+						className="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/5 dark:bg-gray-900/50"
+					>
+						<p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">
+							{flow.label}
+						</p>
+						<div className="flex flex-col gap-1.5">
+							<SyncFlowStep {...flow.first} isInView={isInView} delay={baseDelay + 0.1} />
+							<svg className="w-full" height="28" viewBox="0 0 400 28" preserveAspectRatio="xMidYMid meet">
+								<path d="M200,0 L200,4 C200,16 100,16 100,28" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+								<path d="M200,0 L200,4 C200,16 300,16 300,28" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+							</svg>
+							<div className="flex gap-2">
+								{flow.branches.map((branch, bi) => (
+									<BranchColumn
+										key={branch.label}
+										label={branch.label}
+										steps={branch.steps}
+										alignBottom={branch.alignBottom}
+										isInView={isInView}
+										baseDelay={baseDelay + 0.22 + bi * 0.08}
+									/>
+								))}
+							</div>
+							<svg className="w-full" height="28" viewBox="0 0 400 28" preserveAspectRatio="xMidYMid meet">
+								<path d="M100,0 C100,12 200,12 200,24 L200,28" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+								<path d="M300,0 C300,12 200,12 200,24 L200,28" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-300" />
+							</svg>
+							<SyncFlowStep {...flow.last} isInView={isInView} delay={baseDelay + 0.5} />
+						</div>
+					</motion.div>
+				);
+			})}
+		</div>
+	);
+}
 
 export default function LocalDevContent({ title, description }) {
 	return (
@@ -128,6 +274,7 @@ export default function LocalDevContent({ title, description }) {
 				title="Sync your workspace to a local folder"
 				desc={<span><code>wmill sync pull</code> downloads your entire workspace as plain files: scripts, <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link>, apps, resources, triggers, and variables. Edit anything locally, then <code>wmill sync push</code> to deploy. Both commands support <Link to="/docs/advanced/cli/sync" className="text-blue-600 dark:text-blue-400 hover:underline">path filters</Link> to sync specific folders.</span>}
 				docLink="/docs/advanced/cli/sync"
+				video="/img/platform/local-dev/platform-local-dev-sync-workspace.webm"
 			/>
 
 			{/* ═══════════════ VS Code extension ═══════════════ */}
@@ -135,6 +282,7 @@ export default function LocalDevContent({ title, description }) {
 				title="VS Code extension"
 				desc={<span>The Windmill <Link to="/docs/cli_local_dev/vscode-extension" className="text-blue-600 dark:text-blue-400 hover:underline">VS Code extension</Link> previews auto-generated UIs while you write scripts, tests scripts and flows from the editor, and validates flow YAML in real time. Bidirectional editing lets you switch between the YAML file and a visual flow editor.</span>}
 				docLink="/docs/cli_local_dev/vscode-extension"
+				video="/img/platform/local-dev/platform-local-dev-vscode-extension.webm"
 				reverse
 			/>
 
@@ -143,6 +291,7 @@ export default function LocalDevContent({ title, description }) {
 				title="Built-in skills and AGENTS.md"
 				desc={<span>Run <code>wmill init</code> to generate <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">context files</Link> and skill files for Claude Code, Cursor, and other AI tools. The generated <code>AGENTS.md</code> teaches assistants Windmill's file structure, script conventions, and deployment workflow. AI tools can also connect to a workspace through the <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP server</Link> to execute scripts, manage resources, and monitor jobs directly.</span>}
 				docLink="/docs/misc/guides/local_dev_with_ai"
+				video="/img/platform/local-dev/platform-local-dev-builtin-skills.webm"
 			/>
 
 			{/* ═══════════════ Create scripts, flows, and apps ═══════════════ */}
@@ -156,7 +305,7 @@ export default function LocalDevContent({ title, description }) {
 						{
 							icon: Code2,
 							title: 'Script',
-							command: 'wmill script bootstrap <path> <lang>',
+							command: 'wmill script new <path> <lang>',
 							files: ['fetch_orders.py', 'fetch_orders.script.yaml', 'fetch_orders.lock'],
 							desc: <span>Scaffold a script in any of <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ languages</Link> with its metadata and lockfile.</span>,
 							docLink: '/docs/advanced/cli/script',
@@ -164,7 +313,7 @@ export default function LocalDevContent({ title, description }) {
 						{
 							icon: Workflow,
 							title: 'Flow',
-							command: 'wmill flow bootstrap <path>',
+							command: 'wmill flow new <path>',
 							files: ['flow.yaml', 'step_1.inline_script.ts', 'step_2.inline_script.py'],
 							desc: <span>Scaffold a <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> folder with a YAML definition and inline scripts.</span>,
 							docLink: '/docs/advanced/cli/flow',
@@ -220,7 +369,9 @@ export default function LocalDevContent({ title, description }) {
 				desc={<span><code>wmill sync push</code> deploys to your Windmill workspace and, when <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git Sync</Link> is enabled, automatically commits the changes to your repository. Changes can also be pulled from Git via CI/CD pipelines, making Git the single source of truth. For staging and production workflows, see <Link to="/platform/deployment-versioning" className="text-blue-600 dark:text-blue-400 hover:underline">versioning and deployment</Link>.</span>}
 				docLink="/docs/advanced/git_sync"
 				reverse
-			/>
+			>
+				<SyncFlows />
+			</Section>
 
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[
