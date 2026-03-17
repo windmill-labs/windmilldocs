@@ -743,7 +743,8 @@ const sidebars = {
 						'script_editor/perpetual_scripts',
 						'script_editor/custom_environment_variables',
 						'script_editor/multiplayer',
-						'script_editor/vs_code_scripts'
+						'script_editor/vs_code_scripts',
+						'script_editor/debugger'
 					]
 				},
 				{
