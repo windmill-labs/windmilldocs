@@ -48,7 +48,7 @@ The GitHub App feature requires your Windmill instance to communicate with `http
 If your GitHub organization uses [IP allow lists](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-allowed-ip-addresses-for-your-organization), you will need to whitelist the IP address of `stats.windmill.dev` to allow it to request installation tokens from GitHub on behalf of your Windmill instance. Contact support@windmill.dev to get the current IP address.
 
 :::info
-This network requirement only applies to the Windmill-managed GitHub App. If you use a [self-managed GitHub App](#github-enterprise-server), your Windmill instance communicates directly with your GitHub instance. In that case, if your GitHub organization uses IP allow lists, whitelist your Windmill instance's IP address instead.
+This network requirement only applies to the Windmill-managed GitHub App. If you use a [self-managed GitHub App](#self-managed-github-app), your Windmill instance communicates directly with your GitHub instance. In that case, if your GitHub organization uses IP allow lists, whitelist your Windmill instance's IP address instead.
 :::
 
 As a [Windmill workspace admin](https://www.windmill.dev/docs/core_concepts/roles_and_permissions#admin), you can install the GitHub app to multiple organizations and link them to your Windmill workspaces. Once an app has been installed to a workspace, you can install it to other workspace where you have the admin role.
@@ -71,7 +71,7 @@ The JWT token associated to your GitHub app installation is sensitive and has th
 	src="/videos/github_app_installation.mp4"
 />
 
-### Self-managed GitHub App {#github-enterprise-server}
+### Self-managed GitHub App
 
 Instead of using the Windmill-managed GitHub App, you can register your own GitHub App on any GitHub instance — whether GitHub.com or a GitHub Enterprise Server (GHES) instance. This gives you full control over the app configuration and removes the dependency on `stats.windmill.dev`, as tokens are exchanged directly between your Windmill instance and your GitHub instance.
 

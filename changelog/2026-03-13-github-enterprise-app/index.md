@@ -8,5 +8,5 @@ features:
   - 'Register your own GitHub App on GitHub.com or GitHub Enterprise Server for Git sync authentication.'
   - 'Self-managed JWT token generation and exchange directly with your GitHub instance.'
   - 'Host-based installation filtering prevents token leakage across GitHub instances.'
-docs: /docs/integrations/git_repository#github-enterprise-server
+docs: /docs/integrations/git_repository#self-managed-github-app
 ---
