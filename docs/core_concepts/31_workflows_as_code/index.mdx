@@ -573,7 +573,9 @@ approval = await wait_for_approval(
 </TabItem>
 </Tabs>
 
-{/* Placeholder image: screenshot of the Windmill UI timeline showing a workflow with a waitForApproval() suspension. Should display the workflow job paused at the approval step, with the approval UI visible (approve/reject buttons, and optionally the form fields). The timeline should show the time spent waiting for approval as a distinct suspended segment, then the remaining tasks executing after approval. */}
+{/* Placeholder image: two screenshots side by side. Left: the job detail page showing the workflow in "suspended" / waiting-for-approval state with the approve/reject buttons (and form fields if using a form). Right: the timeline view after approval showing the completed workflow with tasks before and after the approval point. */}
+
+The workflow appears as suspended in the [job runs](../20_jobs/index.mdx) page. Navigate to the job detail to find the approve/reject buttons. The timeline does not display anything while the workflow is waiting — it only shows the full execution once the workflow resumes after approval.
 
 ## Referencing external scripts and flows
 
