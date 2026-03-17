@@ -12,6 +12,7 @@ import { DotLottiePlayer } from '@dotlottie/react-player';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -27,7 +28,7 @@ export const stagger = (delay = 0) => ({
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -47,7 +48,12 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{video ? (
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src={video}
+						/>
+					) : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -395,8 +401,9 @@ export default function FrontendBuilderContent({ title, description }) {
 			{/* ═══════════════ Typed backend API ═══════════════ */}
 			<Section
 				title="Backend runnables"
-				desc={<span>The frontend is served by the Windmill platform. When you add backend runnables to your app, Windmill auto-generates a typed <code>wmill.ts</code> file that makes them callable from the frontend. Your editor gets full autocomplete and type checking out of the box. Runnables execute on <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> and stream results back to the UI in real time.</span>}
+				desc={<span>Pick any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link> or <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> from your workspace and use it as a backend for your app. Windmill handles the typed bindings between frontend and backend automatically.</span>}
 				docLink="/docs/full_code_apps/frontend"
+				video="/img/platform/app-builder/platform-app-builder-backend-runnables.webm"
 				reverse
 			/>
 
@@ -405,6 +412,7 @@ export default function FrontendBuilderContent({ title, description }) {
 				title="Datatables"
 				desc={<span><Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">Datatables</Link> are a managed layer on top of your own database that your app's backend runnables can read and write to. Windmill handles schema management and generates a <code>DATATABLES.md</code> context file so AI assistants understand the data model when building your frontend.</span>}
 				docLink="/docs/core_concepts/persistent_storage/data_tables"
+				video="/img/platform/datatables/platform-datatables-full-code-apps.webm"
 			/>
 			{/* TODO: screenshot of the datatables UI showing a table with columns, rows, and the schema editor. Save as static/img/money-pages/datatables.webp (approx 1200x800px) */}
 
@@ -420,10 +428,7 @@ export default function FrontendBuilderContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-						{/* Placeholder: screenshot of app deployment with version history, ~800x400px, save as /static/img/money-pages/card-versioning-app.webp */}
-						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<img src="/img/money-pages/deployment-history.webp" alt="Deployment and versioning" className="w-full h-40 object-cover" />
 						<div className="flex flex-col p-6 flex-1">
 							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Deploy, version, and share</h3>
 							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Deploy from the browser or CLI. Each deployment is versioned and can be synced to Git. Promote across staging and production workspaces.</p>
@@ -433,10 +438,7 @@ export default function FrontendBuilderContent({ title, description }) {
 						</div>
 					</div>
 					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-						{/* Placeholder: screenshot of the runs page showing app backend job logs, ~800x400px, save as /static/img/money-pages/card-observability-app.webp */}
-						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<img src="/img/money-pages/monitoring.webp" alt="Built-in granular monitoring" className="w-full h-40 object-cover" />
 						<div className="flex flex-col p-6 flex-1">
 							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Observability</h3>
 							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Every backend runnable call is logged with its inputs, outputs, duration, and status. Run history is searchable, failed jobs show full error traces.</p>

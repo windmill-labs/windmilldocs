@@ -10,6 +10,12 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
+import { useColorMode } from '@docusaurus/theme-common';
+import classNames from 'classnames';
+import { Switch } from '@headlessui/react';
 import WorkersHeroAnimation from '../../components/products/WorkersHeroAnimation';
 
 export const fadeIn = {
@@ -26,7 +32,7 @@ export const stagger = (delay = 0) => ({
 
 {/* Section helper */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -46,7 +52,12 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{video ? (
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src={video}
+						/>
+					) : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -60,6 +71,93 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 				</div>
 			</motion.div>
 			{children}
+		</div>
+	);
+}
+
+
+export function BenchmarkSection() {
+	const [chart, setChart] = React.useState('short');
+	const { colorMode } = useColorMode();
+
+	React.useEffect(() => {
+		setChart('short');
+	}, []);
+
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn}>
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Benchmarks</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
+					Windmill is the fastest job orchestrator in the industry. It scales linearly to <Link to="/docs/misc/benchmarks" className="text-blue-600 dark:text-blue-400 hover:underline">100+ workers</Link> with near-theoretical throughput. 100 workers achieve 981 jobs/sec on 100ms jobs. Dedicated workers run fibonacci in 54ms versus Lambda's 73ms. Benchmark data is publicly available and reproducible.
+				</p>
+				<Link
+					to="/docs/misc/benchmarks"
+					className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline mb-8"
+				>
+					<BookOpen className="w-4 h-4" /> Read the docs
+				</Link>
+			</motion.div>
+			<div className="flex flex-row gap-2 items-center justify-end mb-4">
+				<span className="font-light text-sm text-gray-900 dark:text-white">10 long tasks</span>
+				<Switch
+					checked={chart === 'short'}
+					title="Switch between short and long running tasks"
+					onChange={() => setChart(chart === 'long' ? 'short' : 'long')}
+					className={`${
+						chart === 'short' ? 'bg-blue-500 dark:bg-blue-900' : 'bg-gray-200 dark:bg-gray-800'
+					} relative inline-flex h-[24px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+				>
+					<span
+						aria-hidden="true"
+						className={`${
+							chart === 'short' ? 'translate-x-6' : 'translate-x-0'
+						} pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+					/>
+				</Switch>
+				<span className="font-light text-sm text-gray-900 dark:text-white">40 lightweight tasks</span>
+			</div>
+			<div
+				className={classNames(
+					colorMode === 'dark' ? 'bg-black' : 'bg-gray-100',
+					'w-full p-4 md:p-8 bg-opacity-40 rounded-xl benchmark-chart-container'
+				)}
+				data-theme={colorMode}
+			>
+				<BrowserOnly fallback={<div className="h-64" />}>
+					{() => (
+						<div className="grid">
+							{chart === 'short' ? (
+								<div key="short">
+									<BenchmarkVisualization
+										usecase="fibonacci_40_10"
+										language="python"
+										engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
+										workers={1}
+										title="40 lightweight tasks comparison"
+										maintainAspectRatio={false}
+										shouldAnimate={true}
+									/>
+								</div>
+							) : chart === 'long' ? (
+								<div key="long">
+									<BenchmarkVisualization
+										usecase="fibonacci_10_33"
+										language="python"
+										engines={['airflow', 'kestra', 'prefect', 'temporal', 'windmill', 'windmill_dedicated']}
+										workers={1}
+										title="10 long running tasks comparison"
+										maintainAspectRatio={false}
+										shouldAnimate={true}
+									/>
+								</div>
+							) : (
+								<div className="h-64" />
+							)}
+						</div>
+					)}
+				</BrowserOnly>
+			</div>
 		</div>
 	);
 }
@@ -94,7 +192,7 @@ export default function WorkersContent({ title, description }) {
 				<motion.div {...fadeIn}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Where your code actually runs</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						When you run a <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link> or a <Link to="/platform/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> in Windmill, the code does not execute on the server. It is picked up by a worker, an isolated process that runs one job at a time. The server handles the API, UI, and scheduling. Workers handle execution. You can run one worker or hundreds, on the same machine or across continents.
+						When you run a <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link> or a <Link to="/platform/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> in Windmill, the code does not execute on the server. It is picked up by a worker, an isolated process that runs one job at a time. The server handles the API, UI, and job queuing. Workers handle execution. You can run one worker or hundreds, on the same machine or across continents.
 					</p>
 				</motion.div>
 			</div>
@@ -102,70 +200,59 @@ export default function WorkersContent({ title, description }) {
 			{/* How workers work */}
 			<Section
 				title="How workers work"
-				desc={<span>Windmill uses a <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">pull model</Link>: each worker independently grabs one job at a time from the PostgreSQL queue. No coordinator, no message broker. A single worker handles ~26M jobs/month at ~100ms per job. Add more workers for more throughput, scaling is linear.</span>}
+				desc={<span>Workers <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">pull jobs</Link> one at a time from a shared PostgreSQL queue. No coordinator, no message broker. A single worker handles ~26M jobs/month at ~100ms per job. Adding more workers increases throughput linearly.</span>}
 				docLink="/docs/core_concepts/worker_groups"
-				image={null}
+				video="/img/platform/scale/platform-scale-how-workers-work.webm"
 			/>
 
 			{/* Worker groups */}
 			<Section
 				title="Worker groups"
-				desc={<span>Assign <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">tags to workers</Link> and route jobs to specific groups. Default groups include "default" for language jobs and "native" for SQL/API calls with 8 subworkers. Create custom groups for GPU, high-memory, or environment-specific workloads. Use dynamic tags like <code>$workspace</code> or <code>{'$args[argName]'}</code> for flexible routing.</span>}
+				desc={<span>Workers are organized into <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">groups with tags</Link> that determine which jobs they pick up. Default groups handle language jobs and SQL/API calls. Custom groups can be created for GPU, high-memory, or environment-specific workloads.</span>}
 				docLink="/docs/core_concepts/worker_groups"
 				image={null}
+				video="/img/platform/scale/platform-scale-worker-groups.webm"
 				reverse
 			/>
 
 			{/* Dedicated workers */}
 			<Section
 				title="Dedicated workers"
-				desc={<span><Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Dedicated workers</Link> pin a worker to a single script so the runtime stays warm permanently (Enterprise). Supported for TypeScript (Bun/Deno), Python, and nativets. Execution overhead drops to ~12ms per job versus ~50ms for standard workers, making them 1.35x faster than AWS Lambda for lightweight tasks.</span>}
+				desc={<span>A <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated worker</Link> stays pinned to a single script with its runtime permanently warm (Enterprise). Execution overhead drops to ~12ms per job versus ~50ms for standard workers, making them 1.35x faster than AWS Lambda for lightweight tasks.</span>}
 				docLink="/docs/core_concepts/dedicated_workers"
-				image={null}
+				video="/img/platform/scale/platform-scale-dedicated-workers.webm"
 			/>
 
 			{/* Agent workers */}
 			<Section
 				title="Agent workers"
-				desc={<span><Link to="/docs/core_concepts/agent_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Agent workers</Link> connect to the server over HTTP only, with no direct database access (Enterprise). Deploy workers behind firewalls, in remote data centers, or on edge infrastructure. Run on Linux, Windows, or macOS without Docker.</span>}
+				desc={<span><Link to="/docs/core_concepts/agent_workers" className="text-blue-600 dark:text-blue-400 hover:underline">Agent workers</Link> connect to the server over HTTP only, with no direct database access (Enterprise). They can run behind firewalls, in remote data centers, or on edge infrastructure, on Linux, Windows, or macOS without Docker.</span>}
 				docLink="/docs/core_concepts/agent_workers"
 				image={null}
+				video="/img/platform/scale/platform-scale-agent-workers.webm"
 				reverse
-			/>
-
-			{/* Init scripts */}
-			<Section
-				title="Init scripts"
-				desc={<span>Run <Link to="/docs/core_concepts/worker_groups#init-scripts" className="text-blue-600 dark:text-blue-400 hover:underline">init scripts</Link> at worker startup to pre-install dependencies, configure tools, or warm caches. Periodic scripts run maintenance tasks at regular intervals. Configured through the Worker Management UI.</span>}
-				docLink="/docs/core_concepts/worker_groups#init-scripts"
-				image={null}
 			/>
 
 			{/* Autoscaling */}
 			<Section
 				title="Autoscaling"
-				desc={<span>Scale workers automatically based on queue depth. <Link to="/docs/core_concepts/autoscaling" className="text-blue-600 dark:text-blue-400 hover:underline">Kubernetes-native autoscaling</Link> (auto-discovers namespace/credentials), ECS, and custom script-based scaling are all supported. Occupancy-based thresholds: 75% to scale out, 25% to scale in, with configurable cooldown. Checks every 30 seconds and supports scale to zero when idle.</span>}
+				desc={<span>Workers scale automatically based on queue depth. <Link to="/docs/core_concepts/autoscaling" className="text-blue-600 dark:text-blue-400 hover:underline">Kubernetes-native autoscaling</Link>, ECS, and custom script-based scaling are all supported. Scales to zero when idle.</span>}
 				docLink="/docs/core_concepts/autoscaling"
 				image={null}
-				reverse
+				video="/img/platform/scale/platform-scale-autoscaling.webm"
 			/>
 
 			{/* Concurrency and priority */}
 			<Section
 				title="Concurrency and priority"
-				desc={<span>Set <Link to="/docs/script_editor/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">global concurrency limits</Link> per script to avoid API rate limits. Configure time windows, max executions, and custom concurrency keys. Assign priority levels from 1 to 100 so critical jobs always run first.</span>}
+				desc={<span><Link to="/docs/script_editor/concurrency_limit" className="text-blue-600 dark:text-blue-400 hover:underline">Global concurrency limits</Link> prevent scripts from exceeding API rate limits. Priority levels from 1 to 100 ensure critical jobs always run first.</span>}
 				docLink="/docs/script_editor/concurrency_limit"
-				image={null}
+				video="/img/platform/scale/platform-scale-concurrency-priority.webm"
+				reverse
 			/>
 
 			{/* Benchmarks */}
-			<Section
-				title="Benchmarks"
-				desc={<span>Windmill scales linearly to <Link to="/docs/misc/benchmarks" className="text-blue-600 dark:text-blue-400 hover:underline">100+ workers</Link> with near-theoretical throughput. 100 workers achieve 981 jobs/sec on 100ms jobs. Dedicated workers run fibonacci in 54ms versus Lambda's 73ms. Benchmark data is publicly available and reproducible.</span>}
-				docLink="/docs/misc/benchmarks"
-				image={null}
-				reverse
-			/>
+			<BenchmarkSection />
 
 			{/* FAQ */}
 			<UseCaseFAQ faqs={[
