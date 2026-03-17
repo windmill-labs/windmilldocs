@@ -47,6 +47,10 @@ The GitHub App feature requires your Windmill instance to communicate with `http
 
 If your GitHub organization uses [IP allow lists](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-allowed-ip-addresses-for-your-organization), you will need to whitelist the IP address of `stats.windmill.dev` to allow it to request installation tokens from GitHub on behalf of your Windmill instance. Contact support@windmill.dev to get the current IP address.
 
+:::info
+This network requirement only applies to the Windmill-managed GitHub App. If you use a [self-managed GitHub App](#github-enterprise-server), your Windmill instance communicates directly with your GitHub instance. In that case, if your GitHub organization uses IP allow lists, whitelist your Windmill instance's IP address instead.
+:::
+
 As a [Windmill workspace admin](https://www.windmill.dev/docs/core_concepts/roles_and_permissions#admin), you can install the GitHub app to multiple organizations and link them to your Windmill workspaces. Once an app has been installed to a workspace, you can install it to other workspace where you have the admin role.
 
 :::warning
@@ -67,19 +71,19 @@ The JWT token associated to your GitHub app installation is sensitive and has th
 	src="/videos/github_app_installation.mp4"
 />
 
-### GitHub Enterprise Server
+### Self-managed GitHub App {#github-enterprise-server}
 
-Organizations using GitHub Enterprise Server (or any self-hosted GitHub instance) can register their own GitHub App instead of using the Windmill-managed one. This removes the dependency on `stats.windmill.dev` — tokens are exchanged directly with your GHES instance using self-managed JWT token generation.
+Instead of using the Windmill-managed GitHub App, you can register your own GitHub App on any GitHub instance — whether GitHub.com or a GitHub Enterprise Server (GHES) instance. This gives you full control over the app configuration and removes the dependency on `stats.windmill.dev`, as tokens are exchanged directly between your Windmill instance and your GitHub instance.
 
 This feature is [Enterprise Edition](/pricing) only and is configured at the instance level by a [superadmin](../core_concepts/16_roles_and_permissions/index.mdx#superadmin).
 
-To set up a self-managed GitHub App for GHES:
+To set up a self-managed GitHub App:
 
-1. Register a new GitHub App on your GitHub Enterprise Server instance
+1. Register a new GitHub App on your GitHub instance (github.com or your GHES instance)
 2. In Windmill [Instance Settings](../advanced/18_instance_settings/index.mdx#github-enterprise-app), go to **Advanced > GitHub Enterprise App** and enable "Self-managed GitHub App (for GHES or custom GitHub App)"
-3. Fill in the app details: Base URL, App ID, App Slug, Client ID, and Private Key (PEM)
-4. Install the GitHub App to your organization on your GHES instance
+3. Fill in the app details: Base URL (e.g. `https://github.com` or your GHES URL), App ID, App Slug, Client ID, and Private Key (PEM)
+4. Install the GitHub App to your organization on your GitHub instance
 
-Once configured, the GHES GitHub App can be used for [Git sync](../advanced/11_git_sync/index.mdx) authentication in the same way as the managed GitHub App. Host-based installation filtering ensures tokens are scoped to the correct GitHub instance, preventing token leakage across instances.
+Once configured, the self-managed GitHub App can be used for [Git sync](../advanced/11_git_sync/index.mdx) authentication in the same way as the managed GitHub App. Host-based installation filtering ensures tokens are scoped to the correct GitHub instance, preventing token leakage across instances.
 
 ![GitHub Enterprise App settings](./ghes_app_settings.png.webp)
