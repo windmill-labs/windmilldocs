@@ -298,6 +298,7 @@ export default function ObservabilityContent({ title, description }) {
 				title="Service logs"
 				desc={<span>View centralized <Link to="/docs/core_concepts/service_logs" className="text-blue-600 dark:text-blue-400 hover:underline">worker and server logs</Link> from the Windmill UI. Full-text search (Enterprise) across all service logs. Logs are stored on disk or S3 with configurable retention, 2 weeks by default.</span>}
 				docLink="/docs/core_concepts/service_logs"
+				video="/img/platform/observability/platform-observability-service-logs.webm"
 			/>
 			{/* Placeholder image: screenshot of service logs viewer with full-text search filtering server and worker logs, ~1200x800px, save as /static/img/money-pages/service-logs.webp */}
 
@@ -306,6 +307,7 @@ export default function ObservabilityContent({ title, description }) {
 				title="Critical alerts"
 				desc={<span>Get notified on script crashes, queue depth thresholds, and <Link to="/docs/core_concepts/critical_alerts" className="text-blue-600 dark:text-blue-400 hover:underline">worker health issues</Link>. Alerts are sent to Email, Slack, or Microsoft Teams. Configure per-workspace alert channels.</span>}
 				docLink="/docs/core_concepts/critical_alerts"
+				video="/img/platform/observability/platform-observability-critical-alerts.webm"
 				reverse
 			/>
 			{/* Placeholder image: screenshot of critical alerts configuration showing alert channels (Email, Slack, Teams) and threshold settings, ~1200x800px, save as /static/img/money-pages/critical-alerts.webp */}
@@ -315,6 +317,7 @@ export default function ObservabilityContent({ title, description }) {
 				title="Prometheus and OpenTelemetry"
 				desc={<span>Workers expose <Link to="/docs/advanced/instance_settings#prometheus" className="text-blue-600 dark:text-blue-400 hover:underline">Prometheus metrics</Link> on port 8001: job counts, durations, queue depth, and worker status. Export traces via <Link to="/docs/misc/guides/otel" className="text-blue-600 dark:text-blue-400 hover:underline">OpenTelemetry</Link> to Jaeger, Datadog, Grafana, or any OTLP-compatible backend.</span>}
 				docLink="/docs/misc/guides/otel"
+				video="/img/platform/observability/platform-observability-prometheus-otel.webm"
 			/>
 			{/* Placeholder image: screenshot of Grafana dashboard with Windmill Prometheus metrics (queue depth, job throughput, worker utilization), ~1200x800px, save as /static/img/money-pages/prometheus-grafana.webp */}
 
