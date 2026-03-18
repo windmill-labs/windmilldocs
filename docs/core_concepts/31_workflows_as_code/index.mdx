@@ -102,15 +102,31 @@ async def main(url: str):
 
 ## How it works
 
-Workflows as code use a **checkpoint/replay** model:
+Workflows as code use a **checkpoint/replay** model that ensures zero worker waste:
 
-1. The workflow script runs until it hits a `task()` or `step()` call that isn't cached yet
-2. The script exits, and Windmill saves the checkpoint (all completed step results) to the database
-3. For `task()`: a child job is created and dispatched to a worker. When the child completes, the parent workflow resumes
-4. For `step()`: the inline result is persisted immediately, and the workflow is re-picked up
-5. On replay, all previously completed steps return their cached results instantly, and execution continues from where it left off
+1. The workflow script runs until it hits a `task()`, `step()`, `sleep()`, or `waitForApproval()` call that isn't cached yet
+2. The script exits, and Windmill saves a checkpoint (all completed step results) to the database
+3. **The parent workflow fully suspends**, releasing its [worker](../9_worker_groups/index.mdx) slot back to the pool. No worker is held while waiting.
+4. For `task()`: child jobs are created and dispatched. Each child runs independently on any available worker. When all children complete, the parent is automatically re-queued
+5. For `step()`: the inline result is persisted immediately, and the workflow is re-picked up on the next available worker
+6. For `sleep()`: the workflow suspends for the given duration. No worker is occupied during the sleep; the job is re-queued when the timer expires
+7. For `waitForApproval()`: the workflow suspends indefinitely (up to the timeout). The worker is released, and the job resumes only when a human approves or rejects
+8. On replay, all previously completed steps return their cached results instantly, and execution continues from where it left off
 
-This design means the parent workflow process is **never alive while child jobs run**. It only occupies a worker during the brief moments between checkpoints.
+This design means the parent workflow process is **never alive while child jobs run, during sleeps, or while waiting for approvals**. It only occupies a worker during the brief moments between checkpoints. A workflow that sleeps for 24 hours or waits a week for approval consumes zero worker time during those waits.
+
+:::info Zero worker waste
+Unlike traditional workflow engines that hold a thread or process alive while waiting, Windmill workflows fully suspend between steps. The parent job is marked as suspended in the database and becomes invisible to the worker pull query. When a child completes (or a sleep/approval timer fires), the database counter is decremented atomically. Only when all pending children reach zero does the parent become eligible for pickup again. This means:
+
+- A workflow with 100 parallel tasks uses 100 worker slots for the tasks, but 0 slots while orchestrating
+- A workflow sleeping for 1 hour uses 0 worker slots during the entire sleep
+- A workflow waiting for approval uses 0 worker slots until the human responds
+- Workers are free to process other jobs while your workflow waits
+:::
+
+{/* Placeholder image: screenshot of the Windmill run page showing a WAC workflow in "suspended" state. The run detail should show the job status as "Suspended", the timeline with some completed child tasks and a pending suspension point (e.g., waiting for approval or sleeping). The left panel should show the parent job metadata including the workflow script path. This illustrates how the worker slot is freed while the workflow waits. */}
+
+{/* Placeholder image: screenshot of the Windmill script editor with a WAC v2 TypeScript script open. The editor should show the code with workflow(), task(), and step() calls. The right panel should show the "Test" tab with input fields and a "Run" button. If modules are present, show the module tabs at the top of the editor (e.g., "script.ts", "extract.ts"). */}
 
 ## Core primitives
 
@@ -298,6 +314,23 @@ async def main():
 | Use case | Heavy compute, external APIs | Timestamps, random IDs, config reads |
 | Logs | Own log stream | Part of parent logs |
 | Timeline | Separate timeline entry | Not a separate entry |
+
+## Determinism requirement
+
+Because workflows replay from checkpoints, the orchestration logic must be **deterministic**: given the same inputs, the workflow must call tasks in the same order on every replay. This ensures step keys are consistent and cached results map to the correct steps.
+
+Safe patterns:
+- Branching on task results (results are replayed from checkpoint)
+- Loops over static or task-derived data
+- Any logic that depends only on inputs and previous task results
+
+Patterns that break determinism (wrap these in `step()` instead):
+- `Date.now()` / `datetime.now()` — use `await step('ts', () => Date.now())`
+- `Math.random()` / `random.random()` — use `await step('id', () => randomUUID())`
+- Reading environment variables or config that may change between replays
+- External API calls whose results affect control flow
+
+If a workflow's code changes between replays (e.g. a deployment mid-execution), Windmill detects the source hash mismatch and re-runs from scratch to avoid stale checkpoint data.
 
 ## Parallel execution
 
@@ -576,6 +609,53 @@ approval = await wait_for_approval(
 {/* Placeholder image: two screenshots side by side. Left: the job detail page showing the workflow in "suspended" / waiting-for-approval state with the approve/reject buttons (and form fields if using a form). Right: the timeline view after approval showing the completed workflow with tasks before and after the approval point. */}
 
 The workflow appears as suspended in the [job runs](../20_jobs/index.mdx) page. Navigate to the job detail to find the approve/reject buttons. The timeline does not display anything while the workflow is waiting — it only shows the full execution once the workflow resumes after approval.
+
+### `getResumeUrls()`
+
+Use `getResumeUrls()` (wrapped in a `step()` for replay safety) to obtain URLs you can send to approvers via email, Slack, or any notification channel:
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { step, waitForApproval, workflow, getResumeUrls } from 'windmill-client';
+
+export const main = workflow(async () => {
+  const urls = await step('get_urls', () => getResumeUrls());
+  // urls.approvalPage — link to the Windmill approval UI
+  // urls.resume       — POST endpoint to approve programmatically
+  // urls.cancel       — POST endpoint to reject programmatically
+
+  // Send the approval page link via your notification system
+  await step('notify', () => sendSlackMessage(urls.approvalPage));
+
+  const result = await waitForApproval({ timeout: 86400 });
+  return result;
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import step, wait_for_approval, workflow, get_resume_urls
+
+@workflow
+async def main():
+    urls = await step("get_urls", lambda: get_resume_urls())
+    # urls["approvalPage"] — link to the Windmill approval UI
+    # urls["resume"]       — POST endpoint to approve programmatically
+    # urls["cancel"]       — POST endpoint to reject programmatically
+
+    # Send the approval page link via your notification system
+    await step("notify", lambda: send_slack_message(urls["approvalPage"]))
+
+    result = await wait_for_approval(timeout=86400)
+    return result
+```
+
+</TabItem>
+</Tabs>
 
 ## Referencing external scripts and flows
 
@@ -932,6 +1012,258 @@ async def main(base_url: str, page_count: int):
 
 {/* Placeholder image: screenshot of the Windmill UI timeline for the complete example above. Should show the full execution timeline with: step nodes for run_id and started_at, parallel fetch_page tasks (5 at a time), parallel process_chunk tasks (3 at a time), an approval suspension point, the save_results task, a sleep period, and the final result. This is the most important timeline screenshot to include. */}
 
+## Examples
+
+### ETL pipeline with retry
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, step, workflow, parallel } from 'windmill-client';
+
+async function extractFromApi(endpoint: string) {
+  const resp = await fetch(endpoint);
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  return resp.json();
+}
+
+async function transformRecord(record: any) {
+  return { ...record, transformed: true, processedAt: new Date().toISOString() };
+}
+
+async function loadBatch(records: any[]) {
+  console.log(`Loading ${records.length} records`);
+  return { loaded: records.length };
+}
+
+export const main = workflow(async (endpoints: string[]) => {
+  // Extract from multiple APIs in parallel
+  const rawData = await parallel(
+    endpoints,
+    (ep) => task(extractFromApi)(ep),
+    { concurrency: 10 },
+  );
+
+  // Transform all records in parallel
+  const allRecords = rawData.flat();
+  const transformed = await parallel(
+    allRecords,
+    (record) => task(transformRecord)(record),
+    { concurrency: 20 },
+  );
+
+  // Load in a single batch
+  return await task(loadBatch)(transformed);
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task, step, workflow, parallel
+
+@task
+async def extract_from_api(endpoint: str):
+    import httpx
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(endpoint)
+        resp.raise_for_status()
+        return resp.json()
+
+@task
+async def transform_record(record: dict):
+    from datetime import datetime
+    return {**record, "transformed": True, "processed_at": datetime.now().isoformat()}
+
+@task
+async def load_batch(records: list):
+    print(f"Loading {len(records)} records")
+    return {"loaded": len(records)}
+
+@workflow
+async def main(endpoints: list):
+    # Extract from multiple APIs in parallel
+    raw_data = await parallel(endpoints, extract_from_api, concurrency=10)
+
+    # Transform all records in parallel
+    all_records = [r for batch in raw_data for r in batch]
+    transformed = await parallel(all_records, transform_record, concurrency=20)
+
+    # Load in a single batch
+    return await load_batch(transformed)
+```
+
+</TabItem>
+</Tabs>
+
+### Deployment with approval gate
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import {
+  task, step, workflow, sleep, waitForApproval, getResumeUrls, taskScript
+} from 'windmill-client';
+
+async function runTests(branch: string) {
+  console.log(`Running tests for ${branch}`);
+  return { passed: 42, failed: 0 };
+}
+
+async function deployToStaging(branch: string) {
+  console.log(`Deploying ${branch} to staging`);
+  return { url: `https://staging.example.com` };
+}
+
+async function deployToProduction(branch: string) {
+  console.log(`Deploying ${branch} to production`);
+  return { url: `https://example.com` };
+}
+
+export const main = workflow(async (branch: string) => {
+  // Run tests
+  const testResults = await task(runTests)(branch);
+  if (testResults.failed > 0) {
+    return { status: 'failed', tests: testResults };
+  }
+
+  // Deploy to staging
+  const staging = await task(deployToStaging)(branch);
+
+  // Get approval URLs and notify
+  const urls = await step('approval_urls', () => getResumeUrls());
+  await step('notify_team', () => {
+    // send Slack/email with urls.approvalPage
+    console.log(`Approve production deploy: ${urls.approvalPage}`);
+  });
+
+  // Wait up to 24 hours for approval — zero worker usage during the wait
+  const approval = await waitForApproval({ timeout: 86400 });
+  if (!approval.approved) {
+    return { status: 'rejected', approver: approval.approver, staging };
+  }
+
+  // Deploy to production
+  const production = await task(deployToProduction)(branch);
+  return { status: 'deployed', staging, production, approvedBy: approval.approver };
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import (
+    task, step, workflow, sleep, wait_for_approval, get_resume_urls
+)
+
+@task
+async def run_tests(branch: str):
+    print(f"Running tests for {branch}")
+    return {"passed": 42, "failed": 0}
+
+@task
+async def deploy_to_staging(branch: str):
+    print(f"Deploying {branch} to staging")
+    return {"url": "https://staging.example.com"}
+
+@task
+async def deploy_to_production(branch: str):
+    print(f"Deploying {branch} to production")
+    return {"url": "https://example.com"}
+
+@workflow
+async def main(branch: str):
+    # Run tests
+    test_results = await run_tests(branch)
+    if test_results["failed"] > 0:
+        return {"status": "failed", "tests": test_results}
+
+    # Deploy to staging
+    staging = await deploy_to_staging(branch)
+
+    # Get approval URLs and notify
+    urls = await step("approval_urls", lambda: get_resume_urls())
+    await step("notify_team", lambda: print(f"Approve: {urls['approvalPage']}"))
+
+    # Wait up to 24 hours for approval — zero worker usage during the wait
+    approval = await wait_for_approval(timeout=86400)
+    if not approval["approved"]:
+        return {"status": "rejected", "approver": approval["approver"], "staging": staging}
+
+    # Deploy to production
+    production = await deploy_to_production(branch)
+    return {"status": "deployed", "staging": staging, "production": production}
+```
+
+</TabItem>
+</Tabs>
+
+### Scheduled retry with backoff
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task, step, workflow, sleep } from 'windmill-client';
+
+async function callExternalApi(payload: any) {
+  const resp = await fetch('https://api.example.com/submit', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+  if (!resp.ok) throw new Error(`API error: ${resp.status}`);
+  return resp.json();
+}
+
+export const main = workflow(async (payload: any, maxRetries: number = 3) => {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await task(callExternalApi)(payload);
+    } catch (e) {
+      if (attempt === maxRetries) throw e;
+      // Exponential backoff: 30s, 60s, 120s — worker is free during each sleep
+      const delay = 30 * Math.pow(2, attempt - 1);
+      await sleep(delay);
+    }
+  }
+});
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task, workflow, sleep
+from wmill.client import TaskError
+
+@task
+async def call_external_api(payload: dict):
+    import httpx
+    async with httpx.AsyncClient() as client:
+        resp = await client.post("https://api.example.com/submit", json=payload)
+        resp.raise_for_status()
+        return resp.json()
+
+@workflow
+async def main(payload: dict, max_retries: int = 3):
+    for attempt in range(1, max_retries + 1):
+        try:
+            return await call_external_api(payload)
+        except TaskError:
+            if attempt == max_retries:
+                raise
+            # Exponential backoff: 30s, 60s, 120s — worker is free during each sleep
+            delay = 30 * (2 ** (attempt - 1))
+            await sleep(delay)
+```
+
+</TabItem>
+</Tabs>
+
 ## CLI sync
 
 Workflow-as-code scripts and their modules are fully supported by the [Windmill CLI](../../advanced/11_git_sync/cli_sync.mdx):
@@ -953,26 +1285,269 @@ The CLI tracks per-module hashes in `wmill-lock.yaml` and only regenerates locks
 
 ### TypeScript (`windmill-client`)
 
-| Function | Signature | Description |
-|---|---|---|
-| `workflow` | `workflow(fn)` | Mark function as workflow entry point |
-| `task` | `task(fn)`, `task(fn, options)`, `task(path, fn)`, `task(path, fn, options)` | Wrap function for child job dispatch |
-| `taskScript` | `taskScript(path, options?)` | Dispatch to existing Windmill script |
-| `taskFlow` | `taskFlow(path, options?)` | Dispatch to existing Windmill flow |
-| `step` | `step(name, fn)` | Inline checkpoint for deterministic values |
-| `sleep` | `sleep(seconds)` | Server-side suspend |
-| `waitForApproval` | `waitForApproval({ timeout?, form? })` | Suspend for human approval |
-| `parallel` | `parallel(items, fn, { concurrency? })` | Parallel map with optional batching |
+#### `workflow(fn)`
+
+Marks an async function as a workflow entry point. Required for all other WAC primitives.
+
+```typescript
+import { workflow } from 'windmill-client';
+
+export const main = workflow(async (x: number) => {
+  // orchestration logic
+  return x;
+});
+```
+
+#### `task(fn)` / `task(fn, options)` / `task(path, fn)` / `task(path, fn, options)`
+
+Wraps a function so each call runs as a separate child job.
+
+```typescript
+import { task } from 'windmill-client';
+
+// Inline task
+const result = await task(myFunction)(arg1, arg2);
+
+// With options
+const result = await task(myFunction, { timeout: 600, tag: 'gpu' })(arg1);
+
+// With explicit script path
+const result = await task('f/folder/script', myFunction)(arg1);
+
+// With path and options
+const result = await task('f/folder/script', myFunction, { timeout: 600 })(arg1);
+```
+
+Returns a wrapper function with `_is_task: true` and `_task_path` properties.
+
+#### `taskScript(path, options?)`
+
+Creates a task that dispatches to an existing Windmill [script](../../script_editor/index.mdx) by path.
+
+```typescript
+import { taskScript } from 'windmill-client';
+
+const extract = taskScript('f/data/extract', { timeout: 3600 });
+const data = await extract({ url: 'https://...' });
+```
+
+#### `taskFlow(path, options?)`
+
+Creates a task that dispatches to an existing Windmill [flow](../../flows/1_flow_editor.mdx) by path.
+
+```typescript
+import { taskFlow } from 'windmill-client';
+
+const pipeline = taskFlow('f/etl/pipeline', { concurrency_limit: 5 });
+const result = await pipeline({ input: data });
+```
+
+#### `step(name, fn)`
+
+Executes `fn` inline and persists the result. On replay, returns the cached value without re-executing. Use for non-deterministic values that must be stable across replays.
+
+```typescript
+import { step } from 'windmill-client';
+
+const ts = await step('timestamp', () => Date.now());
+const id = await step('run_id', () => crypto.randomUUID());
+```
+
+#### `sleep(seconds)`
+
+Suspends the workflow server-side for the given duration. The worker is released during the sleep. Minimum 1 second.
+
+```typescript
+import { sleep } from 'windmill-client';
+
+await sleep(3600); // 1 hour, zero worker usage
+```
+
+#### `waitForApproval(options?)`
+
+Suspends the workflow waiting for human approval. Returns `{ value, approver, approved }`.
+
+```typescript
+import { waitForApproval } from 'windmill-client';
+
+const result = await waitForApproval({
+  timeout: 3600,  // optional, default 1800s
+  form: {         // optional JSON Schema for approval form
+    type: 'object',
+    properties: {
+      reason: { type: 'string' }
+    }
+  }
+});
+```
+
+#### `parallel(items, fn, options?)`
+
+Processes items in parallel with optional concurrency control. Returns results in input order.
+
+```typescript
+import { parallel, task } from 'windmill-client';
+
+const results = await parallel(
+  items,
+  (item) => task(process)(item),
+  { concurrency: 5 }  // optional, default: all at once
+);
+```
+
+#### `getResumeUrls(approver?)`
+
+Returns URLs for programmatic workflow control: `{ approvalPage, resume, cancel }`.
+
+```typescript
+import { getResumeUrls, step } from 'windmill-client';
+
+const urls = await step('urls', () => getResumeUrls());
+```
+
+#### `TaskOptions`
+
+All task types accept these options:
+
+```typescript
+interface TaskOptions {
+  timeout?: number;                    // max execution time (seconds)
+  tag?: string;                        // worker tag
+  cache_ttl?: number;                  // cache result (seconds)
+  priority?: number;                   // queue priority (higher = sooner)
+  concurrency_limit?: number;          // max concurrent executions
+  concurrency_key?: string;            // concurrency grouping key
+  concurrency_time_window_s?: number;  // concurrency time window (seconds)
+}
+```
 
 ### Python (`wmill`)
 
-| Function | Signature | Description |
-|---|---|---|
-| `@workflow` | `@workflow` | Mark function as workflow entry point |
-| `@task` | `@task`, `@task()`, `@task(path=, tag=, timeout=, ...)` | Wrap function for child job dispatch |
-| `task_script` | `task_script(path, timeout=, tag=, ...)` | Dispatch to existing Windmill script |
-| `task_flow` | `task_flow(path, timeout=, tag=, ...)` | Dispatch to existing Windmill flow |
-| `step` | `await step(name, fn)` | Inline checkpoint for deterministic values |
-| `sleep` | `await sleep(seconds)` | Server-side suspend |
-| `wait_for_approval` | `await wait_for_approval(timeout=, form=)` | Suspend for human approval |
-| `parallel` | `await parallel(items, fn, concurrency=)` | Parallel map with optional batching |
+#### `@workflow`
+
+Marks an async function as a workflow entry point. Required for all other WAC primitives.
+
+```python
+from wmill import workflow
+
+@workflow
+async def main(x: int):
+    # orchestration logic
+    return x
+```
+
+#### `@task` / `@task(path=, timeout=, tag=, ...)`
+
+Wraps a function so each call runs as a separate child job.
+
+```python
+from wmill import task
+
+# Basic decorator
+@task
+async def double(n: int):
+    return n * 2
+
+# With options
+@task(path="f/folder/script", timeout=600, tag="gpu")
+async def heavy_compute(data: list):
+    return sum(data)
+```
+
+Options: `path`, `timeout`, `tag`, `cache_ttl`, `priority`, `concurrency_limit`, `concurrency_key`, `concurrency_time_window_s`.
+
+#### `task_script(path, **options)`
+
+Creates a task that dispatches to an existing Windmill [script](../../script_editor/index.mdx) by path.
+
+```python
+from wmill import task_script
+
+extract = task_script("f/data/extract", timeout=3600)
+data = await extract(url="https://...")
+```
+
+#### `task_flow(path, **options)`
+
+Creates a task that dispatches to an existing Windmill [flow](../../flows/1_flow_editor.mdx) by path.
+
+```python
+from wmill import task_flow
+
+pipeline = task_flow("f/etl/pipeline", concurrency_limit=5)
+result = await pipeline(input=data)
+```
+
+#### `step(name, fn)`
+
+Executes `fn` inline and persists the result. On replay, returns the cached value. Supports both sync and async callables.
+
+```python
+from wmill import step
+
+ts = await step("timestamp", lambda: time.time())
+config = await step("config", get_config)  # async fn also works
+```
+
+#### `sleep(seconds)`
+
+Suspends the workflow server-side. The worker is released during the sleep. Minimum 1 second.
+
+```python
+from wmill import sleep
+
+await sleep(3600)  # 1 hour, zero worker usage
+```
+
+#### `wait_for_approval(timeout=1800, form=None)`
+
+Suspends the workflow waiting for human approval. Returns `{"value": ..., "approver": "...", "approved": True/False}`.
+
+```python
+from wmill import wait_for_approval
+
+result = await wait_for_approval(
+    timeout=3600,
+    form={"type": "object", "properties": {"reason": {"type": "string"}}}
+)
+```
+
+#### `parallel(items, fn, concurrency=None)`
+
+Processes items in parallel with optional concurrency control. Returns results in input order.
+
+```python
+from wmill import parallel, task
+
+results = await parallel(
+    items,
+    lambda item: process(item),
+    concurrency=5  # optional, default: all at once
+)
+```
+
+#### `get_resume_urls(approver=None)`
+
+Returns URLs for programmatic workflow control: `{"approvalPage": ..., "resume": ..., "cancel": ...}`.
+
+```python
+from wmill import get_resume_urls, step
+
+urls = await step("urls", lambda: get_resume_urls())
+```
+
+#### `TaskError`
+
+Exception raised when a child task fails. Available for try/except error handling.
+
+```python
+from wmill.client import TaskError
+
+try:
+    result = await risky_task(data)
+except TaskError as e:
+    print(e.message)       # error description
+    print(e.step_key)      # checkpoint key of the failed step
+    print(e.child_job_id)  # UUID of the failed child job
+    print(e.result)        # error result from the child
+```
