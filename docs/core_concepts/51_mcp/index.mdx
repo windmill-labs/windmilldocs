@@ -110,6 +110,28 @@ Claude will:
 - Ask you for required inputs if needed
 - Run the script and show you the result right inside the chat
 
+## Example: Running a flow and checking its status
+
+You can also trigger multi-step [flows](../../flows/1_flow_editor.mdx) and use the built-in API endpoint tools to monitor them:
+
+> "Run the 'daily_data_sync' flow with the parameter region set to 'us-east-1'"
+
+The LLM will find and execute the flow, then you can follow up:
+
+> "What's the status of the job that just ran?"
+
+Claude will use the **Jobs** endpoint tool to look up the most recent execution, returning the job status, duration, and result.
+
+## Example: Managing resources through chat
+
+MCP exposes Windmill's [resource](../3_resources_and_types/index.mdx) management as endpoint tools. You can create or inspect resources conversationally:
+
+> "List all my PostgreSQL resources in Windmill"
+
+> "Create a new Slack resource called 'alerts-channel' with webhook URL https://hooks.slack.com/services/T00/B00/xxx"
+
+Claude will use the **Resources** endpoint tools to list, create, or update resources in your workspace without leaving the chat.
+
 ---
 
 ## Troubleshooting
