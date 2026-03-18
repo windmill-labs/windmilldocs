@@ -56,7 +56,7 @@ const people = [
     roles: ['Common tree', 'App editor'],
     email: 'jose@zenfin.tech',
     profile: 'https://www.linkedin.com/in/jose-governo/',
-    imageUrl: 'https://media.licdn.com/dms/image/C4D03AQE2yXYlSoBQmg/profile-displayphoto-shrink_800_800/0/1594600574101?e=2147483647&v=beta&t=c2VZb77tUdnBRzlGVTuY23qDvGlUHy1xqy_zn1TNr40',
+    imageUrl: '/images/partners/jose.jpeg',
 },
 {
     name: 'Stephan Fitzpatrick',
