@@ -524,16 +524,16 @@ You can "Send usage" to manually send usage data to Windmill and monitor it from
 
 ## GitHub Enterprise App
 
-Configure a self-managed GitHub App for GitHub Enterprise Server (or any self-hosted GitHub instance) to enable [Git sync](../11_git_sync/index.mdx) without relying on the Windmill-managed GitHub App via `stats.windmill.dev`.
+Configure a self-managed GitHub App for GitHub.com or GitHub Enterprise Server to enable [Git sync](../11_git_sync/index.mdx) without relying on the Windmill-managed GitHub App via `stats.windmill.dev`.
 
 This setting is found under **Advanced > GitHub Enterprise App** in Instance Settings and is only available on [Enterprise Edition](/pricing).
 
 | Field | Description |
 |-------|-------------|
-| Base URL | The base URL of your GitHub Enterprise Server instance |
+| Base URL | The base URL of your GitHub instance (e.g. `https://github.com` or your GHES URL) |
 | App ID | The ID of your registered GitHub App |
 | App Slug | The slug of your GitHub App |
 | Client ID | The client ID of your GitHub App |
 | Private Key (PEM) | The private key generated for your GitHub App |
 
-For setup instructions, see [GitHub Enterprise Server](../../integrations/git_repository.mdx#github-enterprise-server).
+For setup instructions, see [Self-managed GitHub App](../../integrations/git_repository.mdx#self-managed-github-app).
