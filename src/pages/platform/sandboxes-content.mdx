@@ -11,6 +11,8 @@ import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 import SandboxesHeroAnimation from '../../components/products/SandboxesHeroAnimation';
+import PersistentVolumesDiagram from '../../components/products/PersistentVolumesDiagram';
+import ProcessIsolationDiagram from '../../components/products/ProcessIsolationDiagram';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -26,7 +28,7 @@ export const stagger = (delay = 0) => ({
 
 {/* Section helper */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, visual, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -46,7 +48,7 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{visual ? visual : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -103,6 +105,7 @@ export default function SandboxesContent({ title, description }) {
 			<Section
 				title="Claude Code"
 				desc={<span>Windmill includes a built-in <Link to="/docs/core_concepts/ai_sandbox" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code template</Link> using <code>@anthropic-ai/claude-agent-sdk</code>. Select it from the script editor to get a pre-configured sandbox with session persistence: the session ID is stored in the volume so the agent resumes where it left off. Pass instructions and skill files as input parameters to give the agent project-specific context.</span>}
+				visual={<video className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg w-full" src="/videos/claude_code_sandbox_new.mp4" autoPlay loop muted playsInline />}
 				docLink="/docs/core_concepts/ai_sandbox"
 			/>
 
@@ -110,6 +113,7 @@ export default function SandboxesContent({ title, description }) {
 			<Section
 				title="Codex and custom agents"
 				desc={<span>The same pattern works for <Link to="/docs/core_concepts/ai_sandbox" className="text-blue-600 dark:text-blue-400 hover:underline">OpenAI Codex (CLI)</Link> or any agent that operates on a local filesystem. Two annotations are all you need: <code>// sandbox</code> for isolation, and <code>// volume: name path</code> for persistence.</span>}
+				visual={<video className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg w-full" src="/videos/codex_custom_agents_new.mp4" autoPlay loop muted playsInline />}
 				docLink="/docs/core_concepts/ai_sandbox"
 				reverse
 			/>
@@ -118,6 +122,7 @@ export default function SandboxesContent({ title, description }) {
 			<Section
 				title="Persistent volumes"
 				desc={<span>Files are synced to <Link to="/docs/core_concepts/volumes" className="text-blue-600 dark:text-blue-400 hover:underline">workspace object storage</Link> (S3, Azure Blob, GCS). Exclusive leasing prevents concurrent writes. Use dynamic volume names with <code>{'$workspace'}</code> or <code>{'$args[userId]'}</code> to scope storage per user or workspace. Up to 10 volumes per script, with an LRU cache up to 10 GB per worker.</span>}
+				visual={<PersistentVolumesDiagram />}
 				docLink="/docs/core_concepts/volumes"
 			/>
 
@@ -125,6 +130,7 @@ export default function SandboxesContent({ title, description }) {
 			<Section
 				title="Process isolation"
 				desc={<span>Sandboxes use <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">NSJAIL</Link> for filesystem isolation, network restrictions, and resource limits (CPU, memory, disk). The <code>// sandbox</code> annotation enables it per script, or it can be forced instance-wide for all jobs. For lighter workloads, <Link to="/docs/advanced/security_isolation" className="text-blue-600 dark:text-blue-400 hover:underline">PID namespace isolation</Link> is available as a faster alternative with lower overhead.</span>}
+				visual={<ProcessIsolationDiagram />}
 				docLink="/docs/advanced/security_isolation"
 				reverse
 			/>
@@ -133,12 +139,14 @@ export default function SandboxesContent({ title, description }) {
 			<Section
 				title="Resources and permissions"
 				desc={<span>API keys and credentials are injected through <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill resources</Link>, so secrets never appear in code. <Link to="/platform/rbac" className="text-blue-600 dark:text-blue-400 hover:underline">RBAC permissions</Link> control which scripts, flows, and resources each agent can access, and volume permissions (owner, read-only, read-write) scope storage access.</span>}
+				visual={<video className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg w-full" src="/img/platform/script-editor/platform-script-shared-resources.webm" autoPlay loop muted playsInline />}
 			/>
 
 			{/* Observability */}
 			<Section
 				title="Observability"
 				desc={<span>Every agent run is tracked with full <Link to="/platform/observability" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link>: logs, execution history, and token usage for cost monitoring. Set up <Link to="/docs/core_concepts/critical_alerts" className="text-blue-600 dark:text-blue-400 hover:underline">alerts</Link> on failures or cost thresholds, and audit agent activity across workspaces.</span>}
+				visual={<video className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg w-full" src="/videos/sandbox_observability.mp4" autoPlay loop muted playsInline />}
 				docLink="/platform/observability"
 				reverse
 			/>
