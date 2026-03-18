@@ -60,6 +60,10 @@ const config = {
 					{
 						to: '/terms/2025-12-01',
 						from: '/terms'
+					},
+					{
+						to: '/docs/advanced/cli/environment-specific-items',
+						from: '/docs/advanced/cli/branch-specific-items'
 					}
 				]
 			}
