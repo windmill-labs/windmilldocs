@@ -15,5 +15,5 @@ features:
     'Support for all trigger types (kafka, http, websocket, nats, postgres, mqtt, sqs, gcp) and resource files.',
     'Seamless integration with Git sync for environment-specific deployments.',
   ]
-docs: /docs/advanced/cli/branch-specific-items
+docs: /docs/advanced/cli/environment-specific-items
 ---

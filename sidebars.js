@@ -1032,7 +1032,7 @@ const sidebars = {
 						'advanced/cli/installation',
 						'advanced/cli/workspace-management',
 						'advanced/cli/sync',
-						'advanced/cli/branch-specific-items',
+						'advanced/cli/environment-specific-items',
 						'advanced/cli/gitsync-settings',
 						'advanced/cli/user',
 						'advanced/cli/script',
