@@ -889,10 +889,10 @@ export default function ScriptEditorContent({ title, description }) {
 				desc={<span>The integrated <Link to="/docs/script_editor/debugger" className="text-blue-600 dark:text-blue-400 hover:underline">debugger</Link> for Python and TypeScript (Bun) supports breakpoints, step over, step into, step out, and continue controls. A variables panel shows live values in the current scope, and the console allows evaluating expressions while paused.</span>}
 				docLink="/docs/script_editor/debugger"
 				visual={
-					<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-						{/* Placeholder: screenshot of the debugger in action, showing breakpoints in the gutter, the variables panel on the right, and the debug toolbar at the top, ~800x400px, save as /static/img/platform/script-editor/platform-script-debugger.webp */}
-						<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-					</div>
+					<LazyVideo
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						src="/videos/debugger.mp4"
+					/>
 				}
 			/>
 

@@ -415,11 +415,12 @@ export default function FrontendBuilderContent({ title, description }) {
 				video="/img/platform/datatables/platform-datatables-full-code-apps.webm"
 			/>
 
-			{/* ═══════════════ Develop from UI or locally ═══════════════ */}
+			{/* ═══════════════ Build apps locally ═══════════════ */}
 			<Section
-				title="Develop from the Windmill UI or locally"
-				desc={<span>Build from the <Link to="/docs/full_code_apps/ui_editor" className="text-blue-600 dark:text-blue-400 hover:underline">browser editor</Link> or locally with the <Link to="/docs/full_code_apps/cli_workflow" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>, which provides scaffolding, hot reload, and <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">AI context generation</Link> for tools like Claude Code and Cursor.</span>}
+				title="Build apps in your editor, ship on Windmill"
+				desc={<span>Use <code>wmill app dev</code> to scaffold and develop <Link to="/docs/full_code_apps" className="text-blue-600 dark:text-blue-400 hover:underline">full-code apps</Link> locally with <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">AI assistants</Link> and your favorite editor. Deploy to get a production-ready app with authentication, permissions, and audit logs built in.</span>}
 				docLink="/docs/full_code_apps/cli_workflow"
+				video="/videos/wmill-app-dev.mp4"
 				reverse
 			/>
 

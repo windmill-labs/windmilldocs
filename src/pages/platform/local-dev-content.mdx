@@ -355,11 +355,12 @@ export default function LocalDevContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* ═══════════════ Run locally ═══════════════ */}
+			{/* ═══════════════ App dev locally ═══════════════ */}
 			<Section
-				title="Run and debug locally"
-				desc={<span>Execute Windmill scripts on your machine with access to remote <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> and state. Set <code>WM_TOKEN</code> and <code>BASE_INTERNAL_URL</code> to connect to a running instance, or use <Link to="/docs/advanced/local_development#mocked-api-files" className="text-blue-600 dark:text-blue-400 hover:underline">mocked API files</Link> to work offline. Debug with VS Code breakpoints or JetBrains run configurations.</span>}
-				docLink="/docs/advanced/local_development/run_locally"
+				title="Build apps in your editor, ship on Windmill"
+				desc={<span>Use <code>wmill app dev</code> to scaffold and develop <Link to="/docs/full_code_apps" className="text-blue-600 dark:text-blue-400 hover:underline">full-code apps</Link> locally with <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">AI assistants</Link> and your favorite editor. Deploy to get a production-ready app with authentication, permissions, and audit logs built in.</span>}
+				docLink="/docs/full_code_apps/cli_workflow"
+				video="/videos/wmill-app-dev.mp4"
 				reverse
 			/>
 
