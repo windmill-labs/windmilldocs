@@ -15,7 +15,7 @@ import {
 	ScaleIcon,
 	ClockIcon,
 	ShieldCheckIcon,
-	ComputerDesktopIcon,
+	ComputerDesktopIcon
 } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
@@ -121,25 +121,25 @@ const solutionsByUseCase = [
 		name: 'AI agents',
 		description: 'Build and orchestrate AI agents with tools.',
 		href: '/use-cases/ai-agents',
-		icon: Bot,
+		icon: Bot
 	},
 	{
 		name: 'Workflows',
 		description: 'Orchestrate multi-step processes across services.',
 		href: '/use-cases/workflows',
-		icon: ArrowPathIcon,
+		icon: ArrowPathIcon
 	},
 	{
 		name: 'Internal tools',
 		description: 'Build admin panels, dashboards and back-office apps.',
 		href: '/use-cases/internal-tools',
-		icon: WrenchScrewdriverIcon,
+		icon: WrenchScrewdriverIcon
 	},
 	{
 		name: 'Data pipelines',
 		description: 'ETL, syncs and scheduled data jobs.',
 		href: '/use-cases/data-pipelines',
-		icon: CircleStackIcon,
+		icon: CircleStackIcon
 	},
 ];
 
@@ -223,7 +223,7 @@ export default function LandingHeader() {
 				<div className="flex items-center justify-between gap-8">
 					<Link
 						to="/"
-						className="flex justify-start items-center gap-2 h-full lg:w-auto lg:flex-none group !no-underline cursor-pointer w-min"
+						className="flex justify-start items-center gap-2 h-full w-auto lg:flex-none group !no-underline cursor-pointer"
 						onMouseEnter={() => setHoverLogo(true)}
 						onMouseLeave={() => setHoverLogo(false)}
 					>
@@ -239,7 +239,7 @@ export default function LandingHeader() {
 							Windmill
 						</div>
 					</Link>
-					
+
 					<Popover.Group as="nav" className="hidden space-x-8 lg:space-x-10 md:flex min-w-0 grow">
 						<Popover className="relative">
 							{({ open }) => (
@@ -361,7 +361,6 @@ export default function LandingHeader() {
 																))}
 															</div>
 														</div>
-
 													</div>
 												</div>
 											</div>
@@ -510,8 +509,8 @@ export default function LandingHeader() {
 						focus
 						className="absolute inset-x-0 top-0 md:right-0 md:inset-x-auto md:w-80 xl:inset-y-auto origin-top-right transform p-2 transition xl:block 2xl:hidden"
 					>
-						<div className="divide-y-2 divide-gray-50 dark:divide-gray-800 rounded-lg bg-white dark:bg-gray-900  shadow-lg ring-1 ring-black ring-opacity-5">
-							<div className="px-5 pt-5 pb-6">
+						<div className="divide-y-2 md:divide-y-0 divide-gray-50 dark:divide-gray-800 rounded-lg bg-white dark:bg-gray-900  shadow-lg ring-1 ring-black ring-opacity-5">
+							<div className="block md:hidden px-5 pt-5 pb-6">
 								<div className="flex items-center justify-between">
 									<div>
 										<img className="h-8" src="img/windmill.svg" alt="Windmill Labs" />
@@ -581,14 +580,7 @@ export default function LandingHeader() {
 
 								{/* Solutions section in mobile menu */}
 								<div className="md:hidden mt-4 space-y-4">
-									{[
-										{ title: '' /* 'By use case' */, items: solutionsByUseCase },
-										// { title: 'By role', items: solutionsByRole },
-										// { title: 'By industry', items: solutionsByIndustry },
-										// { title: 'Compare', items: solutionsCompare },
-									].map((section) => (
-										<div key={section.title}>
-											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
+Name="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
 												{section.title}
 											</div>
 											<div className="grid grid-cols-2 gap-2">
@@ -607,7 +599,7 @@ export default function LandingHeader() {
 								</div>
 
 								{/* Show social icons only on xl screens (xl:hidden) */}
-								<div className="lg:hidden mt-6 flex justify-center items-center space-x-4 mb-4">
+								<div className="lg:hidden mt-6 md:mt-0 flex justify-center items-center space-x-4 mb-4">
 									<a
 										href="https://github.com/windmill-labs/windmill"
 										data-analytics='"github"'
@@ -632,7 +624,7 @@ export default function LandingHeader() {
 								</div>
 
 								{/* Show buttons that are hidden on current screen size */}
-								<div className="mt-6">
+								<div className="mt-6 md:mt-0">
 									{/* Contact us - hidden on xl screens, visible on 2xl+ */}
 									<div className="lg:block xl:hidden">
 										<button
@@ -642,7 +634,7 @@ export default function LandingHeader() {
 											Contact us
 										</button>
 									</div>
-									
+
 									{/* Windmill cloud - hidden on xl screens, visible on 2xl+ */}
 									<div className="xl:block 2xl:hidden">
 										<a

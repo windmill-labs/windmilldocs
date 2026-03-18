@@ -710,6 +710,17 @@ export const sections = [
 					'tier-team': true
 				},
 				link: '/docs/flows/flow_approval#require-approvers-to-be-members-of-a-group'
+			},
+			{
+				name: 'Workflows as code v2 (checkpoint/replay orchestration)',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/core_concepts/workflows_as_code'
 			}
 		]
 	},

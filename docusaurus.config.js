@@ -108,6 +108,10 @@ const config = {
 					{
 						to: '/platform/self-host',
 						from: '/product/self-host'
+          },
+          {
+						to: '/docs/advanced/cli/environment-specific-items',
+						from: '/docs/advanced/cli/branch-specific-items'
 					}
 				]
 			}

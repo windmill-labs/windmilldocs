@@ -76,7 +76,7 @@ You now have your Windmill workspace on a GitHub repository.
 2. Click **+ Add connection**
 3. Create or select a [git_repository](../../integrations/git_repository.mdx) resource pointing to your Git repository. You have two authentication options:
    - **GitHub App**: Use the [GitHub App](../../integrations/git_repository.mdx#github-app) for simplified authentication and enhanced security
-   - **GitHub Enterprise Server App**: Use a [self-managed GitHub App](../../integrations/git_repository.mdx#github-enterprise-server) for GHES or custom GitHub instances (Enterprise only)
+   - **GitHub Enterprise Server App**: Use a [self-managed GitHub App](../../integrations/git_repository.mdx#self-managed-github-app) for GHES or custom GitHub instances (Enterprise only)
    - **Personal Access Token**: Use a [token](https://github.com/settings/tokens) with Read-and-write on "Contents". Your URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`
 4. Complete the configuration of the connection and save
 
@@ -373,7 +373,7 @@ Git sync settings can be controlled via the [`wmill.yaml`](../3_cli/sync.mdx#wmi
 - **Version-controlled configuration**: Your sync settings are stored in git alongside your code
 - **Branch-specific overrides**: Different sync behavior per git branch
 - **Git Promotion-specific settings**: Special configuration for deployment workflows
-- **[Branch-specific items](../3_cli/branch-specific-items.mdx)**: Different versions of resources and variables per git branch for environment-specific configurations
+- **[Environment-specific items](../3_cli/environment-specific-items.mdx)**: Different versions of resources and variables per environment
 
 The frontend will detect existing `wmill.yaml` files and merge settings appropriately.
 
