@@ -98,7 +98,7 @@ async def main(url: str):
 </TabItem>
 </Tabs>
 
-{/* Placeholder image: screenshot of the Windmill UI showing the timeline for the quickstart example above. Should display the parent workflow job with child jobs for fetch_data, transform, and notify visible as separate entries in the timeline, each with their own duration bars. */}
+![WAC editor](./wac-editor-2.png)
 
 ## How it works
 
@@ -124,9 +124,7 @@ Unlike traditional workflow engines that hold a thread or process alive while wa
 - Workers are free to process other jobs while your workflow waits
   :::
 
-{/* Placeholder image: screenshot of the Windmill run page showing a WAC workflow in "suspended" state. The run detail should show the job status as "Suspended", the timeline with some completed child tasks and a pending suspension point (e.g., waiting for approval or sleeping). The left panel should show the parent job metadata including the workflow script path. This illustrates how the worker slot is freed while the workflow waits. */}
-
-{/* Placeholder image: screenshot of the Windmill script editor with a WAC v2 TypeScript script open. The editor should show the code with workflow(), task(), and step() calls. The right panel should show the "Test" tab with input fields and a "Run" button. If modules are present, show the module tabs at the top of the editor (e.g., "script.ts", "extract.ts"). */}
+![Suspended  WAC](./suspend.png)
 
 ## Core primitives
 
@@ -411,7 +409,7 @@ async def main():
 </TabItem>
 </Tabs>
 
-{/* Placeholder image: screenshot of the Windmill UI timeline showing parallel task execution. Should display 3 fetchUser child jobs running simultaneously (overlapping time bars), followed by 3 enrichUser child jobs also running simultaneously. */}
+![parallel](./parallel.png)
 
 ### Using `parallel()`
 
@@ -605,8 +603,6 @@ approval = await wait_for_approval(
 </TabItem>
 </Tabs>
 
-{/* Placeholder image: two screenshots side by side. Left: the job detail page showing the workflow in "suspended" / waiting-for-approval state with the approve/reject buttons (and form fields if using a form). Right: the timeline view after approval showing the completed workflow with tasks before and after the approval point. */}
-
 The workflow appears as suspended in the [job runs](../20_jobs/index.mdx) page. Navigate to the job detail to find the approve/reject buttons. The timeline does not display anything while the workflow is waiting — it only shows the full execution once the workflow resumes after approval.
 
 ### `getResumeUrls()`
@@ -799,7 +795,7 @@ def main(data: list):
 
 Modules are synced with the CLI and included in the script hash for proper versioning. Each module can have its own dependencies, and locks are tracked per-module.
 
-{/* Placeholder image: screenshot of the Windmill script editor showing the module tab system. Should display the main WAC script open with tabs for the different module files (e.g., "script.ts", "extract.ts", "transform.ts") and the add/rename/delete module controls visible. */}
+![modules](./modules.png)
 
 ## Task options
 
@@ -1014,8 +1010,6 @@ async def main(base_url: str, page_count: int):
 
 </TabItem>
 </Tabs>
-
-{/* Placeholder image: screenshot of the Windmill UI timeline for the complete example above. Should show the full execution timeline with: step nodes for run_id and started_at, parallel fetch_page tasks (5 at a time), parallel process_chunk tasks (3 at a time), an approval suspension point, the save_results task, a sleep period, and the final result. This is the most important timeline screenshot to include. */}
 
 ## Examples
 
