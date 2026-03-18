@@ -579,7 +579,7 @@ export default function VersioningContent({ title, description }) {
 			{/* ═══════════════ Workspace forks ═══════════════ */}
 			<Section
 				title="Workspace forks"
-				desc={<span><Link to="/docs/advanced/workspace_forks" className="text-blue-600 hover:underline">Workspace forks</Link> (Enterprise) are independent copies of a workspace for parallel development. Scripts, flows, apps, resources, variables, and schedules are all included. Teams can work on features or experiments in a fork without affecting the production workspace. Each fork can track its own Git branch, and changes from the parent workspace can be pulled into the fork to stay up to date.</span>}
+				desc={<span><Link to="/docs/advanced/workspace_forks" className="text-blue-600 hover:underline">Workspace forks</Link> (Enterprise) are independent copies of a workspace for parallel development. Scripts, flows, apps, resources, variables, and schedules are all included. Teams can work on features or experiments in a fork without affecting the parent workspace. Each fork can track its own Git branch, and changes from the parent workspace can be pulled into the fork to stay up to date. This enables GitOps-style workflows where developers fork the dev workspace, submit changes via pull request, and promote through staging to production using Git sync.</span>}
 				docLink="/docs/advanced/workspace_forks"
 				video="/img/platform/deployment-versioning/platform-deployment-workspace-forks.webm"
 				reverse

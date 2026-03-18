@@ -37,6 +37,8 @@ const workerTags = {
 	default: { label: 'default', classes: 'bg-blue-100 text-blue-600' },
 	dedicated: { label: 'dedicated', classes: 'bg-purple-100 text-purple-600' },
 	native: { label: 'native', classes: 'bg-green-100 text-green-600' },
+	agent: { label: 'agent', classes: 'bg-amber-100 text-amber-600' },
+	windows: { label: 'windows', classes: 'bg-rose-100 text-rose-600' },
 };
 
 export default function WorkersHeroAnimation() {
@@ -69,6 +71,9 @@ export default function WorkersHeroAnimation() {
 		const w = [
 			{ id: 'W1', tag: 'default', status: 'idle', job: null, result: null },
 			{ id: 'W2', tag: 'dedicated', status: 'idle', job: null, result: null },
+			{ id: 'W3', tag: 'native', status: 'idle', job: null, result: null },
+			{ id: 'W4', tag: 'agent', status: 'idle', job: null, result: null },
+			{ id: 'W5', tag: 'windows', status: 'idle', job: null, result: null },
 		];
 
 		if (phase >= 3) {
@@ -81,7 +86,7 @@ export default function WorkersHeroAnimation() {
 		if (phase >= 5) {
 			w[0] = { id: 'W1', tag: 'default', status: 'processing', job: 4, result: null };
 			w[1] = { id: 'W2', tag: 'dedicated', status: 'processing', job: 3, result: null };
-			w.push({ id: 'W3', tag: 'native', status: 'processing', job: 5, result: null });
+			w[2] = { id: 'W3', tag: 'native', status: 'processing', job: 5, result: null };
 		}
 		if (phase >= 6) {
 			w[0] = { id: 'W1', tag: 'default', status: 'processing', job: 7, result: null };
