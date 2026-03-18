@@ -580,7 +580,11 @@ export default function LandingHeader() {
 
 								{/* Solutions section in mobile menu */}
 								<div className="md:hidden mt-4 space-y-4">
-Name="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
+									{[
+										{ title: 'By use case', items: solutionsByUseCase }
+									].map((section) => (
+										<div key={section.title}>
+											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
 												{section.title}
 											</div>
 											<div className="grid grid-cols-2 gap-2">
