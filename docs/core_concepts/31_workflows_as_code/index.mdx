@@ -10,7 +10,7 @@ import DocCard from '@site/src/components/DocCard';
 
 [Flows](../../flows/1_flow_editor.mdx) are not the only way to write distributed programs that execute distinct jobs. Workflows as code let you define orchestration logic directly in [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) or [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), using familiar language constructs like functions, conditionals, and loops, while Windmill handles checkpointing, parallelism, and fault tolerance.
 
-{/* Placeholder image: screenshot of WAC script in the Windmill editor showing the code alongside the timeline panel. Should show a TypeScript or Python WAC script on the left and the job timeline on the right. */}
+![WAC editor](./wac-editor-1.png)
 
 Each `task()` call runs as a separate [job](../20_jobs/index.mdx) with its own logs, resources, and timeline entry. The workflow suspends between tasks (releasing its [worker](../9_worker_groups/index.mdx) slot entirely) and resumes from a checkpoint when child jobs complete. This means a single worker can run workflows with any number of parallel tasks without deadlocking.
 
@@ -27,32 +27,32 @@ Wrap your orchestration function with `workflow()` and annotate task functions w
 import { task, step, workflow, sleep, parallel } from 'windmill-client';
 
 async function fetchData(url: string) {
-  const resp = await fetch(url);
-  return resp.json();
+	const resp = await fetch(url);
+	return resp.json();
 }
 
 async function transform(data: any) {
-  return { count: data.length, summary: data.slice(0, 5) };
+	return { count: data.length, summary: data.slice(0, 5) };
 }
 
 async function notify(message: string) {
-  console.log(`Sending notification: ${message}`);
-  return 'sent';
+	console.log(`Sending notification: ${message}`);
+	return 'sent';
 }
 
 export const main = workflow(async (url: string) => {
-  // step() persists lightweight inline results (timestamps, IDs, config)
-  const startedAt = await step('started_at', () => new Date().toISOString());
+	// step() persists lightweight inline results (timestamps, IDs, config)
+	const startedAt = await step('started_at', () => new Date().toISOString());
 
-  // task() runs each function as a separate Windmill job
-  const data = await task(fetchData)(url);
-  const result = await task(transform)(data);
+	// task() runs each function as a separate Windmill job
+	const data = await task(fetchData)(url);
+	const result = await task(transform)(data);
 
-  // sleep() suspends the workflow server-side without holding a worker
-  await sleep(5);
+	// sleep() suspends the workflow server-side without holding a worker
+	await sleep(5);
 
-  await task(notify)(`Processed ${result.count} items since ${startedAt}`);
-  return result;
+	await task(notify)(`Processed ${result.count} items since ${startedAt}`);
+	return result;
 });
 ```
 
@@ -60,7 +60,7 @@ export const main = workflow(async (url: string) => {
 <TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
-import wmill
+from datetime import datetime
 from wmill import task, step, workflow, sleep, parallel
 
 @task
@@ -122,7 +122,7 @@ Unlike traditional workflow engines that hold a thread or process alive while wa
 - A workflow sleeping for 1 hour uses 0 worker slots during the entire sleep
 - A workflow waiting for approval uses 0 worker slots until the human responds
 - Workers are free to process other jobs while your workflow waits
-:::
+  :::
 
 {/* Placeholder image: screenshot of the Windmill run page showing a WAC workflow in "suspended" state. The run detail should show the job status as "Suspended", the timeline with some completed child tasks and a pending suspension point (e.g., waiting for approval or sleeping). The left panel should show the parent job metadata including the workflow script path. This illustrates how the worker slot is freed while the workflow waits. */}
 
@@ -141,8 +141,8 @@ Marks a function as a workflow entry point. Required for using `task()`, `step()
 import { workflow } from 'windmill-client';
 
 export const main = workflow(async (x: number, y: number) => {
-  // orchestration logic here
-  return x + y;
+	// orchestration logic here
+	return x + y;
 });
 ```
 
@@ -173,17 +173,17 @@ import { task, workflow } from 'windmill-client';
 
 // Basic usage: task wraps the function, then you call it with arguments
 async function double(n: number) {
-  return n * 2;
+	return n * 2;
 }
 
 async function add(a: number, b: number) {
-  return a + b;
+	return a + b;
 }
 
 export const main = workflow(async () => {
-  const a = await task(double)(5);     // runs as child job, returns 10
-  const b = await task(double)(3);     // runs as child job, returns 6
-  return await task(add)(a, b);        // runs as child job, returns 16
+	const a = await task(double)(5); // runs as child job, returns 10
+	const b = await task(double)(3); // runs as child job, returns 6
+	return await task(add)(a, b); // runs as child job, returns 16
 });
 ```
 
@@ -192,13 +192,13 @@ With options:
 ```typescript
 // With explicit path and options
 const result = await task('f/my_folder/heavy_script', double, {
-  timeout: 600,
-  tag: 'gpu',
-  cache_ttl: 3600,
-  priority: 10,
-  concurrency_limit: 5,
-  concurrency_key: 'my_key',
-  concurrency_time_window_s: 60
+	timeout: 600,
+	tag: 'gpu',
+	cache_ttl: 3600,
+	priority: 10,
+	concurrency_limit: 5,
+	concurrency_key: 'my_key',
+	concurrency_time_window_s: 60
 })(42);
 
 // With options only (no path override)
@@ -261,16 +261,16 @@ import { step, task, workflow } from 'windmill-client';
 import { randomUUID } from 'crypto';
 
 async function processOrder(orderId: string, ts: string) {
-  console.log(`Processing order ${orderId} created at ${ts}`);
-  return { orderId, ts, status: 'processed' };
+	console.log(`Processing order ${orderId} created at ${ts}`);
+	return { orderId, ts, status: 'processed' };
 }
 
 export const main = workflow(async () => {
-  // These values are computed once and cached across replays
-  const orderId = await step('order_id', () => randomUUID());
-  const timestamp = await step('timestamp', () => new Date().toISOString());
+	// These values are computed once and cached across replays
+	const orderId = await step('order_id', () => randomUUID());
+	const timestamp = await step('timestamp', () => new Date().toISOString());
 
-  return await task(processOrder)(orderId, timestamp);
+	return await task(processOrder)(orderId, timestamp);
 });
 ```
 
@@ -300,31 +300,34 @@ async def main():
 </Tabs>
 
 :::tip When to use `step()` vs `task()`
+
 - **`task()`**: heavy computation, external API calls, anything that benefits from being a separate job (own logs, own worker, parallelizable)
 - **`step()`**: lightweight deterministic-must-be-stable operations like generating IDs, reading timestamps, config lookups. No separate job overhead, but the result is persisted so replays are consistent
-:::
+  :::
 
 ### `task()` vs `step()` comparison
 
-| | `task()` | `step()` |
-|---|---|---|
-| Execution | Separate child job (own process) | Inline in parent process |
-| Overhead | Full job lifecycle | Function call + one DB write |
-| Parallelism | Yes (`Promise.all` / `asyncio.gather`) | No, sequential only |
-| Use case | Heavy compute, external APIs | Timestamps, random IDs, config reads |
-| Logs | Own log stream | Part of parent logs |
-| Timeline | Separate timeline entry | Not a separate entry |
+|             | `task()`                               | `step()`                             |
+| ----------- | -------------------------------------- | ------------------------------------ |
+| Execution   | Separate child job (own process)       | Inline in parent process             |
+| Overhead    | Full job lifecycle                     | Function call + one DB write         |
+| Parallelism | Yes (`Promise.all` / `asyncio.gather`) | No, sequential only                  |
+| Use case    | Heavy compute, external APIs           | Timestamps, random IDs, config reads |
+| Logs        | Own log stream                         | Part of parent logs                  |
+| Timeline    | Separate timeline entry                | Not a separate entry                 |
 
 ## Determinism requirement
 
 Because workflows replay from checkpoints, the orchestration logic must be **deterministic**: given the same inputs, the workflow must call tasks in the same order on every replay. This ensures step keys are consistent and cached results map to the correct steps.
 
 Safe patterns:
+
 - Branching on task results (results are replayed from checkpoint)
 - Loops over static or task-derived data
 - Any logic that depends only on inputs and previous task results
 
 Patterns that break determinism (wrap these in `step()` instead):
+
 - `Date.now()` / `datetime.now()` — use `await step('ts', () => Date.now())`
 - `Math.random()` / `random.random()` — use `await step('id', () => randomUUID())`
 - Reading environment variables or config that may change between replays
@@ -345,29 +348,29 @@ Tasks wrapped with `task()` return promises/awaitables, so you can run them in p
 import { task, workflow } from 'windmill-client';
 
 async function fetchUser(id: number) {
-  return { id, name: `User ${id}` };
+	return { id, name: `User ${id}` };
 }
 
 async function enrichUser(user: any) {
-  return { ...user, enriched: true };
+	return { ...user, enriched: true };
 }
 
 export const main = workflow(async () => {
-  // All three fetches dispatch as child jobs simultaneously
-  const [user1, user2, user3] = await Promise.all([
-    task(fetchUser)(1),
-    task(fetchUser)(2),
-    task(fetchUser)(3),
-  ]);
+	// All three fetches dispatch as child jobs simultaneously
+	const [user1, user2, user3] = await Promise.all([
+		task(fetchUser)(1),
+		task(fetchUser)(2),
+		task(fetchUser)(3)
+	]);
 
-  // Enrich in parallel too
-  const [e1, e2, e3] = await Promise.all([
-    task(enrichUser)(user1),
-    task(enrichUser)(user2),
-    task(enrichUser)(user3),
-  ]);
+	// Enrich in parallel too
+	const [e1, e2, e3] = await Promise.all([
+		task(enrichUser)(user1),
+		task(enrichUser)(user2),
+		task(enrichUser)(user3)
+	]);
 
-  return [e1, e2, e3];
+	return [e1, e2, e3];
 });
 ```
 
@@ -421,23 +424,19 @@ The `parallel()` utility provides a higher-level API for processing a list of it
 import { task, parallel, workflow } from 'windmill-client';
 
 async function processItem(item: number) {
-  return item * 2;
+	return item * 2;
 }
 
 export const main = workflow(async () => {
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+	const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  // Process all items in parallel (default: all at once)
-  const results = await parallel(items, (item) => task(processItem)(item));
+	// Process all items in parallel (default: all at once)
+	const results = await parallel(items, (item) => task(processItem)(item));
 
-  // With concurrency control: process at most 3 at a time
-  const batched = await parallel(
-    items,
-    (item) => task(processItem)(item),
-    { concurrency: 3 },
-  );
+	// With concurrency control: process at most 3 at a time
+	const batched = await parallel(items, (item) => task(processItem)(item), { concurrency: 3 });
 
-  return { results, batched };
+	return { results, batched };
 });
 ```
 
@@ -482,17 +481,17 @@ async def main():
 import { task, sleep, workflow } from 'windmill-client';
 
 async function sendReminder(email: string) {
-  console.log(`Reminder sent to ${email}`);
+	console.log(`Reminder sent to ${email}`);
 }
 
 export const main = workflow(async (email: string) => {
-  await task(sendReminder)(email);
+	await task(sendReminder)(email);
 
-  // Suspend for 1 hour without holding a worker
-  await sleep(3600);
+	// Suspend for 1 hour without holding a worker
+	await sleep(3600);
 
-  await task(sendReminder)(email);
-  return 'done';
+	await task(sendReminder)(email);
+	return 'done';
 });
 ```
 
@@ -533,20 +532,20 @@ The minimum sleep duration is 1 second. Values are rounded to the nearest intege
 import { task, waitForApproval, workflow } from 'windmill-client';
 
 async function deploy(env: string) {
-  console.log(`Deploying to ${env}`);
-  return `deployed to ${env}`;
+	console.log(`Deploying to ${env}`);
+	return `deployed to ${env}`;
 }
 
 export const main = workflow(async (env: string) => {
-  // Wait for human approval (default timeout: 1800s)
-  const approval = await waitForApproval({ timeout: 3600 });
-  // approval contains: { value: any, approver: string, approved: boolean }
+	// Wait for human approval (default timeout: 1800s)
+	const approval = await waitForApproval({ timeout: 3600 });
+	// approval contains: { value: any, approver: string, approved: boolean }
 
-  if (!approval.approved) {
-    return `Deployment rejected by ${approval.approver}`;
-  }
+	if (!approval.approved) {
+		return `Deployment rejected by ${approval.approver}`;
+	}
 
-  return await task(deploy)(env);
+	return await task(deploy)(env);
 });
 ```
 
@@ -554,14 +553,14 @@ With a form:
 
 ```typescript
 const approval = await waitForApproval({
-  timeout: 7200,
-  form: {
-    type: 'object',
-    properties: {
-      reason: { type: 'string', description: 'Approval reason' },
-      environment: { type: 'string', enum: ['staging', 'production'] },
-    },
-  },
+	timeout: 7200,
+	form: {
+		type: 'object',
+		properties: {
+			reason: { type: 'string', description: 'Approval reason' },
+			environment: { type: 'string', enum: ['staging', 'production'] }
+		}
+	}
 });
 ```
 
@@ -621,16 +620,16 @@ Use `getResumeUrls()` (wrapped in a `step()` for replay safety) to obtain URLs y
 import { step, waitForApproval, workflow, getResumeUrls } from 'windmill-client';
 
 export const main = workflow(async () => {
-  const urls = await step('get_urls', () => getResumeUrls());
-  // urls.approvalPage — link to the Windmill approval UI
-  // urls.resume       — POST endpoint to approve programmatically
-  // urls.cancel       — POST endpoint to reject programmatically
+	const urls = await step('get_urls', () => getResumeUrls());
+	// urls.approvalPage — link to the Windmill approval UI
+	// urls.resume       — POST endpoint to approve programmatically
+	// urls.cancel       — POST endpoint to reject programmatically
 
-  // Send the approval page link via your notification system
-  await step('notify', () => sendSlackMessage(urls.approvalPage));
+	// Send the approval page link via your notification system
+	await step('notify', () => sendSlackMessage(urls.approvalPage));
 
-  const result = await waitForApproval({ timeout: 86400 });
-  return result;
+	const result = await waitForApproval({ timeout: 86400 });
+	return result;
 });
 ```
 
@@ -668,19 +667,19 @@ Use `taskScript()` and `taskFlow()` to dispatch to existing Windmill [scripts](.
 import { taskScript, taskFlow, workflow } from 'windmill-client';
 
 export const main = workflow(async () => {
-  // Run an existing script by path
-  const data = await taskScript('f/data_team/extract_users')({ limit: 100 });
+	// Run an existing script by path
+	const data = await taskScript('f/data_team/extract_users')({ limit: 100 });
 
-  // Run an existing flow by path
-  const result = await taskFlow('f/data_team/etl_pipeline')({ data });
+	// Run an existing flow by path
+	const result = await taskFlow('f/data_team/etl_pipeline')({ data });
 
-  // With options
-  const heavy = await taskScript('f/ml/train_model', {
-    timeout: 3600,
-    tag: 'gpu',
-  })({ dataset: data });
+	// With options
+	const heavy = await taskScript('f/ml/train_model', {
+		timeout: 3600,
+		tag: 'gpu'
+	})({ dataset: data });
 
-  return { result, heavy };
+	return { result, heavy };
 });
 ```
 
@@ -718,6 +717,7 @@ Workflow-as-code scripts support **companion module files** stored in a `__mod/`
 Two layout options:
 
 **Flat layout:**
+
 ```
 f/my_folder/
 ├── my_workflow.ts              # main script
@@ -727,6 +727,7 @@ f/my_folder/
 ```
 
 **Folder layout:**
+
 ```
 f/my_folder/
 └── my_workflow__mod/
@@ -745,24 +746,24 @@ Modules can be imported with relative paths and referenced via `taskScript()`:
 import { taskScript, workflow } from 'windmill-client';
 
 export const main = workflow(async (url: string) => {
-  const data = await taskScript('./extract.ts')({ url });
-  const result = await taskScript('./transform.ts')({ data });
-  return result;
+	const data = await taskScript('./extract.ts')({ url });
+	const result = await taskScript('./transform.ts')({ data });
+	return result;
 });
 ```
 
 ```typescript
 // my_workflow__mod/extract.ts
 export async function main(url: string) {
-  const resp = await fetch(url);
-  return resp.json();
+	const resp = await fetch(url);
+	return resp.json();
 }
 ```
 
 ```typescript
 // my_workflow__mod/transform.ts
 export async function main(data: any) {
-  return { count: data.length, items: data };
+	return { count: data.length, items: data };
 }
 ```
 
@@ -804,15 +805,15 @@ Modules are synced with the CLI and included in the script hash for proper versi
 
 All task types (`task()`, `taskScript()`, `taskFlow()`) accept the following options:
 
-| Option | Type | Description |
-|---|---|---|
-| `timeout` | `number` | Maximum execution time in seconds |
-| `tag` | `string` | [Worker tag](../9_worker_groups/index.mdx) to route the task to specific workers |
-| `cache_ttl` | `number` | [Cache](../24_caching/index.md) the result for this many seconds |
-| `priority` | `number` | [Priority](../../flows/20_priority.md) in the job queue (higher = picked up sooner) |
-| `concurrency_limit` | `number` | Max concurrent executions for this task |
-| `concurrency_key` | `string` | Key for grouping [concurrency limits](../21_concurrency_limits/index.md) |
-| `concurrency_time_window_s` | `number` | Time window in seconds for the concurrency limit |
+| Option                      | Type     | Description                                                                         |
+| --------------------------- | -------- | ----------------------------------------------------------------------------------- |
+| `timeout`                   | `number` | Maximum execution time in seconds                                                   |
+| `tag`                       | `string` | [Worker tag](../9_worker_groups/index.mdx) to route the task to specific workers    |
+| `cache_ttl`                 | `number` | [Cache](../24_caching/index.md) the result for this many seconds                    |
+| `priority`                  | `number` | [Priority](../../flows/20_priority.md) in the job queue (higher = picked up sooner) |
+| `concurrency_limit`         | `number` | Max concurrent executions for this task                                             |
+| `concurrency_key`           | `string` | Key for grouping [concurrency limits](../21_concurrency_limits/index.md)            |
+| `concurrency_time_window_s` | `number` | Time window in seconds for the concurrency limit                                    |
 
 ## Error handling
 
@@ -825,21 +826,21 @@ When a child task fails, the error is propagated to the parent workflow. You can
 import { task, workflow } from 'windmill-client';
 
 async function riskyOperation(data: string) {
-  if (data === 'bad') throw new Error('Invalid data');
-  return `processed: ${data}`;
+	if (data === 'bad') throw new Error('Invalid data');
+	return `processed: ${data}`;
 }
 
 async function fallback(error: string) {
-  return `fallback result for: ${error}`;
+	return `fallback result for: ${error}`;
 }
 
 export const main = workflow(async (data: string) => {
-  try {
-    return await task(riskyOperation)(data);
-  } catch (e) {
-    console.log(`Task failed: ${e.message}`);
-    return await task(fallback)(e.message);
-  }
+	try {
+		return await task(riskyOperation)(data);
+	} catch (e) {
+		console.log(`Task failed: ${e.message}`);
+		return await task(fallback)(e.message);
+	}
 });
 ```
 
@@ -883,61 +884,65 @@ Here is a full example combining multiple primitives:
 
 ```typescript
 import {
-  task, step, workflow, sleep, parallel, waitForApproval, taskScript
+	task,
+	step,
+	workflow,
+	sleep,
+	parallel,
+	waitForApproval,
+	taskScript
 } from 'windmill-client';
 
 async function fetchPage(url: string) {
-  const resp = await fetch(url);
-  return resp.json();
+	const resp = await fetch(url);
+	return resp.json();
 }
 
 async function processChunk(items: any[]) {
-  return items.map((item: any) => ({ ...item, processed: true }));
+	return items.map((item: any) => ({ ...item, processed: true }));
 }
 
 async function saveResults(results: any[]) {
-  console.log(`Saved ${results.length} results`);
-  return { saved: results.length };
+	console.log(`Saved ${results.length} results`);
+	return { saved: results.length };
 }
 
 export const main = workflow(async (baseUrl: string, pageCount: number) => {
-  // Persist run metadata
-  const runId = await step('run_id', () => crypto.randomUUID());
-  const startedAt = await step('started_at', () => new Date().toISOString());
+	// Persist run metadata
+	const runId = await step('run_id', () => crypto.randomUUID());
+	const startedAt = await step('started_at', () => new Date().toISOString());
 
-  // Fetch all pages in parallel
-  const pages = await parallel(
-    Array.from({ length: pageCount }, (_, i) => i + 1),
-    (page) => task(fetchPage)(`${baseUrl}?page=${page}`),
-    { concurrency: 5 },
-  );
+	// Fetch all pages in parallel
+	const pages = await parallel(
+		Array.from({ length: pageCount }, (_, i) => i + 1),
+		(page) => task(fetchPage)(`${baseUrl}?page=${page}`),
+		{ concurrency: 5 }
+	);
 
-  // Process each page's data in parallel
-  const processed = await parallel(
-    pages,
-    (pageData) => task(processChunk)(pageData),
-    { concurrency: 3 },
-  );
+	// Process each page's data in parallel
+	const processed = await parallel(pages, (pageData) => task(processChunk)(pageData), {
+		concurrency: 3
+	});
 
-  // Request approval before saving
-  const approval = await waitForApproval({ timeout: 3600 });
-  if (!approval.approved) {
-    return { runId, status: 'rejected', approver: approval.approver };
-  }
+	// Request approval before saving
+	const approval = await waitForApproval({ timeout: 3600 });
+	if (!approval.approved) {
+		return { runId, status: 'rejected', approver: approval.approver };
+	}
 
-  // Save with an existing script
-  const flat = processed.flat();
-  const saveResult = await task(saveResults)(flat);
+	// Save with an existing script
+	const flat = processed.flat();
+	const saveResult = await task(saveResults)(flat);
 
-  // Brief delay before cleanup
-  await sleep(5);
+	// Brief delay before cleanup
+	await sleep(5);
 
-  return {
-    runId,
-    startedAt,
-    ...saveResult,
-    approvedBy: approval.approver,
-  };
+	return {
+		runId,
+		startedAt,
+		...saveResult,
+		approvedBy: approval.approver
+	};
 });
 ```
 
@@ -1023,38 +1028,32 @@ async def main(base_url: str, page_count: int):
 import { task, step, workflow, parallel } from 'windmill-client';
 
 async function extractFromApi(endpoint: string) {
-  const resp = await fetch(endpoint);
-  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-  return resp.json();
+	const resp = await fetch(endpoint);
+	if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+	return resp.json();
 }
 
 async function transformRecord(record: any) {
-  return { ...record, transformed: true, processedAt: new Date().toISOString() };
+	return { ...record, transformed: true, processedAt: new Date().toISOString() };
 }
 
 async function loadBatch(records: any[]) {
-  console.log(`Loading ${records.length} records`);
-  return { loaded: records.length };
+	console.log(`Loading ${records.length} records`);
+	return { loaded: records.length };
 }
 
 export const main = workflow(async (endpoints: string[]) => {
-  // Extract from multiple APIs in parallel
-  const rawData = await parallel(
-    endpoints,
-    (ep) => task(extractFromApi)(ep),
-    { concurrency: 10 },
-  );
+	// Extract from multiple APIs in parallel
+	const rawData = await parallel(endpoints, (ep) => task(extractFromApi)(ep), { concurrency: 10 });
 
-  // Transform all records in parallel
-  const allRecords = rawData.flat();
-  const transformed = await parallel(
-    allRecords,
-    (record) => task(transformRecord)(record),
-    { concurrency: 20 },
-  );
+	// Transform all records in parallel
+	const allRecords = rawData.flat();
+	const transformed = await parallel(allRecords, (record) => task(transformRecord)(record), {
+		concurrency: 20
+	});
 
-  // Load in a single batch
-  return await task(loadBatch)(transformed);
+	// Load in a single batch
+	return await task(loadBatch)(transformed);
 });
 ```
 
@@ -1105,50 +1104,56 @@ async def main(endpoints: list):
 
 ```typescript
 import {
-  task, step, workflow, sleep, waitForApproval, getResumeUrls, taskScript
+	task,
+	step,
+	workflow,
+	sleep,
+	waitForApproval,
+	getResumeUrls,
+	taskScript
 } from 'windmill-client';
 
 async function runTests(branch: string) {
-  console.log(`Running tests for ${branch}`);
-  return { passed: 42, failed: 0 };
+	console.log(`Running tests for ${branch}`);
+	return { passed: 42, failed: 0 };
 }
 
 async function deployToStaging(branch: string) {
-  console.log(`Deploying ${branch} to staging`);
-  return { url: `https://staging.example.com` };
+	console.log(`Deploying ${branch} to staging`);
+	return { url: `https://staging.example.com` };
 }
 
 async function deployToProduction(branch: string) {
-  console.log(`Deploying ${branch} to production`);
-  return { url: `https://example.com` };
+	console.log(`Deploying ${branch} to production`);
+	return { url: `https://example.com` };
 }
 
 export const main = workflow(async (branch: string) => {
-  // Run tests
-  const testResults = await task(runTests)(branch);
-  if (testResults.failed > 0) {
-    return { status: 'failed', tests: testResults };
-  }
+	// Run tests
+	const testResults = await task(runTests)(branch);
+	if (testResults.failed > 0) {
+		return { status: 'failed', tests: testResults };
+	}
 
-  // Deploy to staging
-  const staging = await task(deployToStaging)(branch);
+	// Deploy to staging
+	const staging = await task(deployToStaging)(branch);
 
-  // Get approval URLs and notify
-  const urls = await step('approval_urls', () => getResumeUrls());
-  await step('notify_team', () => {
-    // send Slack/email with urls.approvalPage
-    console.log(`Approve production deploy: ${urls.approvalPage}`);
-  });
+	// Get approval URLs and notify
+	const urls = await step('approval_urls', () => getResumeUrls());
+	await step('notify_team', () => {
+		// send Slack/email with urls.approvalPage
+		console.log(`Approve production deploy: ${urls.approvalPage}`);
+	});
 
-  // Wait up to 24 hours for approval — zero worker usage during the wait
-  const approval = await waitForApproval({ timeout: 86400 });
-  if (!approval.approved) {
-    return { status: 'rejected', approver: approval.approver, staging };
-  }
+	// Wait up to 24 hours for approval — zero worker usage during the wait
+	const approval = await waitForApproval({ timeout: 86400 });
+	if (!approval.approved) {
+		return { status: 'rejected', approver: approval.approver, staging };
+	}
 
-  // Deploy to production
-  const production = await task(deployToProduction)(branch);
-  return { status: 'deployed', staging, production, approvedBy: approval.approver };
+	// Deploy to production
+	const production = await task(deployToProduction)(branch);
+	return { status: 'deployed', staging, production, approvedBy: approval.approver };
 });
 ```
 
@@ -1211,25 +1216,25 @@ async def main(branch: str):
 import { task, step, workflow, sleep } from 'windmill-client';
 
 async function callExternalApi(payload: any) {
-  const resp = await fetch('https://api.example.com/submit', {
-    method: 'POST',
-    body: JSON.stringify(payload),
-  });
-  if (!resp.ok) throw new Error(`API error: ${resp.status}`);
-  return resp.json();
+	const resp = await fetch('https://api.example.com/submit', {
+		method: 'POST',
+		body: JSON.stringify(payload)
+	});
+	if (!resp.ok) throw new Error(`API error: ${resp.status}`);
+	return resp.json();
 }
 
 export const main = workflow(async (payload: any, maxRetries: number = 3) => {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      return await task(callExternalApi)(payload);
-    } catch (e) {
-      if (attempt === maxRetries) throw e;
-      // Exponential backoff: 30s, 60s, 120s — worker is free during each sleep
-      const delay = 30 * Math.pow(2, attempt - 1);
-      await sleep(delay);
-    }
-  }
+	for (let attempt = 1; attempt <= maxRetries; attempt++) {
+		try {
+			return await task(callExternalApi)(payload);
+		} catch (e) {
+			if (attempt === maxRetries) throw e;
+			// Exponential backoff: 30s, 60s, 120s — worker is free during each sleep
+			const delay = 30 * Math.pow(2, attempt - 1);
+			await sleep(delay);
+		}
+	}
 });
 ```
 
@@ -1293,8 +1298,8 @@ Marks an async function as a workflow entry point. Required for all other WAC pr
 import { workflow } from 'windmill-client';
 
 export const main = workflow(async (x: number) => {
-  // orchestration logic
-  return x;
+	// orchestration logic
+	return x;
 });
 ```
 
@@ -1371,13 +1376,14 @@ Suspends the workflow waiting for human approval. Returns `{ value, approver, ap
 import { waitForApproval } from 'windmill-client';
 
 const result = await waitForApproval({
-  timeout: 3600,  // optional, default 1800s
-  form: {         // optional JSON Schema for approval form
-    type: 'object',
-    properties: {
-      reason: { type: 'string' }
-    }
-  }
+	timeout: 3600, // optional, default 1800s
+	form: {
+		// optional JSON Schema for approval form
+		type: 'object',
+		properties: {
+			reason: { type: 'string' }
+		}
+	}
 });
 ```
 
@@ -1389,9 +1395,9 @@ Processes items in parallel with optional concurrency control. Returns results i
 import { parallel, task } from 'windmill-client';
 
 const results = await parallel(
-  items,
-  (item) => task(process)(item),
-  { concurrency: 5 }  // optional, default: all at once
+	items,
+	(item) => task(process)(item),
+	{ concurrency: 5 } // optional, default: all at once
 );
 ```
 
@@ -1411,13 +1417,13 @@ All task types accept these options:
 
 ```typescript
 interface TaskOptions {
-  timeout?: number;                    // max execution time (seconds)
-  tag?: string;                        // worker tag
-  cache_ttl?: number;                  // cache result (seconds)
-  priority?: number;                   // queue priority (higher = sooner)
-  concurrency_limit?: number;          // max concurrent executions
-  concurrency_key?: string;            // concurrency grouping key
-  concurrency_time_window_s?: number;  // concurrency time window (seconds)
+	timeout?: number; // max execution time (seconds)
+	tag?: string; // worker tag
+	cache_ttl?: number; // cache result (seconds)
+	priority?: number; // queue priority (higher = sooner)
+	concurrency_limit?: number; // max concurrent executions
+	concurrency_key?: string; // concurrency grouping key
+	concurrency_time_window_s?: number; // concurrency time window (seconds)
 }
 ```
 
