@@ -79,6 +79,8 @@ export async function main(anthropic: RT.Anthropic, agent_instructions?: AgentIn
     ? "What is the fastest OSS workflow engine?"
     : "What did I ask you before?";
 
+  // Script inputs are not environment variables — set them explicitly
+  // so the agent's shell processes (git, curl, etc.) can access them.
   process.env.ANTHROPIC_API_KEY = anthropic.apiKey;
 
   let response = "";
@@ -189,6 +191,43 @@ def main(prompt: str):
 - [Workspace object storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) configured (required for volumes).
 - Workers with nsjail available (included in all standard Windmill images).
 - For the Claude Code template: an Anthropic [resource](../3_resources_and_types/index.mdx).
+
+## Passing credentials to the sandbox
+
+Script inputs are TypeScript (or Python) variables — they are **not** automatically available as environment variables inside the sandbox. This matters because AI agents like Claude Code spawn shell processes (e.g. `git push`, `curl`) that look for credentials in environment variables, not in your script variables.
+
+The built-in template already does this for the Anthropic API key:
+
+```ts
+process.env.ANTHROPIC_API_KEY = anthropic.apiKey;
+```
+
+You must do the same for **any credential the agent needs at runtime**. For example, if you pass a GitHub token as a script input so the agent can push code or open PRs:
+
+```ts
+export async function main(anthropic: RT.Anthropic, github_token: string) {
+  process.env.ANTHROPIC_API_KEY = anthropic.apiKey;
+  process.env.GITHUB_TOKEN = github_token;
+  process.env.GH_TOKEN = github_token; // used by the gh CLI
+
+  // ... launch agent
+}
+```
+
+In Python, the equivalent is:
+
+```python
+import os
+
+def main(api_key: str, github_token: str):
+    os.environ["ANTHROPIC_API_KEY"] = api_key
+    os.environ["GITHUB_TOKEN"] = github_token
+    # ... launch agent
+```
+
+:::tip
+A good rule of thumb: if the agent might run a shell command that needs a credential, set it on `process.env` (or `os.environ`) before starting the agent. Script inputs alone are not enough.
+:::
 
 ## Customization tips
 
