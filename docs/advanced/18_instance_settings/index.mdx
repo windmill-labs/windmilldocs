@@ -30,6 +30,8 @@ Global Users are users of the Windmill instance. They are not associated with an
 
 From there you can manually add a user to the instance, giving an email and a password. Users can be set to User, [Devops](../../core_concepts/16_roles_and_permissions/index.mdx#devops) or Superadmin [roles](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin).
 
+When a user's role is set by an [instance group](../../core_concepts/8_groups_and_folders/index.mdx#instance-level-roles), a "Set by instance group" indicator appears next to the role toggle. You can still upgrade a user to a higher role manually (e.g. from group-assigned devops to superadmin), but demoting to "User" requires removing the user from the instance group. See [instance-level roles via instance groups](../../core_concepts/16_roles_and_permissions/index.mdx#instance-level-roles-via-instance-groups) for details.
+
 You can also enable automatic username creation from emails. Usernames will be shared accross workspaces. We recommend setting it to avoid duplicated usernames.
 
 A more common way to add users is to use [SSO/OAuth](#authoauth).
@@ -522,16 +524,16 @@ You can "Send usage" to manually send usage data to Windmill and monitor it from
 
 ## GitHub Enterprise App
 
-Configure a self-managed GitHub App for GitHub Enterprise Server (or any self-hosted GitHub instance) to enable [Git sync](../11_git_sync/index.mdx) without relying on the Windmill-managed GitHub App via `stats.windmill.dev`.
+Configure a self-managed GitHub App for GitHub.com or GitHub Enterprise Server to enable [Git sync](../11_git_sync/index.mdx) without relying on the Windmill-managed GitHub App via `stats.windmill.dev`.
 
 This setting is found under **Advanced > GitHub Enterprise App** in Instance Settings and is only available on [Enterprise Edition](/pricing).
 
 | Field | Description |
 |-------|-------------|
-| Base URL | The base URL of your GitHub Enterprise Server instance |
+| Base URL | The base URL of your GitHub instance (e.g. `https://github.com` or your GHES URL) |
 | App ID | The ID of your registered GitHub App |
 | App Slug | The slug of your GitHub App |
 | Client ID | The client ID of your GitHub App |
 | Private Key (PEM) | The private key generated for your GitHub App |
 
-For setup instructions, see [GitHub Enterprise Server](../../integrations/git_repository.mdx#github-enterprise-server).
+For setup instructions, see [Self-managed GitHub App](../../integrations/git_repository.mdx#self-managed-github-app).
