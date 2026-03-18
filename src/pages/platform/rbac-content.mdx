@@ -190,7 +190,7 @@ export default function RbacContent({ title, description }) {
 			{/* ═══════════════ SAML and SCIM ═══════════════ */}
 			<Section
 				title="SAML and SCIM (Enterprise)"
-				desc={<span><Link to="/docs/misc/saml_and_scim" className="text-blue-600 dark:text-blue-400 hover:underline">SAML SSO</Link> for enterprise identity providers. SCIM provisioning automatically syncs users and groups from your identity provider to Windmill. No manual user management required.</span>}
+				desc={<span><Link to="/docs/misc/saml_and_scim" className="text-blue-600 dark:text-blue-400 hover:underline">SAML SSO</Link> for enterprise identity providers. SCIM provisioning automatically syncs users and groups from your identity provider to Windmill, and can automatically assign workspace or instance roles to synced groups. No manual user management required.</span>}
 				docLink="/docs/misc/saml_and_scim"
 				video="/img/platform/rbac/platform-rbac-saml-scim.webm"
 			/>
@@ -198,7 +198,7 @@ export default function RbacContent({ title, description }) {
 			{/* ═══════════════ Audit logs ═══════════════ */}
 			<Section
 				title="Audit logs"
-				desc={<span>Every action is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>: deployments, permission changes, resource modifications, logins, and job executions. Filter by user, action type, or time range. Windmill is SOC 2 Type II certified.</span>}
+				desc={<span>Every action is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>: deployments, permission changes, resource modifications, logins, and job executions. Filter by user, action type, or time range. Windmill is <a href="https://trust.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">SOC 2 Type II certified</a>.</span>}
 				docLink="/docs/core_concepts/audit_logs"
 				video="/img/platform/rbac/platform-rbac-audit-logs.webm"
 				reverse
@@ -212,7 +212,7 @@ export default function RbacContent({ title, description }) {
 				{ question: 'Are secrets visible in logs or API responses?', textAnswer: 'No. Secrets are encrypted at rest and injected at runtime only. They are never exposed in logs, the UI, or API responses. Workers receive decrypted values in memory only during script execution.' },
 				{ question: 'Can I authenticate API calls with external tokens?', textAnswer: 'Yes. Enterprise supports JWT external auth to embed Windmill apps in existing portals or call the API with your own identity provider tokens. Windmill can also issue OIDC tokens for running jobs, allowing authentication with cloud providers (AWS, GCP, Azure) without storing long-lived credentials.' },
 				{ question: 'Which features require Enterprise?', textAnswer: 'SAML/SCIM, JWT external auth, OIDC tokens, and secret key rotation require Enterprise. OAuth SSO, the five built-in roles, groups, folders, encrypted secrets, and audit logs are available on all plans.' },
-				{ question: 'Is Windmill SOC 2 certified?', textAnswer: 'Yes. Windmill holds SOC 2 Type II certification. The audit log records all actions for compliance. Enterprise customers get a 3-hour SLA for critical issues and access to the security team via a dedicated channel.' },
+				{ question: 'Is Windmill SOC 2 certified?', textAnswer: 'Yes. Windmill holds SOC 2 Type II certification (see trust.windmill.dev). The audit log records all actions for compliance. Enterprise customers get a 3-hour SLA for critical issues and access to the security team via a dedicated channel.' },
 			]} />
 
 			<ProductCTA />
