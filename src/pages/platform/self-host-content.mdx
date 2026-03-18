@@ -148,7 +148,7 @@ export default function SelfHostContent({ title, description }) {
 			{/* ═══════════════ One-command Docker deploy ═══════════════ */}
 			<Section
 				title="One-command Docker deploy"
-				desc={<span>A single <code>docker compose up -d</code> starts the <Link to="/docs/advanced/self_host#setup-windmill-on-localhost" className="text-blue-600 dark:text-blue-400 hover:underline">full Windmill stack</Link>: server, workers, PostgreSQL, and LSP for language intelligence. Database migrations run automatically on startup. Caddy handles TLS termination out of the box.</span>}
+				desc={<span>A single <code>docker compose up -d</code> starts the <Link to="/docs/advanced/self_host#setup-windmill-on-localhost" className="text-blue-600 dark:text-blue-400 hover:underline">full Windmill stack</Link>: server, workers, PostgreSQL, and LSP for language intelligence. Database migrations run automatically on startup. Caddy handles TLS termination out of the box. See the <Link to="/docs/advanced/docker" className="text-blue-600 dark:text-blue-400 hover:underline">Docker guide</Link> for configuration options.</span>}
 				visual={<DockerStackDiagram />}
 			>
 				<p className="text-sm text-gray-500 dark:text-gray-400 mt-6 mb-2">To get started, make sure Docker is running and execute the following commands:</p>
@@ -163,7 +163,7 @@ docker compose up -d`} />
 			{/* ═══════════════ Kubernetes and Helm ═══════════════ */}
 			<Section
 				title="Kubernetes and Helm"
-				desc={<span>The official <Link to="/docs/advanced/self_host/aws_eks_ecs" className="text-blue-600 dark:text-blue-400 hover:underline">Helm chart</Link> provisions server, worker, and LSP deployments. ConfigMaps manage environment variables. Guides are available for EKS, ECS, GCP, and Azure.</span>}
+				desc={<span>The official <Link to="/docs/advanced/self_host/aws_eks_ecs" className="text-blue-600 dark:text-blue-400 hover:underline">Helm chart</Link> provisions server, worker, and LSP deployments. ConfigMaps manage environment variables. Guides are available for EKS, ECS, GCP, and Azure. Workers can be <Link to="/docs/core_concepts/autoscaling" className="text-blue-600 dark:text-blue-400 hover:underline">autoscaled</Link> based on job queue depth.</span>}
 				visual={<K8sHelmDiagram />}
 				reverse
 			/>
@@ -178,7 +178,7 @@ docker compose up -d`} />
 			{/* ═══════════════ Simple architecture ═══════════════ */}
 			<Section
 				title="Simple architecture"
-				desc={<span>Windmill has three <Link to="/docs/misc/architecture" className="text-blue-600 dark:text-blue-400 hover:underline">components</Link>: the server (API + UI), workers (job execution), and PostgreSQL (state + queue). Everything is stateless except the database, so each layer scales independently.</span>}
+				desc={<span>Windmill has three <Link to="/docs/misc/architecture" className="text-blue-600 dark:text-blue-400 hover:underline">components</Link>: the server (API + UI), <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> (job execution), and PostgreSQL (state + queue). Everything is stateless except the database, so each layer <Link to="/docs/advanced/scaling" className="text-blue-600 dark:text-blue-400 hover:underline">scales independently</Link>.</span>}
 				visual={<ArchitectureDiagram />}
 				reverse
 			/>
@@ -186,14 +186,14 @@ docker compose up -d`} />
 			{/* ═══════════════ Automatic upgrades ═══════════════ */}
 			<Section
 				title="Automatic upgrades"
-				desc={<span>Upgrading Windmill means pulling a new Docker image and restarting containers. Database migrations run automatically on startup with no manual steps. A <code>/api/health</code> endpoint and built-in Prometheus metrics are available for monitoring.</span>}
+				desc={<span>Upgrading Windmill means pulling a new Docker image and restarting containers. Database migrations run automatically on startup with no manual steps. A <code>/api/health</code> endpoint and built-in <Link to="/docs/advanced/instance_settings" className="text-blue-600 dark:text-blue-400 hover:underline">Prometheus metrics</Link> are available for monitoring. <Link to="/docs/misc/guides/otel" className="text-blue-600 dark:text-blue-400 hover:underline">OpenTelemetry</Link> is also supported.</span>}
 				visual={<UpgradeTerminal />}
 			/>
 
 			{/* ═══════════════ Enterprise on your infrastructure ═══════════════ */}
 			<Section
 				title="Enterprise edition"
-				desc={<span>The <Link to="/docs/misc/plans_details" className="text-blue-600 dark:text-blue-400 hover:underline">Enterprise edition</Link> includes SAML/SCIM authentication, S3 dependency caching, dedicated workers, multiplayer editing, and extended audit log retention. It is the same product as Windmill Cloud, running on your own infrastructure. Air-gapped deployments are supported with offline images and internal registries.</span>}
+				desc={<span>The <Link to="/docs/misc/plans_details" className="text-blue-600 dark:text-blue-400 hover:underline">Enterprise edition</Link> includes <Link to="/docs/misc/saml_and_scim" className="text-blue-600 dark:text-blue-400 hover:underline">SAML/SCIM</Link> authentication, <Link to="/docs/misc/s3_cache" className="text-blue-600 dark:text-blue-400 hover:underline">S3 dependency caching</Link>, <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link>, multiplayer editing, and extended <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link> retention. It is the same product as Windmill Cloud, running on your own infrastructure. Air-gapped deployments are supported with offline images and internal registries. <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> is also included for version-controlled deployments.</span>}
 				visual={<EnterpriseDiagram />}
 				reverse
 			/>
