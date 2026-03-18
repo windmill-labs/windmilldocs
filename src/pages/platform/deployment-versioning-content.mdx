@@ -394,14 +394,84 @@ export function SyncFlows() {
 	);
 }
 
+{/* ── Git sync animation ── */}
+
+export function GitSyncAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-40px" });
+	const [phase, setPhase] = useState('right');
+
+	useEffect(() => {
+		if (!isInView) return;
+		const interval = setInterval(() => {
+			setPhase((p) => (p === 'right' ? 'left' : 'right'));
+		}, 1500);
+		return () => clearInterval(interval);
+	}, [isInView]);
+
+	return (
+		<motion.div
+			ref={ref}
+			{...stagger(0.2)}
+			className="flex items-center justify-center"
+		>
+			<div className="flex items-center gap-0 w-full max-w-md">
+				{/* Windmill logo */}
+				<motion.div
+					className="flex flex-col items-center gap-2 flex-shrink-0"
+					animate={isInView && phase === 'left' ? { scale: [1, 1.1, 1] } : {}}
+					transition={{ duration: 0.4 }}
+				>
+					<div className="w-14 h-14 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 flex items-center justify-center shadow-sm">
+						<img src="/img/windmill.svg" alt="Windmill" className="w-8 h-8" />
+					</div>
+					<span className="text-xs font-medium text-gray-600 dark:text-gray-400">Windmill</span>
+				</motion.div>
+
+				{/* Connecting line with traveling dot */}
+				<div className="flex-1 relative mx-4" style={{ height: 4 }}>
+					<div className="absolute inset-0 rounded-full bg-gray-200 dark:bg-gray-700" />
+					{isInView && (
+						<motion.div
+							className="absolute top-1/2 w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"
+							style={{ marginTop: -6 }}
+							animate={{
+								left: phase === 'right' ? ['0%', '100%'] : ['100%', '0%'],
+							}}
+							transition={{
+								duration: 1.2,
+								ease: 'easeInOut',
+							}}
+							key={phase}
+						/>
+					)}
+				</div>
+
+				{/* GitHub logo */}
+				<motion.div
+					className="flex flex-col items-center gap-2 flex-shrink-0"
+					animate={isInView && phase === 'right' ? { scale: [1, 1.1, 1] } : {}}
+					transition={{ duration: 0.4 }}
+				>
+					<div className="w-14 h-14 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 flex items-center justify-center shadow-sm">
+						<Github className="w-8 h-8 text-gray-800 dark:text-gray-200" />
+					</div>
+					<span className="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
+				</motion.div>
+			</div>
+		</motion.div>
+	);
+}
+
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, video, reverse, children }) {
+export function Section({ title, desc, docLink, image, video, visual, reverse, children }) {
+	const hasMedia = video || image || visual;
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
 				{...fadeIn}
-				className={`grid grid-cols-1 ${!children ? 'lg:grid-cols-2' : ''} gap-12 items-center`}
+				className={`grid grid-cols-1 ${!children || hasMedia ? 'lg:grid-cols-2' : ''} gap-12 items-center`}
 			>
 				<div className={reverse ? 'lg:order-2' : ''}>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
@@ -417,7 +487,7 @@ export function Section({ title, desc, docLink, image, video, reverse, children 
 				</div>
 				{!children && (
 					<div className={reverse ? 'lg:order-1' : ''}>
-						{video ? (
+						{visual ? visual : video ? (
 							<LazyVideo
 								className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
 								src={video}
@@ -503,6 +573,7 @@ export default function VersioningContent({ title, description }) {
 				title="Git sync"
 				desc={<span>When connected to a <Link to="/docs/advanced/git_sync" className="text-blue-600 hover:underline">Git repository</Link>, every deployment is automatically committed. Changes can also be pulled from Git, making the repository the single source of truth. Works with GitHub, GitLab, Bitbucket, and Azure DevOps. See the <a href="https://github.com/windmill-labs/windmill-sync-example" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">sync example repository</a> for a complete setup.</span>}
 				docLink="/docs/advanced/git_sync"
+				visual={<GitSyncAnimation />}
 			/>
 
 			{/* ═══════════════ Workspace forks ═══════════════ */}
