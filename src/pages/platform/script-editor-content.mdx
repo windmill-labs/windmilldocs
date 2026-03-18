@@ -925,10 +925,7 @@ export default function ScriptEditorContent({ title, description }) {
 						</div>
 					</div>
 					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-						{/* Placeholder: screenshot of the worker groups page showing active workers and queue stats, ~800x400px, save as /static/img/money-pages/card-workers.webp */}
-						<div className="w-full h-40 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-						</div>
+						<img src="/img/money-pages/card-workers.png" alt="Active workers" className="w-full object-cover" style={{ height: 160 }} />
 						<div className="flex flex-col p-6 flex-1">
 							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Dedicated workers</h3>
 							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Each script runs on an isolated worker with the full CPU and memory available to it. Scale horizontally and eliminate cold starts.</p>
