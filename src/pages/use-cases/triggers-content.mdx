@@ -8,12 +8,15 @@ import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Clock, AlertTriangle, Eye, Calendar, Bell, Shield, Play, CheckCircle, Database, RefreshCw, Mail, Trash2, BookOpen, RotateCcw, Code, Code2, Plug, Globe, Rocket, Terminal, FolderPlus, Webhook, Radio, Waypoints, MessageSquare, Cloud, Rss, Route, Zap, MonitorPlay } from 'lucide-react';
 import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
+import TriggerGrid from '../../components/use-cases/TriggerGrid';
 import CodeBlock from '@theme/CodeBlock';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CaseStudyCard from '../../components/use-cases/CaseStudyCard';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 import { useColorMode } from '@docusaurus/theme-common';
 import { cfaInstituteCaseStudy } from '../../data/case-studies/cfa-institute';
 import { zoomCaseStudy } from '../../data/case-studies/zoom';
@@ -126,23 +129,7 @@ export default function ScheduledTasksContent({ title, description }) {
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 							For ops and engineering teams who run critical jobs. Trigger any script or workflow from schedules, webhooks, Kafka, Postgres, websockets and more. With error handlers and recovery logic powered by Windmill's <Link to="/docs/flows/flow_editor" className="text-blue-400 hover:underline !no-underline">workflow engine</Link>.
 						</p>
-						<div className="flex flex-col sm:flex-row gap-4">
-							<a
-								href="https://app.windmill.dev"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-							>
-								Try Windmill free
-								<ArrowRight className="w-4 h-4" />
-							</a>
-							<Link
-								to="/docs/core_concepts/scheduling"
-								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-							>
-								Read the docs
-							</Link>
-						</div>
+						<HeroCTAButtons />
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
@@ -281,52 +268,9 @@ export default function ScheduledTasksContent({ title, description }) {
 			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
 			{/* All trigger types */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-12">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Every way to trigger a script or flow
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Windmill supports <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">20+ trigger types</Link> out of the box. Run your code from any event source, no glue infrastructure required.
-					</p>
-				</motion.div>
-
-				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-					{[
-						{ icon: Calendar, label: 'Schedules', desc: 'Cron and visual cron builder', link: '/docs/core_concepts/scheduling' },
-						{ icon: Webhook, label: 'Webhooks', desc: 'Sync and async HTTP triggers', link: '/docs/core_concepts/webhooks' },
-						{ icon: Mail, label: 'Emails', desc: 'Trigger on incoming emails', link: '/docs/getting_started/triggers#emails' },
-						{ icon: Route, label: 'HTTP routes', desc: 'Custom REST endpoints', link: '/docs/core_concepts/http_routing' },
-						{ icon: Radio, label: 'WebSockets', desc: 'Real-time bidirectional events', link: '/docs/core_concepts/websocket_triggers' },
-						{ icon: Database, label: 'Postgres', desc: 'CDC and row-level triggers', link: '/docs/core_concepts/postgres_triggers' },
-						{ icon: Waypoints, label: 'Kafka', desc: 'Consume from Kafka topics', link: '/docs/core_concepts/kafka_triggers' },
-						{ icon: MessageSquare, label: 'NATS', desc: 'Subscribe to NATS subjects', link: '/docs/core_concepts/nats_triggers' },
-						{ icon: Cloud, label: 'SQS', desc: 'AWS SQS queue consumer', link: '/docs/core_concepts/sqs_triggers' },
-						{ icon: Rss, label: 'MQTT', desc: 'IoT and MQTT broker events', link: '/docs/core_concepts/mqtt_triggers' },
-						{ icon: Cloud, label: 'GCP Pub/Sub', desc: 'Google Cloud Pub/Sub events', link: '/docs/core_concepts/gcp_triggers' },
-						{ icon: Globe, label: 'Native triggers', desc: 'Nextcloud, Google Drive, Calendar', link: '/docs/core_concepts/native_triggers' },
-						{ icon: MonitorPlay, label: 'Auto-generated UIs', desc: 'One-click run from the UI', link: '/docs/getting_started/triggers#auto-generated-uis' },
-						{ icon: Zap, label: 'CLI & API', desc: 'Trigger from scripts or CI/CD', link: '/docs/getting_started/triggers#trigger-from-api' },
-						{ icon: Plug, label: 'MCP', desc: 'Trigger from LLM clients', link: '/docs/core_concepts/mcp' },
-						{ icon: RefreshCw, label: 'Scheduled polls', desc: 'Poll APIs on an interval', link: '/docs/core_concepts/scheduling#scheduled-polls' },
-					].map((trigger) => {
-						const Icon = trigger.icon;
-						return (
-							<Link
-								key={trigger.label}
-								to={trigger.link}
-								className="group flex flex-col gap-2 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all !no-underline"
-							>
-								<div className="flex items-center gap-2.5">
-									<Icon className="w-5 h-5 text-blue-500 shrink-0" />
-									<span className="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{trigger.label}</span>
-								</div>
-								<span className="text-xs text-gray-500 dark:text-gray-400">{trigger.desc}</span>
-							</Link>
-						);
-					})}
-				</div>
-			</div>
+			<TriggerGrid
+				subtitle={<>Windmill supports <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">20+ trigger types</Link> out of the box. Run your code from any event source, no glue infrastructure required.</>}
+			/>
 
 			{/* From scripts to pipelines */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
@@ -402,32 +346,7 @@ export default function ScheduledTasksContent({ title, description }) {
 			]} />
 			</div>
 
-			{/* CTA */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
-					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start triggering tasks today</h2>
-					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
-						Get started for free on Windmill Cloud or <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">self-host</Link> the open-source version.
-					</p>
-					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<a
-							href="https://app.windmill.dev"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-						>
-							Try Windmill free
-							<ArrowRight className="w-4 h-4" />
-						</a>
-						<Link
-							to="/pricing"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-						>
-							View pricing
-						</Link>
-					</div>
-				</motion.div>
-			</div>
+			<ProductCTA />
 		</div>
 	);
 }

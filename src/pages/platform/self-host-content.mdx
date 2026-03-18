@@ -1,0 +1,213 @@
+---
+title: "No-ops self-host"
+description: "How do I self-host Windmill? Deploy on your own infrastructure with Docker Compose, Kubernetes, or Helm with zero maintenance and automatic upgrades."
+---
+
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, BookOpen, Copy, Check } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import SelfHostHeroAnimation from '../../components/products/SelfHostHeroAnimationA';
+import DockerStackDiagram from '../../components/products/DockerStackDiagram';
+import K8sHelmDiagram from '../../components/products/K8sHelmDiagram';
+import CloudProvidersDiagram from '../../components/products/CloudProvidersDiagram';
+import ArchitectureDiagram from '../../components/products/ArchitectureDiagram';
+import UpgradeTerminal from '../../components/products/UpgradeTerminal';
+import EnterpriseDiagram from '../../components/products/EnterpriseDiagram';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, visual, reverse, children }) {
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+			>
+				<div className={reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{visual ? visual : image ? (
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Copy block ── */}
+
+export function CopyBlock({ text }) {
+	const [copied, setCopied] = useState(false);
+	const handleCopy = () => {
+		navigator.clipboard.writeText(text);
+		setCopied(true);
+		setTimeout(() => setCopied(false), 2000);
+	};
+	return (
+		<motion.div {...stagger(0.1)} className="mt-8 rounded-xl border border-gray-700 overflow-hidden bg-gray-900 dark:bg-gray-950 shadow-lg">
+			{/* Title bar */}
+			<div className="flex items-center justify-between px-4 py-2.5 bg-gray-800 dark:bg-gray-900 border-b border-gray-700">
+				<div className="flex items-center gap-2">
+					<div className="flex gap-1.5">
+						<div className="w-3 h-3 rounded-full bg-red-500/80" />
+						<div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+						<div className="w-3 h-3 rounded-full bg-green-500/80" />
+					</div>
+					<span className="text-xs text-gray-500 ml-2 font-mono">bash</span>
+				</div>
+				<button
+					onClick={handleCopy}
+					className="p-1 rounded hover:bg-gray-700 transition-colors"
+					aria-label="Copy to clipboard"
+				>
+					{copied
+						? <Check className="w-3.5 h-3.5 text-green-400" />
+						: <Copy className="w-3.5 h-3.5 text-gray-500 hover:text-gray-300" />
+					}
+				</button>
+			</div>
+			{/* Code */}
+			<pre className="p-5 overflow-x-auto text-sm leading-relaxed m-0 !bg-gray-900 dark:!bg-gray-950">
+				<code className="!text-gray-100 font-mono">{text}</code>
+			</pre>
+		</motion.div>
+	);
+}
+
+{/* ── Main page ── */}
+
+export default function SelfHostContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Self-hosting</p>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Your infrastructure, zero maintenance
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Deploy Windmill with Docker Compose or Kubernetes in minutes. Updates, scaling, and configuration are handled for you.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<SelfHostHeroAnimation />
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Note of intent ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Note of intent</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+						Windmill is <a href="https://github.com/windmill-labs/windmill" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">open source</a> under the AGPLv3 license. We believe infrastructure software should be transparent: you should be able to read every line of code that runs your jobs, audit it, and fix it yourself if needed. Self-hosting is not a second-class option. There is no phone-home, no license server, no feature gating on the open-source edition. Your data stays on your machines, your secrets never leave your network. The <Link to="/docs/misc/plans_details" className="text-blue-600 dark:text-blue-400 hover:underline">Enterprise edition</Link> adds SAML/SCIM, audit logs, Git sync, and priority support on top of the same core engine.
+					</p>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ One-command Docker deploy ═══════════════ */}
+			<Section
+				title="One-command Docker deploy"
+				desc={<span>A single <code>docker compose up -d</code> starts the <Link to="/docs/advanced/self_host#setup-windmill-on-localhost" className="text-blue-600 dark:text-blue-400 hover:underline">full Windmill stack</Link>: server, workers, PostgreSQL, and LSP for language intelligence. Database migrations run automatically on startup. Caddy handles TLS termination out of the box. See the <Link to="/docs/advanced/docker" className="text-blue-600 dark:text-blue-400 hover:underline">Docker guide</Link> for configuration options.</span>}
+				visual={<DockerStackDiagram />}
+			>
+				<p className="text-sm text-gray-500 dark:text-gray-400 mt-6 mb-2">To get started, make sure Docker is running and execute the following commands:</p>
+				<CopyBlock text={`curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
+curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
+curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
+
+docker compose up -d`} />
+				<p className="text-sm text-gray-500 dark:text-gray-400 mt-3">Go to <code>http://localhost</code> and voila.</p>
+			</Section>
+
+			{/* ═══════════════ Kubernetes and Helm ═══════════════ */}
+			<Section
+				title="Kubernetes and Helm"
+				desc={<span>The official <Link to="/docs/advanced/self_host/aws_eks_ecs" className="text-blue-600 dark:text-blue-400 hover:underline">Helm chart</Link> provisions server, worker, and LSP deployments. ConfigMaps manage environment variables. Guides are available for EKS, ECS, GCP, and Azure. Workers can be <Link to="/docs/core_concepts/autoscaling" className="text-blue-600 dark:text-blue-400 hover:underline">autoscaled</Link> based on job queue depth.</span>}
+				visual={<K8sHelmDiagram />}
+				reverse
+			/>
+
+			{/* ═══════════════ Works on any cloud ═══════════════ */}
+			<Section
+				title="Works on any cloud"
+				desc={<span>Windmill runs wherever Docker or Kubernetes runs. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Deployment guides</Link> are available for AWS, GCP, Azure, Hetzner, Fly.io, Render, Digital Ocean, and others. It works with any PostgreSQL instance, including managed databases like RDS, Cloud SQL, or Azure Database.</span>}
+				visual={<CloudProvidersDiagram />}
+			/>
+
+			{/* ═══════════════ Simple architecture ═══════════════ */}
+			<Section
+				title="Simple architecture"
+				desc={<span>Windmill has three <Link to="/docs/misc/architecture" className="text-blue-600 dark:text-blue-400 hover:underline">components</Link>: the server (API + UI), <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> (job execution), and PostgreSQL (state + queue). Everything is stateless except the database, so each layer <Link to="/docs/advanced/scaling" className="text-blue-600 dark:text-blue-400 hover:underline">scales independently</Link>.</span>}
+				visual={<ArchitectureDiagram />}
+				reverse
+			/>
+
+			{/* ═══════════════ Automatic upgrades ═══════════════ */}
+			<Section
+				title="Automatic upgrades"
+				desc={<span>Upgrading Windmill means pulling a new Docker image and restarting containers. Database migrations run automatically on startup with no manual steps. A <code>/api/health</code> endpoint and built-in <Link to="/docs/advanced/instance_settings" className="text-blue-600 dark:text-blue-400 hover:underline">Prometheus metrics</Link> are available for monitoring. <Link to="/docs/misc/guides/otel" className="text-blue-600 dark:text-blue-400 hover:underline">OpenTelemetry</Link> is also supported.</span>}
+				visual={<UpgradeTerminal />}
+			/>
+
+			{/* ═══════════════ Enterprise on your infrastructure ═══════════════ */}
+			<Section
+				title="Enterprise edition"
+				desc={<span>The <Link to="/docs/misc/plans_details" className="text-blue-600 dark:text-blue-400 hover:underline">Enterprise edition</Link> includes <Link to="/docs/misc/saml_and_scim" className="text-blue-600 dark:text-blue-400 hover:underline">SAML/SCIM</Link> authentication, <Link to="/docs/misc/s3_cache" className="text-blue-600 dark:text-blue-400 hover:underline">S3 dependency caching</Link>, <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link>, multiplayer editing, and extended <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link> retention. It is the same product as Windmill Cloud, running on your own infrastructure. Air-gapped deployments are supported with offline images and internal registries. <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> is also included for version-controlled deployments.</span>}
+				visual={<EnterpriseDiagram />}
+				reverse
+			/>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What are the minimum hardware requirements?', textAnswer: 'Windmill requires minimal resources to get started. A single machine with 2 CPU cores, 4 GB RAM, and 20 GB disk can run the full stack. For production, allocate more resources to workers based on the workloads they execute.' },
+				{ question: 'Can I deploy in an air-gapped environment?', textAnswer: 'Yes. Windmill Docker images can be pulled and transferred offline. The only external dependency is PostgreSQL. Dependencies can be pre-installed or served from an internal registry.' },
+				{ question: 'Does Windmill auto-update?', textAnswer: 'Windmill does not auto-update. You control upgrades by pulling new Docker images and restarting containers. Database migrations run automatically on startup. The upgrade process requires no manual steps beyond updating the image tag.' },
+				{ question: 'What is the difference between Community Edition and Enterprise?', textAnswer: 'Community Edition is open-source and free. It includes scripts, flows, apps, scheduling, and the full API. Enterprise adds SAML/SCIM, Git Sync, dedicated workers, audit log retention, multiplayer editing, S3 dependency caching, and priority support.' },
+				{ question: 'Can I use an external PostgreSQL database?', textAnswer: 'Yes. Set the DATABASE_URL environment variable to point to any PostgreSQL 14+ instance. Managed databases like RDS, Cloud SQL, and Azure Database for PostgreSQL are fully supported.' },
+			]} />
+
+			<ProductCTA />
+		</div>
+	);
+}
