@@ -11,6 +11,12 @@ import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 import SelfHostHeroAnimation from '../../components/products/SelfHostHeroAnimationA';
+import DockerStackDiagram from '../../components/products/DockerStackDiagram';
+import K8sHelmDiagram from '../../components/products/K8sHelmDiagram';
+import CloudProvidersDiagram from '../../components/products/CloudProvidersDiagram';
+import ArchitectureDiagram from '../../components/products/ArchitectureDiagram';
+import UpgradeTerminal from '../../components/products/UpgradeTerminal';
+import EnterpriseDiagram from '../../components/products/EnterpriseDiagram';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -26,7 +32,7 @@ export const stagger = (delay = 0) => ({
 
 {/* ── Section helper ── */}
 
-export function Section({ title, desc, docLink, image, reverse, children }) {
+export function Section({ title, desc, docLink, image, visual, reverse, children }) {
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div
@@ -46,7 +52,7 @@ export function Section({ title, desc, docLink, image, reverse, children }) {
 					)}
 				</div>
 				<div className={reverse ? 'lg:order-1' : ''}>
-					{image ? (
+					{visual ? visual : image ? (
 						<img
 							src={image}
 							alt={title}
@@ -97,8 +103,8 @@ export function CopyBlock({ text }) {
 				</button>
 			</div>
 			{/* Code */}
-			<pre className="p-5 overflow-x-auto text-sm leading-relaxed m-0">
-				<code className="text-gray-100 font-mono">{text}</code>
+			<pre className="p-5 overflow-x-auto text-sm leading-relaxed m-0 !bg-gray-900 dark:!bg-gray-950">
+				<code className="!text-gray-100 font-mono">{text}</code>
 			</pre>
 		</motion.div>
 	);
@@ -143,7 +149,7 @@ export default function SelfHostContent({ title, description }) {
 			<Section
 				title="One-command Docker deploy"
 				desc={<span>A single <code>docker compose up -d</code> starts the <Link to="/docs/advanced/self_host#setup-windmill-on-localhost" className="text-blue-600 dark:text-blue-400 hover:underline">full Windmill stack</Link>: server, workers, PostgreSQL, and LSP for language intelligence. Database migrations run automatically on startup. Caddy handles TLS termination out of the box.</span>}
-				image={null}
+				visual={<DockerStackDiagram />}
 			>
 				<p className="text-sm text-gray-500 dark:text-gray-400 mt-6 mb-2">To get started, make sure Docker is running and execute the following commands:</p>
 				<CopyBlock text={`curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
@@ -158,40 +164,37 @@ docker compose up -d`} />
 			<Section
 				title="Kubernetes and Helm"
 				desc={<span>The official <Link to="/docs/advanced/self_host/aws_eks_ecs" className="text-blue-600 dark:text-blue-400 hover:underline">Helm chart</Link> provisions server, worker, and LSP deployments. ConfigMaps manage environment variables. Guides are available for EKS, ECS, GCP, and Azure.</span>}
+				visual={<K8sHelmDiagram />}
 				reverse
-			>
-				{/* Placeholder: Kubernetes deployment diagram showing Helm chart components (server, worker, LSP pods), ~1200x800px, save as /static/img/money-pages/self-host-k8s.webp */}
-			</Section>
+			/>
 
 			{/* ═══════════════ Works on any cloud ═══════════════ */}
 			<Section
 				title="Works on any cloud"
 				desc={<span>Windmill runs wherever Docker or Kubernetes runs. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Deployment guides</Link> are available for AWS, GCP, Azure, Hetzner, Fly.io, Render, Digital Ocean, and others. It works with any PostgreSQL instance, including managed databases like RDS, Cloud SQL, or Azure Database.</span>}
-			>
-				{/* Placeholder: grid of cloud provider logos (AWS, GCP, Azure, Hetzner, Fly.io, Render, Digital Ocean, etc.), ~1200x800px, save as /static/img/money-pages/self-host-providers.webp */}
-			</Section>
+				visual={<CloudProvidersDiagram />}
+			/>
 
 			{/* ═══════════════ Simple architecture ═══════════════ */}
 			<Section
 				title="Simple architecture"
 				desc={<span>Windmill has three <Link to="/docs/misc/architecture" className="text-blue-600 dark:text-blue-400 hover:underline">components</Link>: the server (API + UI), workers (job execution), and PostgreSQL (state + queue). Everything is stateless except the database, so each layer scales independently.</span>}
+				visual={<ArchitectureDiagram />}
 				reverse
-			>
-				{/* Placeholder: architecture diagram showing server → PostgreSQL ← workers data flow with LSP sidecar, ~1200x800px, save as /static/img/money-pages/self-host-architecture-detail.webp */}
-			</Section>
+			/>
 
 			{/* ═══════════════ Automatic upgrades ═══════════════ */}
 			<Section
 				title="Automatic upgrades"
 				desc={<span>Upgrading Windmill means pulling a new Docker image and restarting containers. Database migrations run automatically on startup with no manual steps. A <code>/api/health</code> endpoint and built-in Prometheus metrics are available for monitoring.</span>}
-			>
-				{/* Placeholder: terminal screenshot showing docker pull and restart with migration output, ~1200x800px, save as /static/img/money-pages/self-host-upgrades.webp */}
-			</Section>
+				visual={<UpgradeTerminal />}
+			/>
 
 			{/* ═══════════════ Enterprise on your infrastructure ═══════════════ */}
 			<Section
-				title="Enterprise on your infrastructure"
+				title="Enterprise edition"
 				desc={<span>The <Link to="/docs/misc/plans_details" className="text-blue-600 dark:text-blue-400 hover:underline">Enterprise edition</Link> includes SAML/SCIM authentication, S3 dependency caching, dedicated workers, multiplayer editing, and extended audit log retention. It is the same product as Windmill Cloud, running on your own infrastructure. Air-gapped deployments are supported with offline images and internal registries.</span>}
+				visual={<EnterpriseDiagram />}
 				reverse
 			/>
 
