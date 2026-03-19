@@ -827,7 +827,7 @@ export default function ScriptEditorContent({ title, description }) {
 			{/* ═══════════════ What you can build ═══════════════ */}
 			<Section
 				title="Write in any language"
-				desc={<span>Write your logic in TypeScript (Bun, Deno), Python, Go, Bash, SQL, or <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ other languages</Link>. Windmill handles <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">dependencies</Link> under the hood: it parses your imports, resolves packages from npm, PyPI, or Go modules, and generates a per-script lockfile. Workers cache dependencies so execution stays fast.</span>}
+				desc={<span>Write your logic in TypeScript (Bun, Deno), Python, Go, Bash, SQL, or <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ other languages</Link>. Each language runs on its real runtime with full LSP support in the browser editor.</span>}
 				docLink="/docs/getting_started/scripts_quickstart"
 				visual={
 					<LazyVideo
@@ -837,19 +837,25 @@ export default function ScriptEditorContent({ title, description }) {
 				}
 			/>
 
-			{/* <Section
-				title="Workflows as code"
-				desc={<span>For multi-step logic, Windmill supports <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> in Python and TypeScript. Annotate functions with <code>@task</code> and each one runs as a distinct job with its own logs and timeline. The result is the same as a visual flow, with full observability, but written entirely in the code editor.</span>}
-				docLink="/docs/core_concepts/workflows_as_code"
+			{/* ═══════════════ Real dependencies, real runtimes ═══════════════ */}
+			<Section
+				title="Real dependencies, real runtimes"
+				desc={<span>Scripts run on real runtimes, not sandboxed interpreters. You can use any <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">dependency</Link> from npm, PyPI, Go modules, or Cargo, including packages from <Link to="/docs/advanced/dependencies_in_typescript#private-npm-registry" className="text-blue-600 dark:text-blue-400 hover:underline">private registries</Link>. Inspectable <Link to="/docs/advanced/dependencies_in_typescript" className="text-blue-600 dark:text-blue-400 hover:underline">lockfiles</Link> are generated per script for reproducibility, and can be centrally managed with <Link to="/docs/core_concepts/workspace_dependencies" className="text-blue-600 dark:text-blue-400 hover:underline">workspace dependencies</Link>.</span>}
+				docLink="/docs/advanced/imports"
 				reverse
-			/> */}
+				visual={
+					<LazyVideo
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						src="/img/platform/script-editor/platform-script-real-dependencies.webm"
+					/>
+				}
+			/>
 
 			{/* ═══════════════ Built-in infrastructure ═══════════════ */}
 			<Section
 				title="Auto-generated UI"
 				desc={<span>Scripts automatically get a <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">form UI</Link> from their function signature. Useful for quick testing during development and for exposing scripts to operators as standalone tools, no frontend needed.</span>}
 				docLink="/docs/core_concepts/auto_generated_uis"
-				reverse
 				visual={
 					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
@@ -862,6 +868,7 @@ export default function ScriptEditorContent({ title, description }) {
 				title="Shared resources"
 				desc={<span>Parameters typed as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> show a dropdown of configured connections in the UI. Credentials are centrally managed, encrypted at rest, and injected at runtime. A database, API key, or OAuth2 connection is configured once and reused across any script that needs it.</span>}
 				docLink="/docs/core_concepts/resources_and_types"
+				reverse
 				visual={
 					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
@@ -874,7 +881,6 @@ export default function ScriptEditorContent({ title, description }) {
 				title="Real-time logs and instant testing"
 				desc="Scripts can be tested directly from the editor. Logs stream in real-time and results are displayed instantly."
 				docLink="/docs/core_concepts/jobs"
-				reverse
 				visual={
 					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
@@ -888,6 +894,7 @@ export default function ScriptEditorContent({ title, description }) {
 				title="Integrated debugger"
 				desc={<span>The integrated <Link to="/docs/script_editor/debugger" className="text-blue-600 dark:text-blue-400 hover:underline">debugger</Link> for Python and TypeScript (Bun) supports breakpoints, step over, step into, step out, and continue controls. A variables panel shows live values in the current scope, and the console allows evaluating expressions while paused.</span>}
 				docLink="/docs/script_editor/debugger"
+				reverse
 				visual={
 					<LazyVideo
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
