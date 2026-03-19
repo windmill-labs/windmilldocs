@@ -141,6 +141,12 @@ const solutionsByUseCase = [
 		href: '/use-cases/data-pipelines',
 		icon: CircleStackIcon
 	},
+	{
+		name: 'Scheduled tasks',
+		description: 'Cron jobs with retries, error handling and alerting.',
+		href: '/use-cases/scheduled-tasks',
+		icon: ClockIcon
+	},
 ];
 
 // const solutionsByRole = [
