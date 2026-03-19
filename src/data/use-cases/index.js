@@ -2,7 +2,6 @@ import { internalToolsUseCase } from './internal-tools';
 import { workflowAutomationUseCase } from './workflows';
 import { dataPipelinesUseCase } from './data-pipelines';
 import { aiAgentsUseCase } from './ai-agents';
-import { triggersUseCase } from './triggers';
 import { scheduledTasksUseCase } from './scheduled-tasks';
 
 export const useCases = [
@@ -10,6 +9,5 @@ export const useCases = [
 	workflowAutomationUseCase,
 	dataPipelinesUseCase,
 	aiAgentsUseCase,
-	triggersUseCase,
 	scheduledTasksUseCase,
 ];
