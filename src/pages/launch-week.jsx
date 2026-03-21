@@ -169,7 +169,7 @@ const days = [
 		releaseDate: new Date('2026-03-25T00:00:00'),
 		title: 'Full code apps',
 		description: 'Build complete applications with React and Svelte frontends connected to backend logic.',
-		href: '/platform/app-builder',
+		href: '/blog/launch-week-full-code-apps',
 	},
 	{
 		day: 3,
