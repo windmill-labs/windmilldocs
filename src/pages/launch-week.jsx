@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import Footer from '../landing/Footer';
 import LandingHeader from '../landing/LandingHeader';
 import Head from '@docusaurus/Head';
@@ -7,6 +7,138 @@ import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import HeroCTAButtons from '../components/products/HeroCTAButtons';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import { useColorMode } from '@docusaurus/theme-common';
+
+function ParticleField() {
+	const canvasRef = useRef(null);
+	const animRef = useRef(null);
+	const particlesRef = useRef([]);
+	const mouseRef = useRef({ x: -1000, y: -1000 });
+	const { colorMode } = useColorMode();
+
+	const initParticles = useCallback((width, height) => {
+		const count = Math.floor((width * height) / 8000);
+		return Array.from({ length: Math.min(count, 200) }, () => ({
+			x: Math.random() * width,
+			y: Math.random() * height,
+			vx: (Math.random() - 0.5) * 0.8 + (Math.random() > 0.5 ? 0.2 : -0.2),
+			vy: (Math.random() - 0.5) * 0.8 + (Math.random() > 0.5 ? 0.2 : -0.2),
+			r: Math.random() * 2 + 0.5,
+			opacity: Math.random() * 0.5 + 0.2,
+		}));
+	}, []);
+
+	useEffect(() => {
+		const canvas = canvasRef.current;
+		if (!canvas) return;
+		const ctx = canvas.getContext('2d');
+
+		const resize = () => {
+			const rect = canvas.parentElement.getBoundingClientRect();
+			canvas.width = rect.width * window.devicePixelRatio;
+			canvas.height = rect.height * window.devicePixelRatio;
+			canvas.style.width = rect.width + 'px';
+			canvas.style.height = rect.height + 'px';
+			ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+			particlesRef.current = initParticles(rect.width, rect.height);
+		};
+
+		const onMouse = (e) => {
+			const rect = canvas.getBoundingClientRect();
+			mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+		};
+		const onLeave = () => { mouseRef.current = { x: -1000, y: -1000 }; };
+
+		resize();
+		window.addEventListener('resize', resize);
+		canvas.addEventListener('mousemove', onMouse);
+		canvas.addEventListener('mouseleave', onLeave);
+
+		const draw = () => {
+			const w = canvas.width / window.devicePixelRatio;
+			const h = canvas.height / window.devicePixelRatio;
+			ctx.clearRect(0, 0, w, h);
+
+			const particles = particlesRef.current;
+			const isDark = colorMode === 'dark';
+			const baseColor = isDark ? [96, 165, 250] : [59, 130, 246]; // blue-400 / blue-500
+			const mouse = mouseRef.current;
+			const connectionDist = 120;
+
+			// Update positions
+			for (const p of particles) {
+				// Mouse repulsion
+				const dx = p.x - mouse.x;
+				const dy = p.y - mouse.y;
+				const dist = Math.sqrt(dx * dx + dy * dy);
+				if (dist < 150 && dist > 0) {
+					const force = (150 - dist) / 150 * 0.8;
+					p.vx += (dx / dist) * force;
+					p.vy += (dy / dist) * force;
+				}
+
+				p.x += p.vx;
+				p.y += p.vy;
+
+				// Wrap
+				if (p.x < 0) p.x = w;
+				if (p.x > w) p.x = 0;
+				if (p.y < 0) p.y = h;
+				if (p.y > h) p.y = 0;
+			}
+
+			// Draw connections
+			for (let i = 0; i < particles.length; i++) {
+				for (let j = i + 1; j < particles.length; j++) {
+					const dx = particles[i].x - particles[j].x;
+					const dy = particles[i].y - particles[j].y;
+					const dist = Math.sqrt(dx * dx + dy * dy);
+					if (dist < connectionDist) {
+						const alpha = (1 - dist / connectionDist) * 0.15;
+						ctx.strokeStyle = `rgba(${baseColor[0]}, ${baseColor[1]}, ${baseColor[2]}, ${alpha})`;
+						ctx.lineWidth = 0.5;
+						ctx.beginPath();
+						ctx.moveTo(particles[i].x, particles[i].y);
+						ctx.lineTo(particles[j].x, particles[j].y);
+						ctx.stroke();
+					}
+				}
+			}
+
+			// Draw particles
+			for (const p of particles) {
+				// Glow
+				const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
+				gradient.addColorStop(0, `rgba(${baseColor[0]}, ${baseColor[1]}, ${baseColor[2]}, ${p.opacity * 0.3})`);
+				gradient.addColorStop(1, `rgba(${baseColor[0]}, ${baseColor[1]}, ${baseColor[2]}, 0)`);
+				ctx.fillStyle = gradient;
+				ctx.beginPath();
+				ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Core
+				ctx.fillStyle = `rgba(${baseColor[0]}, ${baseColor[1]}, ${baseColor[2]}, ${p.opacity})`;
+				ctx.beginPath();
+				ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+				ctx.fill();
+			}
+
+			animRef.current = requestAnimationFrame(draw);
+		};
+
+		draw();
+
+		return () => {
+			cancelAnimationFrame(animRef.current);
+			window.removeEventListener('resize', resize);
+			canvas.removeEventListener('mousemove', onMouse);
+			canvas.removeEventListener('mouseleave', onLeave);
+		};
+	}, [colorMode, initParticles]);
+
+	return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+}
 
 const fadeIn = {
 	initial: { opacity: 0, y: 20 },
@@ -26,7 +158,7 @@ const days = [
 		weekday: 'Monday',
 		date: 'Mar 24',
 		releaseDate: new Date('2026-03-24T00:00:00'),
-		title: 'Data tables / Ducklake',
+		title: 'Data tables',
 		description: 'Store and query relational data with managed SQL, powered by Ducklake.',
 		href: '/platform/datatables',
 	},
@@ -44,7 +176,7 @@ const days = [
 		weekday: 'Wednesday',
 		date: 'Mar 26',
 		releaseDate: new Date('2026-03-26T00:00:00'),
-		title: 'Volumes, sandboxes, AI sandbox',
+		title: 'AI sandboxes',
 		description: 'Run Claude Code, Codex, or custom agents in isolated environments with persistent volumes.',
 		href: '/platform/sandboxes',
 	},
@@ -53,7 +185,7 @@ const days = [
 		weekday: 'Thursday',
 		date: 'Mar 27',
 		releaseDate: new Date('2026-03-27T00:00:00'),
-		title: 'Git sync v2, deploy UI',
+		title: 'Git sync & workspace forks',
 		description: 'Sync with Git, stage workspaces, and deploy via CI/CD with an improved deploy interface.',
 		href: '/platform/deployment-versioning',
 	},
@@ -62,7 +194,7 @@ const days = [
 		weekday: 'Friday',
 		date: 'Mar 28',
 		releaseDate: new Date('2026-03-28T00:00:00'),
-		title: 'Workflow-as-code v2',
+		title: 'Workflow-as-code',
 		description: 'Define complex workflows entirely in code with the next generation of our SDK.',
 		href: '#',
 	},
@@ -214,15 +346,22 @@ export default function LaunchWeekPage() {
 
 				<div className="pt-32">
 					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-32">
-						{/* Hero */}
-						<motion.div className="mb-20" {...fadeIn}>
-							<p className="text-sm text-gray-400 dark:text-gray-500 mb-6">
-								March 24 to 28, 2026
-							</p>
-							<div className="font-bold tracking-tighter text-gray-900 dark:text-white" style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', lineHeight: 0.9 }}>
-								Launch week
+						{/* Hero with particle animation */}
+						<div className="relative mb-20">
+							<div className="absolute inset-0 -mx-4 sm:-mx-6 lg:-mx-8 overflow-hidden" style={{ height: '100%' }}>
+								<BrowserOnly fallback={<div />}>
+									{() => <ParticleField />}
+								</BrowserOnly>
 							</div>
-						</motion.div>
+							<motion.div className="relative z-10 py-8" {...fadeIn}>
+								<p className="text-sm text-gray-400 dark:text-gray-500 mb-6">
+									March 24 to 28, 2026
+								</p>
+								<div className="font-bold tracking-tighter text-gray-900 dark:text-white" style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', lineHeight: 0.9 }}>
+									Launch week
+								</div>
+							</motion.div>
+						</div>
 
 						{/* Main stage */}
 						<motion.div className="mb-6" {...stagger(0.1)}>
@@ -252,13 +391,9 @@ export default function LaunchWeekPage() {
 								<div className="border-t border-gray-200 dark:border-gray-800">
 									{[
 										{ title: 'GitHub Enterprise app integration', href: '/changelog/github-enterprise-app' },
-										{ title: 'Token expiration notifications', href: '/changelog/token-expiration-notifications' },
-										{ title: 'Flow environment variables and resources', href: '/changelog/flow-env-variables-resources' },
 										{ title: 'Private registries for npm, Maven and Cargo', href: '/changelog/private-registries-npm-maven-cargo' },
-										{ title: 'Native mode', href: '/changelog/native-mode' },
 										{ title: 'Native triggers', href: '/changelog/native-triggers' },
 										{ title: 'Infrastructure as code', href: '/changelog/infrastructure-as-code' },
-										{ title: 'Health endpoints', href: '/changelog/health-endpoints' },
 									].map((item, i) => (
 										<Link
 											key={i}
