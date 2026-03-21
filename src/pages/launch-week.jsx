@@ -158,7 +158,7 @@ const days = [
 		weekday: 'Monday',
 		date: 'Mar 24',
 		releaseDate: new Date('2026-03-24T00:00:00'),
-		title: 'Data tables',
+		title: 'Data tables & Ducklake',
 		description: 'Store and query relational data with managed SQL, powered by Ducklake.',
 		href: '/platform/datatables',
 	},
