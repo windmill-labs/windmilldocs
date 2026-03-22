@@ -114,7 +114,7 @@ Three design choices drove the architecture:
 
 **Credential opacity.** Users never see or manage database connection strings. Windmill handles credentials internally. This eliminates a whole class of credential-rotation bugs and accidental leaks.
 
-**Two backend modes.** You can use the Windmill instance database (zero-setup, one click) or bring your own Postgres resource for full control over hosting. We recommend using your own Postgres credentials for production workloads. Both modes expose the same API.
+**Bring your own Postgres.** You attach a workspace Postgres resource to the data table. Windmill manages credentials internally so users never see connection strings. This gives you full control over database hosting while keeping the API simple.
 
 ## Asset tracking and data lineage
 
@@ -252,7 +252,7 @@ Both Data Tables and Ducklake are browsable through the Database Studio, a visua
 
 **Data Tables:**
 1. Go to workspace settings, then Data Tables.
-2. Choose a backend: custom instance database (zero-setup) or a Postgres resource.
+2. Add your own Postgres resource.
 3. Use `wmill.datatable()` in any script.
 
 **Ducklake:**

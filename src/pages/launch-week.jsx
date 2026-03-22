@@ -160,7 +160,7 @@ const days = [
 		releaseDate: new Date('2026-03-24T00:00:00'),
 		title: 'Data tables & Ducklake',
 		description: 'Store and query relational data with managed SQL, powered by Ducklake.',
-		href: '/platform/datatables',
+		href: '/blog/launch-week-data-tables-ducklake',
 	},
 	{
 		day: 2,
@@ -282,25 +282,38 @@ const cardVisuals = [
 
 function DayCard({ item, index }) {
 	const Visual = cardVisuals[index];
+	const disabled = item.day !== 1;
+
+	const content = (
+		<>
+			<div className={`flex-1 flex items-center justify-center p-8 aspect-square ${disabled ? 'opacity-40 grayscale' : ''}`}>
+				<Visual />
+			</div>
+			<div className="p-5">
+				<span className="text-sm text-gray-400 dark:text-gray-500 mb-2 block">
+					{item.weekday}
+				</span>
+				<h3 className={`text-base font-semibold leading-snug ${disabled ? 'text-gray-400 dark:text-gray-600' : 'text-gray-900 dark:text-white'}`}>
+					{disabled ? item.title : `Introducing ${item.title}`}
+				</h3>
+			</div>
+		</>
+	);
 
 	return (
 		<motion.div className="flex" {...stagger(index * 0.08)}>
-			<Link
-				to={item.href}
-				className="group flex flex-col w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 !no-underline hover:text-current hover:border-gray-400 dark:hover:border-gray-600 transition-colors overflow-hidden"
-			>
-				<div className="flex-1 flex items-center justify-center p-8 aspect-square">
-					<Visual />
+			{disabled ? (
+				<div className="flex flex-col w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 overflow-hidden cursor-default">
+					{content}
 				</div>
-				<div className="p-5">
-					<span className="text-sm text-gray-400 dark:text-gray-500 mb-2 block">
-						{item.weekday}
-					</span>
-					<h3 className="text-base font-semibold leading-snug text-gray-900 dark:text-white">
-						Introducing {item.title}
-					</h3>
-				</div>
-			</Link>
+			) : (
+				<Link
+					to={item.href}
+					className="group flex flex-col w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 !no-underline hover:text-current hover:border-gray-400 dark:hover:border-gray-600 transition-colors overflow-hidden"
+				>
+					{content}
+				</Link>
+			)}
 		</motion.div>
 	);
 }
