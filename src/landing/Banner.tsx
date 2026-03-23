@@ -1,16 +1,21 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { useLocation } from '@docusaurus/router';
 
 export default function Banner() {
+	const { pathname } = useLocation();
+	if (pathname === '/launch-week') return null;
+
 	return (
-		<div className="flex items-center gap-x-6 bg-blue-700 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
-			<a
-				href="/pricing"
-				className="text-sm leading-6 !text-white flex flex-row gap-2 items-center"
-			>
-				<strong className="font-semibold">New pricing now available</strong>
-			</a>
-			<div className="flex flex-1 justify-end"></div>
-		</div>
+		<a
+			href="/launch-week"
+			className="group relative block w-full overflow-hidden !no-underline bg-blue-600"
+		>
+			<div className="flex items-center justify-center gap-3 px-6 py-4">
+				<span className="text-base font-semibold text-white">Launch week</span>
+				<span className="text-white/60">·</span>
+				<span className="text-sm text-white/80">Five new features shipping this week (March 24–28)</span>
+				<span className="ml-1 text-white group-hover:translate-x-1 transition-transform">→</span>
+			</div>
+		</a>
 	);
 }

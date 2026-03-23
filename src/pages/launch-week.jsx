@@ -373,6 +373,9 @@ export default function LaunchWeekPage() {
 								<div className="font-bold tracking-tighter text-gray-900 dark:text-white" style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', lineHeight: 0.9 }}>
 									Launch week
 								</div>
+								<p className="mt-6 text-lg text-gray-500 dark:text-gray-400">
+									Five days, five releases. Data tables, full-code apps, AI sandboxes, Git sync and workflow-as-code.
+								</p>
 							</motion.div>
 						</div>
 
