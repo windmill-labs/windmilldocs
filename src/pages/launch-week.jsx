@@ -379,13 +379,6 @@ export default function LaunchWeekPage() {
 							</motion.div>
 						</div>
 
-						{/* Main stage */}
-						<motion.div className="mb-6" {...stagger(0.1)}>
-							<div className="text-2xl font-bold text-gray-900 dark:text-white">
-								Main stage
-							</div>
-						</motion.div>
-
 						{/* Day cards */}
 						<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
 							{days.map((day, index) => (
@@ -393,38 +386,7 @@ export default function LaunchWeekPage() {
 							))}
 						</div>
 
-						{/* Build stage */}
-						<motion.div className="mt-24" {...stagger(0.3)}>
-							<div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12">
-								<div>
-									<div className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-										Build stage
-									</div>
-									<p className="text-sm text-gray-400 dark:text-gray-500">
-										A collection of recent releases and improvements.
-									</p>
-								</div>
-								<div className="border-t border-gray-200 dark:border-gray-800">
-									{[
-										{ title: 'GitHub Enterprise app integration', href: '/changelog/github-enterprise-app' },
-										{ title: 'Private registries for npm, Maven and Cargo', href: '/changelog/private-registries-npm-maven-cargo' },
-										{ title: 'Native triggers', href: '/changelog/native-triggers' },
-										{ title: 'Infrastructure as code', href: '/changelog/infrastructure-as-code' },
-									].map((item, i) => (
-										<Link
-											key={i}
-											to={item.href}
-											className="group flex items-center gap-3 py-4 border-b border-gray-200 dark:border-gray-800 !no-underline hover:text-current"
-										>
-											<span className="w-1.5 h-1.5 rounded-sm bg-gray-300 dark:bg-gray-600 shrink-0" />
-											<span className="text-base text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
-												{item.title}
-											</span>
-										</Link>
-									))}
-								</div>
-							</div>
-						</motion.div>
+
 
 						{/* CTA */}
 						<motion.div className="mt-24 text-center" {...stagger(0.6)}>
