@@ -9,6 +9,7 @@ import { ArrowRight } from 'lucide-react';
 import HeroCTAButtons from '../components/products/HeroCTAButtons';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useColorMode } from '@docusaurus/theme-common';
+import LaunchWeekList from '../components/LaunchWeekList';
 
 function ParticleField() {
 	const canvasRef = useRef(null);
@@ -371,7 +372,7 @@ export default function LaunchWeekPage() {
 									March 24 to 28, 2026
 								</p>
 								<div className="font-bold tracking-tighter text-gray-900 dark:text-white" style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', lineHeight: 0.9 }}>
-									Launch week
+									Launch week #2
 								</div>
 								<p className="mt-6 text-lg text-gray-500 dark:text-gray-400">
 									Five days, five releases. Data tables, full-code apps, AI sandboxes, Git sync and workflow-as-code.
@@ -425,6 +426,8 @@ export default function LaunchWeekPage() {
 								</div>
 							</div>
 						</motion.div>
+
+						<LaunchWeekList current="/launch-week-march-2026" />
 
 						{/* CTA */}
 						<motion.div className="mt-24 text-center" {...stagger(0.6)}>
