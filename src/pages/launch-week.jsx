@@ -286,14 +286,14 @@ function DayCard({ item, index }) {
 
 	const content = (
 		<>
-			<div className={`flex-1 flex items-center justify-center p-8 aspect-square ${disabled ? 'opacity-40 grayscale' : ''}`}>
+			<div className={`flex items-center justify-center p-8 aspect-square ${disabled ? 'opacity-40 grayscale' : ''}`}>
 				<Visual />
 			</div>
-			<div className="p-5">
+			<div className="mt-auto p-5">
 				<span className="text-sm text-gray-400 dark:text-gray-500 mb-2 block">
 					{item.weekday}
 				</span>
-				<h3 className={`text-base font-semibold leading-snug ${disabled ? 'text-gray-400 dark:text-gray-600' : 'text-gray-900 dark:text-white'}`}>
+				<h3 className={`text-base font-semibold leading-snug min-h-[2.5rem] ${disabled ? 'text-gray-400 dark:text-gray-600' : 'text-gray-900 dark:text-white'}`}>
 					{disabled ? item.title : `Introducing ${item.title}`}
 				</h3>
 			</div>
