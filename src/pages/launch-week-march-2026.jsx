@@ -157,8 +157,8 @@ const days = [
 	{
 		day: 1,
 		weekday: 'Monday',
-		date: 'Mar 24',
-		releaseDate: new Date('2026-03-24T00:00:00'),
+		date: 'Mar 30',
+		releaseDate: new Date('2026-03-30T00:00:00'),
 		title: 'Data tables & Ducklake',
 		description: 'Store and query relational data with managed SQL, powered by Ducklake.',
 		href: '/blog/launch-week-data-tables-ducklake',
@@ -166,8 +166,8 @@ const days = [
 	{
 		day: 2,
 		weekday: 'Tuesday',
-		date: 'Mar 25',
-		releaseDate: new Date('2026-03-25T00:00:00'),
+		date: 'Mar 31',
+		releaseDate: new Date('2026-03-31T00:00:00'),
 		title: 'Full code apps',
 		description: 'Build complete applications with React and Svelte frontends connected to backend logic.',
 		href: '/blog/launch-week-full-code-apps',
@@ -175,8 +175,8 @@ const days = [
 	{
 		day: 3,
 		weekday: 'Wednesday',
-		date: 'Mar 26',
-		releaseDate: new Date('2026-03-26T00:00:00'),
+		date: 'Apr 1',
+		releaseDate: new Date('2026-04-01T00:00:00'),
 		title: 'AI sandboxes',
 		description: 'Run Claude Code, Codex, or custom agents in isolated environments with persistent volumes.',
 		href: '/platform/sandboxes',
@@ -184,8 +184,8 @@ const days = [
 	{
 		day: 4,
 		weekday: 'Thursday',
-		date: 'Mar 27',
-		releaseDate: new Date('2026-03-27T00:00:00'),
+		date: 'Apr 2',
+		releaseDate: new Date('2026-04-02T00:00:00'),
 		title: 'Git sync & workspace forks',
 		description: 'Sync with Git, stage workspaces, and deploy via CI/CD with an improved deploy interface.',
 		href: '/platform/deployment-versioning',
@@ -193,8 +193,8 @@ const days = [
 	{
 		day: 5,
 		weekday: 'Friday',
-		date: 'Mar 28',
-		releaseDate: new Date('2026-03-28T00:00:00'),
+		date: 'Apr 3',
+		releaseDate: new Date('2026-04-03T00:00:00'),
 		title: 'Workflow-as-code',
 		description: 'Define complex workflows entirely in code with the next generation of our SDK.',
 		href: '#',
@@ -326,8 +326,8 @@ export default function LaunchWeekPage() {
 		name: 'Windmill launch week',
 		description:
 			'Five major releases in one week: data tables, full code apps, AI sandboxes, Git sync v2, and workflow-as-code v2.',
-		startDate: '2026-03-24',
-		endDate: '2026-03-28',
+		startDate: '2026-03-30',
+		endDate: '2026-04-03',
 		eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
 		location: {
 			'@type': 'VirtualLocation',
@@ -369,7 +369,7 @@ export default function LaunchWeekPage() {
 							</div>
 							<motion.div className="relative z-10 py-8" {...fadeIn}>
 								<p className="text-sm text-gray-400 dark:text-gray-500 mb-6">
-									March 24 to 28, 2026
+									March 30 to April 3, 2026
 								</p>
 								<div className="font-bold tracking-tighter text-gray-900 dark:text-white" style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', lineHeight: 0.9 }}>
 									Launch week #2
