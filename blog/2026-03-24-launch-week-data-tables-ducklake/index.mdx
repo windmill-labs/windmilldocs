@@ -248,6 +248,26 @@ Both Data Tables and Ducklake are browsable through the Database Studio, a visua
 
 <br/>
 
+## Building data pipelines
+
+Data Tables and Ducklake are designed to work with Windmill [flows](/docs/flows/flow_editor). A typical data pipeline looks like this:
+
+1. **Extract**: a script pulls data from an external source (API, webhook, database).
+2. **Transform**: one or more steps clean, enrich, or aggregate the data using Python, TypeScript, or SQL.
+3. **Load**: the result is written to a Data Table for operational use or to Ducklake for analytical queries.
+
+Because each step is a standalone script, you can mix languages freely. For example, fetch data with TypeScript, run a sentiment analysis in Python, and insert the results with a DuckDB query into Ducklake. Windmill handles the orchestration, retries, error handling, and [data lineage](#asset-tracking-and-data-lineage) tracking.
+
+You can also schedule pipelines with [cron triggers](/docs/core_concepts/scheduling), react to events with [webhooks](/docs/core_concepts/webhooks), or chain them with other flows.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Data pipelines"
+		description="Build ETL and data pipelines on Windmill."
+		href="/docs/core_concepts/data_pipelines"
+	/>
+</div>
+
 ## Getting started
 
 **Data Tables:**
