@@ -3,11 +3,11 @@ import { useLocation } from '@docusaurus/router';
 
 export default function Banner() {
 	const { pathname } = useLocation();
-	if (pathname === '/launch-week') return null;
+	if (pathname === '/launch-week-march-2026') return null;
 
 	return (
 		<a
-			href="/launch-week"
+			href="/launch-week-march-2026"
 			className="group relative block w-full overflow-hidden !no-underline bg-blue-600"
 		>
 			<div className="flex items-center justify-center gap-3 px-6 py-4">
