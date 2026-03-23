@@ -25,11 +25,41 @@ Additionally, MCP provides access to Windmill's API endpoints for basic operatio
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
+## Connect with Claude
+
+### From the Claude Connectors Directory
+
+The easiest way to connect Windmill to Claude is through the [Claude Connectors Directory](https://claude.com/connectors):
+
+1. Go to the [Connectors Directory](https://claude.com/connectors) and search for **Windmill**
+2. Click **Connect** and log in to your Windmill account
+3. Select your workspace and choose which tools to expose
+4. Start using your scripts and flows directly from Claude
+
+### As a custom integration
+
+You can also add Windmill manually as a custom integration:
+
+1. Go to Claude > Settings > [Integrations](https://claude.ai/settings/integrations)
+2. Click "Add an integration"
+3. Name it "Windmill" and set the URL to:
+
+```
+https://app.windmill.dev/api/mcp/gateway
+```
+
+For self-hosted instances, replace the URL with your own instance base URL (e.g. `https://windmill.example.com/api/mcp/gateway`).
+
+4. When redirected to Windmill, select your workspace and configure the scope
+5. Click **Approve** to complete the connection
+
+---
+
 ## How to use
 
 ### Connect with OAuth
 
-The simplest way to connect is via OAuth. Just add the following URL to your MCP client:
+The simplest way to connect any MCP client is via OAuth. Just add the following URL to your MCP client:
 
 ```
 <base_url>/api/mcp/gateway
@@ -148,6 +178,72 @@ Claude will use the **Resources** endpoint tools to list, create, or update reso
 
 ---
 
+## Available MCP Tools
+
+In addition to your workspace scripts and flows (which are exposed as individual tools), the Windmill MCP server provides the following built-in API endpoint tools:
+
+### Scripts & Flows
+
+| Tool | Description |
+|------|-------------|
+| `listScripts` | List all scripts in the workspace |
+| `createScript` | Create a new script |
+| `getScriptByPath` | Get a script by its path |
+| `deleteScriptByHash` | Delete a script by hash (admin only) |
+| `deleteScriptByPath` | Delete a script at a given path (admin only) |
+| `runScriptByPath` | Run a script by path |
+| `runScriptPreviewAndWaitResult` | Run a script preview and wait for the result |
+| `listFlows` | List all flows |
+| `getFlowByPath` | Get a flow by its path |
+| `createFlow` | Create a new flow |
+| `updateFlow` | Update an existing flow |
+| `deleteFlowByPath` | Delete a flow by path |
+| `runFlowByPath` | Run a flow by path |
+
+### Resources & Variables
+
+| Tool | Description |
+|------|-------------|
+| `listResource` | List all resources |
+| `getResource` | Get a resource |
+| `createResource` | Create a new resource |
+| `updateResource` | Update an existing resource |
+| `deleteResource` | Delete a resource |
+| `listResourceType` | List available resource types |
+| `listVariable` | List all variables |
+| `getVariable` | Get a variable |
+| `createVariable` | Create a new variable |
+| `updateVariable` | Update an existing variable |
+| `deleteVariable` | Delete a variable |
+
+### Jobs & Schedules
+
+| Tool | Description |
+|------|-------------|
+| `listJobs` | List all completed jobs |
+| `listQueue` | List all queued jobs |
+| `listSchedules` | List all schedules |
+| `getSchedule` | Get a schedule |
+| `createSchedule` | Create a new schedule |
+| `updateSchedule` | Update an existing schedule |
+| `deleteSchedule` | Delete a schedule |
+
+### Apps & Workers
+
+| Tool | Description |
+|------|-------------|
+| `createApp` | Create a new app |
+| `updateApp` | Update an existing app |
+| `listWorkers` | List workers and their status |
+
+### Other
+
+| Tool | Description |
+|------|-------------|
+| `queryDocumentation` | Query the Windmill AI documentation assistant (EE only) |
+
+---
+
 ## Troubleshooting
 
 - **Not seeing any scripts/flows?**
@@ -166,3 +262,5 @@ Claude will use the **Resources** endpoint tools to list, create, or update reso
 
 - [MCP official docs](https://modelcontextprotocol.io/introduction)
 - [MCP compatible clients](https://modelcontextprotocol.io/clients)
+- [Windmill Privacy Policy](https://www.windmill.dev/privacy_policy)
+- [Support & Community](https://discord.com/invite/V7PM2YHsPB) — join our Discord or open an issue on [GitHub](https://github.com/windmill-labs/windmill/issues)
