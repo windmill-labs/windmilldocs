@@ -1,18 +1,31 @@
 import React from 'react';
 import GitHubButton from 'react-github-btn';
-import { useColorMode } from '@docusaurus/theme-common';
 
 export default function GithubStarCount() {
-	const { colorMode } = useColorMode();
 	return (
-		<GitHubButton
-			href="https://github.com/windmill-labs/windmill"
-			data-size="large"
-			data-show-count="true"
-			aria-label="Star buttons/github-buttons on GitHub"
-			data-color-scheme={colorMode == 'dark' ? 'dark' : 'light'}
-		>
-			&nbsp;OSS
-		</GitHubButton>
+		<>
+			<span className="hidden dark:inline">
+				<GitHubButton
+					href="https://github.com/windmill-labs/windmill"
+					data-size="large"
+					data-show-count="true"
+					aria-label="Star buttons/github-buttons on GitHub"
+					data-color-scheme="dark"
+				>
+					&nbsp;OSS
+				</GitHubButton>
+			</span>
+			<span className="inline dark:hidden">
+				<GitHubButton
+					href="https://github.com/windmill-labs/windmill"
+					data-size="large"
+					data-show-count="true"
+					aria-label="Star buttons/github-buttons on GitHub"
+					data-color-scheme="light"
+				>
+					&nbsp;OSS
+				</GitHubButton>
+			</span>
+		</>
 	);
 }
