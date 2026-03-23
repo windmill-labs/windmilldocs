@@ -179,7 +179,7 @@ const days = [
 		releaseDate: new Date('2026-04-01T00:00:00'),
 		title: 'AI sandboxes',
 		description: 'Run Claude Code, Codex, or custom agents in isolated environments with persistent volumes.',
-		href: '/platform/sandboxes',
+		href: '/blog/launch-week-ai-sandboxes',
 	},
 	{
 		day: 4,
@@ -188,7 +188,7 @@ const days = [
 		releaseDate: new Date('2026-04-02T00:00:00'),
 		title: 'Git sync & workspace forks',
 		description: 'Sync with Git, stage workspaces, and deploy via CI/CD with an improved deploy interface.',
-		href: '/platform/deployment-versioning',
+		href: '/blog/launch-week-git-sync',
 	},
 	{
 		day: 5,
@@ -197,7 +197,7 @@ const days = [
 		releaseDate: new Date('2026-04-03T00:00:00'),
 		title: 'Workflow-as-code',
 		description: 'Define complex workflows entirely in code with the next generation of our SDK.',
-		href: '#',
+		href: '/blog/launch-week-workflow-as-code',
 	},
 ];
 
@@ -283,7 +283,7 @@ const cardVisuals = [
 
 function DayCard({ item, index }) {
 	const Visual = cardVisuals[index];
-	const disabled = item.day !== 1;
+	const disabled = false;
 
 	const content = (
 		<>

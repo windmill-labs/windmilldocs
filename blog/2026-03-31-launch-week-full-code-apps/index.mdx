@@ -1,6 +1,6 @@
 ---
 slug: launch-week-full-code-apps
-authors: [tristanlecuyer]
+authors: [tristanlecuyer, rubenfiszel]
 tags: ['Launch Week']
 description: 'Introducing full-code apps: build React or Svelte frontends connected to backend runnables in 25+ languages, with a typed API and local dev workflow.'
 title: 'Full-code apps: React and Svelte on Windmill'
@@ -24,7 +24,7 @@ Workflow platforms typically have no UI layer. When they do, it is a low-code bu
 
 Teams end up building separate frontends. That means a separate deployment pipeline, a separate auth system, REST endpoints to define and maintain, and glue code to connect it all. The orchestration layer runs your backend logic but has no opinion about how users interact with it.
 
-We wanted Windmill users to go from "I have a script" to "I have an app with a React frontend calling that script" without leaving the platform.
+For teams that need a custom frontend, we wanted them to build it where they already build the backend.
 
 ## Full-code apps: one import, typed calls
 
@@ -156,21 +156,6 @@ Three design choices drove the architecture:
 
 **No separate API layer.** The frontend calls backend runnables directly through Windmill's execution engine via WebSocket. No REST endpoints to define, no API gateway to configure, no OpenAPI specs to maintain. You write a function in `backend/`, and it appears as a typed call in your frontend.
 
-## Full-code vs low-code apps
-
-Windmill offers both full-code and [low-code](../docs/apps/app_editor) app builders. They serve different needs:
-
-| | Full-code apps | Low-code apps |
-|---|---|---|
-| **UI** | Custom React/Svelte components | Drag-and-drop component library |
-| **Frontend logic** | Full framework features (hooks, stores, routing) | Connecting components + inline scripts |
-| **Backend** | Scripts in `backend/` folder, any language | Runnables panel, inline or workspace scripts |
-| **Styling** | Your own CSS, Tailwind, etc. | Component-level + global CSS editor |
-| **Local dev** | `wmill app dev` with hot reload | Web-based editor only |
-| **Best for** | Custom UIs, complex interactions, existing codebases | Quick dashboards, forms, CRUD interfaces |
-
-We recommend full-code apps when you need custom UI components, complex frontend logic, or want to reuse an existing React/Svelte codebase. Low-code apps are the faster choice for internal dashboards, forms, and CRUD interfaces where the built-in component library covers your needs.
-
 ## Example: project structure
 
 Here is what a typical full-code app looks like on disk:
@@ -193,6 +178,18 @@ my_app.raw_app/
 Each file in `backend/` becomes a callable runnable. The language is detected from the extension: `.ts` for TypeScript, `.py` for Python, `.pg.sql` for PostgreSQL, and so on. No YAML configuration is needed for simple runnables.
 
 <!-- TODO: video showing the project structure in VS Code alongside the running app. Path suggestion: /videos/full_code_apps_project_structure.webm -->
+
+## Full-stack apps on one platform
+
+Full-code apps are designed to work with the rest of Windmill. Combined with [Data Tables](/blog/launch-week-data-tables-ducklake) and backend runnables, you get a complete full-stack setup with no external infrastructure:
+
+- **Frontend**: React or Svelte, served by Windmill.
+- **Backend**: scripts in 20+ languages, each running on isolated workers with full CPU and memory.
+- **Data**: [Data Tables](/docs/core_concepts/persistent_storage/data_tables) for relational storage, [Ducklake](/docs/core_concepts/persistent_storage/ducklake) for analytics. No connection strings to manage.
+
+There is no API layer to build. Your frontend calls backend runnables via a typed API, and those runnables read and write to Data Tables directly. Windmill handles execution, authentication, hosting, and monitoring.
+
+For AI-assisted development, the CLI generates `AGENTS.md` and `DATATABLES.md` context files so tools like Claude Code or Codex understand your project structure, backend runnables, and data schema out of the box.
 
 ## Getting started
 
@@ -229,6 +226,11 @@ You can also create full-code apps directly from the Windmill UI by clicking "+ 
 		title="Full-code apps quickstart"
 		description="Step-by-step guide to build your first full-code app."
 		href="/docs/getting_started/full_code_apps_quickstart"
+	/>
+	<DocCard
+		title="Internal tools use case"
+		description="See examples of full-stack apps built on Windmill."
+		href="/use-cases/internal-tools"
 	/>
 </div>
 

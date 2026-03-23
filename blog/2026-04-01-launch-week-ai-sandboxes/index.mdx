@@ -1,0 +1,138 @@
+---
+slug: launch-week-ai-sandboxes
+authors: [tristanlecuyer, rubenfiszel]
+tags: ['Launch Week']
+description: 'Introducing AI sandboxes: run Claude Code, Codex, or custom agents in isolated environments with persistent volumes on Windmill.'
+title: 'AI sandboxes: isolated environments for coding agents'
+---
+
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# AI sandboxes: isolated environments for coding agents
+
+**Day 3 of [Windmill launch week](/launch-week-march-2026).** You can now run AI coding agents like Claude Code or Codex in sandboxed environments with persistent storage, directly from your scripts and flows.
+
+{/* truncate */}
+
+<!-- TODO: create hero illustration showing an agent running inside an NSJAIL sandbox with a volume mounted, connected to a Windmill worker -->
+
+## The problem
+
+AI coding agents need two things that are hard to combine: isolation and persistence. You want them sandboxed so they cannot access the host filesystem or network. But you also want them to remember state across runs, produce artifacts, and pick up where they left off.
+
+Teams end up managing Docker containers, mounting volumes manually, and writing wrapper scripts to handle session state. The orchestration layer has no opinion about where the agent runs or how its files persist.
+
+## AI sandboxes: two annotations
+
+An AI sandbox is a regular Windmill script with two annotations: one for isolation, one for storage.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+// sandbox
+// volume: agent-state .agent
+
+import Anthropic from '@anthropic-ai/sdk';
+import { MessageStream } from '@anthropic-ai/sdk/lib/MessageStream';
+
+export async function main(prompt: string) {
+  const client = new Anthropic();
+  // The .agent directory persists across runs
+  const result = await client.messages.create({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1024,
+    messages: [{ role: 'user', content: prompt }],
+  });
+  return result;
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+# sandbox
+# volume: agent-state .agent
+
+import anthropic
+
+def main(prompt: str):
+    client = anthropic.Anthropic()
+    # The .agent directory persists across runs
+    result = client.messages.create(
+        model="claude-sonnet-4-20250514",
+        max_tokens=1024,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return result
+```
+
+</TabItem>
+</Tabs>
+
+<!-- TODO: video showing an AI sandbox running in Windmill, with the volume persisting files across runs. Path suggestion: /videos/ai_sandboxes_demo.webm -->
+
+`// sandbox` enables NSJAIL process isolation. `// volume: agent-state .agent` mounts a persistent volume synced to your workspace object storage. That's it.
+
+## Why we built it this way
+
+Three design choices drove the architecture:
+
+**Process isolation with NSJAIL.** Each execution runs in its own NSJAIL sandbox with filesystem isolation, network restrictions, and resource limits. The agent cannot access the host system or other jobs. You can force sandboxing instance-wide for all scripts.
+
+**Persistent volumes on object storage.** Files in the mounted volume are synced to your workspace S3 (or Azure Blob, GCS) between runs. A per-worker LRU cache (up to 10 GB) avoids re-downloading on consecutive runs. Exclusive leasing prevents concurrent writes to the same volume.
+
+**Works with any agent.** Claude Code, Codex, OpenCode, or any custom agent that operates on a local filesystem. Windmill provides the sandbox and the storage; the agent brings its own logic. A built-in Claude Code template handles session persistence and token counting out of the box.
+
+## Built-in Claude Code template
+
+Windmill ships with a ready-to-use Claude Code template. It handles session persistence (the session ID is stored in the volume), agent instructions, skill files, and token counting for cost monitoring.
+
+```ts
+// sandbox
+// volume: claude-sessions .agent
+
+import { ClaudeCodeAgent } from '@anthropic-ai/claude-agent-sdk';
+
+export async function main(prompt: string) {
+  const agent = new ClaudeCodeAgent({
+    instructions: "You are a helpful coding assistant.",
+  });
+  return await agent.run(prompt);
+}
+```
+
+<!-- TODO: video showing the Claude Code template in action with session persistence. Path suggestion: /videos/ai_sandboxes_claude_code.webm -->
+
+## Use cases
+
+- **Persistent agent memory**: conversation history and session state survive across runs.
+- **Artifact generation**: agents produce reports, code, or data files that persist in the volume.
+- **Multi-step workflows**: a flow triggers an agent, waits for results, then passes artifacts to the next step.
+- **Safe execution at scale**: resource limits and isolation let you run untrusted agent code without risk.
+
+## Getting started
+
+1. Configure [workspace object storage](/docs/core_concepts/persistent_storage) (S3, Azure Blob, GCS, or filesystem).
+2. Add `// sandbox` and `// volume: <name> <path>` annotations to any script.
+3. Run it. Files in the volume path persist across executions.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="AI sandboxes"
+		description="Run agents in isolated environments with persistent volumes."
+		href="/docs/core_concepts/ai_sandbox"
+	/>
+	<DocCard
+		title="Volumes"
+		description="Persistent file storage synced to object storage."
+		href="/docs/core_concepts/volumes"
+	/>
+</div>
+
+## What's next
+
+Tomorrow is Day 4: **Git sync & workspace forks**. Sync with Git, stage workspaces, and deploy via CI/CD. [Follow along](/launch-week-march-2026).
