@@ -306,15 +306,23 @@ You need to configure [Critical alert channels](../37_critical_alerts/index.mdx)
 
 ## Python runtime settings
 
-Add Python runtime specific settings like additional Python paths and PIP local dependencies.
+Configure Python-specific settings at the worker group level.
 
 ![Python runtime settings](./python_runtime_settings.png 'Python runtime settings')
+
+- **Additional Python paths**: extra directories to add to `sys.path` at runtime, making any Python modules in those directories importable by scripts.
+- **PIP local dependencies**: regex patterns for packages that the [dependency resolver](../../advanced/15_dependencies_in_python/index.mdx) should skip during lockfile generation. Use this for packages pre-installed on the worker (e.g. via [global site-packages](../../advanced/8_preinstall_binaries/index.mdx#global-site-packages) or a custom Docker image) so that their `import` lines don't trigger PyPI resolution. Can also be set via the `PIP_LOCAL_DEPENDENCIES` environment variable (comma-separated).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Dependencies in Python"
 		description="How to manage dependencies in Python scripts."
 		href="/docs/advanced/dependencies_in_python"
+	/>
+	<DocCard
+		title="Global site-packages"
+		description="Pre-install Python packages on workers and skip dependency resolution."
+		href="/docs/advanced/preinstall_binaries#global-site-packages"
 	/>
 </div>
 
