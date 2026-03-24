@@ -536,7 +536,7 @@ Parameters:
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `timeout` | `number` / `int` | `1800` | Maximum time to wait for approval in seconds. The workflow is cancelled if the timeout is reached |
-| `form` | `object` / `dict` | `undefined` / `None` | JSON Schema describing form fields shown on the approval page (EE only) |
+| `form` | `object` / `dict` | `undefined` / `None` | Form fields shown on the approval page. Pass fields directly as keys (e.g. `{ reason: { type: "string" } }`), or use a full JSON Schema object for `required`/`order` support (EE only) |
 | `selfApproval` / `self_approval` | `boolean` / `bool` | `true` / `True` | Whether the user who triggered the workflow can approve it. Set to `false` to require a different user (EE only). See [disable self-approval](../../flows/11_flow_approval.mdx#disable-self-approval) |
 
 <Tabs className="unique-tabs">
@@ -564,17 +564,14 @@ export const main = workflow(async (env: string) => {
 });
 ```
 
-With a form (EE only):
+With a form (EE only). Pass fields directly as keys — no `type: "object"` wrapper needed:
 
 ```typescript
 const approval = await waitForApproval({
 	timeout: 7200,
 	form: {
-		type: 'object',
-		properties: {
-			reason: { type: 'string', description: 'Approval reason' },
-			environment: { type: 'string', enum: ['staging', 'production'] }
-		}
+		reason: { type: 'string', description: 'Approval reason' },
+		environment: { type: 'string', enum: ['staging', 'production'] }
 	}
 });
 // The approver fills in the form on the approval page.
@@ -582,6 +579,22 @@ const approval = await waitForApproval({
 // { reason: "LGTM", environment: "production" }
 console.log(approval.value.reason);      // "LGTM"
 console.log(approval.value.environment); // "production"
+```
+
+You can also use a full JSON Schema object if you need `required` or `order` constraints:
+
+```typescript
+const approval = await waitForApproval({
+	form: {
+		type: 'object',
+		properties: {
+			reason: { type: 'string' },
+			environment: { type: 'string', enum: ['staging', 'production'] }
+		},
+		required: ['reason'],
+		order: ['reason', 'environment']
+	}
+});
 ```
 
 </TabItem>
@@ -608,17 +621,14 @@ async def main(env: str):
     return await deploy(env)
 ```
 
-With a form (EE only):
+With a form (EE only). Pass fields directly as keys — no `type: "object"` wrapper needed:
 
 ```python
 approval = await wait_for_approval(
     timeout=7200,
     form={
-        "type": "object",
-        "properties": {
-            "reason": {"type": "string", "description": "Approval reason"},
-            "environment": {"type": "string", "enum": ["staging", "production"]},
-        },
+        "reason": {"type": "string", "description": "Approval reason"},
+        "environment": {"type": "string", "enum": ["staging", "production"]},
     },
 )
 # The approver fills in the form on the approval page.
@@ -626,6 +636,22 @@ approval = await wait_for_approval(
 # {"reason": "LGTM", "environment": "production"}
 print(approval["value"]["reason"])       # "LGTM"
 print(approval["value"]["environment"])  # "production"
+```
+
+You can also use a full JSON Schema object if you need `required` or `order` constraints:
+
+```python
+approval = await wait_for_approval(
+    form={
+        "type": "object",
+        "properties": {
+            "reason": {"type": "string"},
+            "environment": {"type": "string", "enum": ["staging", "production"]},
+        },
+        "required": ["reason"],
+        "order": ["reason", "environment"],
+    },
+)
 ```
 
 </TabItem>
@@ -1397,7 +1423,7 @@ Suspends the workflow and waits for human approval. The worker is released while
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `timeout` | `number` | `1800` | Max wait time in seconds |
-| `form` | `object` | `undefined` | JSON Schema for an approval form (EE only) |
+| `form` | `object` | `undefined` | Form fields (pass fields directly as keys, or a full JSON Schema object for `required`/`order` support) (EE only) |
 | `selfApproval` | `boolean` | `true` | Allow the triggering user to approve. Set to `false` to require a different approver (EE only) |
 
 ```typescript
@@ -1407,11 +1433,8 @@ const result = await waitForApproval({
 	timeout: 3600,
 	selfApproval: false,
 	form: {
-		type: 'object',
-		properties: {
-			reason: { type: 'string', description: 'Why are you approving?' },
-			priority: { type: 'number', enum: [1, 2, 3] }
-		}
+		reason: { type: 'string', description: 'Why are you approving?' },
+		priority: { type: 'number', enum: [1, 2, 3] }
 	}
 });
 // result.approved — true if approved, false if rejected/timed out
@@ -1544,7 +1567,7 @@ Suspends the workflow and waits for human approval. The worker is released while
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `timeout` | `int` | `1800` | Max wait time in seconds |
-| `form` | `dict \| None` | `None` | JSON Schema dict for an approval form (EE only) |
+| `form` | `dict \| None` | `None` | Form fields (pass fields directly as keys, or a full JSON Schema dict for `required`/`order` support) (EE only) |
 | `self_approval` | `bool` | `True` | Allow the triggering user to approve. Set to `False` to require a different approver (EE only) |
 
 ```python
@@ -1554,11 +1577,8 @@ result = await wait_for_approval(
     timeout=3600,
     self_approval=False,
     form={
-        "type": "object",
-        "properties": {
-            "reason": {"type": "string", "description": "Why are you approving?"},
-            "priority": {"type": "number", "enum": [1, 2, 3]},
-        },
+        "reason": {"type": "string", "description": "Why are you approving?"},
+        "priority": {"type": "number", "enum": [1, 2, 3]},
     },
 )
 # result["approved"] — True if approved, False if rejected/timed out
