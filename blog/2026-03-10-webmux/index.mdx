@@ -16,13 +16,13 @@ import linearVideo from './linear.mp4';
 
 # Webmux: a web dashboard for parallel AI coding agents
 
-Every team running AI coding agents in parallel hits the same wall. You have 5 agents going — each in its own git worktree, each with dev servers, each producing PRs — and you're alt-tabbing between terminal windows, GitHub tabs, and CI dashboards trying to keep track.
+Every team running AI coding agents in parallel hits the same wall. You have 5 agents going, each in its own git worktree, each with dev servers, each producing PRs, and you're alt-tabbing between terminal windows, GitHub tabs, and CI dashboards trying to keep track.
 
 The tooling to manage this is evolving fast. [Workmux](https://workmux.raine.dev/) popularized the one-worktree-one-tmux-one-agent model. [Cmux](https://cmux.com/) brings Ghostty-based terminal management with notification rings. Others have built internal solutions around tmux scripts, custom CLIs, or IDE extensions.
 
 ![Webmux dashboard](./thumbnail.webp)
 
-We tried several of these approaches at Windmill, and none fully solved our problem. Our setup has specific needs: each worktree requires its own isolated Postgres database (either fresh or cloned from a seeded template), lifecycle hooks to run migrations automatically, and the ability to manage linked repos — Windmill's enterprise edition lives in a separate repository whose PRs need to be tracked alongside the main one. What we needed was a single dashboard where we could see every agent's terminal output, PR status, CI results, and service health at a glance — without leaving the browser.
+We tried several of these approaches at Windmill, and none fully solved our problem. Our setup has specific needs: each worktree requires its own isolated Postgres database (either fresh or cloned from a seeded template), lifecycle hooks to run migrations automatically, and the ability to manage linked repos (Windmill's enterprise edition lives in a separate repository whose PRs need to be tracked alongside the main one). What we needed was a single dashboard where we could see every agent's terminal output, PR status, CI results, and service health at a glance, without leaving the browser.
 
 So we built [**Webmux**](https://webmux.dev/), an open-source web dashboard and CLI for creating, monitoring, and managing parallel AI agents. It combines embedded terminals (xterm.js rendering real Claude/Codex sessions), GitHub PR and CI tracking, service health monitoring, Docker sandboxing, Linear integration, and a mobile-friendly UI in one tool.
 
@@ -74,10 +74,10 @@ All of this is driven by a single `.webmux.yaml` config file at the root of your
 
 Everything you can do from the web UI is also available from the command line:
 
-- `webmux create` — create a worktree with a profile and prompt.
-- `webmux list` — list active worktrees with their status.
-- `webmux remove` — tear down a worktree and run cleanup hooks.
-- `webmux attach` — attach to a worktree's tmux session.
+- `webmux create`: create a worktree with a profile and prompt.
+- `webmux list`: list active worktrees with their status.
+- `webmux remove`: tear down a worktree and run cleanup hooks.
+- `webmux attach`: attach to a worktree's tmux session.
 
 Since tmux is the source of truth, changes from the CLI and the web UI are always in sync.
 
