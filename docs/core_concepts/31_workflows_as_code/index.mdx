@@ -521,7 +521,23 @@ The minimum sleep duration is 1 second. Values are rounded to the nearest intege
 
 ## Approval / human-in-the-loop
 
-`waitForApproval()` suspends the workflow and waits for a human to approve or reject it from the Windmill UI, similar to [approval steps in flows](../../flows/11_flow_approval.mdx).
+`waitForApproval()` suspends the workflow and waits for a human to approve or reject it from the Windmill UI, similar to [approval steps in flows](../../flows/11_flow_approval.mdx). The worker is fully released while waiting, so there is zero resource usage during the approval window.
+
+It returns an object with three fields:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `value` | `any` | Form data submitted with the approval (if a form was provided) |
+| `approver` | `string` | Username or identifier of the person who approved/rejected |
+| `approved` | `boolean` | `true` if approved, `false` if rejected or timed out |
+
+Parameters:
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `timeout` | `number` / `int` | `1800` | Maximum time to wait for approval in seconds. The workflow is cancelled if the timeout is reached |
+| `form` | `object` / `dict` | `undefined` / `None` | JSON Schema describing form fields shown on the approval page |
+| `selfApproval` / `self_approval` | `boolean` / `bool` | `true` / `True` | Whether the user who triggered the workflow can approve it. Set to `false` to require a different user. See [disable self-approval](../../flows/11_flow_approval.mdx#disable-self-approval) |
 
 <Tabs className="unique-tabs">
 <TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -535,9 +551,10 @@ async function deploy(env: string) {
 }
 
 export const main = workflow(async (env: string) => {
-	// Wait for human approval (default timeout: 1800s)
-	const approval = await waitForApproval({ timeout: 3600 });
-	// approval contains: { value: any, approver: string, approved: boolean }
+	const approval = await waitForApproval({
+		timeout: 3600,
+		selfApproval: false, // require a different user to approve
+	});
 
 	if (!approval.approved) {
 		return `Deployment rejected by ${approval.approver}`;
@@ -560,6 +577,7 @@ const approval = await waitForApproval({
 		}
 	}
 });
+// approval.value contains the submitted form data, e.g. { reason: "LGTM", environment: "production" }
 ```
 
 </TabItem>
@@ -575,9 +593,10 @@ async def deploy(env: str):
 
 @workflow
 async def main(env: str):
-    # Wait for human approval (default timeout: 1800s)
-    approval = await wait_for_approval(timeout=3600)
-    # approval contains: {"value": ..., "approver": "...", "approved": True/False}
+    approval = await wait_for_approval(
+        timeout=3600,
+        self_approval=False,  # require a different user to approve
+    )
 
     if not approval["approved"]:
         return f"Deployment rejected by {approval['approver']}"
@@ -598,6 +617,7 @@ approval = await wait_for_approval(
         },
     },
 )
+# approval["value"] contains the submitted form data, e.g. {"reason": "LGTM", "environment": "production"}
 ```
 
 </TabItem>
@@ -1364,21 +1384,30 @@ await sleep(3600); // 1 hour, zero worker usage
 
 #### `waitForApproval(options?)`
 
-Suspends the workflow waiting for human approval. Returns `{ value, approver, approved }`.
+Suspends the workflow and waits for human approval. The worker is released while waiting. Returns `{ value: any, approver: string, approved: boolean }`.
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `timeout` | `number` | `1800` | Max wait time in seconds |
+| `form` | `object` | `undefined` | JSON Schema for an approval form |
+| `selfApproval` | `boolean` | `true` | Allow the triggering user to approve. Set to `false` to require a different approver |
 
 ```typescript
 import { waitForApproval } from 'windmill-client';
 
 const result = await waitForApproval({
-	timeout: 3600, // optional, default 1800s
+	timeout: 3600,
+	selfApproval: false,
 	form: {
-		// optional JSON Schema for approval form
 		type: 'object',
 		properties: {
 			reason: { type: 'string' }
 		}
 	}
 });
+// result.approved — true if approved, false if rejected/timed out
+// result.approver — username of the person who acted
+// result.value    — submitted form data (if form was provided)
 ```
 
 #### `parallel(items, fn, options?)`
@@ -1499,17 +1528,27 @@ from wmill import sleep
 await sleep(3600)  # 1 hour, zero worker usage
 ```
 
-#### `wait_for_approval(timeout=1800, form=None)`
+#### `wait_for_approval(timeout=1800, form=None, self_approval=True)`
 
-Suspends the workflow waiting for human approval. Returns `{"value": ..., "approver": "...", "approved": True/False}`.
+Suspends the workflow and waits for human approval. The worker is released while waiting. Returns `{"value": ..., "approver": "...", "approved": True/False}`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `timeout` | `int` | `1800` | Max wait time in seconds |
+| `form` | `dict \| None` | `None` | JSON Schema dict for an approval form |
+| `self_approval` | `bool` | `True` | Allow the triggering user to approve. Set to `False` to require a different approver |
 
 ```python
 from wmill import wait_for_approval
 
 result = await wait_for_approval(
     timeout=3600,
+    self_approval=False,
     form={"type": "object", "properties": {"reason": {"type": "string"}}}
 )
+# result["approved"] — True if approved, False if rejected/timed out
+# result["approver"] — username of the person who acted
+# result["value"]    — submitted form data (if form was provided)
 ```
 
 #### `parallel(items, fn, concurrency=None)`
