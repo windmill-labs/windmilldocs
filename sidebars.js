@@ -963,7 +963,8 @@ const sidebars = {
 					items: [
 						'advanced/instance_settings/index',
 						'core_concepts/infrastructure_as_code/index',
-						'advanced/self_host/aws_eks_ecs'
+						'advanced/self_host/aws_eks_ecs',
+						'advanced/self_host/azure_entra_id'
 					]
 				},
 				{

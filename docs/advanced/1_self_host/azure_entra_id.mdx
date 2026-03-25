@@ -1,0 +1,234 @@
+---
+title: Windmill on Azure
+description: How do I deploy Windmill on Azure with AKS and optionally use Entra ID (Workload Identity) for passwordless PostgreSQL authentication?
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+Windmill can be deployed on Azure using [AKS](https://learn.microsoft.com/en-us/azure/aks/) (Azure Kubernetes Service) with an [Azure Database for PostgreSQL Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/). You can connect to the database using a regular password in `DATABASE_URL`, just like any other deployment — see [self-host](./index.mdx#aws-gcp-azure-neon) for general guidance.
+
+Optionally, Windmill Enterprise supports [Azure Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview) for passwordless authentication via Microsoft Entra ID. Instead of storing a database password, Windmill obtains short-lived Azure AD tokens that are automatically refreshed in the background.
+
+## Entra ID database authentication (optional)
+
+:::info Enterprise feature
+Azure Entra ID database authentication is only available in Windmill [Enterprise Edition](/pricing).
+:::
+
+### Prerequisites
+
+#### Azure Database for PostgreSQL Flexible Server
+
+You need a [Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/) instance with Microsoft Entra authentication enabled.
+
+```bash
+az postgres flexible-server create \
+  --name <pg-server> \
+  --resource-group <rg> \
+  --active-directory-auth Enabled \
+  --password-auth Enabled         # keep password auth as fallback, or set Disabled
+```
+
+#### AKS cluster with Workload Identity
+
+Your AKS cluster must have the OIDC issuer and Workload Identity add-on enabled.
+
+```bash
+az aks update \
+  --name <aks-cluster> \
+  --resource-group <rg> \
+  --enable-oidc-issuer \
+  --enable-workload-identity
+```
+
+#### User-assigned managed identity with federated credential
+
+Create a managed identity and federate it with your Kubernetes service account.
+
+```bash
+# Create identity
+az identity create \
+  --name windmill-identity \
+  --resource-group <rg>
+
+# Get the identity client ID and AKS OIDC issuer URL
+export IDENTITY_CLIENT_ID=$(az identity show --name windmill-identity --resource-group <rg> --query clientId -o tsv)
+export AKS_OIDC_ISSUER=$(az aks show --name <aks-cluster> --resource-group <rg> --query "oidcIssuerProfile.issuerUrl" -o tsv)
+
+# Create the federated credential
+az identity federated-credential create \
+  --name windmill-federated \
+  --identity-name windmill-identity \
+  --resource-group <rg> \
+  --issuer "$AKS_OIDC_ISSUER" \
+  --subject system:serviceaccount:windmill:windmill-chart \
+  --audiences api://AzureADTokenExchange
+```
+
+Replace `windmill:windmill-chart` with `<namespace>:<service-account-name>` if you use different values.
+
+### Database setup
+
+#### Set the Entra admin
+
+Assign the managed identity (or an Azure AD user) as the Entra administrator of the Flexible Server.
+
+```bash
+az postgres flexible-server ad-admin create \
+  --server-name <pg-server> \
+  --resource-group <rg> \
+  --display-name windmill-identity \
+  --object-id $(az identity show --name windmill-identity --resource-group <rg> --query principalId -o tsv) \
+  --type ServicePrincipal
+```
+
+#### Create the database and roles
+
+Connect to the server using an Azure AD token, then run the following SQL.
+
+```bash
+# Obtain a token and connect
+export PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
+psql "host=<pg-server>.postgres.database.azure.com dbname=postgres user=windmill-identity sslmode=require"
+```
+
+```sql
+-- Create the windmill database
+CREATE DATABASE windmill;
+
+-- Switch to the windmill database (\c windmill) then:
+
+-- Create the Entra-authenticated principal
+-- NOTE: pgaadauth_create_principal must be run from the postgres database
+\c postgres
+SELECT * FROM pgaadauth_create_principal('windmill-identity', false, false);
+
+-- Grant required roles
+\c windmill
+GRANT ALL ON DATABASE windmill TO "windmill-identity";
+```
+
+:::tip Non-superuser setup
+On Azure Flexible Server, `BYPASSRLS` is not available. After Windmill runs its initial migrations, grant the `windmill_admin` and `windmill_user` roles to the managed identity:
+
+```sql
+GRANT windmill_admin TO "windmill-identity";
+GRANT windmill_user TO "windmill-identity";
+```
+
+See [running Windmill without a Postgres superuser](./index.mdx#run-windmill-without-using-a-postgres-superuser) for details.
+:::
+
+:::note
+`pgaadauth_create_principal` only exists in the `postgres` database. Always switch to `postgres` before calling it.
+:::
+
+### Configuration
+
+Set the `DATABASE_URL` [environment variable](../../core_concepts/47_environment_variables/index.mdx) with `entraid` as the password sentinel:
+
+```
+postgresql://windmill-identity:entraid@<pg-server>.postgres.database.azure.com:5432/windmill?sslmode=require
+```
+
+When Windmill detects `entraid` as the password, it switches to Azure AD token-based authentication instead of using a static password.
+
+#### Auto-injected environment variables
+
+When Workload Identity is configured on AKS, the following environment variables are automatically injected into your pods by the AKS mutating webhook:
+
+| Variable | Description |
+|----------|-------------|
+| `AZURE_TENANT_ID` | Your Azure AD tenant ID |
+| `AZURE_CLIENT_ID` | Client ID of the managed identity |
+| `AZURE_FEDERATED_TOKEN_FILE` | Path to the projected service account token |
+| `AZURE_AUTHORITY_HOST` | Azure AD authority endpoint |
+
+You do not need to set these manually. For sovereign clouds (Azure Government, Azure China), the webhook sets `AZURE_AUTHORITY_HOST` to the appropriate endpoint automatically.
+
+### Helm chart configuration
+
+Below is a `values.yaml` example for deploying Windmill on AKS with Entra ID database authentication.
+
+```yaml
+windmill:
+  image: ghcr.io/windmill-labs/windmill-ee
+  databaseUrl: postgresql://windmill-identity:entraid@<pg-server>.postgres.database.azure.com:5432/windmill?sslmode=require
+  appReplicas: 2
+  lspReplicas: 1
+  multiplayerReplicas: 1
+  indexerReplicas: 1
+
+  app:
+    labels:
+      azure.workload.identity/use: "true"
+
+  indexer:
+    labels:
+      azure.workload.identity/use: "true"
+
+  workers:
+    - name: default
+      replicas: 3
+      labels:
+        azure.workload.identity/use: "true"
+    - name: native
+      replicas: 2
+      labels:
+        azure.workload.identity/use: "true"
+
+serviceAccount:
+  create: true
+  annotations:
+    azure.workload.identity/client-id: "<IDENTITY_CLIENT_ID>"
+
+enterprise:
+  enable: true
+
+postgresql:
+  enabled: false
+```
+
+Replace `<pg-server>` and `<IDENTITY_CLIENT_ID>` with your actual values.
+
+The `azure.workload.identity/use: "true"` label must be present on every pod that connects to the database (app, indexer, and all worker groups).
+
+### How it works
+
+1. AKS projects a short-lived service account token into each pod via the Workload Identity webhook.
+2. At startup, Windmill detects the `entraid` sentinel password and reads the projected token from `AZURE_FEDERATED_TOKEN_FILE`.
+3. Windmill exchanges the federated token for an Azure AD access token scoped to `https://ossrdbms-aad.database.windows.net/.default`.
+4. The access token is used as the PostgreSQL password when opening connections.
+5. A background task refreshes the token approximately every 60 minutes, before the previous token expires. Active connections are re-authenticated transparently.
+
+### Requirements
+
+- Windmill Enterprise Edition (`windmill-ee` image)
+- Azure Database for PostgreSQL Flexible Server with Microsoft Entra authentication enabled
+- AKS cluster with OIDC issuer and Workload Identity enabled
+- User-assigned managed identity with a federated credential linked to the Windmill service account
+- PostgreSQL 16+ recommended
+
+### Troubleshooting
+
+| Error | Solution |
+|-------|----------|
+| `Azure AD authentication failed` | Verify the managed identity is set as Entra admin on the Flexible Server |
+| No `entraid mode detected` log at startup | Ensure the password in `DATABASE_URL` is exactly `entraid` and you are using the `windmill-ee` image |
+| `AADSTS70021: No matching federated identity record found` | Check the federated credential subject matches `system:serviceaccount:<namespace>:<sa-name>` |
+| Token refresh failures in logs | Confirm the Workload Identity webhook is injecting `AZURE_FEDERATED_TOKEN_FILE` (check pod env) |
+| `pgaadauth_create_principal` not found | This function only exists in the `postgres` database — connect to `postgres` before calling it |
+| `permission denied for schema public` | Run `GRANT windmill_admin TO "windmill-identity"; GRANT windmill_user TO "windmill-identity";` after migrations |
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self-host Windmill"
+		description="Self-host Windmill on your own infrastructure."
+		href="/docs/advanced/self_host"
+	/>
+	<DocCard
+		title="Windmill on AWS"
+		description="Deploy Windmill on AWS using EKS, ECS, or CloudFormation."
+		href="/docs/advanced/self_host/aws_eks_ecs"
+	/>
+</div>
