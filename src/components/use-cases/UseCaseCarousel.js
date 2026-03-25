@@ -15,7 +15,7 @@ const allUseCases = [
 	{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.webp' },
 	{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.webp' },
 	{ label: 'Workflows', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflows', cover: '/img/money-pages/parallel-branches.webp' },
-	{ label: 'Triggers', subtitle: 'Trigger scripts and flows from schedules, webhooks, Kafka, Postgres, websockets, emails and more.', to: '/use-cases/triggers', cover: '/img/money-pages/cron-schedules-card.webp' },
+	{ label: 'Scheduled tasks', subtitle: 'Run cron jobs with a visual builder, execution history, error handlers, recovery handlers and alerting.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedule.webp' },
 ];
 
 export default function UseCaseCarousel({ current, title, subtitle }) {

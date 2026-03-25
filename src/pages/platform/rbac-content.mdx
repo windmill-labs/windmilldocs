@@ -78,6 +78,7 @@ export const roles = [
 	{ name: 'Admin', scope: 'Workspace', desc: 'Full control over workspace content, members, and settings.' },
 	{ name: 'Developer', scope: 'Workspace', desc: 'Creates and edits scripts, flows, and apps. Access scoped by folder permissions.' },
 	{ name: 'Operator', scope: 'Workspace', desc: 'Run-only access. Executes scripts and apps without viewing source code.' },
+	{ name: 'Custom', scope: 'Workspace', desc: 'Build your own roles with groups. Combine folder-level permissions (viewer, writer, admin) to create team-specific access profiles.' },
 ];
 
 {/* ── Main page ── */}
@@ -207,7 +208,7 @@ export default function RbacContent({ title, description }) {
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<UseCaseFAQ faqs={[
 				{ question: 'What is the difference between Admin and Devops?', textAnswer: 'Admin is a workspace-level role with full control over workspace content, members, and settings. Devops is an instance-level role focused on infrastructure: it has read access to all workspaces and can manage workers and view service logs, but cannot modify workspace content.' },
-				{ question: 'Can I create custom roles?', textAnswer: 'Windmill does not support custom roles. The five built-in roles combined with folder-based group permissions cover most access control needs. Groups and folders provide the granularity to scope access per team, project, or environment.' },
+				{ question: 'Can I create custom roles?', textAnswer: 'Yes. While Windmill provides five built-in roles, you can create custom roles using groups. Assign folder-level permissions (viewer, writer, admin) per group to build any access profile your team needs.' },
 				{ question: 'Which SSO providers are supported?', textAnswer: 'Windmill supports Google, GitHub, Azure AD, Okta, GitLab, and any OpenID Connect provider via OAuth. Enterprise adds SAML SSO and SCIM provisioning for identity providers like Okta, Azure AD, and OneLogin.' },
 				{ question: 'Are secrets visible in logs or API responses?', textAnswer: 'No. Secrets are encrypted at rest and injected at runtime only. They are never exposed in logs, the UI, or API responses. Workers receive decrypted values in memory only during script execution.' },
 				{ question: 'Can I authenticate API calls with external tokens?', textAnswer: 'Yes. Enterprise supports JWT external auth to embed Windmill apps in existing portals or call the API with your own identity provider tokens. Windmill can also issue OIDC tokens for running jobs, allowing authentication with cloud providers (AWS, GCP, Azure) without storing long-lived credentials.' },

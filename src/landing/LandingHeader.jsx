@@ -141,6 +141,12 @@ const solutionsByUseCase = [
 		href: '/use-cases/data-pipelines',
 		icon: CircleStackIcon
 	},
+	{
+		name: 'Scheduled tasks',
+		description: 'Cron jobs with retries, error handling and alerting.',
+		href: '/use-cases/scheduled-tasks',
+		icon: ClockIcon
+	},
 ];
 
 // const solutionsByRole = [
@@ -527,6 +533,19 @@ export default function LandingHeader() {
 								{/* Show navigation items only on mobile (md:hidden) */}
 								<div className="md:hidden grid grid-cols-2 gap-4">
 									<a
+										href="/platform"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Platform
+									</a>
+									<a
+										href="/use-cases"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Solutions
+									</a>
+
+									<a
 										href="/docs/intro"
 										onClick={() => window.plausible('read-docs')}
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
@@ -556,49 +575,6 @@ export default function LandingHeader() {
 										>
 											{resource.name}
 										</a>
-									))}
-								</div>
-
-								{/* Products section in mobile menu */}
-								<div className="md:hidden mt-4 space-y-4">
-									{productCategories.map((category) => (
-										<div key={category.title}>
-											<div className="grid grid-cols-2 gap-2">
-												{category.items.map((item) => (
-													<a
-														key={item.name}
-														href={item.href}
-														className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-													>
-														{item.name}
-													</a>
-												))}
-											</div>
-										</div>
-									))}
-								</div>
-
-								{/* Solutions section in mobile menu */}
-								<div className="md:hidden mt-4 space-y-4">
-									{[
-										{ title: 'By use case', items: solutionsByUseCase }
-									].map((section) => (
-										<div key={section.title}>
-											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
-												{section.title}
-											</div>
-											<div className="grid grid-cols-2 gap-2">
-												{section.items.map((item) => (
-													<a
-														key={item.name}
-														href={item.href}
-														className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-													>
-														{item.name}
-													</a>
-												))}
-											</div>
-										</div>
 									))}
 								</div>
 

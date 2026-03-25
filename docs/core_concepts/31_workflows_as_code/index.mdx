@@ -521,7 +521,23 @@ The minimum sleep duration is 1 second. Values are rounded to the nearest intege
 
 ## Approval / human-in-the-loop
 
-`waitForApproval()` suspends the workflow and waits for a human to approve or reject it from the Windmill UI, similar to [approval steps in flows](../../flows/11_flow_approval.mdx).
+`waitForApproval()` suspends the workflow and waits for a human to approve or reject it from the Windmill UI, similar to [approval steps in flows](../../flows/11_flow_approval.mdx). The worker is fully released while waiting, so there is zero resource usage during the approval window.
+
+It returns an object with three fields:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `value` | `any` | Form data submitted with the approval (if a form was provided) |
+| `approver` | `string` | Username or identifier of the person who approved/rejected |
+| `approved` | `boolean` | `true` if approved, `false` if rejected or timed out |
+
+Parameters:
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `timeout` | `number` / `int` | `1800` | Maximum time to wait for approval in seconds. The workflow is cancelled if the timeout is reached |
+| `form` | `object` / `dict` | `undefined` / `None` | Form fields shown on the approval page. Pass fields directly as keys (e.g. `{ reason: { type: "string" } }`), or use a full JSON Schema object for `required`/`order` support (EE only) |
+| `selfApproval` / `self_approval` | `boolean` / `bool` | `true` / `True` | Whether the user who triggered the workflow can approve it. Set to `false` to require a different user (EE only). See [disable self-approval](../../flows/11_flow_approval.mdx#disable-self-approval) |
 
 <Tabs className="unique-tabs">
 <TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -535,9 +551,10 @@ async function deploy(env: string) {
 }
 
 export const main = workflow(async (env: string) => {
-	// Wait for human approval (default timeout: 1800s)
-	const approval = await waitForApproval({ timeout: 3600 });
-	// approval contains: { value: any, approver: string, approved: boolean }
+	const approval = await waitForApproval({
+		timeout: 3600,
+		selfApproval: false, // require a different user to approve
+	});
 
 	if (!approval.approved) {
 		return `Deployment rejected by ${approval.approver}`;
@@ -547,17 +564,35 @@ export const main = workflow(async (env: string) => {
 });
 ```
 
-With a form:
+With a form (EE only). Pass fields directly as keys — no `type: "object"` wrapper needed:
 
 ```typescript
 const approval = await waitForApproval({
 	timeout: 7200,
 	form: {
+		reason: { type: 'string', description: 'Approval reason' },
+		environment: { type: 'string', enum: ['staging', 'production'] }
+	}
+});
+// The approver fills in the form on the approval page.
+// approval.value contains the submitted form data, e.g.:
+// { reason: "LGTM", environment: "production" }
+console.log(approval.value.reason);      // "LGTM"
+console.log(approval.value.environment); // "production"
+```
+
+You can also use a full JSON Schema object if you need `required` or `order` constraints:
+
+```typescript
+const approval = await waitForApproval({
+	form: {
 		type: 'object',
 		properties: {
-			reason: { type: 'string', description: 'Approval reason' },
+			reason: { type: 'string' },
 			environment: { type: 'string', enum: ['staging', 'production'] }
-		}
+		},
+		required: ['reason'],
+		order: ['reason', 'environment']
 	}
 });
 ```
@@ -575,9 +610,10 @@ async def deploy(env: str):
 
 @workflow
 async def main(env: str):
-    # Wait for human approval (default timeout: 1800s)
-    approval = await wait_for_approval(timeout=3600)
-    # approval contains: {"value": ..., "approver": "...", "approved": True/False}
+    approval = await wait_for_approval(
+        timeout=3600,
+        self_approval=False,  # require a different user to approve
+    )
 
     if not approval["approved"]:
         return f"Deployment rejected by {approval['approver']}"
@@ -585,17 +621,35 @@ async def main(env: str):
     return await deploy(env)
 ```
 
-With a form:
+With a form (EE only). Pass fields directly as keys — no `type: "object"` wrapper needed:
 
 ```python
 approval = await wait_for_approval(
     timeout=7200,
     form={
+        "reason": {"type": "string", "description": "Approval reason"},
+        "environment": {"type": "string", "enum": ["staging", "production"]},
+    },
+)
+# The approver fills in the form on the approval page.
+# approval["value"] contains the submitted form data, e.g.:
+# {"reason": "LGTM", "environment": "production"}
+print(approval["value"]["reason"])       # "LGTM"
+print(approval["value"]["environment"])  # "production"
+```
+
+You can also use a full JSON Schema object if you need `required` or `order` constraints:
+
+```python
+approval = await wait_for_approval(
+    form={
         "type": "object",
         "properties": {
-            "reason": {"type": "string", "description": "Approval reason"},
+            "reason": {"type": "string"},
             "environment": {"type": "string", "enum": ["staging", "production"]},
         },
+        "required": ["reason"],
+        "order": ["reason", "environment"],
     },
 )
 ```
@@ -1364,21 +1418,28 @@ await sleep(3600); // 1 hour, zero worker usage
 
 #### `waitForApproval(options?)`
 
-Suspends the workflow waiting for human approval. Returns `{ value, approver, approved }`.
+Suspends the workflow and waits for human approval. The worker is released while waiting. Returns `{ value: any, approver: string, approved: boolean }`.
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `timeout` | `number` | `1800` | Max wait time in seconds |
+| `form` | `object` | `undefined` | Form fields (pass fields directly as keys, or a full JSON Schema object for `required`/`order` support) (EE only) |
+| `selfApproval` | `boolean` | `true` | Allow the triggering user to approve. Set to `false` to require a different approver (EE only) |
 
 ```typescript
 import { waitForApproval } from 'windmill-client';
 
 const result = await waitForApproval({
-	timeout: 3600, // optional, default 1800s
+	timeout: 3600,
+	selfApproval: false,
 	form: {
-		// optional JSON Schema for approval form
-		type: 'object',
-		properties: {
-			reason: { type: 'string' }
-		}
+		reason: { type: 'string', description: 'Why are you approving?' },
+		priority: { type: 'number', enum: [1, 2, 3] }
 	}
 });
+// result.approved — true if approved, false if rejected/timed out
+// result.approver — username of the person who acted
+// result.value    — submitted form data, e.g. { reason: "Urgent fix", priority: 1 }
 ```
 
 #### `parallel(items, fn, options?)`
@@ -1499,17 +1560,30 @@ from wmill import sleep
 await sleep(3600)  # 1 hour, zero worker usage
 ```
 
-#### `wait_for_approval(timeout=1800, form=None)`
+#### `wait_for_approval(timeout=1800, form=None, self_approval=True)`
 
-Suspends the workflow waiting for human approval. Returns `{"value": ..., "approver": "...", "approved": True/False}`.
+Suspends the workflow and waits for human approval. The worker is released while waiting. Returns `{"value": ..., "approver": "...", "approved": True/False}`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `timeout` | `int` | `1800` | Max wait time in seconds |
+| `form` | `dict \| None` | `None` | Form fields (pass fields directly as keys, or a full JSON Schema dict for `required`/`order` support) (EE only) |
+| `self_approval` | `bool` | `True` | Allow the triggering user to approve. Set to `False` to require a different approver (EE only) |
 
 ```python
 from wmill import wait_for_approval
 
 result = await wait_for_approval(
     timeout=3600,
-    form={"type": "object", "properties": {"reason": {"type": "string"}}}
+    self_approval=False,
+    form={
+        "reason": {"type": "string", "description": "Why are you approving?"},
+        "priority": {"type": "number", "enum": [1, 2, 3]},
+    },
 )
+# result["approved"] — True if approved, False if rejected/timed out
+# result["approver"] — username of the person who acted
+# result["value"]    — submitted form data, e.g. {"reason": "Urgent fix", "priority": 1}
 ```
 
 #### `parallel(items, fn, concurrency=None)`

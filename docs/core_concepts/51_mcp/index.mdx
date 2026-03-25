@@ -29,13 +29,25 @@ Additionally, MCP provides access to Windmill's API endpoints for basic operatio
 
 ### Connect with OAuth
 
-You can quickly connect your MCP client to Windmill by simply adding the following URL to your client configuration:
+The simplest way to connect is via OAuth. Just add the following URL to your MCP client:
 
 ```
-https://app.windmill.dev/api/mcp/w/<your-workspace-id>/mcp
+<base_url>/api/mcp/gateway
 ```
 
-This OAuth-based approach automatically handles authentication and provides access to all available tools in your workspace.
+(e.g. `https://app.windmill.dev/api/mcp/gateway` for Windmill Cloud, or your own instance URL for self-hosted)
+
+This is the **gateway URL** — it works without knowing your workspace ID upfront. During the OAuth flow, you'll be prompted to select your workspace and configure which tools (scripts, flows, endpoints) to expose.
+
+If you already know your workspace ID, you can also use the **workspace-specific URL**:
+
+```
+<base_url>/api/mcp/w/<your-workspace-id>/mcp
+```
+
+(e.g. `https://app.windmill.dev/api/mcp/w/my-workspace/mcp`)
+
+Both approaches automatically handle authentication via OAuth.
 
 For more fine-grained usage, you can manually create a token to choose which tools are exposed to the client (see below).
 
@@ -49,8 +61,10 @@ For more fine-grained usage, you can manually create a token to choose which too
 Once created, your MCP URL will look like this:
 
 ```
-https://app.windmill.dev/api/mcp/w/<your-workspace-id>/mcp?token=<your-token>
+<base_url>/api/mcp/w/<your-workspace-id>/mcp?token=<your-token>
 ```
+
+(e.g. `https://app.windmill.dev/api/mcp/w/my-workspace/mcp?token=abc123`)
 
 > This token is used to authenticate MCP clients and generate your personal MCP endpoint URL. Save this URL securely. Treat it like an API key—anyone with access can trigger actions in your workspace.
 
@@ -70,7 +84,7 @@ To connect with Cursor:
 {
   "mcpServers": {
     "windmill-mcp": {
-      "url": "https://app.windmill.dev/api/mcp/w/<your-workspace-id>/mcp?token=<your-token>"
+      "url": "<base_url>/api/mcp/w/<your-workspace-id>/mcp?token=<your-token>"
     }
   }
 }
