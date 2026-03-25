@@ -1054,6 +1054,7 @@ const sidebars = {
 				'advanced/clients/rust_client',
 				'advanced/explicit_progress/index',
 				'advanced/scaling/index',
+				'advanced/high_availability/index',
 				'misc/share_on_hub/index'
 			]
 		},
