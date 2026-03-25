@@ -1,11 +1,8 @@
 import React from 'react';
-import { useColorMode } from '@docusaurus/theme-common';
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 
 export default function LogoClouds() {
-	const { colorMode } = useColorMode();
-
 	const logos = [
 		{
 			url: '/case-studies/zoom',
@@ -101,8 +98,14 @@ export default function LogoClouds() {
 							{logo.hoverSrc ? (
 								<>
 									<img
-										className="w-full h-auto max-w-[150px] max-h-[75px] object-contain grayscale transition-opacity group-hover:opacity-0"
-										src={colorMode === 'light' ? logo.light : logo.dark}
+										className="w-full h-auto max-w-[150px] max-h-[75px] object-contain grayscale transition-opacity group-hover:opacity-0 hidden dark:block"
+										src={logo.dark}
+										alt={logo.name}
+										loading="lazy"
+									/>
+									<img
+										className="w-full h-auto max-w-[150px] max-h-[75px] object-contain grayscale transition-opacity group-hover:opacity-0 block dark:hidden"
+										src={logo.light}
 										alt={logo.name}
 										loading="lazy"
 									/>
@@ -114,15 +117,20 @@ export default function LogoClouds() {
 									/>
 								</>
 							) : (
-								<img
-									className={classNames(
-										'w-full h-auto max-w-[150px] max-h-[75px] object-contain',
-										'grayscale transition-all hover:grayscale-0'
-									)}
-									src={colorMode === 'light' ? logo.light : logo.dark}
-									alt={logo.name}
-									loading="lazy"
-								/>
+								<>
+									<img
+										className="w-full h-auto max-w-[150px] max-h-[75px] object-contain grayscale transition-all hover:grayscale-0 hidden dark:block"
+										src={logo.dark}
+										alt={logo.name}
+										loading="lazy"
+									/>
+									<img
+										className="w-full h-auto max-w-[150px] max-h-[75px] object-contain grayscale transition-all hover:grayscale-0 block dark:hidden"
+										src={logo.light}
+										alt={logo.name}
+										loading="lazy"
+									/>
+								</>
 							)}
 						</a>
 					))}
