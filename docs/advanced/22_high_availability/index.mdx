@@ -65,7 +65,7 @@ No data migration, state transfer, or manual intervention on the Windmill side i
 - **Queued jobs** (not yet started) are stored in PostgreSQL and will be picked up by workers in the secondary datacenter.
 - **In-flight jobs** (mid-execution when the primary went down) will not complete. They will appear as failed or timed-out. You can re-run them after failover.
 - **Scheduled jobs** will resume on schedule once workers are running against the new primary database.
-- [**Triggers**](../../8_triggers/index.mdx) (webhooks, SQS, Kafka, etc.) will resume once servers are running. Some trigger messages may need to be reprocessed depending on the trigger type's at-least-once guarantees.
+- [**Triggers**](../../getting_started/8_triggers/index.mdx) (webhooks, SQS, Kafka, etc.) will resume once servers are running. Some trigger messages may need to be reprocessed depending on the trigger type's at-least-once guarantees.
 
 ### Active-active (both datacenters running)
 
@@ -99,7 +99,7 @@ Windmill does not require any special PostgreSQL extensions or configuration bey
 
 ### License key
 
-Your Windmill [license key](../../misc/plans_details/index.mdx) is stored in the database and is not tied to a specific server or cluster. It will work on the secondary datacenter without any changes.
+Your Windmill [license key](../../misc/7_plans_details/index.mdx) is stored in the database and is not tied to a specific server or cluster. It will work on the secondary datacenter without any changes.
 
 ## Kubernetes example
 
