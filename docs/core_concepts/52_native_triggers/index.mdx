@@ -72,6 +72,8 @@ You can also create native triggers directly from a script or flow's **Triggers*
 
 ## Nextcloud triggers
 
+Firs of all make sure you set up the [workspace integration](#workspace-integration) for Nextcloud.
+
 Nextcloud native triggers watch for file, folder, and calendar changes on a [Nextcloud](https://nextcloud.com/) instance and trigger a script or flow when events occur.
 
 ### Prerequisites
@@ -115,6 +117,8 @@ export async function main(
 
 ## Google triggers
 
+First of all make sure you set up the [workspace integration](#workspace-integration) for Google.
+
 Google native triggers watch for changes in [Google Drive](https://drive.google.com/) or [Google Calendar](https://calendar.google.com/) and trigger a script or flow when events occur.
 
 ### Prerequisites
@@ -138,7 +142,7 @@ Both use push notifications via Google watch channels. Windmill automatically re
 
 ### Event payload
 
-Google push notifications only contain metadata about the change, not the full event details. To get the actual content of the change, use the [`gworkspace` resource](../3_resources_and_types/index.mdx) created during workspace integration to query the Google API.
+Google push notifications only contain metadata about the change, not the full event details. To get the actual content of the change, use the [`gworkspace` resource type](../3_resources_and_types/index.mdx) created during workspace integration to query the Google API.
 
 ```typescript
 type GoogleTriggerPayload = {

@@ -1,0 +1,182 @@
+---
+description: How do I use volumes in Windmill to persist files across job runs?
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Volumes
+
+Volumes provide persistent file storage that can be attached to [scripts](../../getting_started/0_scripts_quickstart/index.mdx) via code annotations. Files written to a volume during a job run are synced back to [object storage](../38_object_storage_in_windmill/index.mdx) and restored on the next run, enabling stateful workflows like caching, model storage, or agent memory.
+
+Volumes are an [Enterprise](/pricing) feature. On the Community Edition, volumes are limited to 20 volumes per workspace and 50 MB per file.
+
+## Setup
+
+Volumes require two things to be configured in your workspace:
+
+1. A [workspace object storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) (S3, Azure Blob, GCS, or filesystem).
+2. A **volume storage** selection in the workspace settings under **Storage > Volume storage**. This can be set to the primary storage or any configured secondary storage. If volume storage is not selected, scripts with volume annotations will fail with an error.
+
+Volume data is stored under the `volumes/<workspace_id>/<volume_name>/` prefix in the selected storage.
+
+## Declaring volumes
+
+Volumes are declared with comment annotations at the top of your script. The syntax is:
+
+```
+<comment_prefix> volume: <name> <mount_path>
+```
+
+Where:
+- `<name>` is the volume identifier. Must be 2–255 characters, start and end with an alphanumeric character, and contain only `a-z`, `A-Z`, `0-9`, `.`, `_`, or `-`.
+- `<mount_path>` is the path where the volume will be available during execution. With [nsjail sandboxing](../../advanced/security_isolation/index.mdx), this can be an absolute path (restricted to `/tmp/`, `/mnt/`, `/opt/`, `/home/`, `/data/` prefixes) or a relative path. Without sandboxing, only relative paths are supported (e.g. `.claude`, `data/models`) — they are resolved relative to the job's working directory via a symlink.
+
+A script can mount up to 10 volumes. Duplicate volume names or mount paths within the same script are not allowed.
+
+### TypeScript / JavaScript
+
+```ts
+// volume: mydata data
+export async function main() {
+  // Read and write files in ./data (relative to job working directory)
+  const fs = await import("fs");
+  fs.writeFileSync("data/result.json", JSON.stringify({ ok: true }));
+}
+```
+
+### Python
+
+```python
+# volume: mydata data
+def main():
+    with open("data/result.json", "w") as f:
+        f.write('{"ok": true}')
+```
+
+### With sandbox (absolute paths)
+
+When using the [`sandbox` annotation](../../advanced/security_isolation/index.mdx#sandbox-annotation), you can use absolute mount paths:
+
+```ts
+// sandbox
+// volume: mydata /tmp/data
+export async function main() {
+  const fs = await import("fs");
+  fs.writeFileSync("/tmp/data/result.json", JSON.stringify({ ok: true }));
+}
+```
+
+### Multiple volumes
+
+You can mount multiple volumes on the same script (up to 10):
+
+```python
+# sandbox
+# volume: training-data /tmp/data
+# volume: model-weights /tmp/models
+def main():
+    # /tmp/data has your training data
+    # /tmp/models has your model weights
+    pass
+```
+
+## Dynamic volume names
+
+Volume names support interpolation with `$workspace` and `$args[...]` placeholders, resolved at runtime:
+
+| Placeholder | Resolves to |
+|---|---|
+| `$workspace` | Current workspace ID |
+| `$args[param]` | Value of job input `param` |
+| `$args[param.nested]` | Nested value from a JSON input |
+
+For example:
+
+```python
+# volume: $workspace-cache cache
+# volume: data-$args[env] data
+def main(env: str):
+    pass
+```
+
+When called with `env="prod"` in workspace `acme`, mounts volumes `acme-cache` and `data-prod`.
+
+## How it works
+
+1. **Before execution** — Windmill acquires an exclusive lease on the volume, then downloads the volume's files from object storage into a local directory using a per-worker LRU cache (up to 10 GB). Files are compared by size and MD5 hash to skip unchanged files.
+2. **During execution** — The volume directory is bind-mounted (read-write) into the job's [nsjail](../../advanced/security_isolation/index.mdx) sandbox, or symlinked into the job directory when running without sandboxing.
+3. **After execution** — If the volume is writable, changed and new files are synced back to object storage. Deleted files are removed from the remote. Volume metadata (size, file count) is updated. The lease is released.
+
+Symlinks inside a volume are preserved: they are serialized to a metadata file in object storage and restored on download.
+
+### Exclusive leasing
+
+Only one job can use a given volume at a time. Windmill acquires an exclusive lease (60-second TTL, auto-renewed every 10 seconds) on each volume before downloading. If the volume is already leased by another worker, the job waits for the lease to be released.
+
+### Agent workers
+
+Volumes work with [agent workers](../28_agent_workers/index.mdx). Agent workers interact with volumes through an HTTP proxy API on the Windmill server — the same lease, download, sync-back, and permission logic applies.
+
+## Permissions
+
+Volumes support fine-grained permissions through Windmill's standard sharing model. You can share a volume with specific users or groups and set read-only or read-write access.
+
+- **Owner** — the user who created the volume (or whose job first created it). Has full read-write access and can delete the volume.
+- **Read-only** — the job can use the volume but changes are not synced back to object storage after execution.
+- **Read-write** — the job can both read from and write to the volume.
+- **No permission** — if a volume has permissions set and the job's user has no matching entry, the job will fail.
+
+Volumes with no permissions set (empty `extra_perms`) are accessible to all workspace users.
+
+Admins always have full access to all volumes.
+
+Permissions can be managed from the Volumes drawer in the [Assets](../52_assets/index.mdx) page using the share button.
+
+## Managing volumes
+
+### Creating volumes
+
+Volumes can be created in two ways:
+
+- **Automatically** — when a job with a volume annotation runs and the volume doesn't exist yet, it is created with the job's user as owner.
+- **Manually** — from the Volumes drawer in the [Assets](../52_assets/index.mdx) page using the "New volume" button.
+
+### Exploring and deleting
+
+From the Volumes drawer you can:
+
+- View metadata: file count, total size, owner, last used timestamp.
+- Explore files in the volume using the S3 file browser.
+- Share the volume and manage permissions.
+- Delete the volume (owner, users with write permission, or admins). Deleting removes both the database metadata and all files from object storage. A volume that is currently leased by a running job cannot be deleted.
+
+<!-- TODO: add screenshot of the Volumes drawer from the Assets page showing a list of volumes with their metadata -->
+
+## Volumes and sandboxing
+
+Volumes work with both sandboxed ([nsjail](../../advanced/security_isolation/index.mdx)) and non-sandboxed execution, but the mount path behavior differs:
+
+- **With nsjail (sandbox)** — The volume directory is bind-mounted read-write at the declared mount path inside the sandbox. Both absolute (restricted to `/tmp/`, `/mnt/`, `/opt/`, `/home/`, `/data/`) and relative paths work. Relative paths are resolved relative to the nsjail working directory (`/tmp/bun` for Bun/TypeScript, `/tmp/deno` for Deno, `/tmp` for Python and others).
+- **Without nsjail** — Only relative mount paths are supported. Windmill creates a symlink from the job directory to the volume's local directory.
+
+You can combine volumes with the [`sandbox` annotation](../../advanced/security_isolation/index.mdx#sandbox-annotation) to enable per-script sandboxing, which is required if you need absolute mount paths:
+
+```ts
+// sandbox
+// volume: agent-memory .claude
+export async function main() {
+  // Sandboxed execution with persistent .claude directory
+}
+```
+
+<DocCard
+  title="AI sandbox"
+  description="Run AI coding agents with sandboxing and persistent volumes"
+  href="/docs/core_concepts/ai_sandbox"
+/>
+
+<DocCard
+  title="Security and process isolation"
+  description="Sandbox annotation and nsjail configuration"
+  href="/docs/advanced/security_isolation"
+/>

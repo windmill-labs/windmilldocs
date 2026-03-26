@@ -83,6 +83,14 @@ Instance groups are a special type of group that are automatically managed and s
 3. **User assignment**: When users are added to groups in your identity provider, they automatically gain the corresponding group membership in Windmill
 4. **Permission inheritance**: Instance groups can be assigned to folders and resources just like regular groups, inheriting the same permission levels (Viewer, Writer, Admin)
 
+### Instance-level roles
+
+Instance groups can be assigned an **instance-level role** (superadmin or devops). All members of the group automatically receive that role. This is configured in the instance group editor drawer, accessible from the groups page.
+
+When a user belongs to multiple instance groups with different instance roles, the highest role takes precedence (superadmin > devops > user). Manually elevated roles (set by a superadmin in the instance settings) always take priority over group-assigned roles.
+
+For more details on role precedence, see [Roles and Permissions](../16_roles_and_permissions/index.mdx#instance-level-roles-via-instance-groups).
+
 ### Benefits
 
 - **Reduced administrative overhead**: No need to manually create and manage groups in Windmill

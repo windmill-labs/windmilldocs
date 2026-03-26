@@ -455,7 +455,7 @@ export default function ProductionTabs({
 	return (
 		<div className="w-full" ref={containerRef}>
 			{/* Video mode switch */}
-			<div className="flex justify-center mb-4">
+			<div className="flex justify-center mb-4 mt-4">
 				<div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
 					<button
 						onClick={() => setVideoMode('ui')}

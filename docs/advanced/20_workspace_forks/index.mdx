@@ -105,7 +105,7 @@ This naming convention is what enables Windmill to match branches to workspaces 
 
 Once a fork is created, it is automatically setup to deploy to its parent branch. You can deploy any item to the parent branch directly from the UI by clicking it and selecting `Deploy to staging/prod`. Learn more about the [Deployment UI](../../core_concepts/12_staging_prod/index.md).
 
-### Merge workspaces from the UI
+### Merge workspaces from the UI (Merge UI)
 
 You can merge changes from a forked workspace back to its parent workspace directly from the UI without requiring git sync. This provides a simpler workflow for teams that don't need full git integration.
 
@@ -127,6 +127,10 @@ To merge a fork:
 If it is detected that some of the differences come in fact from the original workspace, these changes will be shown as 'behind'. Before deploying, all behind changes must be updated into the fork and properly tested. When an items has changes that are both ahead and behind, it will be marked as a conflict and will be warned to the user. The user must then review the diff and decide how to edit the item to resolve the conflicting changes. Until deployed or updated however, the item will still be marked as a conflict. For more granular conflict detection and better tracked resolution, you can choose to merge the workspaces through a git workflow instead.
 
 The merge will transfer all selected scripts, flows, apps, resources, and variables from the fork to the parent workspace.
+
+#### Triggers and schedules
+
+Workspace forks do not copy over triggers when being created. This avoids unnecessary executions or confusing collitions. However, you can still create triggers on your fork to test something, and the merge UI will remind you which ones have been created so that you can manually deploy them and/or disable them or delete them.
 
 ### Git sync based merging
 

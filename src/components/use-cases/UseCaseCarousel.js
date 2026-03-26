@@ -11,14 +11,14 @@ const fadeIn = {
 };
 
 const allUseCases = [
-	{ label: 'Internal tools', subtitle: 'Build production-grade internal tools with backend scripts, data tables and React, Vue or Svelte frontends.', to: '/use-cases/internal-tools', cover: '/img/money-pages/frontend.png' },
-	{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.png' },
+	{ label: 'Internal tools', subtitle: 'Build production-grade internal tools with backend scripts, data tables and React, Vue or Svelte frontends.', to: '/use-cases/internal-tools', cover: '/img/money-pages/frontend.webp' },
+	{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.webp' },
 	{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.webp' },
-	// { label: 'Workflow automation', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflow-automation', cover: '/img/money-pages/parallel-branches.webp' },
-	{ label: 'Scheduled tasks', subtitle: 'Run scripts on cron schedules, webhooks or custom triggers with retries and error handlers built in.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedules-card.png' },
+	{ label: 'Workflows', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflows', cover: '/img/money-pages/parallel-branches.webp' },
+	{ label: 'Scheduled tasks', subtitle: 'Run cron jobs with a visual builder, execution history, error handlers, recovery handlers and alerting.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedule.webp' },
 ];
 
-export default function UseCaseCarousel({ current, subtitle }) {
+export default function UseCaseCarousel({ current, title, subtitle }) {
 	const carouselRef = useRef(null);
 	const useCases = allUseCases.filter((uc) => uc.to !== `/use-cases/${current}`);
 
@@ -33,7 +33,7 @@ export default function UseCaseCarousel({ current, subtitle }) {
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 			<motion.div {...fadeIn} className="mb-8">
 				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					More you can build on Windmill
+					{title || 'More you can build on Windmill'}
 				</h2>
 				{subtitle && (
 					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>

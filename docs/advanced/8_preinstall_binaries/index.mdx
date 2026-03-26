@@ -132,8 +132,47 @@ Windmill does not pre-install pip or python directly in the base image as system
 
 To pre-install packages using pip, you will want to use uv, in particular the [uv tool install](https://docs.astral.sh/uv/concepts/tools/#tools-directory) command. The bin path of uv tool is already in the PATH of the worker, so your jobs will be able to run directly binaries installed in such way.
 
-To have packages be available for import, place them in `/tmp/windmill/cache/python_x_y/global-site-packages` where x_y is the python version intended. For python 3.11.*, the path would be `/tmp/windmill/cache/python_3_11/global-site-packages`.
+:::
 
+### Global site-packages for Python {#global-site-packages}
+
+Windmill workers include a `global-site-packages` directory on the Python path for each Python version. Any packages placed in this directory are available for import in all Python scripts running on that worker.
+
+The path follows this pattern:
+
+```
+/tmp/windmill/cache/python_<major>_<minor>/global-site-packages
+```
+
+For example:
+- Python 3.11.*: `/tmp/windmill/cache/python_3_11/global-site-packages`
+- Python 3.12.*: `/tmp/windmill/cache/python_3_12/global-site-packages`
+
+Use `uv pip install` with the `--target` flag to install packages into this directory:
+
+```bash
+uv pip install --system <package> --target /tmp/windmill/cache/python_3_11/global-site-packages
+```
+
+This is particularly useful for:
+- Packages with heavy native dependencies (e.g. `pandas`, `numpy`) that you want pre-installed to avoid per-job install overhead.
+- Shared libraries that every script on the worker should have access to.
+- Packages installed via [init scripts](#init-scripts) or custom Docker images.
+
+#### Skipping dependency resolution for pre-installed packages {#pip-local-dependencies}
+
+Installing a package into `global-site-packages` makes it importable at runtime, but Windmill's [dependency resolver](../15_dependencies_in_python/index.mdx) will still see the `import` line and attempt to resolve the package from PyPI when generating the lockfile.
+
+To skip resolution for pre-installed packages, add them to the **PIP local dependencies** list in the [worker group](../../core_concepts/9_worker_groups/index.mdx)'s [Python runtime settings](../../core_concepts/9_worker_groups/index.mdx#python-runtime-settings). This tells the resolver to exclude matching packages from lockfile generation.
+
+Each entry is treated as a **regex pattern**, so `pandas` matches `pandas`, `pandas==1.5`, etc. You can also use the `PIP_LOCAL_DEPENDENCIES` environment variable (comma-separated) as an alternative to the UI.
+
+![Python runtime settings](../../core_concepts/9_worker_groups/python_runtime_settings.png 'Python runtime settings')
+
+For example, if you pre-install `pandas` and `numpy` into `global-site-packages`, add both to the PIP local dependencies list so scripts that `import pandas` or `import numpy` won't trigger a PyPI resolution for those packages.
+
+:::caution
+Make sure the target path matches the Python version your scripts use. If you run scripts on multiple Python versions, install the package into each version's `global-site-packages` directory.
 :::
 
 ### Example: Installing Pandas

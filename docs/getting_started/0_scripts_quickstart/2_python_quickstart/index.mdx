@@ -307,16 +307,16 @@ The UI is generated from the Script's main function signature, but you can add a
 
 One way to write distributed programs that execute distinct jobs is to use [flows](../../../flows/1_flow_editor.mdx) that chain scripts together.
 
-Another approach is to write a program that defines the jobs and their dependencies, and then execute that program directly in your script. This is known as [workflows as code](../../../core_concepts/31_workflows_as_code/index.mdx).
+Another approach is to write a program that defines the jobs and their dependencies, and then execute that program directly in your script. This is known as [workflows as code](../../../core_concepts/31_workflows_as_code/index.mdx). Use the `@workflow` decorator on your orchestration function and `@task` on task functions. Each task runs as a separate job with its own logs and timeline entry, while the workflow suspends between tasks (releasing its worker slot).
 
-![Flow as code in Python](../../../core_concepts/31_workflows_as_code/python_editor.png "Flow as code in Python")
+![Flow as code in Python](../../../core_concepts/31_workflows_as_code/wac-editor-1.png "Flow as code in Python")
 
 All details at:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workflows as code"
-		description="Automate tasks and their flow with only code."
+		description="Write distributed workflows in TypeScript or Python with checkpoint-based orchestration, parallel execution, and fault tolerance."
 		href="/docs/core_concepts/workflows_as_code"
 	/>
 </div>

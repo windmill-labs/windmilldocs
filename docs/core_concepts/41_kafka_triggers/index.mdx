@@ -2,6 +2,9 @@
 description: How do I trigger scripts and flows from Kafka messages in Windmill?
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Kafka triggers
 
 Windmill can connect to [Kafka](https://kafka.apache.org/) brokers servers and trigger runnables (scripts, flows) when a message is received.
@@ -150,6 +153,110 @@ Specify the topics the trigger should listen to.
 The group id is automatically filled in from the current workspace and the trigger path. You can change it if necessary.
 It indicates the consumer group to which the trigger belongs. This garantees that even if the trigger stops listening for a while, it will receive the messages it missed when it starts listening again.
 
+
+The following settings are available under the **Advanced** section of the Kafka trigger editor.
+
+### Initial offset
+
+The 'Initial offset' setting controls where the consumer starts reading when the consumer group has no committed offset (i.e. the first time the trigger is created or when using a new group ID):
+
+- Latest (default): Only new messages produced after the trigger starts will be consumed.
+- Earliest: All existing messages in the topic will be consumed from the beginning.
+
+This corresponds to Kafka's `auto.offset.reset` configuration. It has no effect once the consumer group has a committed offset.
+
+### Auto-commit offsets
+
+By default, Windmill commits offsets once the job has been successfully pushed to the queue. You can disable auto-commit to get manual control over when offsets are committed.
+
+When auto-commit is disabled:
+- Messages are delivered to your script but offsets are **not** committed automatically.
+- If the trigger restarts before you commit, unacknowledged messages will be re-delivered.
+- You must call the SDK helper from your script to commit offsets.
+
+The [preprocessor](../43_preprocessors/index.mdx) event payload includes `trigger_path`, `partition` and `offset` fields that you pass to the commit function. The SDK call stores the offset in the database and returns immediately. Every 5 seconds, the trigger's consumer picks up stored offsets and commits the highest one for each topic/partition pair to Kafka.
+
+<Tabs>
+<TabItem value="TypeScript (Bun)">
+```TypeScript
+import * as wmill from "windmill-client";
+
+export async function preprocessor(
+  event: {
+    kind: "kafka";
+    trigger_path: string;
+    payload: string;
+    brokers: string[];
+    topic: string;
+    group_id: string;
+    partition: number;
+    offset: number;
+  }
+) {
+  const msg = JSON.parse(atob(event.payload));
+
+  return {
+    data: msg,
+    topic: event.topic,
+    partition: event.partition,
+    offset: event.offset,
+    trigger_path: event.trigger_path
+  };
+}
+
+export async function main(
+  data: any,
+  topic: string,
+  partition: number,
+  offset: number,
+  trigger_path: string
+) {
+  // process the message
+  // ...
+
+  // commit the offset after successful processing
+  await wmill.commitKafkaOffsets(trigger_path, topic, partition, offset);
+}
+```
+</TabItem>
+<TabItem value="Python">
+```Python
+import wmill
+import base64
+import json
+
+def preprocessor(event: dict):
+    msg = json.loads(base64.b64decode(event["payload"]))
+
+    return {
+        "data": msg,
+        "topic": event["topic"],
+        "partition": event["partition"],
+        "offset": event["offset"],
+        "trigger_path": event["trigger_path"],
+    }
+
+def main(
+    data: dict,
+    topic: str,
+    partition: int,
+    offset: int,
+    trigger_path: str,
+):
+    # process the message
+    # ...
+
+    # commit the offset after successful processing
+    wmill.commit_kafka_offsets(trigger_path, topic, partition, offset)
+```
+</TabItem>
+</Tabs>
+
+### Reset offset to earliest
+
+For existing triggers, clicking the 'Reset offset to earliest' button restarts the consumer with the offset reset to the beginning of the topic, causing all messages to be re-processed.
+
+### Runnable configuration
 Once the Kafka resource and settings are set, select the runnable that should be triggered by this trigger.
 The received webhook base64 encoded payload will be passed to the runnable as a string argument called `payload`.
 
@@ -167,10 +274,13 @@ And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could
 export async function preprocessor(
   event: {
     kind: "kafka",
+    trigger_path: string;
     payload: string, // base64 encoded payload
     brokers: string[];
     topic: string; // the specific topic the message was received from
     group_id: string;
+    partition: number;
+    offset: number;
   }
 ) {
   if (event.kind !== "kafka") {
@@ -178,17 +288,18 @@ export async function preprocessor(
   }
 
   // assuming the message is a JSON object
-  const msg = JSON.parse(atob(event.payload)); 
+  const msg = JSON.parse(atob(event.payload));
 
   // define args for the main function
-  // let's assume we want to use the message content and the topic
   return {
     message_content: msg.content,
-    topic: event.topic
+    topic: event.topic,
+    partition: event.partition,
+    offset: event.offset
   };
 }
 
-export async function main(message_content: string, topic: string) {
+export async function main(message_content: string, topic: string, partition: number, offset: number) {
   // do something with the message content and topic
 }
 ```

@@ -30,6 +30,8 @@ Global Users are users of the Windmill instance. They are not associated with an
 
 From there you can manually add a user to the instance, giving an email and a password. Users can be set to User, [Devops](../../core_concepts/16_roles_and_permissions/index.mdx#devops) or Superadmin [roles](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin).
 
+When a user's role is set by an [instance group](../../core_concepts/8_groups_and_folders/index.mdx#instance-level-roles), a "Set by instance group" indicator appears next to the role toggle. You can still upgrade a user to a higher role manually (e.g. from group-assigned devops to superadmin), but demoting to "User" requires removing the user from the instance group. See [instance-level roles via instance groups](../../core_concepts/16_roles_and_permissions/index.mdx#instance-level-roles-via-instance-groups) for details.
+
 You can also enable automatic username creation from emails. Usernames will be shared accross workspaces. We recommend setting it to avoid duplicated usernames.
 
 A more common way to add users is to use [SSO/OAuth](#authoauth).
@@ -311,6 +313,12 @@ This setting is only available on [Enterprise Edition](/pricing).
 
 Enable to mute critical alerts in the UI.
 
+### Alert on token expiry
+
+Enable to send [critical alerts](../../core_concepts/37_critical_alerts/index.mdx#token-expiration-notifications) when API tokens are about to expire (within 7 days) or have expired. This setting is off by default.
+
+Email notifications to token owners are always sent regardless of this setting, as long as [SMTP](#smtp) is configured.
+
 ### Slack
 
 Connecting your instance to a Slack workspace enables [critical alerts](#critical-alert-channels) to be sent to a Slack channel.
@@ -416,6 +424,14 @@ When creating a workspace, you have the option to invite automatically everyone 
 	src="/videos/new_workspace.mp4"
 />
 
+## Webhooks
+
+### Instance events webhook
+
+URL to receive POST requests for instance events such as user added, OAuth signup, user invited to workspace, or user joined workspace.
+
+Configure it from **Instance settings > Monitoring > Webhooks**.
+
 ## Open Telemetry & Prometheus
 
 ![Open Telemetry & Prometheus](./otel_prometheus.png)
@@ -477,25 +493,55 @@ The index will query new service logs peridically and write them on the index. T
 
 ## Telemetry
 
-Anonymous usage data is collected to help improve Windmill. Telemetry data is sent as a HTTPS request to https://stats.windmill.dev. Stats are sent once a day. Stats only contain the size of workers, their uptime and number of seats used.
+Anonymous usage data is collected to help improve Windmill. Telemetry data is sent as a HTTPS request to https://stats.windmill.dev once a day.
 
 ![Telemetry](./telemetry.png "Telemetry")
 
+The data collected differs between Community Edition and [Enterprise Edition](/pricing):
+
+### Community Edition
+
 The following information is collected:
-- version of your instances
+- version of your instance
 - instance base URL
-- job usage per language (count, total duration)
-- per-workspace job counts
+- job usage (language, total duration, count)
 - login type usage (login type, count)
-- worker usage (worker, worker instance, vCPUs, memory, occupancy rates at 15s/5m/30m)
-- user usage per workspace (active author count, operator count)
-- superadmin email address
-- vCPU usage
-- memory usage
+- worker usage (worker, worker instance, vCPUs, memory)
+- user usage (author count, operator count)
 - development instance status
 
-From the instance settings, you can manually disable telemetry or "Send usage" to send usage data to Windmill and monitor it from the [Customer portal](../../misc/7_plans_details/index.mdx#windmill-customer-portal).
+Telemetry can be fully disabled from the instance settings using the "Disable telemetry" toggle.
 
-On [Enterprise Edition](/pricing), you can also "Download usage" to get an encrypted copy of the telemetry data as a `.enc` file. This is useful for air-gapped instances that cannot send telemetry directly — the encrypted file can be sent manually to Windmill.
+### Enterprise Edition
 
-Under [Enterprise Edition](/pricing) (self-hosted), telemetry is mandatory to ensure usage correctly matches the subscription.
+On [Enterprise Edition](/pricing), telemetry is required for [license compliance](../../misc/19_enterprise_onboarding/index.mdx#billing) and cannot be fully disabled. You can toggle "Minimal telemetry" to reduce the data sent to only what is needed for license compliance.
+
+When minimal telemetry is enabled, the following is sent:
+- version of your instance
+- instance base URL
+- login type usage (login type, count)
+- worker usage (worker, worker instance, vCPUs, memory)
+- user usage (author count, operator count)
+- superadmin email addresses
+- development instance status
+
+When minimal telemetry is disabled, the following is also collected:
+- job usage (language, total duration, count)
+
+You can "Send usage" to manually send usage data to Windmill and monitor it from the [Customer portal](../../misc/7_plans_details/index.mdx#windmill-customer-portal). You can also "Download usage" to get an encrypted copy of the telemetry data as a `.enc` file. This is useful for air-gapped instances that cannot send telemetry directly — the encrypted file can be sent manually to Windmill.
+
+## GitHub Enterprise App
+
+Configure a self-managed GitHub App for GitHub.com or GitHub Enterprise Server to enable [Git sync](../11_git_sync/index.mdx) without relying on the Windmill-managed GitHub App via `stats.windmill.dev`.
+
+This setting is found under **Advanced > GitHub Enterprise App** in Instance Settings and is only available on [Enterprise Edition](/pricing).
+
+| Field | Description |
+|-------|-------------|
+| Base URL | The base URL of your GitHub instance (e.g. `https://github.com` or your GHES URL) |
+| App ID | The ID of your registered GitHub App |
+| App Slug | The slug of your GitHub App |
+| Client ID | The client ID of your GitHub App |
+| Private Key (PEM) | The private key generated for your GitHub App |
+
+For setup instructions, see [Self-managed GitHub App](../../integrations/git_repository.mdx#self-managed-github-app).

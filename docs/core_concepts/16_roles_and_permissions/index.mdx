@@ -55,6 +55,17 @@ The superadmin role has the highest level of access and can manage the entire Wi
 
 The devops role is also set at the instance level. Conceptually, it can be understood as a "readonly Superadmin". Devops users have read rights over what is usually only visible to [superadmins](#superadmin), such as [Service Logs](../36_service_logs/index.mdx) or [Critical Alerts](../37_critical_alerts/index.mdx) while keeping write operations to a minimum. Contrary to the superadmin, this role does not supersede other roles like [workspace admins](#admin).
 
+### Instance-level roles via instance groups
+
+Superadmin and devops roles can also be assigned to [instance groups](../8_groups_and_folders/index.mdx#instance-groups). When an instance group has an instance role, all members of that group automatically receive that role. This is particularly useful with [SCIM](../../misc/14_saml_and_scim/index.md#scim) — for example, an "infrastructure" group in your identity provider can automatically grant devops access to all its members.
+
+**Role precedence rules:**
+- If a user belongs to multiple instance groups with different roles, the highest role wins (superadmin > devops > user).
+- Manually-set elevated roles (superadmin or devops) always take precedence over group-assigned roles. A superadmin manually promoted by another superadmin will not be demoted if their instance group only grants devops.
+- To demote a user whose role is set by an instance group, the user must be removed from the group (or the group's instance role must be changed).
+
+In the [instance settings](../../advanced/18_instance_settings/index.mdx) users list, roles set by instance groups are indicated with a "Set by instance group" label.
+
 ### Admin
 
 At the [workspace](#workspace) level, admins have the ability to manage a specific Windmill workspace and users within that workspace. They can see and edit all scripts, flows, apps, and other entities within the workspace. Admins have the power to create, modify, and delete entities and can manage permissions within the workspace.
@@ -170,10 +181,34 @@ Also, [extra permission](#extra-permissions) was given to Ruben as viewer.
 
 <br />
 
+## Run on behalf of
+
+Scripts and flows can be configured to run **on behalf of** a specific user. When set, that user's permissions are used during execution — the runnable can only access the resources, variables, and folders that user has rights to — and all runs are attributed to that user in the [audit logs](../14_audit_logs/index.mdx).
+
+For **apps**, run on behalf of is always enabled: app executions always use the permissions of the set user (usually the app's last editor).
+
+**Schedules and triggers** work in a similar manner: they use the `edited_by` user as the owner of the executions they create.
+
+## Permission compartmentalization with virtual users
+
+By combining the run on behalf of mechanism with dedicated users, you can implement fine-grained permission compartmentalization. Instead of running everything as a single admin or shared account, create users scoped to specific logical modules. For example:
+
+- A `billing-bot` user with access only to billing-related resources and folders
+- A `data-pipeline` user scoped to data processing folders and their associated variables
+
+Then set scripts, flows, schedules, and triggers to run on behalf of these virtual users. A script running on behalf of `billing-bot` cannot accidentally read or modify resources outside its scope, even if the script code itself contains a bug or misconfiguration. The audit logs will also clearly show which virtual user initiated each execution.
+
+Combined with the ["run on behalf of" selector during deployments](../12_staging_prod/index.md#run-on-behalf-of), this pattern extends across workspaces: when deploying to a production workspace, you can assign each item to the appropriate virtual user in the target environment.
+
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Groups and folders"
 		description="Groups classify users with shared permissions, while folders group items and assign role-based access control."
 		href="/docs/core_concepts/groups_and_folders"
+	/>
+	<DocCard
+		title="Deploy to staging/prod"
+		description="Deploy items to another workspace with control over which user they run as."
+		href="/docs/core_concepts/staging_prod"
 	/>
 </div>
