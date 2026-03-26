@@ -185,6 +185,9 @@ includeKey: false
 
 # Git branch validation
 skipBranchValidation: false  # Skip validation for feature branches
+
+# CLI behavior version (controls ownership preservation and other features)
+cliBehavior: v1
 ```
 
 ### Git branch-specific configuration
@@ -224,6 +227,11 @@ gitBranches:
     promotionOverrides:
       skipApps: true      # Don't sync apps during promotion
       skipFlows: true     # Don't sync flows during promotion
+    defaultPermissionedAs:  # Ownership rules for this workspace
+      - email: "prod-deployer@company.com"
+        path_pattern: "f/production/**"
+      - email: "admin@company.com"
+        path_pattern: "**"
 
   # Common items that are branch-specific across all branches
   commonSpecificItems:
@@ -244,6 +252,65 @@ Settings are resolved in this order (highest priority first):
 2. **Promotion overrides** (if `--promotion` flag is used)
 3. **Branch-specific overrides** (if current branch has `overrides` defined)
 4. **Top-level settings** (base configuration)
+
+### Preserving `permissioned_as` ownership
+
+When syncing scripts, flows, apps, schedules, and triggers between workspaces, the CLI can preserve the `permissioned_as` ownership (the user or group on whose behalf the item runs). This is controlled by the `cliBehavior` field in `wmill.yaml`.
+
+```yaml
+cliBehavior: v1
+```
+
+When `cliBehavior` is set to `v1` or higher (the default for new workspaces created with `wmill init`), the following behaviors are enabled:
+
+#### On `sync pull`
+
+The `on_behalf_of_email` field is **stripped** from local script and flow YAML files. This keeps local files clean — the ownership is managed by the remote workspace, not by the local file.
+
+#### On `sync push`
+
+- **Updating existing items**: If the item already has a `permissioned_as` owner on the remote, that owner is preserved. The CLI logs: `Preserving <email> as permissioned_as for <type> <path>`.
+- **Creating new items**: If a `defaultPermissionedAs` rule matches the item's path, the matched email is used. The CLI logs: `Setting <type> <path> to run permissioned as <email> (matched rule '<pattern>' in wmill.yaml)`.
+- **Items without ownership**: If the remote item has no `permissioned_as` set, none is added — the CLI never artificially creates ownership.
+
+This behavior only applies when the pushing user is an **admin** or a member of the **`wm_deployers`** group. Non-admin/non-deployer users will see a warning listing items whose ownership would change, with a confirmation prompt (or use `--accept-overriding-permissioned-as-with-self` to skip the prompt).
+
+#### `defaultPermissionedAs` rules
+
+You can define rules to automatically assign `permissioned_as` ownership when creating new items. Rules are matched in order — first match wins:
+
+```yaml
+# Root-level rules (apply to all workspaces unless overridden)
+defaultPermissionedAs:
+  - email: "deployer@company.com"
+    path_pattern: "f/production/**"
+  - email: "admin@windmill.dev"
+    path_pattern: "**"
+
+# Branch-level rules (workspace-specific, override root-level)
+gitBranches:
+  main:
+    baseUrl: 'https://app.windmill.dev/'
+    workspaceId: prod-workspace
+    defaultPermissionedAs:
+      - email: "prod-deployer@company.com"
+        path_pattern: "**"
+  staging:
+    baseUrl: 'https://staging.windmill.dev/'
+    workspaceId: staging-workspace
+    defaultPermissionedAs:
+      - email: "staging-deployer@company.com"
+        path_pattern: "**"
+```
+
+Rules resolution:
+- When pushing to a workspace, the CLI finds the `gitBranches` entry whose `workspaceId` and `baseUrl` match the target workspace
+- If a matching branch has `defaultPermissionedAs`, those rules are used
+- Otherwise, the root-level `defaultPermissionedAs` rules apply
+
+#### Disabling the feature
+
+If your `wmill.yaml` does not have the `cliBehavior` field (or it is missing entirely), none of the above behaviors are active — the CLI operates in legacy mode with no ownership preservation or stripping.
 
 ### Codebase configuration
 
@@ -326,6 +393,13 @@ export interface SyncOptions {
     }
   };
   promotion?: string;
+
+  // Ownership preservation
+  defaultPermissionedAs?: {
+    email: string;
+    path_pattern: string;
+  }[];
+  cliBehavior?: string; // "v1", "v2", etc. — controls CLI feature set
 }
 ```
 
