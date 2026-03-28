@@ -89,6 +89,11 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/ruby_quickstart/index',
 									label: 'Ruby'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/rlang_quickstart/index',
+									label: 'R'
 								}
 							]
 						},
