@@ -170,22 +170,12 @@ You can also check other installation methods in uv`s [official documentation](h
      Rscript --version
      ```
 
-2. **Locate R installation**:
-   - Find where R is installed by running:
+2. **Install Pak and Renv**:
+   - Run:
      ```powershell
-     where.exe Rscript
-     ```
-     Example output:
-     ```plaintext
-     C:\Program Files\R\R-4.4.0\bin\Rscript.exe
+     Rscript -e "install.packages(c('pak', 'renv'), lib=Sys.getenv('R_LIBS_USER'), repos='https://cloud.r-project.org')"
      ```
 
-3. **Set environment variables**:
-   - Add the following environment variables (replace the placeholders with your specific values):
-     ```powershell
-     # Replace these variables with your specific configuration
-     $env:RSCRIPT_PATH="C:\Program Files\R\R-4.4.0\bin\Rscript.exe"
-     ```
 
 ## Running as a Windows service
 
