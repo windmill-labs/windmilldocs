@@ -198,33 +198,33 @@ export const FullWidthTabsStyle = () => <style>{`.example-tabs ul[role="tablist"
 
 <p className="mb-4">The orchestration flow that receives a user message, calls an AI model with registered tools, and streams the response back.</p>
 
-{/* TODO: screenshot of the AI agent flow in the Windmill flow editor, showing the steps: receive message, call AI model with tools, return response. Path suggestion: ./ai_agent_flow.png */}
-
-<div style={{width: '100%', height: '400px', backgroundColor: '#1e1e2e', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', fontSize: '14px'}}>
-  Screenshot placeholder: AI agent flow in the Windmill flow editor
-</div>
+<iframe
+  src="https://hub.windmill.dev/embed/flow/79/my-summary"
+  style={{ width: '100%', height: '600px', border: 'none', borderRadius: '8px', backgroundColor: 'white' }}
+  title="AI agent flow"
+/>
 
 </TabItem>
-<TabItem value="get-marketing-activation" label="Marketing script" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
+<TabItem value="get-marketing-activation" label="Marketing activation" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
 
 <p className="mb-4">A script the AI agent can call to look up marketing activation live data from connected sources.</p>
 
-{/* TODO: screenshot of the get_marketing_activation script in the Windmill script editor. Path suggestion: ./get_marketing_activation.png */}
-
-<div style={{width: '100%', height: '400px', backgroundColor: '#1e1e2e', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', fontSize: '14px'}}>
-  Screenshot placeholder: get_marketing_activation script in the Windmill script editor
-</div>
+<iframe
+  src="https://hub.windmill.dev/embed/script/28190/get-marketing-activations"
+  style={{ width: '100%', height: '600px', border: 'none', borderRadius: '8px', backgroundColor: 'white' }}
+  title="Get marketing activations script"
+/>
 
 </TabItem>
-<TabItem value="get-sales-metrics" label="Sales script" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
+<TabItem value="get-sales-metrics" label="Sales metrics" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
 
 <p className="mb-4">A script the AI agent can call to query live sales metrics from the database.</p>
 
-{/* TODO: screenshot of the get_sales_metrics script in the Windmill script editor. Path suggestion: ./get_sales_metrics.png */}
-
-<div style={{width: '100%', height: '400px', backgroundColor: '#1e1e2e', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', fontSize: '14px'}}>
-  Screenshot placeholder: get_sales_metrics script in the Windmill script editor
-</div>
+<iframe
+  src="https://hub.windmill.dev/embed/script/28188/get-sales-metrics-(example)"
+  style={{ width: '100%', height: '600px', border: 'none', borderRadius: '8px', backgroundColor: 'white' }}
+  title="Get sales metrics script"
+/>
 
 </TabItem>
 </Tabs>
