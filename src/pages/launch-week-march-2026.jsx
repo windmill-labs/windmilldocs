@@ -283,7 +283,9 @@ const cardVisuals = [
 
 function DayCard({ item, index }) {
 	const Visual = cardVisuals[index];
-	const disabled = false;
+	const now = new Date();
+	now.setHours(0, 0, 0, 0);
+	const disabled = item.releaseDate > now;
 
 	const content = (
 		<>
