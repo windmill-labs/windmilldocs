@@ -7,6 +7,7 @@ import { useLocation } from '@docusaurus/router';
 import Head from '@docusaurus/Head';
 import Footer from '../../landing/Footer';
 import Roadmap from '../../components/roadmap';
+import Banner from '../../landing/Banner';
 
 export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;
@@ -22,6 +23,7 @@ export default function BlogLayout(props) {
 
 	return (
 		<Layout {...layoutProps}>
+			<Banner />
 			{isChangelogHomepage && (
 				<Head>
 					<title>{title}</title>
