@@ -38,6 +38,7 @@ A full-code app is a directory containing your frontend code (React or Svelte) a
   muted
   src="/img/platform/app-builder/platform-app-builder-backend-runnables.webm"
 />
+<p className="text-xs text-gray-500 mb-6 text-center">Calling backend runnables from a full-code frontend with a typed API.</p>
 
 <Tabs className="unique-tabs">
 <TabItem value="react" label="React" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -180,7 +181,7 @@ export const FullWidthTabsStyle = () => <style>{`.example-tabs ul[role="tablist"
 
 <div className="example-tabs">
 <Tabs>
-<TabItem value="frontend" label="Full-code frontend" attributes={{className: "text-lg font-semibold p-4 !mt-0 !ml-0"}}>
+<TabItem value="frontend" label="Full-code frontend" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
 
 <iframe
   src="https://app.windmill.dev/public/windmill-labs/928711b4b9ac223354f283212d5e7594"
@@ -190,12 +191,12 @@ export const FullWidthTabsStyle = () => <style>{`.example-tabs ul[role="tablist"
 />
 
 </TabItem>
-<TabItem value="backend" label="Windmill backend runnables" attributes={{className: "text-lg font-semibold p-4 !mt-0 !ml-0"}}>
+<TabItem value="backend" label="Windmill backend runnables" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
 
 <Tabs className="unique-tabs">
-<TabItem value="ai-agent-flow" label="AI agent flow" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
+<TabItem value="ai-agent-flow" label="AI Agent flow" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
 
-The orchestration flow that receives a user message, calls an AI model with registered tools, and streams the response back.
+<p className="mb-4">The orchestration flow that receives a user message, calls an AI model with registered tools, and streams the response back.</p>
 
 {/* TODO: screenshot of the AI agent flow in the Windmill flow editor, showing the steps: receive message, call AI model with tools, return response. Path suggestion: ./ai_agent_flow.png */}
 
@@ -204,9 +205,9 @@ The orchestration flow that receives a user message, calls an AI model with regi
 </div>
 
 </TabItem>
-<TabItem value="get-marketing-activation" label="Get marketing activations" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
+<TabItem value="get-marketing-activation" label="Marketing script" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
 
-A tool the AI agent can call to look up marketing activation data from connected sources.
+<p className="mb-4">A script the AI agent can call to look up marketing activation live data from connected sources.</p>
 
 {/* TODO: screenshot of the get_marketing_activation script in the Windmill script editor. Path suggestion: ./get_marketing_activation.png */}
 
@@ -215,9 +216,9 @@ A tool the AI agent can call to look up marketing activation data from connected
 </div>
 
 </TabItem>
-<TabItem value="get-sales-metrics" label="Get sales metrics" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
+<TabItem value="get-sales-metrics" label="Sales script" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
 
-A tool the AI agent can call to query sales metrics from the database.
+<p className="mb-4">A script the AI agent can call to query live sales metrics from the database.</p>
 
 {/* TODO: screenshot of the get_sales_metrics script in the Windmill script editor. Path suggestion: ./get_sales_metrics.png */}
 
@@ -258,6 +259,7 @@ Three design choices drove the architecture:
   muted
   src="/videos/wmill-app-dev.mp4"
 />
+<p className="text-xs text-gray-500 mb-6 text-center">Local development with <code>wmill app dev</code>.</p>
 
 **No separate API layer.** The frontend calls backend runnables directly through Windmill's execution engine via WebSocket. No REST endpoints to define, no API gateway to configure, no OpenAPI specs to maintain. You write a function in `backend/`, and it appears as a typed call in your frontend.
 
@@ -290,6 +292,15 @@ Full-code apps are designed to work with the rest of Windmill. Combined with [Da
 - **Frontend**: React or Svelte, served by Windmill.
 - **Backend**: scripts in 20+ languages, each running on isolated workers with full CPU and memory.
 - **Data**: [Data Tables](/docs/core_concepts/persistent_storage/data_tables) for relational storage, [Ducklake](/docs/core_concepts/persistent_storage/ducklake) for analytics. No connection strings to manage.
+
+<video
+  className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800 mb-6"
+  autoPlay
+  loop
+  muted
+  src="/img/platform/datatables/platform-datatables-full-code-apps.webm"
+/>
+<p className="text-xs text-gray-500 mb-6 text-center">Backend runnables reading and writing to Data Tables from a full-code app.</p>
 
 There is no API layer to build. Your frontend calls backend runnables via a typed API, and those runnables read and write to Data Tables directly. Windmill handles execution, authentication, hosting, and monitoring.
 
