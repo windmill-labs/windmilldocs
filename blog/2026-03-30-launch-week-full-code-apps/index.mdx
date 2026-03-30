@@ -244,22 +244,28 @@ When a user asks a question, the flow is:
 
 The entire app, frontend, backend logic, and AI tools, lives in a single Windmill workspace. No external API layer, no separate deployment for the chat UI.
 
-## Why we built it this way
+## Build full-code apps with Claude Code and Codex
 
-Three design choices drove the architecture:
+The Windmill CLI auto-generates `AGENTS.md` and `DATATABLES.md` context files so AI coding assistants understand your project structure, backend runnables, typed API, and data schema out of the box.
 
-**Any language on the backend.** Your frontend is React or Svelte. Your backend can be anything: TypeScript, Python, SQL (PostgreSQL, MySQL, BigQuery, Snowflake, DuckDB), Go, Bash, Rust, PHP, Java, Ruby, C#, and more. Each runnable is a file in `backend/` with the language inferred from the extension. A single app can mix Python data processing with TypeScript API calls and SQL queries.
-
-**Local development first.** `wmill app dev` starts a local dev server with hot module replacement. You use your own editor, your own tools, your own npm packages. The CLI auto-generates an `AGENTS.md` file so AI coding assistants like Claude Code or Codex understand your project structure out of the box. The workflow is standard: `npm install`, write code, see changes instantly.
+With [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [Codex](https://openai.com/index/introducing-codex/), you can prompt the app you want to build and get a working full-stack application: frontend, backend scripts, and typed connections between them. The AI agent knows how to create runnables in `backend/`, call them from your React or Svelte frontend via the typed `wmill.ts` API, and preview the result locally.
 
 <video
   className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800 mb-6"
   autoPlay
   loop
   muted
-  src="/videos/wmill-app-dev.mp4"
+  src={require('./claude-code-app-demo.mp4').default}
 />
-<p className="text-xs text-gray-500 mb-6 text-center">Local development with <code>wmill app dev</code>.</p>
+<p className="text-xs text-gray-500 mb-6 text-center">Prompting Claude Code to build a full-code app from scratch.</p>
+
+## Why we built it this way
+
+Three design choices drove the architecture:
+
+**Any language on the backend.** Your frontend is React or Svelte. Your backend can be anything: TypeScript, Python, SQL (PostgreSQL, MySQL, BigQuery, Snowflake, DuckDB), Go, Bash, Rust, PHP, Java, Ruby, C#, and more. Each runnable is a file in `backend/` with the language inferred from the extension. A single app can mix Python data processing with TypeScript API calls and SQL queries.
+
+**Local development first.** `wmill app dev` starts a local dev server with hot module replacement. You use your own editor, your own tools, your own npm packages. The workflow is standard: `npm install`, write code, see changes instantly.
 
 **No separate API layer.** The frontend calls backend runnables directly through Windmill's execution engine via WebSocket. No REST endpoints to define, no API gateway to configure, no OpenAPI specs to maintain. You write a function in `backend/`, and it appears as a typed call in your frontend.
 
@@ -302,9 +308,7 @@ Full-code apps are designed to work with the rest of Windmill. Combined with [Da
 />
 <p className="text-xs text-gray-500 mb-6 text-center">Backend runnables reading and writing to Data Tables from a full-code app.</p>
 
-There is no API layer to build. Your frontend calls backend runnables via a typed API, and those runnables read and write to Data Tables directly. Windmill handles execution, authentication, hosting, and monitoring.
-
-For AI-assisted development, the CLI generates `AGENTS.md` and `DATATABLES.md` context files so tools like Claude Code or Codex understand your project structure, backend runnables, and data schema out of the box.
+Your frontend calls backend runnables via the typed API, and those runnables read and write to Data Tables directly. Windmill handles execution, authentication, hosting, and monitoring.
 
 ## Getting started
 
