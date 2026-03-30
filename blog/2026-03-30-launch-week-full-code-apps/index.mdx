@@ -15,7 +15,7 @@ import TabItem from '@theme/TabItem';
 
 ![Full-code apps](./cover.webp)
 
-**Day 2 of [Windmill launch week](/launch-week-march-2026).** You can now build complete applications with React or Svelte frontends connected to Windmill backend runnables through a typed, auto-generated API.
+**Day 1 of [Windmill launch week](/launch-week-march-2026).** You can now build complete applications with React or Svelte frontends connected to Windmill backend runnables through a typed, auto-generated API.
 
 {/* truncate */}
 
@@ -31,6 +31,14 @@ For teams that need a custom frontend, we wanted them to build it where they alr
 
 A full-code app is a directory containing your frontend code (React or Svelte) and a `backend/` folder with scripts in any Windmill-supported language. Windmill bundles and serves the frontend. An auto-generated `wmill.ts` module provides typed functions to call your backend runnables.
 
+<video
+  className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800 mb-6"
+  autoPlay
+  loop
+  muted
+  src="/img/platform/app-builder/platform-app-builder-backend-runnables.webm"
+/>
+
 <Tabs className="unique-tabs">
 <TabItem value="react" label="React" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
@@ -40,28 +48,36 @@ import { useState, useEffect } from "react";
 import { backend } from "./wmill.ts";
 
 export default function App() {
-  const [users, setUsers] = useState([]);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    backend.get_users({ limit: 50 })
-      .then(setUsers)
+    backend.get_failed_payments({ days_back: 7, limit: 100 })
+      .then(setData)
       .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <div>Loading...</div>;
 
   return (
-    <table>
-      <thead>
-        <tr><th>Name</th><th>Email</th></tr>
-      </thead>
-      <tbody>
-        {users.map((u) => (
-          <tr key={u.id}><td>{u.name}</td><td>{u.email}</td></tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      <h2>Failed payments ({data.failed_payments_count})</h2>
+      <p>Total: ${(data.total_failed_amount / 100).toFixed(2)}</p>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Amount</th><th>Reason</th></tr>
+        </thead>
+        <tbody>
+          {data.failed_payments.map((p) => (
+            <tr key={p.id}>
+              <td>{p.id}</td>
+              <td>${(p.amount / 100).toFixed(2)}</td>
+              <td>{p.failure_code}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 ```
@@ -74,12 +90,12 @@ export default function App() {
 <script lang="ts">
   import { backend } from "./wmill.ts";
 
-  let users = $state([]);
+  let data = $state(null);
   let loading = $state(true);
 
   $effect(() => {
-    backend.get_users({ limit: 50 })
-      .then((data) => { users = data; })
+    backend.get_failed_payments({ days_back: 7, limit: 100 })
+      .then((result) => { data = result; })
       .finally(() => { loading = false; });
   });
 </script>
@@ -87,16 +103,24 @@ export default function App() {
 {#if loading}
   <div>Loading...</div>
 {:else}
-  <table>
-    <thead>
-      <tr><th>Name</th><th>Email</th></tr>
-    </thead>
-    <tbody>
-      {#each users as user}
-        <tr><td>{user.name}</td><td>{user.email}</td></tr>
-      {/each}
-    </tbody>
-  </table>
+  <div>
+    <h2>Failed payments ({data.failed_payments_count})</h2>
+    <p>Total: ${(data.total_failed_amount / 100).toFixed(2)}</p>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Amount</th><th>Reason</th></tr>
+      </thead>
+      <tbody>
+        {#each data.failed_payments as payment}
+          <tr>
+            <td>{payment.id}</td>
+            <td>${(payment.amount / 100).toFixed(2)}</td>
+            <td>{payment.failure_code}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
 {/if}
 ```
 
@@ -105,30 +129,31 @@ export default function App() {
 
 <!-- TODO: video showing a full-code app in action: creating an app, calling a backend runnable, seeing the result in the UI. Path suggestion: /videos/full_code_apps_demo.webm -->
 
-`backend.get_users` is fully typed. The types come from the backend script's function signature, auto-generated into a `wmill.d.ts` file during development.
-
 ## The typed backend API
 
-During development, `wmill app dev` watches your `backend/` folder and generates a `wmill.d.ts` file with typed signatures for each runnable. Given this backend script:
+`backend.get_failed_payments` is fully typed. During development, `wmill app dev` watches your `backend/` folder and generates a `wmill.d.ts` file with typed signatures for each runnable. Given this backend script:
 
-```typescript
-// backend/get_users.ts
-export async function main(limit: number = 10): Promise<User[]> {
-  // ...
-}
+```python
+# backend/get_failed_payments.py
+def main(stripe_ressource: stripe, days_back: int = 7, limit: int = 100):
+    # ...
 ```
 
 The generated types will be:
 
 ```typescript
 export const backend: {
-  get_users: (v: { limit?: number }) => Promise<User[]>;
+  get_failed_payments: (v: {
+    stripe_ressource: { token: string };
+    days_back?: number;
+    limit?: number;
+  }) => Promise<FailedPaymentsResult>;
 };
 ```
 
 Your frontend gets autocomplete, type checking, and compile-time safety when calling runnables. No manual type definitions, no API contracts to maintain.
 
-<!-- TODO: video showing autocomplete in VS Code when calling backend.get_users, and type errors when passing wrong arguments. Path suggestion: /videos/full_code_apps_typed_api.webm -->
+<!-- TODO: video showing autocomplete in VS Code when calling backend.get_failed_payments, and type errors when passing wrong arguments. Path suggestion: /videos/full_code_apps_typed_api.webm -->
 
 Beyond synchronous calls, the API supports async patterns for long-running tasks:
 
@@ -147,6 +172,77 @@ const finalResult = await streamJob(jobId, (update) => {
 });
 ```
 
+## Example: AI chatbot with tools
+
+export const FullWidthTabsStyle = () => <style>{`.example-tabs ul[role="tablist"] { display: flex; width: 100%; margin: 0 0 20px 0 !important; padding-left: 0 !important; } .example-tabs ul[role="tablist"] li { flex: 1; text-align: center; display: flex; justify-content: center; margin-left: 0 !important; }`}</style>;
+
+<FullWidthTabsStyle />
+
+<div className="example-tabs">
+<Tabs>
+<TabItem value="frontend" label="Full-code frontend" attributes={{className: "text-lg font-semibold p-4 !mt-0 !ml-0"}}>
+
+<iframe
+  src="https://app.windmill.dev/public/windmill-labs/928711b4b9ac223354f283212d5e7594"
+  style={{ width: '100%', height: '800px', border: 'none', borderRadius: '8px' }}
+  title="AI Chatbot App"
+  allow="clipboard-read; clipboard-write"
+/>
+
+</TabItem>
+<TabItem value="backend" label="Windmill backend runnables" attributes={{className: "text-lg font-semibold p-4 !mt-0 !ml-0"}}>
+
+<Tabs className="unique-tabs">
+<TabItem value="ai-agent-flow" label="AI agent flow" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
+
+The orchestration flow that receives a user message, calls an AI model with registered tools, and streams the response back.
+
+{/* TODO: screenshot of the AI agent flow in the Windmill flow editor, showing the steps: receive message, call AI model with tools, return response. Path suggestion: ./ai_agent_flow.png */}
+
+<div style={{width: '100%', height: '400px', backgroundColor: '#1e1e2e', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', fontSize: '14px'}}>
+  Screenshot placeholder: AI agent flow in the Windmill flow editor
+</div>
+
+</TabItem>
+<TabItem value="get-marketing-activation" label="Get marketing activations" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
+
+A tool the AI agent can call to look up marketing activation data from connected sources.
+
+{/* TODO: screenshot of the get_marketing_activation script in the Windmill script editor. Path suggestion: ./get_marketing_activation.png */}
+
+<div style={{width: '100%', height: '400px', backgroundColor: '#1e1e2e', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', fontSize: '14px'}}>
+  Screenshot placeholder: get_marketing_activation script in the Windmill script editor
+</div>
+
+</TabItem>
+<TabItem value="get-sales-metrics" label="Get sales metrics" attributes={{className: "text-sm p-4 !mt-0 !ml-0"}}>
+
+A tool the AI agent can call to query sales metrics from the database.
+
+{/* TODO: screenshot of the get_sales_metrics script in the Windmill script editor. Path suggestion: ./get_sales_metrics.png */}
+
+<div style={{width: '100%', height: '400px', backgroundColor: '#1e1e2e', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', fontSize: '14px'}}>
+  Screenshot placeholder: get_sales_metrics script in the Windmill script editor
+</div>
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+</div>
+
+This app is a full-code app built entirely on Windmill. The frontend is a React chat interface. Behind it, a backend flow calls an AI model and passes Windmill scripts as callable tools.
+
+When a user asks a question, the flow is:
+
+1. The React frontend sends the message to a backend runnable via the typed API.
+2. The backend flow calls an AI model with a set of Windmill scripts registered as tools.
+3. The AI agent decides which tools to call (e.g. querying sales metrics, looking up marketing activations) and returns a response.
+4. The result streams back to the frontend.
+
+The entire app, frontend, backend logic, and AI tools, lives in a single Windmill workspace. No external API layer, no separate deployment for the chat UI.
+
 ## Why we built it this way
 
 Three design choices drove the architecture:
@@ -154,6 +250,14 @@ Three design choices drove the architecture:
 **Any language on the backend.** Your frontend is React or Svelte. Your backend can be anything: TypeScript, Python, SQL (PostgreSQL, MySQL, BigQuery, Snowflake, DuckDB), Go, Bash, Rust, PHP, Java, Ruby, C#, and more. Each runnable is a file in `backend/` with the language inferred from the extension. A single app can mix Python data processing with TypeScript API calls and SQL queries.
 
 **Local development first.** `wmill app dev` starts a local dev server with hot module replacement. You use your own editor, your own tools, your own npm packages. The CLI auto-generates an `AGENTS.md` file so AI coding assistants like Claude Code or Codex understand your project structure out of the box. The workflow is standard: `npm install`, write code, see changes instantly.
+
+<video
+  className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800 mb-6"
+  autoPlay
+  loop
+  muted
+  src="/videos/wmill-app-dev.mp4"
+/>
 
 **No separate API layer.** The frontend calls backend runnables directly through Windmill's execution engine via WebSocket. No REST endpoints to define, no API gateway to configure, no OpenAPI specs to maintain. You write a function in `backend/`, and it appears as a typed call in your frontend.
 
@@ -169,7 +273,7 @@ my_app.raw_app/
 ├── App.tsx                # Main React component
 ├── index.css              # Styles (Tailwind, custom CSS, etc.)
 ├── backend/
-│   ├── get_users.ts       # TypeScript runnable
+│   ├── get_failed_payments.py  # Python runnable (Stripe)
 │   ├── run_query.pg.sql   # PostgreSQL runnable
 │   └── analyze.py         # Python runnable
 └── sql_to_apply/
@@ -237,4 +341,4 @@ You can also create full-code apps directly from the Windmill UI by clicking "+ 
 
 ## What's next
 
-Tomorrow is Day 3: **AI sandboxes**. Run Claude Code, Codex, or custom agents in isolated environments with persistent volumes. [Follow along](/launch-week-march-2026).
+Tomorrow is Day 2: **Data Tables & Ducklake**. Store and query relational data with managed SQL and an S3-backed data lakehouse. [Follow along](/launch-week-march-2026).

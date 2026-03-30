@@ -159,18 +159,18 @@ const days = [
 		weekday: 'Monday',
 		date: 'Mar 30',
 		releaseDate: new Date('2026-03-30T00:00:00'),
-		title: 'Data tables & Ducklake',
-		description: 'Store and query relational data with managed SQL, powered by Ducklake.',
-		href: '/blog/launch-week-data-tables-ducklake',
+		title: 'Full code apps',
+		description: 'Build complete applications with React and Svelte frontends connected to backend logic.',
+		href: '/blog/launch-week-full-code-apps',
 	},
 	{
 		day: 2,
 		weekday: 'Tuesday',
 		date: 'Mar 31',
 		releaseDate: new Date('2026-03-31T00:00:00'),
-		title: 'Full code apps',
-		description: 'Build complete applications with React and Svelte frontends connected to backend logic.',
-		href: '/blog/launch-week-full-code-apps',
+		title: 'Data tables & Ducklake',
+		description: 'Store and query relational data with managed SQL, powered by Ducklake.',
+		href: '/blog/launch-week-data-tables-ducklake',
 	},
 	{
 		day: 3,
@@ -202,34 +202,34 @@ const days = [
 ];
 
 const cardVisuals = [
-	// Day 1: Data tables - grid pattern
+	// Day 1: Full code apps - layered rectangles
 	() => (
 		<svg viewBox="0 0 200 200" className="w-full h-full">
 			<defs>
 				<linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-					<stop offset="0%" stopColor="#3b82f6" stopOpacity="0.7" />
-					<stop offset="100%" stopColor="#60a5fa" stopOpacity="0.2" />
-				</linearGradient>
-			</defs>
-			{Array.from({ length: 5 }, (_, i) =>
-				Array.from({ length: 5 }, (_, j) => (
-					<rect key={`${i}-${j}`} x={25 + j * 32} y={25 + i * 32} width="24" height="24" rx="4" fill="url(#g1)" />
-				))
-			)}
-		</svg>
-	),
-	// Day 2: Full code apps - layered rectangles
-	() => (
-		<svg viewBox="0 0 200 200" className="w-full h-full">
-			<defs>
-				<linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
 					<stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
 					<stop offset="100%" stopColor="#60a5fa" stopOpacity="0.15" />
 				</linearGradient>
 			</defs>
 			<rect x="25" y="40" width="130" height="90" rx="10" fill="none" stroke="#3b82f6" strokeOpacity="0.3" strokeWidth="1.5" />
 			<rect x="45" y="60" width="130" height="90" rx="10" fill="none" stroke="#3b82f6" strokeOpacity="0.4" strokeWidth="1.5" />
-			<rect x="65" y="80" width="130" height="90" rx="10" fill="url(#g2)" />
+			<rect x="65" y="80" width="130" height="90" rx="10" fill="url(#g1)" />
+		</svg>
+	),
+	// Day 2: Data tables - grid pattern
+	() => (
+		<svg viewBox="0 0 200 200" className="w-full h-full">
+			<defs>
+				<linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+					<stop offset="0%" stopColor="#3b82f6" stopOpacity="0.7" />
+					<stop offset="100%" stopColor="#60a5fa" stopOpacity="0.2" />
+				</linearGradient>
+			</defs>
+			{Array.from({ length: 5 }, (_, i) =>
+				Array.from({ length: 5 }, (_, j) => (
+					<rect key={`${i}-${j}`} x={25 + j * 32} y={25 + i * 32} width="24" height="24" rx="4" fill="url(#g2)" />
+				))
+			)}
 		</svg>
 	),
 	// Day 3: Sandboxes - concentric circles
@@ -327,7 +327,7 @@ export default function LaunchWeekPage() {
 		'@type': 'Event',
 		name: 'Windmill launch week',
 		description:
-			'Five major releases in one week: data tables, full code apps, AI sandboxes, Git sync v2, and workflow-as-code v2.',
+			'Five major releases in one week: full code apps, data tables, AI sandboxes, Git sync v2, and workflow-as-code v2.',
 		startDate: '2026-03-30',
 		endDate: '2026-04-03',
 		eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
@@ -354,7 +354,7 @@ export default function LaunchWeekPage() {
 					<meta name="title" content="Launch week | Windmill" />
 					<meta
 						name="description"
-						content="What is new in Windmill? Five major releases in one week: data tables, full code apps, AI sandboxes, Git sync v2, and workflow-as-code v2."
+						content="What is new in Windmill? Five major releases in one week: full code apps, data tables, AI sandboxes, Git sync v2, and workflow-as-code v2."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 					<script type="application/ld+json">{JSON.stringify(eventSchema)}</script>
@@ -377,7 +377,7 @@ export default function LaunchWeekPage() {
 									Launch week #2
 								</div>
 								<p className="mt-6 text-lg text-gray-500 dark:text-gray-400">
-									Five days, five releases. Data tables, full-code apps, AI sandboxes, Git sync and workflow-as-code.
+									Five days, five releases. Full-code apps, data tables, AI sandboxes, Git sync and workflow-as-code.
 								</p>
 							</motion.div>
 						</div>
