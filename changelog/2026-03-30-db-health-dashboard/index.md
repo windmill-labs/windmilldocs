@@ -2,6 +2,7 @@
 slug: db-health-dashboard
 title: DB Health Diagnostic Dashboard
 tags: ['Instance Settings', 'Monitoring']
+image: ./db_health.png
 description: New on-demand database diagnostic dashboard for superadmins. Surfaces database size, job retention health, large job results, connection pool status, vacuum/bloat stats, slow queries, and datatable sizes — all from within Instance Settings.
 features:
   [
