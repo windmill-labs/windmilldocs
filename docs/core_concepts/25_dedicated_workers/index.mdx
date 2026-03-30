@@ -1,5 +1,5 @@
 ---
-description: How do I use dedicated workers to eliminate cold starts and achieve high throughput for scripts?
+description: How do I use dedicated workers and shared runners to eliminate cold starts and achieve high throughput for scripts?
 ---
 
 import DocCard from '@site/src/components/DocCard';
@@ -69,6 +69,42 @@ dedicated_workers:
 Each entry uses the format `<workspace_id>:<path>`. The worker will dispatch incoming jobs to the appropriate dedicated runner based on the job's script path.
 
 This is configured from the worker group settings in the UI using the dedicated workers selector, which lets you search and pick scripts and flows from any workspace.
+
+## Shared runners
+
+Shared runners allow multiple scripts that share the same [workspace dependency](../55_workspace_dependencies/index.mdx) and language to execute in a single long-lived subprocess, instead of requiring a separate dedicated worker process per script.
+
+With standard dedicated workers, each script gets its own process. If you have 10 scripts that all use the same Python dependency file, that means 10 separate processes — each loading the same dependencies into memory. Shared runners solve this by grouping those scripts into a single subprocess that can dispatch jobs to any of them.
+
+### How it works
+
+Shared runners are auto-detected based on script annotations. When multiple dedicated worker scripts in the same worker group:
+
+1. Share the same [workspace dependency](../55_workspace_dependencies/index.mdx) name (e.g. `# requirements: myfile`)
+2. Use the same language (e.g. all Python, or all Bun)
+
+...they are automatically grouped into a shared runner. The subprocess loads all scripts at startup and dispatches incoming jobs to the correct one based on the script path.
+
+Shared runners work with [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Bun and Deno) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx).
+
+### Configuration
+
+1. Create a [workspace dependency](../55_workspace_dependencies/index.mdx) file (e.g. a `requirements.in` or `package.json`) in workspace settings under "Dependencies".
+2. Reference the same workspace dependency from multiple scripts using annotations (e.g. `# requirements: myfile` for Python or `// requirements: myfile` for TypeScript).
+3. Enable "Dedicated Workers" on each script in the [script settings](../../script_editor/settings.mdx).
+4. Add all scripts to the same worker group using the [dedicated workers selector](#multiple-dedicated-workers-per-worker-group).
+
+The worker group configuration UI automatically detects and displays shared runners. Scripts that share a workspace dependency and language are shown grouped together.
+
+![Shared runners](./shared_runners.png 'Shared runners')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace dependencies"
+		description="Manage dependencies centrally at the workspace level."
+		href="/docs/core_concepts/workspace_dependencies"
+	/>
+</div>
 
 ## Dedicated workers for flows
 
