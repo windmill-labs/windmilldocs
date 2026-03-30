@@ -6,11 +6,11 @@ description: "How do I run production scripts? Write scripts in TypeScript, Pyth
 import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Code2, Globe, Eye, Shield, RefreshCw, CheckCircle, BookOpen } from 'lucide-react';
+import { ArrowRight, Code2, Globe, Eye, Shield, RefreshCw, CheckCircle, BookOpen, GitBranch, Activity, Puzzle } from 'lucide-react';
+import LazyVideo from '../../components/products/LazyVideo';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CaseStudyCard from '../../components/use-cases/CaseStudyCard';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
-import TriggerSection from '../../components/use-cases/TriggerSection';
 import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
 import { pantherLabsCaseStudy } from '../../data/case-studies/panther-labs';
@@ -29,60 +29,12 @@ export const stagger = (delay = 0) => ({
 });
 
 export const scriptExamples = [
-	{
-		category: 'Cybersecurity',
-		scripts: [
-			{ title: 'Incident response automation', desc: 'Query your SIEM, enrich alerts with threat intelligence feeds, create tickets in PagerDuty or Jira and notify the on-call team on Slack.' },
-			{ title: 'Compliance scanning', desc: 'Audit AWS IAM policies, check S3 bucket permissions and flag non-compliant resources. Schedule daily and pipe results to a dashboard.' },
-			{ title: 'Certificate monitoring', desc: 'Check TLS certificate expiry across all your domains. Alert the team 30 days before expiration and auto-renew via Let\'s Encrypt API.' },
-			{ title: 'SOAR playbooks', desc: 'Orchestrate containment actions: isolate compromised hosts, revoke tokens, block IPs in the firewall and generate a post-incident report.' },
-		]
-	},
-	{
-		category: 'Finance and fintech',
-		scripts: [
-			{ title: 'Payment reconciliation', desc: 'Pull transactions from Stripe, match them against your ledger in PostgreSQL and flag discrepancies for review.' },
-			{ title: 'Regulatory reporting', desc: 'Aggregate trade data from multiple sources, apply formatting rules and submit reports to regulators on schedule.' },
-			{ title: 'Synthetic monitoring', desc: 'Simulate user journeys on trading platforms with ChromeDriver every 5 minutes. Catch regressions before customers do.' },
-			{ title: 'Fraud detection pipeline', desc: 'Score incoming transactions against ML models, flag anomalies and trigger review workflows with approval steps.' },
-		]
-	},
-	{
-		category: 'DevOps and platform',
-		scripts: [
-			{ title: 'Customer provisioning', desc: 'Spin up AWS accounts, configure IAM roles, deploy baseline infrastructure and notify the customer with onboarding credentials.' },
-			{ title: 'Environment hydration', desc: 'Seed demo environments with realistic data on a schedule. Reset databases, populate sample records and keep environments ready for sales engineers.' },
-			{ title: 'Infrastructure cleanup', desc: 'Find orphaned cloud resources (unused EBS volumes, stale DNS records, idle load balancers) and clean them up to reduce costs.' },
-			{ title: 'Release automation', desc: 'Tag a release in Git, build Docker images, run smoke tests, deploy to staging and notify the team on Slack with a changelog.' },
-		]
-	},
-	{
-		category: 'E-commerce and retail',
-		scripts: [
-			{ title: 'Inventory synchronization', desc: 'Sync stock levels between your ERP, warehouse management system and online storefront. Run every 15 minutes to prevent overselling.' },
-			{ title: 'Order fulfillment', desc: 'Route new orders to the nearest warehouse, generate shipping labels via the carrier API and send tracking emails to customers.' },
-			{ title: 'Price updates', desc: 'Pull competitor pricing data, apply business rules and update your catalog. Schedule nightly or trigger on demand.' },
-			{ title: 'Returns processing', desc: 'Receive return webhooks from the storefront, update inventory, issue refunds via Stripe and log the reason for analytics.' },
-		]
-	},
-	{
-		category: 'Healthcare and life sciences',
-		scripts: [
-			{ title: 'Lab result notifications', desc: 'Poll the LIMS for completed results, format them for clinician review and send secure notifications via the patient portal API.' },
-			{ title: 'Compliance audit trails', desc: 'Generate HIPAA-compliant audit logs from application events. Archive to S3 with retention policies and alert on anomalies.' },
-			{ title: 'Clinical trial data processing', desc: 'Ingest data from EDC systems, validate against protocol rules, transform to CDISC format and load into the data warehouse.' },
-			{ title: 'EHR integration', desc: 'Sync patient records between Epic/Cerner and internal systems. Map HL7 FHIR resources to your data model and handle conflicts.' },
-		]
-	},
-	{
-		category: 'Environmental and field ops',
-		scripts: [
-			{ title: 'Sensor data collection', desc: 'Ingest readings from IoT sensors, validate ranges, store in TimescaleDB and trigger alerts when thresholds are exceeded.' },
-			{ title: 'Satellite imagery processing', desc: 'Download GeoTIFF files from satellite feeds, convert to JPEG, run change detection algorithms and publish results to a map dashboard.' },
-			{ title: 'Field data ingestion', desc: 'Pull submissions from mobile data collection apps (KoBoToolbox, ODK), clean and validate entries, and load into the central database.' },
-			{ title: 'Alert dispatching', desc: 'Send location-aware alerts via WhatsApp, SMS or email when monitoring systems detect illegal activity or environmental hazards.' },
-		]
-	},
+	{ category: 'Cybersecurity', title: 'Incident response automation', desc: 'Query your SIEM, enrich alerts with threat intelligence feeds, create tickets in PagerDuty and notify the on-call team on Slack.' },
+	{ category: 'Finance', title: 'Payment reconciliation', desc: 'Pull transactions from Stripe, match them against your ledger in PostgreSQL and flag discrepancies for review.' },
+	{ category: 'DevOps', title: 'Customer provisioning', desc: 'Spin up AWS accounts, configure IAM roles, deploy baseline infrastructure and notify the customer with onboarding credentials.' },
+	{ category: 'E-commerce', title: 'Inventory synchronization', desc: 'Sync stock levels between your ERP, warehouse system and storefront every 15 minutes to prevent overselling.' },
+	{ category: 'Healthcare', title: 'Lab result notifications', desc: 'Poll the LIMS for completed results, format them for clinician review and send secure notifications via the patient portal API.' },
+	{ category: 'Environmental', title: 'Sensor data collection', desc: 'Ingest readings from IoT sensors, validate ranges, store in TimescaleDB and trigger alerts when thresholds are exceeded.' },
 ];
 
 export default function ScriptsContent({ title, description }) {
@@ -264,40 +216,63 @@ export default function ScriptsContent({ title, description }) {
 
 			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
-			{/* Positioning: 3 pillars */}
+			{/* What is a script on Windmill? */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
-				<motion.div {...fadeIn} className="text-center mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Why teams choose Windmill for scripts
-					</h2>
-				</motion.div>
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-					<motion.div {...stagger(0)} className="text-center px-4">
-						<div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 mb-4">
-							<Code2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-						</div>
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Full code flexibility</h3>
-						<p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-							Write real code in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, Bash, SQL</Link> and 20+ languages. Import any library. No DSL, no drag-and-drop constraints. Your scripts run in isolated sandboxes with automatic <Link to="/docs/advanced/imports" className="text-blue-600 dark:text-blue-400 hover:underline">dependency management</Link>.
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							What is a script on Windmill?
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							A script is a function in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any language</Link> that you write, deploy and monitor with no overhead. Windmill handles the runtime, the dependencies, the UI and the API. You just write the logic.
 						</p>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Each script automatically gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook endpoints</Link>, <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">scheduling</Link> and real-time logs. Use it standalone or as a building block in <Link to="/use-cases/workflows" className="text-blue-600 dark:text-blue-400 hover:underline">workflows</Link> and <Link to="/use-cases/internal-tools" className="text-blue-600 dark:text-blue-400 hover:underline">apps</Link>.
+						</p>
+						<Link
+							to="/platform/script-editor"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							See the script editor in detail
+						</Link>
 					</motion.div>
-					<motion.div {...stagger(0.1)} className="text-center px-4">
-						<div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 mb-4">
-							<Eye className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-						</div>
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Full observability</h3>
-						<p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-							Every run is logged with inputs, outputs, duration and status. Inspect <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">execution logs</Link> in real time, stream results via SSE, set up <Link to="/docs/core_concepts/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handlers</Link> and alerts. No more black-box cron jobs.
-						</p>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/script-editor/platform-script-realtime-logs.webm"
+						/>
 					</motion.div>
-					<motion.div {...stagger(0.2)} className="text-center px-4">
-						<div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 mb-4">
-							<Shield className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+				</div>
+
+				{/* Production-ready strip */}
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+					<motion.div {...stagger(0)} className="flex gap-4 items-start">
+						<div className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/50">
+							<Puzzle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
 						</div>
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Enterprise integration</h3>
-						<p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-							<Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Self-host</Link> on your infrastructure or use Windmill Cloud. <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">RBAC</Link>, SSO, <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit logs</Link>, <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> and secrets management built in. Deploy scripts like you deploy code.
-						</p>
+						<div>
+							<h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Prebuilt integrations</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-400">Connect to databases, APIs and cloud services through <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">typed resources</Link>. Secrets encrypted at rest, injected at runtime.</p>
+						</div>
+					</motion.div>
+					<motion.div {...stagger(0.08)} className="flex gap-4 items-start">
+						<div className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/50">
+							<GitBranch className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+						</div>
+						<div>
+							<h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Versioning and deploy</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-400">Every version is immutable and addressable by hash. Deploy from the UI, <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link>. Roll back instantly.</p>
+						</div>
+					</motion.div>
+					<motion.div {...stagger(0.16)} className="flex gap-4 items-start">
+						<div className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/50">
+							<Activity className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+						</div>
+						<div>
+							<h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Monitoring and enterprise</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-400">Real-time <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">execution logs</Link>, <Link to="/docs/core_concepts/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handlers</Link>, <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit trails</Link>, RBAC and SSO. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Self-host</Link> or use Windmill Cloud.</p>
+						</div>
 					</motion.div>
 				</div>
 			</div>
@@ -313,26 +288,20 @@ export default function ScriptsContent({ title, description }) {
 					</p>
 				</motion.div>
 
-				{scriptExamples.map((group, gi) => (
-					<motion.div key={group.category} {...stagger(gi * 0.05)} className="mb-12 last:mb-0">
-						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">{group.category}</h3>
-						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-							{group.scripts.map((script, si) => (
-								<div
-									key={script.title}
-									className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-5"
-								>
-									<h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{script.title}</h4>
-									<p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{script.desc}</p>
-								</div>
-							))}
-						</div>
-					</motion.div>
-				))}
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+					{scriptExamples.map((example, i) => (
+						<motion.div
+							key={example.title}
+							{...stagger(i * 0.08)}
+							className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6"
+						>
+							<span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">{example.category}</span>
+							<h3 className="text-base font-semibold text-gray-900 dark:text-white mt-2 mb-2">{example.title}</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{example.desc}</p>
+						</motion.div>
+					))}
+				</div>
 			</div>
-
-			{/* Triggers */}
-			<TriggerSection />
 
 			{/* Case studies */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
