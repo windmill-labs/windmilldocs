@@ -172,7 +172,7 @@ const finalResult = await streamJob(jobId, (update) => {
 });
 ```
 
-## Example: AI chatbot with tools
+## Example: AI chatbot with Windmill scripts as tools
 
 export const FullWidthTabsStyle = () => <style>{`.example-tabs ul[role="tablist"] { display: flex; width: 100%; margin: 0 0 20px 0 !important; padding-left: 0 !important; } .example-tabs ul[role="tablist"] li { flex: 1; text-align: center; display: flex; justify-content: center; margin-left: 0 !important; }`}</style>;
 
@@ -267,17 +267,16 @@ Here is what a typical full-code app looks like on disk:
 
 ```
 my_app.raw_app/
-├── raw_app.yaml           # App metadata, policy, data access
-├── package.json
-├── index.tsx              # Entry point
-├── App.tsx                # Main React component
-├── index.css              # Styles (Tailwind, custom CSS, etc.)
-├── backend/
-│   ├── get_failed_payments.py  # Python runnable (Stripe)
-│   ├── run_query.pg.sql   # PostgreSQL runnable
-│   └── analyze.py         # Python runnable
-└── sql_to_apply/
-    └── README.md
+├── frontend/
+│   ├── App.tsx                # Main React component
+│   ├── index.css
+│   ├── index.tsx              # Entry point
+│   ├── package.json
+│   └── wmill.ts              # Auto-generated typed API to call backend runnables
+└── backend/
+    ├── sendAiMessage          # Send message to AI agent
+    ├── getSalesMetrics        # Get sales metrics
+    └── getMarketingActivations # Get marketing activations
 ```
 
 Each file in `backend/` becomes a callable runnable. The language is detected from the extension: `.ts` for TypeScript, `.py` for Python, `.pg.sql` for PostgreSQL, and so on. No YAML configuration is needed for simple runnables.
