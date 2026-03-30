@@ -297,7 +297,7 @@ function DayCard({ item, index }) {
 					{item.weekday}
 				</span>
 				<h3 className={`text-base font-semibold leading-snug min-h-[2.5rem] ${disabled ? 'text-gray-400 dark:text-gray-600' : 'text-gray-900 dark:text-white'}`}>
-					{disabled ? item.title : `Introducing ${item.title}`}
+					{item.title}
 				</h3>
 			</div>
 		</>
