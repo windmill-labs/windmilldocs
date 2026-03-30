@@ -74,7 +74,7 @@ This is configured from the worker group settings in the UI using the dedicated 
 
 When dedicated worker scripts in the same worker group share a [workspace dependency](../55_workspace_dependencies/index.mdx) and language, they automatically run in a single long-lived subprocess instead of separate processes. This is called a shared runner.
 
-Without workspace dependencies, each dedicated worker script gets its own process. With shared runners, scripts that reference the same workspace dependency (e.g. `# requirements: myfile`) and use the same language are grouped into one subprocess that dispatches jobs to the correct script based on its path. This avoids having many parallel processes and reduces memory usage when you have a large number of dedicated worker scripts sharing the same dependencies.
+Without workspace dependencies, each dedicated worker script gets its own process. With shared runners, scripts that reference the same workspace dependency (e.g. `# requirements: myfile`) and use the same language are grouped into one subprocess that dispatches jobs to the correct script based on its path. This avoids having many parallel processes and reduces memory usage when you have multiple dedicated worker scripts sharing the same dependencies.
 
 Shared runners work with [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Bun and Deno) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx).
 
