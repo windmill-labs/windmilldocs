@@ -84,7 +84,7 @@ SELECT * FROM friend WHERE id = $user_id;
 	src="/img/platform/datatables/platform-datatables-query-any-language.webm"
 />
 
-<br/>
+<br />
 
 That's it. One import, one function call, standard SQL. TypeScript uses tagged template literals that are automatically converted to parameterized queries, so string interpolation is safe by default. Python uses positional arguments (`$1`, `$2`). DuckDB uses the native `ATTACH` syntax.
 
@@ -128,7 +128,7 @@ When you reference a Data Table in a script, Windmill automatically parses your 
 	src="/img/platform/datatables/platform-datatables-asset-tracking.webm"
 />
 
-<br/>
+<br />
 
 Assets appear as nodes in flows, giving you a visual data dependency graph. Click any asset node to open it in the Database Studio and inspect the data directly.
 
@@ -145,7 +145,7 @@ Data Tables are great for transactional data. But some workloads produce million
 	src="/videos/ducklake_demo.mp4"
 />
 
-<br/>
+<br />
 
 The API follows the same pattern as Data Tables:
 
@@ -226,13 +226,13 @@ Under the hood, TypeScript and Python integrations run DuckDB inline within the 
 
 ## Why Ducklake over a data warehouse
 
-| | Ducklake | Managed warehouse |
-|---|---|---|
-| **Storage format** | Parquet on your S3 | Proprietary |
-| **Query engine** | DuckDB (single-node, in-process) | Managed cluster |
-| **Catalog** | Postgres (already in your stack) | Proprietary |
-| **Cost model** | S3 storage pricing | Per-query compute pricing |
-| **Lock-in** | None: standard Parquet files | High |
+|                    | Ducklake                         | Managed warehouse         |
+| ------------------ | -------------------------------- | ------------------------- |
+| **Storage format** | Parquet on your S3               | Proprietary               |
+| **Query engine**   | DuckDB (single-node, in-process) | Managed cluster           |
+| **Catalog**        | Postgres (already in your stack) | Proprietary               |
+| **Cost model**     | S3 storage pricing               | Per-query compute pricing |
+| **Lock-in**        | None: standard Parquet files     | High                      |
 
 Ducklake gives you a data lakehouse without new infrastructure. Your data stays in an open format on storage you control. The catalog metadata lives in the same Postgres that Windmill already uses. And DuckDB handles analytical queries on a single node without cluster management.
 
@@ -247,7 +247,7 @@ Both Data Tables and Ducklake are browsable through the Database Studio, a visua
 	src="/img/platform/datatables/platform-datatables-database-studio.webm"
 />
 
-<br/>
+<br />
 
 ## Building data pipelines
 
@@ -277,11 +277,13 @@ You can also schedule pipelines with [cron triggers](/docs/core_concepts/schedul
 ## Getting started
 
 **Data Tables:**
+
 1. Go to workspace settings, then Data Tables.
 2. Add your own Postgres resource.
 3. Use `wmill.datatable()` in any script.
 
 **Ducklake:**
+
 1. Configure a workspace S3 storage.
 2. Go to workspace settings, then Object storage and set up a Ducklake.
 3. Use `wmill.ducklake()` in any script.
@@ -298,6 +300,155 @@ You can also schedule pipelines with [cron triggers](/docs/core_concepts/schedul
 		href="/docs/core_concepts/persistent_storage/ducklake"
 	/>
 </div>
+
+## Benchmark: Windmill + Ducklake vs Airflow + Snowflake
+
+import PipelineBenchmarkChart, {
+	PipelineStepComparison
+} from '@site/src/components/PipelineBenchmarkChart';
+
+To put numbers behind the architecture, we ran the same data pipeline on both stacks and measured wall-clock time. Both pipelines start from the same pre-ingested ~3 million row dataset ([NYC Yellow Taxi trips, January 2024](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)) and run 5 identical transformation and validation steps.
+
+### Pipeline steps
+
+| Step | Name              | What it does                                                                                                         |
+| ---- | ----------------- | -------------------------------------------------------------------------------------------------------------------- |
+| 1    | Clean             | Filter out invalid rows (zero passengers, negative fares, zero-distance trips, missing location IDs) → `clean_trips` |
+| 2    | Enrich            | Add computed columns: trip duration, speed, time-of-day bucket, weekend flag → `enriched_trips`                      |
+| 3    | Aggregate hourly  | Group by hour of day → `hourly_stats` (24 rows)                                                                      |
+| 4    | Aggregate by zone | Group by pickup location → `zone_stats`                                                                              |
+| 5    | Finalize          | Verify row counts across all tables                                                                                  |
+
+The transformations are semantically identical — same filters, same formulas, same output schemas.
+
+### How each side works
+
+**Windmill + Ducklake** runs as a Windmill flow (TypeScript + native DuckDB SQL steps). Each step is a DuckDB SQL script that attaches to Ducklake and creates each table in sequence. All compute and storage stays on your infrastructure — a single worker container (2 CPUs, 4 GB RAM) + PostgreSQL for Windmill metadata. No data leaves your environment.
+
+**Airflow + Snowflake** runs as an Airflow DAG (Python `@task` functions using `SnowflakeHook`). Each step sends SQL to a remote Snowflake MEDIUM warehouse. Compute is externalized to a third-party cloud service: every query travels over the network to Snowflake's infrastructure, where it is processed outside your control. This adds per-query compute costs (Snowflake bills by the second of warehouse uptime) and raises sovereignty concerns over the compute layer — your queries and intermediate results are executed on infrastructure you do not own.
+
+### Results
+
+export const windmillRun = {
+	platform: 'windmill_ducklake',
+	label: 'Windmill + Ducklake',
+	color: 'rgba(59, 130, 246, 1)',
+	total_wall_clock_seconds: 9.981,
+	steps: [
+		{
+			name: 'clean',
+			queue_seconds: 0.003,
+			execution_seconds: 4.189,
+			started_at_relative: 0.0,
+			completed_at_relative: 4.189
+		},
+		{
+			name: 'enrich',
+			queue_seconds: 0.006,
+			execution_seconds: 1.907,
+			started_at_relative: 4.203,
+			completed_at_relative: 6.11
+		},
+		{
+			name: 'aggregate_hourly',
+			queue_seconds: 0.004,
+			execution_seconds: 1.08,
+			started_at_relative: 6.121,
+			completed_at_relative: 7.201
+		},
+		{
+			name: 'aggregate_by_zone',
+			queue_seconds: 0.007,
+			execution_seconds: 0.901,
+			started_at_relative: 7.282,
+			completed_at_relative: 8.183
+		},
+		{
+			name: 'finalize',
+			queue_seconds: 0.002,
+			execution_seconds: 1.788,
+			started_at_relative: 8.193,
+			completed_at_relative: 9.981
+		}
+	]
+};
+
+export const airflowRun = {
+	platform: 'airflow_snowflake',
+	label: 'Airflow + Snowflake',
+	color: 'rgba(239, 68, 68, 1)',
+	total_wall_clock_seconds: 14.736,
+	steps: [
+		{
+			name: 'clean',
+			queue_seconds: 0.119,
+			execution_seconds: 4.351,
+			started_at_relative: 0.0,
+			completed_at_relative: 4.351
+		},
+		{
+			name: 'enrich',
+			queue_seconds: 0.18,
+			execution_seconds: 3.502,
+			started_at_relative: 5.094,
+			completed_at_relative: 8.596
+		},
+		{
+			name: 'aggregate_hourly',
+			queue_seconds: 0.113,
+			execution_seconds: 1.452,
+			started_at_relative: 9.163,
+			completed_at_relative: 10.615
+		},
+		{
+			name: 'aggregate_by_zone',
+			queue_seconds: 0.154,
+			execution_seconds: 1.493,
+			started_at_relative: 11.137,
+			completed_at_relative: 12.631
+		},
+		{
+			name: 'finalize',
+			queue_seconds: 0.153,
+			execution_seconds: 1.531,
+			started_at_relative: 13.204,
+			completed_at_relative: 14.736
+		}
+	]
+};
+
+Windmill + Ducklake completed the pipeline in **9.98 s** — 1.5× faster than Airflow + Snowflake at **14.74 s**.
+
+<PipelineBenchmarkChart
+	runs={[windmillRun, airflowRun]}
+	title="Total pipeline execution time"
+	xAxisLabel="Duration (seconds)"
+/>
+
+<br />
+
+The per-step breakdown shows where the difference comes from:
+
+<PipelineStepComparison
+	runs={[windmillRun, airflowRun]}
+	title="Per-step execution time"
+	xAxisLabel="Duration (seconds)"
+/>
+
+<br />
+
+| Step              | Windmill + Ducklake | Airflow + Snowflake |  Speedup |
+| ----------------- | ------------------: | ------------------: | -------: |
+| Clean             |              4.19 s |              4.35 s |    1.04× |
+| Enrich            |              1.91 s |              3.50 s |     1.8× |
+| Aggregate hourly  |              1.08 s |              1.45 s |     1.3× |
+| Aggregate by zone |              0.90 s |              1.49 s |     1.7× |
+| Finalize          |              1.79 s |              1.53 s |    0.86× |
+| **Total**         |          **9.98 s** |         **14.74 s** | **1.5×** |
+
+:::note
+This benchmark was run on a single node with 24 GB of RAM. Results may vary depending on node compute speed and S3 connectivity speed.
+:::
 
 ## What's next
 
