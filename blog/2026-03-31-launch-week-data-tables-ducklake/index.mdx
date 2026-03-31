@@ -323,9 +323,9 @@ The transformations are semantically identical — same filters, same formulas, 
 
 ### How each side works
 
-**Windmill + Ducklake** runs as a Windmill flow (TypeScript + native DuckDB SQL steps). Each step is a DuckDB SQL script that attaches to Ducklake and creates each table in sequence
+**Windmill + Ducklake** runs as a Windmill flow (TypeScript + native DuckDB SQL steps). Each step is a DuckDB SQL script that attaches to Ducklake and creates each table in sequence. All compute and storage stays on your infrastructure — a single worker container (2 CPUs, 4 GB RAM) + PostgreSQL for Windmill metadata. No data leaves your environment.
 
-**Airflow + Snowflake** runs as an Airflow DAG (Python `@task` functions using `SnowflakeHook`). Each step executes SQL via the Snowflake connector
+**Airflow + Snowflake** runs as an Airflow DAG (Python `@task` functions using `SnowflakeHook`). Each step sends SQL to a remote Snowflake MEDIUM warehouse. Compute is externalized to a third-party cloud service: every query travels over the network to Snowflake's infrastructure, where it is processed outside your control. This adds per-query compute costs (Snowflake bills by the second of warehouse uptime) and raises sovereignty concerns over the compute layer — your queries and intermediate results are executed on infrastructure you do not own.
 
 ### Results
 
