@@ -9,6 +9,7 @@ import {
 	Legend
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { useColorMode } from '@docusaurus/theme-common';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -68,6 +69,9 @@ export default function PipelineBenchmarkChart({
 	title = 'Pipeline execution time',
 	xAxisLabel = 'Duration (seconds)'
 }: PipelineBenchmarkChartProps) {
+	const { colorMode } = useColorMode();
+	const textColor = colorMode === 'dark' ? '#e5e7eb' : '#374151';
+	const gridColor = colorMode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
 	const labels = runs.map((r) => r.label);
 
 	// Build datasets: for each step, create an overhead segment + execution segment
@@ -111,11 +115,16 @@ export default function PipelineBenchmarkChart({
 				max: Math.ceil(maxTime * 1.1),
 				title: {
 					display: true,
-					text: xAxisLabel
-				}
+					text: xAxisLabel,
+					color: textColor
+				},
+				ticks: { color: textColor },
+				grid: { color: gridColor }
 			},
 			y: {
-				stacked: true
+				stacked: true,
+				ticks: { color: textColor },
+				grid: { color: gridColor }
 			}
 		},
 		responsive: true,
@@ -124,12 +133,14 @@ export default function PipelineBenchmarkChart({
 			legend: {
 				display: true,
 				labels: {
+					color: textColor,
 					filter: (item: any) => !item.text.includes('(overhead)')
 				}
 			},
 			title: {
 				display: !!title,
-				text: title
+				text: title,
+				color: textColor
 			},
 			tooltip: {
 				callbacks: {
@@ -149,7 +160,7 @@ export default function PipelineBenchmarkChart({
 
 	return (
 		<div style={{ position: 'relative', height: '200px', width: '100%' }}>
-			<Bar options={options} data={{ labels, datasets }} />
+			<Bar key={colorMode} options={options} data={{ labels, datasets }} />
 		</div>
 	);
 }
@@ -162,6 +173,9 @@ export function PipelineStepComparison({
 	title = 'Per-step execution time',
 	xAxisLabel = 'Duration (seconds)'
 }: PipelineBenchmarkChartProps) {
+	const { colorMode } = useColorMode();
+	const textColor = colorMode === 'dark' ? '#e5e7eb' : '#374151';
+	const gridColor = colorMode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
 	const stepNames = (runs[0]?.steps ?? []).map((s) => formatStepName(s.name));
 
 	const datasets = runs.map((run) => ({
@@ -181,19 +195,28 @@ export function PipelineStepComparison({
 				max: Math.ceil(maxStep * 1.15),
 				title: {
 					display: true,
-					text: xAxisLabel
-				}
+					text: xAxisLabel,
+					color: textColor
+				},
+				ticks: { color: textColor },
+				grid: { color: gridColor }
+			},
+			y: {
+				ticks: { color: textColor },
+				grid: { color: gridColor }
 			}
 		},
 		responsive: true,
 		maintainAspectRatio: false,
 		plugins: {
 			legend: {
-				display: true
+				display: true,
+				labels: { color: textColor }
 			},
 			title: {
 				display: !!title,
-				text: title
+				text: title,
+				color: textColor
 			},
 			tooltip: {
 				callbacks: {
@@ -208,7 +231,7 @@ export function PipelineStepComparison({
 
 	return (
 		<div style={{ position: 'relative', height: '300px', width: '100%' }}>
-			<Bar options={options} data={{ labels: stepNames, datasets }} />
+			<Bar key={colorMode} options={options} data={{ labels: stepNames, datasets }} />
 		</div>
 	);
 }
