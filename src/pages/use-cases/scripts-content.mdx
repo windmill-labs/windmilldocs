@@ -6,13 +6,15 @@ description: "How do I run production scripts? Write scripts in TypeScript, Pyth
 import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Code2, Globe, Eye, Shield, RefreshCw, CheckCircle, BookOpen, GitBranch, Activity, Puzzle } from 'lucide-react';
+import { Globe, RefreshCw, CheckCircle, BookOpen } from 'lucide-react';
 import LazyVideo from '../../components/products/LazyVideo';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CaseStudyCard from '../../components/use-cases/CaseStudyCard';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import ProductCTA from '../../components/products/ProductCTA';
 import { pantherLabsCaseStudy } from '../../data/case-studies/panther-labs';
 import { cfaInstituteCaseStudy } from '../../data/case-studies/cfa-institute';
 
@@ -51,23 +53,7 @@ export default function ScriptsContent({ title, description }) {
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 							Write a script in any language, Windmill turns it into an <Link to="/docs/core_concepts/webhooks" className="text-blue-400 hover:underline !no-underline">API endpoint</Link>, a <Link to="/docs/core_concepts/scheduling" className="text-blue-400 hover:underline !no-underline">scheduled job</Link>, or a <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-400 hover:underline !no-underline">shareable tool with a UI</Link>. No infrastructure to manage.
 						</p>
-						<div className="flex flex-col sm:flex-row gap-4">
-							<a
-								href="https://app.windmill.dev"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-							>
-								Try Windmill free
-								<ArrowRight className="w-4 h-4" />
-							</a>
-							<Link
-								to="/docs/script_editor"
-								className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-							>
-								Read the docs
-							</Link>
-						</div>
+						<HeroCTAButtons />
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
@@ -224,18 +210,11 @@ export default function ScriptsContent({ title, description }) {
 							What is a script on Windmill?
 						</h2>
 						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-							A script is a function in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any language</Link> that you write, deploy and monitor with no overhead. Windmill handles the runtime, the dependencies, the UI and the API. You just write the logic.
+							A script is a function in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any language</Link> that you write, deploy and monitor directly on Windmill. Windmill handles the runtime, the dependencies, the UI and the API. You just write the logic.
 						</p>
 						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-							Each script automatically gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhook endpoints</Link>, <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">scheduling</Link> and real-time logs. Use it standalone or as a building block in <Link to="/use-cases/workflows" className="text-blue-600 dark:text-blue-400 hover:underline">workflows</Link> and <Link to="/use-cases/internal-tools" className="text-blue-600 dark:text-blue-400 hover:underline">apps</Link>.
+							Each script automatically gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link>, webhook endpoints and real-time logs. Scripts can run on demand or through <Link to="/platform/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">built-in triggers</Link>, and can be composed into <Link to="/use-cases/workflows" className="text-blue-600 dark:text-blue-400 hover:underline">workflows</Link> and <Link to="/use-cases/internal-tools" className="text-blue-600 dark:text-blue-400 hover:underline">apps</Link>.
 						</p>
-						<Link
-							to="/platform/script-editor"
-							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:underline"
-						>
-							<BookOpen className="w-4 h-4" />
-							See the script editor in detail
-						</Link>
 					</motion.div>
 					<motion.div {...stagger(0.1)}>
 						<LazyVideo
@@ -244,35 +223,180 @@ export default function ScriptsContent({ title, description }) {
 						/>
 					</motion.div>
 				</div>
+			</div>
 
-				{/* Production-ready strip */}
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-					<motion.div {...stagger(0)} className="flex gap-4 items-start">
-						<div className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/50">
-							<Puzzle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-						</div>
-						<div>
-							<h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Prebuilt integrations</h3>
-							<p className="text-sm text-gray-600 dark:text-gray-400">Connect to databases, APIs and cloud services through <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">typed resources</Link>. Secrets encrypted at rest, injected at runtime.</p>
-						</div>
+			{/* Two ways to write scripts */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Two ways to write scripts
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Write scripts directly in the Windmill UI or develop locally with your own editor. Both paths deploy to the same platform.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+					{/* Windmill UI */}
+					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In the Windmill UI</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							The built-in editor gives you autocomplete, LSP support, a live preview of the auto-generated UI, one-click deploy and <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">AI assistance</Link> (BYOK).
+						</p>
+						<LazyVideo
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							src="/img/platform/script-editor/platform-script-realtime-logs.webm"
+						/>
+						<Link
+							to="/platform/script-editor"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about the script editor
+						</Link>
 					</motion.div>
-					<motion.div {...stagger(0.08)} className="flex gap-4 items-start">
-						<div className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/50">
-							<GitBranch className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-						</div>
-						<div>
-							<h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Versioning and deploy</h3>
-							<p className="text-sm text-gray-600 dark:text-gray-400">Every version is immutable and addressable by hash. Deploy from the UI, <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link>. Roll back instantly.</p>
-						</div>
+
+					{/* Local development */}
+					<motion.div {...stagger(0.1)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In your local editor</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Use the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>, the <Link to="/docs/script_editor/vs_code_scripts" className="text-blue-600 dark:text-blue-400 hover:underline">VS Code extension</Link> or AI coding tools like Claude Code. Scripts are standard files on disk, ready for any editor or AI agent.
+						</p>
+						<LazyVideo
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							src="/img/platform/local-dev/platform-local-dev-vscode-extension.webm"
+						/>
+						<Link
+							to="/platform/local-dev"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about local development
+						</Link>
 					</motion.div>
-					<motion.div {...stagger(0.16)} className="flex gap-4 items-start">
-						<div className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/50">
-							<Activity className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-						</div>
-						<div>
-							<h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Monitoring and enterprise</h3>
-							<p className="text-sm text-gray-600 dark:text-gray-400">Real-time <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">execution logs</Link>, <Link to="/docs/core_concepts/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handlers</Link>, <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit trails</Link>, RBAC and SSO. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Self-host</Link> or use Windmill Cloud.</p>
-						</div>
+				</div>
+			</div>
+
+			{/* Production-grade platform */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Enterprise-grade by default
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Every script runs within a platform built for enterprise requirements: immutable versioning, role-based access control, full audit trails, SSO and self-hosting. No extra setup needed.
+					</p>
+				</motion.div>
+
+				{/* Versioning and deploy */}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+					<motion.div {...fadeIn}>
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Versioning and deploy</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+							Every script version is immutable and addressable by hash. Deploy from the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link>. Roll back to any previous version instantly. Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link> and use your existing code review workflows.
+						</p>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<img
+							src="/img/money-pages/deploy.webp"
+							alt="Script deployment interface"
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							loading="lazy"
+						/>
+					</motion.div>
+				</div>
+
+				{/* Observability (reversed) */}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
+						<img
+							src="/img/money-pages/monitoring.webp"
+							alt="Script monitoring and logs"
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							loading="lazy"
+						/>
+					</motion.div>
+					<motion.div {...fadeIn} className="order-1 md:order-2">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Full observability</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+							Every run is logged with inputs, outputs, duration and status. Real-time <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">execution logs</Link> stream as your script runs. Set up <Link to="/docs/core_concepts/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handlers</Link> to send alerts on failure. <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">Audit trails</Link> track who ran what and when.
+						</p>
+					</motion.div>
+				</div>
+
+				{/* RBAC and permissions */}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+					<motion.div {...fadeIn}>
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">RBAC and permissions</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+							Control who can view, edit and run each script with <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">role-based access control</Link>. Organize scripts into <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">folders</Link> with group-level permissions. Authenticate users with SSO. Every action is recorded in the audit log.
+						</p>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						{/* placeholder: screenshot of script permissions panel showing folder permissions, group access and RBAC settings */}
+						<img
+							src="/img/money-pages/secrets.webp"
+							alt="Script permissions and secrets"
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							loading="lazy"
+						/>
+					</motion.div>
+				</div>
+
+			</div>
+
+			{/* Scripts as building blocks */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Scripts as building blocks
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Every script you write can be reused across the platform. Use them standalone or compose them into larger systems.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Workflows</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Chain scripts into DAG-based flows with branching, loops, retries and approval steps. Each script becomes a step that passes its output to the next.
+						</p>
+						<Link
+							to="/use-cases/workflows"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Explore workflows
+						</Link>
+					</motion.div>
+
+					<motion.div {...stagger(0.08)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Data pipelines</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Use scripts as extraction, transformation or loading steps in data pipelines. Connect to any database or API and process data at scale.
+						</p>
+						<Link
+							to="/use-cases/data-pipelines"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Explore data pipelines
+						</Link>
+					</motion.div>
+
+					<motion.div {...stagger(0.16)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Internal apps</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Use scripts as backends for internal tools. Build a UI with the app editor and wire buttons, tables and forms to your scripts.
+						</p>
+						<Link
+							to="/use-cases/internal-tools"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Explore internal tools
+						</Link>
 					</motion.div>
 				</div>
 			</div>
@@ -284,7 +408,7 @@ export default function ScriptsContent({ title, description }) {
 						What you can build with a script
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						A Windmill script is a function that takes typed inputs and returns a result. That's it. What makes it powerful is the platform around it: triggers, permissions, logging, retries and a UI generated from the function signature. Here's what teams build across industries.
+						A Windmill script is a function that takes typed inputs and returns a result. What makes it powerful is the platform around it: triggers, permissions, logging, retries and a UI generated from the function signature. Here's what teams build across industries.
 					</p>
 				</motion.div>
 
@@ -346,31 +470,7 @@ export default function ScriptsContent({ title, description }) {
 			]} />
 
 			{/* CTA */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
-					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start building with scripts today</h2>
-					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
-						Get started for free on Windmill Cloud or <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">self-host</Link> the open-source version.
-					</p>
-					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<a
-							href="https://app.windmill.dev"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-						>
-							Try Windmill free
-							<ArrowRight className="w-4 h-4" />
-						</a>
-						<Link
-							to="/pricing"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-						>
-							View pricing
-						</Link>
-					</div>
-				</motion.div>
-			</div>
+			<ProductCTA />
 		</div>
 	);
 }
