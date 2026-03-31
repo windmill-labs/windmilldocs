@@ -7,8 +7,8 @@ const USE_CASE_LABELS = {
 	'internal-tools': 'Internal tools',
 	'data-pipelines': 'Data pipelines',
 	'ai-agents': 'AI agents',
-	'scheduled-tasks': 'Scheduled tasks',
-	'workflow-automation': 'Workflow automation',
+	'triggers': 'Triggers',
+	'workflows': 'Workflows',
 };
 
 export default function CaseStudyBackLink() {

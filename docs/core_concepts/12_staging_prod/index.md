@@ -4,6 +4,8 @@ description: How do I deploy items from a staging workspace to production using 
 
 # Deploy to prod using the UI
 
+## Per item Deployment UI
+
 From a workspace in Windmill, you can deploy a item and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 :::info Deploy to prod
@@ -27,7 +29,7 @@ The [Draft and deploy](../0_draft_and_deploy/index.mdx) is another feature that 
 
 :::
 
-## How it works
+### How it works
 
 For users with admin rights on the source workspace, in the `Workspace` settings, go to the "Deployment UI" tab and pick a workspace for "Workspace to link to".
 
@@ -53,7 +55,7 @@ This can be done by users with both View rights on the deployed-from workspace a
 
 You can deploy one by one flows, scripts (including each script within flow), variables and resources. Or toggle more than one and "Deploy all".
 
-![Deploy to staging/prod](./deploy_to_staging_prod.png.webp 'Deploy to staging/prod')
+![Deploy to staging/prod](./deploy_to_staging_prod.png 'Deploy to staging/prod')
 
 Items are called:
 
@@ -61,20 +63,49 @@ Items are called:
 - "New" if the item will be created with the deployment.
 - "diff" if the item was already deployed previously. This opens a difference viewer tab where you can see differences with the previous version.
 
-![Diff menu](./diff_menu.png.webp 'Diff menu')
+![Diff menu](./diff_menu.png 'Diff menu')
+![Diff menu2](./diff_menu2.png 'Diff menu2')
 
-## Shareable page
+### Shareable page
 
 A static page is created for each potential deployment to Staging/Prod.
 
 This can be useful for non-admin (for example, operators) to share a page to properly-permissioned users to have them review or do the deployment.
 
-![Shareable link](./shareable_link.png.webp 'Shareable link')
+![Shareable link](./shareable_link.png 'Shareable link')
 
 > Even users who are not admin can see the "Deploy to staging/prod", from where they can get the link of the shareable page.
 
 <br/>
 
-![Shareable page](./shareable_page.png.webp 'Shareable page')
+![Shareable page](./shareable_page.png 'Shareable page')
 
 > This page then allows users with the right permissions to deploy the given items.
+
+## Merge UI for merging changes done in workspace forks
+
+If you are on a workspace fork, the first thing to know is that it will be preconfigured to set the parent workspace as the target for this same UI. Also, a fork-specific Merge UI is available, showing you exactly the items that were modified and letting you deploy but also update.
+
+
+![Merge UI](./merge_ui.png 'Merge UI')
+
+Learn more about [merging forks through Merge UI](../../advanced/20_workspace_forks/index.mdx#merge-workspaces-from-the-ui-merge-ui)
+
+
+## Run on behalf of
+
+When deploying a script, flow, app, or trigger to another workspace, the **"run on behalf of"** selector lets you choose which user the item will execute as in the target workspace. This is useful for controlling execution permissions across environments.
+
+There are three options:
+
+- **Keep the target workspace's existing setting** — the item continues running as whatever user was previously configured in the target workspace. This is the default for items that already exist there.
+- **Use yourself** — the item will run as your own user in the target workspace.
+- **Pick any user from the target workspace** — select a specific user (e.g. a dedicated service account) for the item to run as.
+
+Selecting a user other than yourself requires **admin** rights or membership in the **`wm_deployers`** group in the target workspace.
+
+:::tip Virtual users for fine-grained permissions
+
+For production workspaces, consider creating dedicated virtual users scoped to specific responsibilities. See [Permission compartmentalization with virtual users](../16_roles_and_permissions/index.mdx#permission-compartmentalization-with-virtual-users) for the recommended pattern.
+
+:::

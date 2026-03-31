@@ -9,7 +9,7 @@ import DocCard from '@site/src/components/DocCard';
 Synchronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
-The CLI supports [branch-specific items](./branch-specific-items.mdx) that allow different Git branches to have different versions of resources and variables.
+The CLI supports [environment-specific items](./environment-specific-items.mdx) that allow different versions of resources and variables per environment/branch.
 
 Having a Windmill instance synchronized to folders & git repositories allows for
 local development through the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx).
@@ -106,6 +106,7 @@ wmill sync pull [options]
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                                    |
 | `--skip-branch-validation` | None      | Skip git branch validation and prompts. Useful for temporary feature branches that don't need to be added to wmill.yaml.                                                                                             |
 | `--branch`             | `<branch>`    | Override the current Git branch. Useful for working outside a Git repository or testing branch-specific configurations.                                                                                              |
+| `--env`                | `<env>`       | Override the environment name for single-branch setups. See [environment-specific items](./environment-specific-items.mdx).                                                                                                    |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Overrides `wmill.yaml` includes. Patterns can include `*` (any string until '/') and `**` (any string). |
 | `-e, --excludes`       | `<patterns>`  | Comma-separated patterns to specify which files to NOT take into account. Overrides `wmill.yaml` excludes.                                                                                                           |
 | `--extra-includes`     | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy.                  |
@@ -142,6 +143,7 @@ wmill sync push [options]
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                   |
 | `--skip-branch-validation` | None      | Skip git branch validation and prompts. Useful for temporary feature branches that don't need to be added to wmill.yaml.                                                                            |
 | `--branch`             | `<branch>`    | Override the current Git branch. Useful for working outside a Git repository or testing branch-specific configurations.                                                                             |
+| `--env`                | `<env>`       | Override the environment name for single-branch setups. See [environment-specific items](./environment-specific-items.mdx).                                                                                   |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Patterns can include `*` (any string until '/') and `**` (any string).                 |
 | `-e, --excludes`       | `<patterns>`  | Comma-separated patterns to specify which files to NOT take into account.                                                                                                                           |
 | `--extra-includes`     | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy. |
@@ -192,7 +194,7 @@ cliBehavior: v1
 
 ### Git branch-specific configuration
 
-The CLI supports branch-specific settings through the `gitBranches` configuration:
+The CLI supports branch-specific settings through the `gitBranches` configuration. For single-branch, multi-environment setups, you can use the `environments` key instead — it works the same way but with `--env` instead of `--branch`. See [environment-specific items](./environment-specific-items.mdx) for details.
 
 ```yaml
 gitBranches:

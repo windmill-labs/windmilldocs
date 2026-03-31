@@ -67,29 +67,27 @@ wmill script bootstrap --summary 'Great script' --description 'This script does 
 
 ## (Re-)Generating a script metadata file
 
-The `wmill script generate-metadata` command is used to read all the files that have been edited and gracefully update the metadata file and lockfile accordingly, inferring the script schema from the script content and generating the locks. Only the schema and the locks part of the metadata file will be updated. If a change was made to other fields like description or summary, it will be kept.
+The [`wmill generate-metadata`](./generate-metadata.md) command is used to read all the files that have been edited and gracefully update the metadata file and lockfile accordingly, inferring the script schema from the script content and generating the locks. Only the schema and the locks part of the metadata file will be updated. If a change was made to other fields like description or summary, it will be kept.
 
 This command can only be run at the same level of the `wmill-lock.yaml` of your workspace, so by default at top level of the repository.
 
 ```bash
-wmill script generate-metadata
+wmill generate-metadata
 ```
 
-You can also generate metadata for a single script with `wmill script generate-metadata <path>`:
+You can also generate metadata for a single script with `wmill generate-metadata <path>`:
 
 ```bash
-wmill script generate-metadata [--lock-only] [--schema-only] [<path>]
+wmill generate-metadata [--lock-only] [--schema-only] [<path>]
 ```
 
 Note that you can explicitly exclude (or include) specific files or folders to be taken into account by this command, with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
 
-[Flows](./flow.md) inline script lockfiles can be also updated locally in the same way as `wmill script generate-metadata --lock-only` but for flows' inline scripts:
-
-```bash
-wmill flow generate-locks
-```
-
 For centralized dependency management, see [workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx).
+
+:::info Legacy command
+Prior to the unified command, this was done with `wmill script generate-metadata`. This command is now deprecated but still works.
+:::
 
 ### Arguments
 
@@ -102,7 +100,7 @@ For centralized dependency management, see [workspace dependencies](../../core_c
 1. After update the of the script `f/scripts/hallowed_script.py`, re-generate its schema and its locks:
 
 ```bash
-wmill script generate-metadata f/scripts/hallowed_script.py
+wmill generate-metadata f/scripts/hallowed_script.py
 ```
 
 ## Showing a script
@@ -129,7 +127,7 @@ wmill script show f/scripts/test
 
 ## Running a script
 
-Running a script by its path s done using the `wmill script run` command.
+Running a script by its path is done using the `wmill script run` command.
 
 ```bash
 wmill script run <remote_path> [options]

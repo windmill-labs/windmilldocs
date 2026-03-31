@@ -1,0 +1,162 @@
+---
+title: "Managed data tables"
+description: "How do I store and query relational data in Windmill? Near-zero setup SQL storage for scripts, flows, and apps with automatic credential management."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, BookOpen } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import DatatablesHeroAnimation from '../../components/products/DatatablesHeroAnimation';
+import LazyVideo from '../../components/products/LazyVideo';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+			>
+				<div className={reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{video ? (
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src={video}
+						/>
+					) : image ? (
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Main page ── */}
+
+export default function DatatablesContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Data tables</p>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							SQL storage with near-zero setup
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Store and query relational data from scripts, flows, and apps. Windmill manages the database, credentials, and schema so you just write SQL.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<DatatablesHeroAnimation />
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Intro ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">SQL storage with near-zero setup</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+						Datatables are a workspace-scoped layer on top of your own PostgreSQL database, added as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link>. Configure it once, then any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link>, <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>, or <Link to="/docs/getting_started/apps_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">app</Link> can query it. Windmill manages credentials internally so they are never exposed to users.
+					</p>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ Query from any language ═══════════════ */}
+			<Section
+				title="One line to connect"
+				desc={<span>Call <code>wmill.datatable()</code> from any script to get a database connection, then query with TypeScript, Python, DuckDB, or raw SQL. String interpolation is automatically converted to <Link to="/docs/core_concepts/persistent_storage/data_tables#permissions" className="text-blue-600 dark:text-blue-400 hover:underline">parameterized queries</Link> to prevent SQL injection.</span>}
+				docLink="/docs/core_concepts/persistent_storage/data_tables"
+				video="/img/platform/datatables/platform-datatables-query-any-language.webm"
+			/>
+
+			{/* ═══════════════ Asset tracking and data lineage ═══════════════ */}
+			<Section
+				title="Asset tracking and data lineage"
+				desc={<span>Windmill auto-detects datatable usage in scripts and shows them as <Link to="/docs/core_concepts/assets" className="text-blue-600 dark:text-blue-400 hover:underline">asset nodes</Link> in flows. Read vs write mode is detected automatically. Click through to the Database Explorer to inspect schemas and data.</span>}
+				docLink="/docs/core_concepts/assets"
+				video="/img/platform/datatables/platform-datatables-asset-tracking.webm"
+				reverse
+			/>
+
+			{/* ═══════════════ Database Studio ═══════════════ */}
+			<Section
+				title="Database Studio"
+				desc={<span>The <Link to="/docs/apps/app_configuration_settings/database_studio" className="text-blue-600 dark:text-blue-400 hover:underline">Database Studio</Link> is a visual interface for exploring table data, editing rows, and managing schemas. Available in both the app editor and as a standalone tool.</span>}
+				docLink="/docs/apps/app_configuration_settings/database_studio"
+				video="/img/platform/datatables/platform-datatables-database-studio.webm"
+			/>
+
+			{/* ═══════════════ Schema organization ═══════════════ */}
+			<Section
+				title="Schema organization"
+				desc={<span>Use schemas to organize tables within a datatable. Set a default <Link to="/docs/core_concepts/persistent_storage/data_tables#usage" className="text-blue-600 dark:text-blue-400 hover:underline">search path</Link> per script or use <code>schema.table</code> syntax. Typically one or a few datatables per workspace, with schemas for logical separation.</span>}
+				docLink="/docs/core_concepts/persistent_storage/data_tables"
+				video="/img/platform/datatables/platform-datatables-schema-organization.webm"
+				reverse
+			/>
+
+			{/* ═══════════════ Full-code apps integration ═══════════════ */}
+			<Section
+				title="Full-code apps integration"
+				desc={<span>Data tables are fully integrated with <Link to="/docs/full_code_apps" className="text-blue-600 dark:text-blue-400 hover:underline">full-code apps</Link> on Windmill. Query them directly from backend runnables with SQL and build complete data-driven applications.</span>}
+				docLink="/docs/full_code_apps/data_tables"
+				video="/img/platform/datatables/platform-datatables-full-code-apps.webm"
+			/>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What databases are supported?', textAnswer: 'PostgreSQL. Attach any PostgreSQL instance as a workspace resource.' },
+				{ question: 'Are queries safe from SQL injection?', textAnswer: 'Yes. TypeScript string interpolation is converted to parameterized queries. Python uses positional arguments.' },
+				{ question: 'Who can access data tables?', textAnswer: 'All workspace members. Credentials are managed internally and never exposed.' },
+				{ question: 'Can I use data tables from full-code apps?', textAnswer: 'Yes. Data tables are fully integrated with full-code apps. Query them directly from backend runnables with SQL.' },
+				{ question: 'Can I use DuckDB with data tables?', textAnswer: 'Yes. DuckDB scripts can ATTACH a datatable and query it with standard SQL.' },
+			]} />
+
+			<ProductCTA />
+		</div>
+	);
+}

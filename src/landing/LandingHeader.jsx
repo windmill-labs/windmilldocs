@@ -15,7 +15,7 @@ import {
 	ScaleIcon,
 	ClockIcon,
 	ShieldCheckIcon,
-	ComputerDesktopIcon,
+	ComputerDesktopIcon
 } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
@@ -23,64 +23,129 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
-import { Bot, Landmark, HeartPulse } from 'lucide-react';
+import {
+	Bot, Landmark, HeartPulse,
+	Code, GitFork, LayoutDashboard, Database, GitBranch, Terminal,
+	Activity, ShieldCheck, Container, Cpu, Server, Zap,
+} from 'lucide-react';
 import Banner from './Banner';
 import Link from '@docusaurus/Link';
 
-const products = [
+const productCategories = [
 	{
-		name: 'Scripts',
-		description: 'Code to production in minutes.',
-		href: '/scripts'
+		title: 'Build',
+		items: [
+			{
+				name: 'Script editor',
+				description: 'Write scripts in TypeScript, Python, Go, Bash or SQL.',
+				href: '/platform/script-editor',
+				icon: Code,
+			},
+			{
+				name: 'Flow editor',
+				description: 'Connect scripts into flows with no glue code.',
+				href: '/platform/flow-editor',
+				icon: GitFork,
+			},
+			{
+				name: 'App builder',
+				description: 'Connect backend logic to React & Svelte frontends.',
+				href: '/platform/app-builder',
+				icon: LayoutDashboard,
+			},
+			{
+				name: 'Triggers',
+				description: 'Schedules, webhooks, Kafka, Postgres CDC and more.',
+				href: '/platform/triggers',
+				icon: Zap,
+			},
+			{
+				name: 'Data tables',
+				description: 'Store and query relational data with managed SQL.',
+				href: '/platform/datatables',
+				icon: Database,
+			},
+			{
+				name: 'Deployment & versioning',
+				description: 'Sync with Git, stage workspaces and deploy via CI/CD.',
+				href: '/platform/deployment-versioning',
+				icon: GitBranch,
+			},
+		],
 	},
 	{
-		name: 'Flows',
-		description: 'Build complex flows without complexity.',
-		href: '/flows'
+		title: 'Run',
+		items: [
+			{
+				name: 'Local dev',
+				description: 'Develop and test locally with the Windmill CLI.',
+				href: '/platform/local-dev',
+				icon: Terminal,
+			},
+			{
+				name: 'Workers',
+				description: 'Isolated workers that pull from a shared queue.',
+				href: '/platform/workers',
+				icon: Cpu,
+			},
+			{
+				name: 'AI sandboxes',
+				description: 'Run Claude Code, Codex, or custom agents in isolated environments.',
+				href: '/platform/sandboxes',
+				icon: Container,
+			},
+			{
+				name: 'Observability',
+				description: 'Monitor logs, metrics and alerts in real time.',
+				href: '/platform/observability',
+				icon: Activity,
+			},
+			{
+				name: 'RBAC',
+				description: 'Enforce role-based access, audit logs and secrets.',
+				href: '/platform/rbac',
+				icon: ShieldCheck,
+			},
+			{
+				name: 'No-ops self-host',
+				description: 'Deploy Windmill on your infra with zero maintenance.',
+				href: '/platform/self-host',
+				icon: Server,
+			},
+		],
 	},
-	{
-		name: 'Apps',
-		description: 'Build super fast and powerful apps using drag-and-drop.',
-		href: '/apps'
-	}
 ];
 
 const solutionsByUseCase = [
 	{
+		name: 'AI agents',
+		description: 'Build and orchestrate AI agents with tools.',
+		href: '/use-cases/ai-agents',
+		icon: Bot
+	},
+	{
+		name: 'Workflows',
+		description: 'Orchestrate multi-step processes across services.',
+		href: '/use-cases/workflows',
+		icon: ArrowPathIcon
+	},
+	{
 		name: 'Internal tools',
 		description: 'Build admin panels, dashboards and back-office apps.',
 		href: '/use-cases/internal-tools',
-		icon: WrenchScrewdriverIcon,
+		icon: WrenchScrewdriverIcon
 	},
-	// {
-	// 	name: 'Workflow automation',
-	// 	description: 'Orchestrate multi-step processes across services.',
-	// 	href: '/use-cases/workflow-automation',
-	// 	icon: ArrowPathIcon,
-	// },
 	{
 		name: 'Data pipelines',
 		description: 'ETL, syncs and scheduled data jobs.',
 		href: '/use-cases/data-pipelines',
-		icon: CircleStackIcon,
-	},
-	// {
-	// 	name: 'Scripts & endpoints',
-	// 	description: 'Deploy scripts as APIs or cron jobs instantly.',
-	// 	href: '/use-cases/scripts-and-endpoints',
-	// 	icon: CodeBracketIcon,
-	// },
-	{
-		name: 'AI agents',
-		description: 'Build and orchestrate AI agents with tools.',
-		href: '/use-cases/ai-agents',
-		icon: Bot,
+		icon: CircleStackIcon
 	},
 	{
 		name: 'Scheduled tasks',
-		description: 'Cron jobs, polling and background processing.',
+		description: 'Cron jobs with retries, error handling and alerting.',
 		href: '/use-cases/scheduled-tasks',
-		icon: ClockIcon,
+		icon: ClockIcon
 	},
 ];
 
@@ -106,6 +171,12 @@ const solutionsByUseCase = [
 // ];
 
 const resources = [
+	{
+		name: 'Hub',
+		description: 'Browse community scripts, flows, and apps.',
+		href: 'https://hub.windmill.dev',
+		newtab: true
+	},
 	{
 		name: 'OpenAPI',
 		description: 'Explore our API specs.',
@@ -158,7 +229,7 @@ export default function LandingHeader() {
 				<div className="flex items-center justify-between gap-8">
 					<Link
 						to="/"
-						className="flex justify-start items-center gap-2 h-full lg:w-auto lg:flex-none group !no-underline cursor-pointer w-min"
+						className="flex justify-start items-center gap-2 h-full w-auto lg:flex-none group !no-underline cursor-pointer"
 						onMouseEnter={() => setHoverLogo(true)}
 						onMouseLeave={() => setHoverLogo(false)}
 					>
@@ -174,8 +245,71 @@ export default function LandingHeader() {
 							Windmill
 						</div>
 					</Link>
-					
+
 					<Popover.Group as="nav" className="hidden space-x-8 lg:space-x-10 md:flex min-w-0 grow">
+						<Popover className="relative">
+							{({ open }) => (
+								<>
+									<Popover.Button
+										className={classNames(
+											open ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500',
+											'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-offset-1 dark:focus:ring-offset-gray-800 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300'
+										)}
+									>
+										<span>Platform</span>
+										<ChevronDownIcon
+											className={classNames(
+												open ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400',
+												'ml-2 h-5 w-5 group-hover:text-gray-500 dark:group-hover:text-gray-300'
+											)}
+											aria-hidden="true"
+										/>
+									</Popover.Button>
+
+									<Transition
+										as={Fragment}
+										enter="transition ease-out duration-200"
+										enterFrom="opacity-0 translate-y-1"
+										enterTo="opacity-100 translate-y-0"
+										leave="transition ease-in duration-150"
+										leaveFrom="opacity-100 translate-y-0"
+										leaveTo="opacity-0 translate-y-1"
+									>
+										<Popover.Panel className="absolute left-0 z-10 mt-3 w-screen max-w-2xl transform px-2 sm:px-0">
+											<div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
+												<div className="bg-white dark:bg-gray-800 p-6">
+													<div className="grid grid-cols-2 gap-6">
+														{productCategories.map((category) => (
+															<div key={category.title}>
+																<div className="space-y-1">
+																	{category.items.map((item) => (
+																		<Link
+																			key={item.name}
+																			to={item.href}
+																			className="group flex items-start gap-3 rounded-lg px-3 py-2.5 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
+																		>
+																			<item.icon className="h-5 w-5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" />
+																			<div>
+																				<p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+																					{item.name}
+																				</p>
+																				<p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+																					{item.description}
+																				</p>
+																			</div>
+																		</Link>
+																	))}
+																</div>
+															</div>
+														))}
+													</div>
+												</div>
+											</div>
+										</Popover.Panel>
+									</Transition>
+								</>
+							)}
+						</Popover>
 						<Popover className="relative">
 							{({ open }) => (
 								<>
@@ -210,9 +344,9 @@ export default function LandingHeader() {
 													<div>
 														{/* Use cases */}
 														<div>
-															<p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3 px-3">
+															{/* <p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3 px-3">
 																By use case
-															</p>
+															</p> */}
 															<div className="space-y-1">
 																{solutionsByUseCase.map((item) => (
 																	<Link
@@ -233,7 +367,6 @@ export default function LandingHeader() {
 																))}
 															</div>
 														</div>
-
 													</div>
 												</div>
 											</div>
@@ -255,13 +388,6 @@ export default function LandingHeader() {
 						>
 							Pricing
 						</Link>
-
-						<a
-							href="https://hub.windmill.dev"
-							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
-						>
-							Hub
-						</a>
 
 						<Link
 							to="/case-studies"
@@ -318,6 +444,9 @@ export default function LandingHeader() {
 														</a>
 													))}
 												</div>
+												<div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-5 py-4 sm:px-8">
+													<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
+												</div>
 											</div>
 										</Popover.Panel>
 									</Transition>
@@ -327,8 +456,6 @@ export default function LandingHeader() {
 					</Popover.Group>
 
 					<div className="hidden items-center justify-end lg:flex lg:flex-1 gap-4 ml-8">
-						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
-
 						<a
 							href="https://github.com/windmill-labs/windmill"
 							data-analytics='"github"'
@@ -388,8 +515,8 @@ export default function LandingHeader() {
 						focus
 						className="absolute inset-x-0 top-0 md:right-0 md:inset-x-auto md:w-80 xl:inset-y-auto origin-top-right transform p-2 transition xl:block 2xl:hidden"
 					>
-						<div className="divide-y-2 divide-gray-50 dark:divide-gray-800 rounded-lg bg-white dark:bg-gray-900  shadow-lg ring-1 ring-black ring-opacity-5">
-							<div className="px-5 pt-5 pb-6">
+						<div className="divide-y-2 md:divide-y-0 divide-gray-50 dark:divide-gray-800 rounded-lg bg-white dark:bg-gray-900  shadow-lg ring-1 ring-black ring-opacity-5">
+							<div className="block md:hidden px-5 pt-5 pb-6">
 								<div className="flex items-center justify-between">
 									<div>
 										<img className="h-8" src="img/windmill.svg" alt="Windmill Labs" />
@@ -406,6 +533,19 @@ export default function LandingHeader() {
 								{/* Show navigation items only on mobile (md:hidden) */}
 								<div className="md:hidden grid grid-cols-2 gap-4">
 									<a
+										href="/platform"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Platform
+									</a>
+									<a
+										href="/use-cases"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Solutions
+									</a>
+
+									<a
 										href="/docs/intro"
 										onClick={() => window.plausible('read-docs')}
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
@@ -418,13 +558,6 @@ export default function LandingHeader() {
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
 										Pricing
-									</a>
-
-									<a
-										href="https://hub.windmill.dev"
-										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-									>
-										Hub
 									</a>
 
 									<a
@@ -445,35 +578,8 @@ export default function LandingHeader() {
 									))}
 								</div>
 
-								{/* Solutions section in mobile menu */}
-								<div className="md:hidden mt-4 space-y-4">
-									{[
-										{ title: 'By use case', items: solutionsByUseCase },
-										// { title: 'By role', items: solutionsByRole },
-										// { title: 'By industry', items: solutionsByIndustry },
-										// { title: 'Compare', items: solutionsCompare },
-									].map((section) => (
-										<div key={section.title}>
-											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
-												{section.title}
-											</div>
-											<div className="grid grid-cols-2 gap-2">
-												{section.items.map((item) => (
-													<a
-														key={item.name}
-														href={item.href}
-														className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-													>
-														{item.name}
-													</a>
-												))}
-											</div>
-										</div>
-									))}
-								</div>
-
 								{/* Show social icons only on xl screens (xl:hidden) */}
-								<div className="lg:hidden mt-6 flex justify-center items-center space-x-4 mb-4">
+								<div className="lg:hidden mt-6 md:mt-0 flex justify-center items-center space-x-4 mb-4">
 									<a
 										href="https://github.com/windmill-labs/windmill"
 										data-analytics='"github"'
@@ -498,7 +604,7 @@ export default function LandingHeader() {
 								</div>
 
 								{/* Show buttons that are hidden on current screen size */}
-								<div className="mt-6">
+								<div className="mt-6 md:mt-0">
 									{/* Contact us - hidden on xl screens, visible on 2xl+ */}
 									<div className="lg:block xl:hidden">
 										<button
@@ -508,7 +614,7 @@ export default function LandingHeader() {
 											Contact us
 										</button>
 									</div>
-									
+
 									{/* Windmill cloud - hidden on xl screens, visible on 2xl+ */}
 									<div className="xl:block 2xl:hidden">
 										<a
@@ -527,7 +633,7 @@ export default function LandingHeader() {
 					</Popover.Panel>
 				</Transition>
 			</Popover>
-			{/* <Banner /> */}
+			<Banner />
 			<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
 		</div>
 	);

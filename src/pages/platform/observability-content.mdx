@@ -1,0 +1,348 @@
+---
+title: "Full observability"
+description: "How do I monitor Windmill? Real-time logs, run history, queue metrics, critical alerts, OpenTelemetry, and Prometheus. See everything across your platform."
+---
+
+import React, { useState, useEffect, useRef } from 'react';
+import Link from '@docusaurus/Link';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, BookOpen, CheckCircle2, XCircle, Calendar, Clock, Webhook, Radio } from 'lucide-react';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Scatter plot points ── */}
+
+export const scatterPoints = [
+	{ x: 0.01, y: 320, ok: true },  { x: 0.04, y: 5100, ok: true }, { x: 0.06, y: 2800, ok: true },
+	{ x: 0.09, y: 1300, ok: true }, { x: 0.11, y: 1050, ok: true }, { x: 0.13, y: 780, ok: true },
+	{ x: 0.16, y: 850, ok: true },  { x: 0.18, y: 920, ok: false }, { x: 0.20, y: 750, ok: true },
+	{ x: 0.23, y: 1100, ok: true }, { x: 0.25, y: 680, ok: true },  { x: 0.27, y: 1250, ok: true },
+	{ x: 0.30, y: 900, ok: true },  { x: 0.32, y: 1400, ok: true }, { x: 0.34, y: 820, ok: true },
+	{ x: 0.37, y: 1050, ok: true }, { x: 0.39, y: 750, ok: true },  { x: 0.41, y: 1600, ok: false },
+	{ x: 0.44, y: 680, ok: true },  { x: 0.46, y: 920, ok: true },  { x: 0.48, y: 1100, ok: true },
+	{ x: 0.51, y: 780, ok: true },  { x: 0.53, y: 850, ok: true },  { x: 0.56, y: 1050, ok: true },
+	{ x: 0.58, y: 520, ok: true },  { x: 0.61, y: 1200, ok: true }, { x: 0.63, y: 950, ok: true },
+	{ x: 0.66, y: 1050, ok: true }, { x: 0.68, y: 780, ok: true },  { x: 0.71, y: 1100, ok: true },
+	{ x: 0.73, y: 920, ok: true },  { x: 0.76, y: 850, ok: true },  { x: 0.78, y: 1150, ok: true },
+	{ x: 0.81, y: 700, ok: true },  { x: 0.83, y: 980, ok: true },  { x: 0.86, y: 1050, ok: true },
+	{ x: 0.88, y: 820, ok: false }, { x: 0.91, y: 1100, ok: true }, { x: 0.93, y: 750, ok: true },
+	{ x: 0.96, y: 900, ok: true },  { x: 0.99, y: 1020, ok: true },
+];
+
+export const yTicks = [500, 2000, 5000];
+export const chartH = 100;
+export const yMax = 5500;
+
+export function yPos(val) {
+	return chartH - (val / yMax) * chartH;
+}
+
+{/* ── Job runs ── */}
+
+export const jobRuns = [
+	{ id: 'j1', ok: true,  ended: 'Ended 169s ago', duration: '0,87s', name: 'f/devops/deploy_staging',   triggeredBy: 'Schedule', tag: 'flow' },
+	{ id: 'j2', ok: true,  ended: 'Ended 469s ago', duration: '1,05s', name: 'f/devops/deploy_staging',   triggeredBy: 'Schedule', tag: 'flow' },
+	{ id: 'j3', ok: false, ended: '12/03 00:15',    duration: '0,83s', name: 'f/billing/sync_invoices',   triggeredBy: 'Webhook',  tag: 'script' },
+	{ id: 'j4', ok: true,  ended: '12/03 00:10',    duration: '0,70s', name: 'f/data/ingest_events',      triggeredBy: 'Kafka',    tag: 'flow' },
+	{ id: 'j5', ok: true,  ended: '12/03 00:05',    duration: '0,77s', name: 'f/data/ingest_events',      triggeredBy: 'Kafka',    tag: 'flow' },
+	{ id: 'j6', ok: false, ended: '12/03 00:00',    duration: '3,35s', name: 'f/billing/charge_customer', triggeredBy: 'Webhook',  tag: 'script' },
+	{ id: 'j7', ok: true,  ended: '12/03 00:00',    duration: '1,30s', name: 'f/devops/deploy_staging',   triggeredBy: 'Schedule', tag: 'flow' },
+];
+
+{/* ── Hero animation ── */}
+
+export function HeroAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, amount: 0.2 });
+	const [visibleDots, setVisibleDots] = useState(0);
+	const [visibleRows, setVisibleRows] = useState(0);
+
+	useEffect(() => {
+		if (!isInView) return;
+		const dotInterval = setInterval(() => {
+			setVisibleDots((prev) => {
+				if (prev >= scatterPoints.length) { clearInterval(dotInterval); return scatterPoints.length; }
+				return prev + 1;
+			});
+		}, 50);
+		const rowTimeout = setTimeout(() => {
+			const rowInterval = setInterval(() => {
+				setVisibleRows((prev) => {
+					if (prev >= jobRuns.length) { clearInterval(rowInterval); return jobRuns.length; }
+					return prev + 1;
+				});
+			}, 250);
+		}, 600);
+		return () => { clearInterval(dotInterval); clearTimeout(rowTimeout); };
+	}, [isInView]);
+
+	return (
+		<div ref={ref} className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-lg">
+			{/* Toolbar */}
+			<div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200">
+				<span className="text-sm font-bold text-gray-900">Runs</span>
+				<span className="px-2 py-0.5 rounded bg-blue-600/20 text-blue-600 text-[10px] font-medium">All</span>
+				<span className="text-[10px] text-gray-400">Runs</span>
+				<span className="text-[10px] text-gray-400">Deps</span>
+				<div className="flex-1" />
+				<CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+				<XCircle className="w-3.5 h-3.5 text-red-400/60" />
+				<Clock className="w-3.5 h-3.5 text-gray-400" />
+			</div>
+
+			{/* Scatter chart */}
+			<div className="px-4 pt-2 pb-2">
+				<div className="flex items-center gap-3 mb-2">
+					<span className="text-[11px] font-medium text-gray-900">Duration</span>
+					<span className="text-[11px] text-gray-400">Concurrency</span>
+				</div>
+				<div className="relative w-full" style={{ height: chartH }}>
+					{yTicks.map((tick) => (
+						<div key={tick} className="absolute left-0 right-0 flex items-center" style={{ top: yPos(tick) }}>
+							<span className="text-[10px] text-gray-400 tabular-nums w-10 text-right shrink-0">{tick >= 1000 ? `${tick/1000} 000` : tick}</span>
+							<div className="ml-2 h-px bg-gray-200 flex-1" />
+						</div>
+					))}
+					<svg className="absolute top-0 bottom-0" style={{ left: 48, right: 0, width: 'calc(100% - 48px)', height: chartH }}>
+						{scatterPoints.map((pt, i) => (
+							<motion.circle
+								key={i}
+								cx={`${pt.x * 100}%`}
+								cy={yPos(pt.y)}
+								className={pt.ok ? 'fill-emerald-500' : 'fill-red-500'}
+								initial={{ opacity: 0, r: 0 }}
+								animate={i < visibleDots ? { opacity: 0.85, r: 4 } : { opacity: 0, r: 0 }}
+								transition={{ duration: 0.15 }}
+							/>
+						))}
+					</svg>
+				</div>
+			</div>
+
+			{/* Table header */}
+			<motion.div
+				className="grid px-4 py-1 mt-2 bg-gray-100 border-b border-gray-200 text-[10px] font-medium text-gray-500"
+				style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}
+				initial={{ opacity: 0 }}
+				animate={visibleRows > 0 ? { opacity: 1 } : { opacity: 0 }}
+				transition={{ duration: 0.3 }}
+			>
+				<span></span>
+				<span>Path</span>
+				<span>Duration</span>
+				<span>Triggered by</span>
+				<span>Tag</span>
+			</motion.div>
+
+			{/* Rows */}
+			{jobRuns.map((job, i) => (
+				<motion.div
+					key={job.id}
+					className="grid px-4 py-1.5 border-b border-gray-100 items-center"
+					style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}
+					initial={{ opacity: 0, y: 5 }}
+					animate={i < visibleRows ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
+					transition={{ duration: 0.2 }}
+				>
+					{job.ok
+						? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+						: <XCircle className="w-3.5 h-3.5 text-red-500" />
+					}
+					<span className="text-[10px] text-gray-700 truncate font-mono">{job.name}</span>
+					<span className="text-[10px] text-gray-700 tabular-nums">{job.duration}</span>
+					<div className="flex items-center gap-1 truncate">
+						{job.triggeredBy === 'Schedule' && <Calendar className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						{job.triggeredBy === 'Webhook' && <Webhook className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						{job.triggeredBy === 'Kafka' && <Radio className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						<span className="text-[10px] text-gray-500 truncate font-mono">{job.triggeredBy}</span>
+					</div>
+					<span className="text-[10px] text-gray-400">{job.tag}</span>
+				</motion.div>
+			))}
+		</div>
+	);
+}
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+			>
+				<div className={reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{video ? (
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src={video}
+						/>
+					) : image ? (
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+
+{/* ── Main page ── */}
+
+export default function ObservabilityContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">Observability</p>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Every run, logged and searchable
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Real-time logs, run history, queue metrics, critical alerts, and OpenTelemetry. See everything that happens across your platform.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<HeroAnimation />
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Built in observability for every job ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Built in observability for every job</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Every script and flow execution is logged, searchable, and monitored. No external tooling or configuration required.
+					</p>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ Script execution logs ═══════════════ */}
+			<Section
+				title="Script execution logs"
+				desc={<span>Every <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">script execution</Link> records full stdout/stderr logs, typed inputs, returned outputs, duration, and status. View the complete trace of any run: what went in, what came out, and what happened in between.</span>}
+				docLink="/docs/core_concepts/jobs"
+				video="/img/platform/observability/platform-observability-script-execution-logs.webm"
+			/>
+
+			{/* ═══════════════ Flow execution logs ═══════════════ */}
+			<Section
+				title="Flow execution logs"
+				desc={<span>Inspect each step of a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow execution</Link> individually with inputs, outputs, logs, duration, and status per node. The visual timeline shows which steps succeeded, failed, or were skipped. Restart from any failed step without replaying the entire flow.</span>}
+				video="/img/platform/observability/platform-observability-flow-execution-logs.webm"
+				reverse
+			/>
+
+			{/* ═══════════════ Runs dashboard ═══════════════ */}
+			<Section
+				title="Runs dashboard"
+				desc={<span>All <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">past and future runs</Link> across your workspace in a single view. See completed, running, and scheduled executions. Click any run to drill into its full logs and IO.</span>}
+				docLink="/docs/core_concepts/monitor_past_and_future_runs"
+				video="/img/platform/observability/platform-observability-runs-dashboard.webm"
+			/>
+
+			{/* ═══════════════ Granular filtering ═══════════════ */}
+			<Section
+				title="Granular filtering"
+				desc={<span>Filter runs by time range, script or flow path, user, folder, custom label, or worker tag. Use presets like "hide schedules" or "show skipped" to focus on what matters. Combine filters to narrow down to exact runs across thousands of executions.</span>}
+				docLink="/docs/core_concepts/monitor_past_and_future_runs"
+				video="/img/platform/observability/platform-observability-granular-filtering.webm"
+				reverse
+			/>
+
+			{/* ═══════════════ Service logs ═══════════════ */}
+			<Section
+				title="Service logs"
+				desc={<span>View centralized <Link to="/docs/core_concepts/service_logs" className="text-blue-600 dark:text-blue-400 hover:underline">worker and server logs</Link> from the Windmill UI. Full-text search (Enterprise) across all service logs. Logs are stored on disk or S3 with configurable retention, 2 weeks by default.</span>}
+				docLink="/docs/core_concepts/service_logs"
+				video="/img/platform/observability/platform-observability-service-logs.webm"
+			/>
+
+			{/* ═══════════════ Critical alerts ═══════════════ */}
+			<Section
+				title="Critical alerts"
+				desc={<span>Get notified on script crashes, queue depth thresholds, and <Link to="/docs/core_concepts/critical_alerts" className="text-blue-600 dark:text-blue-400 hover:underline">worker health issues</Link>. Alerts are sent to Email, Slack, or Microsoft Teams. Configure per-workspace alert channels.</span>}
+				docLink="/docs/core_concepts/critical_alerts"
+				video="/img/platform/observability/platform-observability-critical-alerts.webm"
+				reverse
+			/>
+
+			{/* ═══════════════ Prometheus and OpenTelemetry ═══════════════ */}
+			<Section
+				title="Prometheus and OpenTelemetry"
+				desc={<span>Workers expose <Link to="/docs/advanced/instance_settings#prometheus" className="text-blue-600 dark:text-blue-400 hover:underline">Prometheus metrics</Link> on port 8001: job counts, durations, queue depth, and worker status. Export traces via <Link to="/docs/misc/guides/otel" className="text-blue-600 dark:text-blue-400 hover:underline">OpenTelemetry</Link> to Jaeger, Datadog, Grafana, or any OTLP-compatible backend.</span>}
+				docLink="/docs/misc/guides/otel"
+				video="/img/platform/observability/platform-observability-prometheus-otel.webm"
+			/>
+
+			{/* ═══════════════ Automatic tracing ═══════════════ */}
+			<Section
+				title="Automatic tracing"
+				desc={<span>Windmill can automatically instrument scripts and flows with <Link to="/docs/advanced/instance_settings#http-tracing" className="text-blue-600 dark:text-blue-400 hover:underline">distributed tracing</Link>. Enable it in instance settings to get traces for every execution without modifying your code. Traces are exported via OpenTelemetry to any compatible backend.</span>}
+				docLink="/docs/advanced/instance_settings#http-tracing"
+				video="/img/platform/observability/platform-observability-automatic-tracing.webm"
+				reverse
+			/>
+
+			{/* ═══════════════ Audit logs ═══════════════ */}
+			<Section
+				title="Audit logs"
+				desc={<span>Every deployment, permission change, resource modification, and login is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>. Filter by user, action type, or time range. Export logs for compliance reviews and security investigations.</span>}
+				docLink="/docs/core_concepts/audit_logs"
+				video="/img/platform/observability/platform-observability-audit-logs.webm"
+			/>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'Can I send alerts to Slack or PagerDuty?', textAnswer: 'Yes. Critical alerts can be sent to Email, Slack, and Microsoft Teams natively. For PagerDuty, Opsgenie, or other services, use a webhook-based error handler that calls their API on failure.' },
+				{ question: 'Does Windmill support OpenTelemetry?', textAnswer: 'Yes. Windmill exports traces and metrics via OpenTelemetry Protocol (OTLP). Configure an OTLP endpoint to send data to Jaeger, Datadog, Grafana Tempo, or any compatible backend. Traces span flow steps and sub-flows.' },
+				{ question: 'How long are logs retained?', textAnswer: 'Job logs are stored in PostgreSQL and retained indefinitely by default. Service logs are stored on disk or S3 with a default 2-week retention. Both retention periods are configurable via environment variables.' },
+				{ question: 'Can I export Prometheus metrics?', textAnswer: 'Yes. Each worker exposes a Prometheus metrics endpoint on port 8001. Metrics include job counts, durations, queue depth, and worker status. Scrape these endpoints with your existing Prometheus setup and visualize with Grafana.' },
+				{ question: 'What is the difference between service logs and job logs?', textAnswer: 'Job logs are the stdout/stderr output of individual script executions and appear in the run detail view. Service logs are the internal logs of the Windmill server and worker processes themselves, useful for debugging infrastructure issues, startup errors, and connectivity problems.' },
+			]} />
+
+			<ProductCTA />
+		</div>
+	);
+}

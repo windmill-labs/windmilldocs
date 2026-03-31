@@ -415,17 +415,19 @@ To grant access to the portal, you need to add the email address to the 'Contact
 
 ## Usage checks
 
-Windmill employs lightweight telemetry to automatically track and report the usage of memory and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
+Windmill employs lightweight telemetry to automatically track and report the usage of memory and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill. On [Enterprise Edition](../19_enterprise_onboarding/index.mdx#billing), telemetry cannot be fully disabled but can be reduced to a minimal mode (see [Instance settings - Telemetry](../../advanced/18_instance_settings/index.mdx#telemetry)).
 
-The following information is collected:
+When minimal telemetry is enabled, only the following is sent:
 - version of your instance
-- number and total duration of jobs
-- accounts usage
-- login type usage
-- workers usage
-- vCPUs usage
-- memory usage
-- superadmin email address
+- instance base URL
+- login type usage (login type, count)
+- worker usage (worker, worker instance, vCPUs, memory)
+- user usage (author count, operator count)
+- superadmin email addresses
+- development instance status
+
+When minimal telemetry is disabled, the following is also collected:
+- job usage (language, total duration, count)
 
 How the data is calculated:
 - Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.

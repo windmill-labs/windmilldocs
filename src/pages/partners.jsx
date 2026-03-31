@@ -31,7 +31,7 @@ const people = [
     description: 'CloudShapers is a Dutch cloud consultancy specializing in automation for MSPs and enterprise platform teams. We implemented Windmill at Axians and other customers, building multi-tenant orchestration platforms with hundreds of users and thousands of daily executions.',
     roles: ['Common tree'],
     email: 'thierry.vanzantvoort@cloudshapers.nl',
-    profile: 'https://www.linkedin.com/company/cloudshapers/',
+    profile: 'https://www.linkedin.com/company/cloudshapers-b-v/',
     imageUrl: '/images/partners/cloudshapers.webp'
   },
   {
@@ -56,7 +56,7 @@ const people = [
     roles: ['Common tree', 'App editor'],
     email: 'jose@zenfin.tech',
     profile: 'https://www.linkedin.com/in/jose-governo/',
-    imageUrl: 'https://media.licdn.com/dms/image/C4D03AQE2yXYlSoBQmg/profile-displayphoto-shrink_800_800/0/1594600574101?e=2147483647&v=beta&t=c2VZb77tUdnBRzlGVTuY23qDvGlUHy1xqy_zn1TNr40',
+    imageUrl: '/images/partners/jose.jpeg',
 },
 {
     name: 'Stephan Fitzpatrick',

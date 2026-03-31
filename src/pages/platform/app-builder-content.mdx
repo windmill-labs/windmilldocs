@@ -1,0 +1,465 @@
+---
+title: "Full-code frontend builder"
+description: "How do I build custom frontends with Windmill? Build React or Svelte UIs on top of your backend scripts and flows through an auto-generated, type-safe API."
+---
+
+import React, { useState } from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import { ArrowRight, BookOpen, Terminal, FileCode, Layers, Play, Plug, Database, Zap, Bot, Globe } from 'lucide-react';
+import { SiReact, SiSvelte } from 'react-icons/si';
+import { DotLottiePlayer } from '@dotlottie/react-player';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import LazyVideo from '../../components/products/LazyVideo';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Section helper ── */}
+
+export function Section({ title, desc, docLink, image, video, reverse, children }) {
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div
+				{...fadeIn}
+				className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+			>
+				<div className={reverse ? 'lg:order-2' : ''}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{desc}</p>
+					{docLink && (
+						<Link
+							to={docLink}
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					)}
+				</div>
+				<div className={reverse ? 'lg:order-1' : ''}>
+					{video ? (
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src={video}
+						/>
+					) : image ? (
+						<img
+							src={image}
+							alt={title}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					) : (
+						<div className="w-full h-64 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+							<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+						</div>
+					)}
+				</div>
+			</motion.div>
+			{children}
+		</div>
+	);
+}
+
+{/* ── Tab section ── */}
+
+export function TabSection({ title, subtitle, features }) {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn} className="mb-16">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					{title}
+				</h2>
+				{subtitle && (
+					<p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
+				)}
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+				<div className="flex flex-col gap-2">
+					{features.map((feat, i) => (
+						<button
+							key={feat.label || feat.title}
+							onClick={() => setActive(i)}
+							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
+								i === active
+									? 'bg-blue-600 text-white border-blue-600'
+									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+							}`}
+						>
+							<feat.icon
+								className={`w-5 h-5 flex-shrink-0 ${
+									i === active ? 'text-white' : 'text-blue-500'
+								}`}
+							/>
+							<span className="font-medium text-sm">
+								{feat.label || feat.title}
+							</span>
+						</button>
+					))}
+				</div>
+
+				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+					{features.map((feat, i) => (
+						<div
+							key={feat.label || feat.title}
+							className={`transition-opacity duration-200 ${
+								i === active
+									? 'opacity-100 relative'
+									: 'opacity-0 absolute inset-0 pointer-events-none p-8'
+							}`}
+						>
+							<div className="flex items-center gap-3 mb-4">
+								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+								</div>
+								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
+									{feat.title}
+								</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
+								{feat.desc}
+							</p>
+							{feat.content ? (
+								feat.content
+							) : feat.image ? (
+								<img
+									src={feat.image}
+									alt={feat.title}
+									className="rounded-lg border border-gray-200 dark:border-gray-700 w-full"
+								/>
+							) : (
+								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+									<span className="text-gray-400 dark:text-gray-500 text-sm">
+										Screenshot coming soon
+									</span>
+								</div>
+							)}
+							{feat.docLink && (
+								<div className="flex justify-end mt-3">
+									<Link
+										to={feat.docLink}
+										className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+									>
+										<BookOpen className="w-4 h-4" /> Read the docs
+									</Link>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── Code block helper ── */}
+
+export function CodeBlock({ code, language }) {
+	return (
+		<pre className="rounded-lg bg-gray-900 text-gray-100 p-4 overflow-x-auto text-sm">
+			<code>{code}</code>
+		</pre>
+	);
+}
+
+{/* ── Local dev features data ── */}
+
+export const localDevFeatures = [
+	{
+		icon: Terminal,
+		label: 'wmill app new',
+		title: 'Scaffold a project',
+		desc: <span>Run <code>wmill app new</code> to create a new full-code app. An interactive wizard prompts for the app path, framework (React 19/18 or Svelte 5), and optional data table configuration. The CLI generates the project structure, installs dependencies, and creates the <code>raw_app.yaml</code> config.</span>,
+		docLink: '/docs/full_code_apps/cli_workflow',
+	},
+	{
+		icon: Play,
+		label: 'wmill app dev',
+		title: 'Local dev server',
+		desc: <span>Run <code>wmill app dev</code> to start a local development server with hot module replacement. Frontend changes reload instantly. Backend runnables execute on Windmill workers with results streamed back via WebSocket. The <code>wmill.d.ts</code> type definitions regenerate automatically when runnables change.</span>,
+		docLink: '/docs/full_code_apps/cli_workflow',
+	},
+	{
+		icon: Zap,
+		label: 'Type generation',
+		title: 'Auto-generated types',
+		desc: <span>The dev server generates <code>wmill.d.ts</code> with typed signatures for every backend runnable. Parameter types and return types are inferred from your code. Your editor provides autocomplete and type checking when calling <code>backend.my_runnable()</code> without any manual configuration.</span>,
+		docLink: '/docs/full_code_apps/frontend',
+	},
+	{
+		icon: Bot,
+		label: 'Claude Code & Codex',
+		title: 'Claude Code & Codex',
+		desc: <span>Run <code>wmill app generate-agents</code> to create <code>AGENTS.md</code> and <code>DATATABLES.md</code> context files. <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code, Codex, and Cursor</Link> read these files to understand your project structure, available runnables, and data table schemas. Claude Code skills let AI write valid frontend and backend code for your app out of the box.</span>,
+		docLink: '/docs/misc/guides/local_dev_with_ai',
+	},
+];
+
+{/* ── Dev mode switch section ── */}
+
+export function DevModeSection() {
+	const [mode, setMode] = useState('local');
+	return (
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+			<motion.div {...fadeIn}>
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Develop from the Windmill UI or locally</h2>
+				<p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+					Build full-code apps directly in the browser or use the CLI for a full local development workflow with your own editor and AI tools.
+				</p>
+				<div className="inline-flex rounded-lg border border-gray-200 dark:border-gray-700 p-1 mb-8 bg-gray-50 dark:bg-gray-900">
+					<button
+						onClick={() => setMode('ui')}
+						className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+							mode === 'ui'
+								? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-600'
+								: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border border-transparent'
+						}`}
+					>
+						<Globe className="w-4 h-4" />
+						Windmill UI
+					</button>
+					<button
+						onClick={() => setMode('local')}
+						className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+							mode === 'local'
+								? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-600'
+								: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border border-transparent'
+						}`}
+					>
+						<Terminal className="w-4 h-4" />
+						Local dev
+					</button>
+				</div>
+			</motion.div>
+
+			{mode === 'ui' ? (
+				<div>
+					<p className="text-gray-600 dark:text-gray-300 text-lg mb-6">
+						Create and edit apps directly in the <Link to="/docs/full_code_apps/ui_editor" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill browser editor</Link>. File tree, code editor, runnables panel, data table config, and preview without deployment.
+					</p>
+					{/* Placeholder: screenshot of the Windmill UI full-code app editor showing the file tree
+						on the left, code editor in the center, and runnables panel on the right.
+						Save as static/img/money-pages/full-code-ui-editor.webp */}
+					<div className="w-full h-80 rounded-2xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+						<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+					</div>
+					<div className="flex justify-end mt-3">
+						<Link
+							to="/docs/full_code_apps/ui_editor"
+							className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" /> Read the docs
+						</Link>
+					</div>
+				</div>
+			) : (
+				<div>
+					<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+						<DevLocalTabs />
+					</div>
+				</div>
+			)}
+		</div>
+	);
+}
+
+export function DevLocalTabs() {
+	const [active, setActive] = useState(0);
+	const features = localDevFeatures;
+	return (
+		<>
+			<div className="flex flex-col gap-2">
+				{features.map((feat, i) => (
+					<button
+						key={feat.label}
+						onClick={() => setActive(i)}
+						className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
+							i === active
+								? 'bg-blue-600 text-white border-blue-600'
+								: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+						}`}
+					>
+						<feat.icon
+							className={`w-5 h-5 flex-shrink-0 ${
+								i === active ? 'text-white' : 'text-blue-500'
+							}`}
+						/>
+						<span className="font-medium text-sm">{feat.label}</span>
+					</button>
+				))}
+			</div>
+			<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+				{features.map((feat, i) => (
+					<div
+						key={feat.label}
+						className={`transition-opacity duration-200 ${
+							i === active
+								? 'opacity-100 relative'
+								: 'opacity-0 absolute inset-0 pointer-events-none p-8'
+						}`}
+					>
+						<div className="flex items-center gap-3 mb-4">
+							<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+								<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+							</div>
+							<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
+						</div>
+						<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
+						{feat.docLink && (
+							<div className="flex justify-end mt-3">
+								<Link
+									to={feat.docLink}
+									className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline"
+								>
+									<BookOpen className="w-4 h-4" /> Read the docs
+								</Link>
+							</div>
+						)}
+					</div>
+				))}
+			</div>
+		</>
+	);
+}
+
+{/* ── Main page ── */}
+
+export default function FrontendBuilderContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ═══════════════ Hero ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 tracking-wide uppercase">App builder</p>
+						<h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Full-code frontends connected to your backend
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Build custom UIs in React or Svelte on top of your backend scripts and flows through an auto-generated, type-safe API.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<motion.div {...stagger(0.2)} className="hidden lg:block">
+						<div className="rounded-2xl px-0.5 py-0.5 shadow-xl" style={{ backgroundColor: '#f5f6f7' }}>
+							<DotLottiePlayer
+								src="/img/money-pages/saas-dashboard.lottie"
+								loop
+								autoplay
+								style={{ width: '100%', height: 360, display: 'block' }}
+							/>
+						</div>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ What is the app builder ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn}>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">React and Svelte apps on top of Windmill</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						The <Link to="/docs/full_code_apps" className="text-blue-600 dark:text-blue-400 hover:underline">app builder</Link> lets you write a React or Svelte frontend that calls <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> and <Link to="/platform/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link>, also referenced as 'backend runnables'. Windmill handles execution, authentication, and hosting. You keep full control over the UI and can develop from the <Link to="/docs/full_code_apps/ui_editor" className="text-blue-600 dark:text-blue-400 hover:underline">browser editor</Link> or <Link to="/docs/full_code_apps/cli_workflow" className="text-blue-600 dark:text-blue-400 hover:underline">locally from the CLI</Link>.
+					</p>
+				</motion.div>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+					<motion.div {...stagger(0.1)}>
+						<div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 h-full">
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+								<Link to="/platform/script-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Scripts</Link>
+							</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-300">
+								Single functions in TypeScript, Python, Go, SQL, Bash, and 15+ other languages. Each script runs on an isolated worker.
+							</p>
+						</div>
+					</motion.div>
+					<motion.div {...stagger(0.2)}>
+						<div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 h-full">
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+								<Link to="/platform/flow-editor" className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">Flows</Link>
+							</h3>
+							<p className="text-sm text-gray-600 dark:text-gray-300">
+								Multi-step workflows that chain scripts into DAGs with branching, loops, retries, and approval steps.
+							</p>
+						</div>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Typed backend API ═══════════════ */}
+			<Section
+				title="Backend runnables"
+				desc={<span>Pick any <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">script</Link> or <Link to="/docs/getting_started/flows_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> from your workspace and use it as a backend for your app. Windmill handles the typed bindings between frontend and backend automatically.</span>}
+				docLink="/docs/full_code_apps/frontend"
+				video="/img/platform/app-builder/platform-app-builder-backend-runnables.webm"
+				reverse
+			/>
+
+			{/* ═══════════════ Datatables ═══════════════ */}
+			<Section
+				title="Datatables"
+				desc={<span><Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">Datatables</Link> are a managed layer on top of your own database that your app's backend runnables can read and write to. Windmill handles schema management and generates a <code>DATATABLES.md</code> context file so AI assistants understand the data model when building your frontend.</span>}
+				docLink="/docs/core_concepts/persistent_storage/data_tables"
+				video="/img/platform/datatables/platform-datatables-full-code-apps.webm"
+			/>
+
+			{/* ═══════════════ Build apps locally ═══════════════ */}
+			<Section
+				title="Build apps in your editor, ship on Windmill"
+				desc={<span>Use <code>wmill app dev</code> to scaffold and develop <Link to="/docs/full_code_apps" className="text-blue-600 dark:text-blue-400 hover:underline">full-code apps</Link> locally with <Link to="/docs/misc/guides/local_dev_with_ai" className="text-blue-600 dark:text-blue-400 hover:underline">AI assistants</Link> and your favorite editor. Deploy to get a production-ready app with authentication, permissions, and audit logs built in.</span>}
+				docLink="/docs/full_code_apps/cli_workflow"
+				video="/videos/wmill-app-dev.mp4"
+				reverse
+			/>
+
+			{/* ═══════════════ Versioning & observability ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						<img src="/img/money-pages/deployment-history.webp" alt="Deployment and versioning" className="w-full h-40 object-cover" />
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Deploy, version, and share</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Deploy from the browser or CLI. Each deployment is versioned and can be synced to Git. Promote across staging and production workspaces.</p>
+							<Link to="/platform/deployment-versioning" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our versioning dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
+					</div>
+					<div className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+						<img src="/img/money-pages/monitoring.webp" alt="Built-in granular monitoring" className="w-full h-40 object-cover" />
+						<div className="flex flex-col p-6 flex-1">
+							<h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Observability</h3>
+							<p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">Every backend runnable call is logged with its inputs, outputs, duration, and status. Run history is searchable, failed jobs show full error traces.</p>
+							<Link to="/platform/observability" className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+								Check our observability dedicated page <ArrowRight className="w-4 h-4" />
+							</Link>
+						</div>
+					</div>
+				</motion.div>
+			</div>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<UseCaseFAQ faqs={[
+	{ question: 'Can I use any npm package?', textAnswer: 'Yes. Full-code apps use standard package.json for dependencies. Install any npm package and use it in your frontend code. The CLI bundles everything with esbuild for deployment.' },
+				{ question: 'How does the backend execute?', textAnswer: 'Backend runnables execute on Windmill workers, not in the browser. The frontend communicates with Windmill via WebSocket. Each call creates a job that runs on an isolated worker with full CPU and memory. Results stream back to the frontend in real time.' },
+				{ question: 'Can I use Tailwind CSS?', textAnswer: 'Yes. You can add Tailwind or any CSS framework to your project. The frontend is standard React or Svelte with full control over styling.' },
+				{ question: 'Can I build with AI coding assistants?', textAnswer: 'Yes. Running wmill app generate-agents creates AGENTS.md and DATATABLES.md context files that teach AI assistants the project structure, available runnables, and data table schemas. AI tools like Claude Code or Cursor can write valid frontend and backend code using these context files.' },
+				{ question: 'Do I need a running Windmill instance for local dev?', textAnswer: 'Yes. The wmill app dev server connects to a Windmill instance to execute backend runnables on workers. Frontend hot reload works locally, but backend calls require a connected workspace (cloud or self-hosted).' },
+			]} />
+
+			<ProductCTA />
+		</div>
+	);
+}

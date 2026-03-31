@@ -7,11 +7,15 @@ import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings, Database, BookOpen, Zap, Container, HardDrive, Cpu, Lock, Code2, Terminal, FileCode, Play, Sparkles, Shield, Activity, Layers } from 'lucide-react';
+import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
 import { athenaIntelligenceCaseStudy } from '../../data/case-studies/athena-intelligence';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
+import GithubStarCount from '../../landing/GithubStarCount';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -258,73 +262,6 @@ export const agentFeatures = [
 
 {/* TODO: add screenshots for each agent feature tab */}
 
-export function AgentFeaturesSection() {
-	const [active, setActive] = useState(0);
-	return (
-		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<motion.div {...fadeIn} className="mb-8">
-				<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-					Visual AI builder with tools
-				</h2>
-				<p className="text-lg text-gray-600 dark:text-gray-300">
-					Build AI agents as loops with tools using Windmill's visual builder. The agent reasons, picks <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> (scripts or <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP servers</Link>) and executes them. Use agent steps in any <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> alongside branching, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approvals</Link> and error handling.
-				</p>
-			</motion.div>
-
-			<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 mb-12">
-				{/* Left: clickable list */}
-				<div className="flex flex-col gap-2">
-					{agentFeatures.map((feat, i) => (
-						<button
-							key={feat.title}
-							onClick={() => setActive(i)}
-							className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
-								i === active
-									? 'bg-blue-600 text-white border-blue-600'
-									: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-							}`}
-						>
-							<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
-							<span className="font-medium text-sm">{feat.title}</span>
-						</button>
-					))}
-				</div>
-
-				{/* Right: selected content */}
-				<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
-					{agentFeatures.map((feat, i) => (
-						<div
-							key={feat.title}
-							className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
-						>
-							<div className="flex items-center gap-3 mb-4">
-								<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-									<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-								</div>
-								<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
-							{feat.image ? (
-								<img src={feat.image} alt={feat.title} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
-							) : (
-								<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-									<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-								</div>
-							)}
-							{feat.docLink && (
-								<div className="flex justify-end mt-3">
-									<Link to={feat.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
-										<BookOpen className="w-4 h-4" /> Read the docs
-									</Link>
-								</div>
-							)}
-						</div>
-					))}
-				</div>
-			</div>
-		</div>
-	);
-}
 
 {/* ── Big tab section: two agent modes ── */}
 
@@ -364,7 +301,11 @@ export function AgentModeTabs() {
 
 			{/* Tab 1: Visual AI builder */}
 			{activeTab === 0 && (
-				<AgentFeaturesSection />
+				<TabFeatureSection
+					title="Visual AI builder with tools"
+					subtitle={<>Build AI agents as loops with tools using Windmill's visual builder. The agent reasons, picks <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> (scripts or <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP servers</Link>) and executes them. Use agent steps in any <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> alongside branching, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approvals</Link> and error handling.</>}
+					features={agentFeatures}
+				/>
 			)}
 
 			{/* Tab 2: Claude / Codex / Opencode in sandboxes */}
@@ -438,29 +379,14 @@ export default function AiAgentsContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 				<motion.div {...fadeIn}>
+					<div className="mb-4"><GithubStarCount /></div>
 					<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
 						Build AI agents with full control and observability
 					</h1>
 					<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 						For platform teams who deploy AI agents to production and need full control over <Link to="/docs/core_concepts/ai_agents" className="text-blue-400 hover:underline !no-underline">permissions</Link>, <Link to="/docs/core_concepts/ai_agents#debugging" className="text-blue-400 hover:underline !no-underline">monitoring</Link> and audit logs.
 					</p>
-					<div className="flex flex-col sm:flex-row gap-4">
-						<a
-							href="https://app.windmill.dev"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-						>
-							Try Windmill free
-							<ArrowRight className="w-4 h-4" />
-						</a>
-						<Link
-							to="/docs/core_concepts/ai_agents"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-						>
-							Read the docs
-						</Link>
-					</div>
+					<HeroCTAButtons />
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
@@ -472,11 +398,11 @@ export default function AiAgentsContent({ title, description }) {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Run full <Link to="/docs/core_concepts/worker_groups" className="text-blue-500 hover:underline !no-underline">Claude Code, Codex or Opencode</Link> in sandboxes at their full power</span>
+							<span>Run full Claude Code, Codex or Opencode in sandboxes at their full power</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Track every decision, tool call and code execution with <Link to="/docs/core_concepts/ai_agents#debugging" className="text-blue-500 hover:underline !no-underline">full observability</Link></span>
+							<span>Track every decision, tool call and code execution with <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-500 hover:underline !no-underline">full observability</Link></span>
 						</div>
 					</div>
 				</motion.div>
@@ -575,7 +501,7 @@ export default function AiAgentsContent({ title, description }) {
 			{/* More use cases */}
 			<UseCaseCarousel
 				current="ai-agents"
-				subtitle="AI agents are just one use case. The same platform powers internal tools, data pipelines, workflow automations and scheduled tasks."
+				subtitle="AI agents are just one use case. The same platform powers internal tools, data pipelines, workflows and triggers."
 			/>
 
 			{/* FAQ */}
@@ -590,32 +516,7 @@ export default function AiAgentsContent({ title, description }) {
 			]} />
 			</div>
 
-			{/* CTA */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="text-center py-16 px-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-gray-900 border border-blue-200 dark:border-blue-800">
-					<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Start building AI agents today</h2>
-					<p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
-						Get started for free on Windmill Cloud or <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline !no-underline">self-host</Link> the open-source version.
-					</p>
-					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<a
-							href="https://app.windmill.dev"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors !no-underline"
-						>
-							Try Windmill free
-							<ArrowRight className="w-4 h-4" />
-						</a>
-						<Link
-							to="/pricing"
-							className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:border-gray-400 dark:hover:border-gray-500 transition-colors !no-underline"
-						>
-							View pricing
-						</Link>
-					</div>
-				</motion.div>
-			</div>
+			<ProductCTA />
 		</div>
 	);
 }

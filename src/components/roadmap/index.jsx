@@ -28,11 +28,11 @@ const roadmapItems = [
 			'Investigate having Windmill work locally for local workflow and script execution allowing better DX and AI agents to have immediate local feedback.'
 	},
 	{
-		title: 'Full wmill lint for agents',
+		title: 'Improve wmill lint for agents',
 		category: 'Developer',
 		issueLink: '',
 		description:
-			'Implement a full wmill lint to be used as a complete feedback tool for agents locally + clear OpenAPI specs for each kind of items writable locally by agents, for improved local dev.'
+			'The wmill lint command already works for v0. Improve it to be a more complete feedback tool for agents locally + clear OpenAPI specs for each kind of items writable locally by agents, for improved local dev.'
 	},
 	{
 		title: 'Unit tests support',
@@ -42,28 +42,16 @@ const roadmapItems = [
 			'Investigate unit tests with Windmill, either only guidance for local tests or/and supporting it as a first class concept in Windmill.'
 	},
 	{
-		title: 'True IaC support',
-		category: 'Backend',
-		issueLink: '',
-		description: 'Full instance config can be set using yaml in the helm chart synced with the DB.'
-	},
-	{
-		title: 'Full-code App GA',
-		category: 'UI',
-		issueLink: '',
-		description: 'Finish the latest full-code app nits and move from Beta to General Availability'
-	},
-	{
 		title: 'Extend multiplayer to flows and apps',
 		issueLink: '',
 		description: 'Extend multiplayer working for scripts to flow and apps.'
 	},
 	{
-		title: 'Native triggers for common external services',
+		title: 'Add more native triggers',
 		category: 'Backend',
 		issueLink: '',
 		description:
-			'Native triggers support to allow setting Github/Nextcloud/GWorkspace events as direct triggers by setting the webhooks on the external service, and monitor their liveness'
+			'Native triggers for Nextcloud and Google are already done. Next steps are adding native triggers for GitHub, Linear, etc.'
 	},
 	{
 		title: 'Single shard performance focus',
@@ -78,11 +66,11 @@ const roadmapItems = [
 		description: 'Support multi-shards for unlimited scalability'
 	},
 	{
-		title: 'Ruleset for deployment rules',
+		title: 'Add more rulesets',
 		category: 'Backend',
 		issueLink: '',
 		description:
-			'Ruleset for deployment rules to match Github rules (read-only prod workspaces, approver rules, etc)'
+			'Add more rulesets for deployment rules to match Github rules (read-only prod workspaces, approver rules, etc)'
 	},
 	{
 		title: 'Data tables/PostgreSQL runtime v2',

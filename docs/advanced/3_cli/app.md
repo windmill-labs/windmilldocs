@@ -60,11 +60,23 @@ Starts a local development server with hot reload and WebSocket backend. Options
 
 ### Generate lock files
 
+Generate `.lock` files for backend runnables with dependencies using the [`wmill generate-metadata`](./generate-metadata.md) command:
+
 ```bash
-wmill app generate-locks
+wmill generate-metadata
 ```
 
-Generates `.lock` files for backend runnables with dependencies. Options: `--yes`, `--dry-run`, `--default-ts`.
+To only update app lockfiles, use:
+
+```bash
+wmill generate-metadata --skip-scripts --skip-flows
+```
+
+Options: `--yes`, `--dry-run`, `--default-ts`.
+
+:::info Legacy command
+Prior to the unified command, this was done with `wmill app generate-locks`. This command is now deprecated but still works.
+:::
 
 ### Generate agent documentation
 

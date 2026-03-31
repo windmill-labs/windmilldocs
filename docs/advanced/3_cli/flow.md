@@ -59,7 +59,7 @@ wmill flow bootstrap f/flows/flashy_flow
 
 ## Running a flow
 
-Running a flow by its path s done using the `wmill flow run` command.
+Running a flow by its path is done using the `wmill flow run` command.
 
 ```bash
 wmill flow run <remote_path> [options]
@@ -82,11 +82,21 @@ wmill flow run <remote_path> [options]
 
 ## Update flow inline scripts lockfile
 
-Flows inline script [lockfiles](../6_imports/index.mdx) can be also updated locally in the same way as [`wmill script generate-metadata --lock-only`](./script.md#re-generating-a-script-metadata-file) but for flows' inline scripts:
+Flows inline script [lockfiles](../6_imports/index.mdx) can be updated locally using the [`wmill generate-metadata`](./generate-metadata.md) command:
 
 ```bash
-wmill flow generate-locks
+wmill generate-metadata
 ```
+
+This command handles scripts, flows and apps in a single pass. To only update flow lockfiles, use:
+
+```bash
+wmill generate-metadata --skip-scripts --skip-apps
+```
+
+:::info Legacy command
+Prior to the unified command, this was done with `wmill flow generate-locks`. This command is now deprecated but still works.
+:::
 
 ## Flow specification
 

@@ -386,10 +386,12 @@ const sidebars = {
 					]
 				},
 				'core_concepts/object_storage_in_windmill/index',
+				'core_concepts/volumes/index',
 				'core_concepts/custom_instance_database/index',
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
+				'core_concepts/user_tokens/index',
 				'core_concepts/error_handling/index',
 				'core_concepts/jobs/index',
 				'core_concepts/monitor_past_and_future_runs/index',
@@ -408,6 +410,7 @@ const sidebars = {
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
 				'core_concepts/ai_agents/index',
+				'core_concepts/ai_sandbox/index',
 				'core_concepts/workspace_dependencies/index',
 				'core_concepts/workspace_settings/index',
 				'core_concepts/streaming/index',
@@ -740,7 +743,8 @@ const sidebars = {
 						'script_editor/perpetual_scripts',
 						'script_editor/custom_environment_variables',
 						'script_editor/multiplayer',
-						'script_editor/vs_code_scripts'
+						'script_editor/vs_code_scripts',
+						'script_editor/debugger'
 					]
 				},
 				{
@@ -956,7 +960,11 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/instance_settings/index', 'core_concepts/infrastructure_as_code/index', 'advanced/self_host/aws_eks_ecs']
+					items: [
+						'advanced/instance_settings/index',
+						'core_concepts/infrastructure_as_code/index',
+						'advanced/self_host/aws_eks_ecs'
+					]
 				},
 				{
 					type: 'category',
@@ -1024,7 +1032,8 @@ const sidebars = {
 						'advanced/cli/installation',
 						'advanced/cli/workspace-management',
 						'advanced/cli/sync',
-						'advanced/cli/branch-specific-items',
+						'advanced/cli/generate-metadata',
+						'advanced/cli/environment-specific-items',
 						'advanced/cli/gitsync-settings',
 						'advanced/cli/user',
 						'advanced/cli/script',
@@ -1046,6 +1055,7 @@ const sidebars = {
 				'advanced/clients/rust_client',
 				'advanced/explicit_progress/index',
 				'advanced/scaling/index',
+				'advanced/high_availability/index',
 				'misc/share_on_hub/index'
 			]
 		},

@@ -44,6 +44,7 @@ export async function preprocessor(
       }
     | {
         kind: "http";
+        trigger_path: string;
         body: any,
         raw_string: string | null,
         route: string;
@@ -55,19 +56,24 @@ export async function preprocessor(
       }
     | {
         kind: "email";
+        trigger_path: string;
         parsed_email: any,
         raw_email: string,
       }
-    | { kind: "websocket"; msg: string; url: string }
+    | { kind: "websocket"; trigger_path: string; msg: string; url: string }
     | {
         kind: "kafka";
+        trigger_path: string;
         payload: string;
         brokers: string[];
         topic: string;
         group_id: string;
+        partition: number;
+        offset: number;
       }
     | {
         kind: "nats";
+        trigger_path: string;
         payload: string;
         servers: string[];
         subject: string;
@@ -78,6 +84,7 @@ export async function preprocessor(
       }
     | {
         kind: "sqs";
+        trigger_path: string;
         msg: string,
         queue_url: string;
         message_id?: string;
@@ -90,6 +97,7 @@ export async function preprocessor(
       }
     | {
         kind: "mqtt";
+        trigger_path: string;
         payload: string,
         topic: string;
         retain: boolean;
@@ -107,6 +115,7 @@ export async function preprocessor(
       }
     | {
         kind: "gcp";
+        trigger_path: string;
         payload: string,
         message_id: string;
         subscription: string;
@@ -153,6 +162,7 @@ class WebhookEvent(TypedDict):
 
 class HttpEvent(TypedDict):
     kind: Literal["http"]
+    trigger_path: str
     body: dict
     raw_string: Optional[str]
     route: str
@@ -165,26 +175,32 @@ class HttpEvent(TypedDict):
 
 class EmailEvent(TypedDict):
     kind: Literal["email"]
+    trigger_path: str
     parsed_email: dict
     raw_email: str
 
 
 class WebsocketEvent(TypedDict):
     kind: Literal["websocket"]
+    trigger_path: str
     msg: str
     url: str
 
 
 class KafkaEvent(TypedDict):
     kind: Literal["kafka"]
+    trigger_path: str
     payload: str
     brokers: list[str]
     topic: str
     group_id: str
+    partition: int
+    offset: int
 
 
 class NatsEvent(TypedDict):
     kind: Literal["nats"]
+    trigger_path: str
     payload: str
     servers: list[str]
     subject: str
@@ -201,6 +217,7 @@ class MessageAttribute(TypedDict):
 
 class SqsEvent(TypedDict):
     kind: Literal["sqs"]
+    trigger_path: str
     msg: str
     queue_url: str
     message_id: Optional[str]
@@ -221,6 +238,7 @@ class MqttV5Properties(TypedDict, total=False):
 
 class MqttEvent(TypedDict):
     kind: Literal["mqtt"]
+    trigger_path: str
     payload: str
     topic: str
     retain: bool
@@ -231,6 +249,7 @@ class MqttEvent(TypedDict):
 
 class GcpEvent(TypedDict):
     kind: Literal["gcp"]
+    trigger_path: str
     payload: str
     message_id: str
     subscription: str
@@ -305,6 +324,7 @@ export async function preprocessor(
     }
     | {
       kind: "http";
+      trigger_path: string;
       body: any;
       raw_string: string | null;
       route: string;
@@ -316,19 +336,24 @@ export async function preprocessor(
     }
     | {
       kind: "email";
+      trigger_path: string;
       parsed_email: any;
       raw_email: string;
     }
-    | { kind: "websocket"; msg: string; url: string }
+    | { kind: "websocket"; trigger_path: string; msg: string; url: string }
     | {
       kind: "kafka";
+      trigger_path: string;
       payload: string;
       brokers: string[];
       topic: string;
       group_id: string;
+      partition: number;
+      offset: number;
     }
     | {
       kind: "nats";
+      trigger_path: string;
       payload: string;
       servers: string[];
       subject: string;
@@ -339,6 +364,7 @@ export async function preprocessor(
     }
     | {
       kind: "sqs";
+      trigger_path: string;
       msg: string;
       queue_url: string;
       message_id?: string;
@@ -351,6 +377,7 @@ export async function preprocessor(
     }
     | {
       kind: "mqtt";
+      trigger_path: string;
       payload: string;
       topic: string;
       retain: boolean;
@@ -368,6 +395,7 @@ export async function preprocessor(
     }
     | {
       kind: "gcp";
+      trigger_path: string;
       payload: string;
       message_id: string;
       subscription: string;
@@ -379,6 +407,7 @@ export async function preprocessor(
     }
     | {
       kind: "postgres";
+      trigger_path: string;
       transaction_type: "insert" | "update" | "delete",
       schema_name: string,
       table_name: string,
@@ -418,6 +447,7 @@ class WebhookEvent(TypedDict):
 
 class HttpEvent(TypedDict):
     kind: Literal["http"]
+    trigger_path: str
     body: dict
     raw_string: Optional[str]
     route: str
@@ -430,26 +460,32 @@ class HttpEvent(TypedDict):
 
 class EmailEvent(TypedDict):
     kind: Literal["email"]
+    trigger_path: str
     parsed_email: dict
     raw_email: str
 
 
 class WebsocketEvent(TypedDict):
     kind: Literal["websocket"]
+    trigger_path: str
     msg: str
     url: str
 
 
 class KafkaEvent(TypedDict):
     kind: Literal["kafka"]
+    trigger_path: str
     payload: str
     brokers: list[str]
     topic: str
     group_id: str
+    partition: int
+    offset: int
 
 
 class NatsEvent(TypedDict):
     kind: Literal["nats"]
+    trigger_path: str
     payload: str
     servers: list[str]
     subject: str
@@ -466,6 +502,7 @@ class MessageAttribute(TypedDict):
 
 class SqsEvent(TypedDict):
     kind: Literal["sqs"]
+    trigger_path: str
     msg: str
     queue_url: str
     message_id: Optional[str]
@@ -486,6 +523,7 @@ class MqttV5Properties(TypedDict, total=False):
 
 class MqttEvent(TypedDict):
     kind: Literal["mqtt"]
+    trigger_path: str
     payload: str
     topic: str
     retain: bool
@@ -496,6 +534,7 @@ class MqttEvent(TypedDict):
 
 class GcpEvent(TypedDict):
     kind: Literal["gcp"]
+    trigger_path: str
     payload: str
     message_id: str
     subscription: str
@@ -508,6 +547,7 @@ class GcpEvent(TypedDict):
 
 class PostgresEvent(TypedDict):
     kind: Literal["postgres"]
+    trigger_path: str
     transaction_type: Literal["insert", "update", "delete"]
     schema_name: str
     table_name: str

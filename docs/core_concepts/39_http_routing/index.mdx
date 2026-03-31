@@ -247,7 +247,7 @@ Windmill supports several ways to secure HTTP triggers:
 | Method           | Description                                                                                  |
 |------------------|----------------------------------------------------------------------------------------------|
 | **None**         | Open to anyone (use only in trusted environments)                                            |
-| **Windmill Auth**| Uses a Windmill-signed JWT token to ensure the requesting agent has read access to both the runnable and the trigger. The token must be provided either in the Authorization header as Bearer `<token>`, or via a cookie named `token`. You can generate this token from your user settings. |
+| **Windmill Auth**| Uses a Windmill-signed JWT token to ensure the requesting agent has read access to both the runnable and the trigger. The token must be provided either in the Authorization header as Bearer `<token>`, or via a cookie named `token`. You can generate this token from your user settings. When selecting this option, you can generate a token pre-scoped with `http_triggers:read` access to the route directly from the trigger configuration. See [user tokens](../59_user_tokens/index.mdx) for more details on scoped tokens. |
 | **API Key**      | Checks a header (e.g., `x-api-key`) for a valid key stored as a resource                     |
 | **Basic Auth**   | Uses HTTP Basic Authentication via a configured resource                                     |
 | **Signature Auth** | Verifies a signature using HMAC or third-party formats (Stripe, GitHub, etc.)               |

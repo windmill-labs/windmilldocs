@@ -153,7 +153,7 @@ Flows themselves can be triggered from other flows. This is called inner flows.
 
 Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program within a [Python](../0_scripts_quickstart/2_python_quickstart/index.mdx) or [TypeScript](../0_scripts_quickstart/1_typescript_quickstart/index.mdx) script. This is known as workflows as code.
 
-![Flow as code](../../core_concepts/31_workflows_as_code/python_editor.png)
+![Flow as code](../../core_concepts/31_workflows_as_code/wac-editor-1.png)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -404,6 +404,8 @@ Native triggers allow external services like Nextcloud, Google Drive, and Google
 A particular use case for schedules are [Trigger scripts](../../flows/10_flow_trigger.mdx).
 
 Trigger scripts are used in [Flows](../../flows/1_flow_editor.mdx) and are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used as scheduled poll with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
+
+For more complex objects or when you need structured relational data instead of simple state tracking, consider using [Data tables](../../core_concepts/11_persistent_storage/data_tables.mdx) which provide a workspace-scoped SQL database for storing and querying data.
 
 You could set your script in a flow after a Trigger script to have it run only when new data is available.
 
