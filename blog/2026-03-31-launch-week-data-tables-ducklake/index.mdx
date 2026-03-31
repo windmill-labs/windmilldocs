@@ -307,7 +307,7 @@ import PipelineBenchmarkChart, {
 	PipelineStepComparison
 } from '@site/src/components/PipelineBenchmarkChart';
 
-To put numbers behind the architecture, we ran the same data pipeline on both stacks and measured wall-clock time. Both pipelines start from the same pre-ingested ~3 million row dataset ([NYC Yellow Taxi trips, January 2024](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)) and run 5 identical transformation and validation steps. Ingestion is excluded since the two stacks use fundamentally different loading mechanisms that are not directly comparable.
+To put numbers behind the architecture, we ran the same data pipeline on both stacks and measured wall-clock time. Both pipelines start from the same pre-ingested ~3 million row dataset ([NYC Yellow Taxi trips, January 2024](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)) and run 5 identical transformation and validation steps.
 
 ### Pipeline steps
 
@@ -445,6 +445,7 @@ The per-step breakdown shows where the difference comes from:
 | Aggregate by zone |              0.90 s |              1.49 s |     1.7× |
 | Finalize          |              1.79 s |              1.53 s |    0.86× |
 | **Total**         |          **9.98 s** |         **14.74 s** | **1.5×** |
+
 :::note
 This benchmark was run on a single node with 24 GB of RAM. Results may vary depending on node compute speed and S3 connectivity speed.
 :::
