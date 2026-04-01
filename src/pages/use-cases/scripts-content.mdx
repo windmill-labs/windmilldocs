@@ -9,14 +9,11 @@ import { motion } from 'framer-motion';
 import { Globe, RefreshCw, CheckCircle, BookOpen } from 'lucide-react';
 import LazyVideo from '../../components/products/LazyVideo';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
-import CaseStudyCard from '../../components/use-cases/CaseStudyCard';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 import ProductCTA from '../../components/products/ProductCTA';
-import { pantherLabsCaseStudy } from '../../data/case-studies/panther-labs';
-import { cfaInstituteCaseStudy } from '../../data/case-studies/cfa-institute';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -30,14 +27,6 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
-export const scriptExamples = [
-	{ category: 'Cybersecurity', title: 'Incident response automation', desc: 'Query your SIEM, enrich alerts with threat intelligence feeds, create tickets in PagerDuty and notify the on-call team on Slack.' },
-	{ category: 'Finance', title: 'Payment reconciliation', desc: 'Pull transactions from Stripe, match them against your ledger in PostgreSQL and flag discrepancies for review.' },
-	{ category: 'DevOps', title: 'Customer provisioning', desc: 'Spin up AWS accounts, configure IAM roles, deploy baseline infrastructure and notify the customer with onboarding credentials.' },
-	{ category: 'E-commerce', title: 'Inventory synchronization', desc: 'Sync stock levels between your ERP, warehouse system and storefront every 15 minutes to prevent overselling.' },
-	{ category: 'Healthcare', title: 'Lab result notifications', desc: 'Poll the LIMS for completed results, format them for clinician review and send secure notifications via the patient portal API.' },
-	{ category: 'Environmental', title: 'Sensor data collection', desc: 'Ingest readings from IoT sensors, validate ranges, store in TimescaleDB and trigger alerts when thresholds are exceeded.' },
-];
 
 export default function ScriptsContent({ title, description }) {
 	return (
@@ -232,60 +221,6 @@ export default function ScriptsContent({ title, description }) {
 				subtitle="Scripts work on their own as API endpoints, scheduled jobs or shareable tools. They can also be composed into workflows, data pipelines, internal apps and more."
 			/>
 
-			{/* What you get out of the box */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						What every script gets out of the box
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Every script you deploy on Windmill automatically comes with a UI, triggers and access to shared resources.
-					</p>
-				</motion.div>
-
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6">
-						<img
-							src="/img/money-pages/script-for-endpoint.webp"
-							alt="Auto-generated UI"
-							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
-							loading="lazy"
-						/>
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Auto-generated UI</h3>
-						<p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-							Windmill reads the types from your <code>main</code> function and generates a <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">form</Link> automatically. Share it with anyone in your team, no frontend code needed.
-						</p>
-					</motion.div>
-
-					<motion.div {...stagger(0.08)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6">
-						{/* placeholder: video or screenshot of trigger configuration panel showing webhooks, schedules, Kafka, etc. */}
-						<img
-							src="/img/money-pages/triggers.webp"
-							alt="Script triggers"
-							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
-							loading="lazy"
-						/>
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Built-in triggers</h3>
-						<p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-							Run scripts from <Link to="/platform/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks, schedules, Kafka, Postgres CDC, SQS, emails</Link> and more. Every script also gets sync and async API endpoints.
-						</p>
-					</motion.div>
-
-					<motion.div {...stagger(0.16)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6">
-						<img
-							src="/img/money-pages/resource.webp"
-							alt="Shared resources"
-							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
-							loading="lazy"
-						/>
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Shared resources</h3>
-						<p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-							Connect to databases, APIs and cloud services through <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">typed resources</Link>. Credentials are encrypted at rest and injected at runtime. Share connections across scripts without duplicating secrets.
-						</p>
-					</motion.div>
-				</div>
-			</div>
-
 			{/* Two ways to write scripts */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="mb-16">
@@ -342,7 +277,7 @@ export default function ScriptsContent({ title, description }) {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="mb-16">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Enterprise-grade by default
+						Enterprise features built in
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
 						Every script runs within a platform built for enterprise requirements: immutable versioning, role-based access control, full audit trails, SSO and self-hosting. No extra setup needed.
@@ -353,9 +288,12 @@ export default function ScriptsContent({ title, description }) {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
 					<motion.div {...fadeIn}>
 						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Versioning and deploy</h3>
-						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
 							Every script version is immutable and addressable by hash. Deploy from the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link>. Roll back to any previous version instantly. Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link> and use your existing code review workflows.
 						</p>
+						<Link to="/platform/deployment-versioning" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about deployment and versioning
+						</Link>
 					</motion.div>
 					<motion.div {...stagger(0.1)}>
 						<LazyVideo
@@ -375,9 +313,12 @@ export default function ScriptsContent({ title, description }) {
 					</motion.div>
 					<motion.div {...fadeIn} className="order-1 md:order-2">
 						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Full observability</h3>
-						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
 							Every run is logged with inputs, outputs, duration and status. Real-time <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">execution logs</Link> stream as your script runs. Set up <Link to="/docs/core_concepts/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handlers</Link> to send alerts on failure. <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">Audit trails</Link> track who ran what and when.
 						</p>
+						<Link to="/platform/observability" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about observability
+						</Link>
 					</motion.div>
 				</div>
 
@@ -385,9 +326,12 @@ export default function ScriptsContent({ title, description }) {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
 					<motion.div {...fadeIn}>
 						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">RBAC and permissions</h3>
-						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
 							Control who can view, edit and run each script with <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">role-based access control</Link>. Organize scripts into <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">folders</Link> with group-level permissions. Authenticate users with SSO. Every action is recorded in the audit log.
 						</p>
+						<Link to="/platform/rbac" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about RBAC
+						</Link>
 					</motion.div>
 					<motion.div {...stagger(0.1)}>
 						<LazyVideo
@@ -426,57 +370,7 @@ export default function ScriptsContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* Examples: the core of the page */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						What you can build with a script
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						A Windmill script is a function that takes typed inputs and returns a result. What makes it powerful is the platform around it: triggers, permissions, logging, retries and a UI generated from the function signature. Here's what teams build across industries.
-					</p>
-				</motion.div>
 
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-					{scriptExamples.map((example, i) => (
-						<motion.div
-							key={example.title}
-							{...stagger(i * 0.08)}
-							className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6"
-						>
-							<span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">{example.category}</span>
-							<h3 className="text-base font-semibold text-gray-900 dark:text-white mt-2 mb-2">{example.title}</h3>
-							<p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{example.desc}</p>
-						</motion.div>
-					))}
-				</div>
-			</div>
-
-			{/* Case studies */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-12">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Scripts in production
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						From cybersecurity to synthetic monitoring, teams rely on Windmill scripts for their most critical operations.
-					</p>
-				</motion.div>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-					<CaseStudyCard
-						caseStudy={pantherLabsCaseStudy}
-						title="How Panther Labs automates customer provisioning with Windmill scripts"
-						description="Panther Labs uses Windmill scripts for customer provisioning, AWS account management and infrastructure deployment across 16 workers. Scripts serve as the building blocks of their platform operations."
-						from="scripts"
-					/>
-					<CaseStudyCard
-						caseStudy={cfaInstituteCaseStudy}
-						title="How CFA Institute runs synthetic monitoring scripts every 5 minutes"
-						description="CFA Institute schedules 25 synthetic monitoring scripts that run every 5 minutes with ChromeDriver, catching production regressions before users do."
-						from="scripts"
-					/>
-				</div>
-			</div>
 
 			{/* FAQ */}
 			<UseCaseFAQ faqs={[
