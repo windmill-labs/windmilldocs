@@ -152,6 +152,12 @@ export async function main(prompt: string) {
 
 <!-- TODO: video showing the Claude Code template in action with session persistence. Path suggestion: /videos/ai_sandboxes_claude_code.webm -->
 
+## Observability
+
+Every agent run is a regular Windmill job, which means full [observability](/platform/observability) out of the box: logs, execution history, and token usage for cost monitoring. Set up [alerts](/docs/core_concepts/critical_alerts) on failures or cost thresholds, and audit agent activity across workspaces.
+
+<video className="border-2 rounded-lg object-cover w-full h-full dark:border-dark-border" autoPlay controls src="/videos/sandbox_observability.mp4" />
+
 ## Use cases
 
 - **Persistent agent memory**: conversation history and session state survive across runs.
