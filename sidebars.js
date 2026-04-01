@@ -1033,6 +1033,7 @@ const sidebars = {
 						'advanced/cli/installation',
 						'advanced/cli/workspace-management',
 						'advanced/cli/sync',
+						'advanced/cli/generate-metadata',
 						'advanced/cli/environment-specific-items',
 						'advanced/cli/gitsync-settings',
 						'advanced/cli/user',
@@ -1055,6 +1056,7 @@ const sidebars = {
 				'advanced/clients/rust_client',
 				'advanced/explicit_progress/index',
 				'advanced/scaling/index',
+				'advanced/high_availability/index',
 				'misc/share_on_hub/index'
 			]
 		},

@@ -633,7 +633,7 @@ export default function LandingHeader() {
 					</Popover.Panel>
 				</Transition>
 			</Popover>
-			{/* <Banner /> */}
+			<Banner />
 			<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
 		</div>
 	);
