@@ -132,7 +132,7 @@ const solutionsByUseCase = [
 	{
 		name: 'Internal apps',
 		description: 'Build admin panels, dashboards and back-office apps.',
-		href: '/use-cases/internal-tools',
+		href: '/use-cases/internal-apps',
 		icon: WrenchScrewdriverIcon
 	},
 	{

@@ -1,4 +1,4 @@
-import { internalToolsUseCase } from './internal-tools';
+import { internalAppsUseCase } from './internal-apps';
 import { workflowAutomationUseCase } from './workflows';
 import { dataPipelinesUseCase } from './data-pipelines';
 import { aiAgentsUseCase } from './ai-agents';
@@ -7,7 +7,7 @@ import { scriptsUseCase } from './scripts';
 
 export const useCases = [
 	scriptsUseCase,
-	internalToolsUseCase,
+	internalAppsUseCase,
 	workflowAutomationUseCase,
 	dataPipelinesUseCase,
 	aiAgentsUseCase,
