@@ -273,11 +273,36 @@ export default function ScriptsContent({ title, description }) {
 				</div>
 			</div>
 
+			{/* Many ways to trigger scripts */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Built-in triggers
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Every script gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated UI</Link> so anyone on your team can run it. It also gets sync and async <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">API endpoints</Link> out of the box. On top of that, Windmill provides a full set of built-in triggers: <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">schedules</Link>, Kafka, Postgres CDC, SQS, MQTT, emails, WebSockets and more.
+						</p>
+						<Link to="/platform/triggers" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about available triggers
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<img
+							src="/img/money-pages/triggers.webp"
+							alt="Script triggers"
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							loading="lazy"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
 			{/* Enterprise-grade by default */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="mb-16">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Enterprise features built in
+						Built for production
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
 						Every script runs within a platform built for enterprise requirements: immutable versioning, role-based access control, full audit trails, SSO and self-hosting. No extra setup needed.
@@ -348,7 +373,7 @@ export default function ScriptsContent({ title, description }) {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 					<motion.div {...fadeIn}>
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							Run scripts on any infrastructure
+							Assign scripts to dedicated infrastructure
 						</h2>
 						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
 							Choose where and how each script runs. Assign scripts to <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> with specific hardware, network access or pre-installed dependencies. Run them remotely with <Link to="/docs/core_concepts/agent_workers" className="text-blue-600 dark:text-blue-400 hover:underline">agent workers</Link> behind firewalls, or use <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> for high-throughput scripts that need permanently warm runtimes.
