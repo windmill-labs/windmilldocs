@@ -277,7 +277,14 @@ export default function ScriptsContent({ title, description }) {
 				</div>
 			</div>
 
-			{/* Production-grade platform */}
+			{/* Scripts as building blocks */}
+			<UseCaseCarousel
+				current="scripts"
+				title="Scripts as building blocks"
+				subtitle="Every script you write can be reused across the platform: as a step in a workflow, a transformation in a data pipeline, a backend for an internal app and more."
+			/>
+
+			{/* Enterprise-grade by default */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="mb-16">
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -343,62 +350,6 @@ export default function ScriptsContent({ title, description }) {
 					</motion.div>
 				</div>
 
-			</div>
-
-			{/* Scripts as building blocks */}
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-				<motion.div {...fadeIn} className="mb-16">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Scripts as building blocks
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Every script you write can be reused across the platform. Use them standalone or compose them into larger systems.
-					</p>
-				</motion.div>
-
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
-						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Workflows</h3>
-						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-							Chain scripts into DAG-based flows with branching, loops, retries and approval steps. Each script becomes a step that passes its output to the next.
-						</p>
-						<Link
-							to="/use-cases/workflows"
-							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
-						>
-							<BookOpen className="w-4 h-4" />
-							Explore workflows
-						</Link>
-					</motion.div>
-
-					<motion.div {...stagger(0.08)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
-						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Data pipelines</h3>
-						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-							Use scripts as extraction, transformation or loading steps in data pipelines. Connect to any database or API and process data at scale.
-						</p>
-						<Link
-							to="/use-cases/data-pipelines"
-							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
-						>
-							<BookOpen className="w-4 h-4" />
-							Explore data pipelines
-						</Link>
-					</motion.div>
-
-					<motion.div {...stagger(0.16)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
-						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Internal apps</h3>
-						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-							Use scripts as backends for internal tools. Build a UI with the app editor and wire buttons, tables and forms to your scripts.
-						</p>
-						<Link
-							to="/use-cases/internal-tools"
-							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
-						>
-							<BookOpen className="w-4 h-4" />
-							Explore internal tools
-						</Link>
-					</motion.div>
-				</div>
 			</div>
 
 			{/* Examples: the core of the page */}

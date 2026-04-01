@@ -12,7 +12,7 @@ const fadeIn = {
 
 const allUseCases = [
 	{ label: 'Scripts', subtitle: 'Write scripts in TypeScript, Python, Go, Bash, SQL and trigger them from webhooks, schedules, queues or the auto-generated UI.', to: '/use-cases/scripts', cover: '/img/money-pages/scripts-preview.webp' },
-	{ label: 'Internal tools', subtitle: 'Build production-grade internal tools with backend scripts, data tables and React, Vue or Svelte frontends.', to: '/use-cases/internal-tools', cover: '/img/money-pages/frontend.webp' },
+	{ label: 'Internal apps', subtitle: 'Build production-grade internal apps with backend scripts, data tables and React, Vue or Svelte frontends.', to: '/use-cases/internal-tools', cover: '/img/money-pages/frontend.webp' },
 	{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.webp' },
 	{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.webp' },
 	{ label: 'Workflows', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflows', cover: '/img/money-pages/parallel-branches.webp' },
