@@ -3,10 +3,10 @@ title: "How to build with scripts on Windmill"
 description: "How do I run production scripts? Write scripts in TypeScript, Python, Go, Bash, SQL and trigger them from webhooks, schedules, queues or an auto-generated UI with full observability."
 ---
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from '@docusaurus/Link';
-import { motion } from 'framer-motion';
-import { Globe, RefreshCw, CheckCircle, BookOpen } from 'lucide-react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { Rocket, CheckCircle2, XCircle, Calendar, Clock, Webhook, Radio, BookOpen } from 'lucide-react';
 import LazyVideo from '../../components/products/LazyVideo';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
@@ -27,6 +27,310 @@ export const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
+{/* ── Hero animation: Code → Deploy → Monitor ── */}
+
+export const heroCodeLines = [
+	{ tokens: [{ text: 'import ', c: 'text-purple-400' }, { text: '{ Client } ', c: 'text-blue-300' }, { text: 'from ', c: 'text-purple-400' }, { text: "'pg'", c: 'text-amber-300' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'type ', c: 'text-purple-400' }, { text: 'Postgresql ', c: 'text-emerald-300' }, { text: '= { ', c: 'text-gray-400' }, { text: 'host', c: 'text-orange-300' }, { text: ': string; ... }', c: 'text-gray-400' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'export async function ', c: 'text-purple-400' }, { text: 'main', c: 'text-blue-300' }, { text: '(', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  db', c: 'text-orange-300' }, { text: ': ', c: 'text-gray-400' }, { text: 'Postgresql', c: 'text-emerald-300' }, { text: ',', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  query', c: 'text-orange-300' }, { text: ': ', c: 'text-gray-400' }, { text: 'string', c: 'text-emerald-300' }, { text: ',', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  limit', c: 'text-orange-300' }, { text: ': ', c: 'text-gray-400' }, { text: 'number', c: 'text-emerald-300' }, { text: ' = ', c: 'text-gray-400' }, { text: '100', c: 'text-amber-300' }] },
+	{ tokens: [{ text: ') {', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  const ', c: 'text-purple-400' }, { text: 'client ', c: 'text-blue-300' }, { text: '= ', c: 'text-gray-400' }, { text: 'new ', c: 'text-purple-400' }, { text: 'Client', c: 'text-blue-300' }, { text: '(db)', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  return ', c: 'text-purple-400' }, { text: 'client', c: 'text-blue-300' }, { text: '.query(query, [limit])', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '}', c: 'text-gray-400' }] },
+];
+
+export const heroAllText = heroCodeLines.map((l) => l.tokens.map((t) => t.text).join('') || ' ').join('\n');
+export const heroTotalChars = heroAllText.length;
+
+export const heroScatterPoints = [
+	{ x: 0.01, y: 85, ok: true },   { x: 0.04, y: 120, ok: true },  { x: 0.06, y: 95, ok: true },
+	{ x: 0.09, y: 110, ok: true },  { x: 0.11, y: 130, ok: true },  { x: 0.13, y: 88, ok: true },
+	{ x: 0.16, y: 105, ok: true },  { x: 0.18, y: 310, ok: false }, { x: 0.20, y: 92, ok: true },
+	{ x: 0.23, y: 115, ok: true },  { x: 0.25, y: 78, ok: true },   { x: 0.27, y: 145, ok: true },
+	{ x: 0.30, y: 100, ok: true },  { x: 0.32, y: 125, ok: true },  { x: 0.34, y: 90, ok: true },
+	{ x: 0.37, y: 108, ok: true },  { x: 0.39, y: 82, ok: true },   { x: 0.41, y: 155, ok: true },
+	{ x: 0.44, y: 75, ok: true },   { x: 0.46, y: 98, ok: true },   { x: 0.48, y: 118, ok: true },
+	{ x: 0.51, y: 88, ok: true },   { x: 0.53, y: 95, ok: true },   { x: 0.56, y: 112, ok: true },
+	{ x: 0.58, y: 70, ok: true },   { x: 0.61, y: 135, ok: true },  { x: 0.63, y: 102, ok: true },
+	{ x: 0.66, y: 115, ok: true },  { x: 0.68, y: 85, ok: true },   { x: 0.71, y: 120, ok: true },
+	{ x: 0.73, y: 98, ok: true },   { x: 0.76, y: 92, ok: true },   { x: 0.78, y: 128, ok: true },
+	{ x: 0.81, y: 80, ok: true },   { x: 0.83, y: 105, ok: true },  { x: 0.86, y: 110, ok: true },
+	{ x: 0.88, y: 340, ok: false }, { x: 0.91, y: 115, ok: true },  { x: 0.93, y: 82, ok: true },
+	{ x: 0.96, y: 95, ok: true },   { x: 0.99, y: 108, ok: true },
+];
+
+export const heroYMax = 400;
+export const heroChartH = 100;
+export const heroYTicks = [100, 200, 350];
+export function heroYPos(val) { return heroChartH - (val / heroYMax) * heroChartH; }
+
+export const heroJobRuns = [
+	{ id: 'j1', ok: true,  duration: '0,12s', name: 'u/admin/query_db',  triggeredBy: 'Webhook',  tag: 'script' },
+	{ id: 'j2', ok: true,  duration: '0,09s', name: 'u/admin/query_db',  triggeredBy: 'Schedule', tag: 'script' },
+	{ id: 'j3', ok: true,  duration: '0,15s', name: 'u/admin/query_db',  triggeredBy: 'Webhook',  tag: 'script' },
+	{ id: 'j4', ok: false, duration: '0,31s', name: 'u/admin/query_db',  triggeredBy: 'Webhook',  tag: 'script' },
+	{ id: 'j5', ok: true,  duration: '0,11s', name: 'u/admin/query_db',  triggeredBy: 'Schedule', tag: 'script' },
+];
+
+export function HeroCodeEditor({ typedChars }) {
+	let charsSoFar = 0;
+	return (
+		<div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-950 overflow-hidden">
+			<div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800 bg-gray-900">
+				<motion.img
+					src="/img/windmill.svg"
+					alt="Windmill"
+					className="w-4 h-4"
+					animate={{ rotate: 360 }}
+					transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+				/>
+				<span className="text-[10px] font-medium text-gray-400">query_db.ts</span>
+			</div>
+			<div className="p-4 font-mono text-[12px] leading-relaxed" style={{ minHeight: 280 }}>
+				{heroCodeLines.map((line, i) => {
+					const lineText = line.tokens.map((t) => t.text).join('') || ' ';
+					const lineStart = charsSoFar;
+					charsSoFar += lineText.length + 1;
+					const lineCharsShown = Math.max(0, Math.min(lineText.length, typedChars - lineStart));
+					if (typedChars <= lineStart) return (
+						<div key={i} className="flex h-[1.5em]">
+							<span className="text-gray-600 w-5 text-right mr-2 select-none opacity-0 text-[10px]">{i + 1}</span>
+						</div>
+					);
+					let tokChars = 0;
+					const rendered = [];
+					for (const token of line.tokens) {
+						if (tokChars >= lineCharsShown) break;
+						const visLen = Math.min(token.text.length, lineCharsShown - tokChars);
+						rendered.push(
+							<span key={rendered.length} className={token.c} style={{ whiteSpace: 'pre' }}>{token.text.slice(0, visLen)}</span>
+						);
+						tokChars += token.text.length;
+					}
+					return (
+						<div key={i} className="flex">
+							<span className="text-gray-600 w-5 text-right mr-2 select-none text-[10px]">{i + 1}</span>
+							{line.tokens.length === 0 ? <span>&nbsp;</span> : rendered}
+							{lineCharsShown < lineText.length && (
+								<span className="inline-block w-[2px] h-[1.1em] bg-gray-300 ml-[1px] animate-pulse" />
+							)}
+						</div>
+					);
+				})}
+			</div>
+		</div>
+	);
+}
+
+export function HeroMonitorDashboard({ visibleDots, visibleRows }) {
+	return (
+		<div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden shadow-lg">
+			<div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+				<span className="text-sm font-bold text-gray-900 dark:text-gray-100">Runs</span>
+				<span className="px-2 py-0.5 rounded bg-blue-600/20 text-blue-600 dark:text-blue-400 text-[10px] font-medium">All</span>
+				<span className="text-[10px] text-gray-400">Runs</span>
+				<span className="text-[10px] text-gray-400">Deps</span>
+				<div className="flex-1" />
+				<CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+				<XCircle className="w-3.5 h-3.5 text-red-400/60" />
+				<Clock className="w-3.5 h-3.5 text-gray-400" />
+			</div>
+			<div className="px-4 pt-2 pb-2">
+				<div className="flex items-center gap-3 mb-2">
+					<span className="text-[11px] font-medium text-gray-900 dark:text-gray-100">Duration</span>
+					<span className="text-[11px] text-gray-400">Concurrency</span>
+				</div>
+				<div className="relative w-full" style={{ height: heroChartH }}>
+					{heroYTicks.map((tick) => (
+						<div key={tick} className="absolute left-0 right-0 flex items-center" style={{ top: heroYPos(tick) }}>
+							<span className="text-[10px] text-gray-400 tabular-nums w-10 text-right shrink-0">{tick}ms</span>
+							<div className="ml-2 h-px bg-gray-200 dark:bg-gray-700 flex-1" />
+						</div>
+					))}
+					<svg className="absolute top-0 bottom-0" style={{ left: 48, right: 0, width: 'calc(100% - 48px)', height: heroChartH }}>
+						{heroScatterPoints.map((pt, i) => (
+							<motion.circle
+								key={i}
+								cx={`${pt.x * 100}%`}
+								cy={heroYPos(pt.y)}
+								className={pt.ok ? 'fill-emerald-500' : 'fill-red-500'}
+								initial={{ opacity: 0, r: 0 }}
+								animate={i < visibleDots ? { opacity: 0.85, r: 4 } : { opacity: 0, r: 0 }}
+								transition={{ duration: 0.15 }}
+							/>
+						))}
+					</svg>
+				</div>
+			</div>
+			<motion.div
+				className="grid px-4 py-1 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 text-[10px] font-medium text-gray-500"
+				style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}
+				initial={{ opacity: 0 }}
+				animate={visibleRows > 0 ? { opacity: 1 } : { opacity: 0 }}
+				transition={{ duration: 0.3 }}
+			>
+				<span></span>
+				<span>Path</span>
+				<span>Duration</span>
+				<span>Triggered by</span>
+				<span>Tag</span>
+			</motion.div>
+			{heroJobRuns.map((job, i) => (
+				<motion.div
+					key={job.id}
+					className="grid px-4 py-1.5 border-b border-gray-100 dark:border-gray-700/50 items-center"
+					style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}
+					initial={{ opacity: 0, y: 5 }}
+					animate={i < visibleRows ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
+					transition={{ duration: 0.2 }}
+				>
+					{job.ok
+						? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+						: <XCircle className="w-3.5 h-3.5 text-red-500" />
+					}
+					<span className="text-[10px] text-gray-700 dark:text-gray-300 truncate font-mono">{job.name}</span>
+					<span className="text-[10px] text-gray-700 dark:text-gray-300 tabular-nums">{job.duration}</span>
+					<div className="flex items-center gap-1 truncate">
+						{job.triggeredBy === 'Schedule' && <Calendar className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						{job.triggeredBy === 'Webhook' && <Webhook className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						{job.triggeredBy === 'Kafka' && <Radio className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						<span className="text-[10px] text-gray-500 truncate font-mono">{job.triggeredBy}</span>
+					</div>
+					<span className="text-[10px] text-gray-400">{job.tag}</span>
+				</motion.div>
+			))}
+		</div>
+	);
+}
+
+export function HeroAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: false, amount: 0.3 });
+	const [phase, setPhase] = useState(0);
+	const [typedChars, setTypedChars] = useState(0);
+	const [visibleDots, setVisibleDots] = useState(0);
+	const [visibleRows, setVisibleRows] = useState(0);
+
+	useEffect(() => {
+		if (!isInView) return;
+		let typingInterval, deployTimeout, monitorTimeout, dotInterval, rowTimeout, rowInterval, resetTimeout;
+		const speed = 12;
+		typingInterval = setInterval(() => {
+			setTypedChars((prev) => {
+				if (prev >= heroTotalChars) {
+					clearInterval(typingInterval);
+					deployTimeout = setTimeout(() => {
+						setPhase(1);
+						monitorTimeout = setTimeout(() => {
+							setPhase(2);
+							let dotCount = 0;
+							dotInterval = setInterval(() => {
+								dotCount++;
+								setVisibleDots(dotCount);
+								if (dotCount >= heroScatterPoints.length) clearInterval(dotInterval);
+							}, 40);
+							rowTimeout = setTimeout(() => {
+								let rowCount = 0;
+								rowInterval = setInterval(() => {
+									rowCount++;
+									setVisibleRows(rowCount);
+									if (rowCount >= heroJobRuns.length) clearInterval(rowInterval);
+								}, 200);
+							}, 400);
+							resetTimeout = setTimeout(() => {
+								setPhase(0);
+								setTypedChars(0);
+								setVisibleDots(0);
+								setVisibleRows(0);
+							}, 6000);
+						}, 1500);
+					}, 600);
+					return heroTotalChars;
+				}
+				return prev + 1;
+			});
+		}, speed);
+		return () => {
+			clearInterval(typingInterval);
+			clearTimeout(deployTimeout);
+			clearTimeout(monitorTimeout);
+			clearInterval(dotInterval);
+			clearTimeout(rowTimeout);
+			clearInterval(rowInterval);
+			clearTimeout(resetTimeout);
+		};
+	}, [isInView, phase === 0 && typedChars === 0]);
+
+	const codeRef = useRef(null);
+	const monitorRef = useRef(null);
+	const [containerH, setContainerH] = useState(360);
+	useEffect(() => {
+		const measure = () => {
+			const cH = codeRef.current?.offsetHeight || 0;
+			const mH = monitorRef.current?.offsetHeight || 0;
+			setContainerH(Math.max(cH, mH, 360));
+		};
+		measure();
+		window.addEventListener('resize', measure);
+		return () => window.removeEventListener('resize', measure);
+	}, [phase]);
+
+	return (
+		<div ref={ref} className="relative w-full max-w-[520px]" style={{ height: containerH }}>
+			<motion.div
+				className="absolute inset-0 z-10"
+				animate={{
+					filter: phase === 1 ? 'blur(6px)' : 'blur(0px)',
+					scale: phase === 1 ? 1.01 : 1,
+					opacity: phase >= 2 ? 0 : 1,
+				}}
+				transition={{ duration: 0.5 }}
+			>
+				<div ref={codeRef}>
+					<HeroCodeEditor typedChars={typedChars} />
+				</div>
+			</motion.div>
+			<AnimatePresence>
+				{phase === 1 && (
+					<motion.div
+						className="absolute inset-0 flex items-center justify-center z-30"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.4 }}
+					>
+						<div className="absolute inset-0 bg-black/10 dark:bg-black/30 rounded-xl" />
+						<motion.div
+							className="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-blue-500 text-white text-lg font-semibold shadow-2xl shadow-blue-500/30 cursor-default"
+							initial={{ scale: 0.85, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							exit={{ scale: 1.08, opacity: 0 }}
+							transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+						>
+							<Rocket className="w-5 h-5" />
+							Deploy
+						</motion.div>
+					</motion.div>
+				)}
+			</AnimatePresence>
+			<motion.div
+				className="absolute inset-0 z-10"
+				animate={{ opacity: phase === 2 ? 1 : 0 }}
+				transition={{ duration: 0.5 }}
+				style={{ pointerEvents: phase === 2 ? 'auto' : 'none' }}
+			>
+				<div ref={monitorRef}>
+					<HeroMonitorDashboard visibleDots={visibleDots} visibleRows={visibleRows} />
+				</div>
+			</motion.div>
+		</div>
+	);
+}
 
 export default function ScriptsContent({ title, description }) {
 	return (
@@ -37,7 +341,7 @@ export default function ScriptsContent({ title, description }) {
 					<motion.div {...fadeIn}>
 						<div className="mb-4"><GithubStarCount /></div>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Run scripts as production endpoints
+							Write scripts for production
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 							Write a script in any language, Windmill turns it into an <Link to="/docs/core_concepts/webhooks" className="text-blue-400 hover:underline !no-underline">API endpoint</Link>, a <Link to="/docs/core_concepts/scheduling" className="text-blue-400 hover:underline !no-underline">scheduled job</Link>, or a <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-400 hover:underline !no-underline">shareable tool with a UI</Link>. No infrastructure to manage.
@@ -50,141 +354,22 @@ export default function ScriptsContent({ title, description }) {
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Trigger from <Link to="/docs/core_concepts/webhooks" className="text-blue-500 hover:underline !no-underline">webhooks</Link>, <Link to="/docs/core_concepts/scheduling" className="text-blue-500 hover:underline !no-underline">schedules</Link>, queues, Postgres CDC or the auto-generated UI</span>
+								<span>Trigger from <Link to="/docs/core_concepts/webhooks" className="text-blue-500 hover:underline !no-underline">webhooks</Link>, <Link to="/docs/core_concepts/scheduling" className="text-blue-500 hover:underline !no-underline">schedules</Link>, queues, or the auto-generated UI</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Production-ready with <Link to="/docs/script_editor/concurrency_limit" className="text-blue-500 hover:underline !no-underline">caching, concurrency limits</Link>, retries and <Link to="/docs/core_concepts/audit_logs" className="text-blue-500 hover:underline !no-underline">audit logs</Link></span>
+								<span>Built-in <Link to="/docs/core_concepts/versioning" className="text-blue-500 hover:underline !no-underline">versioning</Link> and full <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-500 hover:underline !no-underline">observability</Link> on every run</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span>Compose into <Link to="/use-cases/workflows" className="text-blue-500 hover:underline !no-underline">workflows</Link> or use as backends for <Link to="/use-cases/internal-apps" className="text-blue-500 hover:underline !no-underline">internal tools</Link></span>
+								<span>Compose into <Link to="/use-cases/workflows" className="text-blue-500 hover:underline !no-underline">workflows</Link> or use as backends for <Link to="/use-cases/internal-apps" className="text-blue-500 hover:underline !no-underline">internal apps</Link></span>
 							</div>
 						</div>
 					</motion.div>
 
-					{/* Hero animation: script execution flow */}
+					{/* Hero animation: code → deploy → monitor */}
 					<div className="hidden md:flex items-center justify-center">
-						<div className="relative w-[420px] h-[480px]">
-							{/* Connecting lines */}
-							<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
-								<line x1="210" y1="72" x2="210" y2="148" className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={2} strokeDasharray="6 4" />
-								<line x1="210" y1="268" x2="210" y2="340" className="stroke-gray-200 dark:stroke-gray-700/50" strokeWidth={2} strokeDasharray="6 4" />
-							</svg>
-
-							{/* Step 1: Trigger */}
-							<motion.div
-								className="absolute top-0 left-1/2 -translate-x-1/2 w-[280px]"
-								animate={{
-									borderColor: ['rgb(229,231,235)', 'rgb(59,130,246)', 'rgb(229,231,235)'],
-									boxShadow: ['0 1px 2px rgba(0,0,0,0.05)', '0 0 16px rgba(59,130,246,0.3)', '0 1px 2px rgba(0,0,0,0.05)'],
-								}}
-								transition={{ duration: 3, repeat: Infinity, repeatDelay: 7, times: [0, 0.15, 0.4] }}
-								style={{ borderWidth: 1, borderStyle: 'solid', borderRadius: '0.75rem' }}
-							>
-								<div className="rounded-xl bg-white dark:bg-gray-800 px-5 py-4 text-center">
-									<div className="flex items-center justify-center gap-2 mb-1">
-										<Globe className="w-4 h-4 text-blue-500" />
-										<span className="text-sm font-semibold text-gray-700 dark:text-gray-200">POST /api/run</span>
-									</div>
-									<span className="text-xs text-gray-400 font-mono">webhook trigger</span>
-								</div>
-							</motion.div>
-
-							{/* Data flowing down line 1 */}
-							<motion.div
-								className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-blue-500"
-								animate={{ top: [72, 148], opacity: [0, 1, 1, 0] }}
-								transition={{ duration: 0.8, delay: 0.5, repeat: Infinity, repeatDelay: 9.2, times: [0, 0.1, 0.8, 1] }}
-							/>
-
-							{/* Step 2: Script execution */}
-							<motion.div
-								className="absolute top-[148px] left-1/2 -translate-x-1/2 w-[320px]"
-								animate={{
-									borderColor: ['rgb(229,231,235)', 'rgb(229,231,235)', 'rgb(59,130,246)', 'rgb(59,130,246)', 'rgb(229,231,235)'],
-									boxShadow: ['0 1px 2px rgba(0,0,0,0.05)', '0 1px 2px rgba(0,0,0,0.05)', '0 0 20px rgba(59,130,246,0.3)', '0 0 20px rgba(59,130,246,0.3)', '0 1px 2px rgba(0,0,0,0.05)'],
-								}}
-								transition={{ duration: 5, repeat: Infinity, repeatDelay: 5, times: [0, 0.25, 0.3, 0.7, 0.85] }}
-								style={{ borderWidth: 1, borderStyle: 'solid', borderRadius: '0.75rem' }}
-							>
-								<div className="rounded-xl bg-white dark:bg-gray-800 px-5 py-5">
-									<div className="flex items-center justify-between mb-3">
-										<span className="text-sm font-semibold text-gray-700 dark:text-gray-200">process_order.py</span>
-										<motion.div
-											animate={{ opacity: [0, 0, 1, 1, 0] }}
-											transition={{ duration: 5, repeat: Infinity, repeatDelay: 5, times: [0, 0.25, 0.3, 0.7, 0.85] }}
-										>
-											<motion.div
-												animate={{ rotate: [0, 360] }}
-												transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-											>
-												<RefreshCw className="w-3.5 h-3.5 text-blue-500" />
-											</motion.div>
-										</motion.div>
-									</div>
-									{/* Language icons */}
-									<div className="flex gap-3 items-center">
-										{[
-											{ label: 'TS', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' },
-											{ label: 'PY', color: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300' },
-											{ label: 'GO', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900 dark:text-cyan-300' },
-											{ label: 'SH', color: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300' },
-											{ label: 'SQL', color: 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300' },
-										].map((lang, i) => (
-											<motion.span
-												key={lang.label}
-												className={`text-[10px] font-bold px-2 py-1 rounded ${lang.color}`}
-												animate={{ scale: [1, 1, 1.15, 1, 1] }}
-												transition={{ duration: 10, repeat: Infinity, delay: i * 2, times: [0, 0.05, 0.1, 0.15, 1] }}
-											>
-												{lang.label}
-											</motion.span>
-										))}
-									</div>
-									{/* Code preview */}
-									<div className="mt-3 rounded-lg bg-gray-50 dark:bg-gray-900 p-3 font-mono text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
-										<div><span className="text-purple-500">def</span> main(order_id: <span className="text-blue-500">str</span>):</div>
-										<div className="ml-4"><span className="text-gray-400">order</span> = db.get(order_id)</div>
-										<div className="ml-4"><span className="text-purple-500">return</span> process(order)</div>
-									</div>
-								</div>
-							</motion.div>
-
-							{/* Data flowing down line 2 */}
-							<motion.div
-								className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-emerald-500"
-								animate={{ top: [268, 340], opacity: [0, 1, 1, 0] }}
-								transition={{ duration: 0.8, delay: 4.5, repeat: Infinity, repeatDelay: 9.2, times: [0, 0.1, 0.8, 1] }}
-							/>
-
-							{/* Step 3: Result */}
-							<motion.div
-								className="absolute top-[340px] left-1/2 -translate-x-1/2 w-[280px]"
-								animate={{
-									borderColor: ['rgb(229,231,235)', 'rgb(229,231,235)', 'rgb(34,197,94)', 'rgb(34,197,94)', 'rgb(229,231,235)'],
-									boxShadow: ['0 1px 2px rgba(0,0,0,0.05)', '0 1px 2px rgba(0,0,0,0.05)', '0 0 16px rgba(34,197,94,0.3)', '0 0 16px rgba(34,197,94,0.3)', '0 1px 2px rgba(0,0,0,0.05)'],
-								}}
-								transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, times: [0, 0.6, 0.65, 0.85, 1] }}
-								style={{ borderWidth: 1, borderStyle: 'solid', borderRadius: '0.75rem' }}
-							>
-								<div className="rounded-xl bg-white dark:bg-gray-800 px-5 py-4">
-									<div className="flex items-center gap-2 mb-2">
-										<motion.div
-											animate={{ opacity: [0, 0, 1, 1, 0] }}
-											transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, times: [0, 0.6, 0.65, 0.85, 1] }}
-										>
-											<CheckCircle className="w-4 h-4 text-emerald-500" />
-										</motion.div>
-										<span className="text-sm font-semibold text-gray-700 dark:text-gray-200">200 OK</span>
-										<span className="text-xs text-gray-400 ml-auto">142ms</span>
-									</div>
-									<div className="rounded-lg bg-gray-50 dark:bg-gray-900 p-2 font-mono text-[11px] text-gray-500 dark:text-gray-400">
-										{'{ "status": "processed", "id": "ord_82f" }'}
-									</div>
-								</div>
-							</motion.div>
-						</div>
+						<HeroAnimation />
 					</div>
 				</div>
 			</div>
