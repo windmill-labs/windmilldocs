@@ -304,11 +304,9 @@ export default function ScriptsContent({ title, description }) {
 						</p>
 					</motion.div>
 					<motion.div {...stagger(0.1)}>
-						<img
-							src="/img/money-pages/deploy.webp"
-							alt="Script deployment interface"
+						<LazyVideo
 							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-							loading="lazy"
+							src="/img/platform/deployment-versioning/platform-deployment-deployment-history.webm"
 						/>
 					</motion.div>
 				</div>
@@ -316,11 +314,9 @@ export default function ScriptsContent({ title, description }) {
 				{/* Observability (reversed) */}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
 					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
-						<img
-							src="/img/money-pages/monitoring.webp"
-							alt="Script monitoring and logs"
+						<LazyVideo
 							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-							loading="lazy"
+							src="/img/platform/observability/platform-observability-runs-dashboard.webm"
 						/>
 					</motion.div>
 					<motion.div {...fadeIn} className="order-1 md:order-2">
@@ -340,12 +336,9 @@ export default function ScriptsContent({ title, description }) {
 						</p>
 					</motion.div>
 					<motion.div {...stagger(0.1)}>
-						{/* placeholder: screenshot of script permissions panel showing folder permissions, group access and RBAC settings */}
-						<img
-							src="/img/money-pages/secrets.webp"
-							alt="Script permissions and secrets"
+						<LazyVideo
 							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-							loading="lazy"
+							src="/img/platform/rbac/platform-rbac-path-based-acl.webm"
 						/>
 					</motion.div>
 				</div>
@@ -403,12 +396,6 @@ export default function ScriptsContent({ title, description }) {
 					/>
 				</div>
 			</div>
-
-			{/* More use cases */}
-			<UseCaseCarousel
-				current="scripts"
-				subtitle="Scripts are the building blocks. The same platform powers workflows, internal tools, data pipelines, AI agents and scheduled tasks."
-			/>
 
 			{/* FAQ */}
 			<UseCaseFAQ faqs={[
