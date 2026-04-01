@@ -225,6 +225,67 @@ export default function ScriptsContent({ title, description }) {
 				</div>
 			</div>
 
+			{/* Standalone or as building blocks */}
+			<UseCaseCarousel
+				current="scripts"
+				title="Standalone or used as building blocks"
+				subtitle="Scripts work on their own as API endpoints, scheduled jobs or shareable tools. They can also be composed into workflows, data pipelines, internal apps and more."
+			/>
+
+			{/* What you get out of the box */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						What every script gets out of the box
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Every script you deploy on Windmill automatically comes with a UI, triggers and access to shared resources.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6">
+						<img
+							src="/img/money-pages/script-for-endpoint.webp"
+							alt="Auto-generated UI"
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							loading="lazy"
+						/>
+						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Auto-generated UI</h3>
+						<p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+							Windmill reads the types from your <code>main</code> function and generates a <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">form</Link> automatically. Share it with anyone in your team, no frontend code needed.
+						</p>
+					</motion.div>
+
+					<motion.div {...stagger(0.08)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6">
+						{/* placeholder: video or screenshot of trigger configuration panel showing webhooks, schedules, Kafka, etc. */}
+						<img
+							src="/img/money-pages/triggers.webp"
+							alt="Script triggers"
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							loading="lazy"
+						/>
+						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Built-in triggers</h3>
+						<p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+							Run scripts from <Link to="/platform/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks, schedules, Kafka, Postgres CDC, SQS, emails</Link> and more. Every script also gets sync and async API endpoints.
+						</p>
+					</motion.div>
+
+					<motion.div {...stagger(0.16)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6">
+						<img
+							src="/img/money-pages/resource.webp"
+							alt="Shared resources"
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							loading="lazy"
+						/>
+						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Shared resources</h3>
+						<p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+							Connect to databases, APIs and cloud services through <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">typed resources</Link>. Credentials are encrypted at rest and injected at runtime. Share connections across scripts without duplicating secrets.
+						</p>
+					</motion.div>
+				</div>
+			</div>
+
 			{/* Two ways to write scripts */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<motion.div {...fadeIn} className="mb-16">
@@ -276,13 +337,6 @@ export default function ScriptsContent({ title, description }) {
 					</motion.div>
 				</div>
 			</div>
-
-			{/* Scripts as building blocks */}
-			<UseCaseCarousel
-				current="scripts"
-				title="Scripts as building blocks"
-				subtitle="Every script you write can be reused across the platform: as a step in a workflow, a transformation in a data pipeline, a backend for an internal app and more."
-			/>
 
 			{/* Enterprise-grade by default */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
@@ -343,6 +397,33 @@ export default function ScriptsContent({ title, description }) {
 					</motion.div>
 				</div>
 
+			</div>
+
+			{/* Run scripts anywhere */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Run scripts on any infrastructure
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Choose where and how each script runs. Assign scripts to <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> with specific hardware, network access or pre-installed dependencies. Run them remotely with <Link to="/docs/core_concepts/agent_workers" className="text-blue-600 dark:text-blue-400 hover:underline">agent workers</Link> behind firewalls, or use <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> for high-throughput scripts that need permanently warm runtimes.
+						</p>
+						<Link
+							to="/platform/workers"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about workers
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/videos/how_workers_work.webm"
+						/>
+					</motion.div>
+				</div>
 			</div>
 
 			{/* Examples: the core of the page */}
