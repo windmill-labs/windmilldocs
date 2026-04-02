@@ -89,6 +89,11 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/ruby_quickstart/index',
 									label: 'Ruby'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/rlang_quickstart/index',
+									label: 'R'
 								}
 							]
 						},
@@ -963,7 +968,8 @@ const sidebars = {
 					items: [
 						'advanced/instance_settings/index',
 						'core_concepts/infrastructure_as_code/index',
-						'advanced/self_host/aws_eks_ecs'
+						'advanced/self_host/aws_eks_ecs',
+						'advanced/self_host/azure_entra_id'
 					]
 				},
 				{
@@ -1033,11 +1039,13 @@ const sidebars = {
 						'advanced/cli/installation',
 						'advanced/cli/workspace-management',
 						'advanced/cli/sync',
+						'advanced/cli/generate-metadata',
 						'advanced/cli/environment-specific-items',
 						'advanced/cli/gitsync-settings',
 						'advanced/cli/user',
 						'advanced/cli/script',
 						'advanced/cli/flow',
+						'advanced/cli/job',
 						'advanced/cli/app',
 						'advanced/cli/resource',
 						'advanced/cli/variable',

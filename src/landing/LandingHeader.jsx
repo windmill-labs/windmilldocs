@@ -118,10 +118,10 @@ const productCategories = [
 
 const solutionsByUseCase = [
 	{
-		name: 'AI agents',
-		description: 'Build and orchestrate AI agents with tools.',
-		href: '/use-cases/ai-agents',
-		icon: Bot
+		name: 'Scripts',
+		description: 'Write, deploy and monitor production scripts.',
+		href: '/use-cases/scripts',
+		icon: CodeBracketIcon
 	},
 	{
 		name: 'Workflows',
@@ -130,10 +130,16 @@ const solutionsByUseCase = [
 		icon: ArrowPathIcon
 	},
 	{
-		name: 'Internal tools',
+		name: 'Internal apps',
 		description: 'Build admin panels, dashboards and back-office apps.',
-		href: '/use-cases/internal-tools',
+		href: '/use-cases/internal-apps',
 		icon: WrenchScrewdriverIcon
+	},
+	{
+		name: 'AI agents',
+		description: 'Build and orchestrate AI agents with tools.',
+		href: '/use-cases/ai-agents',
+		icon: Bot
 	},
 	{
 		name: 'Data pipelines',
@@ -633,7 +639,7 @@ export default function LandingHeader() {
 					</Popover.Panel>
 				</Transition>
 			</Popover>
-			{/* <Banner /> */}
+			<Banner />
 			<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
 		</div>
 	);

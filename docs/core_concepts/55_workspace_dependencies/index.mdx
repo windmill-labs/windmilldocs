@@ -164,7 +164,7 @@ wmill sync push
 ### Generate lockfiles
 ```bash
 # Create lockfile using workspace dependencies
-wmill script generate-metadata my_script.py
+wmill generate-metadata my_script.py
 ```
 
 ### Manage dependencies
@@ -248,8 +248,13 @@ Workspace dependencies replace the previous "raw requirements" system. See [migr
     href="/docs/core_concepts/workspace_dependencies/migration"
   />
   <DocCard
-    title="Dependency management overview" 
+    title="Dependency management overview"
     description="Understanding Windmill's dependency resolution and import system."
     href="/docs/advanced/imports"
+  />
+  <DocCard
+    title="Shared runners (dedicated workers)"
+    description="Run multiple dedicated worker scripts sharing the same workspace dependency in a single subprocess."
+    href="/docs/core_concepts/dedicated_workers#shared-runners"
   />
 </div>
