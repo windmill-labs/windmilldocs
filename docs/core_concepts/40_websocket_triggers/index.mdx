@@ -102,6 +102,8 @@ When enabled, Windmill sends a configurable message at a fixed interval through 
 - **Message**: The message to send. You can use the `{{state}}` placeholder to include a value extracted from incoming messages.
 - **State field** (optional): A top-level JSON field to extract from every incoming message. The extracted value replaces `{{state}}` in the heartbeat message.
 
+![Heartbeat configuration](./heartbeat.png 'Heartbeat configuration for Discord Gateway')
+
 #### Examples
 
 **Static heartbeat** (STOMP, MQTT, simple APIs):
