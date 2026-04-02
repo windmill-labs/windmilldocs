@@ -1039,6 +1039,7 @@ const sidebars = {
 						'advanced/cli/user',
 						'advanced/cli/script',
 						'advanced/cli/flow',
+						'advanced/cli/job',
 						'advanced/cli/app',
 						'advanced/cli/resource',
 						'advanced/cli/variable',

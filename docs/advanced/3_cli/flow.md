@@ -59,7 +59,7 @@ wmill flow bootstrap f/flows/flashy_flow
 
 ## Running a flow
 
-Running a flow by its path is done using the `wmill flow run` command.
+Running a flow by its path is done using the `wmill flow run` command. Logs are streamed step-by-step with labeled headers showing each module's ID and summary. For-loop iterations are tracked individually as they complete.
 
 ```bash
 wmill flow run <remote_path> [options]
@@ -79,6 +79,10 @@ wmill flow run <remote_path> [options]
 | `-s, --silent` |            | Do not ouput anything other then the final output. Useful for scripting.      |
 
 ![CLI arguments](../../assets/cli/cli_arguments.png "CLI arguments")
+
+:::tip Inspecting flow runs after completion
+Use `wmill job get <job_id>` to see a hierarchical step tree with status and durations, or `wmill job logs <job_id>` to see aggregated logs from all steps. See [Jobs](./job.md) for details.
+:::
 
 ## Update flow inline scripts lockfile
 
