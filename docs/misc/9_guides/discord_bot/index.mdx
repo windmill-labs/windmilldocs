@@ -1,0 +1,274 @@
+---
+title: Build an AI Discord bot with WebSocket triggers
+description: How to build a Discord bot powered by Claude that runs entirely in Windmill using WebSocket triggers with application-level heartbeat.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Build an AI Discord bot with WebSocket triggers
+
+This guide walks you through building a Discord bot that connects to the Discord Gateway via Windmill's WebSocket trigger, uses the application-level heartbeat feature to maintain the connection, and responds to messages using Claude (Anthropic API).
+
+Everything runs inside Windmill — no external bot framework, no separate server, no Docker containers.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="WebSocket triggers"
+		description="Connect to WebSocket servers and trigger runnables when messages are received."
+		href="/docs/core_concepts/websocket_triggers"
+	/>
+	<DocCard
+		title="Discord Gateway documentation"
+		description="Official Discord Gateway API reference."
+		href="https://discord.com/developers/docs/events/gateway"
+		target="_blank"
+	/>
+</div>
+
+## Overview
+
+The architecture is simple:
+
+1. A **WebSocket trigger** connects to Discord's Gateway (`wss://gateway.discord.gg`)
+2. The **heartbeat config** keeps the connection alive by sending periodic heartbeat messages (required by Discord's protocol)
+3. A **handler script** processes incoming events — authenticates the bot, and responds to messages using Claude
+4. Responses are sent back to Discord via the REST API
+
+## Prerequisites
+
+- A Windmill instance (self-hosted with EE, WebSocket triggers are not available on Cloud Free/Team plans)
+- A Discord bot token ([create one in the Discord Developer Portal](https://discord.com/developers/applications))
+- An Anthropic API key for Claude
+
+## Step 1: Create a Discord bot
+
+1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
+2. Click **New Application**, give it a name, and create it
+3. Go to the **Bot** tab:
+   - Click **Reset Token** and copy the token — save it, you'll only see it once
+   - Under **Privileged Gateway Intents**, enable **Message Content Intent**
+4. Go to the **OAuth2** tab:
+   - Under **OAuth2 URL Generator**, select the `bot` scope
+   - Under **Bot Permissions**, select: **Send Messages**, **Read Message History**, **View Channels**
+   - Copy the generated URL and open it in your browser to invite the bot to your server
+
+## Step 2: Create Windmill resources
+
+Create two resources in your Windmill workspace:
+
+**Discord bot token** (e.g., `f/bot/discord_token`):
+
+```json
+{
+  "token": "YOUR_DISCORD_BOT_TOKEN"
+}
+```
+
+**Anthropic API key** (e.g., `f/bot/anthropic`, resource type `anthropic`):
+
+```json
+{
+  "apiKey": "YOUR_ANTHROPIC_API_KEY"
+}
+```
+
+## Step 3: Create the handler script
+
+Create a new Bun/TypeScript script (e.g., `f/bot/discord_handler`). This script handles all Discord Gateway events:
+
+```typescript
+import Anthropic from "@anthropic-ai/sdk";
+import * as wmill from "windmill-client";
+
+// Restrict to a specific channel (optional)
+const ALLOWED_CHANNEL = "YOUR_CHANNEL_ID";
+
+// Your bot's application ID (same as the user ID for bots)
+const BOT_USER_ID = "YOUR_BOT_APPLICATION_ID";
+
+export async function main(msg: string): Promise<string | null> {
+  let event: any;
+  try {
+    event = JSON.parse(msg);
+  } catch {
+    return null;
+  }
+
+  const op = event.op;
+
+  // Op 10: Hello — respond with Identify to authenticate
+  if (op === 10) {
+    console.log(`Hello received. heartbeat_interval: ${event.d?.heartbeat_interval}ms`);
+    const token = (await wmill.getResource("f/bot/discord_token")).token;
+    return JSON.stringify({
+      op: 2,
+      d: {
+        token,
+        intents: 33281, // GUILDS + GUILD_MESSAGES + MESSAGE_CONTENT
+        properties: { os: "linux", browser: "windmill", device: "windmill" }
+      }
+    });
+  }
+
+  // Op 11: Heartbeat ACK — ignore (heartbeat is handled by the trigger)
+  if (op === 11) return null;
+
+  // Op 0: Dispatch events
+  if (op === 0) {
+    const t = event.t;
+
+    if (t === "READY") {
+      console.log(`Connected as ${event.d?.user?.username}`);
+      return null;
+    }
+
+    if (t === "MESSAGE_CREATE") {
+      const d = event.d;
+
+      // Ignore bot messages
+      if (d.author?.bot) return null;
+
+      // Only respond in the allowed channel (remove this check to respond everywhere)
+      if (d.channel_id !== ALLOWED_CHANNEL) return null;
+
+      // Only respond to @mentions (remove this check to respond to all messages)
+      const mentioned = d.mentions?.some((m: any) => m.id === BOT_USER_ID);
+      if (!mentioned) return null;
+
+      const channelId = d.channel_id;
+      const content = d.content
+        .replace(new RegExp(`<@!?${BOT_USER_ID}>`, "g"), "")
+        .trim();
+      const username = d.author?.username;
+
+      console.log(`[#${channelId}] ${username}: ${content}`);
+
+      // Call Claude
+      const anthropicRes = await wmill.getResource("f/bot/anthropic");
+      const client = new Anthropic({ apiKey: anthropicRes.apiKey });
+
+      const response = await client.messages.create({
+        model: "claude-sonnet-4-6",
+        max_tokens: 500,
+        system: "You are a helpful assistant in a Discord channel. Be concise.",
+        messages: [{ role: "user", content: `${username} says: ${content}` }],
+      });
+
+      const reply = response.content
+        .filter((b: any) => b.type === "text")
+        .map((b: any) => b.text)
+        .join("");
+
+      if (!reply) return null;
+
+      // Send reply via Discord REST API
+      const token = (await wmill.getResource("f/bot/discord_token")).token;
+      const resp = await fetch(
+        `https://discord.com/api/v10/channels/${channelId}/messages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bot ${token}`,
+          },
+          body: JSON.stringify({ content: reply }),
+        }
+      );
+
+      if (!resp.ok) {
+        console.log(`Discord send failed: ${resp.status} ${await resp.text()}`);
+      } else {
+        console.log(`Replied: ${reply.slice(0, 100)}`);
+      }
+    }
+  }
+
+  return null;
+}
+```
+
+Key points:
+- **Op 10 (Hello)**: When Discord sends the Hello event, the script returns an Identify payload to authenticate the bot. This is sent back through the WebSocket because "Send runnable result" is enabled.
+- **Op 11 (Heartbeat ACK)**: Ignored — the heartbeat itself is handled by the trigger's heartbeat configuration, not the script.
+- **MESSAGE_CREATE**: The script filters for messages in the allowed channel from non-bot users, calls Claude, and sends the reply via the Discord REST API.
+
+## Step 4: Create the WebSocket trigger
+
+Create a new WebSocket trigger with the following configuration:
+
+| Setting | Value |
+|---------|-------|
+| **URL** | `wss://gateway.discord.gg/?v=10&encoding=json` |
+| **Script** | `f/bot/discord_handler` |
+| **Send runnable result** | Enabled |
+| **Initial messages** | *(none)* |
+
+### Heartbeat configuration
+
+This is the key part. Discord's Gateway requires clients to send a periodic heartbeat message containing the last received sequence number. Without it, Discord closes the connection after ~41 seconds.
+
+| Setting | Value |
+|---------|-------|
+| **Enable heartbeat** | Yes |
+| **Interval (seconds)** | `41` |
+| **Message** | `{"op": 1, "d": {{state}}}` |
+| **State field** | `s` |
+
+This tells Windmill to:
+1. Extract the `s` (sequence number) field from every incoming Discord message
+2. Every 41 seconds, send `{"op": 1, "d": <last_sequence>}` through the WebSocket
+
+The heartbeat runs at the Rust level with zero job overhead.
+
+:::info Why not use initial messages for Identify?
+Discord requires the client to receive a Hello (op 10) event before sending Identify (op 2). Since initial messages are sent immediately on connection (before any messages are read), sending Identify as an initial message would fail. Instead, the handler script detects the Hello event and returns the Identify payload via the "Send runnable result" feature.
+:::
+
+## Step 5: Test it
+
+1. Save and enable the trigger
+2. Check the trigger status — it should show no errors and an active server ID
+3. Send a message in your Discord channel (@ the bot if you added the mention filter)
+4. The bot should respond with a Claude-generated reply
+
+You can verify the heartbeat is working by checking completed jobs — you should see handler jobs with empty results at ~41-second intervals (these are the Heartbeat ACK events from Discord).
+
+## Discord Gateway intents
+
+The Identify payload uses `intents: 33281`, which is a bitmask combining:
+
+| Intent | Value | Purpose |
+|--------|-------|---------|
+| `GUILDS` | `1 << 0` = 1 | Receive guild/channel metadata |
+| `GUILD_MESSAGES` | `1 << 9` = 512 | Receive message events in guild channels |
+| `MESSAGE_CONTENT` | `1 << 15` = 32768 | Access message content (privileged — must be enabled in the Developer Portal) |
+
+**Total: 1 + 512 + 32768 = 33281**
+
+Without `MESSAGE_CONTENT`, the `content` field in message events will be empty for messages from other users.
+
+## Adding AI sandbox with volumes
+
+You can enhance the bot with persistent context by using [volumes](../../core_concepts/39_persistent_storage/volumes.mdx). Add a volume annotation to the script:
+
+```typescript
+// volume: my-bot-volume .claude
+```
+
+This mounts a persistent volume at `.claude/` where you can store persona files, conversation history, or learned preferences that persist across executions:
+
+```typescript
+import * as fs from "fs";
+
+// Load persona from volume
+let systemPrompt = "You are a helpful assistant.";
+if (fs.existsSync(".claude/PERSONA.md")) {
+  systemPrompt = fs.readFileSync(".claude/PERSONA.md", "utf-8");
+}
+```
+
+## Next steps
+
+- Add conversation history by storing recent messages in a database or volume
+- Use [filters](../../core_concepts/40_websocket_triggers/index.mdx#filters) on the WebSocket trigger to only trigger the handler for specific event types
+- Connect multiple bots by creating additional WebSocket triggers with different tokens
