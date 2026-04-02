@@ -59,7 +59,7 @@ Three ways to bring changes back:
 
 ### Coming soon: data table forking
 
-Workspace forks will soon support [data tables](/docs/core_concepts/data_tables) as well. When forking a workspace, you will be able to clone a data table's schema only or its schema and data, letting you develop against a separate database without affecting upstream workspaces like production.
+Workspace forks will soon support [data tables](/docs/core_concepts/persistent_storage/data_tables) as well. When forking a workspace, you will be able to clone a data table's schema only or its schema and data, letting you develop against a separate database without affecting upstream workspaces like production.
 
 On merge, Windmill queries the full data table schema, detects differences, and generates SQL migrations automatically.
 
@@ -73,7 +73,7 @@ Three design choices drove the architecture:
 
 **Git as the source of truth.** If you need to roll back, reset the branch. If you need to audit, read the commit history. Windmill does not replace your Git workflow; it plugs into it.
 
-**Multiple deployment paths.** Not every team needs the same workflow. Small teams can use the deploy UI. Growing teams can use workspace forks. Enterprise teams can use the full Git promotion workflow with CI/CD and cross-instance deployment.
+**Multiple deployment paths.** Not every team needs the same workflow. Small teams can use the deploy UI. Growing teams can use workspace forks. Enterprise teams can use the full Git promotion workflow with separate dev and prod workspaces, CI/CD, and cross-instance deployment. See [Canonical deployment setups](/docs/advanced/canonical_deployment_setups) for step-by-step guides on each approach.
 
 ## Deployment options
 

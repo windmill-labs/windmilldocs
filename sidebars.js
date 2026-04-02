@@ -1006,7 +1006,8 @@ const sidebars = {
 						'advanced/workspace_forks/index',
 						'advanced/deploy_gh_gl/index',
 						'core_concepts/staging_prod/index',
-						'core_concepts/protection_rulesets/index'
+						'core_concepts/protection_rulesets/index',
+						'advanced/canonical_deployment_setups/index'
 					],
 					collapsed: false
 				},
