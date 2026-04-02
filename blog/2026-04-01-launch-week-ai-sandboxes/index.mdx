@@ -4,18 +4,20 @@ authors: [tristanlecuyer, rubenfiszel]
 tags: ['Launch Week']
 image: ./cover.webp
 description: 'Introducing AI sandboxes: run Claude Code, Codex, or custom agents in isolated environments with persistent volumes on Windmill.'
-title: 'AI sandboxes: isolated environments for coding agents'
+title: 'AI sandboxes & volumes: isolated environments for coding agents'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# AI sandboxes: isolated environments for coding agents
+# AI sandboxes & volumes: isolated environments for coding agents
 
 ![AI sandboxes](./cover.webp)
 
 **Day 3 of [Windmill launch week](/launch-week-march-2026).** You can now run AI coding agents like Claude Code or Codex in sandboxed environments with persistent storage, directly from your scripts and flows.
+
+<video className="border-2 rounded-lg object-cover w-full h-full dark:border-dark-border" autoPlay controls src="/videos/claude_code_sandbox_new.mp4" />
 
 {/* truncate */}
 
@@ -43,7 +45,7 @@ export async function main(prompt: string) {
   const client = new Anthropic();
   // The .agent directory persists across runs
   const result = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-opus-4-6-20260401',
     max_tokens: 1024,
     messages: [{ role: 'user', content: prompt }],
   });
@@ -78,15 +80,57 @@ def main(prompt: str):
 
 `// sandbox` enables NSJAIL process isolation. `// volume: agent-state .agent` mounts a persistent volume synced to your workspace object storage. That's it.
 
-## Why we built it this way
+## Persistent volumes
 
-Three design choices drove the architecture:
+Agents need to remember state across runs. Volumes handle this by syncing files to your [workspace object storage](/docs/core_concepts/persistent_storage) (S3, Azure Blob, GCS) between executions.
 
-**Process isolation with NSJAIL.** Each execution runs in its own NSJAIL sandbox with filesystem isolation, network restrictions, and resource limits. The agent cannot access the host system or other jobs. You can force sandboxing instance-wide for all scripts.
+Declaring a volume is a single annotation: `// volume: <name> <mount_path>`. You can attach up to 10 volumes per script.
 
-**Persistent volumes on object storage.** Files in the mounted volume are synced to your workspace S3 (or Azure Blob, GCS) between runs. A per-worker LRU cache (up to 10 GB) avoids re-downloading on consecutive runs. Exclusive leasing prevents concurrent writes to the same volume.
+Each volume goes through three phases per execution:
 
-**Works with any agent.** Claude Code, Codex, OpenCode, or any custom agent that operates on a local filesystem. Windmill provides the sandbox and the storage; the agent brings its own logic. A built-in Claude Code template handles session persistence and token counting out of the box.
+1. **Before execution**: Windmill acquires an exclusive lease on the volume and downloads files from object storage. A per-worker LRU cache (up to 10 GB) skips the download when files haven't changed (compared by size and MD5).
+2. **During execution**: the volume is bind-mounted into the sandbox. The agent reads and writes files normally.
+3. **After execution**: changed files are synced back to object storage, metadata is updated, and the lease is released.
+
+The exclusive lease (60-second TTL, auto-renewed every 10 seconds) guarantees that only one job writes to a volume at a time. If another job targets the same volume, it waits for the lease to be released.
+
+Volume names support `$workspace` and `$args[...]` interpolation, so you can scope storage per workspace, per user, or per any input parameter. This makes it straightforward to give each agent session its own isolated storage.
+
+Volumes also have fine-grained [permissions](/docs/core_concepts/volumes): owner, read-only, or read-write access, assignable per user or group. A job with no permission on a volume will fail, so you control exactly which agents can access which data.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Volumes"
+		description="Persistent file storage synced to object storage."
+		href="/docs/core_concepts/volumes"
+	/>
+</div>
+
+## Process isolation
+
+Without isolation, an agent has access to the host filesystem, environment variables (including credentials), other running jobs, and unrestricted network. Windmill provides two levels of process isolation to prevent this.
+
+**NSJAIL sandboxing** is the strongest option. Each execution runs in its own [NSJAIL](/docs/advanced/security_isolation) sandbox with:
+
+- **Filesystem isolation**: the agent only sees its own working directory and mounted volumes. No access to the host filesystem or other jobs.
+- **Network restrictions**: outbound network access can be restricted per sandbox.
+- **Resource limits**: CPU, memory, and disk usage are capped per execution.
+
+Enable it per script with the `// sandbox` annotation, or force it instance-wide for all jobs with `DISABLE_NSJAIL=false`.
+
+**PID namespace isolation** is a lighter alternative for workloads where full sandboxing is unnecessary. It uses Linux `unshare` to create separate process namespaces, so each job gets its own process tree and cannot see or signal processes from other jobs. Enable it with `ENABLE_UNSHARE_PID=true`. Lower overhead, but no filesystem or network isolation.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Security and isolation"
+		description="Process isolation, NSJAIL, and PID namespace isolation."
+		href="/docs/advanced/security_isolation"
+	/>
+</div>
+
+## Works with any agent
+
+Claude Code, Codex, OpenCode, or any custom agent that operates on a local filesystem. Windmill provides the sandbox and the storage; the agent brings its own logic. A built-in Claude Code template handles session persistence and token counting out of the box.
 
 ## Built-in Claude Code template
 
@@ -107,6 +151,12 @@ export async function main(prompt: string) {
 ```
 
 <!-- TODO: video showing the Claude Code template in action with session persistence. Path suggestion: /videos/ai_sandboxes_claude_code.webm -->
+
+## Observability
+
+Every agent run is a regular Windmill job, which means full [observability](/platform/observability) out of the box: logs, execution history, and token usage for cost monitoring. Set up [alerts](/docs/core_concepts/critical_alerts) on failures or cost thresholds, and audit agent activity across workspaces.
+
+<video className="border-2 rounded-lg object-cover w-full h-full dark:border-dark-border" autoPlay controls src="/videos/sandbox_observability.mp4" />
 
 ## Use cases
 

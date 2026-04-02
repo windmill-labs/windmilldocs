@@ -177,7 +177,7 @@ const days = [
 		weekday: 'Wednesday',
 		date: 'Apr 1',
 		releaseDate: new Date('2026-04-01T00:00:00'),
-		title: 'AI sandboxes',
+		title: 'AI sandboxes & volumes',
 		description: 'Run Claude Code, Codex, or custom agents in isolated environments with persistent volumes.',
 		href: '/blog/launch-week-ai-sandboxes',
 	},
@@ -327,7 +327,7 @@ export default function LaunchWeekPage() {
 		'@type': 'Event',
 		name: 'Windmill launch week',
 		description:
-			'Five major releases in one week: full code apps, data tables, AI sandboxes, Git sync v2, and workflow-as-code v2.',
+			'Five major releases in one week: full code apps, data tables, AI sandboxes & volumes, Git sync v2, and workflow-as-code v2.',
 		startDate: '2026-03-30',
 		endDate: '2026-04-03',
 		eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
@@ -354,7 +354,7 @@ export default function LaunchWeekPage() {
 					<meta name="title" content="Launch week | Windmill" />
 					<meta
 						name="description"
-						content="What is new in Windmill? Five major releases in one week: full code apps, data tables, AI sandboxes, Git sync v2, and workflow-as-code v2."
+						content="What is new in Windmill? Five major releases in one week: full code apps, data tables, AI sandboxes & volumes, Git sync v2, and workflow-as-code v2."
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 					<script type="application/ld+json">{JSON.stringify(eventSchema)}</script>
@@ -377,7 +377,7 @@ export default function LaunchWeekPage() {
 									Launch week #2
 								</div>
 								<p className="mt-6 text-lg text-gray-500 dark:text-gray-400">
-									Five days, five releases. Full-code apps, data tables, AI sandboxes, Git sync and workflow-as-code.
+									Five days, five releases. Full-code apps, data tables, AI sandboxes & volumes, Git sync and workflow-as-code.
 								</p>
 							</motion.div>
 						</div>
