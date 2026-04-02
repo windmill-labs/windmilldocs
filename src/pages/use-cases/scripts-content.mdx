@@ -1,0 +1,599 @@
+---
+title: "How to build with scripts on Windmill"
+description: "How do I run production scripts? Write scripts in TypeScript, Python, Go, Bash, SQL and trigger them from webhooks, schedules, queues or an auto-generated UI with full observability."
+---
+
+import React, { useState, useEffect, useRef } from 'react';
+import Link from '@docusaurus/Link';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { Rocket, CheckCircle2, XCircle, Calendar, Clock, Webhook, Radio, BookOpen } from 'lucide-react';
+import LazyVideo from '../../components/products/LazyVideo';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import LogoClouds from '../../landing/LogoClouds';
+import GithubStarCount from '../../landing/GithubStarCount';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import ProductCTA from '../../components/products/ProductCTA';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Hero animation: Code → Deploy → Monitor ── */}
+
+export const heroCodeLines = [
+	{ tokens: [{ text: 'import ', c: 'text-purple-400' }, { text: '{ Client } ', c: 'text-blue-300' }, { text: 'from ', c: 'text-purple-400' }, { text: "'pg'", c: 'text-amber-300' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'type ', c: 'text-purple-400' }, { text: 'Postgresql ', c: 'text-emerald-300' }, { text: '= { ', c: 'text-gray-400' }, { text: 'host', c: 'text-orange-300' }, { text: ': string; ... }', c: 'text-gray-400' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'export async function ', c: 'text-purple-400' }, { text: 'main', c: 'text-blue-300' }, { text: '(', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  db', c: 'text-orange-300' }, { text: ': ', c: 'text-gray-400' }, { text: 'Postgresql', c: 'text-emerald-300' }, { text: ',', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  query', c: 'text-orange-300' }, { text: ': ', c: 'text-gray-400' }, { text: 'string', c: 'text-emerald-300' }, { text: ',', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  limit', c: 'text-orange-300' }, { text: ': ', c: 'text-gray-400' }, { text: 'number', c: 'text-emerald-300' }, { text: ' = ', c: 'text-gray-400' }, { text: '100', c: 'text-amber-300' }] },
+	{ tokens: [{ text: ') {', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  const ', c: 'text-purple-400' }, { text: 'client ', c: 'text-blue-300' }, { text: '= ', c: 'text-gray-400' }, { text: 'new ', c: 'text-purple-400' }, { text: 'Client', c: 'text-blue-300' }, { text: '(db)', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '  return ', c: 'text-purple-400' }, { text: 'client', c: 'text-blue-300' }, { text: '.query(query, [limit])', c: 'text-gray-400' }] },
+	{ tokens: [{ text: '}', c: 'text-gray-400' }] },
+];
+
+export const heroAllText = heroCodeLines.map((l) => l.tokens.map((t) => t.text).join('') || ' ').join('\n');
+export const heroTotalChars = heroAllText.length;
+
+export const heroScatterPoints = [
+	{ x: 0.01, y: 85, ok: true },   { x: 0.04, y: 120, ok: true },  { x: 0.06, y: 95, ok: true },
+	{ x: 0.09, y: 110, ok: true },  { x: 0.11, y: 130, ok: true },  { x: 0.13, y: 88, ok: true },
+	{ x: 0.16, y: 105, ok: true },  { x: 0.18, y: 310, ok: false }, { x: 0.20, y: 92, ok: true },
+	{ x: 0.23, y: 115, ok: true },  { x: 0.25, y: 78, ok: true },   { x: 0.27, y: 145, ok: true },
+	{ x: 0.30, y: 100, ok: true },  { x: 0.32, y: 125, ok: true },  { x: 0.34, y: 90, ok: true },
+	{ x: 0.37, y: 108, ok: true },  { x: 0.39, y: 82, ok: true },   { x: 0.41, y: 155, ok: true },
+	{ x: 0.44, y: 75, ok: true },   { x: 0.46, y: 98, ok: true },   { x: 0.48, y: 118, ok: true },
+	{ x: 0.51, y: 88, ok: true },   { x: 0.53, y: 95, ok: true },   { x: 0.56, y: 112, ok: true },
+	{ x: 0.58, y: 70, ok: true },   { x: 0.61, y: 135, ok: true },  { x: 0.63, y: 102, ok: true },
+	{ x: 0.66, y: 115, ok: true },  { x: 0.68, y: 85, ok: true },   { x: 0.71, y: 120, ok: true },
+	{ x: 0.73, y: 98, ok: true },   { x: 0.76, y: 92, ok: true },   { x: 0.78, y: 128, ok: true },
+	{ x: 0.81, y: 80, ok: true },   { x: 0.83, y: 105, ok: true },  { x: 0.86, y: 110, ok: true },
+	{ x: 0.88, y: 340, ok: false }, { x: 0.91, y: 115, ok: true },  { x: 0.93, y: 82, ok: true },
+	{ x: 0.96, y: 95, ok: true },   { x: 0.99, y: 108, ok: true },
+];
+
+export const heroYMax = 400;
+export const heroChartH = 100;
+export const heroYTicks = [100, 200, 350];
+export function heroYPos(val) { return heroChartH - (val / heroYMax) * heroChartH; }
+
+export const heroJobRuns = [
+	{ id: 'j1', ok: true,  duration: '0,12s', name: 'u/admin/query_db',  triggeredBy: 'Webhook',  tag: 'script' },
+	{ id: 'j2', ok: true,  duration: '0,09s', name: 'u/admin/query_db',  triggeredBy: 'Schedule', tag: 'script' },
+	{ id: 'j3', ok: true,  duration: '0,15s', name: 'u/admin/query_db',  triggeredBy: 'Webhook',  tag: 'script' },
+	{ id: 'j4', ok: false, duration: '0,31s', name: 'u/admin/query_db',  triggeredBy: 'Webhook',  tag: 'script' },
+	{ id: 'j5', ok: true,  duration: '0,11s', name: 'u/admin/query_db',  triggeredBy: 'Schedule', tag: 'script' },
+];
+
+export function HeroCodeEditor({ typedChars }) {
+	let charsSoFar = 0;
+	return (
+		<div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-950 overflow-hidden">
+			<div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800 bg-gray-900">
+				<motion.img
+					src="/img/windmill.svg"
+					alt="Windmill"
+					className="w-4 h-4"
+					animate={{ rotate: 360 }}
+					transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+				/>
+				<span className="text-[10px] font-medium text-gray-400">query_db.ts</span>
+			</div>
+			<div className="p-4 font-mono text-[12px] leading-relaxed" style={{ minHeight: 280 }}>
+				{heroCodeLines.map((line, i) => {
+					const lineText = line.tokens.map((t) => t.text).join('') || ' ';
+					const lineStart = charsSoFar;
+					charsSoFar += lineText.length + 1;
+					const lineCharsShown = Math.max(0, Math.min(lineText.length, typedChars - lineStart));
+					if (typedChars <= lineStart) return (
+						<div key={i} className="flex h-[1.5em]">
+							<span className="text-gray-600 w-5 text-right mr-2 select-none opacity-0 text-[10px]">{i + 1}</span>
+						</div>
+					);
+					let tokChars = 0;
+					const rendered = [];
+					for (const token of line.tokens) {
+						if (tokChars >= lineCharsShown) break;
+						const visLen = Math.min(token.text.length, lineCharsShown - tokChars);
+						rendered.push(
+							<span key={rendered.length} className={token.c} style={{ whiteSpace: 'pre' }}>{token.text.slice(0, visLen)}</span>
+						);
+						tokChars += token.text.length;
+					}
+					return (
+						<div key={i} className="flex">
+							<span className="text-gray-600 w-5 text-right mr-2 select-none text-[10px]">{i + 1}</span>
+							{line.tokens.length === 0 ? <span>&nbsp;</span> : rendered}
+							{lineCharsShown < lineText.length && (
+								<span className="inline-block w-[2px] h-[1.1em] bg-gray-300 ml-[1px] animate-pulse" />
+							)}
+						</div>
+					);
+				})}
+			</div>
+		</div>
+	);
+}
+
+export function HeroMonitorDashboard({ visibleDots, visibleRows }) {
+	return (
+		<div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden shadow-lg">
+			<div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+				<span className="text-sm font-bold text-gray-900 dark:text-gray-100">Runs</span>
+				<span className="px-2 py-0.5 rounded bg-blue-600/20 text-blue-600 dark:text-blue-400 text-[10px] font-medium">All</span>
+				<span className="text-[10px] text-gray-400">Runs</span>
+				<span className="text-[10px] text-gray-400">Deps</span>
+				<div className="flex-1" />
+				<CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+				<XCircle className="w-3.5 h-3.5 text-red-400/60" />
+				<Clock className="w-3.5 h-3.5 text-gray-400" />
+			</div>
+			<div className="px-4 pt-2 pb-2">
+				<div className="flex items-center gap-3 mb-2">
+					<span className="text-[11px] font-medium text-gray-900 dark:text-gray-100">Duration</span>
+					<span className="text-[11px] text-gray-400">Concurrency</span>
+				</div>
+				<div className="relative w-full" style={{ height: heroChartH }}>
+					{heroYTicks.map((tick) => (
+						<div key={tick} className="absolute left-0 right-0 flex items-center" style={{ top: heroYPos(tick) }}>
+							<span className="text-[10px] text-gray-400 tabular-nums w-10 text-right shrink-0">{tick}ms</span>
+							<div className="ml-2 h-px bg-gray-200 dark:bg-gray-700 flex-1" />
+						</div>
+					))}
+					<svg className="absolute top-0 bottom-0" style={{ left: 48, right: 0, width: 'calc(100% - 48px)', height: heroChartH }}>
+						{heroScatterPoints.map((pt, i) => (
+							<motion.circle
+								key={i}
+								cx={`${pt.x * 100}%`}
+								cy={heroYPos(pt.y)}
+								className={pt.ok ? 'fill-emerald-500' : 'fill-red-500'}
+								initial={{ opacity: 0, r: 0 }}
+								animate={i < visibleDots ? { opacity: 0.85, r: 4 } : { opacity: 0, r: 0 }}
+								transition={{ duration: 0.15 }}
+							/>
+						))}
+					</svg>
+				</div>
+			</div>
+			<motion.div
+				className="grid px-4 py-1 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 text-[10px] font-medium text-gray-500"
+				style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}
+				initial={{ opacity: 0 }}
+				animate={visibleRows > 0 ? { opacity: 1 } : { opacity: 0 }}
+				transition={{ duration: 0.3 }}
+			>
+				<span></span>
+				<span>Path</span>
+				<span>Duration</span>
+				<span>Triggered by</span>
+				<span>Tag</span>
+			</motion.div>
+			{heroJobRuns.map((job, i) => (
+				<motion.div
+					key={job.id}
+					className="grid px-4 py-1.5 border-b border-gray-100 dark:border-gray-700/50 items-center"
+					style={{ gridTemplateColumns: '20px 1fr 48px 1fr 32px' }}
+					initial={{ opacity: 0, y: 5 }}
+					animate={i < visibleRows ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
+					transition={{ duration: 0.2 }}
+				>
+					{job.ok
+						? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+						: <XCircle className="w-3.5 h-3.5 text-red-500" />
+					}
+					<span className="text-[10px] text-gray-700 dark:text-gray-300 truncate font-mono">{job.name}</span>
+					<span className="text-[10px] text-gray-700 dark:text-gray-300 tabular-nums">{job.duration}</span>
+					<div className="flex items-center gap-1 truncate">
+						{job.triggeredBy === 'Schedule' && <Calendar className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						{job.triggeredBy === 'Webhook' && <Webhook className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						{job.triggeredBy === 'Kafka' && <Radio className="w-2.5 h-2.5 text-gray-400 shrink-0" />}
+						<span className="text-[10px] text-gray-500 truncate font-mono">{job.triggeredBy}</span>
+					</div>
+					<span className="text-[10px] text-gray-400">{job.tag}</span>
+				</motion.div>
+			))}
+		</div>
+	);
+}
+
+export function HeroAnimation() {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: false, amount: 0.3 });
+	const [phase, setPhase] = useState(0);
+	const [typedChars, setTypedChars] = useState(0);
+	const [visibleDots, setVisibleDots] = useState(0);
+	const [visibleRows, setVisibleRows] = useState(0);
+
+	useEffect(() => {
+		if (!isInView) return;
+		let typingInterval, deployTimeout, monitorTimeout, dotInterval, rowTimeout, rowInterval, resetTimeout;
+		const speed = 12;
+		typingInterval = setInterval(() => {
+			setTypedChars((prev) => {
+				if (prev >= heroTotalChars) {
+					clearInterval(typingInterval);
+					deployTimeout = setTimeout(() => {
+						setPhase(1);
+						monitorTimeout = setTimeout(() => {
+							setPhase(2);
+							let dotCount = 0;
+							dotInterval = setInterval(() => {
+								dotCount++;
+								setVisibleDots(dotCount);
+								if (dotCount >= heroScatterPoints.length) clearInterval(dotInterval);
+							}, 40);
+							rowTimeout = setTimeout(() => {
+								let rowCount = 0;
+								rowInterval = setInterval(() => {
+									rowCount++;
+									setVisibleRows(rowCount);
+									if (rowCount >= heroJobRuns.length) clearInterval(rowInterval);
+								}, 200);
+							}, 400);
+							resetTimeout = setTimeout(() => {
+								setPhase(0);
+								setTypedChars(0);
+								setVisibleDots(0);
+								setVisibleRows(0);
+							}, 6000);
+						}, 1500);
+					}, 600);
+					return heroTotalChars;
+				}
+				return prev + 1;
+			});
+		}, speed);
+		return () => {
+			clearInterval(typingInterval);
+			clearTimeout(deployTimeout);
+			clearTimeout(monitorTimeout);
+			clearInterval(dotInterval);
+			clearTimeout(rowTimeout);
+			clearInterval(rowInterval);
+			clearTimeout(resetTimeout);
+		};
+	}, [isInView, phase === 0 && typedChars === 0]);
+
+	const codeRef = useRef(null);
+	const monitorRef = useRef(null);
+	const [containerH, setContainerH] = useState(360);
+	useEffect(() => {
+		const measure = () => {
+			const cH = codeRef.current?.offsetHeight || 0;
+			const mH = monitorRef.current?.offsetHeight || 0;
+			setContainerH(Math.max(cH, mH, 360));
+		};
+		measure();
+		window.addEventListener('resize', measure);
+		return () => window.removeEventListener('resize', measure);
+	}, [phase]);
+
+	return (
+		<div ref={ref} className="relative w-full max-w-[520px]" style={{ height: containerH }}>
+			<motion.div
+				className="absolute inset-0 z-10"
+				animate={{
+					filter: phase === 1 ? 'blur(6px)' : 'blur(0px)',
+					scale: phase === 1 ? 1.01 : 1,
+					opacity: phase >= 2 ? 0 : 1,
+				}}
+				transition={{ duration: 0.5 }}
+			>
+				<div ref={codeRef}>
+					<HeroCodeEditor typedChars={typedChars} />
+				</div>
+			</motion.div>
+			<AnimatePresence>
+				{phase === 1 && (
+					<motion.div
+						className="absolute inset-0 flex items-center justify-center z-30"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.4 }}
+					>
+						<div className="absolute inset-0 bg-black/10 dark:bg-black/30 rounded-xl" />
+						<motion.div
+							className="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-blue-500 text-white text-lg font-semibold shadow-2xl shadow-blue-500/30 cursor-default"
+							initial={{ scale: 0.85, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							exit={{ scale: 1.08, opacity: 0 }}
+							transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+						>
+							<Rocket className="w-5 h-5" />
+							Deploy
+						</motion.div>
+					</motion.div>
+				)}
+			</AnimatePresence>
+			<motion.div
+				className="absolute inset-0 z-10"
+				animate={{ opacity: phase === 2 ? 1 : 0 }}
+				transition={{ duration: 0.5 }}
+				style={{ pointerEvents: phase === 2 ? 'auto' : 'none' }}
+			>
+				<div ref={monitorRef}>
+					<HeroMonitorDashboard visibleDots={visibleDots} visibleRows={visibleRows} />
+				</div>
+			</motion.div>
+		</div>
+	);
+}
+
+export default function ScriptsContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* Hero */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Write scripts for production
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Write a script in any language, Windmill turns it into an <Link to="/docs/core_concepts/webhooks" className="text-blue-400 hover:underline !no-underline">API endpoint</Link>, a <Link to="/docs/core_concepts/scheduling" className="text-blue-400 hover:underline !no-underline">scheduled job</Link>, or a <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-400 hover:underline !no-underline">shareable tool with a UI</Link>. No infrastructure to manage.
+						</p>
+						<HeroCTAButtons />
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Write in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">TypeScript, Python, Go, Bash, SQL</Link> and 20+ languages</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Trigger from <Link to="/docs/core_concepts/webhooks" className="text-blue-500 hover:underline !no-underline">webhooks</Link>, <Link to="/docs/core_concepts/scheduling" className="text-blue-500 hover:underline !no-underline">schedules</Link>, queues, or the auto-generated UI</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Built-in <Link to="/docs/core_concepts/versioning" className="text-blue-500 hover:underline !no-underline">versioning</Link> and full <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-500 hover:underline !no-underline">observability</Link> on every run</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Compose into <Link to="/use-cases/workflows" className="text-blue-500 hover:underline !no-underline">workflows</Link> or use as backends for <Link to="/use-cases/internal-apps" className="text-blue-500 hover:underline !no-underline">internal apps</Link></span>
+							</div>
+						</div>
+					</motion.div>
+
+					{/* Hero animation: code → deploy → monitor */}
+					<div className="hidden md:flex items-center justify-center">
+						<HeroAnimation />
+					</div>
+				</div>
+			</div>
+
+			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
+
+			{/* What is a script on Windmill? */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							What is a script on Windmill?
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							A script is a function in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">any language</Link> that you write, deploy and monitor directly on Windmill. Windmill handles the runtime, the dependencies, the UI and the API. You just write the logic.
+						</p>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Each script automatically gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated form</Link>, webhook endpoints and real-time logs. Scripts can run on demand or through <Link to="/platform/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">built-in triggers</Link>, and can be composed into <Link to="/use-cases/workflows" className="text-blue-600 dark:text-blue-400 hover:underline">workflows</Link> and <Link to="/use-cases/internal-apps" className="text-blue-600 dark:text-blue-400 hover:underline">apps</Link>.
+						</p>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/script-editor/platform-script-20languages.webm"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* Standalone or as building blocks */}
+			<UseCaseCarousel
+				current="scripts"
+				title="Standalone or used as building blocks"
+				subtitle="Scripts work on their own as API endpoints, scheduled jobs or shareable tools. They can also be composed into workflows, data pipelines, internal apps and more."
+			/>
+
+			{/* Two ways to write scripts */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Two ways to write scripts
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Write scripts directly in the Windmill UI or develop locally with your own editor. Both paths deploy to the same platform.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+					{/* Windmill UI */}
+					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In the Windmill UI</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							The built-in editor gives you autocomplete, LSP support, a live preview of the auto-generated UI, one-click deploy and <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">AI assistance</Link> (BYOK).
+						</p>
+						<LazyVideo
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							src="/img/platform/script-editor/platform-script-realtime-logs.webm"
+						/>
+						<Link
+							to="/platform/script-editor"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about the script editor
+						</Link>
+					</motion.div>
+
+					{/* Local development */}
+					<motion.div {...stagger(0.1)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In your local editor</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Use the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>, the <Link to="/docs/script_editor/vs_code_scripts" className="text-blue-600 dark:text-blue-400 hover:underline">VS Code extension</Link> or AI coding tools like Claude Code. Scripts are standard files on disk, ready for any editor or AI agent.
+						</p>
+						<LazyVideo
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							src="/img/platform/local-dev/platform-local-dev-vscode-extension.webm"
+						/>
+						<Link
+							to="/platform/local-dev"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about local development
+						</Link>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* Many ways to trigger scripts */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Built-in triggers
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Every script gets an <Link to="/docs/core_concepts/auto_generated_uis" className="text-blue-600 dark:text-blue-400 hover:underline">auto-generated UI</Link> so anyone on your team can run it. It also gets sync and async <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">API endpoints</Link> out of the box. On top of that, Windmill provides a full set of built-in triggers: <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">schedules</Link>, Kafka, Postgres CDC, SQS, MQTT, emails, WebSockets and more.
+						</p>
+						<Link to="/platform/triggers" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about available triggers
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<img
+							src="/img/money-pages/triggers.webp"
+							alt="Script triggers"
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							loading="lazy"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* Enterprise-grade by default */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Built for production
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Every script runs within a platform built for enterprise requirements: immutable versioning, role-based access control, full audit trails, SSO and self-hosting. No extra setup needed.
+					</p>
+				</motion.div>
+
+				{/* Versioning and deploy */}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+					<motion.div {...fadeIn}>
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Versioning and deploy</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							Every script version is immutable and addressable by hash. Deploy from the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link>. Roll back to any previous version instantly. Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link> and use your existing code review workflows.
+						</p>
+						<Link to="/platform/deployment-versioning" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about deployment and versioning
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/deployment-versioning/platform-deployment-deployment-history.webm"
+						/>
+					</motion.div>
+				</div>
+
+				{/* Observability (reversed) */}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/observability/platform-observability-runs-dashboard.webm"
+						/>
+					</motion.div>
+					<motion.div {...fadeIn} className="order-1 md:order-2">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Full observability</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							Every run is logged with inputs, outputs, duration and status. Real-time <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">execution logs</Link> stream as your script runs. Set up <Link to="/docs/core_concepts/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handlers</Link> to send alerts on failure. <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">Audit trails</Link> track who ran what and when.
+						</p>
+						<Link to="/platform/observability" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about observability
+						</Link>
+					</motion.div>
+				</div>
+
+				{/* RBAC and permissions */}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+					<motion.div {...fadeIn}>
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">RBAC and permissions</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							Control who can view, edit and run each script with <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">role-based access control</Link>. Organize scripts into <Link to="/docs/core_concepts/groups_and_folders" className="text-blue-600 dark:text-blue-400 hover:underline">folders</Link> with group-level permissions. Authenticate users with SSO. Every action is recorded in the audit log.
+						</p>
+						<Link to="/platform/rbac" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about RBAC
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/rbac/platform-rbac-path-based-acl.webm"
+						/>
+					</motion.div>
+				</div>
+
+			</div>
+
+			{/* Run scripts anywhere */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Assign scripts to dedicated infrastructure
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Choose where and how each script runs. Assign scripts to <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> with specific hardware, network access or pre-installed dependencies. Run them remotely with <Link to="/docs/core_concepts/agent_workers" className="text-blue-600 dark:text-blue-400 hover:underline">agent workers</Link> behind firewalls, or use <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link> for high-throughput scripts that need permanently warm runtimes.
+						</p>
+						<Link
+							to="/platform/workers"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about workers
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/videos/how_workers_work.webm"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+
+
+			{/* FAQ */}
+			<UseCaseFAQ faqs={[
+				{ question: 'What languages does Windmill support for scripts?', textAnswer: 'Windmill supports TypeScript (Deno and Bun), Python, Go, Bash, SQL (PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake), REST, GraphQL, PowerShell, Rust, PHP, C#, Ansible, Nushell and any Docker container. Each script runs in its own isolated sandbox with automatic dependency resolution.' },
+				{ question: 'How do I trigger a Windmill script?', textAnswer: 'Every script automatically gets sync and async webhook URLs. You can also schedule scripts with cron, expose them as HTTP routes, or trigger them from Postgres CDC, Kafka, NATS, SQS, MQTT, GCP Pub/Sub, email or WebSocket events. Scripts can also be run manually from the auto-generated UI or via the CLI and API.' },
+				{ question: 'Can I use scripts as API endpoints?', textAnswer: 'Yes. Every Windmill script automatically gets a webhook URL that accepts POST requests. You can also create custom HTTP routes with path parameters and method routing. Scripts can return JSON, control HTTP status codes and set custom response headers.' },
+				{ question: 'How are scripts different from workflows in Windmill?', textAnswer: 'Scripts are single units of code that take inputs and return outputs. Workflows chain multiple scripts together with branching, loops, error handling and approval steps. Scripts are the building blocks that can be used standalone or composed into workflows.' },
+				{ question: 'Does Windmill handle script dependencies automatically?', textAnswer: 'Yes. Windmill parses import statements in your scripts and automatically resolves and caches dependencies. You can pin specific versions in your imports. Dependencies are cached across runs for fast cold starts.' },
+				{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source (AGPLv3) and can be self-hosted on your own infrastructure, from a single-node VPS to large Kubernetes clusters. The Community Edition is free with unlimited scripts and runs. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
+			]} />
+
+			{/* CTA */}
+			<ProductCTA />
+		</div>
+	);
+}

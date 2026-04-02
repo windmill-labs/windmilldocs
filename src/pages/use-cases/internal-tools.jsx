@@ -1,8 +1,6 @@
 import React from 'react';
-import UseCaseLayout from '../../components/use-cases/UseCaseLayout';
-import Content, { frontMatter } from './internal-tools-content.mdx';
-import { internalToolsUseCase } from '../../data/use-cases/internal-tools';
+import { Redirect } from '@docusaurus/router';
 
-export default function InternalToolsPage() {
-	return <UseCaseLayout Content={Content} frontMatter={frontMatter} useCaseData={internalToolsUseCase} />;
+export default function InternalToolsRedirect() {
+	return <Redirect to="/use-cases/internal-apps" />;
 }

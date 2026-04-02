@@ -1,0 +1,826 @@
+---
+title: "How to build internal tools with Windmill"
+description: "How do I build internal tools with Windmill? Write backend scripts in TypeScript, Python or SQL, store data in built-in tables, and deploy a React, Vue or Svelte frontend on a production engine."
+---
+
+import React, { useState, useRef, useEffect } from 'react';
+import Link from '@docusaurus/Link';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, Code2, Database, LayoutGrid, Palette, Lock, Eye, Layers, Plug, Terminal, FileCode, Play, BookOpen, Cpu, Wrench, GitBranch, Table2, HardDrive, Globe, Bot, Shield, Activity, History } from 'lucide-react';
+import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
+import { DotLottiePlayer } from '@dotlottie/react-player';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
+import LogoClouds from '../../landing/LogoClouds';
+import GithubStarCount from '../../landing/GithubStarCount';
+import ProductCTA from '../../components/products/ProductCTA';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import { platformLayers } from '../../landing/platformLayers';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 }
+};
+
+export const stagger = (delay = 0) => ({
+	...fadeIn,
+	transition: { duration: 0.5, delay }
+});
+
+{/* ── Hero animation: dashboard with monitoring overlay ── */}
+
+export const logEntries = [
+	{ script: 'sync_users', duration: '120ms', status: 'success' },
+	{ script: 'generate_report', duration: '2.4s', status: 'success' },
+	{ script: 'onboard_user', duration: '890ms', status: 'success' },
+	{ script: 'backup_db', duration: '4.1s', status: 'success' },
+	{ script: 'send_invoices', duration: '340ms', status: 'error', retry: '1/3' },
+	{ script: 'refresh_dashboard', duration: '67ms', status: 'success' },
+	{ script: 'send_invoices', duration: '290ms', status: 'success', retry: '2/3' },
+	{ script: 'deploy_staging', duration: '12.3s', status: 'success' },
+	{ script: 'check_permissions', duration: '45ms', status: 'success' },
+	{ script: 'etl_daily_metrics', duration: '8.7s', status: 'success' },
+];
+
+export function HeroAnimation() {
+	return (
+		<div className="relative w-[520px] h-[480px]">
+			{/* Lottie SaaS dashboard */}
+			<div className="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-xl bg-white dark:bg-gray-900">
+				<DotLottiePlayer
+					src="/img/money-pages/saas-dashboard.lottie"
+					loop
+					autoplay
+					style={{ width: '100%', height: 360 }}
+				/>
+			</div>
+
+			{/* Floating monitoring overlay */}
+			<motion.div
+				className="absolute -bottom-4 -right-4 w-[280px] z-20"
+				initial={{ opacity: 0, y: 20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.6, delay: 0.8 }}
+			>
+				<div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm overflow-hidden shadow-lg">
+					<div className="flex items-center justify-between px-3 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+						<div className="flex items-center gap-2">
+							<Eye className="w-3.5 h-3.5 text-blue-500" />
+							<span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Live executions</span>
+						</div>
+						<div className="flex items-center gap-1.5">
+							<span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+							<span className="text-[10px] text-gray-400">live</span>
+						</div>
+					</div>
+					<div className="relative h-[120px] overflow-hidden">
+						<motion.div
+							animate={{ y: [0, -(logEntries.length * 28)] }}
+							transition={{ duration: logEntries.length * 2.5, repeat: Infinity, ease: 'linear' }}
+						>
+							{[...logEntries, ...logEntries].map((entry, i) => (
+								<div key={i} className="flex items-center gap-2 px-3 h-[28px] text-[11px] font-mono border-b border-gray-100 dark:border-gray-800/50">
+									<span className={entry.status === 'success' ? 'text-emerald-500' : 'text-red-400'}>
+										{entry.status === 'success' ? '●' : '✕'}
+									</span>
+									<span className="text-gray-700 dark:text-gray-300 truncate flex-1">{entry.script}</span>
+									{entry.retry && <span className="text-amber-500 text-[10px]">retry {entry.retry}</span>}
+									<span className="text-gray-400 dark:text-gray-500 tabular-nums">{entry.duration}</span>
+								</div>
+							))}
+						</motion.div>
+					</div>
+				</div>
+			</motion.div>
+		</div>
+	);
+}
+
+
+{/* ── Orbit animation: Windmill orchestrating three layers ── */}
+
+export const orbitItems = [
+	{ Icon: LayoutGrid, label: 'Frontend', sublabel: 'React / Vue / Svelte, served by the platform', color: 'from-emerald-400 to-emerald-600', baseAngle: -90, tabIndex: 2 },
+	{ Icon: Database, label: 'Data', sublabel: 'Built-in integrations to your existing resources', color: 'from-amber-400 to-amber-600', baseAngle: 30, tabIndex: 1 },
+	{ Icon: Code2, label: 'Backend', sublabel: 'Scripts in 20+ languages, run in dedicated workers', color: 'from-blue-400 to-blue-600', baseAngle: 150, tabIndex: 0 },
+];
+
+export function StackAnimation({ activeTab = 0, onSelect }) {
+	const c = 240;
+	const r = 180;
+
+	/* Rotate orbit so the active card lands at 0° (right edge, facing the detail panel) */
+	const activeItem = orbitItems.find((it) => it.tabIndex === activeTab);
+	const orbitRotation = -activeItem.baseAngle;
+
+	return (
+		<div className="relative w-[480px] h-[480px]">
+			{/* Center Windmill logo — stays fixed */}
+			<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+				<motion.div
+					animate={{ rotate: 360 }}
+					transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+				>
+					<img src="/img/windmill.svg" alt="Windmill" className="w-20 h-20" />
+				</motion.div>
+			</div>
+
+			{/* Rotating orbit */}
+			<motion.div
+				className="absolute inset-0"
+				animate={{ rotate: orbitRotation }}
+				transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+			>
+				{/* Orbit ring */}
+				<div className="absolute inset-[60px] rounded-full border border-gray-200 dark:border-gray-700/50" />
+
+				{/* Lines + particles */}
+				<svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none', overflow: 'visible' }}>
+					{orbitItems.map((item, i) => {
+						const rad = (item.baseAngle * Math.PI) / 180;
+						const rStart = 40;
+						const isActive = item.tabIndex === activeTab;
+						/* Active line extends to the right edge of the container (touches the detail panel border) */
+						const rEnd = isActive ? 240 : r;
+						return (
+							<line
+								key={`line-${i}`}
+								x1={c + rStart * Math.cos(rad)}
+								y1={c + rStart * Math.sin(rad)}
+								x2={c + rEnd * Math.cos(rad)}
+								y2={c + rEnd * Math.sin(rad)}
+								className="stroke-gray-200 dark:stroke-gray-700/50"
+								strokeWidth={1.5}
+							/>
+						);
+					})}
+					{(() => {
+						const rDot = 220;
+						const toXY = (angle) => {
+							const rad = (angle * Math.PI) / 180;
+							return { x: c + rDot * Math.cos(rad), y: c + rDot * Math.sin(rad) };
+						};
+						const pos = orbitItems.map((it) => toXY(it.baseAngle));
+						const balls = [
+							{ route: [0, 1, 2], duration: 10, delay: 0 },
+							{ route: [2, 0, 1], duration: 12, delay: 2 },
+							{ route: [1, 2, 0], duration: 11, delay: 4 },
+							{ route: [0, 2, 1], duration: 13, delay: 6 },
+							{ route: [2, 1, 0], duration: 10, delay: 8 },
+							{ route: [1, 0, 2], duration: 12, delay: 10 },
+						];
+						return balls.map((b, i) => {
+							const xK = [c];
+							const yK = [c];
+							b.route.forEach((idx) => {
+								xK.push(pos[idx].x, c);
+								yK.push(pos[idx].y, c);
+							});
+							return (
+								<motion.circle
+									key={`dot-${i}`}
+									r={4}
+									className="fill-blue-400 dark:fill-blue-300"
+									style={{ opacity: 0.8 }}
+									animate={{ cx: xK, cy: yK }}
+									transition={{ duration: b.duration, repeat: Infinity, ease: 'linear', delay: b.delay }}
+								/>
+							);
+						});
+					})()}
+				</svg>
+
+				{/* Orbit cards — counter-rotate to stay upright, active card fades out at the right edge */}
+				{orbitItems.map((item) => {
+					const rad = (item.baseAngle * Math.PI) / 180;
+					const x = c + r * Math.cos(rad);
+					const y = c + r * Math.sin(rad);
+					const isActive = item.tabIndex === activeTab;
+					return (
+						<div
+							key={item.label}
+							className="absolute"
+							style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
+						>
+							<motion.div
+								className={isActive ? '' : 'cursor-pointer'}
+								animate={{
+									rotate: -orbitRotation,
+									opacity: isActive ? 0 : 1,
+									scale: isActive ? 0.8 : 1,
+								}}
+								transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+								onClick={() => !isActive && onSelect?.(item.tabIndex)}
+							>
+								<div className={`relative rounded-2xl bg-gradient-to-r ${item.color} p-[2px] shadow-lg`}>
+									<div className="rounded-[14px] bg-white dark:bg-gray-900 px-5 py-4 flex items-center gap-4 whitespace-nowrap">
+										<div className={`w-11 h-11 rounded-lg bg-gradient-to-br ${item.color} flex items-center justify-center flex-shrink-0`}>
+											<item.Icon className="w-5 h-5 text-white" />
+										</div>
+										<div>
+											<span className="text-base font-semibold text-gray-900 dark:text-white block">{item.label}</span>
+											<span className="text-xs text-gray-500 dark:text-gray-400 block">{item.sublabel}</span>
+										</div>
+									</div>
+								</div>
+							</motion.div>
+						</div>
+					);
+				})}
+			</motion.div>
+		</div>
+	);
+}
+
+{/* ── Feature panel component ── */}
+
+export function FeaturePanel({ features }) {
+	const [active, setActive] = useState(0);
+	return (
+		<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+			{/* Left: clickable list */}
+			<div className="flex flex-col gap-2">
+				{features.map((feat, i) => (
+					<button
+						key={feat.title}
+						onClick={() => setActive(i)}
+						className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
+							i === active
+								? 'bg-blue-600 text-white border-blue-600'
+								: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+						}`}
+					>
+						<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
+						<span className="font-medium text-sm">{feat.title}</span>
+					</button>
+				))}
+			</div>
+
+			{/* Right: selected content */}
+			<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
+				{features.map((feat, i) => (
+					<div
+						key={feat.title}
+						className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
+					>
+						<div className="flex items-center gap-3 mb-4">
+							<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+								<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+							</div>
+							<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
+						</div>
+						<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
+						{feat.image ? (
+							<img src={feat.image} alt={feat.title} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
+						) : (
+							<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+								<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+							</div>
+						)}
+						{feat.docLink && (
+							<div className="flex justify-end mt-3">
+								<Link to={feat.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+									<BookOpen className="w-4 h-4" /> Read the docs
+								</Link>
+							</div>
+						)}
+					</div>
+				))}
+			</div>
+		</div>
+	);
+}
+
+{/* ── Three-tab card content ── */}
+
+export const backendCard = { title: 'Scripts in 20+ languages with 100+ integrations', desc: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Connect to PostgreSQL, Slack, GitHub, Stripe and <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">100+ services</Link> out of the box. Credentials are stored as shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Each script runs on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> with full isolation.</span>, image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' };
+
+export const dataCard = { title: 'Connect to your databases', desc: <span>Connect to PostgreSQL, MySQL, BigQuery, Snowflake or any database via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Query S3 files with <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>, manage datasets with <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link>. Use <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">built-in data tables</Link> for zero-setup SQL storage.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage' };
+
+export const frontendCard = { title: 'Full-code app builder', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React, Vue or Svelte app</Link>. Full control over the frontend with <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS editing</Link>, theming and no ceiling on what you can build. Your app connects directly to backend scripts and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>, no API layer to build.</span>, image: '/img/money-pages/frontend.webp', docLink: '/docs/react_vue_svelte_apps/react' };
+
+export function SingleCard({ card }) {
+	return (
+		<motion.div {...fadeIn} className="flex flex-col gap-6">
+			<div>
+				<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{card.title}</h3>
+				<p className="text-base text-gray-600 dark:text-gray-300 mb-4">{card.desc}</p>
+				{card.docLink && (
+					<Link to={card.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
+						<BookOpen className="w-4 h-4" /> Read the docs
+					</Link>
+				)}
+			</div>
+			{card.image ? (
+				<div className="w-full rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+					<img src={card.image} alt={card.title} className="w-full object-cover object-top" />
+				</div>
+			) : (
+				<div className="w-full h-56 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+					<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
+				</div>
+			)}
+		</motion.div>
+	);
+}
+
+export function BuildIntegrateTabs() {
+	const [activeTab, setActiveTab] = useState(0);
+	const tabs = [
+		{ icon: Code2, label: 'Backend' },
+		{ icon: Database, label: 'Data' },
+		{ icon: LayoutGrid, label: 'Frontend' },
+	];
+	const tabContent = [
+		{ card: backendCard },
+		{ card: dataCard },
+		{ card: frontendCard },
+	];
+	/* Find the orbit item that matches the active tab (for card header on desktop) */
+	const activeOrbitItem = orbitItems.find((it) => it.tabIndex === activeTab);
+	return (
+		<div>
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-8">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Backend, data and frontend in one platform
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Full code flexibility to build what you need, built-in integrations to connect your resources. No wiring required.
+					</p>
+				</motion.div>
+				<div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] lg:gap-0 gap-12 items-center">
+					{/* Left: orbit — the cards ARE the navigation on desktop */}
+					<div className="hidden lg:flex justify-center">
+						<StackAnimation activeTab={activeTab} onSelect={setActiveTab} />
+					</div>
+					{/* Right: content panel — vertically centered with the orbit */}
+					<div>
+						{/* Tab buttons — mobile only (orbit replaces them on desktop) */}
+						<div className="grid grid-cols-3 mb-8 border-b border-gray-200 dark:border-gray-700 lg:hidden">
+							{tabs.map((tab, i) => (
+								<button
+									key={tab.label}
+									onClick={() => setActiveTab(i)}
+									className={`flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-b-2 transition-colors -mb-px ${
+										i === activeTab
+											? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+											: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+									}`}
+								>
+									<tab.icon className="w-5 h-5" />
+									{tab.label}
+								</button>
+							))}
+						</div>
+						{/* Detail panel — on desktop, shows the orbit card header so it feels like the card "moved" here */}
+						<motion.div
+							key={activeTab}
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.35 }}
+							className={`rounded-2xl border-2 bg-white dark:bg-gray-950 overflow-hidden border-gray-200 dark:border-gray-700`}
+						>
+							{/* Orbit-style card header — desktop only */}
+							<div className={`hidden lg:flex items-center gap-3 px-6 py-4 bg-gradient-to-r ${activeOrbitItem.color} text-white`}>
+								<div className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center">
+									<activeOrbitItem.Icon className="w-4 h-4 text-white" />
+								</div>
+								<div>
+									<span className="text-base font-semibold block">{activeOrbitItem.label}</span>
+									<span className="text-xs text-white/80">{activeOrbitItem.sublabel}</span>
+								</div>
+							</div>
+							<div className="p-6">
+								{tabContent.map((content, i) => (
+									activeTab === i && (
+										<SingleCard key={content.card.title} card={content.card} />
+									)
+								))}
+							</div>
+						</motion.div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── Boilerplate animation ── */}
+
+export const codeLines = [
+	{ tokens: [{ text: 'import ', color: 'text-purple-400' }, { text: 'wmill ', color: 'text-blue-300' }, { text: 'from ', color: 'text-purple-400' }, { text: "'windmill-client'", color: 'text-amber-300' }] },
+	{ tokens: [] },
+	{ tokens: [{ text: 'export async function ', color: 'text-purple-400' }, { text: 'main', color: 'text-blue-300' }, { text: '(', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  db', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'Postgresql', color: 'text-emerald-300' }, { text: ',', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  slack', color: 'text-orange-300' }, { text: ': ', color: 'text-gray-400' }, { text: 'Slack', color: 'text-emerald-300' }] },
+	{ tokens: [{ text: ') {', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  const ', color: 'text-purple-400' }, { text: 'rows ', color: 'text-blue-300' }, { text: '= ', color: 'text-gray-400' }, { text: 'await ', color: 'text-purple-400' }, { text: 'db', color: 'text-orange-300' }, { text: '.query(', color: 'text-gray-400' }, { text: "'SELECT ...'", color: 'text-amber-300' }, { text: ')', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '  await ', color: 'text-purple-400' }, { text: 'slack', color: 'text-orange-300' }, { text: '.post(', color: 'text-gray-400' }, { text: "'#alerts'", color: 'text-amber-300' }, { text: ', rows)', color: 'text-gray-400' }] },
+	{ tokens: [{ text: '}', color: 'text-gray-400' }] },
+];
+
+
+export function BoilerplateAnimation() {
+	const [view, setView] = useState('local');
+	const [openLayer, setOpenLayer] = useState(null);
+
+	/* Animation phases: typing → connector → layers */
+	const sectionRef = useRef(null);
+	const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+	const [phase, setPhase] = useState(0); /* 0=idle, 1=typing, 2=connector, 3=layers */
+	const [typedChars, setTypedChars] = useState(0);
+
+	/* Flatten all code lines into a single character count for the typing effect */
+	const allText = codeLines.map((line) => line.tokens.map((t) => t.text).join('') || ' ').join('\n');
+	const totalChars = allText.length;
+
+	useEffect(() => {
+		if (isInView && phase === 0) setPhase(1);
+	}, [isInView]);
+
+	/* Phase 1: typing effect */
+	useEffect(() => {
+		if (phase !== 1) return;
+		const speed = 12; /* ms per character */
+		const interval = setInterval(() => {
+			setTypedChars((prev) => {
+				if (prev >= totalChars) {
+					clearInterval(interval);
+					setTimeout(() => setPhase(2), 400);
+					return totalChars;
+				}
+				return prev + 1;
+			});
+		}, speed);
+		return () => clearInterval(interval);
+	}, [phase, totalChars]);
+
+	/* Phase 2 → 3: connector appears, then after a beat, layers cascade in */
+	useEffect(() => {
+		if (phase === 2) {
+			const t = setTimeout(() => setPhase(3), 800);
+			return () => clearTimeout(t);
+		}
+	}, [phase]);
+
+	/* Helper: render code lines with typing effect */
+	const renderTypedLines = () => {
+		let charsSoFar = 0;
+		return codeLines.map((line, i) => {
+			const lineText = line.tokens.map((t) => t.text).join('') || ' ';
+			const lineStart = charsSoFar;
+			charsSoFar += lineText.length + 1; /* +1 for \n */
+			const lineVisible = typedChars > lineStart;
+			const lineCharsShown = Math.max(0, Math.min(lineText.length, typedChars - lineStart));
+			if (!lineVisible) return (
+				<div key={i} className="flex h-[1.75em]">
+					<span className="text-gray-600 w-8 text-right mr-4 select-none opacity-0">{i + 1}</span>
+				</div>
+			);
+			/* Render tokens up to lineCharsShown characters */
+			let tokCharsSoFar = 0;
+			const renderedTokens = [];
+			for (const token of line.tokens) {
+				if (tokCharsSoFar >= lineCharsShown) break;
+				const visibleLen = Math.min(token.text.length, lineCharsShown - tokCharsSoFar);
+				renderedTokens.push(
+					<span key={renderedTokens.length} className={token.color} style={{ whiteSpace: 'pre' }}>{token.text.slice(0, visibleLen)}</span>
+				);
+				tokCharsSoFar += token.text.length;
+			}
+			return (
+				<div key={i} className="flex">
+					<span className="text-gray-600 w-8 text-right mr-4 select-none">{i + 1}</span>
+					{line.tokens.length === 0 ? <span>&nbsp;</span> : renderedTokens}
+					{lineCharsShown < lineText.length && (
+						<span className="inline-block w-[2px] h-[1.1em] bg-gray-300 ml-[1px] animate-pulse" />
+					)}
+				</div>
+			);
+		});
+	};
+
+	return (
+		<div ref={sectionRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+			{/* Left: code editor + connector */}
+			<div className="flex flex-col">
+			<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-950 overflow-hidden flex-1 flex flex-col">
+				<div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800 bg-gray-900">
+					<div className="flex gap-1.5">
+						<span className="w-3 h-3 rounded-full bg-red-500/80" />
+						<span className="w-3 h-3 rounded-full bg-yellow-500/80" />
+						<span className="w-3 h-3 rounded-full bg-green-500/80" />
+					</div>
+					<span className="text-sm font-semibold text-gray-300 ml-2">Write your business logic</span>
+					<div className="flex ml-auto rounded-lg bg-gray-800 p-0.5">
+						<button
+							onClick={() => setView('local')}
+							className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+								view === 'local'
+									? 'bg-gray-700 text-white'
+									: 'text-gray-400 hover:text-gray-300'
+							}`}
+						>
+							<Terminal className="w-3.5 h-3.5" />
+							Local dev
+						</button>
+						<button
+							onClick={() => setView('windmill')}
+							className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+								view === 'windmill'
+									? 'bg-gray-700 text-white'
+									: 'text-gray-400 hover:text-gray-300'
+							}`}
+						>
+							<img src="/img/windmill.svg" alt="Windmill" className="w-3.5 h-3.5" />
+							Windmill UI
+						</button>
+					</div>
+				</div>
+				{view === 'local' ? (
+					<div className="p-6 font-mono text-sm leading-relaxed flex-1 flex flex-col justify-center">
+						{phase >= 1 ? renderTypedLines() : (
+							/* Pre-animation: reserve space with invisible lines */
+							codeLines.map((_, i) => (
+								<div key={i} className="flex h-[1.75em]">
+									<span className="text-gray-600 w-8 text-right mr-4 select-none opacity-0">{i + 1}</span>
+								</div>
+							))
+						)}
+						<p className={`text-xs text-gray-500 mt-6 transition-opacity duration-500 ${typedChars >= totalChars ? 'opacity-100' : 'opacity-0'}`}>
+							Code locally with Windmill CLI, VS code extension, skills and plug-in.
+						</p>
+					</div>
+				) : (
+					<div className="p-6 flex-1 flex flex-col justify-center">
+						<div className="w-full rounded-lg bg-gray-800 border border-gray-700 overflow-hidden">
+							<img src="/img/money-pages/scripts-preview.webp" alt="Windmill script editor" className="w-full object-cover object-top" />
+						</div>
+						<p className="text-xs text-gray-500 mt-4">Same script, deployed and managed in the Windmill UI.</p>
+					</div>
+				)}
+			</div>
+
+			{/* Connector: vertical line → big pill → L-arrow right — appears in phase 2 */}
+			<motion.div
+				className="hidden lg:flex flex-col items-center"
+				initial={{ opacity: 0 }}
+				animate={phase >= 2 ? { opacity: 1 } : { opacity: 0 }}
+				transition={{ duration: 0.5 }}
+			>
+				{/* Vertical line from code editor to pill */}
+				<motion.div
+					className="w-[2.5px] bg-blue-400 dark:bg-blue-500 rounded-full"
+					initial={{ height: 0 }}
+					animate={phase >= 2 ? { height: 32 } : { height: 0 }}
+					transition={{ duration: 0.3 }}
+				/>
+				{/* Arrow head pointing down */}
+				<svg className="w-4 h-3 -mt-[1px]" viewBox="0 0 16 12" fill="none">
+					<path d="M 2 0 L 8 10 L 14 0" className="fill-blue-400 dark:fill-blue-500" />
+				</svg>
+
+				{/* Big Windmill pill (centered) + horizontal arrow to the right panel */}
+				<div className="flex items-center mt-2" style={{ width: 'calc(100% + 4rem)' }}>
+					{/* Spacer to center the pill */}
+					<div className="flex-1" />
+					<motion.div
+						className="flex items-center gap-4 px-8 py-5 rounded-2xl bg-blue-50 dark:bg-blue-950/50 border-2 border-blue-200 dark:border-blue-800 shadow-md flex-shrink-0"
+						initial={{ scale: 0.9, opacity: 0 }}
+						animate={phase >= 2 ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
+						transition={{ duration: 0.4, delay: 0.2 }}
+					>
+						<motion.img
+							src="/img/windmill.svg"
+							alt="Windmill"
+							className="w-14 h-14"
+							animate={phase >= 2 ? { rotate: 360 } : {}}
+							transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+						/>
+						<span className="text-xl font-bold text-blue-700 dark:text-blue-300">Windmill runs it</span>
+					</motion.div>
+					<div className="flex items-center flex-1 ml-2 overflow-hidden">
+						<motion.div
+							className="h-[2.5px] bg-gradient-to-r from-blue-400/40 to-blue-500 dark:from-blue-500/40 dark:to-blue-400 rounded-full origin-left"
+							initial={{ scaleX: 0 }}
+							animate={phase >= 2 ? { scaleX: 1 } : { scaleX: 0 }}
+							transition={{ duration: 0.5, delay: 0.5 }}
+							style={{ width: '100%' }}
+						/>
+						<motion.svg
+							className="w-4 h-6 -ml-[1px] flex-shrink-0"
+							viewBox="0 0 16 24"
+							fill="none"
+							initial={{ opacity: 0 }}
+							animate={phase >= 2 ? { opacity: 1 } : { opacity: 0 }}
+							transition={{ duration: 0.2, delay: 0.95 }}
+						>
+							<path d="M 0 4 L 14 12 L 0 20" fill="#3b82f6" />
+						</motion.svg>
+					</div>
+				</div>
+			</motion.div>
+			</div>
+
+			{/* Right: layers — each row cascades in during phase 3 */}
+			<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
+				<motion.div
+					className="flex items-center gap-2 px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+					initial={{ opacity: 0 }}
+					animate={phase >= 3 ? { opacity: 1 } : { opacity: 0 }}
+					transition={{ duration: 0.4 }}
+				>
+					<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+					<span className="text-sm font-semibold text-gray-700 dark:text-gray-300">And provides all the platform layers</span>
+				</motion.div>
+				<div className="p-6 flex flex-col gap-3">
+					{platformLayers.map((layer, i) => {
+						const isOpen = openLayer === i;
+						return (
+							<motion.div
+								key={layer.label}
+								className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 overflow-hidden"
+								initial={{ opacity: 0, x: 30 }}
+								animate={phase >= 3 ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+								transition={{ duration: 0.35, delay: i * 0.08 }}
+							>
+								<button
+									onClick={() => setOpenLayer(isOpen ? null : i)}
+									className="flex items-center gap-3 px-4 py-3 w-full text-left"
+								>
+									<div className="w-1 h-8 rounded-full bg-emerald-500" />
+									<layer.icon className="w-5 h-5 text-blue-500 flex-shrink-0" />
+									<div className="flex-1 min-w-0">
+										<span className="text-sm font-medium text-gray-900 dark:text-white">{layer.label}</span>
+										<span className="text-xs text-gray-500 dark:text-gray-400 ml-2">{layer.detail}</span>
+									</div>
+									<ArrowRight className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`} />
+								</button>
+								{isOpen && (
+									<div className="px-4 pb-4 pt-0 ml-[44px]">
+										<p className="text-sm text-gray-600 dark:text-gray-300">{layer.expanded}</p>
+										{layer.docLink && (
+											<div className="flex justify-end mt-1.5">
+												<a href={layer.docLink} className="inline-flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:underline !no-underline hover:!underline"><BookOpen className="w-3.5 h-3.5" /> {layer.docLabel || 'Read the docs'}</a>
+											</div>
+										)}
+									</div>
+								)}
+							</motion.div>
+						);
+					})}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+{/* ── Monitor feature list ── */}
+
+export const monitorFeatures = [
+	{ icon: History, title: 'Full deployment history', desc: <span><Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy</Link> your app in one click from the UI or via CLI. Backend logic runs on dedicated workers, frontend is served by the platform. Every deployment is tracked with who deployed what, when and which version. Roll back to any previous deployment instantly.</span>, image: '/img/money-pages/deployment-history.webp', docLink: '/docs/core_concepts/draft_and_deploy' },
+	{ icon: Eye, title: 'Full execution history', desc: <span>Every script and flow run is logged with input, output, duration and errors. Search, filter and replay past <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">executions</Link> to debug issues in seconds.</span>, image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
+	{ icon: Activity, title: 'Error handlers & retries', desc: <span>Configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retry count with exponential backoff</Link>. Custom error handler scripts per step. Apps that don't break silently at 2am.</span>, image: '/img/money-pages/error-handler.webp', docLink: '/docs/flows/retries' },
+	{ icon: Lock, title: 'RBAC & SSO', desc: <span>Granular <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> control who can build, view and execute apps. SSO with SAML, OAuth and LDAP.</span>, image: '/img/money-pages/sso.webp', docLink: '/docs/core_concepts/roles_and_permissions' },
+	{ icon: Shield, title: 'Audit logs', desc: <span>Track every user action: logins, permission changes, script edits, resource access. Full <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit trail</Link> for compliance, security reviews and incident investigations.</span>, image: '/img/money-pages/auditlogs.webp', docLink: '/docs/core_concepts/audit_logs' },
+	{ icon: GitBranch, title: 'Git sync', desc: <span>Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link>. Push and pull scripts, flows and apps as code. Use your existing CI/CD and code review workflows.</span>, image: '/img/money-pages/gitsync.webp', docLink: '/docs/advanced/deploy_gh_gl' },
+];
+
+{/* ── Main page ── */}
+
+export default function InternalToolsContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* Hero */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Build full-code internal apps
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							For platform teams who need to ship internal tools with production-grade observability, enterprise controls and zero infrastructure overhead.
+						</p>
+						<HeroCTAButtons />
+						<div className="mt-8 flex flex-col gap-3">
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span><span className="text-blue-500">Build</span> <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">backend</Link> in 20+ languages, <Link to="/docs/full_code_apps/frontend" className="text-blue-500 hover:underline !no-underline">and React, Vue or Svelte</Link> frontends</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Native integrations with <Link to="/docs/integrations/duckdb" className="text-blue-500 hover:underline !no-underline">DuckDB</Link>, <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-500 hover:underline !no-underline">Ducklake</Link>, S3 and any database</span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>Monitor full <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-500 hover:underline !no-underline">execution logs</Link>, <Link to="/docs/flows/error_handling" className="text-blue-500 hover:underline !no-underline">error handlers</Link>, <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-500 hover:underline !no-underline">RBAC</Link>, <Link to="/docs/misc/setup_oauth" className="text-blue-500 hover:underline !no-underline">SSO</Link> and <Link to="/docs/core_concepts/audit_logs" className="text-blue-500 hover:underline !no-underline">audit trails</Link></span>
+							</div>
+							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
+								<span className="text-blue-500 font-bold">✓</span>
+								<span>One platform, no infrastructure to manage, <Link to="/docs/advanced/self_host" className="text-blue-500 hover:underline !no-underline">self-host</Link> or cloud</span>
+							</div>
+						</div>
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<HeroAnimation />
+					</div>
+				</div>
+			</div>
+
+			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
+
+			{/* ═══════════════ 1. Build & Integrate (3 tabs) ═══════════════ */}
+			<BuildIntegrateTabs />
+
+			{/* ═══════════════ 2. Monitor ═══════════════ */}
+			<div className="">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+					<motion.div {...fadeIn} className="mb-12">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Production-grade observability and enterprise controls
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							Everything you need to run tools in production while meeting enterprise observability and security requirements. Every execution is logged. Every error is caught. Every action is audited. RBAC, SSO and version control are built in.
+						</p>
+					</motion.div>
+					<FeaturePanel features={monitorFeatures} />
+				</div>
+			</div>
+
+			{/* ═══════════════ 4. No overhead — animated two-panel ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						One platform, no infrastructure overhead
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						No separate tools for backend, frontend, storage, monitoring and deployment. Windmill provides them all as built-in layers, natively integrated, no glue code required. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Self-host</Link> or use Windmill Cloud.
+					</p>
+				</motion.div>
+
+				<BoilerplateAnimation />
+
+			</div>
+
+			{/* ═══════════════ Example internal tool ═══════════════ */}
+			<div className="">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+					<motion.div {...fadeIn} className="mb-12">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							See it in action
+						</h2>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							An example production planning tool built on Windmill. Browse the <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill Hub</a> for more templates.
+						</p>
+					</motion.div>
+					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white p-6">
+						<iframe
+							src="https://hub.windmill.dev/embed/raw_app/25/production-planning"
+							className="w-full rounded-lg"
+							style={{ height: '900px', border: 'none', backgroundColor: 'white' }}
+							title="Production planning — example internal tool built on Windmill"
+							loading="lazy"
+						/>
+					</div>
+				</div>
+			</div>
+
+			{/* ═══════════════ Case study: Zoom ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<CaseStudyBanner
+					logo="/images/brands/zoom-light.webp"
+					logoDark="/images/brands/zoom-dark.webp"
+					title="How Zoom built their enterprise demo platform with Windmill"
+					description="Zoom's Global Architecture organization needed a scalable way to create consistent demo environments for 400+ solution engineers. They built a centralized demo platform on Windmill, enabling 60+ Global Architects to contribute workflows in multiple languages, all self-hosted on AWS EKS."
+					link="/case-studies/zoom"
+					from="internal-apps"
+				/>
+			</div>
+
+			{/* ═══════════════ 5. Connected to the rest of the platform ═══════════════ */}
+			<UseCaseCarousel
+				current="internal-apps"
+				subtitle="Internal tools are just one use case. The same platform powers triggers, data pipelines, AI agents and workflows."
+			/>
+
+			{/* ═══════════════ FAQ ═══════════════ */}
+			<div className="">
+				<UseCaseFAQ faqs={[
+					{ question: 'How is Windmill different from Retool?', textAnswer: 'Windmill lets you write backend logic in 20+ languages (TypeScript, Python, Go, SQL, Bash and more) running server-side on dedicated workers. Retool limits you to sandboxed JavaScript. Windmill also includes built-in data tables, a workflow engine with schedules and triggers, Git-based version control, and full self-hosting support. You deploy your own React, Vue or Svelte frontend on the same platform, with a real execution engine underneath.' },
+					{ question: 'How is Windmill different from Lovable?', textAnswer: 'Lovable generates full-stack apps with AI, but the result is a standalone codebase with no execution engine, observability or enterprise controls. Windmill gives you the same AI-powered development (via Claude Code and Codex integration) but runs your code on a production engine with execution history, error handlers, RBAC, SSO, audit logs and built-in data storage. Apps built on Windmill are production-grade, not prototypes.' },
+					{ question: 'Can I use Claude Code to build internal tools on Windmill?', textAnswer: 'Yes. Windmill integrates Claude Code and Codex directly into the development experience. AI generates backend scripts and app configurations that deploy instantly on the Windmill platform with full observability, versioning and permissions. You vibe-code the logic, Windmill handles the production infrastructure.' },
+					{ question: 'Do I need to set up an external database?', textAnswer: 'Windmill requires a PostgreSQL database for its core storage. On top of that, Data Tables provide workspace-scoped SQL storage with safe parameterized queries, no additional setup beyond the instance database. For heavier workloads you can also connect external databases (MySQL, BigQuery, Snowflake) via shared resources.' },
+					{ question: 'Can I import my own React app into Windmill?', textAnswer: 'Yes. You can import full React, Vue or Svelte apps that run inside Windmill with access to the same backend scripts, data tables and permissions.' },
+					{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source and can be self-hosted on your own infrastructure, including air-gapped deployments. The Community Edition is free. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
+				]} />
+			</div>
+
+			<ProductCTA />
+		</div>
+	);
+}
