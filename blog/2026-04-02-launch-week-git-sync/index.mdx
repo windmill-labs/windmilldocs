@@ -59,7 +59,7 @@ Three ways to bring changes back:
 
 ### Coming soon: data table forking
 
-Workspace forks will soon support [data tables](/docs/core_concepts/data_tables) as well. When forking a workspace, you will be able to clone a data table's schema only or its schema and data, letting you develop against a separate database without affecting upstream workspaces like production.
+Workspace forks will soon support [data tables](/docs/core_concepts/persistent_storage/data_tables) as well. When forking a workspace, you will be able to clone a data table's schema only or its schema and data, letting you develop against a separate database without affecting upstream workspaces like production.
 
 On merge, Windmill queries the full data table schema, detects differences, and generates SQL migrations automatically.
 
