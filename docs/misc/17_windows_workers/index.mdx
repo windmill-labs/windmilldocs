@@ -162,6 +162,21 @@ You can also check other installation methods in uv`s [official documentation](h
      ruby --version && bundler --version && gem --version
      ```
 
+### R executor
+
+1. **Install R**: Download and install R from the [official CRAN website](https://cran.r-project.org/bin/windows/base/). During installation, ensure R is added to the system PATH.
+   - Start PowerShell and verify you have a working R installation:
+     ```powershell
+     Rscript --version
+     ```
+
+2. **Install Pak and Renv**:
+   - Run:
+     ```powershell
+     Rscript -e "install.packages(c('pak', 'renv'), lib=Sys.getenv('R_LIBS_USER'), repos='https://cloud.r-project.org')"
+     ```
+
+
 ## Running as a Windows service
 
 For production environments, it's strongly recommended to run `windmill-ee.exe` as a Windows service. This ensures the Windmill process starts automatically at system boot, restarts on failure, and runs reliably in the background.

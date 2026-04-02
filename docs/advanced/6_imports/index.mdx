@@ -159,6 +159,22 @@ e.g.:
 use std
 ```
 
+## Imports in R
+
+For [R](../../getting_started/0_scripts_quickstart/15_rlang_quickstart/index.mdx), dependencies are automatically detected from `library()` and `require()` calls. Windmill resolves versions from CRAN and caches lockfiles with a 3-day TTL.
+
+e.g.:
+
+```r
+library(httr)
+library(jsonlite)
+library(dplyr)
+
+main <- function() {
+  # Your code here
+}
+```
+
 ## Dependencies on Local development
 
 When created and edited through the UI (Windmill App), the lockfile is automatically generated. On [local development](../4_local_development/index.mdx), each script gets:
