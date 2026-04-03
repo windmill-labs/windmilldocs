@@ -110,6 +110,31 @@ This means a workflow that sleeps for 24 hours consumes zero worker time during 
 
 Each `task()` supports options for timeout, worker tag, cache TTL, priority, and concurrency limits.
 
+## Approval steps in code
+
+`waitForApproval()` suspends the workflow and releases the worker until a human approves or rejects — zero resource usage while waiting. Combined with `getResumeUrls()`, you can send approval links via Slack, email, or any notification channel:
+
+```ts
+import { task, step, waitForApproval, getResumeUrls, workflow } from 'windmill-client';
+
+export const main = workflow(async () => {
+  await task(async () => runTests());
+  await task(async () => deployToStaging());
+
+  const urls = await step('get_urls', () => getResumeUrls());
+  await step('notify', () => sendSlackMessage(urls.approvalPage));
+
+  const approval = await waitForApproval({ timeout: 86400 });
+  if (!approval.approved) {
+    return `Rejected by ${approval.approver}`;
+  }
+
+  return await task(async () => deployToProduction());
+});
+```
+
+The workflow suspends at `waitForApproval()` and the worker is fully freed — a 24-hour timeout costs zero compute. Approvals also support [forms and self-approval controls](/docs/core_concepts/workflows_as_code#approval--human-in-the-loop).
+
 ## Why we built it this way
 
 Three design choices drove the architecture:
@@ -143,6 +168,10 @@ Each module has its own dependencies and lock file. Import with relative paths, 
 | **Version control** | Standard Git diffs | JSON diffs |
 | **Local dev** | Full IDE support | Web editor |
 | **Interop** | Can call flows via `taskFlow()` | Can include WAC scripts as steps |
+
+## How it compares to other frameworks
+
+Windmill's workflow-as-code supports the same patterns as Temporal, Inngest, Cloudflare Workflows, and Airflow — checkpointing, retries, parallelism, durable sleep — with comparable or better performance (especially compared to Airflow, where task scheduling overhead alone can dwarf actual execution time). The difference: Windmill is easily [self-hostable](/docs/advanced/self_host), ships with an intuitive [web editor](/docs/script_editor) and [visual flow builder](/docs/flows/flow_editor), and includes built-in approval steps and a complete [app builder](/docs/apps/app_editor) — all in one platform.
 
 ## Getting started
 

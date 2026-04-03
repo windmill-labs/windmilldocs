@@ -14,6 +14,8 @@ import DocCard from '@site/src/components/DocCard';
 
 Each `task()` call runs as a separate [job](../20_jobs/index.mdx) with its own logs, resources, and timeline entry. The workflow suspends between tasks (releasing its [worker](../9_worker_groups/index.mdx) slot entirely) and resumes from a checkpoint when child jobs complete. This means a single worker can run workflows with any number of parallel tasks without deadlocking.
 
+Workflows as code support the same patterns as Temporal, Inngest, Cloudflare Workflows, and Airflow — checkpointing, retries, parallelism, durable sleep — with comparable or better performance (especially compared to Airflow, where task scheduling overhead alone can dwarf actual execution time). Windmill is easily [self-hostable](../../advanced/1_self_host/index.mdx), ships with an intuitive [script editor](../../script_editor/index.mdx) and [visual flow builder](../../flows/1_flow_editor.mdx), and includes built-in [approval steps](#approval--human-in-the-loop) and a complete [app builder](../../apps/0_app_editor/index.mdx) — all in one platform.
+
 Workflows as code can be [synced with git](../../advanced/11_git_sync/index.mdx) and the [CLI](../../advanced/11_git_sync/cli_sync.mdx) like any other script.
 
 ## Quickstart
