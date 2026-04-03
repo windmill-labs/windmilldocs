@@ -80,7 +80,14 @@ def main(urls: list[str]):
 </TabItem>
 </Tabs>
 
-<!-- TODO: video showing a workflow-as-code script running with the DAG visualization updating in real-time. Path suggestion: /videos/workflow_as_code_demo.webm -->
+<video
+	className="rounded-xl border border-gray-200 dark:border-gray-700 w-full"
+	autoPlay
+	loop
+	muted
+	playsInline
+	src="/img/platform/workflow-editor/platform-flow-workflow-as-code.webm"
+/>
 
 No YAML, no DSL, no drag-and-drop. Standard TypeScript or Python with full IDE support, type checking, and version control.
 
@@ -134,6 +141,15 @@ export const main = workflow(async () => {
 ```
 
 The workflow suspends at `waitForApproval()` and the worker is fully freed — a 24-hour timeout costs zero compute. Approvals also support [forms and self-approval controls](/docs/core_concepts/workflows_as_code#approval--human-in-the-loop).
+
+<video
+	className="rounded-xl border border-gray-200 dark:border-gray-700 w-full"
+	autoPlay
+	loop
+	muted
+	playsInline
+	src="/img/platform/workflow-editor/platform-flow-approval-step.webm"
+/>
 
 ## Why we built it this way
 

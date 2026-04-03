@@ -131,7 +131,8 @@ const sidebars = {
 								'misc/guides/snowflake_app_with_user_roles/index',
 								'misc/guides/otel/index',
 								'misc/guides/aws_marketplace/index',
-								'misc/guides/local_dev_with_ai/index'
+								'misc/guides/local_dev_with_ai/index',
+							'misc/guides/discord_bot/index'
 							]
 						}
 					]
