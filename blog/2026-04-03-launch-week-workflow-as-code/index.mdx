@@ -80,7 +80,14 @@ def main(urls: list[str]):
 </TabItem>
 </Tabs>
 
-<!-- TODO: video showing a workflow-as-code script running with the DAG visualization updating in real-time. Path suggestion: /videos/workflow_as_code_demo.webm -->
+<video
+	className="rounded-xl border border-gray-200 dark:border-gray-700 w-full"
+	autoPlay
+	loop
+	muted
+	playsInline
+	src="/img/platform/workflow-editor/platform-flow-workflow-as-code.webm"
+/>
 
 No YAML, no DSL, no drag-and-drop. Standard TypeScript or Python with full IDE support, type checking, and version control.
 
@@ -109,6 +116,17 @@ This means a workflow that sleeps for 24 hours consumes zero worker time during 
 | `taskFlow(path)` | Dispatch to an existing Windmill flow |
 
 Each `task()` supports options for timeout, worker tag, cache TTL, priority, and concurrency limits.
+
+Here is an example of using `waitForApproval()` to add a human-in-the-loop approval step:
+
+<video
+	className="rounded-xl border border-gray-200 dark:border-gray-700 w-full"
+	autoPlay
+	loop
+	muted
+	playsInline
+	src="/img/platform/workflow-editor/platform-flow-approval-step.webm"
+/>
 
 ## Why we built it this way
 
