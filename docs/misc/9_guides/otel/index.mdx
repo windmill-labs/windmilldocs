@@ -86,12 +86,33 @@ The following tags are useful to filter for specific traces:
 - `parent_job`: The ID of the parent job (flow)
 - `flow_step_id`: The ID of the step within the workflow
 - `script_path`: The path of the script
+- `script_hash`: Hex hash of the deployed script version (lets you correlate failures with a specific deploy)
 - `workspace_id`: The name of the workspace
 - `worker_id`: The ID of the worker
 - `language`: The language of the script
 - `tag`: The queue tag of the workflow
+- `job_kind`: Job type — `script`, `flow`, `appscript`, `aiagent`, `preview`, `flowscript`, etc.
+- `trigger_kind`: How the job was triggered — `schedule`, `webhook`, `kafka`, `http`, `sqs`, etc.
+- `trigger`: Trigger identifier, e.g. the schedule path `f/elt/crm_ingestion_schedule`
+- `created_by`: User or system that started the job (`u/admin`, `schedule`, …)
+
+These attributes are recorded on both the `job` and `job_postprocessing` spans, so you can build dashboards in Sentry/Honeycomb/Datadog that break down execution by trigger source or deploy version without joining to the Windmill DB.
 
 ![Jaeger Search](./jaeger_search.png)
+
+## OTEL trace context in jobs
+
+When OTEL tracing is enabled, Windmill exposes the trace context of each job as environment variables inside the job's runtime, so user scripts can propagate trace context to downstream services:
+
+| Env var | Description |
+|---------|-------------|
+| `TRACEPARENT` | W3C Trace Context header value: `00-{trace_id}-{span_id}-01` |
+| `OTEL_TRACE_ID` | Hex-encoded trace ID (derived from the job UUID) |
+| `OTEL_SPAN_ID` | Hex-encoded span ID (derived from the job UUID) |
+
+These variables are set for Python, Bash, Bun, Deno, Go, TypeScript, Rust, C#, Ruby, Nu, Java, and PHP jobs. You can, for example, forward `TRACEPARENT` on outbound HTTP calls so that downstream services create child spans under the Windmill job span.
+
+When OTEL tracing is disabled (or on Community Edition), these env vars are not set.
 
 ## Monitoring metrics with Jaeger
 
@@ -204,6 +225,50 @@ exporters:
 In the Jaeger UI, you will now be able to see metrics time series for the traces in the "Monitor" tab.
 
 ![Jaeger Metrics](./jaeger_metrics.png)
+
+# Metrics
+
+In addition to traces and logs, Windmill can export its own operational metrics to any OTLP-compatible collector. Enable the **Metrics** toggle in **Instance settings > OTEL/Prom** — metrics are then exported alongside traces and logs to the same collector endpoint.
+
+These metrics complement the [Prometheus `/metrics` endpoint](../../../advanced/18_instance_settings/index.mdx#prometheus) on port 8001: the Prometheus endpoint is scraped by your monitoring system, while the OTEL metrics are pushed to the collector you configured for tracing.
+
+Flipping the toggle triggers a delayed worker restart so the OTLP meter provider can be initialized.
+
+## Exported metrics
+
+| Metric | Type | Attributes |
+|---|---|---|
+| `windmill.queue.push_count` | Counter | — |
+| `windmill.queue.delete_count` | Counter | — |
+| `windmill.queue.pull_count` | Counter | — |
+| `windmill.queue.zombie_restart_count` | Counter | — |
+| `windmill.queue.zombie_delete_count` | Counter | — |
+| `windmill.queue.count` | Gauge | `tag` |
+| `windmill.queue.running_count` | Gauge | `tag` |
+| `windmill.worker.started` | Counter | — |
+| `windmill.worker.uptime` | Gauge | `worker` |
+| `windmill.worker.execution_count` | Counter | `tag` |
+| `windmill.worker.execution_duration` | Histogram | `tag` |
+| `windmill.worker.execution_failed` | Counter | `tag` |
+| `windmill.worker.busy` | Gauge | `worker` |
+| `windmill.worker.pull_duration` | Histogram | `worker`, `has_job` |
+| `windmill.db.pool.active` | Gauge | — |
+| `windmill.db.pool.idle` | Gauge | — |
+| `windmill.db.pool.max` | Gauge | — |
+| `windmill.health.db_latency` | Gauge | — |
+| `windmill.health.db_unresponsive` | Gauge | — |
+| `windmill.health.status` | Gauge | `phase` |
+
+Metrics export is an [Enterprise Edition](/pricing) feature.
+
+## Selecting the exporter protocol
+
+The **OTEL/Prom** instance settings tab exposes a **Protocol** dropdown that applies to all three signal types (traces, logs, metrics):
+
+- **grpc** (default): uses the tonic gRPC client against the collector's OTLP gRPC endpoint (typically port `4317`).
+- **http/protobuf**: uses an HTTP client against the collector's OTLP HTTP endpoint (typically port `4318`). This is equivalent to setting `OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf`.
+
+Use `http/protobuf` when your network or collector does not support gRPC (for example, some managed observability backends only expose HTTP endpoints).
 
 # Tracing with Tempo and Grafana
 

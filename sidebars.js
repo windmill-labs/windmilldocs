@@ -420,6 +420,7 @@ const sidebars = {
 				'core_concepts/workspace_dependencies/index',
 				'core_concepts/workspace_settings/index',
 				'core_concepts/streaming/index',
+				'core_concepts/labels/index',
 				{
 					type: 'category',
 					label: 'Integrations',
@@ -783,7 +784,8 @@ const sidebars = {
 						'flows/flow_approval',
 						'flows/sleep',
 						'flows/step_mocking',
-						'flows/sticky_notes'
+						'flows/sticky_notes',
+						'flows/flow_as_chat'
 					],
 					collapsed: true
 				},

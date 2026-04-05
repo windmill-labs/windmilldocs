@@ -1,0 +1,83 @@
+---
+description: How do I turn a flow into a chatbot in Windmill? Enable chat input on a flow to converse with it, cancel runs, and display images and tool usage.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Flow as chat
+
+Flow as chat turns any flow into a conversational runtime. When enabled, the flow exposes a chat interface instead of (or in addition to) the traditional input form — users send messages, the flow runs once per turn, and each run's output is rendered as an assistant reply in the thread.
+
+This is different from **[AI Flow Chat](./17_ai_flows.mdx)** (the editor-side assistant that helps you build flows). Flow as chat is a **runtime** feature: it turns the finished flow itself into a chatbot that end-users interact with.
+
+## Enabling chat on a flow
+
+Open the flow in the editor and toggle **Chat input** on the flow's Input settings. Enabling chat sets `chat_input_enabled: true` on the flow definition (part of the OpenFlow spec).
+
+When chat is enabled, a chat-input virtual node is rendered on the flow graph to make it clear that the flow's main input comes from the chat interface rather than a form. The runtime passes two extra fields to the flow on every turn:
+
+- The user's latest chat message (as the flow's chat input argument)
+- A `memory_id` identifying the current conversation
+
+The flow is free to use the `memory_id` to load conversation history, persist state, or pass it to AI agent steps for multi-turn memory.
+
+## Conversations
+
+Every chat session is a **conversation**. Conversations are persisted server-side (tables `flow_conversation` and `flow_conversation_message`), so users can reopen past chats, resume where they left off, and browse history from the conversations sidebar.
+
+Each turn adds at least two messages to the conversation: the user's prompt and the assistant's reply. Tool usage steps, when shown, appear as additional messages threaded into the turn.
+
+## Running a flow as chat
+
+When a chat-enabled flow is opened in the runner, the form is replaced (or augmented) by a chat interface with:
+
+- A message list showing the conversation so far
+- A text input at the bottom
+- A sidebar listing past conversations, with the ability to create a new one, rename, or delete
+
+Sending a message starts a new flow run with the message as input. The assistant's reply is the flow's output, streamed or polled as it arrives.
+
+### Cancel button
+
+While a turn is in-flight, the **Send** button is replaced by a **Stop** button. Clicking Stop cancels the underlying queued job (via `JobService.cancelQueuedJob`) so a long-running flow doesn't block the conversation. Cancel works in both polling and streaming modes.
+
+### Image outputs
+
+If the flow's output contains image data (data URLs, base64-encoded images, or S3 objects resolving to images), the chat renders them inline in the assistant's reply. This lets chat flows return generated charts, screenshots, or AI-generated images without any extra configuration.
+
+### Tool usage display
+
+When a chat flow uses [AI agent steps](../core_concepts/54_ai_agents/index.mdx) that call tools, each tool invocation is displayed inline in the conversation as a collapsible message. Tool messages show:
+
+- The tool name (and flow step name)
+- A success indicator (green check or red cross)
+- The tool's arguments and result (expandable)
+
+This makes it easy for end-users to see what the agent did on their behalf, and for developers to debug multi-step agent runs.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="AI agents"
+		description="Integrate AI agent steps directly into your Windmill flows."
+		href="/docs/core_concepts/ai_agents"
+	/>
+	<DocCard
+		color="teal"
+		title="AI flows"
+		description="Generate flows from prompts with the editor-side AI assistant."
+		href="/docs/flows/ai_flows"
+	/>
+	<DocCard
+		color="teal"
+		title="Testing flows"
+		description="Iterate quickly and get control on your flow testing."
+		href="/docs/flows/test_flows"
+	/>
+	<DocCard
+		color="teal"
+		title="Flow editor components"
+		description="Details on the flow editor's major components."
+		href="/docs/flows/editor_components"
+	/>
+</div>
