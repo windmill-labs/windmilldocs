@@ -117,6 +117,77 @@ A variable can be made secret. In this case, its value will not be visible outsi
 
 ![Add variable](./add_variable.png.webp)
 
+## Secret masking in job logs
+
+Windmill automatically masks secret values in job logs to prevent accidental leakage. When a job fetches a secret variable (or is given `$encrypted:` arguments), the plaintext values are tracked per-job and masked in stdout/stderr before logs are persisted.
+
+When a masked value would appear in the logs, the first 3 characters are kept for debuggability and the rest is replaced by `*****`, followed by a one-time notice line:
+
+```
+my_*****
+[windmill] secret value was masked for security reasons, use string transformations to display partial values
+```
+
+Notes:
+- Only values of 8 characters or more are masked, to avoid false positives on short strings like `"true"` or `"1234"`.
+- Only the values of **secret variables** and decrypted `$encrypted:` arguments are tracked — non-secret variables remain fully visible.
+- Masking happens in-memory before the logs are written to the database, so plaintext secrets never land in `job_logs`.
+- If your script needs to display a partial secret (e.g. the last 4 characters of a token), use string transformations inside the script before logging, since the full match will always be masked.
+
+## Secret storage backends <span className="text-red-500">EE</span>
+
+By default, Windmill stores encrypted secrets in its own database using a workspace-specific symmetric key. On [Enterprise Edition](/pricing), superadmins can instead delegate secret storage to an external secret manager, keeping the ciphertext out of the Windmill database entirely.
+
+Secret backends are configured instance-wide from **Instance Settings → Secret backend**. Changes take effect immediately without restarting the server, and Windmill provides a **Test connection** button plus bidirectional migration endpoints to move existing secrets between backends (`Database → Vault/Key Vault` and back).
+
+**Fail-closed by design:** if the configured backend is unreachable, secret reads and writes fail rather than silently falling back to the database.
+
+### HashiCorp Vault backend
+
+Windmill can store secrets natively in [HashiCorp Vault](https://www.vaultproject.io/) using the KV v2 secrets engine.
+
+Configuration requires:
+
+- The Vault server URL and namespace (if applicable).
+- A KV v2 mount path where Windmill will read and write secrets.
+- A JWT auth role configured in Vault. Windmill exposes a JWKS endpoint at `/.well-known/jwks.json` that Vault uses to validate the short-lived JWTs Windmill issues on every secret operation.
+
+Once configured:
+- All new and updated secret variables are written to Vault.
+- Existing database-backed secrets can be migrated with the **Migrate secrets to Vault** action in Instance Settings.
+- The reverse migration (**Migrate secrets to Database**) is also available to roll back.
+
+### Azure Key Vault backend
+
+Windmill can also store secrets in [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault). Configuration requires the Key Vault URL and service principal credentials (tenant ID, client ID, client secret) with the necessary `Get`/`Set`/`Delete` permissions on the vault.
+
+The migration and fail-closed semantics are identical to the Vault backend.
+
+## Sensitive and secret inputs
+
+Resource, script and flow inputs can also be marked as sensitive so that their values are treated as secrets at submission time — not only when stored long-term.
+
+### Password/sensitive string fields
+
+Any string field on a resource, script parameter or flow input can be flagged as **Password / Sensitive** in the schema editor. The field renders as a masked input in the auto-generated form and an eye icon lets users toggle visibility.
+
+**Multiline secrets** (SSH private keys, PEM certificates, multi-line tokens) are supported: the field starts as a single-line password input and automatically switches to a masked textarea when multiline content is detected (pasted content with newlines, Enter pressed inside the field, or values already containing newlines). You can also force the textarea mode from the start by setting **Min textarea rows** > 1 in the schema editor.
+
+### Sensitive fields on non-string types
+
+Object fields in script UI customization and flow inputs can also be marked **Is sensitive**. On submit, the value is stored as an ephemeral secret variable and replaced in the args with a `$jsonvar:<path>` reference. At job execution, Windmill fetches the variable and JSON-parses the value so the script still receives the original object — identical to how `$var:` works for string secrets, but for arbitrary JSON payloads.
+
+`$jsonvar:` references are also clickable in the job args viewer for users with access.
+
+### Multiple secret fields per resource
+
+When creating a resource, you can mark **multiple fields** as secret (e.g. both `api_key` and `refresh_token` on the same resource). Windmill creates one secret variable per sensitive field:
+
+- If a single field is marked secret, a single variable is created at the resource path (unchanged behavior).
+- If multiple fields are marked secret, each gets its own variable with `_<field_name>` appended to the resource path.
+
+This makes it easy to rotate individual credentials without touching the others, and keeps each sensitive value auditable on its own.
+
 ## Accessing a variable from a script
 
 <div className="grid grid-cols-2 gap-6 mb-4">

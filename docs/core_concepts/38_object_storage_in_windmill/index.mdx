@@ -420,6 +420,25 @@ This allows the handling of large-scale logs with minimal database impact, suppo
 
 For large logs storage (and display) and cache for distributed Python jobs, you can [connect your instance to a bucket](../20_jobs/index.mdx#large-job-logs-management). This feature is at the Instance-level, and has no overlap with the Workspace object storage.
 
+When instance object storage is configured from the UI, the **Monitor logs on S3** toggle (`monitor_logs_on_s3`) defaults to **on** — meaning Windmill mirrors service logs and job log chunks to the configured bucket for long-term storage and search. You can explicitly disable it if you prefer to keep logs on disk/DB only.
+
+### Storage usage by folder
+
+The Object Storage panel in **Instance settings** includes a **Storage usage by folder** view. Click **Show usage** (or **Refresh**) to list the top-level prefixes of your instance bucket with their total size, sorted largest first. Root-level files are aggregated under `(root files)`. This is a superadmin-only tool and is gated on the `parquet` build feature.
+
+The listing operation has a 30s timeout and is safe to run on production buckets — it only enumerates objects, it does not mutate anything.
+
+### Manual log cleanup
+
+Below the usage panel, **Clean up expired logs** triggers the same cleanup logic normally run by the cron job, on demand:
+
+- Deletes expired **service log** rows (and their associated log files on disk and in S3) in batches of 2000.
+- Deletes expired **job log** rows using the same transactional `SKIP LOCKED` semantics as the background monitor, then batches the S3 deletes (up to 1000 objects per `DeleteObjects` request) for a ~1000x speedup over per-object deletes.
+
+The panel shows a live progress bar, per-phase counters, the number of S3 objects deleted, errors, and the last-run timestamp. Polling runs every second and resumes automatically if you reload the page while a cleanup is in progress. Only one cleanup can run at a time (a second request returns `400 already running`).
+
+Manual cleanup always deletes from S3, even if `MONITOR_LOGS_ON_OBJECT_STORE` is currently off, so you can use it to reclaim orphaned objects from a previous configuration.
+
 ### Instance object storage distributed cache for Python, Rust, Go
 
 [Workers](../../core_concepts/9_worker_groups/index.mdx) cache aggressively the [dependencies](../../advanced/6_imports/index.mdx) (and each version of them since every script has its own lockfile with a specific version for each dependency) so they are never pulled nor installed twice on the same worker. However, with a bigger cluster, for each script, the likelihood of being seen by a worker for the first time increases (and the cache hit ratio decreases).

@@ -153,6 +153,30 @@ wmill sync push [options]
 
 Note that you can set the default TypeScript language and explicitly exclude (or include) specific files or folders to be taken into account with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
 
+### Generating and inspecting the config
+
+`wmill init` generates a fully commented `wmill.yaml` with every option documented inline and grouped by category. Advanced / opt-in options are included as commented-out examples, so you can discover and enable them without having to look them up.
+
+`wmill config` prints a structured reference table of all config options with their types, defaults, and descriptions. Pair it with `--json` for programmatic consumption (for example, from an AI agent that edits `wmill.yaml`).
+
+```bash
+wmill config            # human-readable reference
+wmill config --json     # JSON reference, one entry per option
+```
+
+A JSON Schema is also committed at [`cli/wmill.schema.json`](https://github.com/windmill-labs/windmill/blob/main/cli/wmill.schema.json) for editor autocomplete and validation of your `wmill.yaml`.
+
+### Non-dotted paths (`nonDottedPaths`)
+
+By default, local files for flows, apps, and raw apps are stored under folders named `<path>__flow/`, `<path>__app/`, and `<path>__raw_app/` (using `__flow`/`__app`/`__raw_app` suffixes rather than dotted extensions). This avoids filesystem edge-cases on Windows and with tooling that assumes a `.flow` extension means a file.
+
+```yaml
+# wmill.yaml
+nonDottedPaths: true   # default for new workspaces created with `wmill init --use-default`
+```
+
+Set `nonDottedPaths: false` to fall back to legacy `.flow`/`.app`/`.raw_app` folder names.
+
 ### Basic configuration
 
 ```yaml
