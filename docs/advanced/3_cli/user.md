@@ -117,7 +117,7 @@ wmill group remove-user data-team bob
 
 ## Audit logs
 
-The `wmill audit` commands read from the workspace [audit log](../../core_concepts/42_audit_logs/index.mdx) (Enterprise Edition).
+The `wmill audit` commands read from the workspace [audit log](../../core_concepts/14_audit_logs/index.mdx) (Enterprise Edition).
 
 ```bash
 wmill audit list [options]

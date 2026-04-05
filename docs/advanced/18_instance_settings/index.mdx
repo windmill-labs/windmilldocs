@@ -307,7 +307,7 @@ Write a nuget.config file to set custom/private package sources and credentials.
 
 ### Docker registries
 
-Credentials used by `crane` when pulling private container images for [sandbox](../../core_concepts/55_sandbox/index.mdx) snapshot builds. Provide a JSON array of `{registry, username, password}` objects, for example:
+Credentials used by `crane` when pulling private container images for [sandbox](../../core_concepts/58_ai_sandbox/index.mdx) snapshot builds. Provide a JSON array of `{registry, username, password}` objects, for example:
 
 ```json
 [
@@ -486,7 +486,7 @@ Use this when AI traffic must flow through a corporate proxy or gateway that exp
 
 ### OpenTelemetry (OTEL)
 
-Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelemetry data sent to the collector consists of traces, logs, and [metrics](../../misc/9_guides/otel/index.mdx#metrics). You can independently toggle each signal (Tracing, Logs, Metrics) in the instance settings.
+Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelemetry data sent to the collector consists of traces, logs, and [metrics](../../misc/9_guides/otel/index.mdx#exporting-windmill-metrics-via-otlp). You can independently toggle each signal (Tracing, Logs, Metrics) in the instance settings.
 
 The transport protocol can also be selected from a dropdown: **grpc** (default, port 4317) or **http/protobuf** (port 4318, sets `OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf`). Use `http/protobuf` when your collector or network environment does not support gRPC. Follow this [guide](../../misc/9_guides/otel/index.mdx) for an example setup.
 

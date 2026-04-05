@@ -8,7 +8,7 @@ The CLI can run scripts and flows against a remote workspace without deploying t
 
 ## `wmill script preview`
 
-Preview a local script file against the remote workspace. Supports both regular scripts and [codebase](../../core_concepts/42_code_sharing/index.md) scripts (which are bundled before running).
+Preview a local script file against the remote workspace. Supports both regular scripts and [codebase](../../core_concepts/33_codebases_and_bundles/index.mdx) scripts (which are bundled before running).
 
 ```bash
 wmill script preview <path> [options]
