@@ -99,16 +99,14 @@ export default function HeroExample() {
 	return (
 		<div className="relative">
 			<LandingSection bgClass="">
-				<div className="w-full gap-6 flex flex-col">
-					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-slate-500 to-slate-800 dark:from-slate-100 dark:to-slate-500 ">
+				<div className="w-full flex flex-col">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 						Get a tour of Windmill
-					</h1>
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+						Learn Windmill's core features through hands-on video tutorials covering scripts, workflows, apps, and local dev.
+					</p>
 					<div className="flex flex-col gap-4">
-						<div className="flex flex-col gap-2">
-							<p className="text-lg">
-								Learn Windmill's core features through hands-on video tutorials covering scripts, workflows, apps, and local dev.
-							</p>
-						</div>
 						<div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
 							<div className="flex flex-col gap-2">
 								{videoTabs.map((tab, idx) => {
