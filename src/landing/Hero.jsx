@@ -40,7 +40,7 @@ export default function Hero() {
 						<GithubStarCount />
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
-						Build, deploy and monitor{' '}
+						Build, orchestrate, and monitor{' '}
 						<span className="text-blue-500 dark:text-blue-450">
 							internal software
 						</span>{' '}
