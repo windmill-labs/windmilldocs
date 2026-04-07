@@ -9,8 +9,8 @@ interface SeoHeadProps {
 }
 
 export default function SeoHead({
-	title = 'Windmill | Build, deploy and monitor internal software at scale',
-	description = 'Open-source workflow engine to build workflows, data pipelines and internal tools at scale. Self-hostable, for developers and AI, with enterprise security.',
+	title = 'Windmill | The orchestration platform for internal software',
+	description = 'AI lets your entire team build apps, tools, and workflows. Windmill orchestrates them all with enterprise-grade observability and security. Open-source and self-hostable.',
 	url = 'https://www.windmill.dev/',
 	image = 'https://www.windmill.dev/img/og_preview.png'
 }: SeoHeadProps) {

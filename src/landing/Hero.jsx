@@ -40,14 +40,13 @@ export default function Hero() {
 						<GithubStarCount />
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
-						Build, deploy and monitor{' '}
+						The orchestration platform for{' '}
 						<span className="text-blue-500 dark:text-blue-450">
 							internal software
-						</span>{' '}
-						at scale
+						</span>
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						For developers who need real code capabilities without platform engineering overhead.
+						AI lets your entire team build apps, tools, and workflows. Windmill orchestrates them all with enterprise-grade observability and security.
 					</div>
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
@@ -56,11 +55,11 @@ export default function Hero() {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Workflows, internal tools and data pipelines in one platform</span>
+							<span>Build workflows, internal apps and data pipelines at any scale</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Full flexibility of code with Git-based collaboration</span>
+							<span>Full flexibility of code with AI assistance and Git-based collaboration</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
