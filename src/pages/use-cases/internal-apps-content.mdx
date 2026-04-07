@@ -708,11 +708,11 @@ export default function InternalToolsContent({ title, description }) {
 					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
 						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In the Windmill UI</h3>
 						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-							The <Link to="/docs/apps/app_editor" className="text-blue-600 dark:text-blue-400 hover:underline">app editor</Link> lets you build apps with a drag-and-drop canvas, connect components to backend scripts and preview results in real time. Deploy in one click with built-in versioning.
+							The Windmill UI provides a built-in <Link to="/docs/apps/app_editor" className="text-blue-600 dark:text-blue-400 hover:underline">IDE</Link> where you can connect your frontend to your workspace's backend runnables and use <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">AI assistance</Link> to generate your app. Deploy in one click with built-in versioning.
 						</p>
 						<LazyVideo
 							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
-							src="/img/platform/app-builder/platform-app-builder-backend-runnables.webm"
+							src="/img/platform/app-builder/platform-app-builder-windmill-ui.webm"
 						/>
 						<Link
 							to="/platform/app-builder"
@@ -727,11 +727,11 @@ export default function InternalToolsContent({ title, description }) {
 					<motion.div {...stagger(0.1)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
 						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In your local editor</h3>
 						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-							<Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React or Svelte app</Link> built in your local editor. Use the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/script_editor/vs_code_scripts" className="text-blue-600 dark:text-blue-400 hover:underline">VS Code extension</Link> to sync and deploy. Backend scripts can also be developed locally with any editor or AI coding tool.
+							Use <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex skills</Link> to generate frontend and backend runnables locally. <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import React or Svelte apps</Link> and deploy with the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>.
 						</p>
 						<LazyVideo
 							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
-							src="/img/platform/local-dev/platform-local-dev-vscode-extension.webm"
+							src="/img/platform/app-builder/platform-app-builder-local-dev.webm"
 						/>
 						<Link
 							to="/platform/local-dev"
