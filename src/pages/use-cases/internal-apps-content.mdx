@@ -1,6 +1,6 @@
 ---
 title: "How to build internal tools with Windmill"
-description: "How do I build internal tools with Windmill? Write backend scripts in TypeScript, Python or SQL, store data in built-in tables, and deploy a React, Vue or Svelte frontend on a production engine."
+description: "How do I build internal tools with Windmill? Write backend scripts in TypeScript, Python or SQL, store data in built-in tables, and deploy a React or Svelte frontend on a production engine."
 ---
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -15,6 +15,8 @@ import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import BuiltForProduction from '../../components/use-cases/BuiltForProduction';
+import LazyVideo from '../../components/products/LazyVideo';
 import { platformLayers } from '../../landing/platformLayers';
 
 export const fadeIn = {
@@ -102,7 +104,7 @@ export function HeroAnimation() {
 {/* ── Orbit animation: Windmill orchestrating three layers ── */}
 
 export const orbitItems = [
-	{ Icon: LayoutGrid, label: 'Frontend', sublabel: 'React / Vue / Svelte, served by the platform', color: 'from-emerald-400 to-emerald-600', baseAngle: -90, tabIndex: 2 },
+	{ Icon: LayoutGrid, label: 'Frontend', sublabel: 'React / Svelte, served by the platform', color: 'from-emerald-400 to-emerald-600', baseAngle: -90, tabIndex: 2 },
 	{ Icon: Database, label: 'Data', sublabel: 'Built-in integrations to your existing resources', color: 'from-amber-400 to-amber-600', baseAngle: 30, tabIndex: 1 },
 	{ Icon: Code2, label: 'Backend', sublabel: 'Scripts in 20+ languages, run in dedicated workers', color: 'from-blue-400 to-blue-600', baseAngle: 150, tabIndex: 0 },
 ];
@@ -234,72 +236,13 @@ export function StackAnimation({ activeTab = 0, onSelect }) {
 	);
 }
 
-{/* ── Feature panel component ── */}
-
-export function FeaturePanel({ features }) {
-	const [active, setActive] = useState(0);
-	return (
-		<div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
-			{/* Left: clickable list */}
-			<div className="flex flex-col gap-2">
-				{features.map((feat, i) => (
-					<button
-						key={feat.title}
-						onClick={() => setActive(i)}
-						className={`flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-colors border ${
-							i === active
-								? 'bg-blue-600 text-white border-blue-600'
-								: 'bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-						}`}
-					>
-						<feat.icon className={`w-5 h-5 flex-shrink-0 ${i === active ? 'text-white' : 'text-blue-500'}`} />
-						<span className="font-medium text-sm">{feat.title}</span>
-					</button>
-				))}
-			</div>
-
-			{/* Right: selected content */}
-			<div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 relative overflow-hidden">
-				{features.map((feat, i) => (
-					<div
-						key={feat.title}
-						className={`transition-opacity duration-200 ${i === active ? 'opacity-100 relative' : 'opacity-0 absolute inset-0 pointer-events-none p-8'}`}
-					>
-						<div className="flex items-center gap-3 mb-4">
-							<div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-								<feat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-							</div>
-							<h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{feat.title}</h3>
-						</div>
-						<p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{feat.desc}</p>
-						{feat.image ? (
-							<img src={feat.image} alt={feat.title} className="rounded-lg border border-gray-200 dark:border-gray-700 w-full" />
-						) : (
-							<div className="w-full h-48 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-								<span className="text-gray-400 dark:text-gray-500 text-sm">Screenshot coming soon</span>
-							</div>
-						)}
-						{feat.docLink && (
-							<div className="flex justify-end mt-3">
-								<Link to={feat.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
-									<BookOpen className="w-4 h-4" /> Read the docs
-								</Link>
-							</div>
-						)}
-					</div>
-				))}
-			</div>
-		</div>
-	);
-}
-
 {/* ── Three-tab card content ── */}
 
-export const backendCard = { title: 'Scripts in 20+ languages with 100+ integrations', desc: <span>Write backend logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Connect to PostgreSQL, Slack, GitHub, Stripe and <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">100+ services</Link> out of the box. Credentials are stored as shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Each script runs on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> with full isolation.</span>, image: '/img/money-pages/20+languages.webp', docLink: '/docs/getting_started/scripts_quickstart' };
+export const backendCard = { title: 'Backend runnables in 20+ languages', desc: <span>Each app component calls <Link to="/use-cases/scripts" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> and <Link to="/use-cases/workflows" className="text-blue-600 dark:text-blue-400 hover:underline">workflows</Link> that run server-side on dedicated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link>. Write business logic in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, Go, SQL, Bash</Link> and more. Scripts connect to external services through shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> with <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">100+ integrations</Link> available out of the box.</span>, image: '/img/money-pages/20+languages.webp', docLink: '/platform/script-editor', docLabel: 'Learn more about the script editor' };
 
-export const dataCard = { title: 'Connect to your databases', desc: <span>Connect to PostgreSQL, MySQL, BigQuery, Snowflake or any database via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Query S3 files with <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>, manage datasets with <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link>. Use <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">built-in data tables</Link> for zero-setup SQL storage.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/docs/core_concepts/persistent_storage' };
+export const dataCard = { title: 'Built-in data layer', desc: <span>Apps read and write data through backend scripts that query your databases (PostgreSQL, MySQL, BigQuery, Snowflake) via shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. For simpler use cases, <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">built-in data tables</Link> provide zero-setup SQL storage directly in the platform. For analytics workloads, query S3 files with <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link> or manage datasets with <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link>.</span>, image: '/img/money-pages/ducklake.webp', docLink: '/platform/datatables', docLabel: 'Learn more about data tables' };
 
-export const frontendCard = { title: 'Full-code app builder', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React, Vue or Svelte app</Link>. Full control over the frontend with <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS editing</Link>, theming and no ceiling on what you can build. Your app connects directly to backend scripts and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>, no API layer to build.</span>, image: '/img/money-pages/frontend.webp', docLink: '/docs/react_vue_svelte_apps/react' };
+export const frontendCard = { title: 'Full-code frontend', desc: <span><Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import your own React or Svelte app</Link> with full control over <Link to="/docs/apps/css_editor" className="text-blue-600 dark:text-blue-400 hover:underline">CSS</Link>, theming and layout. The frontend runs on the platform and calls backend scripts and <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link> directly, no API layer to build or maintain.</span>, image: '/img/money-pages/frontend.webp', docLink: '/platform/app-builder', docLabel: 'Learn more about the app builder' };
 
 export function SingleCard({ card }) {
 	return (
@@ -309,7 +252,7 @@ export function SingleCard({ card }) {
 				<p className="text-base text-gray-600 dark:text-gray-300 mb-4">{card.desc}</p>
 				{card.docLink && (
 					<Link to={card.docLink} className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline !no-underline">
-						<BookOpen className="w-4 h-4" /> Read the docs
+						<BookOpen className="w-4 h-4" /> {card.docLabel || 'Read the docs'}
 					</Link>
 				)}
 			</div>
@@ -348,7 +291,7 @@ export function BuildIntegrateTabs() {
 						Backend, data and frontend in one platform
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Full code flexibility to build what you need, built-in integrations to connect your resources. No wiring required.
+						Backend scripts, data connections and frontend components live in the same platform. Each layer connects natively, no glue code or separate services to manage.
 					</p>
 				</motion.div>
 				<div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] lg:gap-0 gap-12 items-center">
@@ -678,17 +621,6 @@ export function BoilerplateAnimation() {
 	);
 }
 
-{/* ── Monitor feature list ── */}
-
-export const monitorFeatures = [
-	{ icon: History, title: 'Full deployment history', desc: <span><Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy</Link> your app in one click from the UI or via CLI. Backend logic runs on dedicated workers, frontend is served by the platform. Every deployment is tracked with who deployed what, when and which version. Roll back to any previous deployment instantly.</span>, image: '/img/money-pages/deployment-history.webp', docLink: '/docs/core_concepts/draft_and_deploy' },
-	{ icon: Eye, title: 'Full execution history', desc: <span>Every script and flow run is logged with input, output, duration and errors. Search, filter and replay past <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">executions</Link> to debug issues in seconds.</span>, image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
-	{ icon: Activity, title: 'Error handlers & retries', desc: <span>Configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retry count with exponential backoff</Link>. Custom error handler scripts per step. Apps that don't break silently at 2am.</span>, image: '/img/money-pages/error-handler.webp', docLink: '/docs/flows/retries' },
-	{ icon: Lock, title: 'RBAC & SSO', desc: <span>Granular <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> control who can build, view and execute apps. SSO with SAML, OAuth and LDAP.</span>, image: '/img/money-pages/sso.webp', docLink: '/docs/core_concepts/roles_and_permissions' },
-	{ icon: Shield, title: 'Audit logs', desc: <span>Track every user action: logins, permission changes, script edits, resource access. Full <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit trail</Link> for compliance, security reviews and incident investigations.</span>, image: '/img/money-pages/auditlogs.webp', docLink: '/docs/core_concepts/audit_logs' },
-	{ icon: GitBranch, title: 'Git sync', desc: <span>Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link>. Push and pull scripts, flows and apps as code. Use your existing CI/CD and code review workflows.</span>, image: '/img/money-pages/gitsync.webp', docLink: '/docs/advanced/deploy_gh_gl' },
-];
-
 {/* ── Main page ── */}
 
 export default function InternalToolsContent({ title, description }) {
@@ -709,7 +641,7 @@ export default function InternalToolsContent({ title, description }) {
 						<div className="mt-8 flex flex-col gap-3">
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
-								<span><span className="text-blue-500">Build</span> <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">backend</Link> in 20+ languages, <Link to="/docs/full_code_apps/frontend" className="text-blue-500 hover:underline !no-underline">and React, Vue or Svelte</Link> frontends</span>
+								<span><span className="text-blue-500">Build</span> <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-500 hover:underline !no-underline">backend</Link> in 20+ languages, <Link to="/docs/full_code_apps/frontend" className="text-blue-500 hover:underline !no-underline">and React or Svelte</Link> frontends</span>
 							</div>
 							<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 								<span className="text-blue-500 font-bold">✓</span>
@@ -734,23 +666,86 @@ export default function InternalToolsContent({ title, description }) {
 
 			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
+			{/* ═══════════════ What is an internal app on Windmill? ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							What is an internal app on Windmill?
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							An internal app on Windmill is a <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">React or Svelte frontend</Link> backed by Windmill backend-runnables running on <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">dedicated workers</Link>. The platform serves the frontend, runs the backend, stores the data and handles auth, permissions, versioning and observability.
+						</p>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							The backend runnables are Windmill server-side <Link to="/use-cases/scripts" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> and <Link to="/use-cases/workflows" className="text-blue-600 dark:text-blue-400 hover:underline">workflows</Link>, which connect to your databases and APIs through shared <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. The frontend calls them directly, no API layer to build, no infrastructure to manage.
+						</p>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/app-builder/platform-app-builder-backend-runnables.webm"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
 			{/* ═══════════════ 1. Build & Integrate (3 tabs) ═══════════════ */}
 			<BuildIntegrateTabs />
 
-			{/* ═══════════════ 2. Monitor ═══════════════ */}
-			<div className="">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-					<motion.div {...fadeIn} className="mb-12">
-						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							Production-grade observability and enterprise controls
-						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Everything you need to run tools in production while meeting enterprise observability and security requirements. Every execution is logged. Every error is caught. Every action is audited. RBAC, SSO and version control are built in.
+			{/* ═══════════════ Two ways to create internal apps ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Two ways to create internal apps
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Build apps directly in the Windmill UI or develop locally with your own editor and framework. Both paths deploy to the same platform.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+					{/* Windmill UI */}
+					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In the Windmill UI</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							The Windmill UI provides a built-in <Link to="/docs/apps/app_editor" className="text-blue-600 dark:text-blue-400 hover:underline">IDE</Link> where you can connect your frontend to your workspace's backend runnables and use <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">AI assistance</Link> to generate your app. Deploy in one click with built-in versioning.
 						</p>
+						<LazyVideo
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							src="/img/platform/app-builder/platform-app-builder-windmill-ui.webm"
+						/>
+						<Link
+							to="/platform/app-builder"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about the app builder
+						</Link>
 					</motion.div>
-					<FeaturePanel features={monitorFeatures} />
+
+					{/* Local development */}
+					<motion.div {...stagger(0.1)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In your local editor</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Use <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">Claude Code or Codex skills</Link> to generate frontend and backend runnables locally. <Link to="/docs/react_vue_svelte_apps/react" className="text-blue-600 dark:text-blue-400 hover:underline">Import React or Svelte apps</Link> and deploy with the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>.
+						</p>
+						<LazyVideo
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							src="/img/platform/app-builder/platform-app-builder-local-dev.webm"
+						/>
+						<Link
+							to="/platform/local-dev"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about local development
+						</Link>
+					</motion.div>
 				</div>
 			</div>
+
+			{/* ═══════════════ 2. Built for production ═══════════════ */}
+			<BuiltForProduction variant="app" />
 
 			{/* ═══════════════ 4. No overhead — animated two-panel ═══════════════ */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
@@ -811,11 +806,11 @@ export default function InternalToolsContent({ title, description }) {
 			{/* ═══════════════ FAQ ═══════════════ */}
 			<div className="">
 				<UseCaseFAQ faqs={[
-					{ question: 'How is Windmill different from Retool?', textAnswer: 'Windmill lets you write backend logic in 20+ languages (TypeScript, Python, Go, SQL, Bash and more) running server-side on dedicated workers. Retool limits you to sandboxed JavaScript. Windmill also includes built-in data tables, a workflow engine with schedules and triggers, Git-based version control, and full self-hosting support. You deploy your own React, Vue or Svelte frontend on the same platform, with a real execution engine underneath.' },
+					{ question: 'How is Windmill different from Retool?', textAnswer: 'Windmill lets you write backend logic in 20+ languages (TypeScript, Python, Go, SQL, Bash and more) running server-side on dedicated workers. Retool limits you to sandboxed JavaScript. Windmill also includes built-in data tables, a workflow engine with schedules and triggers, Git-based version control, and full self-hosting support. You deploy your own React or Svelte frontend on the same platform, with a real execution engine underneath.' },
 					{ question: 'How is Windmill different from Lovable?', textAnswer: 'Lovable generates full-stack apps with AI, but the result is a standalone codebase with no execution engine, observability or enterprise controls. Windmill gives you the same AI-powered development (via Claude Code and Codex integration) but runs your code on a production engine with execution history, error handlers, RBAC, SSO, audit logs and built-in data storage. Apps built on Windmill are production-grade, not prototypes.' },
 					{ question: 'Can I use Claude Code to build internal tools on Windmill?', textAnswer: 'Yes. Windmill integrates Claude Code and Codex directly into the development experience. AI generates backend scripts and app configurations that deploy instantly on the Windmill platform with full observability, versioning and permissions. You vibe-code the logic, Windmill handles the production infrastructure.' },
 					{ question: 'Do I need to set up an external database?', textAnswer: 'Windmill requires a PostgreSQL database for its core storage. On top of that, Data Tables provide workspace-scoped SQL storage with safe parameterized queries, no additional setup beyond the instance database. For heavier workloads you can also connect external databases (MySQL, BigQuery, Snowflake) via shared resources.' },
-					{ question: 'Can I import my own React app into Windmill?', textAnswer: 'Yes. You can import full React, Vue or Svelte apps that run inside Windmill with access to the same backend scripts, data tables and permissions.' },
+					{ question: 'Can I import my own React app into Windmill?', textAnswer: 'Yes. You can import full React or Svelte apps that run inside Windmill with access to the same backend scripts, data tables and permissions.' },
 					{ question: 'Can I self-host Windmill?', textAnswer: 'Yes. Windmill is open source and can be self-hosted on your own infrastructure, including air-gapped deployments. The Community Edition is free. Enterprise features like SSO, audit logs and priority support require a paid plan.' },
 				]} />
 			</div>

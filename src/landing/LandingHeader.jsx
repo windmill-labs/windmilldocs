@@ -28,7 +28,6 @@ import {
 	Code, GitFork, LayoutDashboard, Database, GitBranch, Terminal,
 	Activity, ShieldCheck, Container, Cpu, Server, Zap,
 } from 'lucide-react';
-import Banner from './Banner';
 import Link from '@docusaurus/Link';
 
 const productCategories = [
@@ -639,8 +638,7 @@ export default function LandingHeader() {
 					</Popover.Panel>
 				</Transition>
 			</Popover>
-			<Banner />
-			<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
+				<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
 		</div>
 	);
 }
