@@ -48,7 +48,7 @@ export default function WhatYouCanBuild() {
 					2 ways to build with Windmill
 				</h2>
 				<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-					Windmill is code first. Whether you use the built-in UI or your local editor, everything you build is real code. Engineers can also manage the whole infrastructure as code.
+					Windmill is code first. Whether you use the built-in UI or your local editor, everything you build is real code. Engineers can also manage the whole <Link to="/docs/core_concepts/infrastructure_as_code">infrastructure as code</Link>.
 				</p>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
