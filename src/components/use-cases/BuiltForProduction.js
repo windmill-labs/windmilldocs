@@ -17,8 +17,8 @@ const stagger = (delay = 0) => ({
 });
 
 export default function BuiltForProduction({ variant = 'script' }) {
-	const label = variant === 'app' ? 'app' : variant === 'workflow' ? 'workflow' : 'script';
-	const labelCap = variant === 'app' ? 'App' : variant === 'workflow' ? 'Workflow' : 'Script';
+	const label = variant === 'agent' ? 'agent' : variant === 'app' ? 'app' : variant === 'workflow' ? 'workflow' : 'script';
+	const labelCap = variant === 'agent' ? 'Agent' : variant === 'app' ? 'App' : variant === 'workflow' ? 'Workflow' : 'Script';
 
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
