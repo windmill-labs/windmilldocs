@@ -74,7 +74,7 @@ export default function CodeFirstSection() {
 						From scripts to infrastructure, everything lives in code
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-						Your entire workspace is versioned in Git. Teams can build from the UI or locally, while engineers manage infrastructure, deployments and environments with full code flexibility.
+						Your entire workspace is <Link to="/platform/deployment-versioning" className="text-blue-600 dark:text-blue-400 hover:underline">versioned in Git</Link>. Teams can build from the UI or locally, while engineers manage infrastructure, deployments and environments with full code flexibility.
 					</p>
 					<Link
 						to="/docs/advanced/git_sync"

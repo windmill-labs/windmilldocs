@@ -17,7 +17,7 @@ export default function ObservabilitySection() {
 						Full observability on every execution
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Every job is <Link to="/platform/observability">logged, tracked and searchable</Link>. Monitor runs from a central dashboard with granular filtering, track every action with audit logs, and get alerts on Slack, email or Teams when things go wrong.
+						Every execution is <Link to="/platform/observability">logged, tracked and searchable</Link>. Real-time logs, granular filtering, audit trails, and alerts on Slack, email or Teams when things go wrong.
 					</p>
 				</div>
 			</div>

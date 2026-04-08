@@ -6,7 +6,7 @@ export default function WorkspaceSection() {
 		<div className="max-w-7xl mx-auto px-4 lg:px-8 py-16">
 			<div className="mb-12">
 				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					Shared workspaces for your entire team
+					Shared workspaces to orchestrate, scope and secure your team's work
 				</h2>
 				<p className="text-lg text-gray-600 dark:text-gray-300">
 					Everything your team builds lives in <Link to="/platform/rbac">workspaces</Link> with granular permissions, shared resources and built-in databases.
