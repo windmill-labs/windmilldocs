@@ -44,7 +44,7 @@ export default function Hero() {
 						<span className="text-blue-500 dark:text-blue-450">
 							orchestration platform
 						</span>
-						{' '}for enterprises
+						{' '}for enterprise
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
 						Built for teams to create and collaborate on internal software. Loved by engineers for full code flexibility and control over their infrastructure.
