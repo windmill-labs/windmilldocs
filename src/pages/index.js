@@ -6,23 +6,17 @@ import SeoHead from '../components/SeoHead';
 import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
-
-
 import LogoClouds from '../landing/LogoClouds';
 import TestimonialsSection from '../landing/TestimonialsSection';
-import CorePrinciple from '../landing/CorePrinciple';
-import ScriptLightSection from '../landing/ScriptLightSection';
-import AppLightSection from '../landing/AppLightSection';
-import FlowLightSection from '../landing/FlowLightSection';
-import TutorialSection from '../landing/TutorialSection';
 import Head from '@docusaurus/Head';
-
-
-import MobileTutorialSection from '../landing/MobileTutorialSection';
 import WhatYouCanBuild from '../landing/WhatYouCanBuild';
+import CodeFirstSection from '../landing/CodeFirstSection';
+import HowYouBuild from '../landing/HowYouBuild';
+
 import WorkspaceSection from '../landing/WorkspaceSection';
 import ObservabilitySection from '../landing/ObservabilitySection';
-import { BenchmarkCard } from '../landing/DeveloperExperienceSection';
+import PerformanceSection from '../landing/PerformanceSection';
+import CorePrinciple from '../landing/CorePrinciple';
 
 
 const organizationSchema = {
@@ -55,17 +49,11 @@ function HomepageHeader() {
 			<Hero />
 			<LogoClouds />
 			<WhatYouCanBuild />
+			<HowYouBuild />
+			<CodeFirstSection />
 			<WorkspaceSection />
 			<ObservabilitySection />
-			<div className="max-w-7xl mx-auto px-4 lg:px-8 py-16">
-				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-					Run at any scale with best performance
-				</h2>
-				<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-					We engineered Windmill to be the fastest orchestrator in the industry. From a single-node VPS to 1,000-node K8s clusters, auto-scale on demand with dedicated worker groups.
-				</p>
-				<BenchmarkCard />
-			</div>
+			<PerformanceSection />
 			<CorePrinciple />
 			<TestimonialsSection />
 			<HeroExample />

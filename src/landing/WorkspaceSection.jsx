@@ -19,7 +19,7 @@ export default function WorkspaceSection() {
 						Roles and permissions
 					</h3>
 					<p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-						Built-in roles from operator to superadmin. Organize with groups and folders, control access with path-based ACLs.
+						Built-in roles from operator to superadmin. Organize with groups and folders, control who can build or execute thanks to <Link to="/platform/rbac" className="text-blue-600 dark:text-blue-400 hover:underline">path-based ACLs</Link>.
 					</p>
 					{/* placeholder: screenshot showing the RBAC UI — role assignment panel, groups and folder permissions */}
 					<div className="rounded-lg bg-gray-100 dark:bg-gray-800 aspect-video" />
@@ -39,7 +39,7 @@ export default function WorkspaceSection() {
 						Databases
 					</h3>
 					<p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-						Set up PostgreSQL databases at the workspace level so team members can build scripts, workflows and apps on top of shared data.
+						Set up <Link to="/platform/datatables" className="text-blue-600 dark:text-blue-400 hover:underline">PostgreSQL databases</Link> at the workspace level so team members can build scripts, workflows and apps on top of shared data.
 					</p>
 					{/* placeholder: screenshot showing the data tables UI — spreadsheet view with columns, rows and query panel */}
 					<div className="rounded-lg bg-gray-100 dark:bg-gray-800 aspect-video" />

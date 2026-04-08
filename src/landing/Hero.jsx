@@ -46,7 +46,7 @@ export default function Hero() {
 						</span>
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						Built for teams to create and share their internal software. Loved by engineers for full code flexibility and control over their infrastructure.
+						Built for teams to create and collaborate on internal software. Loved by engineers for full code flexibility and control over their infrastructure.
 					</div>
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
