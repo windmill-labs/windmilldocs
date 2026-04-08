@@ -34,19 +34,19 @@ export default function Hero() {
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
 			<RadialBlur />
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl px-8 mx-auto py-16">
+			<div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 max-w-7xl px-8 mx-auto py-16">
 				<div>
 					<div className="flex flex-row items-end gap-8">
 						<GithubStarCount />
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
-						The orchestration platform for{' '}
+						Code-first orchestration platform for{' '}
 						<span className="text-blue-500 dark:text-blue-450">
-							internal software
+							enterprises
 						</span>
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						AI lets your entire team build apps, tools, and workflows. Windmill orchestrates them all with enterprise-grade observability and security.
+						Built for teams to create and share their internal software. Loved by engineers for full code flexibility and control over their infrastructure.
 					</div>
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
@@ -55,11 +55,11 @@ export default function Hero() {
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Build workflows, internal apps and data pipelines at any scale</span>
+							<span>Workflows, internal apps and data pipelines in one platform</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Full flexibility of code with AI assistance and Git-based collaboration</span>
+							<span>Full flexibility of code and Git-based collaboration</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
