@@ -3,12 +3,12 @@ import Link from '@docusaurus/Link';
 import { ArrowRight, Code, LayoutDashboard, GitFork, Bot, Workflow, Clock } from 'lucide-react';
 
 const allUseCases = [
-	{ label: 'Scripts', subtitle: 'Write scripts in TypeScript, Python, Go, Bash, SQL and trigger them from webhooks, schedules, queues or the auto-generated UI.', to: '/use-cases/scripts', cover: '/img/money-pages/scripts-preview.webp', icon: Code },
-	{ label: 'Workflows', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic.', to: '/use-cases/workflows', cover: '/img/money-pages/parallel-branches.webp', icon: Workflow },
-	{ label: 'Internal apps', subtitle: 'Build production-grade internal apps with backend scripts, data tables and React, Vue or Svelte frontends.', to: '/use-cases/internal-apps', cover: '/img/money-pages/frontend.webp', icon: LayoutDashboard },
+	{ label: 'Scripts', subtitle: 'Write scripts in TypeScript, Python, Go, Bash, and 20+ languages, and trigger them from webhooks, schedules, queues or the auto-generated UI.', to: '/use-cases/scripts', cover: '/img/money-pages/scripts-preview.webp', icon: Code },
+	{ label: 'Workflows', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic. Build visually with the DAG editor or define workflows entirely as code in TypeScript or Python.', to: '/use-cases/workflows', cover: '/img/money-pages/parallel-branches.webp', icon: Workflow },
+	{ label: 'Internal apps', subtitle: 'Build full-code internal apps using Windmill scripts or workflows as backend, and React or Svelte as frontend frameworks.', to: '/use-cases/internal-apps', cover: '/img/money-pages/frontend.webp', icon: LayoutDashboard },
 	{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.webp', icon: GitFork },
 	{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.webp', icon: Bot },
-	{ label: 'Scheduled tasks', subtitle: 'Run cron jobs with a visual builder, execution history, error handlers, recovery handlers and alerting.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedule.webp', icon: Clock },
+	{ label: 'Scheduled tasks', subtitle: 'Turn any script or workflow into a scheduled task. Built-in cron builder with execution history, recovery handlers and alerting.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedule.webp', icon: Clock },
 ];
 
 export default function WhatYouCanBuild() {
