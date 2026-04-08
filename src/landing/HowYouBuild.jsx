@@ -52,7 +52,7 @@ export default function HowYouBuild() {
 						Windmill provides built-in <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script editor</Link>, <Link to="/platform/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link> and <Link to="/platform/app-builder" className="text-blue-600 dark:text-blue-400 hover:underline">app builder</Link> to build directly from the browser.
 					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-						To <Link to="/platform/local-dev" className="text-blue-600 dark:text-blue-400 hover:underline">build locally</Link>, use the CLI, the VS Code extension, and built-in AI skills, then sync to your remote workspace with <code className="text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">wmill sync push</code>.
+						To <Link to="/platform/local-dev" className="text-blue-600 dark:text-blue-400 hover:underline">build locally</Link> with Claude Code or Codex, use the CLI and built-in AI skills. You can then deploy your work to your remote workspace with <code className="text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">wmill sync push</code>.
 					</p>
 					<CliSnippet />
 					<p className="text-sm text-gray-500 dark:text-gray-400 mt-4">

@@ -40,10 +40,11 @@ export default function Hero() {
 						<GithubStarCount />
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
-						Code-first orchestration platform for{' '}
+						Code-first{' '}
 						<span className="text-blue-500 dark:text-blue-450">
-							enterprises
+							orchestration platform
 						</span>
+						{' '}for enterprises
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
 						Built for teams to create and collaborate on internal software. Loved by engineers for full code flexibility and control over their infrastructure.

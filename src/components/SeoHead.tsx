@@ -9,8 +9,8 @@ interface SeoHeadProps {
 }
 
 export default function SeoHead({
-	title = 'Windmill | The orchestration platform for internal software',
-	description = 'AI lets your entire team build apps, tools, and workflows. Windmill orchestrates them all with enterprise-grade observability and security. Open-source and self-hostable.',
+	title = 'Windmill | Code-first orchestration platform for enterprises',
+	description = 'Built for teams to create and collaborate on internal software. Loved by engineers for full code flexibility and control over their infrastructure. Open-source and self-hostable.',
 	url = 'https://www.windmill.dev/',
 	image = 'https://www.windmill.dev/img/og_preview.png'
 }: SeoHeadProps) {

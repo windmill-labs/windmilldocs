@@ -8,7 +8,7 @@ export default function PerformanceSection() {
 				The fastest orchestrator in the industry
 			</h2>
 			<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-				Scale from a single-node VPS to 1,000-node K8s clusters. Engineers configure dedicated worker groups, GPU workers and autoscaling policies to match their infrastructure needs.
+				We engineered Windmill to be the fastest orchestrator in the industry, ensuring your most demanding workloads never bottleneck. From a single-node VPS to 1,000-node K8s clusters, auto-scale on demand or isolate critical tasks with dedicated worker groups on Kubernetes and Docker.
 			</p>
 			<BenchmarkCard />
 		</div>
