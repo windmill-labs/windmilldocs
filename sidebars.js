@@ -386,7 +386,7 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
-							id: 'core_concepts/persistent_storage/volumes',
+							id: 'core_concepts/volumes/index',
 							label: 'Volumes'
 						},
 						{
