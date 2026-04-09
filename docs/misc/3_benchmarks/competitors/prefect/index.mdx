@@ -7,13 +7,13 @@ import { EngineBenchmarks } from '@site/src/components/EngineBenchmarks';
 import DocCard from '@site/src/components/DocCard';
 
 # Prefect benchmarks
-
-<DocCard
-	title="Benchmark conclusions"
-	description="Conclusions for each benchmark run for all engines in all languages and settings"
-	href="/docs/misc/benchmarks/competitors/results/conclusion/"
-/>
-
+<div className="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        title="Benchmark conclusions"
+        description="Conclusions for each benchmark run for all engines in all languages and settings"
+        href="/docs/misc/benchmarks/competitors/results/conclusion/"
+    />
+</div>
 ## Summary
 
 [Prefect](https://prefect.io/) outperformed [Airflow](../airflow/index.mdx) in most benchmarks, especially in long-running tasks, but still exhibited noticeable assignment delays and orchestration latency. It’s adequate for moderate workloads, but not optimized for high-frequency or highly parallel use cases.

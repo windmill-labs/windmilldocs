@@ -9,13 +9,13 @@ import TabItem from '@theme/TabItem';
 import DocCard from '@site/src/components/DocCard';
 
 # Windmill benchmarks
-
-<DocCard
-	title="Benchmark conclusions"
-	description="Conclusions for each benchmark run for all engines in all languages and settings"
-	href="/docs/misc/benchmarks/competitors/results/conclusion/"
-/>
-
+<div className="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        title="Benchmark conclusions"
+        description="Conclusions for each benchmark run for all engines in all languages and settings"
+        href="/docs/misc/benchmarks/competitors/results/conclusion/"
+    />
+</div>
 ## Summary
 
 [Windmill](/) emerged as the most balanced and versatile orchestrator. In normal mode, it excelled at long-running tasks with minimal overhead. In dedicated worker mode, it matched or surpassed the performance of [Temporal](../temporal/index.mdx) and [Hatchet](../hatchet/index.mdx) for lightweight, parallel workloads. With smart caching, cold-start isolation, and adaptive behavior, it consistently delivered top-tier performance across runtimes and load types.

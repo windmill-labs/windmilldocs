@@ -9,13 +9,13 @@ import TabItem from '@theme/TabItem';
 import DocCard from '@site/src/components/DocCard';
 
 # Temporal benchmarks
-
-<DocCard
-	title="Benchmark conclusions"
-	description="Conclusions for each benchmark run for all engines in all languages and settings"
-	href="/docs/misc/benchmarks/competitors/results/conclusion/"
-/>
-
+<div className="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        title="Benchmark conclusions"
+        description="Conclusions for each benchmark run for all engines in all languages and settings"
+        href="/docs/misc/benchmarks/competitors/results/conclusion/"
+    />
+</div>
 ## Summary
 
 [Temporal](https://temporal.io/) consistently showed strong performance across the board, particularly in Go and multi-worker scenarios. It handled lightweight tasks efficiently with low wait times and high utilization. A great fit for teams needing low-latency, high-throughput orchestration, especially when running parallel workloads at scale.
