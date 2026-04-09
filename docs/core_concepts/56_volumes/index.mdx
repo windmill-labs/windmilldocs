@@ -6,7 +6,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Volumes
 
-Volumes provide persistent file storage that can be attached to [scripts](../../getting_started/0_scripts_quickstart/index.mdx) via code annotations. Files written to a volume during a job run are synced back to [object storage](../38_object_storage_in_windmill/index.mdx) and restored on the next run, enabling stateful workflows like caching, model storage, or agent memory.
+Volumes provide [persistent file storage](../11_persistent_storage/index.mdx) that can be attached to [scripts](../../getting_started/0_scripts_quickstart/index.mdx) via code annotations. Files written to a volume during a job run are synced back to [object storage](../38_object_storage_in_windmill/index.mdx) and restored on the next run, enabling stateful workflows like caching, model storage, or agent memory.
 
 Volumes are an [Enterprise](/pricing) feature. On the Community Edition, volumes are limited to 20 volumes per workspace and 50 MB per file.
 

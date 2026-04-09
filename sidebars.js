@@ -380,13 +380,17 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'core_concepts/persistent_storage/volumes',
+							label: 'Volumes'
+						},
+						{
+							type: 'doc',
 							id: 'core_concepts/persistent_storage/key_value_stores',
 							label: 'NoSQL & document databases'
 						}
 					]
 				},
 				'core_concepts/object_storage_in_windmill/index',
-				'core_concepts/volumes/index',
 				'core_concepts/custom_instance_database/index',
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
