@@ -7,7 +7,6 @@ import { useLocation } from '@docusaurus/router';
 import Head from '@docusaurus/Head';
 import Footer from '../../landing/Footer';
 import Roadmap from '../../components/roadmap';
-
 export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;
 	const hasSidebar = sidebar && sidebar.items.length > 0;

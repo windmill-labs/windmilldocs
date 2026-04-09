@@ -12,6 +12,8 @@ This page is part of our section on [Persistent storage & databases](./index.mdx
 
 Windmill **Data Tables** let you store and query relational data with **near-zero setup** using databases managed automatically by Windmill. They provide a simple, safe, workspace-scoped way to leverage SQL inside your workflows without exposing credentials. Data tables can also be used from [full-code apps](../../full_code_apps/4_data_tables/index.mdx) via SQL backend runnables and from the [Database Studio](../../apps/4_app_configuration_settings/database_studio.mdx) app component for browsing and editing data visually.
 
+Data tables are queryable as a **typed** schema from TypeScript, Python and DuckDB clients, and can be browsed, edited and used as a Postgres trigger source without ever exposing the underlying connection string to users.
+
 ---
 
 ## Getting started
@@ -89,6 +91,22 @@ sql = wmill.datatable(':myschema'); // or 'named_datatable:myschema'
 sql`SELECT * FROM mytable`; // refers to myschema.mytable
 ```
 
+### Schemas
+
+Data tables support Postgres schemas to organize tables into logical groupings within a single data table. You can:
+
+- Create, rename and drop schemas from the workspace settings Data Tables UI.
+- Reference tables with the explicit `schema.table` syntax, or switch the default search path from the client by appending `:myschema` after the data table name (`wmill.datatable('named_datatable:myschema')` or `wmill.datatable(':myschema')` for the default data table).
+- Use schemas as an organizational boundary without needing multiple data tables — we recommend keeping the number of data tables per workspace small and using schemas for separation.
+
+### Type-checked queries
+
+The Windmill editor understands your data table's schema and **type-checks queries at edit time** for TypeScript, Python and DuckDB scripts. The introspected schema (tables, columns, types) is surfaced in the editor's SQL IntelliSense, and invalid columns or type mismatches are flagged before the script ever runs.
+
+String-interpolated parameters (e.g. `` sql`SELECT * FROM friend WHERE id = ${user_id}` ``) are always transformed into safe parameterized queries, so type checking covers both the SQL itself and the bindings.
+
+When a data table schema changes, the editor re-introspects it so downstream scripts immediately see the new columns and types without a manual refresh.
+
 ### Assets integration
 
 Data tables are **assets** in Windmill.
@@ -101,6 +119,16 @@ Windmill auto detects if the data table was used in Read (SELECT ... FROM) or Wr
 Assets are displayed as asset nodes in flows, making it easy to visualize data dependencies between scripts.
 
 ![Data Table asset flow](./datatable_images/datatable_asset_flow.png 'Data Table asset flow')
+
+### Database Studio integration
+
+Data tables are a first-class source in the [Database Studio](../../apps/4_app_configuration_settings/database_studio.mdx) app component. Select **Data Table** as the component's `Type`, then use the built-in table picker to choose from the workspace's configured data tables — no resource wiring required.
+
+From there you get the full Database Studio experience (browse rows, inline edit, create/alter tables, schema explorer) on top of your data tables, without exposing the underlying credentials to the app builder or end users.
+
+### Use as a Postgres resource and trigger source
+
+A data table that is backed by a Postgres resource (either the custom instance database or a workspace-managed Postgres resource) can be used anywhere a Postgres resource is expected — most notably as the source of a [Postgres trigger](../46_postgres_triggers/index.mdx). This lets you react to inserts, updates and deletes on tables managed by a data table without handing out the Postgres credentials.
 
 ---
 
@@ -148,3 +176,7 @@ Currently, Windmill does **not** enforce database-level permissions in data tabl
 - Table/row-level permissions may be introduced in a later version.
 
 Windmill ensures secure access by handling database credentials internally.
+
+## Use on agent workers
+
+`wmill.datatable()` and `wmill.ducklake()` work on [agent workers](../28_agent_workers/index.mdx) out of the box, from both TypeScript and Python. Because agent workers do not run the embedded internal Windmill server, the clients automatically detect the execution environment and fall back from the inline preview path to a run-and-wait flow against the main Windmill API, so scripts that use data tables remain portable between regular and agent workers with no code changes.

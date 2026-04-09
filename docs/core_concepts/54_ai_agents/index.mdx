@@ -42,6 +42,16 @@ Each script tool must have a unique name within the AI agent step and contain on
 
 When script tools are configured, the AI agent can decide when and how to use them based on the user's request. It selects the most appropriate tool by name, and issues a tool call with JSON arguments that conform to the tool's input schema. Windmill executes the underlying `script` and returns a JSON result, which is surfaced back to the model as a tool response message and is included in `messages`.
 
+### Websearch tool
+
+AI Agents can be equipped with a built-in websearch tool to retrieve up-to-date information from the web during execution. Websearch is supported on OpenAI, Anthropic, and Google AI (Gemini) providers, and uses each provider's native web search capability (OpenAI's web search tool via the Responses API, Anthropic's web search tool, and Gemini's Google Search grounding). Add it from the tool picker of the AI Agent step — no additional configuration is required.
+
+### Nested AI agents (agent as tool)
+
+An AI Agent can be used as a tool inside another AI Agent step, enabling hierarchical or specialized sub-agents (for example, a coordinator agent that delegates to a research agent). When adding a tool to an AI Agent step, pick "AI Agent" as the tool type and configure the nested agent with its own provider, model, system prompt, tools, memory, and other input transforms — the full input transforms view is available, so the nested agent can be configured just like a regular AI Agent step.
+
+Only two levels of nesting are supported: `flow → AI agent → nested AI agent tool`. A nested AI agent cannot itself contain further AI agent tools; attempting deeper nesting is rejected at runtime.
+
 ### MCP tools
 
 AI Agents can connect to [MCP (Model Context Protocol)](../51_mcp/index.mdx) servers as tools, enabling access to any tools exposed by MCP-compatible servers.
@@ -160,8 +170,17 @@ If the AI agent step is not the last step of your flow, make sure to configure [
 The `new_result_stream` field of an SSE event can contain multiple payloads at a time, make sure to split on line breaks.
 Only complete payloads are streamed, you do not need to handle partial JSON.
 
-#### user_images (optional)
-Allows you to pass images as input to the AI model for analysis, processing, or context. The AI can analyze the image content and respond accordingly. Requires an [S3 object storage](../38_object_storage_in_windmill/index.mdx) to be configured at the workspace level.
+#### user_attachments (optional)
+Allows you to pass images or PDF documents as input to the AI model for analysis, processing, or context. The AI can analyze the attachment content and respond accordingly. Requires an [S3 object storage](../38_object_storage_in_windmill/index.mdx) to be configured at the workspace level.
+
+Supported attachment types:
+- **Images**: analyzed as visual content across all providers that support vision input.
+- **PDF documents**: supported on Anthropic (sent as `document` content blocks), OpenAI (sent as `input_file` blocks), and Google AI (Gemini, natively supported via inline data). The MIME type is detected automatically from the file extension.
+
+The field was previously named `user_images`; flows using the old name continue to work through backward-compatible deserialization.
+
+#### max_iterations (number, optional)
+Maximum number of tool-calling iterations the agent is allowed to perform in a single run. Each iteration corresponds to one round-trip where the model can choose to call tools; once the limit is reached, the agent stops and returns its current output. Use this to bound cost and runtime, or to prevent runaway agents that get stuck in tool-calling loops.
 
 #### max_completion_tokens (number)
 Controls the maximum number of tokens the AI can generate in its response. This helps manage costs and ensures responses stay within desired length limits.
@@ -234,9 +253,29 @@ Only in text output mode, contains the complete conversation history, including:
 
 The `messages` array provides full visibility into the AI's reasoning process and tool usage, which can be useful for debugging, logging, or understanding how the AI reached its conclusion.
 
+#### usage (optional)
+
+Contains token usage information for the AI agent run, accumulated across all iterations (including tool calls). Fields include `input_tokens`, `output_tokens`, `total_tokens`, and — for providers that support prompt caching — `cache_read_input_tokens` and `cache_write_input_tokens`.
+
+```json
+{
+  "usage": {
+    "input_tokens": 1234,
+    "output_tokens": 567,
+    "total_tokens": 1801
+  }
+}
+```
+
+Usage tracking is supported on Anthropic, AWS Bedrock, Google AI (Gemini), OpenAI (Responses API), Azure OpenAI / Chat Completions, and OpenRouter. If a provider does not support the `stream_options.include_usage` parameter, Windmill automatically retries the request without it.
+
 #### wm_stream (optional)
 
 Only included in streaming mode, contains the complete stream.
+
+### Anthropic prompt caching
+
+For Anthropic models (including Vertex AI Anthropic), Windmill automatically applies `cache_control: { "type": "ephemeral" }` to the system prompt, the last custom tool definition, and the last content block of the last message on every request. This reduces token costs and latency on multi-turn conversations and iterative tool use, since Anthropic can reuse the cached prefix across calls. Cache hits are reflected in the `cache_read_input_tokens` and `cache_write_input_tokens` fields of the `usage` output. No configuration is required — caching is applied transparently whenever an Anthropic-based provider is used.
 
 ## Debugging
 

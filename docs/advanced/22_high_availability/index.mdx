@@ -1,0 +1,146 @@
+---
+description: How do I set up high availability and failover for self-hosted Windmill? Configure multi-datacenter deployments with PostgreSQL replication.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# High availability and failover
+
+Windmill's architecture makes high availability straightforward: all application state lives in PostgreSQL. Servers and workers are stateless — they can be started, stopped, or moved between datacenters without any migration or state transfer.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self-host Windmill"
+		description="How do I self-host Windmill? Set up Windmill on your own infrastructure."
+		href="/docs/advanced/self_host"
+	/>
+	<DocCard
+		title="Scaling workers"
+		description="How do I scale Windmill for high-throughput workloads?"
+		href="/docs/advanced/scaling"
+	/>
+</div>
+
+## Architecture overview
+
+Windmill consists of three components:
+
+- **Servers** — serve the API and UI, stateless
+- **Workers** — execute jobs, stateless
+- **PostgreSQL** — stores all state (job queue, scripts, flows, resources, schedules, audit logs)
+
+Since servers and workers hold no local state, high availability reduces to ensuring PostgreSQL is highly available and that servers/workers can reach it.
+
+## Single-datacenter HA
+
+For high availability within a single datacenter:
+
+1. **Run multiple server replicas** behind a load balancer. Any server can handle any request.
+2. **Run multiple workers**. Workers pull jobs from a shared queue — if one worker goes down, others continue processing.
+3. **Use a managed PostgreSQL service** or a HA PostgreSQL setup (e.g., [CloudNativePG](https://cloudnative-pg.io/), Patroni, or your cloud provider's managed database).
+
+No special Windmill configuration is needed. Windmill natively supports multiple servers and workers connecting to the same database.
+
+## Multi-datacenter failover
+
+For failover across two or more datacenters:
+
+### Recommended setup
+
+1. **Primary datacenter**: runs Windmill servers, workers, and the primary PostgreSQL instance.
+2. **Secondary datacenter**: runs a PostgreSQL replica (streaming replication). Windmill servers and workers are either pre-deployed (pointing at the primary DB) or ready to be spun up.
+
+### Failover procedure
+
+When the primary datacenter becomes unavailable:
+
+1. **Promote the PostgreSQL replica** to primary in the secondary datacenter.
+2. **Start (or redirect) Windmill servers and workers** to point at the new primary database.
+3. Windmill will resume normal operation — workers will pick up queued jobs, servers will serve the API.
+
+No data migration, state transfer, or manual intervention on the Windmill side is required. The only dependency is the database connection string.
+
+### What happens to in-flight jobs
+
+- **Queued jobs** (not yet started) are stored in PostgreSQL and will be picked up by workers in the secondary datacenter.
+- **In-flight jobs** (mid-execution when the primary went down) will not complete. They will appear as failed or timed-out. You can re-run them after failover.
+- **Scheduled jobs** will resume on schedule once workers are running against the new primary database.
+- [**Triggers**](../../getting_started/8_triggers/index.mdx) (webhooks, SQS, Kafka, etc.) will resume once servers are running. Some trigger messages may need to be reprocessed depending on the trigger type's at-least-once guarantees.
+
+### Active-active (both datacenters running)
+
+You can run Windmill workers in both datacenters simultaneously, all pointing at the primary PostgreSQL instance. This gives you:
+
+- **Faster failover** — workers in the secondary datacenter are already running and will start processing jobs as soon as the database is available locally.
+- **Geographic distribution** — jobs can be processed closer to data sources using [worker groups](../../core_concepts/9_worker_groups/index.mdx) and tags.
+
+In this setup, only the database needs to fail over. Windmill servers and workers continue running and automatically reconnect.
+
+## Database considerations
+
+### Connection string
+
+Windmill connects to PostgreSQL via the `DATABASE_URL` environment variable. For failover, you have two options:
+
+- **DNS-based failover**: point `DATABASE_URL` at a DNS name that gets updated during failover (e.g., a cloud provider's endpoint that follows the primary).
+- **Restart with new URL**: update the `DATABASE_URL` and restart Windmill servers/workers after promoting the replica.
+
+### PostgreSQL replication
+
+Windmill is compatible with any PostgreSQL replication solution:
+
+- [CloudNativePG](https://cloudnative-pg.io/) (Kubernetes-native)
+- [Patroni](https://patroni.readthedocs.io/) (HA with automatic failover)
+- AWS RDS Multi-AZ / Aurora
+- Google Cloud SQL HA
+- Azure Database for PostgreSQL with HA
+
+Windmill does not require any special PostgreSQL extensions or configuration beyond standard PostgreSQL.
+
+### License key
+
+Your Windmill [license key](../../misc/7_plans_details/index.mdx) is stored in the database and is not tied to a specific server or cluster. It will work on the secondary datacenter without any changes.
+
+## Kubernetes example
+
+If you run Windmill on Kubernetes with CloudNativePG:
+
+```yaml
+# CloudNativePG cluster with replica in secondary DC
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: windmill-db
+spec:
+  instances: 3
+  postgresql:
+    parameters:
+      max_connections: "200"
+  bootstrap:
+    initdb:
+      database: windmill
+      owner: windmill
+```
+
+Windmill's Helm chart can be deployed in both datacenters. In the secondary datacenter, keep replicas at 0 until failover, or run them actively pointing at the primary database.
+
+```bash
+# Secondary DC: deploy with 0 replicas (standby)
+helm install windmill windmill/windmill \
+  --set windmill.databaseUrl="postgres://windmill:password@primary-db:5432/windmill" \
+  --set windmill.server.replicas=0 \
+  --set windmill.worker.replicas=0
+
+# During failover: scale up
+kubectl scale deployment windmill-server --replicas=2
+kubectl scale deployment windmill-worker --replicas=4
+```
+
+## Git sync for disaster recovery
+
+[Git sync](../11_git_sync/index.mdx) provides an additional layer of protection. When enabled, all scripts, flows, apps, and resources are version-controlled in a git repository. Even in a total database loss scenario, you can:
+
+1. Set up a fresh Windmill instance with a new database.
+2. Use `wmill sync push` to restore all your scripts, flows, and apps from git.
+
+This restores your codebase but not job history, schedules, or runtime state.

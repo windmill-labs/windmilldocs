@@ -312,7 +312,11 @@ Each filter is a key/value pair where:
 - **Key**: A path into the JSON-decoded message (e.g. `type`, `data.status`)
 - **Value**: The expected value at that path (can be a string, number, object, or array)
 
-A message must match all filters (AND logic) to trigger the runnable. The matching uses a superset check — the message value at the given key must contain all fields from the filter value (additional fields in the message are allowed).
+When multiple filters are configured, a filter logic selector lets you choose how they are combined:
+- **AND** (default): the message must match all filters to trigger the runnable.
+- **OR**: the message triggers the runnable as soon as it matches any one of the filters.
+
+The matching uses a superset check — the message value at the given key must contain all fields from the filter value (additional fields in the message are allowed). Existing triggers without an explicit filter logic default to **AND**.
 
 Filters can be configured in the Kafka trigger editor UI using the filter section. You can add multiple key/value pairs, and a human-readable preview is shown for each filter (e.g. `payload.type == "order_created"`).
 

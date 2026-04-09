@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, Wrench, Eye, MessageSquare, Plug, Settings, Database, BookOpen, Zap, Container, HardDrive, Cpu, Lock, Code2, Terminal, FileCode, Play, Sparkles, Shield, Activity, Layers } from 'lucide-react';
-import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
 import { athenaIntelligenceCaseStudy } from '../../data/case-studies/athena-intelligence';
@@ -16,6 +15,9 @@ import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import BuiltForProduction from '../../components/use-cases/BuiltForProduction';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -249,31 +251,13 @@ export function DagAnimation() {
 	);
 }
 
-{/* ── PART A: Agent features interactive tabs ── */}
 
-export const agentFeatures = [
-	{ icon: Bot, title: 'AI Agent step', desc: <span>Windmill flows are DAG workflows made of steps. The AI agent step is a ready-to-use node you drop into any <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>. It handles LLM calls, <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tool execution</Link> and reasoning loops out of the box, so you focus on your business logic.</span>, image: '/img/money-pages/ai-dag.webp', docLink: '/docs/core_concepts/ai_agents' },
-	{ icon: Database, title: 'Any LLM provider', desc: <span>Use AI agent steps with the LLM of your choice, including self-hosted models. Just provide an API key as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource</Link> and switch providers or models without changing your agent logic.</span>, image: '/img/money-pages/llm.webp', docLink: '/docs/core_concepts/ai_agents' },
-	{ icon: Settings, title: 'Built-in presets', desc: <span>Each agent step exposes configurable presets: <code>system_prompt</code>, <code>user_message</code>, <code>output_schema</code>, <code>memory</code>, <code>temperature</code>, <code>max_tokens</code> and more. Set them in the UI or pass them dynamically from previous steps. No boilerplate code to write.</span>, image: '/img/money-pages/ai-presets.webp', docLink: '/docs/core_concepts/ai_agents' },
-	{ icon: Wrench, title: 'Scripts as tools', desc: <span>Write tools in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">20+ languages</Link> (TypeScript, Python, Go, Bash, SQL, and more). Each script's typed parameters and descriptions are automatically used as the tool schema. No separate SDK or adapter needed.</span>, image: '/img/money-pages/ai-tool.webp', docLink: '/docs/core_concepts/ai_agents#script-tools' },
-	{ icon: Plug, title: 'MCP integration', desc: 'Connect to MCP servers and auto-discover tools. Supports OAuth and custom auth. Use MCP tools alongside native Windmill scripts in the same agent step.', image: '/img/money-pages/ai-mcp.webp', docLink: '/docs/core_concepts/mcp' },
-	{ icon: Zap, title: 'Deploy in one click', desc: <span>Build your agent flow in the editor, test it with live previews and deploy to production in one click. Every deployment is versioned with full history, so you can compare changes and roll back instantly. Integrate with <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">Git sync</Link> for CI/CD workflows.</span>, image: '/img/money-pages/deploy.webp', docLink: '/docs/core_concepts/draft_and_deploy' },
-];
-
-{/* TODO: add screenshots for each agent feature tab */}
-
-
-{/* ── Big tab section: two agent modes ── */}
+{/* ── Two ways to build AI agents ── */}
 
 export function AgentModeTabs() {
-	const [activeTab, setActiveTab] = useState(0);
-	const tabs = [
-		{ icon: Zap, label: 'Visual AI builder' },
-		{ icon: Terminal, label: 'Claude / Codex / Opencode (Coming soon)' },
-	];
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-			<motion.div {...fadeIn} className="mb-8">
+			<motion.div {...fadeIn} className="mb-16">
 				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 					Two ways to build AI agents
 				</h2>
@@ -281,65 +265,54 @@ export function AgentModeTabs() {
 					Use the visual AI builder with tools for structured agent loops, or run full Claude Code, Codex or Opencode inside sandboxes for maximum autonomy. Both can be used as steps of a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link>.
 				</p>
 			</motion.div>
-			{/* Tab buttons */}
-			<div className="grid grid-cols-2 mb-12 border-b border-gray-200 dark:border-gray-700">
-				{tabs.map((tab, i) => (
-					<button
-						key={tab.label}
-						onClick={() => setActiveTab(i)}
-						className={`flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-b-2 transition-colors -mb-px ${
-							i === activeTab
-								? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-						}`}
+
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+				{/* Visual AI builder */}
+				<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+					<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Visual AI builder with tools</h3>
+					<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+						The <Link to="/docs/core_concepts/ai_agents" className="text-blue-600 dark:text-blue-400 hover:underline">AI agent step</Link> is a ready-to-use node in the <Link to="/platform/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link>. Build agent workflows visually by combining agent steps with <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">branching</Link>, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approval steps</Link>, <Link to="/docs/flows/flow_error_handler" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> and any other flow step.
+					</p>
+					<video
+						className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+						src="/img/money-pages/ai-agent-visual-builder.webm"
+						autoPlay
+						loop
+						muted
+						playsInline
+					/>
+					<Link
+						to="/platform/flow-editor"
+						className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
 					>
-						<tab.icon className="w-5 h-5" />
-						{tab.label}
-					</button>
-				))}
+						<BookOpen className="w-4 h-4" />
+						Learn more about the flow editor
+					</Link>
+				</motion.div>
+
+				{/* Claude Code / Codex / Opencode in sandboxes */}
+				<motion.div {...stagger(0.1)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+					<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Claude Code, Codex and Opencode in sandboxes</h3>
+					<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+						Run coding agents inside isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">sandboxes</Link> with full capabilities: bash, code writing, file editing. Cached snapshots for instant startup, persistent volumes across runs and <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">scoped permissions</Link>.
+					</p>
+					<video
+						className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+						src="/videos/claude_code_sandbox_new.mp4"
+						autoPlay
+						loop
+						muted
+						playsInline
+					/>
+					<Link
+						to="/docs/core_concepts/ai_agents"
+						className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+					>
+						<BookOpen className="w-4 h-4" />
+						Learn more about AI sandboxes
+					</Link>
+				</motion.div>
 			</div>
-
-			{/* Tab 1: Visual AI builder */}
-			{activeTab === 0 && (
-				<TabFeatureSection
-					title="Visual AI builder with tools"
-					subtitle={<>Build AI agents as loops with tools using Windmill's visual builder. The agent reasons, picks <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> (scripts or <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP servers</Link>) and executes them. Use agent steps in any <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow</Link> alongside branching, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approvals</Link> and error handling.</>}
-					features={agentFeatures}
-				/>
-			)}
-
-			{/* Tab 2: Claude / Codex / Opencode in sandboxes */}
-			{activeTab === 1 && (
-				<div>
-					<div className="mb-16">
-						<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-							Run Claude Code, Codex and Opencode at full power
-						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Run coding agents like Claude Code, Codex or Opencode inside isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">sandboxes</Link> where they can use their full capabilities: bash, code writing, file editing and more. Give them scoped <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">permissions</Link> and <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resource access</Link>, and use them as steps in any flow.
-						</p>
-					</div>
-
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-						{[
-							{ icon: Cpu, title: 'Cached snapshots', desc: 'Pre-configured environments with agents.md, skills, dependencies and custom instructions. Cached on workers for instant startup, no container builds needed.' },
-							{ icon: HardDrive, title: 'Persistent volumes', desc: 'S3-backed storage mounted into the sandbox. The agent picks up where it left off with full context of previous work across runs.' },
-							{ icon: Lock, title: 'nsjail isolation', desc: <span>Each run is sandboxed with nsjail. The agent accesses <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-600 dark:text-blue-400 hover:underline">secrets</Link> and <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link> via the Windmill SDK but cannot escape the sandbox.</span> },
-							{ icon: Database, title: 'Self-hosted & air-gapped', desc: <span>Run on your own infrastructure. No data leaves your network. <Link to="/docs/advanced/self_host" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy</Link> on Docker or Kubernetes with a single command.</span> },
-						].map((item, i) => (
-							<div key={item.title} className="flex gap-4 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
-								<div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center flex-shrink-0">
-									<item.icon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-								</div>
-								<div>
-									<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{item.title}</h3>
-									<p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			)}
 		</div>
 	);
 }
@@ -415,76 +388,124 @@ export default function AiAgentsContent({ title, description }) {
 
 			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
-			{/* ═══════════════ Agent modes tabs ═══════════════ */}
-			<AgentModeTabs />
-
-
-			{/* ═══════════════ SHARED SECTIONS ═══════════════ */}
-
-			{/* Why Windmill for AI agents */}
-			<div className="">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-					<motion.div {...fadeIn} className="mb-12">
+			{/* ═══════════════ What is an AI agent on Windmill? ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-							Built on a production-grade workflow engine
+							What is an AI agent on Windmill?
 						</h2>
-						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Windmill is not an AI framework. It is an open-source workflow engine already used by teams to orchestrate scripts, APIs and infrastructure at scale. AI agents plug directly into that existing platform, with enterprise-grade security, observability and integration built in.
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							Windmill provides enterprise-grade infrastructure to build AI agents around any LLM, including <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">self-hosted models</Link>. Give your agents access to <Link to="/docs/core_concepts/ai_agents#script-tools" className="text-blue-600 dark:text-blue-400 hover:underline">tools</Link> written in any language, connect them to your databases and APIs, compose them into <Link to="/platform/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flows</Link> alongside <Link to="/use-cases/scripts" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> and <Link to="/use-cases/workflows" className="text-blue-600 dark:text-blue-400 hover:underline">workflows</Link>, or run them in isolated <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">sandboxes</Link>.
 						</p>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Your agents run on the same platform as the rest of your infrastructure, with full <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link> on every tool call and LLM request, <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-600 dark:text-blue-400 hover:underline">RBAC</Link>, <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit trails</Link> and <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">versioning</Link> built in.
+						</p>
+						<Link
+							to="/docs/core_concepts/ai_agents"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Read the docs
+						</Link>
 					</motion.div>
-
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-						{[
-							{
-								title: 'Part of your orchestration layer',
-								image: '/img/money-pages/parallel-branches.webp',
-								points: [
-									'AI agents are flow steps alongside HTTP calls, database queries and approval gates',
-									'Retries, error handling and conditional branching apply to agent steps like any other',
-									'Schedule agents, chain them with existing workflows, trigger them from webhooks or events',
-								],
-							},
-							{
-								title: 'Full observability out of the box',
-								image: '/img/money-pages/monitoring.webp',
-								points: [
-									'Every agent run is a job with structured logs, timing and resource usage',
-									'Track each tool call, LLM request and token count in the run detail view',
-									'Audit trails, run history and flow-level debugging across all steps',
-								],
-							},
-							{
-								title: 'Enterprise-grade security',
-								image: '/img/money-pages/security.webp',
-								points: [
-									'SSO, RBAC and granular permissions control who can build and trigger agents',
-									'Secrets and API keys are managed centrally and never exposed to the LLM',
-									'Self-host on your infrastructure, air-gapped deployments supported',
-								],
-							},
-						].map((card) => (
-							<motion.div key={card.title} {...fadeIn} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 overflow-hidden">
-								{card.image ? (
-									<img src={card.image} alt={card.title} className="w-full h-48 object-cover border-b border-gray-200 dark:border-gray-700" />
-								) : (
-									<div className="w-full h-48 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-center text-sm text-gray-400">Screenshot coming soon</div>
-								)}
-								<div className="p-8">
-									<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{card.title}</h3>
-									<ul className="space-y-3">
-										{card.points.map((point, i) => (
-											<li key={i} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
-												<span className="text-blue-500 mt-0.5 shrink-0">&#10003;</span>
-												<span>{point}</span>
-											</li>
-										))}
-									</ul>
-								</div>
-							</motion.div>
-						))}
-					</div>
+					<motion.div {...stagger(0.1)}>
+						<img
+							src="/img/money-pages/ai-dag.webp"
+							alt="AI agent as a step in a Windmill flow"
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+						/>
+					</motion.div>
 				</div>
 			</div>
+
+			{/* ═══════════════ Agent modes ═══════════════ */}
+			<AgentModeTabs />
+
+			{/* ═══════════════ Tools for AI agents ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Give your agents the right tools
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Agents can use <Link to="/use-cases/scripts" className="text-blue-600 dark:text-blue-400 hover:underline">Windmill scripts</Link> and <Link to="/docs/core_concepts/mcp" className="text-blue-600 dark:text-blue-400 hover:underline">MCP servers</Link> as tools. Scripts are written in TypeScript, Python, Go, SQL or any supported language. Windmill reads each script's typed function signature and generates the tool schema the LLM sees. MCP servers expose their own tool definitions and are auto-discovered when connected.
+						</p>
+						<Link
+							to="/docs/core_concepts/ai_agents#script-tools"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about agent tools
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<video
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/money-pages/ai-agent-tools.webm"
+							autoPlay
+							loop
+							muted
+							playsInline
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* ═══════════════ See it in action ═══════════════ */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						See it in action
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						An AI chatbot built entirely on Windmill. The <Link to="/platform/app-builder">frontend</Link> is a full-code React app, the backend is a <Link to="/platform/flow-editor">flow</Link> that calls an AI model with Windmill <Link to="/platform/script-editor">scripts</Link> as tools.
+					</p>
+				</motion.div>
+
+				<Tabs>
+					<TabItem value="frontend" label="Full-code frontend">
+						<iframe
+							src="https://app.windmill.dev/public/windmill-labs/928711b4b9ac223354f283212d5e7594"
+							style={{ width: '100%', height: '800px', border: 'none', borderRadius: '8px' }}
+							title="AI Chatbot App"
+							allow="clipboard-read; clipboard-write"
+						/>
+					</TabItem>
+					<TabItem value="backend" label="Windmill backend runnables">
+						<Tabs>
+							<TabItem value="ai-agent-flow" label="AI Agent flow">
+								<p className="mb-4 text-gray-600 dark:text-gray-300">The orchestration flow that receives a user message, calls an AI model with registered tools, and streams the response back. Click on Play to see what happens when we ask the agent "Who is in charge of HR?".</p>
+								<iframe
+									src="https://hub.windmill.dev/embed/flow/79/my-summary"
+									style={{ width: '100%', height: '600px', border: 'none', borderRadius: '8px', backgroundColor: 'white' }}
+									title="AI agent flow"
+								/>
+							</TabItem>
+							<TabItem value="get-marketing-activation" label="Marketing activation">
+								<p className="mb-4 text-gray-600 dark:text-gray-300">A script the AI agent can call to look up marketing activations. This demo uses mocked data.</p>
+								<iframe
+									src="https://hub.windmill.dev/embed/script/28190/get-marketing-activations"
+									style={{ width: '100%', height: '600px', border: 'none', borderRadius: '8px', backgroundColor: 'white' }}
+									title="Get marketing activations script"
+								/>
+							</TabItem>
+							<TabItem value="get-sales-metrics" label="Sales metrics">
+								<p className="mb-4 text-gray-600 dark:text-gray-300">A script the AI agent can call to query sales metrics. This demo uses mocked data.</p>
+								<iframe
+									src="https://hub.windmill.dev/embed/script/28188/get-sales-metrics-(example)"
+									style={{ width: '100%', height: '600px', border: 'none', borderRadius: '8px', backgroundColor: 'white' }}
+									title="Get sales metrics script"
+								/>
+							</TabItem>
+						</Tabs>
+					</TabItem>
+				</Tabs>
+			</div>
+
+			{/* ═══════════════ Built for production ═══════════════ */}
+			<BuiltForProduction variant="agent" />
 
 			{/* Case study: Athena Intelligence */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">

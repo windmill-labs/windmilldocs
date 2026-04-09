@@ -16,21 +16,71 @@ The best submissions get approved by the Windmill Team and get integrated direct
 On [Enterprise Edition](/pricing) and [Whitelabelling](/pricing), you can have your own Private Hub. 
 You decide which scripts, flows, apps and resource types are approved and are shared with your Windmill instances, appearing directly in the app.
 
-You can configure your Private Hub using Docker by following the instructions in the [Private Hub repository](https://github.com/windmill-labs/windmillhub-ee-public).
-We also provide [values in our Helm chart](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml) for including the Private Hub in a Kubernetes cluster.
+## Setup
 
-Once your Private Hub is up and running, you need to change the hub base url field in the core [instance settings](../../advanced/18_instance_settings/index.mdx#private-hub-base-url) to your Private Hub url.
+### Docker
+
+1. Clone the [Private Hub repository](https://github.com/windmill-labs/windmillhub-ee-public).
+2. Fill in the `.env` file with your desired database password, the URL of your Windmill instance and your license key.
+3. Run `docker-compose up -d` to start the hub and database.
+4. Update the hub base URL field in the [instance settings](../../advanced/18_instance_settings/index.mdx#private-hub-base-url) on your Windmill instance to point to the Private Hub URL.
+
+If users access the Windmill instance from a different URL than the one configured in `APP_URL` (e.g. a public-facing URL vs. an internal one), set `APP_ACCESSIBLE_URL` in your `.env` file (exposed as `PUBLIC_APP_ACCESSIBLE_URL`). The Hub will use this URL when redirecting users to the Windmill instance for authentication.
+
+The `docker-compose.yml` and `Caddyfile` contain commented-out examples for enabling HTTPS, either via automatic Let's Encrypt certificates or custom certificate files.
+
+### Kubernetes
+
+We provide [values in our Helm chart](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml) for including the Private Hub in a Kubernetes cluster.
 
 :::warning
 Authentication on the Hub is performed via the Windmill instance.
 The Hub and Windmill instances must have the same root domain name for authentication to work.
 For example, if the Windmill instance is available on windmill.example.com, the Hub must be accessible on a similar sub-domain such as hub.example.com.
-You'll also need to set the COOKIE_DOMAIN [environment variable](../47_environment_variables/index.mdx) of the Windmill instance (server) to the root domain name (e.g. example.com). 
+You'll also need to set the COOKIE_DOMAIN [environment variable](../47_environment_variables/index.mdx) of the Windmill instance (server) to the root domain name (e.g. example.com).
 If you're using the [Helm chart](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml#L50), there is a built-in `cookieDomain` value for this.
 **Make sure to log out and log back in after setting the cookie domain.**
 :::
 
 If you are interested in having your own Private Hub, please [contact us](mailto:contact@windmill.dev).
+
+### Custom CA certificates
+
+If your Windmill instance uses a self-signed or internal CA certificate, the Hub server (Node.js) needs to trust that CA. Set the `NODE_EXTRA_CA_CERTS` environment variable on the hub service and mount the CA certificate file.
+
+With Docker, add to the hub service in `docker-compose.yml`:
+
+```yaml
+# docker-compose.yml – hub service
+environment:
+  - NODE_EXTRA_CA_CERTS=/certs/ca.pem
+volumes:
+  - ./certs/ca.pem:/certs/ca.pem:ro
+```
+
+With the Helm chart, use `extraEnv`, `volumes` and `volumeMounts` on the `hub` values:
+
+```yaml
+hub:
+  extraEnv:
+    - name: NODE_EXTRA_CA_CERTS
+      value: /certs/ca.pem
+  volumes:
+    - name: ca-cert
+      secret:
+        secretName: my-ca-cert
+  volumeMounts:
+    - name: ca-cert
+      mountPath: /certs/ca.pem
+      subPath: ca.pem
+      readOnly: true
+```
+
+### Debugging
+
+- Enable debug logs by setting `DEBUG_LOG=true` in the environment section of the hub service in `docker-compose.yml` (or via `hub.extraEnv` in the Helm chart).
+- The hub exposes a debug page at `/debug` that displays the configuration and status of the hub.
+- If you need more support, share the logs and the debug page output with the Windmill team.
 
 ## Multiple Windmill instances
 

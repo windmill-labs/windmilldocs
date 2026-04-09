@@ -19,6 +19,7 @@ Moreover, there are other tricks, compatible with the methodologies mentioned ab
 - [Pinning dependencies and requirements](#pinning-dependencies-and-requirements).
 - [Private PyPI Repository](#private-pypi-repository).
 - [Python runtime settings](#python-runtime-settings).
+- [Pre-installed packages via global site-packages](#pre-installed-packages-via-global-site-packages).
 
 To learn more about how dependencies from other languages are handled, see [Dependency management & imports](../../advanced/6_imports/index.mdx).
 
@@ -82,7 +83,7 @@ You can get those 3 files for each script by pulling your workspace with command
 
 Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
 
-Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill generate-metadata`](../3_cli/generate-metadata.md), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
 When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -317,6 +318,26 @@ UV is not using system certificates by default, if you wish to use them, set `PY
 ### Python runtime settings
 
 For a given [worker group](../../core_concepts/9_worker_groups/index.mdx), you can add Python [runtime specific settings](../../core_concepts/9_worker_groups/index.mdx#python-runtime-settings) like additional Python paths and PIP local dependencies.
+
+### Pre-installed packages via global site-packages
+
+Windmill workers have a `global-site-packages` directory on the Python path. Packages installed there are available for import in all Python scripts on that worker, typically installed via [init scripts](../8_preinstall_binaries/index.mdx#init-scripts) or a custom Docker image.
+
+```bash
+uv pip install --system pandas --target /tmp/windmill/cache/python_3_11/global-site-packages
+```
+
+The path is version-specific: `/tmp/windmill/cache/python_<major>_<minor>/global-site-packages`. Make sure to target the Python version your scripts use.
+
+Installing into `global-site-packages` only makes a package importable at runtime. The dependency resolver will still try to resolve those imports from PyPI when generating lockfiles. To prevent this, add the package names as regex patterns to the **PIP local dependencies** list in the [worker group](../../core_concepts/9_worker_groups/index.mdx)'s [Python runtime settings](../../core_concepts/9_worker_groups/index.mdx#python-runtime-settings), or set the `PIP_LOCAL_DEPENDENCIES` environment variable (comma-separated). This tells the resolver to skip matching packages during lockfile generation.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Global site-packages setup"
+		description="How to pre-install Python packages on workers using global-site-packages and skip dependency resolution."
+		href="/docs/advanced/preinstall_binaries#global-site-packages"
+	/>
+</div>
 
 ### Select Python version
 

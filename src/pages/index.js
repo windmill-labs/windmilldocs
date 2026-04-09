@@ -7,6 +7,7 @@ import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
 
+
 import LogoClouds from '../landing/LogoClouds';
 import TestimonialsSection from '../landing/TestimonialsSection';
 import CorePrinciple from '../landing/CorePrinciple';
@@ -31,7 +32,7 @@ const organizationSchema = {
 	url: 'https://www.windmill.dev',
 	logo: 'https://www.windmill.dev/img/windmill.svg',
 	description:
-		'Open-source platform to build, deploy and monitor internal tools from scripts. Turn scripts into auto-generated UIs, APIs and cron jobs. Compose them as workflows or data pipelines.',
+		'Open-source platform to build, orchestrate, and monitor internal tools from scripts. Turn scripts into auto-generated UIs, APIs and cron jobs. Compose them as workflows or data pipelines.',
 	sameAs: [
 		'https://github.com/windmill-labs/windmill',
 		'https://discord.com/invite/V7PM2YHsPB',

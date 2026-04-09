@@ -6,21 +6,23 @@ description: "How do I automate production workflows? Windmill orchestrates DAG-
 import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
-import { ArrowRight, GitBranch, RotateCcw, ShieldCheck, Webhook, Timer, Layers, Zap, GitFork, CheckCircle2, BookOpen, Code2, Code, AlertTriangle, Rocket, Eye, Plug } from 'lucide-react';
+import { Zap, GitFork, CheckCircle2, BookOpen } from 'lucide-react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
 import { useColorMode } from '@docusaurus/theme-common';
 import { Switch } from '@headlessui/react';
 import classNames from 'classnames';
-import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
 import { SiTypescript } from 'react-icons/si';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import CaseStudyBanner from '../../components/use-cases/CaseStudyBanner';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import LogoClouds from '../../landing/LogoClouds';
 import GithubStarCount from '../../landing/GithubStarCount';
+import LazyVideo from '../../components/products/LazyVideo';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import BuiltInTriggers from '../../components/use-cases/BuiltInTriggers';
+import BuiltForProduction from '../../components/use-cases/BuiltForProduction';
 
 export function PythonColored({ className }) {
 	return (
@@ -257,81 +259,6 @@ export function HeroAnimation() {
 	);
 }
 
-export const workflowFeatures = [
-	{
-		id: 'steps-as-code',
-		icon: Code,
-		label: 'Steps as code',
-		title: 'Steps as code',
-		desc: <span>Write each workflow step in the language that fits best. <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript, Python, SQL, Go, Bash</Link>, Rust, PHP and 20+ more. Mix and match freely within a single flow.</span>,
-		image: '/img/money-pages/workflow-code.webp',
-		docLink: '/docs/getting_started/scripts_quickstart',
-	},
-	{
-		id: 'dag-workflow',
-		icon: Layers,
-		label: 'DAG visualizer',
-		title: 'DAG visualizer',
-		desc: <span>See your entire workflow as an interactive graph. Inspect inputs and outputs at each node, follow data as it flows between <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">steps</Link>, spot bottlenecks at a glance and restart from any step without replaying the full run.</span>,
-		image: '/img/money-pages/dag-workflow.webp',
-		docLink: '/docs/flows/flow_editor',
-	},
-	{
-		id: 'resources',
-		icon: Plug,
-		label: 'Resources',
-		title: 'Connect to any service',
-		desc: <span>Connect to <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">databases, APIs and third-party services</Link> using typed <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Credentials are stored centrally and injected at runtime. Share connections across scripts and flows without duplicating secrets.</span>,
-		image: '/img/money-pages/resource.webp',
-		docLink: '/docs/core_concepts/resources_and_types',
-	},
-	{
-		id: 'control-flow',
-		icon: GitBranch,
-		label: 'Branching, loops & approvals',
-		title: 'Branching, loops & approvals',
-		desc: <span>Use <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">branching</Link> (if/else, parallel fan-out), <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">for-loops</Link> with configurable parallelism, while-loops for polling, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">and approval steps</Link> that suspend until someone approves.</span>,
-		image: '/img/money-pages/parallel-branches.webp',
-		docLink: '/docs/flows/flow_editor',
-	},
-	{
-		id: 'error-handling',
-		icon: AlertTriangle,
-		label: 'Error handling & retry',
-		title: 'Error handling and retry that don\'t fail silently',
-		desc: <span>Each step can have its own <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> strategy and configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with exponential backoff. Run a custom script on failure (send a Slack alert, create a ticket, trigger a rollback), stop the flow early based on a predicate, or mark non-critical steps to continue on error.</span>,
-		image: '/img/money-pages/error-handler.webp',
-		docLink: '/docs/flows/error_handling',
-	},
-	{
-		id: 'triggers',
-		icon: Zap,
-		label: 'Triggers',
-		title: 'Trigger from anywhere',
-		desc: <span>Start flows from <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedules</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks</Link>, Slack commands, emails, <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Postgres CDC, Kafka, SQS</Link>, or manually from the UI. Combine multiple trigger types on the same flow.</span>,
-		image: '/img/money-pages/triggers.webp',
-		docLink: '/docs/getting_started/triggers',
-	},
-	{
-		id: 'deploy-and-version',
-		icon: Rocket,
-		label: 'Deploy & version control',
-		title: 'Deploy & version control',
-		desc: <span>Promote flows from <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">draft to production</Link> in one click with full deployment history and instant rollbacks. Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link>, use your existing code review workflows and deploy via the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">CI/CD pipelines</Link>.</span>,
-		image: '/img/money-pages/deploy-workflow.webp',
-		docLink: '/docs/advanced/git_sync',
-	},
-	{
-		id: 'observability',
-		icon: Eye,
-		label: 'Observability',
-		title: 'Full observability out of the box',
-		desc: <span>Every run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">logs</Link> and re-run with one click. Track resource usage, monitor <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> and set up alerts for failures.</span>,
-		image: '/img/money-pages/monitoring.webp',
-		docLink: '/docs/core_concepts/jobs',
-	},
-];
-
 export function ScaleAndSpeedSection() {
 	const { colorMode } = useColorMode();
 	const [chart, setChart] = useState('short');
@@ -464,11 +391,148 @@ export default function WorkflowAutomationContent({ title, description }) {
 
 			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
-			<TabFeatureSection
-			title="Everything you need in a workflow engine"
-			subtitle={<>Write each step in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link> or any supported language, and connect them in the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link> with built-in error handling, retries and observability.</>}
-			features={workflowFeatures}
-		/>
+			{/* What is a workflow on Windmill? */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							What is a workflow on Windmill?
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							A workflow is a multi-step process that chains <Link to="/use-cases/scripts" className="text-blue-600 dark:text-blue-400 hover:underline">scripts</Link> together to automate a task end to end. Each step runs in its own isolated environment, with typed inputs and outputs passed between steps automatically.
+						</p>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Windmill supports two approaches: <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">low-code flows</Link> where you compose steps visually as a DAG, and <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-600 dark:text-blue-400 hover:underline">workflows as code</Link> where you orchestrate steps programmatically. Both get <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link>, <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> and full <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link> out of the box.
+						</p>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/workflow-editor/platform-flow-realtime-logs.webm"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* 2 types of workflows */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Two types of workflows
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Pick the approach that fits your use case. Use low-code flows for visual composition, or workflows as code for full programmatic control. Both run on the same engine with the same guarantees.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+					{/* Low-code flows */}
+					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Low-code flows</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Compose steps visually as a DAG in the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link>. Drag and drop <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">branches</Link>, <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">loops</Link>, <Link to="/docs/flows/flow_approval" className="text-blue-600 dark:text-blue-400 hover:underline">approval steps</Link> and <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handlers</Link>. Each step can be written in a different language. Inspect inputs and outputs at every node and restart from any step.
+						</p>
+						<video
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							autoPlay
+							loop
+							muted
+							playsInline
+							src="/img/platform/workflow-editor/platform-flow-dynamic-expressions.webm"
+						/>
+						<Link
+							to="/platform/flow-editor"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about the flow editor
+						</Link>
+					</motion.div>
+
+					{/* Workflows as code */}
+					<motion.div {...stagger(0.1)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Workflows as code</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Define your entire workflow programmatically in <Link to="/docs/getting_started/scripts_quickstart/typescript" className="text-blue-600 dark:text-blue-400 hover:underline">TypeScript</Link> or <Link to="/docs/getting_started/scripts_quickstart/python" className="text-blue-600 dark:text-blue-400 hover:underline">Python</Link>. Call other scripts as steps, handle errors with native try/catch, run branches in parallel and use all the control flow your language provides. Each step still runs in isolation with full observability.
+						</p>
+						<video
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							autoPlay
+							loop
+							muted
+							playsInline
+							src="/img/platform/workflow-editor/platform-flow-workflow-as-code.webm"
+						/>
+						<Link
+							to="/docs/core_concepts/workflows_as_code"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about workflows as code
+						</Link>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* Two ways to write workflows */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<motion.div {...fadeIn} className="mb-16">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Two ways to write workflows
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Write workflows directly in the Windmill UI or develop locally with your own editor. Both paths deploy to the same platform.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+					{/* Windmill UI */}
+					<motion.div {...stagger(0)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In the Windmill UI</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							The <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link> lets you build and test workflows visually. Each step has its own code editor with autocomplete and LSP support, a live preview of inputs and outputs, one-click deploy and <Link to="/docs/core_concepts/ai_generation" className="text-blue-600 dark:text-blue-400 hover:underline">AI assistance</Link> (BYOK).
+						</p>
+						<LazyVideo
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							src="/img/platform/workflow-editor/platform-flow-editor-overview.webm"
+						/>
+						<Link
+							to="/docs/flows/flow_editor"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about the flow editor
+						</Link>
+					</motion.div>
+
+					{/* Local development */}
+					<motion.div {...stagger(0.1)} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-8">
+						<h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">In your local editor</h3>
+						<p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+							Use the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link>, the <Link to="/docs/script_editor/vs_code_scripts" className="text-blue-600 dark:text-blue-400 hover:underline">VS Code extension</Link> or AI coding tools like Claude Code. Flows are YAML files and workflow-as-code scripts are standard code files, ready for any editor or AI agent.
+						</p>
+						<video
+							className="rounded-xl border border-gray-200 dark:border-gray-700 w-full mb-4"
+							autoPlay
+							loop
+							muted
+							playsInline
+							src="/img/platform/workflow-editor/platform-flow-local-editor.webm"
+						/>
+						<Link
+							to="/platform/local-dev"
+							className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline"
+						>
+							<BookOpen className="w-4 h-4" />
+							Learn more about local development
+						</Link>
+					</motion.div>
+				</div>
+			</div>
+
+			<BuiltInTriggers variant="workflow" />
+
+			<BuiltForProduction variant="workflow" />
 
 			<ScaleAndSpeedSection />
 

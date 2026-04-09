@@ -39,3 +39,38 @@ See [Installation](./installation.md) for getting started.
 		href="/docs/advanced/local_development"
 	/>
 </div>
+
+## Unified `list` / `get` / `new` subcommands
+
+Every item type supports the same set of subcommands so the CLI can be used as a full API client in shell scripts — piping JSON output to `jq`, etc.
+
+| Subcommand | Behavior |
+| ---------- | -------- |
+| `<type> list [--json]` | Lists items. With `--json`, outputs machine-readable JSON. |
+| `<type> get <path> [--json]` | Pretty-prints an item. With `--json`, outputs the full API response. |
+| `<type> new <path> [...]` | Bootstraps a local template file for the item. `bootstrap` remains as an alias for script/flow. |
+
+The supported types are: `script`, `flow`, `app`, `resource`, `resource-type`, `variable`, `schedule`, `folder`, and `trigger`. For `trigger`, pass `--kind <type>` (e.g. `http`, `websocket`, `kafka`, ...) to `new` and to `get` when multiple trigger kinds share a path.
+
+```bash
+wmill script list --json | jq '.[].path'
+wmill trigger new f/http/webhook --kind http
+wmill resource get f/db/prod --json | jq .value.host
+```
+
+## `wmill docs`
+
+The `wmill docs` command searches the Windmill documentation from your terminal. It calls the backend search endpoint and prints formatted results.
+
+```bash
+wmill docs <query> [--json]
+```
+
+### Example
+
+```bash
+wmill docs "how do I create a flow?"
+wmill docs "what are resources?" --json | jq .answer
+```
+
+Documentation search is an Enterprise Edition feature — on a Community Edition instance, the command prints a message indicating EE is required.

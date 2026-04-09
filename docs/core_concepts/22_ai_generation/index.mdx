@@ -256,8 +256,78 @@ Windmill AI supports:
 - OpenRouter's [models](https://openrouter.ai/models)
 - Together AI's [models](https://docs.together.ai/docs/serverless-models)
 - AWS Bedrock's [models](https://aws.amazon.com/bedrock/)
-  - Required configuration: AWS region and long term API key
 - Custom AI: base URL and API key of any AI provider that is OpenAI API-compatible
   - For Ollama and other local models, select "Custom AI" and provide your Ollama server URL (e.g., `http://localhost:11434/v1` for local Ollama or your custom endpoint)
 
 If you'd like to use a model that isn't in the default dropdown list, you can use any model supported by a provider (like `gpt-4o-2024-05-13` or `claude-3-7-sonnet-20250219`) by simply typing the model name in the model input field and pressing enter.
+
+### Provider-specific configuration
+
+Some providers accept additional fields on their [resource](../3_resources_and_types/index.mdx) beyond the base URL and API key.
+
+#### AWS Bedrock
+
+Bedrock accepts any of three authentication modes on the resource — the worker picks the first one that is fully provided:
+
+1. **Long-term IAM user keys**: set `awsAccessKeyId` and `awsSecretAccessKey`, plus an optional `awsSessionToken` when you are using temporary credentials (e.g. from AWS STS).
+2. **Bedrock bearer API key**: set the resource's `apiKey` to an [Amazon Bedrock API key](https://docs.aws.amazon.com/bedrock/latest/userguide/api-keys.html). This takes precedence over the IAM key pair when both are set.
+3. **Ambient IAM role**: leave `apiKey` and the access keys empty. The worker falls back to the default AWS credential chain (IRSA / EKS Pod Identity / EC2 instance profile / `AWS_*` environment variables) resolved against the configured `region`.
+
+The `region` field is required in all cases. Bedrock requests use the AWS SDK's native Converse API, so models are referenced by their native Bedrock model id (e.g. `anthropic.claude-3-5-sonnet-20241022-v2:0`).
+
+#### Anthropic
+
+- **1M context window**: enable the `enable_1m_context` toggle on an Anthropic resource to send the `anthropic-beta: context-1m-2025-08-07` header with every request. This unlocks the 1M-token context window on compatible Claude models. The flag is ignored when the Anthropic resource is routed through Google Vertex AI.
+
+#### Google Gemini / Anthropic on Vertex AI
+
+Both the `googleai` and `anthropic` resources expose a `platform` field that switches between the provider's standard API and Google Vertex AI:
+
+- `platform: standard` (default) — the provider's public API.
+- `platform: google_vertex_ai` — route requests through Vertex AI. Set `base_url` to your Vertex endpoint and `api_key` to an OAuth2 access token for a Google Cloud service account with the `Vertex AI User` role.
+  - Gemini example: `https://{region}-aiplatform.googleapis.com/v1/projects/{project}/locations/{region}/publishers/google/models`
+  - Claude-on-Vertex example: `https://{region}-aiplatform.googleapis.com/v1/projects/{project}/locations/{region}/publishers/anthropic/models`
+
+`base_url` overrides are also honored on the standard platform, which is useful for pointing an Anthropic or Gemini resource at an internal proxy.
+
+#### Custom AI (`customai`)
+
+In addition to `base_url` and `api_key`, the `customai` resource accepts a `headers` object mapping header names to values. Those headers are attached to every AI request made with that resource, which is handy for upstream proxies, gateway auth, or routing metadata.
+
+```json
+{
+  "base_url": "https://my-gateway.example.com/v1",
+  "api_key": "sk-...",
+  "headers": {
+    "X-Tenant-Id": "team-42",
+    "X-Route": "prod"
+  }
+}
+```
+
+Resource-level `headers` are applied after the instance-wide `AI_HTTP_HEADERS` env var, so they take precedence on conflicting keys.
+
+### Instance-wide AI HTTP headers
+
+Set the `AI_HTTP_HEADERS` environment variable on the server and workers to attach custom headers to every outgoing AI request (OpenAI, Anthropic, Azure, Bedrock, etc.). Headers are comma-separated:
+
+```bash
+AI_HTTP_HEADERS="X-Org: acme, X-Env: prod" ./windmill
+```
+
+This is the right knob when every AI request in the instance must traverse a corporate proxy or gateway that expects fixed auth/routing headers.
+
+## Instance-level AI settings
+
+Superadmins can configure AI providers, models, and prompts once at the instance level and have every workspace inherit them. Navigate to **Instance settings → AI** to set it up.
+
+Resolution order for the AI config used by chat, code generation, and code completion:
+
+1. **Workspace AI settings** when the workspace has any provider configured — these always win.
+2. **Instance AI settings** as the fallback when the workspace has no providers configured.
+
+The fallback resources are read from the `admins` workspace, so any resources referenced by instance AI settings must exist there.
+
+In a workspace that is using the instance fallback, the Windmill AI settings page shows a read-only "Active instance AI" summary and an **Override for this workspace** button to reveal the editable workspace form. Clearing the workspace providers reverts the workspace to the instance fallback immediately, without a page refresh.
+
+Non-admin members can use AI chat whenever either scope is configured — they do not need access to workspace or instance settings.

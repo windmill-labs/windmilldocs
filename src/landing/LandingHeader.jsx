@@ -28,7 +28,6 @@ import {
 	Code, GitFork, LayoutDashboard, Database, GitBranch, Terminal,
 	Activity, ShieldCheck, Container, Cpu, Server, Zap,
 } from 'lucide-react';
-import Banner from './Banner';
 import Link from '@docusaurus/Link';
 
 const productCategories = [
@@ -118,10 +117,10 @@ const productCategories = [
 
 const solutionsByUseCase = [
 	{
-		name: 'AI agents',
-		description: 'Build and orchestrate AI agents with tools.',
-		href: '/use-cases/ai-agents',
-		icon: Bot
+		name: 'Scripts',
+		description: 'Write, deploy and monitor production scripts.',
+		href: '/use-cases/scripts',
+		icon: CodeBracketIcon
 	},
 	{
 		name: 'Workflows',
@@ -130,16 +129,28 @@ const solutionsByUseCase = [
 		icon: ArrowPathIcon
 	},
 	{
-		name: 'Internal tools',
+		name: 'Internal apps',
 		description: 'Build admin panels, dashboards and back-office apps.',
-		href: '/use-cases/internal-tools',
+		href: '/use-cases/internal-apps',
 		icon: WrenchScrewdriverIcon
+	},
+	{
+		name: 'AI agents',
+		description: 'Build and orchestrate AI agents with tools.',
+		href: '/use-cases/ai-agents',
+		icon: Bot
 	},
 	{
 		name: 'Data pipelines',
 		description: 'ETL, syncs and scheduled data jobs.',
 		href: '/use-cases/data-pipelines',
 		icon: CircleStackIcon
+	},
+	{
+		name: 'Scheduled tasks',
+		description: 'Cron jobs with retries, error handling and alerting.',
+		href: '/use-cases/scheduled-tasks',
+		icon: ClockIcon
 	},
 ];
 
@@ -527,6 +538,19 @@ export default function LandingHeader() {
 								{/* Show navigation items only on mobile (md:hidden) */}
 								<div className="md:hidden grid grid-cols-2 gap-4">
 									<a
+										href="/platform"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Platform
+									</a>
+									<a
+										href="/use-cases"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Solutions
+									</a>
+
+									<a
 										href="/docs/intro"
 										onClick={() => window.plausible('read-docs')}
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
@@ -556,49 +580,6 @@ export default function LandingHeader() {
 										>
 											{resource.name}
 										</a>
-									))}
-								</div>
-
-								{/* Products section in mobile menu */}
-								<div className="md:hidden mt-4 space-y-4">
-									{productCategories.map((category) => (
-										<div key={category.title}>
-											<div className="grid grid-cols-2 gap-2">
-												{category.items.map((item) => (
-													<a
-														key={item.name}
-														href={item.href}
-														className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-													>
-														{item.name}
-													</a>
-												))}
-											</div>
-										</div>
-									))}
-								</div>
-
-								{/* Solutions section in mobile menu */}
-								<div className="md:hidden mt-4 space-y-4">
-									{[
-										{ title: 'By use case', items: solutionsByUseCase }
-									].map((section) => (
-										<div key={section.title}>
-											<div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
-												{section.title}
-											</div>
-											<div className="grid grid-cols-2 gap-2">
-												{section.items.map((item) => (
-													<a
-														key={item.name}
-														href={item.href}
-														className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
-													>
-														{item.name}
-													</a>
-												))}
-											</div>
-										</div>
 									))}
 								</div>
 
@@ -657,8 +638,7 @@ export default function LandingHeader() {
 					</Popover.Panel>
 				</Transition>
 			</Popover>
-			{/* <Banner /> */}
-			<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
+				<BookDemoModal open={bookDemoOpen} setOpen={setBookDemoOpen} />
 		</div>
 	);
 }

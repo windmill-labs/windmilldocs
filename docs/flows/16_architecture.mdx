@@ -5,6 +5,7 @@ description: What is the architecture of Windmill flows and how do steps exchang
 import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import FlowEngineSimulator from '@site/src/components/FlowEngineSimulator';
 
 # Architecture and data exchange
 
@@ -21,6 +22,12 @@ In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openfl
 9. Inner flows.
 
 ![Flow architecture](../assets/flows/flow_architecture.png.webp 'Flow architecture')
+
+### How flows are executed
+
+Each step of a flow is executed as an individual [job](../core_concepts/20_jobs/index.mdx) picked up by a [worker](../core_concepts/9_worker_groups/index.mdx). Sequential steps run one after another, while [parallel branches](./13_flow_branches.md#branch-all) are queued simultaneously and can be processed by different workers at the same time. A join step (like a final result aggregation) waits until every branch has completed before it is queued. With enough workers, parallel branches overlap and the total flow duration equals the longest branch — not the sum of all branches.
+
+<FlowEngineSimulator />
 
 ## Input transform
 

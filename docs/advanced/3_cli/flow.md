@@ -59,7 +59,7 @@ wmill flow bootstrap f/flows/flashy_flow
 
 ## Running a flow
 
-Running a flow by its path is done using the `wmill flow run` command.
+Running a flow by its path is done using the `wmill flow run` command. Logs are streamed step-by-step with labeled headers showing each module's ID and summary. For-loop iterations are tracked individually as they complete.
 
 ```bash
 wmill flow run <remote_path> [options]
@@ -80,13 +80,27 @@ wmill flow run <remote_path> [options]
 
 ![CLI arguments](../../assets/cli/cli_arguments.png "CLI arguments")
 
+:::tip Inspecting flow runs after completion
+Use `wmill job get <job_id>` to see a hierarchical step tree with status and durations, or `wmill job logs <job_id>` to see aggregated logs from all steps. See [Jobs](./job.md) for details.
+:::
+
 ## Update flow inline scripts lockfile
 
-Flows inline script [lockfiles](../6_imports/index.mdx) can be also updated locally in the same way as [`wmill script generate-metadata --lock-only`](./script.md#re-generating-a-script-metadata-file) but for flows' inline scripts:
+Flows inline script [lockfiles](../6_imports/index.mdx) can be updated locally using the [`wmill generate-metadata`](./generate-metadata.md) command:
 
 ```bash
-wmill flow generate-locks
+wmill generate-metadata
 ```
+
+This command handles scripts, flows and apps in a single pass. To only update flow lockfiles, use:
+
+```bash
+wmill generate-metadata --skip-scripts --skip-apps
+```
+
+:::info Legacy command
+Prior to the unified command, this was done with `wmill flow generate-locks`. This command is now deprecated but still works.
+:::
 
 ## Flow specification
 
