@@ -715,6 +715,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/tigris',
+							label: 'Tigris'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/telegram',
 							label: 'Telegram'
 						},
