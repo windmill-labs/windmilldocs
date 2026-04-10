@@ -1,91 +1,45 @@
 ---
-description: How do I configure environment-specific resources in Windmill? Set up per-environment resources and variables with multi-branch or single-branch workflows.
+description: How do I configure per-workspace resources and variables in Windmill? Store different versions of resources, variables, triggers, folders, and settings per workspace on disk.
 ---
 
-# Environment-specific items
+# Workspace-specific items
 
-Environment-specific items allow you to have different versions of [resources](../../core_concepts/3_resources_and_types/index.mdx) and [variables](../../core_concepts/2_variables_and_secrets/index.mdx) per environment/branch (dev/staging/prod). The CLI automatically transforms file paths so that each environment gets its own namespaced files locally while maintaining clean base paths in the Windmill workspace.
+Workspace-specific items let you store different versions of
+[resources](../../core_concepts/3_resources_and_types/index.mdx),
+[variables](../../core_concepts/2_variables_and_secrets/index.mdx), triggers, folders, and
+workspace settings per workspace (dev / staging / prod). The CLI transforms file paths so
+that each workspace has its own namespaced files locally while keeping clean base paths in
+the Windmill workspace itself.
+
+This replaces the older split between `gitBranches` (multi-branch) and `environments`
+(single-branch). Both are now a single `workspaces:` key — see
+[Migrating from `gitBranches` / `environments`](./sync.mdx#migrating-from-gitbranches--environments).
 
 ## How it works
 
-When a file matches a pattern in your `wmill.yaml` configuration, the CLI inserts the environment name into the local file path:
+When a file matches a pattern in your `wmill.yaml` configuration, the CLI inserts the
+workspace name into the local file path:
 
 - **Local files**: `database.dev.resource.yaml`, `database.prod.resource.yaml`
 - **Windmill workspace**: `database.resource.yaml` (clean base path)
 
-This lets each environment have its own configuration for the same logical resource. In practice, multiple environment files usually end up coexisting in the repository (e.g. `database.dev.resource.yaml` and `database.prod.resource.yaml` side by side) — by design in single-branch setups, or as a result of merging branches in multi-branch setups. The CLI only reads the files matching the current environment and ignores the others.
+Each workspace has its own version of the same logical resource. In practice, multiple
+workspace-specific files usually coexist in the repository (e.g. `database.dev.resource.yaml`
+and `database.prod.resource.yaml` side by side) — by design when one git branch hosts
+multiple workspaces, or as a result of merging branches when each workspace has its own
+branch. The CLI only reads the files matching the current workspace and ignores the others.
 
-Two workflows are supported to define environments:
+## Configuration
 
-- **Multi-branch** — each git branch is an environment, detected automatically. Use the `gitBranches` key in `wmill.yaml`.
-- **Single-branch** — one git branch, environments are defined explicitly. Use the `environments` key in `wmill.yaml` and the `--env` CLI flag.
-
-Both use the same path-transformation logic — only the configuration key differs.
-
-## Multi-branch setup
-
-Each git branch maps to an environment (e.g. `main` → production, `dev` → development). The CLI detects the current branch automatically.
-
-### Configuration
+Workspace-specific items are declared inside a `workspaces:` entry, either per workspace
+under `specificItems`, or shared across every workspace under `commonSpecificItems`.
 
 ```yaml
-gitBranches:
-  main:
-    specificItems:
-      resources:
-        - "u/alex/config/**"
-      variables:
-        - "u/alex/env_*"
-      triggers:
-        - "u/alex/kafka_*"
-      folders:
-        - "f/env_*"
-      settings: true
-    overrides:
-      skipSecrets: false
-
+workspaces:
   dev:
-    specificItems:
-      resources:
-        - "u/alex/config/**"
-      variables:
-        - "u/alex/env_*"
-      triggers:
-        - "u/alex/kafka_*"
-      folders:
-        - "f/env_*"
-      settings: true
+    baseUrl: https://dev.windmill.dev
     overrides:
       skipSecrets: true
-```
-
-### Usage
-
-The CLI automatically detects the current git branch and applies the matching configuration.
-
-```bash
-git checkout main
-wmill sync pull
-# Creates: u/alex/config/database.main.resource.yaml
-
-git checkout dev
-wmill sync pull
-# Creates: u/alex/config/database.dev.resource.yaml
-```
-
-You can override the detected branch with `--branch` (e.g. `wmill sync pull --branch main`).
-
-## Single-branch setup
-
-All environments are managed from a single git branch. You select the target environment with `--env`.
-
-### Configuration
-
-Use the `environments` key in `wmill.yaml`:
-
-```yaml
-environments:
-  dev:
     specificItems:
       resources:
         - "u/alex/config/**"
@@ -93,23 +47,15 @@ environments:
         - "u/alex/env_*"
       triggers:
         - "u/alex/kafka_*"
-      folders:
-        - "f/env_*"
-      settings: true
-    overrides:
-      skipSecrets: true
-
-  staging:
-    specificItems:
-      resources:
-        - "u/alex/config/**"
-      variables:
-        - "u/alex/env_*"
       folders:
         - "f/env_*"
       settings: true
 
   prod:
+    baseUrl: https://app.windmill.dev
+    gitBranch: main              # workspace "prod" lives on git branch "main"
+    overrides:
+      skipSecrets: false
     specificItems:
       resources:
         - "u/alex/config/**"
@@ -118,23 +64,69 @@ environments:
       folders:
         - "f/env_*"
       settings: true
-    overrides:
-      skipSecrets: false
+
+  # Items that are workspace-specific across ALL workspaces
+  commonSpecificItems:
+    resources:
+      - "u/alex/config/**"
+    variables:
+      - "u/alex/database_*"
+    folders:
+      - "f/env_*"
+    settings: true
 ```
 
-### Usage
+The `workspaces` key is the map key (`dev`, `prod`, …) and is also the suffix inserted into
+file names on disk. `gitBranch` and `workspaceId` default to that key — only set them when
+they differ.
+
+## Resolving the current workspace
+
+`wmill sync pull` and `wmill sync push` pick the workspace in this order:
+
+1. `--workspace <name>` — explicit override, looks up the entry by key.
+2. **Current git branch** — the first entry whose effective `gitBranch` matches
+   `git rev-parse --abbrev-ref HEAD`.
+3. No match — top-level sync options are used as-is, no workspace-specific transform.
+
+### One git branch per workspace
+
+Each workspace has its own git branch. The CLI detects the current branch automatically and
+applies the matching entry.
 
 ```bash
-wmill sync pull --env dev
-# Creates: u/alex/config/database.dev.resource.yaml
-
-wmill sync pull --env prod
+git checkout main
+wmill sync pull
+# Uses workspace "prod" (gitBranch: main)
 # Creates: u/alex/config/database.prod.resource.yaml
 
-wmill sync push --env staging
+git checkout dev
+wmill sync pull
+# Uses workspace "dev"
+# Creates: u/alex/config/database.dev.resource.yaml
 ```
 
-No `git checkout` is needed — all environment-specific files coexist on the same branch.
+### Multiple workspaces on one git branch
+
+All workspaces live on the same branch and you pick the target with `--workspace`.
+
+```bash
+wmill sync pull --workspace dev
+# Creates: u/alex/config/database.dev.resource.yaml
+
+wmill sync pull --workspace prod
+# Creates: u/alex/config/database.prod.resource.yaml
+
+wmill sync push --workspace staging
+```
+
+No `git checkout` is needed — all workspace-specific files coexist on the same branch.
+
+:::info Migrating from `--env` and `--branch`
+`--branch` and `--env` are still accepted on sync commands but are deprecated — they print a
+one-time warning and resolve the same way `--workspace` does. Update any scripts or CI jobs
+to use `--workspace` instead.
+:::
 
 ## File path transformation
 
@@ -152,20 +144,26 @@ No `git checkout` is needed — all environment-specific files coexist on the sa
 - `f/env_staging/folder.dev.meta.yaml` → `f/env_staging/folder.meta.yaml`
 - `settings.dev.yaml` → `settings.yaml`
 
+The suffix is the **workspace name** (the key in `workspaces:`). In migrated configs where
+the workspace name equals the old branch name, existing files keep working unchanged.
+
 ### Resource files
 
-Resources can include associated files (certificates, config files, etc.) alongside their YAML definitions. These follow the same transformation:
+Resources can include associated files (certificates, config files, etc.) alongside their
+YAML definitions. These follow the same transformation:
 
 - Base file: `u/alex/certificate.resource.file.pem`
-- Environment-specific: `u/alex/certificate.dev.resource.file.pem`
+- Workspace-specific: `u/alex/certificate.dev.resource.file.pem`
 
-When a resource YAML file is marked as environment-specific, all associated resource files are automatically treated the same way.
+When a resource YAML file is marked as workspace-specific, all associated resource files are
+automatically treated the same way.
 
 ### Supported file types
 
 - **Variables**: `*.variable.yaml`
 - **Resources**: `*.resource.yaml` and resource files (`*.resource.file.*`)
 - **Triggers**: `*.kafka_trigger.yaml`, `*.http_trigger.yaml`, `*.websocket_trigger.yaml`, `*.nats_trigger.yaml`, `*.postgres_trigger.yaml`, `*.mqtt_trigger.yaml`, `*.sqs_trigger.yaml`, `*.gcp_trigger.yaml`
+- **Schedules**: `*.schedule.yaml`
 - **Folders**: `folder.meta.yaml` files within folder directories
 - **Settings**: `settings.yaml` (workspace settings file)
 
@@ -180,61 +178,65 @@ Patterns support standard glob syntax:
 
 ## Common specific items
 
-Items that should be environment-specific across all environments can be defined with `commonSpecificItems`:
+Items that should be workspace-specific across all workspaces can be declared once under
+`commonSpecificItems`:
 
 ```yaml
-# Inside gitBranches or environments
-commonSpecificItems:
-  variables:
-    - "u/alex/database_*"
-    - "f/config/**"
-  resources:
-    - "u/alex/api_keys/**"
-    - "f/environments/**"
-  triggers:
-    - "u/alex/kafka_*"
-    - "f/streaming/**"
-  folders:
-    - "f/env_*"
-  settings: true
-```
-
-## Per-environment specific items
-
-If some resources only exist in certain environments, you can define different patterns per environment instead of using `commonSpecificItems`:
-
-```yaml
-# Inside gitBranches or environments
-prod:
-  specificItems:
+workspaces:
+  commonSpecificItems:
     variables:
-      - "u/alex/prod_*"
+      - "u/alex/database_*"
+      - "f/config/**"
     resources:
-      - "u/alex/production/**"
+      - "u/alex/api_keys/**"
+      - "f/environments/**"
     triggers:
-      - "u/alex/prod_kafka_*"
+      - "u/alex/kafka_*"
+      - "f/streaming/**"
     folders:
-      - "f/prod_config"
-    settings: true
-
-dev:
-  specificItems:
-    variables:
-      - "u/alex/dev_*"
-    resources:
-      - "u/alex/development/**"
-    triggers:
-      - "u/alex/dev_kafka_*"
-    folders:
-      - "f/dev_config"
+      - "f/env_*"
     settings: true
 ```
 
-Here, `prod_kafka_*` triggers only get the environment suffix on `prod` — they don't exist in `dev`, so there's no need to mark them there. Most setups use `commonSpecificItems` since the same resources typically exist across all environments.
+## Per-workspace specific items
+
+If some resources only exist in certain workspaces, define different patterns per workspace
+instead of using `commonSpecificItems`:
+
+```yaml
+workspaces:
+  prod:
+    specificItems:
+      variables:
+        - "u/alex/prod_*"
+      resources:
+        - "u/alex/production/**"
+      triggers:
+        - "u/alex/prod_kafka_*"
+      folders:
+        - "f/prod_config"
+      settings: true
+
+  dev:
+    specificItems:
+      variables:
+        - "u/alex/dev_*"
+      resources:
+        - "u/alex/development/**"
+      triggers:
+        - "u/alex/dev_kafka_*"
+      folders:
+        - "f/dev_config"
+      settings: true
+```
+
+Here, `prod_kafka_*` triggers only get the workspace suffix on `prod` — they don't exist in
+`dev`, so there's no need to mark them there. Most setups use `commonSpecificItems` since
+the same resources typically exist across all workspaces.
 
 ## Name safety
 
-Environment and branch names containing certain characters are automatically sanitized for filesystem safety:
+Workspace names containing certain characters are automatically sanitized for filesystem safety:
 
 - **Unsafe characters**: `/ \ : * ? " < > | .`
 - **Replacement**: All unsafe characters are replaced with `_`
@@ -245,40 +247,47 @@ Warning: Branch name "feature/api-v2.1" contains filesystem-unsafe characters (/
 and was sanitized to "feature_api-v2_1". This may cause collisions with other similarly named branches.
 ```
 
+Prefer simple workspace keys (`dev`, `staging`, `prod`) to avoid collisions.
+
 ## Best practices
 
 - **Start broad**: Use `commonSpecificItems` for widely-used resources
 - **Be specific**: Target exact paths rather than overly broad patterns
-- **Group logically**: Organize patterns by team, environment, or function
+- **Group logically**: Organize patterns by team, workspace, or function
 - **Define patterns early**: Establish patterns before team members start using them
-- **Test locally**: Verify environment-specific behavior works correctly before CI/CD integration
+- **Test locally**: Verify workspace-specific behavior works correctly before CI/CD integration
 
 ## Troubleshooting
 
-### Files not being detected as environment-specific
+### Files not being detected as workspace-specific
 
 1. **Check patterns**: Ensure your glob patterns match the file paths exactly
-2. **Verify file types**: Only variables, resources, resource files, and trigger files are supported
+2. **Verify file types**: Only the types listed above are supported
 3. **Pattern testing**: Use tools like [globster.xyz](https://globster.xyz/) to test your patterns
 
 ### Files syncing to the wrong workspace
 
-1. **Check config**: Ensure your environment configuration is correct
-2. **Verify current context**: Make sure you're on the expected git branch or using the right `--env` flag
+1. **Check config**: Ensure your `workspaces:` entry is correct
+2. **Verify current context**: Make sure you're on the expected git branch or using the right `--workspace` flag
 3. **Configuration precedence**: CLI flags override configuration file settings
 
 ## Git sync integration
 
-When [Git sync](../11_git_sync/index.mdx) is configured, environment-specific items work seamlessly with your Git repository setup. Git sync will automatically push changes to the correct environment-specific files based on the repository configuration.
+When [Git sync](../11_git_sync/index.mdx) is configured, workspace-specific items work
+seamlessly with your Git repository setup. Git sync pushes changes to the correct
+workspace-specific files based on the resolved workspace.
 
-**Multi-branch**: each workspace's `git_repository` resource points to a different branch. Git sync detects the branch and applies the matching `gitBranches` configuration automatically.
+- **One git branch per workspace**: each Windmill workspace's `git_repository` resource
+  points to a different branch. Git sync detects the branch and applies the matching
+  `workspaces:` entry automatically.
+  - **Production workspace**: `git_repository` pointing to `repoX` on `main` branch
+    - Changes to `database.resource.yaml` → pushed as `database.prod.resource.yaml`
+  - **Development workspace**: `git_repository` pointing to `repoX` on `dev` branch
+    - Changes to `database.resource.yaml` → pushed as `database.dev.resource.yaml`
 
-- **Production workspace**: `git_repository` pointing to `repoX` on `prod` branch
-  - Changes to `database.resource.yaml` → pushes to `database.prod.resource.yaml`
-- **Development workspace**: `git_repository` pointing to `repoX` on `dev` branch
-  - Changes to `database.resource.yaml` → pushes to `database.dev.resource.yaml`
-
-**Single-branch**: all workspaces point to the same branch. Set the environment name in the Git sync advanced settings so that Git sync applies the matching `environments` configuration.
+- **Multiple workspaces on one git branch**: all Windmill workspaces point to the same
+  branch. Set the workspace name in the Git sync advanced settings so Git sync applies the
+  matching `workspaces:` entry.
 
 ## Related documentation
 

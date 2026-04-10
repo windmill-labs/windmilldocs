@@ -371,9 +371,9 @@ Git sync settings can be controlled via the [`wmill.yaml`](../3_cli/sync.mdx#wmi
 
 - **CLI compatibility**: Settings configured in the UI are compatible with [Windmill CLI](../3_cli/index.mdx)
 - **Version-controlled configuration**: Your sync settings are stored in git alongside your code
-- **Branch-specific overrides**: Different sync behavior per git branch
-- **Git Promotion-specific settings**: Special configuration for deployment workflows
-- **[Environment-specific items](../3_cli/environment-specific-items.mdx)**: Different versions of resources and variables per environment
+- **Workspace-specific overrides**: Different sync behavior per workspace (resolved from the current git branch or `--workspace`)
+- **Git promotion-specific settings**: Special configuration for deployment workflows
+- **[Workspace-specific items](../3_cli/environment-specific-items.mdx)**: Different versions of resources and variables per workspace
 
 The frontend will detect existing `wmill.yaml` files and merge settings appropriately.
 
