@@ -73,6 +73,10 @@ Stop editing the shared workspace directly. Instead, developers create a [worksp
 
 This is still a pure UI workflow — no git, no CI/CD, no external tools. Stage 3 will add git sync on top, and forks integrate seamlessly with it when you get there.
 
+:::note Forks are optional
+Forks are not a prerequisite for stage 3. Git sync works on a plain shared workspace, so if you already want git history and local development, you can skip this stage and go straight to [stage 3](#stage-3--add-git-sync). Adopt forks later if you need isolated sandboxes and a review gate.
+:::
+
 ### Architecture
 
 - One shared workspace (same as stage 1), now called `prod` or `main`
