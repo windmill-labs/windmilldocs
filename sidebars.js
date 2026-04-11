@@ -1019,7 +1019,11 @@ const sidebars = {
 						'advanced/deploy_gh_gl/index',
 						'core_concepts/staging_prod/index',
 						'core_concepts/protection_rulesets/index',
-						'advanced/canonical_deployment_setups/index'
+						{
+							type: 'doc',
+							id: 'advanced/canonical_deployment_setups/index',
+							label: 'Collaboration and deployment stages'
+						}
 					],
 					collapsed: false
 				},

@@ -11,6 +11,16 @@ workspace settings per workspace (dev / staging / prod). The CLI transforms file
 that each workspace has its own namespaced files locally while keeping clean base paths in
 the Windmill workspace itself.
 
+:::tip Multi-workspace setups are stage 4 of the collaboration guide
+
+Using `workspaces:` with multiple entries (one per environment, each with its own
+`gitBranch`) corresponds to **stage 4** of the
+[collaboration and deployment stages](../23_canonical_deployment_setups/index.mdx#stage-4--add-multi-workspace-promotion)
+guide. The single-workspace form of `workspaces:` is used starting at
+[stage 2](../23_canonical_deployment_setups/index.mdx#stage-2--add-git-sync).
+
+:::
+
 This replaces the older split between `gitBranches` (multi-branch) and `environments`
 (single-branch). Both are now a single `workspaces:` key — see
 [Migrating from `gitBranches` / `environments`](./sync.mdx#migrating-from-gitbranches--environments).
