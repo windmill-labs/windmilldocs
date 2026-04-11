@@ -15,9 +15,11 @@ This page describes how to set up collaboration and deployment in Windmill as a 
 | [Stage 3](#stage-3--add-forks-and-the-merge-ui) | Forks, merge UI, protection rulesets | Optional | Yes | 1 |
 | [Stage 4](#stage-4--add-multi-workspace-promotion) | Multi-workspace (dev/staging/prod) | Yes | Yes | 2+ |
 
-:::info Enterprise features
+:::info Edition requirements
 
-Stages 3 and 4 rely on [workspace forks](../20_workspace_forks/index.mdx), [protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx) and [git sync](../11_git_sync/index.mdx), which are [Cloud or Enterprise Self-Hosted](/pricing) features. Stage 1 works on any edition.
+- **Stage 1** works on any edition.
+- **Stage 2** uses [git sync](../11_git_sync/index.mdx). Git sync is available on [Cloud and Enterprise Self-Hosted](/pricing), and also on Community Edition for workspaces with **up to 2 users**.
+- **Stages 3 and 4** rely on [workspace forks](../20_workspace_forks/index.mdx) and [protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx), which are [Cloud or Enterprise Self-Hosted](/pricing) only.
 
 :::
 
@@ -67,6 +69,8 @@ Everyone on the team works in the same workspace. Developers iterate in their ow
 ## Stage 2 — Add git sync
 
 Keep the single shared workspace from stage 1, and connect it to a git repository using [git sync](../11_git_sync/index.mdx). Every deploy is committed to git, and changes pushed to the repository are synced back to Windmill via CI/CD. This gives you a full audit trail, external version control, and [local development](../4_local_development/index.mdx) from your IDE — without changing how your team edits items in the UI.
+
+Git sync is available on [Cloud and Enterprise Self-Hosted](/pricing), and on Community Edition for workspaces with up to 2 users.
 
 ### Architecture
 
