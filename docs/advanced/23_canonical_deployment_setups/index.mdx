@@ -132,7 +132,7 @@ See [workspace-specific items](../3_cli/environment-specific-items.mdx) for the 
 
 1. Developers continue to work in the shared workspace, exactly like stage 1 (`u/` → `f/`).
 2. Every deploy creates a commit in the git repository.
-3. Developers who prefer local editing can `wmill sync pull` the workspace, edit in their IDE or the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx), and `wmill sync push` back.
+3. Developers who prefer local editing can [work on the workspace outside of Windmill](../4_local_development/index.mdx): `wmill sync pull`, edit in their IDE, the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx), or an [agentic coding tool](../../misc/9_guides/local_dev_with_ai/index.mdx) like Claude Code, then `wmill sync push` back.
 4. External commits (from local development or PR merges) are replayed into the workspace by the CI/CD workflow.
 
 ### When to move to stage 3
