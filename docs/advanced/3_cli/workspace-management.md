@@ -4,7 +4,7 @@ description: How do I manage workspaces using the Windmill CLI?
 
 # Workspace management
 
-Windmill CLI can be used on several workspaces from several instances.
+Windmill CLI can be used on several workspaces from several instances. For how multi-workspace setups fit into a team collaboration workflow, see the [collaboration and deployment stages](../23_canonical_deployment_setups/index.mdx) guide, in particular [stage 4](../23_canonical_deployment_setups/index.mdx#stage-4--add-multi-workspace-promotion).
 
 ## List workspaces
 
