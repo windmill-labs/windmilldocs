@@ -11,15 +11,16 @@ This page describes how to set up collaboration and deployment in Windmill as a 
 | Stage | What you add | Git required | Forks | Workspaces |
 |-------|--------------|--------------|-------|------------|
 | [Stage 1](#stage-1--shared-workspace) | Shared workspace, `u/` → `f/` | No | No | 1 |
-| [Stage 2](#stage-2--add-git-sync) | Bi-directional git sync | Yes | No | 1 |
-| [Stage 3](#stage-3--add-forks-and-the-merge-ui) | Forks, merge UI, protection rulesets | Optional | Yes | 1 |
+| [Stage 2](#stage-2--add-forks-and-the-merge-ui) | Forks, merge UI, protection rulesets | No | Yes | 1 |
+| [Stage 3](#stage-3--add-git-sync) | Bi-directional git sync, local development | Yes | Yes | 1 |
 | [Stage 4](#stage-4--add-multi-workspace-promotion) | Multi-workspace (dev/staging/prod) | Yes | Yes | 2+ |
 
 :::info Edition requirements
 
 - **Stage 1** works on any edition.
-- **Stage 2** uses [git sync](../11_git_sync/index.mdx). Git sync is available on [Cloud and Enterprise Self-Hosted](/pricing), and also on Community Edition for workspaces with **up to 2 users**.
-- **Stages 3 and 4** rely on [workspace forks](../20_workspace_forks/index.mdx) and [protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx), which are [Cloud or Enterprise Self-Hosted](/pricing) only.
+- **Stage 2** relies on [workspace forks](../20_workspace_forks/index.mdx) and [protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx), which are [Cloud or Enterprise Self-Hosted](/pricing) only.
+- **Stage 3** adds [git sync](../11_git_sync/index.mdx), available on [Cloud and Enterprise Self-Hosted](/pricing), and on Community Edition for workspaces with **up to 2 users**.
+- **Stage 4** requires git sync and is [Cloud or Enterprise Self-Hosted](/pricing) only.
 
 :::
 
@@ -49,9 +50,9 @@ Everyone on the team works in the same workspace. Developers iterate in their ow
 
 ### When to move to stage 2
 
-- You want a history of changes outside Windmill (audit, backup, code review in git).
-- You want to edit scripts and flows locally in your IDE and push them back.
-- You've had an accidental edit in production and wish you had version control.
+- Someone broke an item in the shared workspace and you wish it had been isolated.
+- You want a review gate before changes reach the shared workspace.
+- Developers want sandboxes to test risky changes without affecting anyone else.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -66,21 +67,79 @@ Everyone on the team works in the same workspace. Developers iterate in their ow
 	/>
 </div>
 
-## Stage 2 — Add git sync
+## Stage 2 — Add forks and the merge UI
 
-Keep the single shared workspace from stage 1, and connect it to a git repository using [git sync](../11_git_sync/index.mdx). Every deploy is committed to git, and changes pushed to the repository are synced back to Windmill via CI/CD. This gives you a full audit trail, external version control, and [local development](../4_local_development/index.mdx) from your IDE — without changing how your team edits items in the UI.
+Stop editing the shared workspace directly. Instead, developers create a [workspace fork](../20_workspace_forks/index.mdx) for each change, iterate in the fork, and merge back via the [merge UI](../20_workspace_forks/index.mdx#merge-workspaces-from-the-ui-merge-ui). [Protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx) enforce this: direct deploys to the shared workspace are blocked except for a small `wm_deployer` group.
+
+This is still a pure UI workflow — no git, no CI/CD, no external tools. Stage 3 will add git sync on top, and forks integrate seamlessly with it when you get there.
+
+### Architecture
+
+- One shared workspace (same as stage 1), now called `prod` or `main`
+- [Protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx) block direct deploys; a `wm_deployer` group has bypass permissions
+- Developers create [workspace forks](../20_workspace_forks/index.mdx) to develop features
+- Changes merge back through the [merge UI](../20_workspace_forks/index.mdx#merge-workspaces-from-the-ui-merge-ui)
+
+![UI only forks](./workspace_forks_ui_only.png)
+
+### Setup
+
+#### 1. Create the `wm_deployer` group
+
+1. Open the workspace settings and go to **Groups**.
+2. Create a group called `wm_deployer` and add the users who are allowed to deploy directly or approve merges.
+
+#### 2. Enable protection rulesets
+
+1. Go to **Workspace settings** → **Protection Rulesets**.
+2. Add a rule that enables **Disable direct deployment**.
+3. Add the `wm_deployer` group to the bypass list.
+
+This blocks everyone except the deployer group from modifying `f/` items directly. Developers must now use forks.
+
+### Developer workflow
+
+1. A developer creates a [workspace fork](../20_workspace_forks/index.mdx#fork-creation) from the shared workspace via the workspace menu.
+2. They iterate, test, and deploy freely *inside* the fork — triggers are not copied over to avoid unwanted executions.
+3. When ready, they open the fork home page, click **Review & Deploy Changes**, and review the diff in the [merge UI](../20_workspace_forks/index.mdx#merge-workspaces-from-the-ui-merge-ui).
+4. A member of `wm_deployer` approves the merge. The changes land in the shared workspace.
+
+### When to move to stage 3
+
+- You want a history of changes outside Windmill (audit, backup, rollback).
+- You want to edit scripts and flows locally in your IDE or with [agentic coding tools](../../misc/9_guides/local_dev_with_ai/index.mdx) like Claude Code.
+- You want fork branches mirrored in git so PRs can be reviewed there too.
+- You're planning to add a separate production environment (stage 4), which requires git sync.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace forks"
+		description="Create independent copies of a workspace for parallel development."
+		href="/docs/advanced/workspace_forks"
+	/>
+	<DocCard
+		title="Protection rulesets"
+		description="Enforce governance policies that control how changes reach a workspace."
+		href="/docs/core_concepts/protection_rulesets"
+	/>
+</div>
+
+## Stage 3 — Add git sync
+
+Connect the workspace from stages 1 and 2 to a git repository using [git sync](../11_git_sync/index.mdx). Every deploy is committed to git, and changes pushed to the repository are synced back to Windmill via CI/CD. This gives you a full audit trail, external version control, and [local development](../4_local_development/index.mdx) — and each fork from stage 2 now automatically gets its own git branch, so the merge UI and git PRs stay in lockstep.
 
 Git sync is available on [Cloud and Enterprise Self-Hosted](/pricing), and on Community Edition for workspaces with up to 2 users.
 
 ### Architecture
 
-- One workspace (same as stage 1)
+- The shared workspace and its forks from stage 2, unchanged
 - A git repository with a single branch (for example `main`)
 - [Git sync](../11_git_sync/index.mdx) configured on the workspace: each deploy pushes a commit
 - A CI/CD workflow that syncs commits back to the workspace, enabling bi-directional sync
 - A `wmill.yaml` file in the repository with a single entry in the [`workspaces:`](../3_cli/environment-specific-items.mdx) key
+- Fork branches auto-created as `wm-fork/<parent-branch>/<fork-name>`
 
-![Git sync diagram](/images/basic_git_sync.png 'Git sync diagram')
+![Workspace Forks + git sync](./workspace_forks.png)
 
 ### Setup
 
@@ -96,14 +155,19 @@ Create an empty repository on GitHub, GitLab or similar with a single `main` bra
 
 See the full walkthrough in [git sync setup](../11_git_sync/index.mdx#setup---git-sync-from-windmill).
 
-#### 3. Add the CI/CD workflow for the reverse direction
+#### 3. Add the CI/CD workflows
 
-Git sync only pushes *from* Windmill *to* git by default. To make changes in git flow back into the workspace, add a GitHub Actions workflow (or equivalent). A working reference is the [windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example) repository, in particular [`push-on-merge.yaml`](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml), which runs `wmill sync push` on every merge to `main`.
+Git sync only pushes *from* Windmill *to* git by default. To make changes in git flow back into the workspace, add GitHub Actions workflows (or equivalent). A working reference is the [windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example) repository. You will want:
+
+- [`push-on-merge.yaml`](../11_git_sync/index.mdx#setup---cicd-from-git-repository) — runs `wmill sync push` when commits land on `main`.
+- [`push-on-merge-to-forks.yaml`](../11_git_sync/index.mdx#setup---cicd-from-git-repository) and [`open-pr-on-fork-commit.yaml`](../11_git_sync/index.mdx#setup---cicd-from-git-repository) — keep fork branches in sync and open PRs automatically.
+
+Without the fork workflows, forks still work exactly as in stage 2 — their git branches just won't receive external edits.
 
 You will need:
 
 - A [Windmill user token](../../core_concepts/4_webhooks/index.mdx#user-token) saved as a `WMILL_TOKEN` GitHub secret.
-- The `WMILL_WORKSPACE` and `WMILL_URL` variables set in the workflow.
+- The `WMILL_WORKSPACE` and `WMILL_URL` variables set in the workflows.
 
 Full details in [git sync CI/CD setup](../11_git_sync/index.mdx#setup---cicd-from-git-repository).
 
@@ -130,74 +194,11 @@ See [workspace-specific items](../3_cli/environment-specific-items.mdx) for the 
 
 ### Developer workflow
 
-1. Developers continue to work in the shared workspace, exactly like stage 1 (`u/` → `f/`).
-2. Every deploy creates a commit in the git repository.
-3. Developers who prefer local editing can [work on the workspace outside of Windmill](../4_local_development/index.mdx): `wmill sync pull`, edit in their IDE, the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx), or an [agentic coding tool](../../misc/9_guides/local_dev_with_ai/index.mdx) like Claude Code, then `wmill sync push` back.
-4. External commits (from local development or PR merges) are replayed into the workspace by the CI/CD workflow.
-
-### When to move to stage 3
-
-- The shared workspace has grown, and accidental edits to `f/` items are causing problems.
-- You want code review on deploys instead of trusting deploy-and-fix.
-- Developers want fully isolated sandboxes to test risky changes.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Git sync"
-		description="Connect a Windmill workspace to a git repository with bi-directional sync."
-		href="/docs/advanced/git_sync"
-	/>
-	<DocCard
-		title="Local development"
-		description="Edit Windmill scripts and flows locally with the CLI and VS Code."
-		href="/docs/advanced/local_development"
-	/>
-</div>
-
-## Stage 3 — Add forks and the merge UI
-
-Stop editing the shared workspace directly. Instead, developers create a [workspace fork](../20_workspace_forks/index.mdx) for each change, iterate in the fork, and merge back via the merge UI (or via a git PR if git sync is on). [Protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx) enforce this: direct deploys to the shared workspace are blocked except for a small `wm_deployer` group.
-
-This stage works with or without git sync. With git sync (stage 2) it's strictly better: every fork automatically gets its own git branch, so the merge UI and git PRs stay in lockstep.
-
-### Architecture
-
-- One shared workspace (same as stages 1 and 2), now called `prod` or `main`
-- Protection rulesets block direct deploys; a `wm_deployer` group has bypass permissions
-- Developers create [workspace forks](../20_workspace_forks/index.mdx) to develop features
-- Changes merge back through the [merge UI](../20_workspace_forks/index.mdx#merge-workspaces-from-the-ui-merge-ui) or a git PR
-- If git sync (stage 2) is configured, each fork automatically creates a corresponding branch `wm-fork/<parent-branch>/<fork-name>`
-
-![Workspace Forks + git sync](./workspace_forks.png)
-
-### Setup
-
-#### 1. Create the `wm_deployer` group
-
-1. Open the workspace settings and go to **Groups**.
-2. Create a group called `wm_deployer` and add the users who are allowed to deploy directly or approve merges.
-
-#### 2. Enable protection rulesets
-
-1. Go to **Workspace settings** → **Protection Rulesets**.
-2. Add a rule that enables **Disable direct deployment**.
-3. Add the `wm_deployer` group to the bypass list.
-
-This blocks everyone except the deployer group from modifying `f/` items directly. Developers must now use forks.
-
-#### 3. (Optional, but recommended) Add the fork CI/CD workflows
-
-If you followed stage 2, add [`push-on-merge-to-forks.yaml`](../11_git_sync/index.mdx#setup---cicd-from-git-repository) and [`open-pr-on-fork-commit.yaml`](../11_git_sync/index.mdx#setup---cicd-from-git-repository) so fork branches stay in sync and PRs are opened automatically. Without these, forks still work, but their git branches won't receive external edits.
-
-### Developer workflow
-
-1. A developer creates a [workspace fork](../20_workspace_forks/index.mdx#fork-creation) from the shared workspace (UI or `wmill workspace fork`).
-2. If git sync is on, a matching `wm-fork/<branch>/<name>` git branch is created automatically — the developer can now also edit the fork locally against that branch.
-3. They iterate, test, and deploy freely *inside* the fork.
-4. When ready, they open the fork home page, click **Review & Deploy Changes**, and review the diff in the [merge UI](../20_workspace_forks/index.mdx#merge-workspaces-from-the-ui-merge-ui).
-5. A member of `wm_deployer` approves the merge. The changes land in the shared workspace (and, if git sync is on, in `main`).
-
-Fork branches can also be reviewed through normal git PRs instead of the merge UI — useful when you want code review on an existing git platform.
+1. Developers continue to use forks from stage 2. When they create a fork, a matching `wm-fork/main/<name>` git branch is created automatically.
+2. They can now also edit the fork locally: [work on the workspace outside of Windmill](../4_local_development/index.mdx) with `wmill sync pull`, edit in their IDE, the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx), or an [agentic coding tool](../../misc/9_guides/local_dev_with_ai/index.mdx) like Claude Code, then `wmill sync push` back.
+3. Every deploy creates a commit in the git repository.
+4. Merging a fork via the merge UI *or* via a normal git PR both work — pick whichever your team prefers for review.
+5. External commits (from local development or PR merges) are replayed into the workspace by the CI/CD workflow.
 
 ### When to move to stage 4
 
@@ -207,14 +208,14 @@ Fork branches can also be reviewed through normal git PRs instead of the merge U
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workspace forks"
-		description="Create independent copies of a workspace for parallel development."
-		href="/docs/advanced/workspace_forks"
+		title="Git sync"
+		description="Connect a Windmill workspace to a git repository with bi-directional sync."
+		href="/docs/advanced/git_sync"
 	/>
 	<DocCard
-		title="Protection rulesets"
-		description="Enforce governance policies that control how changes reach a workspace."
-		href="/docs/core_concepts/protection_rulesets"
+		title="Local development"
+		description="Edit Windmill scripts and flows locally with the CLI, IDEs, and agentic coding tools."
+		href="/docs/advanced/local_development"
 	/>
 </div>
 
@@ -229,7 +230,7 @@ The `prod` workspace is never edited directly. Its only source of change is a me
 - Two (or more) workspaces, each on its own git branch
 - Each workspace has its own `git_repository` resource and its own entry under `workspaces:` in `wmill.yaml`
 - Git sync is configured in [promotion mode](../11_git_sync/index.mdx#git-promotion-workflow-cross-instance-deployment-using-a-git-workflow) from `staging` to `prod`
-- Developers edit `staging` via [forks](../20_workspace_forks/index.mdx) (stage 3 pattern)
+- Developers edit `staging` via [forks](../20_workspace_forks/index.mdx) (stage 2 pattern)
 - `prod` is protected by [protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx) and only the promotion CI/CD can deploy to it
 
 | Workspace | Git branch | Promotes to |
@@ -237,7 +238,7 @@ The `prod` workspace is never edited directly. Its only source of change is a me
 | staging   | staging    | prod        |
 | prod      | prod       | —           |
 
-![Git Promotion](./git_promotion.png 'Edits to staging use the stage 3 fork workflow')
+![Git Promotion](./git_promotion.png 'Edits to staging use the stage 2 fork workflow')
 
 ### Setup
 
@@ -271,7 +272,7 @@ The git sync resource points at the workspace's *own* branch (`staging`). The pr
 
 - `push-on-merge.yaml` — one copy per workspace (`WMILL_WORKSPACE=staging`, `WMILL_WORKSPACE=prod`), triggered by merges to `staging` and `prod` respectively.
 - `open-pr-on-promotion-commit.yaml` — opens a PR on `prod` when staging promotes a change.
-- `push-on-merge-to-forks.yaml` and `open-pr-on-fork-commit.yaml` — unchanged from stage 3.
+- `push-on-merge-to-forks.yaml` and `open-pr-on-fork-commit.yaml` — unchanged from stage 3, now scoped to the `staging` workspace.
 
 See [git sync CI/CD setup](../11_git_sync/index.mdx#setup---cicd-from-git-repository) for the workflow files.
 
@@ -310,7 +311,7 @@ Enable [protection rulesets](../../core_concepts/56_protection_rulesets/index.md
 ### Developer workflow
 
 1. A developer needs to change something. They [fork](../20_workspace_forks/index.mdx) the **staging** workspace (not prod).
-2. They iterate in the fork and merge back to `staging` via the merge UI. This is the stage 3 workflow, unchanged.
+2. They iterate in the fork and merge back to `staging` via the merge UI. This is the stage 2 workflow plus the git sync integration from stage 3.
 3. When the change needs to go live, they trigger a [git promotion](../9_deploy_gh_gl/index.mdx) from `staging` to `prod`.
 4. A PR is opened on the `prod` branch. The team reviews it in their git platform.
 5. Merging the PR triggers the `push-on-merge.yaml` workflow, which syncs `prod` to the new state.
@@ -340,11 +341,11 @@ Enable [protection rulesets](../../core_concepts/56_protection_rulesets/index.md
 Most teams should start at **stage 1** and only move up when they feel the pain the next stage solves. Stage 4 is real operational overhead and should not be the default — the majority of teams are well served by stages 2 or 3.
 
 - **Stage 1** if you have a small team, no compliance requirements, and a single environment is fine.
-- **Stage 2** if you want git history, backup, and local development, but don't need a review gate.
-- **Stage 3** if you want enforced review on every change via the merge UI or git PRs.
+- **Stage 2** if you want enforced review on every change and isolated sandboxes, but don't need external version control.
+- **Stage 3** if you want git history, backup, local development, and the option of git PR-based review on top of stage 2.
 - **Stage 4** if you need a separate production environment with a promotion gate, or you deploy across multiple Windmill instances.
 
-Stages 1 → 2 → 3 → 4 are designed to be adopted in order, but you can skip stages: stage 1 → stage 3 (no git sync) is valid if you want fork-based review without git infrastructure.
+Stages 1 → 2 → 3 → 4 are designed to be adopted in order, but you can skip stages: a small team on Community Edition can go stage 1 → stage 3 (skip forks) to get git sync and local development without needing fork-based review.
 
 ## Related documentation
 
