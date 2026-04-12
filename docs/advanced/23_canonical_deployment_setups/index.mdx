@@ -308,6 +308,31 @@ workspaces:
 
 Each workspace declares its own `gitBranch`. Items listed under `specificItems` (for example, environment-specific database credentials) are stored per workspace on disk. See [workspace-specific items](../3_cli/environment-specific-items.mdx) for the full schema.
 
+:::info Per-folder ownership defaults on deploy
+
+When CI/CD pushes items to the target workspace, it runs as a user in `wm_deployers`, so the default `on_behalf_of` / `permissioned_as` on newly created items would normally be that deploy user. If you want items under a folder to run as a specific service account instead — and to differ per environment — set `default_permissioned_as` rules on the folder in the target workspace:
+
+```yaml
+# f/customer_x/folder.meta.yaml — committed per workspace via specificItems
+summary: ''
+display_name: customer_x
+owners: []
+extra_perms: {}
+default_permissioned_as:
+  - path_glob: 'jobs/**'
+    permissioned_as: u/customer_x_svc    # or g/customer_x or an email
+  - path_glob: '**'
+    permissioned_as: u/ops
+```
+
+Rules are ordered; the first `path_glob` (relative to the folder root) that matches an item wins. Applied only at **create time** and only when the caller is admin or a member of `wm_deployers` — existing items are untouched, and non-deployer users still deploy as themselves. Set `folders: ["f/**/folder.meta.yaml"]` under `specificItems` in `wmill.yaml` if you want different rules per workspace on the same path.
+
+Edit the rules in the folder settings UI, or commit them directly in `folder.meta.yaml`. The CLI also exposes per-item overrides for already-deployed items via `wmill script|flow|app|schedule|trigger set-permissioned-as <path> <email>`.
+
+Folder defaults are advisory: they only fill in the default when the pushed item does not already carry an explicit `on_behalf_of`. To opt in to CLI preview of which items will be affected by rules on the next push, set `syncBehavior: v1` in `wmill.yaml`.
+
+:::
+
 #### 6. Protect `prod`
 
 Enable [protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx) on the `prod` workspace with no bypass group — the only way in is the promotion PR.
