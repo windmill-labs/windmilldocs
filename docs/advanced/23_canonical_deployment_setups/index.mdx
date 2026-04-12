@@ -310,7 +310,7 @@ Each workspace declares its own `gitBranch`. Items listed under `specificItems` 
 
 :::info Per-folder ownership defaults on deploy
 
-When CI/CD pushes items to the target workspace, it runs as a user in `wm_deployers`, so the default `on_behalf_of` / `permissioned_as` on newly created items would normally be that deploy user. If you want items under a folder to run as a specific service account instead — and to differ per environment — set `default_permissioned_as` rules on the folder in the target workspace:
+By default, a newly deployed script, flow, app, schedule or trigger runs as whichever user pushed it. For CLI / CI/CD deploys that's the identity behind `WMILL_TOKEN` — typically a workspace admin or a dedicated deploy user that you've added to `wm_deployers`. If you want items under a folder to run as a specific service account instead — and to differ per environment — set `default_permissioned_as` rules on the folder in the target workspace:
 
 ```yaml
 # f/customer_x/folder.meta.yaml — committed per workspace via specificItems
