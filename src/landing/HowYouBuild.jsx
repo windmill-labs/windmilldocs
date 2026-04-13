@@ -56,7 +56,7 @@ export default function HowYouBuild() {
 					</p>
 					<CliSnippet />
 					<p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-						Self-hosting? <Link to="/platform/self-host" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy on Docker first</Link>.
+						Self-hosting? <Link to="/platform/self-host" className="text-blue-600 dark:text-blue-400 hover:underline">Deploy with Docker or Kubernetes first</Link>.
 					</p>
 				</div>
 				<div>
