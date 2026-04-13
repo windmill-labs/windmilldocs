@@ -1,0 +1,82 @@
+---
+description: How do I set up CI tests in Windmill? Write test scripts that automatically run when the tested script or flow is deployed.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# CI test scripts
+
+Add a `test:` annotation at the top of any script to turn it into a CI test. When the tested [script](../../getting_started/0_scripts_quickstart/index.mdx) or [flow](../../getting_started/6_flows_quickstart/index.mdx) is deployed, the test runs automatically.
+
+## Writing a test script
+
+### Single target
+
+```typescript
+// test: script/u/admin/my_script
+import * as wmill from "windmill-client";
+
+export async function main() {
+  const result = await wmill.runScript("u/admin/my_script", {});
+
+  if (result !== 42) {
+    throw new Error(`Expected 42, got ${JSON.stringify(result)}`);
+  }
+
+  return result;
+}
+```
+
+### Multiple targets
+
+```typescript
+// test:
+// script/u/admin/script_a
+// script/u/admin/script_b
+// flow/u/admin/my_flow
+import * as wmill from "windmill-client";
+
+export async function main() {
+  // test all items
+}
+```
+
+### Python
+
+```python
+# test: script/u/admin/my_script
+import wmill
+
+def main():
+    result = wmill.run_script("u/admin/my_script", {})
+    assert result == 42
+    return result
+```
+
+The annotation uses the comment syntax of each language (`//` for TypeScript, `#` for Python, etc.).
+
+The script creation page also provides ready-made CI test templates for TypeScript and Python.
+
+## Where results appear
+
+Test scripts show a yellow **CI test** badge in the script list and detail page.
+
+On the detail page of the tested script or flow, each test is listed with its status (pass, fail, or running) and a link to the job run. Results auto-refresh while tests are running.
+
+In [workspace forks](../20_workspace_forks/index.mdx), CI results are also visible:
+
+- The fork banner shows a summary of passing, failing, and running tests across all changed items.
+- On the [comparison page](../20_workspace_forks/index.mdx#merge-workspaces-from-the-ui-merge-ui), each changed item displays a CI badge, and a test summary lists all test scripts with their latest results.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Deploy to prod"
+		description="Set up staging/prod environments with Git-based deployment and workspace forks."
+		href="/docs/advanced/deploy_to_prod"
+	/>
+	<DocCard
+		title="Workspace forks"
+		description="Create independent copies of a workspace for parallel development workflows."
+		href="/docs/advanced/workspace_forks"
+	/>
+</div>
