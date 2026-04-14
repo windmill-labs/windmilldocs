@@ -48,7 +48,6 @@ export default function WhatYouCanBuild() {
 							<video
 								key={item.video}
 								src={item.video}
-								poster={item.cover}
 								autoPlay
 								loop
 								muted
