@@ -6,7 +6,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # AI sandbox
 
-The AI sandbox combines two Windmill features — [sandboxing](../../advanced/security_isolation/index.mdx#sandbox-annotation) and [volumes](../56_volumes/index.mdx) — to run AI coding agents with process isolation and persistent file storage. Any agent that operates on a local filesystem can be wrapped in a Windmill script this way: Claude Code, Codex, OpenCode, or a custom agent.
+The AI sandbox combines two Windmill features - [sandboxing](../../advanced/security_isolation/index.mdx#sandbox-annotation) and [volumes](../56_volumes/index.mdx) - to run AI coding agents with process isolation and persistent file storage. Any agent that operates on a local filesystem can be wrapped in a Windmill [script](../../getting_started/0_scripts_quickstart/index.mdx) this way: [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Codex](https://github.com/openai/codex), [OpenCode](https://github.com/nicepkg/opencode), or a custom agent.
 
 ## Core pattern
 
@@ -17,16 +17,16 @@ An AI sandbox script has two annotations at the top:
 // volume: agent-state .agent
 ```
 
-- `sandbox` — runs the job inside [nsjail](../../advanced/security_isolation/index.mdx#nsjail-sandboxing), isolating the agent's filesystem and processes from the worker.
-- `volume: <name> <path>` — mounts a persistent [volume](../56_volumes/index.mdx) so the agent can read and write files that survive across job runs (session state, memory, generated artifacts, etc.).
+- `sandbox` - runs the [job](../20_jobs/index.mdx) inside [nsjail](../../advanced/security_isolation/index.mdx#nsjail-sandboxing), isolating the agent's filesystem and processes from the [worker](../9_worker_groups/index.mdx).
+- `volume: <name> <path>` - mounts a persistent [volume](../56_volumes/index.mdx) so the agent can read and write files that survive across job runs (session state, memory, generated artifacts, etc.). Files are synced to [object storage](../38_object_storage_in_windmill/index.mdx).
 
-This pattern works for any language supported by Windmill. The agent itself can be invoked via an SDK, a CLI subprocess, or an HTTP API — the sandbox and volume annotations are independent of how the agent runs.
+This pattern works for any [language](../../getting_started/0_scripts_quickstart/index.mdx) supported by Windmill. The agent itself can be invoked via an SDK, a CLI subprocess, or an HTTP API - the sandbox and volume annotations are independent of how the agent runs. You can use AI sandboxes in standalone scripts or as steps within [flows](../../flows/1_flow_editor.mdx).
 
 ## Use cases
 
-- **Persistent agent memory** — the agent stores session IDs, conversation history, or memory files in the volume and resumes where it left off on the next run.
-- **Artifact generation** — the agent produces files (reports, code, data) that are synced to object storage and available for downstream jobs.
-- **Safe execution** — nsjail restricts the agent's access to the filesystem, network, and system resources, preventing accidental or malicious damage to the worker.
+- **Persistent agent memory** - the agent stores session IDs, conversation history, or memory files in the volume and resumes where it left off on the next run.
+- **Artifact generation** - the agent produces files (reports, code, data) that are synced to object storage and available for downstream jobs.
+- **Safe execution** - nsjail restricts the agent's access to the filesystem, network, and system resources, preventing accidental or malicious damage to the worker.
 
 ## Creating an AI sandbox script
 
@@ -34,16 +34,20 @@ This pattern works for any language supported by Windmill. The agent itself can 
 
 1. Add a new step and select **AI Sandbox**.
 2. Choose a template (e.g. **Claude Code**).
-3. The template is inserted as an inline Bun script step with the `sandbox` and `volume` annotations pre-configured.
+3. The template is inserted as an inline [Bun script](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) step with the `sandbox` and `volume` annotations pre-configured.
 
 ### From the script editor
 
 1. Create a new script.
-2. In the language selector, click the **Claude Sandbox** template button — or start from scratch and add the `// sandbox` and `// volume:` annotations manually.
+2. In the language selector, click the **Claude Sandbox** template button - or start from scratch and add the `// sandbox` and `// volume:` annotations manually.
+
+![Pick sandbox](./pick_sandbox.png "Pick sandbox")
+
+![Get template](./get_template.png "Get template")
 
 ## Claude Code template
 
-Windmill includes a built-in template for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) using the `@anthropic-ai/claude-agent-sdk`. It demonstrates the sandbox + volume pattern with session persistence.
+Windmill includes a built-in template for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) using the [`@anthropic-ai/claude-agent-sdk`](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk). It demonstrates the sandbox + volume pattern with session persistence.
 
 ```ts
 // sandbox
@@ -79,7 +83,7 @@ export async function main(anthropic: RT.Anthropic, agent_instructions?: AgentIn
     ? "What is the fastest OSS workflow engine?"
     : "What did I ask you before?";
 
-  // Script inputs are not environment variables — set them explicitly
+  // Script inputs are not environment variables - set them explicitly
   // so the agent's shell processes (git, curl, etc.) can access them.
   process.env.ANTHROPIC_API_KEY = anthropic.apiKey;
 
@@ -146,7 +150,7 @@ The template stores the session ID in `.claude/session-id.txt` inside the volume
 
 The same pattern applies to any AI agent. Here are skeleton examples:
 
-### OpenAI Codex CLI
+### [OpenAI Codex](https://github.com/openai/codex) CLI
 
 ```ts
 // sandbox
@@ -189,12 +193,12 @@ def main(prompt: str):
 ## Prerequisites
 
 - [Workspace object storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) configured (required for volumes).
-- Workers with nsjail available (included in all standard Windmill images).
-- For the Claude Code template: an Anthropic [resource](../3_resources_and_types/index.mdx).
+- [Workers](../../core_concepts/9_worker_groups/index.mdx) with [nsjail](https://github.com/google/nsjail) available (included in all standard Windmill [Docker images](../../advanced/1_self_host/index.mdx)).
+- For the Claude Code template: an [Anthropic](https://console.anthropic.com/) [resource](../3_resources_and_types/index.mdx).
 
 ## Passing credentials to the sandbox
 
-Script inputs are TypeScript (or Python) variables — they are **not** automatically available as environment variables inside the sandbox. This matters because AI agents like Claude Code spawn shell processes (e.g. `git push`, `curl`) that look for credentials in environment variables, not in your script variables.
+Script inputs are TypeScript (or Python) variables - they are **not** automatically available as [environment variables](../../script_editor/custom_environment_variables.mdx) inside the sandbox. This matters because AI agents like Claude Code spawn shell processes (e.g. `git push`, `curl`) that look for credentials in environment variables, not in your script variables.
 
 The built-in template already does this for the Anthropic API key:
 
@@ -235,14 +239,15 @@ A good rule of thumb: if the agent might run a shell command that needs a creden
 - **Multiple volumes**: mount separate volumes for different concerns (e.g. one for session state, one for output artifacts).
 - **Prompt as input**: replace hardcoded prompts with script input parameters to make the script reusable.
 
-<DocCard
-  title="Volumes"
-  description="Persistent file storage for scripts"
-  href="/docs/core_concepts/volumes"
-/>
-
-<DocCard
+<div className="grid grid-cols-2 gap-6 mb-4">
+  <DocCard
+    title="Volumes"
+    description="Persistent file storage for scripts"
+    href="/docs/core_concepts/volumes"
+  />
+  <DocCard
   title="Security and process isolation"
   description="Sandbox annotation and nsjail"
   href="/docs/advanced/security_isolation"
 />
+</div>

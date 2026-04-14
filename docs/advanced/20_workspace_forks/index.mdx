@@ -8,6 +8,12 @@ import DocCard from '@site/src/components/DocCard';
 
 Workspace forks allow users to create independent copies of a workspace, enabling parallel development workflows similar to git branches and GitHub forks.
 
+:::tip Forks are stage 2 of the collaboration guide
+
+Adopting workspace forks corresponds to **stage 2** of the [collaboration and deployment stages](../23_canonical_deployment_setups/index.mdx#stage-2--add-forks-and-the-merge-ui) guide. If you are setting up collaboration for a team, that guide explains how forks fit alongside protection rulesets, git sync, and multi-workspace promotion.
+
+:::
+
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
@@ -54,7 +60,7 @@ Key features:
 #### From the CLI
 
 1. Enter the local repo being synced with the workspace you want to fork.
-2. Run `wmill workspace fork` and follow the prompts to name your workspace. This will use your `gitBranches` settings on your `wmill.yaml` to determine which workspace to fork from based on the branch you are on.
+2. Run `wmill workspace fork` and follow the prompts to name your workspace. This uses your `workspaces` settings in `wmill.yaml` to determine which workspace to fork from based on the branch you are on.
 3. The fork will be created on your instance and is ready to be worked on.
 4. Run the command shown on your terminal to create the corresponding branch and start adding edits to your newly created fork!
 

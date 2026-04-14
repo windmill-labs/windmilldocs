@@ -1,6 +1,6 @@
 # Windmill
 
-> Windmill is an open-source and self-hostable workflow engine and developer platform to build, deploy and monitor internal software at scale. Build workflows, internal tools, AI agents and automations. Full flexibility of code with 20+ languages, public and private library imports, and a local development experience optimized for AI (Claude Code, Cursor, CLI & VS Code extension). Enterprise-grade integrations with Postgres, Snowflake, Kafka, DuckDB and 50+ services. Enterprise-grade security with SSO, SAML, SCIM and audit logs. Built in Rust, optimized for scale.
+> Windmill is an open-source and self-hostable workflow engine and developer platform to build, orchestrate, and monitor internal software at scale. Build workflows, internal tools, AI agents and automations. Full flexibility of code with 20+ languages, public and private library imports, and a local development experience optimized for AI (Claude Code, Cursor, CLI & VS Code extension). Enterprise-grade integrations with Postgres, Snowflake, Kafka, DuckDB and 50+ services. Enterprise-grade security with SSO, SAML, SCIM and audit logs. Built in Rust, optimized for scale.
 
 Website: https://www.windmill.dev
 Documentation: https://www.windmill.dev/docs

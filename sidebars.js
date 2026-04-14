@@ -386,13 +386,17 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'core_concepts/volumes/index',
+							label: 'Volumes'
+						},
+						{
+							type: 'doc',
 							id: 'core_concepts/persistent_storage/key_value_stores',
 							label: 'NoSQL & document databases'
 						}
 					]
 				},
 				'core_concepts/object_storage_in_windmill/index',
-				'core_concepts/volumes/index',
 				'core_concepts/custom_instance_database/index',
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
@@ -711,6 +715,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/tigris',
+							label: 'Tigris'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/telegram',
 							label: 'Telegram'
 						},
@@ -1010,7 +1019,11 @@ const sidebars = {
 						'advanced/deploy_gh_gl/index',
 						'core_concepts/staging_prod/index',
 						'core_concepts/protection_rulesets/index',
-						'advanced/canonical_deployment_setups/index'
+						{
+							type: 'doc',
+							id: 'advanced/canonical_deployment_setups/index',
+							label: 'Collaboration and deployment stages'
+						}
 					],
 					collapsed: false
 				},

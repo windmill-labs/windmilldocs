@@ -108,4 +108,6 @@ Selecting a user other than yourself requires **admin** rights or membership in 
 
 For production workspaces, consider creating dedicated virtual users scoped to specific responsibilities. See [Permission compartmentalization with virtual users](../16_roles_and_permissions/index.mdx#permission-compartmentalization-with-virtual-users) for the recommended pattern.
 
+For CLI / CI/CD deploys into multi-workspace setups, you can also pre-configure per-folder defaults so newly deployed items pick up the right owner automatically — see [per-folder ownership defaults](../../advanced/23_canonical_deployment_setups/index.mdx#stage-4--add-multi-workspace-promotion) in the Stage 4 setup.
+
 :::
