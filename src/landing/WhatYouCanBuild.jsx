@@ -3,12 +3,12 @@ import Link from '@docusaurus/Link';
 import { ArrowRight, Code, LayoutDashboard, GitFork, Bot, Workflow, Clock } from 'lucide-react';
 
 const allUseCases = [
-	{ label: 'Scripts', subtitle: 'Write scripts in TypeScript, Python, Go, Bash, and 20+ languages, and trigger them from webhooks, schedules, queues or the auto-generated UI.', to: '/use-cases/scripts', cover: '/img/money-pages/scripts-preview.webp', icon: Code },
-	{ label: 'Workflows', subtitle: 'Chain scripts into flows with approval steps, parallel branches, loops and conditional logic. Build visually with the DAG editor or define workflows entirely as code in TypeScript or Python.', to: '/use-cases/workflows', cover: '/img/money-pages/parallel-branches.webp', icon: Workflow },
-	{ label: 'Internal apps', subtitle: 'Build full-code internal apps using Windmill scripts or workflows as backend, and React or Svelte as frontend frameworks.', to: '/use-cases/internal-apps', cover: '/img/money-pages/frontend.webp', icon: LayoutDashboard },
-	{ label: 'Data pipelines', subtitle: 'Orchestrate ETL jobs with parallel branches, DuckDB queries and connections to any database or S3 bucket.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.webp', icon: GitFork },
-	{ label: 'AI agents', subtitle: 'Build AI agents with tool-calling, DAG orchestration, sandboxes and direct access to your scripts and resources.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.webp', icon: Bot },
-	{ label: 'Scheduled tasks', subtitle: 'Turn any script or workflow into a scheduled task. Built-in cron builder with execution history, recovery handlers and alerting.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedule.webp', icon: Clock },
+	{ label: 'Scripts', subtitle: 'The starting point for most internal work. A single file of TypeScript, Python, Go, Bash or 20+ other languages becomes an API, a triggerable job and an auto-generated form, with no boilerplate in between.', to: '/use-cases/scripts', cover: '/img/money-pages/scripts-preview.webp', icon: Code },
+	{ label: 'Workflows', subtitle: 'For the processes that span multiple steps, systems or people, and where a single script stops being enough. Chains of scripts with approvals, parallel branches, loops and conditional logic, designed in the DAG editor or written entirely as code.', to: '/use-cases/workflows', cover: '/img/money-pages/parallel-branches.webp', icon: Workflow },
+	{ label: 'Internal apps', subtitle: 'When non-technical teammates need to act on your backend logic directly. Full-code UIs with scripts or workflows as backend and React or Svelte as frontend, without a separate deploy pipeline to maintain.', to: '/use-cases/internal-apps', cover: '/img/money-pages/frontend.webp', icon: LayoutDashboard },
+	{ label: 'Data pipelines', subtitle: 'An ETL layer without a dedicated ETL stack. Parallel branches, DuckDB queries and native connectors to databases, warehouses and S3 keep pipelines fast, observable and versioned alongside the rest of your code.', to: '/use-cases/data-pipelines', cover: '/img/money-pages/data-pipelines-card.webp', icon: GitFork },
+	{ label: 'AI agents', subtitle: 'For LLMs that need to act on your real systems with isolated environments and scoped permissions. Tool-calling, sandboxes and your existing scripts as tools, with visibility into cost, latency and every decision the agent makes.', to: '/use-cases/ai-agents', cover: '/img/money-pages/ai-agent-card.webp', icon: Bot },
+	{ label: 'Scheduled tasks', subtitle: 'For work that needs to run on a fixed schedule rather than on demand. Any script or flow becomes a recurring job with retries, execution history, alerting and recovery handlers built in.', to: '/use-cases/scheduled-tasks', cover: '/img/money-pages/cron-schedule.webp', icon: Clock },
 ];
 
 export default function WhatYouCanBuild() {
@@ -18,10 +18,10 @@ export default function WhatYouCanBuild() {
 	return (
 		<div className="max-w-7xl mx-auto px-4 lg:px-8 py-16">
 			<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-				Build all your internal software on Windmill
+				Build and orchestrate all your internal software
 			</h2>
 			<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-				From small scripts to heavy data pipelines, Windmill provides the infrastructure and integrations to build internal software with no overhead, and the <Link to="/platform/workers" className="text-blue-600 dark:text-blue-400 hover:underline">workers</Link> to run them at any scale.
+				In the AI era, every team can now build their custom apps and workflows, from engineering and data to sales, support and marketing. Windmill gives you one platform to build, share and orchestrate them all, with the governance and observability needed at enterprise scale.
 			</p>
 
 			<div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
