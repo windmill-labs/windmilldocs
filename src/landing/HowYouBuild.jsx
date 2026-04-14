@@ -46,7 +46,7 @@ export default function HowYouBuild() {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 				<div>
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Build from the Windmill UI or locally
+						From the Windmill UI or locally
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
 						Windmill provides built-in <Link to="/platform/script-editor" className="text-blue-600 dark:text-blue-400 hover:underline">script editor</Link>, <Link to="/platform/flow-editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link> and <Link to="/platform/app-builder" className="text-blue-600 dark:text-blue-400 hover:underline">app builder</Link> to build directly from the browser.
