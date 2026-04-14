@@ -1,4 +1,6 @@
 import React from 'react';
+import Link from '@docusaurus/Link';
+import { ArrowRight } from 'lucide-react';
 import { BenchmarkCard } from './DeveloperExperienceSection';
 
 export default function PerformanceSection() {
@@ -7,9 +9,16 @@ export default function PerformanceSection() {
 			<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 				The fastest orchestrator in the industry
 			</h2>
-			<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+			<p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
 				We engineered Windmill to be the fastest orchestrator in the industry, ensuring your most demanding workloads never bottleneck. From a single-node VPS to 1,000-node K8s clusters, auto-scale on demand or isolate critical tasks with dedicated worker groups on Kubernetes and Docker.
 			</p>
+			<Link
+				to="/docs/misc/benchmarks/competitors"
+				className="text-sm text-blue-600 dark:text-blue-400 inline-flex items-center gap-2 hover:underline !no-underline mb-8"
+			>
+				See benchmarks
+				<ArrowRight size={16} />
+			</Link>
 			<BenchmarkCard />
 		</div>
 	);
