@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-export default function LazyVideo({ src, className }) {
+export default function LazyVideo({ src, className, loop = true }) {
 	const ref = useRef(null);
 
 	useEffect(() => {
@@ -26,7 +26,7 @@ export default function LazyVideo({ src, className }) {
 		<video
 			ref={ref}
 			className={className}
-			loop
+			loop={loop}
 			muted
 			playsInline
 			src={src}

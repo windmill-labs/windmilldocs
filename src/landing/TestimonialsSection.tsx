@@ -132,14 +132,13 @@ export default function Example() {
 		<LandingSection bgClass="pb-8">
 			<div>
 				<div className="mx-auto text-left">
-					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 						Testimonials
-					</h1>
-					<p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl"></p>
+					</h2>
 					<div className="flex justify-between items-center">
-						<span className="text-lg text-gray-600 dark:text-gray-200">
-							Entreprise software that developers love.
-						</span>
+						<p className="text-lg text-gray-600 dark:text-gray-300">
+							Enterprise software that developers love.
+						</p>
 						<a
 							href="/case-studies"
 							className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 inline-flex items-center gap-1"
