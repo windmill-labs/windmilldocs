@@ -137,23 +137,7 @@ Every state transition is a database write. The scheduler owns `scheduled → qu
 
 #### Data Passing Between Steps
 
-Since tasks run in separate processes (possibly different machines), data must be serialized to shared storage. Airflow calls this "XCom" (cross-communication):
-
-```python
-# Task A: push data
-@task
-def extract():
-    return {"data": [1, 2, 3]}  # Serialized to DB as a JSON blob
-
-# Task B: receives via function argument (deserialized from DB)
-@task
-def transform(raw):  # raw = the JSON blob from extract()
-    return [x * 2 for x in raw["data"]]
-```
-
-Under the hood, this is `INSERT INTO xcom (key, value, ...) VALUES (...)` and `SELECT value FROM xcom WHERE ...`. There's typically a size limit (48KB in Postgres by default). For anything larger, you must use external storage (S3) and pass references.
-
-This pattern — step results stored in the database, next step reads them — is actually universal across engines where steps run in separate processes. Temporal stores activity results in the event history. Windmill stores step results in `v2_job.result` (Postgres JSONB). The difference is mostly in ergonomics: Airflow's XCom historically required explicit push/pull calls and had tight size limits, while newer engines handle serialization transparently.
+Since tasks run in separate processes (possibly different machines), data must be serialized to shared storage. Airflow calls this "XCom" (cross-communication). All engines where steps are separate jobs share this pattern — Temporal stores results in event history, Windmill in Postgres JSONB — but Airflow's XCom has historically had the worst developer experience: tight size limits (48KB default), and in older versions, explicit `xcom_push`/`xcom_pull` calls. Newer Airflow versions with the `@task` decorator make this more transparent, but the size limits remain.
 
 #### The Executor Layer
 
@@ -174,11 +158,15 @@ Each executor makes a different trade-off between isolation, latency, and operat
 
 #### Cons
 
-**Latency.** A task takes 2-40 seconds to start (scheduler loop + executor dispatch + cold start), even if the actual work takes 1ms. This is fine for ETL pipelines where tasks run for minutes, but makes Airflow useless for real-time workflows.
+**Latency and cold start.** A task takes 2-40 seconds to start (scheduler polling loop + executor dispatch + worker cold start), even if the actual work takes 1ms. The scheduler loop alone adds 1-5 seconds of delay. With the KubernetesExecutor, cold start can be 10-30 seconds per task (pod creation). This makes Airflow unsuitable for anything latency-sensitive.
 
-**Static DAGs.** The dependency graph is fixed at parse time. You can't say "if the result of Task A is X, skip Task B" in a truly dynamic way. Airflow 2.x added `@task.branch` and dynamic task mapping, but these are limited — you're still declaring branches upfront, not writing arbitrary control flow.
+**Python-only.** DAGs are Python files. Tasks are Python functions. If your pipeline needs a TypeScript transform or a Go data processor, you shell out or use a BashOperator — no first-class polyglot support.
 
-**No durable execution.** If a task crashes mid-execution, all progress within that task is lost. Airflow retries the entire task from the beginning. There's no concept of "resume from where it left off."
+**No visual editor.** Airflow has a monitoring UI (DAG view, Gantt charts, logs), but no visual flow builder. You define workflows in Python code, which is powerful but excludes non-developers from authoring workflows.
+
+**Static DAGs.** The dependency graph is fixed at parse time. Airflow 2.x added `@task.branch` and dynamic task mapping, but you're still declaring branches upfront, not writing arbitrary runtime control flow.
+
+**No durable execution.** If a task crashes mid-execution, all progress within that task is lost. Airflow retries the entire task from the beginning.
 
 **Parse overhead.** The scheduler re-parses all Python DAG files periodically. With thousands of DAGs, this alone can consume significant CPU and cause scheduling delays.
 
