@@ -303,7 +303,7 @@ But the implementations differ wildly in how they achieve this.
 Temporal (2019, ex-Uber Cadence team) is the most well-known durable execution engine. Its core abstraction: **record every state change as an immutable event, then replay events to reconstruct state.**
 
 ```typescript
-// Workflow — runs in a deterministic sandbox
+// Workflow — must be deterministic (sandboxed in TS, by convention in Go/Java)
 export async function processOrder(orderId: string) {
   const order = await activities.getOrder(orderId);
   const payment = await activities.chargePayment(order);
@@ -320,7 +320,10 @@ export async function chargePayment(order: Order): Promise<Receipt> {
 
 Temporal enforces a strict separation:
 
-- **Workflow code** runs in a **deterministic sandbox**. No I/O, no randomness, no clock access. The TypeScript SDK achieves this with a stripped-down V8 isolate that blocks non-deterministic APIs. You cannot call `fetch()`, `Math.random()`, or `Date.now()` inside a workflow.
+- **Workflow code** must be deterministic — no I/O, no randomness, no direct clock access. How strictly this is enforced depends on the SDK:
+  - **TypeScript**: the strictest. Workflows run in a V8 isolate with `Math.random()`, `Date()`, `setTimeout()` replaced by deterministic versions. Node.js APIs (`fs`, `http`, `fetch`) are blocked at the bundler level.
+  - **Python**: a sandbox using proxy objects and a custom module importer restricts most non-deterministic access at runtime.
+  - **Go and Java**: **no sandbox.** Determinism is enforced by convention — developers are told not to use goroutines/threads, system clocks, or randomness. Violations are only caught at replay time (non-determinism error), not at compile time.
 - **Activity code** runs in normal Node.js / Python / Go. It can do anything — call APIs, write to databases, generate random numbers.
 
 This split exists because of Temporal's replay mechanism.
@@ -380,7 +383,7 @@ Event#  EventType                     Details
 
 Since the workflow function is replayed from the beginning on every resume, it **must produce the same sequence of commands on every execution.** If you used `Math.random()` to decide whether to call activity A or B, replay would make a different choice and Temporal would throw a **non-determinism error**.
 
-This is the most common source of developer pain with Temporal. You must learn to think about which code is "workflow" (deterministic orchestration) and which is "activity" (actual work). Third-party libraries that use randomness or timestamps silently break.
+This is the most common source of developer pain with Temporal. You must learn to think about which code is "workflow" (deterministic orchestration) and which is "activity" (actual work). In TypeScript, the sandbox catches most violations immediately. In Go or Java, a third-party library that calls `time.Now()` or `Math.random()` will silently work until replay fails — potentially in production, weeks after deployment.
 
 ```typescript
 // ❌ BROKEN — non-deterministic
