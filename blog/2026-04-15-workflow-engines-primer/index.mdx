@@ -158,10 +158,10 @@ Each executor makes a different trade-off between isolation, latency, and operat
 
 #### Cons
 
-**Latency and cold start.** In [our benchmarks](https://www.windmill.dev/docs/misc/benchmarks/competitors/airflow), Airflow took **56 seconds to run 40 lightweight tasks** (~0.7 tasks/sec). Windmill completed the same workload in 2.4 seconds (~16.5 tasks/sec) — a **23x difference.** The overhead comes from multiple layers:
-- **Scheduler polling loop**: the scheduler queries the DB every few seconds to find ready tasks. There's a built-in idle sleep between scheduling cycles. This alone adds 1-5 seconds of delay per task.
-- **Python cold start**: each task forks a subprocess that loads the DAG file and all Python imports. A simple task can take 1-2 seconds just to start. Compare with Windmill's Bun cold start (~12ms) or dedicated workers (0ms).
-- **Multi-hop dispatch**: task goes scheduler → DB → executor → message broker (Redis/RabbitMQ for Celery) → worker. Each hop adds latency. Windmill workers pull directly from Postgres (`SELECT ... FOR UPDATE SKIP LOCKED`).
+**Latency and cold start.** In [our benchmarks](https://www.windmill.dev/docs/misc/benchmarks/competitors/airflow), Airflow took **56 seconds to run 40 lightweight tasks** (~0.7 tasks/sec). Windmill completed the same workload in 2.4 seconds (~16.5 tasks/sec) — a **23x difference.** The overhead comes from architectural differences:
+- **Three-hop dispatch**: in Airflow, a task goes scheduler (polls DB, resolves dependencies, checks pool limits) → DB state update → executor → message broker (Redis/RabbitMQ for Celery) → worker. Three separate components, each with their own polling interval and latency. In Windmill, the worker polls Postgres directly with `SELECT ... FOR UPDATE SKIP LOCKED` — one component, one hop.
+- **Scheduler overhead**: Airflow's scheduler is a Python process that re-parses DAG files, evaluates dependencies, and checks concurrency limits — all in Python — before a task can even be enqueued. This adds 1-5 seconds per scheduling cycle. Windmill has no separate scheduler; workers self-schedule by pulling from the queue.
+- **Cold start per task**: each Airflow task forks a subprocess that loads the entire DAG file + Airflow framework imports. Even for a trivial task, this can take 1-2 seconds. Windmill's cold start is lighter (~26ms for Python, ~12ms for Bun), and with dedicated workers it's 0ms — the process stays alive across jobs.
 
 With the KubernetesExecutor, cold start grows to 10-30 seconds per task (pod creation). This makes Airflow unsuitable for anything latency-sensitive.
 
