@@ -135,7 +135,7 @@ Each task passes through a state machine stored in the database:
 
 Every state transition is a database write. The scheduler owns `scheduled → queued`. The executor owns `queued → running`. The worker owns `running → success/failed`.
 
-#### Data Passing: The XCom Problem
+#### Data Passing Between Steps
 
 Since tasks run in separate processes (possibly different machines), data must be serialized to shared storage. Airflow calls this "XCom" (cross-communication):
 
@@ -153,7 +153,7 @@ def transform(raw):  # raw = the JSON blob from extract()
 
 Under the hood, this is `INSERT INTO xcom (key, value, ...) VALUES (...)` and `SELECT value FROM xcom WHERE ...`. There's typically a size limit (48KB in Postgres by default). For anything larger, you must use external storage (S3) and pass references.
 
-This is not a limitation of Airflow's implementation — it's inherent to the DAG scheduler model. If tasks are independent processes, they can't share memory, so all inter-task data flows through external storage.
+This pattern — step results stored in the database, next step reads them — is actually universal across engines where steps run in separate processes. Temporal stores activity results in the event history. Windmill stores step results in `v2_job.result` (Postgres JSONB). The difference is mostly in ergonomics: Airflow's XCom historically required explicit push/pull calls and had tight size limits, while newer engines handle serialization transparently.
 
 #### The Executor Layer
 
@@ -266,7 +266,7 @@ Pro:  Natural fit for scheduled batch processing.
 Con:  No durable execution within a task.
 Con:  High per-task overhead (state transitions, data serialization).
 Con:  Static or weakly dynamic control flow (Airflow worse, Prefect better).
-Con:  Data passing is clunky (XCom / serialization / size limits).
+Con:  Data passing goes through the database (all engines share this when steps are separate processes, but Airflow's XCom has historically been the most limited in size and ergonomics).
 ```
 
 For scheduled ETL pipelines where tasks run for minutes, these trade-offs are excellent. For real-time, latency-sensitive, or long-running workflows, they're not.
@@ -347,7 +347,7 @@ Each execution replays all previous steps (returning results from the event hist
 
 #### Concrete Example: Event History
 
-For the 3-step workflow above, here's what Temporal actually stores in Postgres:
+For the 3-step workflow above, here's what Temporal actually stores in its database (Postgres, MySQL, or Cassandra depending on deployment):
 
 ```
 Event#  EventType                     Details
@@ -416,13 +416,13 @@ Temporal's server is 4 services (Frontend, History, Matching, Worker) backed by 
        │                         │                                │
        │  replay, hit new await  │                                │
        │                         │                                │
-       │── gRPC Command ────────▶│── append events ─▶ Postgres    │
+       │── gRPC Command ────────▶│── append events ─▶ DB          │
        │   ScheduleActivityTask  │── enqueue on task queue ──────▶│
        │                         │                                │
        │                         │                          execute fn()
        │                         │                                │
        │                         │◀── gRPC result ────────────────│
-       │                         │── append events ─▶ Postgres    │
+       │                         │── append events ─▶ DB          │
        │                         │                                │
        │◀── gRPC WorkflowTask ───│                                │
        │  (updated history)      │                                │
@@ -687,7 +687,7 @@ Windmill also offers a traditional flow builder — a visual drag-and-drop edito
 This is closer to Airflow's model — each step is an independent execution unit dispatched to a worker. But unlike Airflow:
 
 - **Steps can be in different languages** (TypeScript, Python, Go, Bash, SQL, etc.) within the same flow
-- **Data passes via `results` context** (in-memory JSON between steps, not XCom)
+- **Data passes via `results` context** — step results are stored in Postgres (like every engine where steps are separate jobs), but accessed transparently via `results.step_name` expressions in the flow definition
 - **The flow executor runs as a state machine** in the Windmill worker, not as a separate scheduler process
 - **Branching, loops, error handlers, and approval steps** are built-in flow constructs
 - **Each step can be a full Windmill script** with auto-generated UIs, schedules, etc.
@@ -991,7 +991,7 @@ const service = restate.service({
 
 **Why it's fast:** The commit point for "a step happened" is a local RocksDB write + quorum replication across nodes — no network round-trip to an external database. In our benchmarks, Restate achieved **4,600-6,700 workflows/sec** on the same hardware where Temporal did ~100 and Windmill did ~80. That's a **50x advantage** over Temporal.
 
-**The insight:** This 50x gap isn't an implementation detail — it's a fundamental consequence of storage topology. Every engine that routes through an external Postgres pays ~1ms per step (network + SQL + WAL sync). Restate pays ~0.01-0.1ms (local disk + quorum ACK). Remove the network hop and you gain an order of magnitude.
+**The insight:** This 50x gap isn't an implementation detail — it's a fundamental consequence of storage topology. Every engine that routes through an external database (Postgres, MySQL, Cassandra) pays ~1ms per step (network + query + WAL sync). Restate pays ~0.01-0.1ms (local disk + quorum ACK). Remove the network hop and you gain an order of magnitude.
 
 **The trade-off:** No SQL access to workflow state. No familiar Postgres tooling for backup/replication — you rely on Restate's built-in mechanisms (S3 snapshots, log-based replication). Younger ecosystem (SDK for TypeScript, Java, Rust, Go). And for durable execution specifically: no separate activity/workflow distinction — all code runs in the handler, and `ctx.run()` is your only escape hatch for side-effects.
 
