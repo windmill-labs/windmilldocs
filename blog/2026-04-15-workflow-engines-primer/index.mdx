@@ -165,14 +165,14 @@ Airflow's executor is pluggable — one of its best design decisions:
 
 Each executor makes a different trade-off between isolation, latency, and operational complexity. But all share the fundamental constraint: **each task is an independent execution unit**.
 
-#### What Airflow Gets Right
+#### Pros
 
 - **Massive ecosystem**: hundreds of "operators" (pre-built integrations) for AWS, GCP, databases, Spark, dbt, etc.
 - **Scheduling**: sophisticated time-based scheduling with backfill, catchup, data intervals.
 - **Monitoring**: built-in UI showing DAG runs, task statuses, logs, Gantt charts.
 - **Battle-tested**: runs at Airbnb, Google, PayPal, thousands of companies. You will find answers on StackOverflow.
 
-#### What Airflow Gets Wrong
+#### Cons
 
 **Latency.** A task takes 2-40 seconds to start (scheduler loop + executor dispatch + cold start), even if the actual work takes 1ms. This is fine for ETL pipelines where tasks run for minutes, but makes Airflow useless for real-time workflows.
 
@@ -239,13 +239,13 @@ def parallel_pipeline():
 
 `.submit()` creates a future (using Python's `concurrent.futures` or a task runner). The function call runs in a thread/process pool. This is simpler than Airflow's DAG-level parallelism but limited by Python's GIL for CPU-bound work.
 
-#### What Prefect Gets Right
+#### Pros
 
 - **Zero new concepts for Python developers.** Decorators on regular functions. Python control flow. Python data passing.
 - **Dynamic workflows.** Since the code is real Python, you can use `if/else`, `for` loops, `try/except` — anything. The "DAG" is whatever Python actually executes.
 - **Lower ceremony than Airflow.** No scheduler process. No DAG file parsing. Just run the flow.
 
-#### What Prefect Gets Wrong
+#### Cons
 
 - **No durable execution.** Like Airflow, if the process crashes mid-task, work is lost. Task-level retries restart the task from the beginning.
 - **State-tracking overhead.** Every task run creates multiple HTTP calls + DB writes for state transitions (Pending → Running → Completed). For workflows with hundreds of short tasks, this overhead dominates.
@@ -426,14 +426,14 @@ Temporal's server is 4 services (Frontend, History, Matching, Worker) backed by 
        │  replay all, advance    │                                │
 ```
 
-#### What Temporal Gets Right
+#### Pros
 
 - **True durable execution.** Workflows can run for months. Crash anywhere, resume exactly where you left off.
 - **Full audit trail.** Every event is recorded. You can inspect and replay any workflow.
 - **Multi-language SDKs.** TypeScript, Go, Java, Python, .NET, PHP.
 - **Rich primitives.** Signals, queries, child workflows, timers, cancellation, search attributes.
 
-#### What Temporal Gets Wrong
+#### Cons
 
 - **Operational complexity.** 4 server services + database + optionally Elasticsearch. Many moving parts.
 - **Determinism tax.** Developers must constantly think about what's deterministic. Subtle bugs from non-deterministic libraries.
@@ -520,14 +520,14 @@ Inngest and Temporal both re-execute code and skip completed steps, but the mech
 
 The practical difference: Temporal's replay is in-process (fast, ~microseconds per replayed step). Inngest's replay is across HTTP (slower, but the memoized steps are essentially free since the function body isn't called).
 
-#### What Inngest Gets Right
+#### Pros
 
 - **Simplest deployment model.** Add it to your existing app. No infrastructure beyond the Inngest server (which can be self-hosted or cloud).
 - **Serverless-native.** Works perfectly with Lambda/Vercel/Cloudflare. No persistent connections to maintain.
 - **Event-driven.** First-class event system with fan-out, debounce, throttle.
 - **Server-side sleep.** `step.sleep("1h")` doesn't hold a process — the server wakes your function after 1 hour.
 
-#### What Inngest Gets Wrong
+#### Cons
 
 - **Latency.** Each step = HTTP round-trip. For workflows with many fast steps, the HTTP overhead dominates.
 - **Re-execution cost.** The function code (parsing, importing, middleware) runs on every step, not just the new one.
@@ -633,7 +633,7 @@ This is O(completed_steps) regardless of how many replays. Temporal's history is
 
 The trade-off: checkpoints don't give you an audit trail of *when* each step ran. Temporal's history does. For debugging, Temporal wins. For storage efficiency, Windmill wins.
 
-#### What Windmill WAC Gets Right
+#### Pros
 
 - **Dual step model (task/step).** Choose the right cost/isolation trade-off per step.
 - **Fast inline steps.** `step()` with the inline fast path: ~0.5ms per step, no process restart.
@@ -641,7 +641,7 @@ The trade-off: checkpoints don't give you an audit trail of *when* each step ran
 - **Compact checkpoints.** JSONB, O(completed_steps), not O(events).
 - **No determinism requirement.** Unlike Temporal, you can use `Math.random()` between steps. The checkpoint stores results, not replay commands.
 
-#### What Windmill WAC Gets Wrong
+#### Cons
 
 - **Per-workflow cold start.** Each workflow spawns a new Bun process (~12ms). Temporal's workers are persistent. This is the main throughput bottleneck for short workflows.
 - **One job per worker.** Workers process one workflow at a time. Temporal handles 200+ concurrent activities per worker.
