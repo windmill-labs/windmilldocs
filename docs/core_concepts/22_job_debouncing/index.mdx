@@ -35,6 +35,18 @@ The result: process all your data with a fraction of the job executions.
 
 Job debouncing is available for [scripts](../../script_editor/index.mdx) and [flows](../../flows/1_flow_editor.mdx). Configure it from the Settings menu under Runtime settings.
 
+## When does debouncing run?
+
+For scripts and flows **without** a preprocessor, debouncing is evaluated at push time — before the job runs, against the arguments the caller supplied.
+
+For flows **with** a [preprocessor](../43_preprocessors/index.mdx) step, debouncing is evaluated **after** the preprocessor runs, against the preprocessor's output. The preprocessor itself is never debounced: every incoming call executes it, and the resulting flow steps are what collapse into the debounced batch.
+
+This is deliberate — it lets you normalize wildly different trigger payloads (webhook body vs. Kafka event vs. email) into a common shape before the deduplication decision is made. A few consequences to keep in mind:
+
+- The argument named in **Debounce args to accumulate** must exist in the **preprocessor's output**, not in the raw trigger event.
+- The accumulated list is built from each debounced job's preprocessed args at pull time, so its elements reflect what the preprocessor emitted, not the raw event.
+- Any non-accumulated field in the preprocessor's output is considered part of the default debounce key (see below). If your preprocessor injects per-call-varying fields like a timestamp, a Kafka offset, a request ID, or the raw event object, each call will land on a different key and no debouncing will happen. Either (a) keep the preprocessor's non-accumulated output stable across calls, or (b) set an explicit **Custom debounce key** template so you control exactly which fields matter.
+
 ## Configuration fields
 
 ### Debounce delay
@@ -90,6 +102,8 @@ This is the key field for high-throughput processing. Specify an array-type argu
 1. Exclude this argument from the debounce key
 2. Collect values from all debounced jobs
 3. Concatenate them into a single array when the job executes
+
+For flows with a preprocessor, the named argument must exist in the **preprocessor's output** (that's what post-preprocessing debouncing evaluates against). Make sure your preprocessor returns the accumulation field and that the other fields it emits are stable across calls — or set a [Custom debounce key](#custom-debounce-key) template to control exactly which fields are compared.
 
 Debouncing works with all languages supported by Windmill. Here's an example where three webhook calls with `items: ["a"]`, `items: ["b", "c"]`, and `items: ["d"]` debounce into one job execution with `items: ["a", "b", "c", "d"]`:
 
