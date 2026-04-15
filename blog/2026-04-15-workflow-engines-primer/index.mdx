@@ -158,7 +158,12 @@ Each executor makes a different trade-off between isolation, latency, and operat
 
 #### Cons
 
-**Latency and cold start.** A task takes 2-40 seconds to start (scheduler polling loop + executor dispatch + worker cold start), even if the actual work takes 1ms. The scheduler loop alone adds 1-5 seconds of delay. With the KubernetesExecutor, cold start can be 10-30 seconds per task (pod creation). This makes Airflow unsuitable for anything latency-sensitive.
+**Latency and cold start.** In [our benchmarks](https://www.windmill.dev/docs/misc/benchmarks/competitors/airflow), Airflow took **56 seconds to run 40 lightweight tasks** (~0.7 tasks/sec). Windmill completed the same workload in 2.4 seconds (~16.5 tasks/sec) — a **23x difference.** The overhead comes from multiple layers:
+- **Scheduler polling loop**: the scheduler queries the DB every few seconds to find ready tasks. There's a built-in idle sleep between scheduling cycles. This alone adds 1-5 seconds of delay per task.
+- **Python cold start**: each task forks a subprocess that loads the DAG file and all Python imports. A simple task can take 1-2 seconds just to start. Compare with Windmill's Bun cold start (~12ms) or dedicated workers (0ms).
+- **Multi-hop dispatch**: task goes scheduler → DB → executor → message broker (Redis/RabbitMQ for Celery) → worker. Each hop adds latency. Windmill workers pull directly from Postgres (`SELECT ... FOR UPDATE SKIP LOCKED`).
+
+With the KubernetesExecutor, cold start grows to 10-30 seconds per task (pod creation). This makes Airflow unsuitable for anything latency-sensitive.
 
 **Python-only.** DAGs are Python files. Tasks are Python functions. If your pipeline needs a TypeScript transform or a Go data processor, you shell out or use a BashOperator — no first-class polyglot support.
 
