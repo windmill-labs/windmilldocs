@@ -648,7 +648,7 @@ The trade-off: checkpoints don't give you an audit trail of *when* each step ran
 
 - **Per-workflow cold start (without dedicated workers).** By default, each workflow spawns a new Bun process (~12ms). This is the main throughput bottleneck for short workflows. Windmill offers [dedicated workers](/docs/core_concepts/dedicated_workers) — persistent Bun processes assigned to specific scripts or workspaces — which eliminate this cold start entirely and bring execution closer to Temporal's persistent worker model.
 - **One job per worker.** Workers process one workflow at a time. Temporal handles 200+ concurrent activities per worker.
-- **Workers talk to Postgres directly by default.** No server-mediated batching — each step result is an individual PG transaction. Windmill also supports an [agent mode](/docs/advanced/worker_groups#agent-workers) where workers communicate with the server over HTTP/WebSocket instead of connecting to Postgres directly, which is useful for remote/edge deployments but doesn't yet batch writes.
+- **Workers talk to Postgres directly by default.** No server-mediated batching — each step result is an individual PG transaction. Windmill also supports an [agent mode](/docs/core_concepts/agent_workers) where workers communicate with the server over HTTP/WebSocket instead of connecting to Postgres directly, which is useful for remote/edge deployments but doesn't yet batch writes.
 
 ---
 
