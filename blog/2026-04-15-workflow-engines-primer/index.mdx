@@ -646,7 +646,7 @@ The trade-off: checkpoints don't give you an audit trail of *when* each step ran
 
 #### Cons
 
-- **Per-workflow cold start.** Each workflow spawns a new Bun process (~12ms). Temporal's workers are persistent. This is the main throughput bottleneck for short workflows.
+- **Per-workflow cold start (without dedicated workers).** By default, each workflow spawns a new Bun process (~12ms). This is the main throughput bottleneck for short workflows. Windmill offers [dedicated workers](/docs/core_concepts/dedicated_workers) — persistent Bun processes assigned to specific scripts or workspaces — which eliminate this cold start entirely and bring execution closer to Temporal's persistent worker model.
 - **One job per worker.** Workers process one workflow at a time. Temporal handles 200+ concurrent activities per worker.
 - **Workers talk to Postgres directly.** No server-mediated batching. Each step result is an individual PG transaction.
 
@@ -913,7 +913,7 @@ We benchmarked equivalent workflows (using `step()` / local activities — inlin
 
 For Windmill, two factors explain the performance gap with Temporal on sequential workloads:
 
-1. **Per-workflow Bun cold start (~12ms).** Each workflow spawns a new Bun process. Temporal's worker is a persistent Node.js process. With dedicated workers (persistent Bun process), this drops to zero.
+1. **Per-workflow Bun cold start (~12ms).** Without dedicated workers, each workflow spawns a new Bun process. Temporal's worker is a persistent Node.js process. Windmill's [dedicated workers](/docs/core_concepts/dedicated_workers) — persistent Bun processes assigned to specific scripts or workspaces — eliminate this cold start entirely.
 
 2. **Per-step: individual PG writes vs server-batched writes.** Each `step()` call POSTs to the API server, which does one PG transaction. Temporal's server accumulates events and writes them in batches. This is a ~2.5x difference per step (0.8ms vs 0.3ms).
 
