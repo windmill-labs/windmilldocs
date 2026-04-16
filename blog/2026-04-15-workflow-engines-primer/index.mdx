@@ -1029,7 +1029,7 @@ workflow.step("ship", async (ctx) => { return shipping.dispatch(ctx.stepOutput("
 
 ### Dagster: Asset-Based Orchestration
 
-[Dagster](https://dagster.io) (~13.5K stars) sits in the same broad category as Airflow and Prefect (Python, DAG-based, no durable execution), but its core abstraction is different enough to warrant its own mention. Instead of declaring tasks and their dependencies, you declare **software-defined assets**: the tables, files, ML models, or datasets your pipeline produces. The DAG then emerges from the dependencies between assets:
+[Dagster](https://dagster.io) (~15.3K stars) sits in the same broad category as Airflow and Prefect (Python, DAG-based, no durable execution), but its core abstraction is different enough to warrant its own mention. Instead of declaring tasks and their dependencies, you declare **software-defined assets**: the tables, files, ML models, or datasets your pipeline produces. The DAG then emerges from the dependencies between assets:
 
 ```python
 from dagster import asset

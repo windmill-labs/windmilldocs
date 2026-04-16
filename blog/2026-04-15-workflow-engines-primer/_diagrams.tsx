@@ -184,15 +184,15 @@ export function WorkerArchitecture() {
 // --- 5. GitHub Stars Bar Chart ---
 export function GithubStarsChart() {
   const engines = [
-    { name: 'Airflow', stars: 45050, color: 'bg-sky-500' },
-    { name: 'Prefect', stars: 22177, color: 'bg-indigo-500' },
-    { name: 'Temporal', stars: 19598, color: 'bg-violet-500' },
-    { name: 'Windmill', stars: 16241, color: 'bg-emerald-500' },
-    { name: 'Dagster', stars: 13500, color: 'bg-cyan-500' },
-    { name: 'Hatchet', stars: 6826, color: 'bg-orange-500' },
-    { name: 'Inngest', stars: 5202, color: 'bg-pink-500' },
-    { name: 'Restate', stars: 3729, color: 'bg-rose-500' },
-    { name: 'DBOS (TS+Py)', stars: 2404, color: 'bg-amber-500' },
+    { name: 'Airflow', stars: 45070, color: 'bg-sky-500' },
+    { name: 'Prefect', stars: 22188, color: 'bg-indigo-500' },
+    { name: 'Temporal', stars: 19643, color: 'bg-violet-500' },
+    { name: 'Windmill', stars: 16254, color: 'bg-emerald-500' },
+    { name: 'Dagster', stars: 15335, color: 'bg-cyan-500' },
+    { name: 'Hatchet', stars: 6848, color: 'bg-orange-500' },
+    { name: 'Inngest', stars: 5213, color: 'bg-pink-500' },
+    { name: 'Restate', stars: 3738, color: 'bg-rose-500' },
+    { name: 'DBOS (TS+Py)', stars: 2410, color: 'bg-amber-500' },
   ];
   const max = Math.max(...engines.map((e) => e.stars));
   return (
@@ -218,7 +218,7 @@ export function GithubStarsChart() {
         ))}
       </div>
       <div className="text-xs text-gray-500 dark:text-gray-400 mt-4 text-center italic">
-        DBOS combined: 1,137 TypeScript + 1,267 Python
+        DBOS combined: 1,141 TypeScript + 1,269 Python
       </div>
     </div>
   );
