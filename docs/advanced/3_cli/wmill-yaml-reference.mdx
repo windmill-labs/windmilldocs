@@ -1,0 +1,604 @@
+---
+description: What are all the options in wmill.yaml? Reference for every configuration key used by the Windmill CLI, including defaults, effects, and deprecated keys.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# `wmill.yaml` reference
+
+`wmill.yaml` is the configuration file for the Windmill CLI. It lives at the root
+of a project, binds workspaces to Windmill instances, and controls what
+[`wmill sync pull`](./sync.mdx#pull-api) and [`wmill sync push`](./sync.mdx#push-api)
+do by default. This page disects every option the CLI reads from it.
+
+:::tip Auto-generated files
+
+`wmill init` writes a fully commented starter file with every option documented
+inline. `wmill config` prints a table of every option with its type, default,
+and description (`wmill config --json` for a machine-readable version). A JSON
+Schema for editor autocompletion is committed at
+[`cli/wmill.schema.json`](https://github.com/windmill-labs/windmill/blob/main/cli/wmill.schema.json).
+
+:::
+
+## File discovery
+
+When the CLI needs the config it walks up from the current directory looking
+for `wmill.yaml`, stopping at the git repository root (if any) or the
+filesystem root. If it finds the file in a parent directory, it logs a warning
+and changes the working directory there — so commands always run from the
+project root regardless of where they were invoked.
+
+If no file is found, most commands print
+`No wmill.yaml found. Use 'wmill init' to bootstrap it.` and fall back to the
+built-in defaults listed below.
+
+## Schema header
+
+Add this header to get editor autocompletion and validation in most editors
+(VS Code, Zed, JetBrains) via the YAML Language Server:
+
+```yaml
+# yaml-language-server: $schema=wmill.schema.json
+```
+
+## Starter example
+
+A typical `wmill.yaml` for a single-workspace project:
+
+```yaml
+# yaml-language-server: $schema=wmill.schema.json
+defaultTs: bun
+includes:
+  - "f/**"
+excludes: []
+skipSecrets: true
+nonDottedPaths: true
+syncBehavior: v1
+
+workspaces:
+  main:
+    baseUrl: https://app.windmill.dev
+    # workspaceId defaults to "main"
+    # gitBranch defaults to "main"
+```
+
+## Options at a glance
+
+| Option | Type | Default | Purpose |
+| --- | --- | --- | --- |
+| [`defaultTs`](#defaultts) | `"bun" \| "deno"` | `bun` | TypeScript runtime for `.ts` scripts |
+| [`includes`](#includes) | `string[]` | `["f/**"]` | Glob patterns to include in sync |
+| [`extraIncludes`](#extraincludes) | `string[]` | `[]` | Extra include patterns merged on top |
+| [`excludes`](#excludes) | `string[]` | `[]` | Glob patterns to exclude from sync |
+| [`skipVariables`](#skipvariables) | `boolean` | `false` | Skip syncing variables |
+| [`skipResources`](#skipresources) | `boolean` | `false` | Skip syncing resources |
+| [`skipResourceTypes`](#skipresourcetypes) | `boolean` | `false` | Skip syncing resource types |
+| [`skipSecrets`](#skipsecrets) | `boolean` | `true` | Skip syncing secret variables |
+| [`skipScripts`](#skipscripts) | `boolean` | `false` | Skip syncing scripts |
+| [`skipFlows`](#skipflows) | `boolean` | `false` | Skip syncing flows |
+| [`skipApps`](#skipapps) | `boolean` | `false` | Skip syncing apps |
+| [`skipFolders`](#skipfolders) | `boolean` | `false` | Skip syncing folders |
+| [`skipWorkspaceDependencies`](#skipworkspacedependencies) | `boolean` | `false` | Skip workspace dependencies |
+| [`includeSchedules`](#includeschedules) | `boolean` | `false` | Include schedules |
+| [`includeTriggers`](#includetriggers) | `boolean` | `false` | Include triggers (HTTP, WebSocket, Kafka, …) |
+| [`includeUsers`](#includeusers) | `boolean` | `false` | Include workspace users |
+| [`includeGroups`](#includegroups) | `boolean` | `false` | Include workspace groups |
+| [`includeSettings`](#includesettings) | `boolean` | `false` | Include workspace settings |
+| [`includeKey`](#includekey) | `boolean` | `false` | Include the workspace encryption key |
+| [`parallel`](#parallel) | `integer` | unset (`1`) | Parallel operations during push |
+| [`locksRequired`](#locksrequired) | `boolean` | `false` | Fail push if any script lacks a lock |
+| [`lint`](#lint) | `boolean` | `false` | Run lint before push |
+| [`plainSecrets`](#plainsecrets) | `boolean` | `false` | Store secrets in plain text |
+| [`message`](#message) | `string` | unset | Default commit message for push |
+| [`promotion`](#promotion) | `string` | unset | Branch whose `promotionOverrides` to apply |
+| [`skipBranchValidation`](#skipbranchvalidation) | `boolean` | `false` | Skip git-branch ↔ workspace matching |
+| [`nonDottedPaths`](#nondottedpaths) | `boolean` | `false` (`true` via `wmill init`) | Use `__flow`/`__app`/`__raw_app` suffixes |
+| [`syncBehavior`](#syncbehavior) | `string` (`v1`) | `v1` | Ownership-handling behavior version |
+| [`codebases`](#codebases) | `object[]` | `[]` | Bundled codebases shared across scripts |
+| [`workspaces`](#workspaces) | `object` | `{}` | Workspace bindings and per-workspace overrides |
+| [`gitBranches`](#gitbranches-deprecated) | `object` | — | **Deprecated** — use `workspaces` |
+| [`environments`](#environments-deprecated) | `object` | — | **Deprecated** — use `workspaces` |
+| [`git_branches`](#git_branches-deprecated) | `object` | — | **Deprecated** — use `workspaces` |
+| [`overrides`](#overrides-removed) | `object` | — | **Removed** — errors on read |
+
+## Core options
+
+### `defaultTs`
+
+- Type: `"bun" | "deno"`
+- Default: `bun`
+
+Runtime used when a `.ts` file's language cannot be inferred from its filename
+(`*.bun.ts` and `*.deno.ts` override this). Also used by
+[`wmill script bootstrap`](./script.md) and by lock/metadata generation to pick
+the right dependency resolver.
+
+```yaml
+defaultTs: bun   # or: deno
+```
+
+### `includes`
+
+- Type: `string[]`
+- Default: `["f/**"]`
+
+Glob patterns limiting which local files participate in sync. Matches both
+pulled and pushed items. Standard glob syntax applies: `*` matches within a
+path segment, `**` matches across segments.
+
+Overridden entirely when the `-i, --includes` CLI flag is passed.
+
+```yaml
+includes:
+  - "f/**"        # everything under the f/ root
+  - "u/alex/**"   # one user's personal namespace
+```
+
+### `extraIncludes`
+
+- Type: `string[]`
+- Default: `[]`
+
+Additional patterns merged with `includes` (both must match for a file to be
+considered). Useful inside a workspace `overrides:` block to tighten the scope
+for one workspace without rewriting the base `includes` list. Mirrors the
+`--extra-includes` CLI flag.
+
+### `excludes`
+
+- Type: `string[]`
+- Default: `[]`
+
+Glob patterns of files to exclude from sync, applied after `includes`.
+Overridden entirely by the `-e, --excludes` CLI flag.
+
+## What to sync
+
+The CLI syncs a core set of items by default (scripts, flows, apps, resources,
+resource types, variables, folders) and opts out of the rest (secrets,
+schedules, triggers, users, groups, settings, encryption key). The `skip*`
+flags remove items from the default set; the `include*` flags opt additional
+categories in.
+
+### `skipVariables`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips all variables (including any secret variables) on both pull and push.
+Equivalent CLI flag: `--skip-variables`.
+
+### `skipResources`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips resources. Equivalent CLI flag: `--skip-resources`.
+
+### `skipResourceTypes`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips resource type definitions. Equivalent CLI flag: `--skip-resource-types`.
+
+### `skipSecrets`
+
+- Type: `boolean`
+- Default: `true`
+
+Skips *only* secret variables (non-secret variables still sync unless
+`skipVariables` is also set). Defaults to `true` so secret values never leave
+the Windmill workspace unintentionally. Set to `false` only when you have
+understood the security implications. Equivalent CLI flag: `--skip-secrets`;
+`--include-secrets` overrides this setting from the CLI.
+
+### `skipScripts`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips scripts. Equivalent CLI flag: `--skip-scripts`.
+
+### `skipFlows`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips flows. Equivalent CLI flag: `--skip-flows`.
+
+### `skipApps`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips [apps](../../apps/0_app_editor/index.mdx). Equivalent CLI flag:
+`--skip-apps`.
+
+### `skipFolders`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips [folders](../../core_concepts/8_groups_and_folders/index.mdx) (their
+metadata and ACLs). Equivalent CLI flag: `--skip-folders`.
+
+### `skipWorkspaceDependencies`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips the workspace-level shared dependency manifests
+(`package.json`, `requirements.txt`, …) used by TypeScript/Python scripts.
+Equivalent CLI flag: `--skip-workspace-dependencies`.
+
+### `includeSchedules`
+
+- Type: `boolean`
+- Default: `false`
+
+Includes [schedules](../../core_concepts/1_scheduling/index.mdx) in the sync
+scope. Equivalent CLI flag: `--include-schedules`.
+
+### `includeTriggers`
+
+- Type: `boolean`
+- Default: `false`
+
+Includes all [triggers](../../getting_started/8_triggers/index.mdx) (HTTP
+routes, WebSocket, Postgres, Kafka, NATS, SQS, GCP Pub/Sub, MQTT). Equivalent
+CLI flag: `--include-triggers`.
+
+### `includeUsers`
+
+- Type: `boolean`
+- Default: `false`
+
+Includes workspace user memberships. Equivalent CLI flag: `--include-users`.
+
+### `includeGroups`
+
+- Type: `boolean`
+- Default: `false`
+
+Includes [groups](../../core_concepts/8_groups_and_folders/index.mdx) and
+their memberships. Equivalent CLI flag: `--include-groups`.
+
+### `includeSettings`
+
+- Type: `boolean`
+- Default: `false`
+
+Includes workspace-level settings (default timezone, auto-invite, error
+handler, …). Equivalent CLI flag: `--include-settings`.
+
+### `includeKey`
+
+- Type: `boolean`
+- Default: `false`
+
+Includes the workspace encryption key. Only relevant when cloning a workspace
+to a new instance and you want secrets to decrypt without re-encryption.
+Equivalent CLI flag: `--include-key`.
+
+## Sync behavior
+
+### `parallel`
+
+- Type: `integer`
+- Default: unset (runs sequentially with concurrency `1`)
+
+Number of changes applied in parallel during push. Values `<= 0` are clamped
+to `1`. Folder-metadata changes are always applied sequentially first (so ACLs
+are in place before items reference them), then the rest of the changes run
+through the parallel pool. Equivalent CLI flag: `--parallel <n>`.
+
+### `locksRequired`
+
+- Type: `boolean`
+- Default: `false`
+
+When `true`, `wmill sync push` fails upfront if any script (or flow inline
+script) that should have a lockfile is missing one. Prevents accidentally
+pushing non-reproducible scripts. Equivalent CLI flag: `--locks-required`.
+
+### `lint`
+
+- Type: `boolean`
+- Default: `false`
+
+Runs `wmill lint` before push. If any errors are reported, the push aborts.
+Equivalent CLI flag: `--lint`. See [Lint](./lint.md).
+
+### `plainSecrets`
+
+- Type: `boolean`
+- Default: `false`
+
+When pulling, stores secret variable values in clear text in local YAML
+instead of the default encrypted form. When pushing, treats local secret
+values as already in clear text. Not recommended — use only in development or
+when secrets are already managed by an external secret store. Equivalent CLI
+flag: `--plain-secrets`.
+
+### `message`
+
+- Type: `string`
+- Default: unset
+
+Default commit-like message attached to every script, flow, and app that
+sync push updates in this run. Overridden by `--message <string>`.
+
+### `promotion`
+
+- Type: `string`
+- Default: unset
+
+Name of the *source* workspace whose
+[`promotionOverrides`](#workspaces) to apply on top of the current workspace
+during push. Typical use: deploying code tested on `staging` to `prod`. Mirrors
+the `--promotion <name>` CLI flag and is typically set per invocation rather
+than in the file.
+
+### `skipBranchValidation`
+
+- Type: `boolean`
+- Default: `false`
+
+Disables the safety check that requires the current git branch to match an
+entry in `workspaces:`. Handy for throwaway feature branches. Equivalent CLI
+flag: `--skip-branch-validation`.
+
+### `nonDottedPaths`
+
+- Type: `boolean`
+- Default: `false` (set to `true` by `wmill init` for new projects)
+
+Controls how flow/app/raw-app directories are named on disk.
+
+- `true` → `my_flow__flow/`, `my_app__app/`, `my_raw_app__raw_app/`
+- `false` → `my_flow.flow/`, `my_app.app/`, `my_raw_app.raw_app/`
+
+The non-dotted form avoids edge cases on Windows and with tooling that treats
+`.flow` as a file extension. Recommended for new projects.
+
+### `syncBehavior`
+
+- Type: `string` (format: `vN`)
+- Default: `v1`
+
+Version knob for sync semantics. `v1` enables:
+
+- **Ownership preservation on push**: updating an existing item keeps its
+  `permissioned_as` owner instead of silently rewriting it to the caller.
+- **`on_behalf_of_email` stripped on pull**: the transient "acting user" field
+  is never written to disk.
+
+If not set, the CLI warns that ownership preservation is disabled. If set to
+a version newer than the CLI supports, the CLI errors and suggests
+`wmill upgrade`.
+
+```yaml
+syncBehavior: v1
+```
+
+## Codebase bundling
+
+### `codebases`
+
+- Type: `object[]`
+- Default: `[]`
+
+List of shared TypeScript/JavaScript projects bundled and uploaded alongside
+scripts so multiple scripts can import from a common library. Each entry runs
+through `esbuild` (or a custom bundler) during push. See
+[Sharing common logic](../5_sharing_common_logic/index.mdx) and
+[Codebases and bundles](../../core_concepts/33_codebases_and_bundles/index.mdx)
+for background.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `relative_path` | `string` *(required)* | Path to the codebase directory (relative to `wmill.yaml`) |
+| `includes` | `string[]` | Glob patterns of files to bundle |
+| `excludes` | `string[]` | Glob patterns of files to exclude |
+| `format` | `"cjs" \| "esm"` | Output module format |
+| `external` | `string[]` | Packages left unbundled at runtime |
+| `assets` | `{ from: string; to: string }[]` | Static files copied into the bundle |
+| `customBundler` | `string` | Path to a custom bundler script (replaces esbuild) |
+| `inject` | `string[]` | Files injected into every entry point |
+| `define` | `Record<string, string>` | Compile-time constants |
+| `banner` | `Record<string, string>` | Text prepended to output files by type (`js`, `css`, …) |
+| `loader` | `Record<string, string>` | esbuild loader overrides by file extension |
+
+```yaml
+codebases:
+  - relative_path: ./shared
+    includes: ["**/*.ts"]
+    excludes: ["**/*.test.ts", "node_modules/**"]
+    format: esm
+    external: ["pg", "axios"]
+    assets:
+      - from: ./static
+        to: ./dist
+    define:
+      API_URL: '"https://api.example.com"'
+    inject: ["./polyfills.ts"]
+    banner:
+      js: "/* bundled by windmill */"
+    loader:
+      ".png": "dataurl"
+    # customBundler: ./build.ts
+```
+
+## Workspaces
+
+### `workspaces`
+
+- Type: `object`
+- Default: `{}`
+
+Map from a human-friendly workspace name to a Windmill instance and
+per-workspace sync configuration. The map key doubles as the default
+workspace id (`workspaceId`), the default git branch (`gitBranch`), and the
+filename suffix for
+[workspace-specific items](./environment-specific-items.mdx).
+
+```yaml
+workspaces:
+  dev:
+    baseUrl: https://dev.windmill.dev
+    overrides:
+      skipSecrets: false
+
+  prod:
+    baseUrl: https://app.windmill.dev
+    workspaceId: prod-ws     # set only if it differs from the key
+    gitBranch: main          # set only if it differs from the key
+    overrides:
+      skipSecrets: false
+      includeSchedules: true
+    promotionOverrides:
+      skipApps: true
+    specificItems:
+      resources: ["u/alex/prod_*"]
+      variables: ["u/alex/env_*"]
+
+  commonSpecificItems:
+    resources: ["u/alex/config/**"]
+    folders: ["f/env_*"]
+    settings: true
+```
+
+The key `commonSpecificItems` is reserved — it is not a workspace, it declares
+items that should be stored per-workspace for *every* workspace.
+
+#### Per-workspace fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `baseUrl` | `string` | Windmill instance URL (e.g. `https://app.windmill.dev`). The CLI matches this against local [workspace profiles](./workspace-management.md) so the same file works on any machine logged into the instance. |
+| `workspaceId` | `string` | Windmill workspace id. Defaults to the map key. |
+| `gitBranch` | `string` | Git branch name this workspace is auto-selected on. Defaults to the map key. |
+| `overrides` | `Partial<SyncOptions>` | Any top-level sync option, overridden when this workspace is active. |
+| `promotionOverrides` | `Partial<SyncOptions>` | Overrides applied when this workspace is the *source* of a `--promotion` push. Falls back to `overrides` if unset. |
+| `specificItems` | `object` | Items stored per-workspace on disk (see below). |
+
+#### `specificItems` and `commonSpecificItems`
+
+Both share the same shape. Items whose path matches one of these patterns get
+the workspace name inserted into the local filename
+(`database.resource.yaml` ↔ `database.prod.resource.yaml` on disk). Full
+details in [Workspace-specific items](./environment-specific-items.mdx).
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `variables` | `string[]` | Variable path patterns |
+| `resources` | `string[]` | Resource path patterns |
+| `triggers` | `string[]` | Trigger path patterns |
+| `folders` | `string[]` | Folder path patterns |
+| `settings` | `boolean` | Treat `settings.yaml` as per-workspace |
+
+:::note `schedules` pattern list
+
+The internal `SpecificItemsConfig_Yaml` type also accepts a `schedules` key,
+but it is currently not part of the JSON Schema and is reserved for future
+use. Prefer `triggers` for now.
+
+:::
+
+### Workspace resolution order
+
+1. `--workspace <name>` — explicit CLI override.
+2. **Current git branch** — the first entry whose effective `gitBranch` (the
+   `gitBranch` field, or the map key if unset) matches
+   `git rev-parse --abbrev-ref HEAD`.
+3. **Local profile** — the workspace selected via
+   [`wmill workspace switch`](./workspace-management.md).
+
+### Settings resolution priority
+
+When multiple layers define the same option, the highest-priority one wins:
+
+1. CLI flags (highest).
+2. `promotionOverrides` of the workspace pointed to by `--promotion`.
+3. `overrides` of the resolved workspace.
+4. Top-level options in `wmill.yaml`.
+5. Built-in defaults (lowest).
+
+## Deprecated and removed keys
+
+The CLI reads the legacy keys below and normalizes them to `workspaces` in
+memory, emitting a one-time deprecation warning. Run `wmill config migrate` to
+rewrite the file in the new format — it preserves every field (`baseUrl`,
+`workspaceId`, `overrides`, `promotionOverrides`, `specificItems`,
+`commonSpecificItems`).
+
+### `gitBranches` *(deprecated)*
+
+Legacy multi-branch map. Keys were git branch names (not freeform workspace
+names). Has the same per-entry shape as `workspaces`. Priority over
+`environments` and `git_branches` if multiple legacy keys are present.
+
+### `environments` *(deprecated)*
+
+Legacy single-branch alias of `gitBranches` intended for promotion workflows
+on one branch. Same per-entry shape. Only read if `workspaces` and
+`gitBranches` are both absent.
+
+### `git_branches` *(deprecated)*
+
+Snake-case variant of `gitBranches`, kept for historical configs. Lowest
+priority among the legacy keys.
+
+### `overrides` *(removed)*
+
+Was previously a top-level key holding per-branch overrides. Reading a non-empty
+`overrides` now errors:
+
+```
+❌ The 'overrides' field is no longer supported.
+   The configuration system now uses workspace-based configuration.
+   Please delete your wmill.yaml and run 'wmill init' to recreate it with the new format.
+```
+
+Move the settings into the matching entry under `workspaces:` (`overrides:`
+lives *inside* a workspace entry, not at the top level).
+
+## Fields not meant for `wmill.yaml`
+
+The internal `SyncOptions` type also contains fields backing one-off CLI flags
+(`yes`, `dryRun`, `skipPull`, `failConflicts`, `json`, `jsonOutput`, `stateful`,
+`raw`). Setting these in `wmill.yaml` is technically possible but discouraged —
+they describe *one invocation*, not a project's baseline. In particular:
+
+- `raw` is now the default on push. The CLI prints
+  `--raw is now the default, you can remove it as a flag` if set.
+- `stateful` enables `.wmill/` state tracking. The file-based alternative
+  (sync from a clean checkout every time) is recommended instead.
+
+## See also
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Sync"
+		description="wmill sync pull / push — what each option actually does at sync time."
+		href="/docs/advanced/cli/sync"
+	/>
+	<DocCard
+		title="Workspace-specific items"
+		description="Per-workspace variables, resources, triggers and settings on disk."
+		href="/docs/advanced/cli/environment-specific-items"
+	/>
+	<DocCard
+		title="Git sync settings"
+		description="Managing sync configuration stored on the Windmill backend."
+		href="/docs/advanced/cli/gitsync-settings"
+	/>
+	<DocCard
+		title="Workspace management"
+		description="Local profiles used to resolve baseUrl / workspaceId."
+		href="/docs/advanced/cli/workspace-management"
+	/>
+</div>
+
