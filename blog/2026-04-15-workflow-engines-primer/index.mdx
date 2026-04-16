@@ -2,7 +2,7 @@
 slug: workflow-engines-primer
 authors: [rubenfiszel]
 tags: ['Benchmarks', 'Workflow Engines']
-description: 'A deep dive comparing Airflow, Prefect, Temporal, Inngest, and Windmill — how they work internally, their trade-offs, and real benchmarks. Plus Restate, DBOS, and Hatchet.'
+description: 'A deep dive comparing Airflow, Prefect, Temporal, Inngest, and Windmill — how they work internally, their trade-offs, and real benchmarks. Plus Dagster, Restate, DBOS, and Hatchet.'
 title: 'From Cron to Durable Execution: A Primer on Workflow Engines'
 ---
 
@@ -19,7 +19,7 @@ import {
   InngestHttpRoundtrips,
 } from './_diagrams';
 
-A deep dive comparing Airflow, Prefect, Temporal, Inngest, and Windmill — how they work internally, their trade-offs, and real benchmarks. Plus honorable mentions for Restate, DBOS, and Hatchet.
+A deep dive comparing Airflow, Prefect, Temporal, Inngest, and Windmill — how they work internally, their trade-offs, and real benchmarks. Plus honorable mentions for Dagster, Restate, DBOS, and Hatchet.
 
 {/* truncate */}
 
@@ -945,9 +945,9 @@ The fix for both is architectural:
 
 ---
 
-## Honorable Mentions: Restate, DBOS, Hatchet
+## Honorable Mentions: Dagster, Restate, DBOS, Hatchet
 
-The five engines above cover the main archetypes, but three other projects are worth knowing. Each represents a genuinely different point in the design space.
+The five engines above cover the main archetypes, but four other projects are worth knowing. Each represents a genuinely different point in the design space.
 
 ### Restate: Co-Located Storage (No External DB)
 
@@ -1026,6 +1026,32 @@ workflow.step("ship", async (ctx) => { return shipping.dispatch(ctx.stepOutput("
 **How it works:** Steps declare their parent dependencies explicitly. The Hatchet engine (Go) builds the DAG and dispatches steps via Postgres + RabbitMQ. Workers connect via gRPC. No deterministic replay: steps execute once, results are persisted.
 
 **Where it sits:** Between Airflow (static DAG) and Temporal (imperative code). You get DAG-level parallelism (steps with no parents run in parallel automatically) without the determinism constraints of Temporal. But you lose the ability to use arbitrary control flow (if/else, loops) within the workflow. The DAG structure is fixed at registration time.
+
+### Dagster: Asset-Based Orchestration
+
+[Dagster](https://dagster.io) (~13.5K stars) sits in the same broad category as Airflow and Prefect (Python, DAG-based, no durable execution), but its core abstraction is different enough to warrant its own mention. Instead of declaring tasks and their dependencies, you declare **software-defined assets**: the tables, files, ML models, or datasets your pipeline produces. The DAG then emerges from the dependencies between assets:
+
+```python
+from dagster import asset
+
+@asset
+def orders():
+    return db.query("SELECT * FROM orders")
+
+@asset
+def enriched_orders(orders, customers):
+    return orders.merge(customers, on="customer_id")
+
+@asset
+def daily_revenue(enriched_orders):
+    return enriched_orders.groupby("day")["total"].sum()
+```
+
+**How it works:** You declare what each asset *is* (a function that produces it) and what other assets it depends on (function arguments). Dagster inspects the asset graph, figures out execution order, and runs whatever is needed to materialize a target asset. Everything hangs off the asset catalog: lineage, freshness checks, backfills, partitioning, data-quality assertions.
+
+**Where it sits:** Gen 1 in execution model (each asset run is a separate task, no durable execution within it) but with a higher-level authoring experience that targets data engineers specifically. It leans further into declarative/data-centric thinking than Airflow's task-centric DAGs. For ETL / ELT / analytics engineering, the asset model is genuinely a different mental frame. For general-purpose orchestration (business workflows, long-running processes, approvals), the asset framing fits less naturally.
+
+**The trade-off:** Best-in-class data lineage and catalog story. Python-only, and like Prefect/Airflow, no durable execution — a crash inside an asset computation loses all in-flight work.
 
 ---
 

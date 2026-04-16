@@ -188,6 +188,7 @@ export function GithubStarsChart() {
     { name: 'Prefect', stars: 22177, color: 'bg-indigo-500' },
     { name: 'Temporal', stars: 19598, color: 'bg-violet-500' },
     { name: 'Windmill', stars: 16241, color: 'bg-emerald-500' },
+    { name: 'Dagster', stars: 13500, color: 'bg-cyan-500' },
     { name: 'Hatchet', stars: 6826, color: 'bg-orange-500' },
     { name: 'Inngest', stars: 5202, color: 'bg-pink-500' },
     { name: 'Restate', stars: 3729, color: 'bg-rose-500' },
