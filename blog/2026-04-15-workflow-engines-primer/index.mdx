@@ -6,7 +6,18 @@ description: 'A deep dive comparing Airflow, Prefect, Temporal, Inngest, and Win
 title: 'From Cron to Durable Execution: A Primer on Workflow Engines'
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import DocCard from '@site/src/components/DocCard';
+import {
+  DAGSchedulerModel,
+  AirflowStateMachine,
+  PersistenceSpectrum,
+  WorkerArchitecture,
+  GithubStarsChart,
+  TemporalReplaySequence,
+  InngestHttpRoundtrips,
+} from './_diagrams';
 
 A deep dive comparing Airflow, Prefect, Temporal, Inngest, and Windmill — how they work internally, their trade-offs, and real benchmarks. Plus honorable mentions for Restate, DBOS, and Hatchet.
 
@@ -33,11 +44,11 @@ The fundamental problem: **a sequence of side-effects spread across time and net
 
 Every workflow engine is a different answer to the same question: **how do you coordinate multiple fallible side-effects so that the overall process makes progress, even when individual steps fail?**
 
-The answers cluster into three generations, each with a different core abstraction.
+The answers cluster into two generations of core abstractions, with a visual UX mode sitting on top of Gen 1.
 
 ---
 
-## The Three Generations
+## Two Generations (and a Visual UX)
 
 ```
 Generation 1: DAG Schedulers                    Airflow, Prefect
@@ -48,12 +59,13 @@ Generation 2: Durable Execution                 Temporal, Inngest, Windmill WAC
               "Write normal code, the runtime
                makes it survive crashes"
 
-Hybrid:       Visual Flow Builder               Windmill Flows
-              "Drag-and-drop steps,
-               JSON-defined DAG with code steps"
+Visual UX:    Flow Builder                      Windmill Flows
+              (built on top of a Gen 1 engine)  "Drag-and-drop steps, JSON DAG"
 ```
 
-The shift from Gen 1 to Gen 2 mirrors a broader shift in computer science: from **declarative** (describe the computation) to **imperative** (write the computation, let the infrastructure handle durability). Neither is universally better — they solve different problems.
+The shift from Gen 1 to Gen 2 mirrors a broader shift in computer science: from **declarative** (describe the computation) to **imperative** (write the computation, let the infrastructure handle durability). Neither is universally better. They solve different problems.
+
+Visual flow builders like Windmill Flows are not a third generation. They are a different authoring experience (drag-and-drop, JSON DAG) over the same Gen 1 execution model, aimed at users who prefer a UI over code.
 
 ---
 
@@ -65,23 +77,7 @@ A DAG scheduler separates **what to do** (your task code) from **when and where 
 
 The key property: **tasks are independent units of work.** They don't share memory. They don't know about each other. They communicate through external storage. The scheduler is the only component that understands the full picture.
 
-```
-┌──────────────────────────────────────────────────────┐
-│                   DAG Scheduler Model                │
-│                                                      │
-│   You define:        Scheduler does:                 │
-│                                                      │
-│   [Task A] ──┐       1. Parse graph                  │
-│              ├──→    2. Poll: which tasks are ready?  │
-│   [Task B] ──┘       3. Dispatch ready tasks          │
-│      │               4. Wait for completion           │
-│      ▼               5. Repeat from 2                 │
-│   [Task C]                                           │
-│                                                      │
-│   Data passes via external storage (DB, S3, XCom)    │
-│   Tasks are independent processes                     │
-└──────────────────────────────────────────────────────┘
-```
+<DAGSchedulerModel />
 
 ### Airflow: The Incumbent
 
@@ -110,7 +106,7 @@ def etl_pipeline():
     load(transformed)
 ```
 
-**The fundamental misunderstanding about Airflow**: this looks like Python calling functions, but it isn't. At parse time, no functions execute. Airflow builds a dependency graph from the return value annotations. The actual execution happens later — possibly minutes later, on a different machine.
+**The fundamental misunderstanding about Airflow**: this looks like Python calling functions, but it isn't. At parse time, no functions execute. Airflow builds a dependency graph from the return value annotations. The actual execution happens later, possibly minutes later, on a different machine.
 
 #### How the Scheduler Works
 
@@ -128,20 +124,17 @@ Every ~5 seconds:
 
 Each task passes through a state machine stored in the database:
 
-```
-  none → scheduled → queued → running → success
-                                    └──→ failed → up_for_retry → scheduled → ...
-```
+<AirflowStateMachine />
 
 Every state transition is a database write. The scheduler owns `scheduled → queued`. The executor owns `queued → running`. The worker owns `running → success/failed`.
 
 #### Data Passing Between Steps
 
-Since tasks run in separate processes (possibly different machines), data must be serialized to shared storage. Airflow calls this "XCom" (cross-communication). All engines where steps are separate jobs share this pattern — Temporal stores results in event history, Windmill in Postgres JSONB — but Airflow's XCom has historically had the worst developer experience: tight size limits (48KB default), and in older versions, explicit `xcom_push`/`xcom_pull` calls. Newer Airflow versions with the `@task` decorator make this more transparent, but the size limits remain.
+Since tasks run in separate processes (possibly different machines), data must be serialized to shared storage. Airflow calls this "XCom" (cross-communication). All engines where steps are separate jobs share this pattern (Temporal stores results in event history, Windmill in Postgres JSONB), but Airflow's XCom has historically had the worst developer experience: tight size limits (48KB default), and in older versions, explicit `xcom_push`/`xcom_pull` calls. Newer Airflow versions with the `@task` decorator make this more transparent, but the size limits remain.
 
 #### The Executor Layer
 
-Airflow's executor is pluggable — one of its best design decisions:
+Airflow's executor is pluggable, one of its best design decisions:
 
 - **LocalExecutor**: forks a subprocess per task. Simple, single-machine.
 - **CeleryExecutor**: sends tasks to a message broker (Redis/RabbitMQ). Celery workers pick them up. Most common production setup.
@@ -158,14 +151,14 @@ Each executor makes a different trade-off between isolation, latency, and operat
 
 #### Cons
 
-**Latency and cold start.** In [our benchmarks](https://www.windmill.dev/docs/misc/benchmarks/competitors/airflow), Airflow took **56 seconds to run 40 lightweight tasks** (~0.7 tasks/sec). Windmill completed the same workload in 2.4 seconds (~16.5 tasks/sec) — a **23x difference.** The overhead comes from architectural differences:
-- **Three-hop dispatch**: in Airflow, a task goes scheduler (polls DB, resolves dependencies, checks pool limits) → DB state update → executor → message broker (Redis/RabbitMQ for Celery) → worker. Three separate components, each with their own polling interval and latency. In Windmill, the worker polls Postgres directly with `SELECT ... FOR UPDATE SKIP LOCKED` — one component, one hop.
-- **Scheduler overhead**: Airflow's scheduler is a Python process that re-parses DAG files, evaluates dependencies, and checks concurrency limits — all in Python — before a task can even be enqueued. This adds 1-5 seconds per scheduling cycle. Windmill has no separate scheduler; workers self-schedule by pulling from the queue.
-- **Cold start per task**: each Airflow task forks a subprocess that loads the entire DAG file + Airflow framework imports. Even for a trivial task, this can take 1-2 seconds. Windmill's cold start is lighter (~26ms for Python, ~12ms for Bun), and with dedicated workers it's 0ms — the process stays alive across jobs.
+**Latency and cold start.** In [our benchmarks](https://www.windmill.dev/docs/misc/benchmarks/competitors/airflow), Airflow took **56 seconds to run 40 lightweight tasks** (~0.7 tasks/sec). Windmill completed the same workload in 2.4 seconds (~16.5 tasks/sec), a **23x difference.** The overhead comes from architectural differences:
+- **Three-hop dispatch**: in Airflow, a task goes scheduler (polls DB, resolves dependencies, checks pool limits) → DB state update → executor → message broker (Redis/RabbitMQ for Celery) → worker. Three separate components, each with their own polling interval and latency. In Windmill, the worker polls Postgres directly with `SELECT ... FOR UPDATE SKIP LOCKED`: one component, one hop.
+- **Scheduler overhead**: Airflow's scheduler is a Python process that re-parses DAG files, evaluates dependencies, and checks concurrency limits, all in Python, before a task can even be enqueued. This adds 1-5 seconds per scheduling cycle. Windmill has no separate scheduler; workers self-schedule by pulling from the queue.
+- **Cold start per task**: each Airflow task forks a subprocess that loads the entire DAG file + Airflow framework imports. Even for a trivial task, this can take 1-2 seconds. Windmill's cold start is lighter (~26ms for Python, ~12ms for Bun), and with dedicated workers it's 0ms: the process stays alive across jobs.
 
 With the KubernetesExecutor, cold start grows to 10-30 seconds per task (pod creation). This makes Airflow unsuitable for anything latency-sensitive.
 
-**Python-only.** DAGs are Python files. Tasks are Python functions. If your pipeline needs a TypeScript transform or a Go data processor, you shell out or use a BashOperator — no first-class polyglot support.
+**Python-only.** DAGs are Python files. Tasks are Python functions. If your pipeline needs a TypeScript transform or a Go data processor, you shell out or use a BashOperator. There is no first-class polyglot support.
 
 **No visual editor.** Airflow has a monitoring UI (DAG view, Gantt charts, logs), but no visual flow builder. You define workflows in Python code, which is powerful but excludes non-developers from authoring workflows.
 
@@ -203,11 +196,11 @@ def etl_pipeline():
     load(transformed)
 ```
 
-This looks almost identical to Airflow, but with a crucial difference: **the code actually runs as Python.** When `etl_pipeline()` is called, `extract()` really executes `extract()`. There's no graph construction phase — the DAG is implicit from the call order.
+This looks almost identical to Airflow, but with a crucial difference: **the code actually runs as Python.** When `etl_pipeline()` is called, `extract()` really executes `extract()`. There's no graph construction phase. The DAG is implicit from the call order.
 
 #### The Hybrid Execution Model
 
-Prefect sits between Generation 1 and Generation 2. Tasks execute in the same process as the flow (by default), so there's no XCom problem — data passes through Python variables. But each task run is tracked by the Prefect server via a REST API:
+Prefect sits between Generation 1 and Generation 2. Tasks execute in the same process as the flow (by default), so there's no XCom problem: data passes through Python variables. But each task run is tracked by the Prefect server via a REST API:
 
 ```
 @task runs:
@@ -235,7 +228,7 @@ def parallel_pipeline():
 #### Pros
 
 - **Zero new concepts for Python developers.** Decorators on regular functions. Python control flow. Python data passing.
-- **Dynamic workflows.** Since the code is real Python, you can use `if/else`, `for` loops, `try/except` — anything. The "DAG" is whatever Python actually executes.
+- **Dynamic workflows.** Since the code is real Python, you can use `if/else`, `for` loops, `try/except`, anything. The "DAG" is whatever Python actually executes.
 - **Lower ceremony than Airflow.** No scheduler process. No DAG file parsing. Just run the flow.
 
 #### Cons
@@ -284,10 +277,10 @@ async function processOrder(order) {
 
 The runtime intercepts each `await` and ensures that:
 1. The result is **durably persisted** before execution continues
-2. On crash, the function **resumes from where it left off** — already-completed steps are not re-executed
+2. On crash, the function **resumes from where it left off**. Already-completed steps are not re-executed
 3. Side effects happen **at least once** (and ideally exactly once)
 
-The key insight: **the `await` keyword is the persistence boundary.** Everything between two `await`s is either fully completed or fully retried — never partially executed.
+The key insight: **the `await` keyword is the persistence boundary.** Everything between two `await`s is either fully completed or fully retried, never partially executed.
 
 But the implementations differ wildly in how they achieve this.
 
@@ -296,14 +289,14 @@ But the implementations differ wildly in how they achieve this.
 Temporal (2019, ex-Uber Cadence team) is the most well-known durable execution engine. Its core abstraction: **record every state change as an immutable event, then replay events to reconstruct state.**
 
 ```typescript
-// Workflow — must be deterministic (sandboxed in TS, by convention in Go/Java)
+// Workflow: must be deterministic (sandboxed in TS, by convention in Go/Java)
 export async function processOrder(orderId: string) {
   const order = await activities.getOrder(orderId);
   const payment = await activities.chargePayment(order);
   await activities.shipOrder(payment);
 }
 
-// Activity — runs in normal Node.js, can do anything
+// Activity: runs in normal Node.js, can do anything
 export async function chargePayment(order: Order): Promise<Receipt> {
   return stripe.charges.create({ amount: order.total });
 }
@@ -313,11 +306,11 @@ export async function chargePayment(order: Order): Promise<Receipt> {
 
 Temporal enforces a strict separation:
 
-- **Workflow code** must be deterministic — no I/O, no randomness, no direct clock access. How strictly this is enforced depends on the SDK:
+- **Workflow code** must be deterministic: no I/O, no randomness, no direct clock access. How strictly this is enforced depends on the SDK:
   - **TypeScript**: the strictest. Workflows run in a V8 isolate with `Math.random()`, `Date()`, `setTimeout()` replaced by deterministic versions. Node.js APIs (`fs`, `http`, `fetch`) are blocked at the bundler level.
   - **Python**: a sandbox using proxy objects and a custom module importer restricts most non-deterministic access at runtime.
-  - **Go and Java**: **no sandbox.** Determinism is enforced by convention — developers are told not to use goroutines/threads, system clocks, or randomness. Violations are only caught at replay time (non-determinism error), not at compile time.
-- **Activity code** runs in normal Node.js / Python / Go. It can do anything — call APIs, write to databases, generate random numbers.
+  - **Go and Java**: **no sandbox.** Determinism is enforced by convention. Developers are told not to use goroutines/threads, system clocks, or randomness. Violations are only caught at replay time (non-determinism error), not at compile time.
+- **Activity code** runs in normal Node.js / Python / Go. It can do anything: call APIs, write to databases, generate random numbers.
 
 This split exists because of Temporal's replay mechanism.
 
@@ -327,14 +320,7 @@ Every time a workflow makes a decision (schedule an activity, start a timer, sen
 
 When the workflow needs to resume (after an activity completes, after a crash, after a timer fires), the **entire workflow function re-executes from the beginning.** But this time, the SDK checks the event history:
 
-```
-Execution 1:  run → await getOrder → [no event] → schedule activity → YIELD
-Execution 2:  run → await getOrder → [event: completed(order)] → return recorded result
-                  → await chargePayment → [no event] → schedule activity → YIELD
-Execution 3:  run → await getOrder → [event] → skip
-                  → await chargePayment → [event] → skip
-                  → await shipOrder → [no event] → schedule activity → YIELD
-```
+<TemporalReplaySequence />
 
 Each execution replays all previous steps (returning results from the event history) and then advances one step. This is **event sourcing applied to code execution**.
 
@@ -376,10 +362,10 @@ Event#  EventType                     Details
 
 Since the workflow function is replayed from the beginning on every resume, it **must produce the same sequence of commands on every execution.** If you used `Math.random()` to decide whether to call activity A or B, replay would make a different choice and Temporal would throw a **non-determinism error**.
 
-This is the most common source of developer pain with Temporal. You must learn to think about which code is "workflow" (deterministic orchestration) and which is "activity" (actual work). In TypeScript, the sandbox catches most violations immediately. In Go or Java, a third-party library that calls `time.Now()` or `Math.random()` will silently work until replay fails — potentially in production, weeks after deployment.
+This is the most common source of developer pain with Temporal. You must learn to think about which code is "workflow" (deterministic orchestration) and which is "activity" (actual work). In TypeScript, the sandbox catches most violations immediately. In Go or Java, a third-party library that calls `time.Now()` or `Math.random()` will silently work until replay fails, potentially in production, weeks after deployment.
 
 ```typescript
-// ❌ BROKEN — non-deterministic
+// ❌ BROKEN: non-deterministic
 export async function myWorkflow() {
   if (Math.random() > 0.5) {           // Different on replay!
     await activities.pathA();
@@ -388,7 +374,7 @@ export async function myWorkflow() {
   }
 }
 
-// ✅ CORRECT — decision based on activity result
+// ✅ CORRECT: decision based on activity result
 export async function myWorkflow() {
   const coin = await activities.flipCoin();  // Recorded in history
   if (coin > 0.5) {
@@ -464,32 +450,7 @@ export const processOrder = inngest.createFunction(
 
 Inngest's execution model is unlike anything else. Your code runs as a **stateless HTTP endpoint**. The Inngest server orchestrates execution by making HTTP calls to your endpoint:
 
-```
-Request 1 (no steps completed):
-  Server POST → your endpoint
-  Code runs: step.run("get-order", fn) → fn executes → returns order
-  Response: { step_result: "get-order", data: order }
-  Server stores result.
-
-Request 2 (get-order completed):
-  Server POST → your endpoint (with memoized results)
-  Code runs: step.run("get-order", fn) → memoized, returns stored result
-  Code runs: step.run("charge", fn) → fn executes → returns receipt
-  Response: { step_result: "charge", data: receipt }
-  Server stores result.
-
-Request 3 (get-order + charge completed):
-  Server POST → your endpoint (with memoized results)
-  Code runs: step.run("get-order") → memoized
-  Code runs: step.run("charge") → memoized
-  Code runs: step.run("ship", fn) → fn executes
-  Response: { step_result: "ship", data: tracking }
-  
-Request 4 (all steps completed):
-  Server POST → your endpoint
-  All steps memoized, function returns.
-  Response: { complete: true, result: ... }
-```
+<InngestHttpRoundtrips />
 
 **Each `step.run()` = one HTTP round-trip.** The function re-executes from the top on every request, but completed steps return instantly from memoized results.
 
@@ -497,7 +458,7 @@ Request 4 (all steps completed):
 
 This design choice has profound implications:
 
-**Pro: Truly stateless workers.** Your code is a regular HTTP endpoint — deploy it on Vercel, AWS Lambda, Cloudflare Workers, a Docker container, anywhere. No persistent worker process, no gRPC connection to maintain, no special runtime. The Inngest server handles all state.
+**Pro: Truly stateless workers.** Your code is a regular HTTP endpoint. Deploy it on Vercel, AWS Lambda, Cloudflare Workers, a Docker container, anywhere. No persistent worker process, no gRPC connection to maintain, no special runtime. The Inngest server handles all state.
 
 **Pro: No new infrastructure for the developer.** You add Inngest to your existing Express/Next.js/Flask app. No separate worker binary, no task queue, no Celery/RabbitMQ.
 
@@ -505,7 +466,7 @@ This design choice has profound implications:
 
 **Con: Highest per-step latency.** Every step = HTTP request + response + memoized replay of all previous steps. A 10-step workflow makes 10 HTTP requests, and the 10th request re-executes (and skips) all 9 previous steps before running the 10th.
 
-**Con: Full re-execution per step.** Like Temporal, the function re-runs from the beginning. Unlike Temporal, there's no compiled workflow bundle or V8 isolate — it's a full HTTP request with all the associated overhead (routing, middleware, JSON parsing).
+**Con: Full re-execution per step.** Like Temporal, the function re-runs from the beginning. Unlike Temporal, there's no compiled workflow bundle or V8 isolate. It's a full HTTP request with all the associated overhead (routing, middleware, JSON parsing).
 
 #### The Memoization Distinction
 
@@ -521,7 +482,7 @@ The practical difference: Temporal's replay is in-process (fast, ~microseconds p
 - **Simplest deployment model.** Add it to your existing app. No infrastructure beyond the Inngest server (which can be self-hosted or cloud).
 - **Serverless-native.** Works perfectly with Lambda/Vercel/Cloudflare. No persistent connections to maintain.
 - **Event-driven.** First-class event system with fan-out, debounce, throttle.
-- **Server-side sleep.** `step.sleep("1h")` doesn't hold a process — the server wakes your function after 1 hour.
+- **Server-side sleep.** `step.sleep("1h")` doesn't hold a process. The server wakes your function after 1 hour.
 
 #### Cons
 
@@ -545,7 +506,7 @@ const getOrder = task(async (id: string) => {
 export const main = workflow(async () => {
   const order = await getOrder("order-123");
 
-  // step() executes inline — no child job, no dispatch
+  // step() executes inline: no child job, no dispatch
   const total = await step("calc-total", () =>
     order.items.reduce((sum, i) => sum + i.price, 0)
   );
@@ -559,9 +520,9 @@ export const main = workflow(async () => {
 
 Windmill is unique in offering two step types with very different execution models:
 
-**`task()`** — dispatches a child job. Separate process, separate resource limits, visible as an independent job in the UI. Like Temporal's activities.
+**`task()`** dispatches a child job. Separate process, separate resource limits, visible as an independent job in the UI. Like Temporal's activities.
 
-**`step()`** — executes inline in the same process. No child job, no queue hop. Result is checkpointed to the database. Like Temporal's local activities, but with a fast-path optimization: the SDK POSTs the step result directly to the API server while the script continues running. No suspend/resume cycle.
+**`step()`** executes inline in the same process. No child job, no queue hop. Result is checkpointed to the database. Like Temporal's local activities, but with a fast-path optimization: the SDK POSTs the step result directly to the API server while the script continues running. No suspend/resume cycle.
 
 This dual model reflects a real insight: **not all steps are equally expensive, and forcing them through the same dispatch mechanism is wasteful.** A database query and a CSV parsing step don't need the same isolation guarantees.
 
@@ -595,7 +556,7 @@ With `step()`, there's no suspend/resume at all. The SDK:
 1. Executes the function body in-process
 2. POSTs the result to `POST /wac/inline_checkpoint/{job_id}` on the API server
 3. The API server writes a single JSONB delta to Postgres
-4. The script continues immediately — no process restart
+4. The script continues immediately. No process restart
 
 This means a 100-step workflow using `step()` runs as **one continuous Bun process** making 100 HTTP POSTs. There's no re-execution, no replay, no suspend/resume.
 
@@ -639,17 +600,17 @@ The trade-off: checkpoints don't give you an audit trail of *when* each step ran
 
 #### Cons
 
-- **Per-workflow cold start (without dedicated workers).** By default, each workflow spawns a new Bun process (~12ms). This is the main throughput bottleneck for short workflows. Windmill offers [dedicated workers](/docs/core_concepts/dedicated_workers) — persistent Bun processes assigned to specific scripts or workspaces — which eliminate this cold start entirely and bring execution closer to Temporal's persistent worker model.
+- **Per-workflow cold start (without dedicated workers).** By default, each workflow spawns a new Bun process (~12ms). This is the main throughput bottleneck for short workflows. Windmill offers [dedicated workers](/docs/core_concepts/dedicated_workers), persistent Bun processes assigned to specific scripts or workspaces, which eliminate this cold start entirely and bring execution closer to Temporal's persistent worker model.
 - **One job per worker.** Workers process one workflow at a time. Temporal handles 200+ concurrent activities per worker.
-- **Workers talk to Postgres directly by default.** No server-mediated batching — each step result is an individual PG transaction. Windmill also supports an [agent mode](/docs/core_concepts/agent_workers) where workers communicate with the server over HTTP/WebSocket instead of connecting to Postgres directly, which is useful for remote/edge deployments but doesn't yet batch writes.
+- **Workers talk to Postgres directly by default.** No server-mediated batching. Each step result is an individual PG transaction. Windmill also supports an [agent mode](/docs/core_concepts/agent_workers) where workers communicate with the server over HTTP/WebSocket instead of connecting to Postgres directly, which is useful for remote/edge deployments but doesn't yet batch writes.
 
 ---
 
-## The Hybrid: Visual Flow Builder
+## Visual UX: Flow Builders
 
 ### Windmill Flows: JSON DAG + Code Steps
 
-Windmill also offers a traditional flow builder — a visual drag-and-drop editor that produces JSON-defined DAGs:
+Separate from its Gen-2 Workflow-as-Code engine, Windmill also offers a traditional flow builder. It is a visual drag-and-drop editor that produces JSON-defined DAGs, executed by a Gen-1 style engine:
 
 ```json
 {
@@ -677,15 +638,15 @@ Windmill also offers a traditional flow builder — a visual drag-and-drop edito
 }
 ```
 
-This is closer to Airflow's model — each step is an independent execution unit dispatched to a worker. But unlike Airflow:
+This is closer to Airflow's model: each step is an independent execution unit dispatched to a worker. But unlike Airflow:
 
 - **Steps can be in different languages** (TypeScript, Python, Go, Bash, SQL, etc.) within the same flow
-- **Data passes via `results` context** — step results are stored in Postgres (like every engine where steps are separate jobs), but accessed transparently via `results.step_name` expressions in the flow definition
+- **Data passes via `results` context**: step results are stored in Postgres (like every engine where steps are separate jobs), but accessed transparently via `results.step_name` expressions in the flow definition
 - **The flow executor runs as a state machine** in the Windmill worker, not as a separate scheduler process
 - **Branching, loops, error handlers, and approval steps** are built-in flow constructs
 - **Each step can be a full Windmill script** with auto-generated UIs, schedules, etc.
 
-The flow builder is not programmatic — it's a UI. This makes it more accessible to non-developers but less flexible than code-based approaches. It sits between Airflow (Python DAGs) and Temporal (pure code) in the abstraction spectrum.
+The flow builder is not programmatic. It's a UI. This makes it more accessible to non-developers but less flexible than code-based approaches. It sits between Airflow (Python DAGs) and Temporal (pure code) in the abstraction spectrum.
 
 ---
 
@@ -695,7 +656,9 @@ The flow builder is not programmatic — it's a UI. This makes it more accessibl
 
 Let's implement the same 3-step workflow across all engines to see the differences in expressiveness:
 
-**Airflow:**
+<Tabs>
+<TabItem value="airflow" label="Airflow">
+
 ```python
 @task
 def get_order(id):
@@ -716,7 +679,9 @@ def process_order():
     ship(payment)
 ```
 
-**Prefect:**
+</TabItem>
+<TabItem value="prefect" label="Prefect">
+
 ```python
 @task
 def get_order(id):
@@ -737,7 +702,9 @@ def process_order():
     ship(payment)
 ```
 
-**Temporal:**
+</TabItem>
+<TabItem value="temporal" label="Temporal">
+
 ```typescript
 // Workflow file (deterministic sandbox)
 export async function processOrder() {
@@ -752,7 +719,9 @@ export async function charge(order) { return stripe.charges.create({amount: orde
 export async function ship(payment) { return shipping.dispatch(payment); }
 ```
 
-**Inngest:**
+</TabItem>
+<TabItem value="inngest" label="Inngest">
+
 ```typescript
 export const processOrder = inngest.createFunction(
   { id: "process-order" },
@@ -765,7 +734,9 @@ export const processOrder = inngest.createFunction(
 );
 ```
 
-**Windmill WAC:**
+</TabItem>
+<TabItem value="windmill" label="Windmill WAC">
+
 ```typescript
 import { step, workflow } from "windmill-client";
 
@@ -776,21 +747,24 @@ export const main = workflow(async () => {
 });
 ```
 
+</TabItem>
+</Tabs>
+
 Notice how the code converges. Gen 2 engines (Temporal, Inngest, Windmill) all look like decorated async functions. The differences are:
 
 - **Temporal** forces you to split into workflow + activities files. Strictest, but enables a deterministic sandbox.
-- **Inngest** wraps each step in `step.run()`. Simplest — no build step, works in any HTTP framework.
+- **Inngest** wraps each step in `step.run()`. Simplest: no build step, works in any HTTP framework.
 - **Windmill** offers `step()` (inline) and `task()` (dispatched). Most flexible per-step control.
-- **Airflow / Prefect** look similar but the execution model is fundamentally different — no durable execution within a task.
+- **Airflow / Prefect** look similar but the execution model is fundamentally different: no durable execution within a task.
 
 ### Dynamic Control Flow
 
-Where the engines truly diverge is control flow:
+Where the engines truly diverge is control flow. Consider the same requirement ("if payment fails, send to manual review queue"):
+
+<Tabs>
+<TabItem value="temporal" label="Temporal">
 
 ```typescript
-// "If payment fails, send to manual review queue"
-
-// Temporal — full imperative control flow
 export async function processOrder() {
   const order = await activities.getOrder("123");
   try {
@@ -802,8 +776,14 @@ export async function processOrder() {
   }
   await activities.ship(order);
 }
+```
 
-// Inngest — same, via step.run()
+Full imperative control flow. `try/catch`, signals, dynamic branching all work.
+
+</TabItem>
+<TabItem value="inngest" label="Inngest">
+
+```typescript
 async ({ step }) => {
   const order = await step.run("get-order", () => getOrder("123"));
   let charged = false;
@@ -818,16 +798,26 @@ async ({ step }) => {
   }
   await step.run("ship", () => ship(order));
 }
+```
 
-// Airflow — you can't.
+Same as Temporal, via `step.run()`.
+
+</TabItem>
+<TabItem value="airflow" label="Airflow">
+
+```python
 # DAGs are static. You can use @task.branch, but it's limited:
 @task.branch
 def check_payment(result):
     if result["success"]:
         return "ship_order"
     return "send_to_review"
-# This creates a static branch in the DAG — not a try/catch with dynamic resumption.
 ```
+
+You can't express this pattern directly. `@task.branch` creates a static branch in the DAG, not a `try/catch` with dynamic resumption.
+
+</TabItem>
+</Tabs>
 
 This is the fundamental expressiveness gap between DAG schedulers and durable execution engines. Temporal, Inngest, and Windmill can express any control flow (loops, recursion, try/catch, dynamic branching). Airflow and Prefect are limited to what a DAG can represent.
 
@@ -839,17 +829,7 @@ This is the fundamental expressiveness gap between DAG schedulers and durable ex
 
 Every workflow engine makes a choice: **when do you persist state, and at what granularity?**
 
-```
-  No persistence          Per-task           Per-step           Per-side-effect
-  (plain code)            (Airflow)          (Temporal,         (Restate-style
-                                              Inngest,           journaling)
-                                              Windmill WAC)
-
-  ◄─────────────────────────────────────────────────────────────────────────►
-  Fastest                                                              Most
-  No durability                                                    durable
-  No overhead                                                    Most overhead
-```
+<PersistenceSpectrum />
 
 - **Airflow/Prefect**: persist after each task completes. If a task has 100 lines of code, a crash at line 50 loses all 50 lines of work.
 - **Temporal/Inngest/Windmill**: persist after each step (activity/step.run/step). Crashes only lose the current in-flight step.
@@ -869,29 +849,35 @@ How you represent workflow state determines what you can query, how much storage
 
 How workers relate to the coordination layer fundamentally determines throughput:
 
-```
-  Workers → DB directly          Workers → Server → DB        Workers = Runtime
-  (Airflow, Windmill)            (Temporal, Inngest)           (Restate)
+<WorkerArchitecture />
 
-  Each step = DB round-trip      Server mediates + batches     No external DB
-  ~1-5ms per step                ~0.3-1ms per step             ~0.01ms per step
-```
-
-Temporal's workers never touch the database directly — they communicate with the Temporal server via gRPC, and the server handles all database access. This is a key architectural advantage: the server can batch writes, cache state, and optimize queries. Windmill's workers currently talk to Postgres directly, paying a full round-trip per step.
+Temporal's workers never touch the database directly. They communicate with the Temporal server via gRPC, and the server handles all database access. This is a key architectural advantage: the server can batch writes, cache state, and optimize queries. Windmill's workers currently talk to Postgres directly, paying a full round-trip per step.
 
 ---
 
 ## Performance Characteristics
 
-We benchmarked equivalent workflows (using `step()` / local activities — inline execution, no dispatch) on the same hardware:
+### Methodology
+
+We compare Windmill WAC against Temporal only. The reason is scope: Airflow and Prefect target minute-to-hour batch workloads where per-step latency is dominated by task dispatch (seconds per task), so head-to-head throughput numbers for short sequential workflows are misleading. Inngest runs over HTTP with inherently different latency characteristics. Temporal is the closest architectural comparable to WAC: persistent workers, durable per-step state, full imperative code.
+
+The workload shapes:
+
+- **`seq_N`**: N steps executed sequentially, each a trivial inline function (no real I/O). Measures per-step overhead.
+- **`par_N`**: N steps dispatched in parallel with `Promise.all` / `workflow.Go`. Measures batch-dispatch cost.
+- **`fan_out_N`**: one parent workflow fans out to N child jobs. Measures scheduler throughput under parallel dispatch.
+
+All runs use a single worker, Docker, the same host. We'll publish a standalone repro repo (engine versions, Docker Compose, workload scripts, raw CSVs) so anyone can verify or extend the numbers. Until then, treat the table below as directional rather than definitive.
+
+### Results
 
 | Workflow | Windmill WAC | Temporal | Notes |
 |----------|------------:|--------:|-------|
-| seq_2 (2 steps) | 80 wf/s | 124 wf/s | Temporal 1.5x — persistent worker vs Bun cold start |
+| seq_2 (2 steps) | 80 wf/s | 124 wf/s | Temporal 1.5x (persistent worker vs Bun cold start) |
 | seq_3 (3 steps) | 77 wf/s | 110 wf/s | Adding steps barely costs in Windmill (fast path) |
 | seq_100 (100 steps) | 12.6 wf/s | 29 wf/s | Per-step: Windmill 0.8ms, Temporal 0.3ms |
-| par_2 (2 parallel) | 79 wf/s | 60 wf/s | **Windmill wins** — batch dispatch |
-| fan_out_10 (10-way parallel) | 80 wf/s | 45 wf/s | **Windmill wins +79%** — StepSuspend batch |
+| par_2 (2 parallel) | 79 wf/s | 60 wf/s | **Windmill wins** (batch dispatch) |
+| fan_out_10 (10-way parallel) | 80 wf/s | 45 wf/s | **Windmill wins +79%** (StepSuspend batch) |
 
 *Windmill v1.683 (CE, single worker, Docker). Temporal v1.29 (single worker, Docker).*
 
@@ -899,14 +885,14 @@ We benchmarked equivalent workflows (using `step()` / local activities — inlin
 
 - **Temporal is faster on sequential workflows** due to persistent workers (no cold start) and server-mediated DB writes (batched events vs individual PG round-trips).
 - **Windmill is faster on parallel workflows** due to batch dispatch. `StepSuspend` collects all parallel tasks and pushes them in one operation. Temporal schedules activities individually.
-- **Windmill's step() fast path scales well** — seq_2 (80) and seq_3 (77) are nearly identical because the script stays alive and each step is just an HTTP POST.
+- **Windmill's step() fast path scales well**: seq_2 (80) and seq_3 (77) are nearly identical because the script stays alive and each step is just an HTTP POST.
 - **At 100 steps, per-step cost dominates** over cold start. The 2.3x gap (0.8ms vs 0.3ms per step) reflects Windmill writing each step as an individual PG transaction vs Temporal's server batching event writes.
 
 ### Where the Remaining Gap Comes From
 
 For Windmill, two factors explain the performance gap with Temporal on sequential workloads:
 
-1. **Per-workflow Bun cold start (~12ms).** Without dedicated workers, each workflow spawns a new Bun process. Temporal's worker is a persistent Node.js process. Windmill's [dedicated workers](/docs/core_concepts/dedicated_workers) — persistent Bun processes assigned to specific scripts or workspaces — eliminate this cold start entirely.
+1. **Per-workflow Bun cold start (~12ms).** Without dedicated workers, each workflow spawns a new Bun process. Temporal's worker is a persistent Node.js process. Windmill's [dedicated workers](/docs/core_concepts/dedicated_workers), persistent Bun processes assigned to specific scripts or workspaces, eliminate this cold start entirely.
 
 2. **Per-step: individual PG writes vs server-batched writes.** Each `step()` call POSTs to the API server, which does one PG transaction. Temporal's server accumulates events and writes them in batches. This is a ~2.5x difference per step (0.8ms vs 0.3ms).
 
@@ -949,7 +935,7 @@ The fix for both is architectural:
 → Windmill (Flows for visual, WAC for code, both in one platform)
 
 **You need the lowest per-step latency:**
-→ Windmill WAC with `step()` (0.5ms/step inline) — or Temporal with local activities (1-2ms/step)
+→ Windmill WAC with `step()` (0.5ms/step inline), or Temporal with local activities (1-2ms/step)
 
 **You need the best parallel throughput:**
 → Windmill WAC with `task()` (batch dispatch via StepSuspend)
@@ -961,13 +947,13 @@ The fix for both is architectural:
 
 ## Honorable Mentions: Restate, DBOS, Hatchet
 
-The five engines above cover the main archetypes, but three other projects are worth knowing — each represents a genuinely different point in the design space.
+The five engines above cover the main archetypes, but three other projects are worth knowing. Each represents a genuinely different point in the design space.
 
 ### Restate: Co-Located Storage (No External DB)
 
 [Restate](https://restate.dev) (3.7K stars) is the most architecturally radical engine in this space. Built by the team behind Apache Flink, it eliminates the external database entirely.
 
-**How it works:** Your code runs as a normal HTTP service. Restate sits between the client and your service as a proxy, intercepting every side-effect (`ctx.run()`) via a bidirectional HTTP/2 stream. Each side-effect result is journaled to an embedded replicated log (Bifrost, backed by RocksDB) — not Postgres, not MySQL, not any external database.
+**How it works:** Your code runs as a normal HTTP service. Restate sits between the client and your service as a proxy, intercepting every side-effect (`ctx.run()`) via a bidirectional HTTP/2 stream. Each side-effect result is journaled to an embedded replicated log (Bifrost, backed by RocksDB): not Postgres, not MySQL, not any external database.
 
 ```typescript
 const service = restate.service({
@@ -982,17 +968,17 @@ const service = restate.service({
 });
 ```
 
-**Why it's fast:** The commit point for "a step happened" is a local RocksDB write + quorum replication across nodes — no network round-trip to an external database. In our benchmarks, Restate achieved **4,600-6,700 workflows/sec** on the same hardware where Temporal did ~100 and Windmill did ~80. That's a **50x advantage** over Temporal.
+**Why it's fast:** The commit point for "a step happened" is a local RocksDB write + quorum replication across nodes. No network round-trip to an external database. In our benchmarks, Restate achieved **4,600-6,700 workflows/sec** on the same hardware where Temporal did ~100 and Windmill did ~80. That's a **50x advantage** over Temporal.
 
-**The insight:** This 50x gap isn't an implementation detail — it's a fundamental consequence of storage topology. Every engine that routes through an external database (Postgres, MySQL, Cassandra) pays ~1ms per step (network + query + WAL sync). Restate pays ~0.01-0.1ms (local disk + quorum ACK). Remove the network hop and you gain an order of magnitude.
+**The insight:** This 50x gap isn't an implementation detail. It's a fundamental consequence of storage topology. Every engine that routes through an external database (Postgres, MySQL, Cassandra) pays ~1ms per step (network + query + WAL sync). Restate pays ~0.01-0.1ms (local disk + quorum ACK). Remove the network hop and you gain an order of magnitude.
 
-**The trade-off:** No SQL access to workflow state. No familiar Postgres tooling for backup/replication — you rely on Restate's built-in mechanisms (S3 snapshots, log-based replication). Younger ecosystem (SDK for TypeScript, Java, Rust, Go). And for durable execution specifically: no separate activity/workflow distinction — all code runs in the handler, and `ctx.run()` is your only escape hatch for side-effects.
+**The trade-off:** No SQL access to workflow state. No familiar Postgres tooling for backup/replication. You rely on Restate's built-in mechanisms (S3 snapshots, log-based replication). Younger ecosystem (SDK for TypeScript, Java, Rust, Go). And for durable execution specifically: no separate activity/workflow distinction. All code runs in the handler, and `ctx.run()` is your only escape hatch for side-effects.
 
-**Unique feature:** Virtual Objects — keyed handlers with exclusive access and durable state. Essentially the actor model (Akka/Erlang) with persistence and exactly-once semantics. No other engine offers this.
+**Unique feature:** Virtual Objects: keyed handlers with exclusive access and durable state. Essentially the actor model (Akka/Erlang) with persistence and exactly-once semantics. No other engine offers this.
 
 ### DBOS: Durable Execution as a Library
 
-[DBOS](https://dbos.dev) (1.1K stars TS, 1.3K stars Python) takes the opposite approach from Restate: instead of replacing Postgres, it **leans into it.** DBOS is not a server — it's a library you import into your application. Postgres IS the durable execution engine.
+[DBOS](https://dbos.dev) (1.1K stars TS, 1.3K stars Python) takes the opposite approach from Restate: instead of replacing Postgres, it **leans into it.** DBOS is not a server. It's a library you import into your application. Postgres IS the durable execution engine.
 
 ```typescript
 import { DBOS } from "@dbos-inc/dbos-sdk";
@@ -1020,13 +1006,13 @@ class OrderWorkflow {
 
 **The appeal:** No server to deploy, no infrastructure to manage. Just `npm install @dbos-inc/dbos-sdk` and use Postgres you already have. For teams that are allergic to adding infrastructure, this is compelling.
 
-**The insight for Windmill:** DBOS proves that "durable execution on Postgres" can be simple and fast. Their approach — a library that uses Postgres transactions directly — is the lightest possible weight. It's the same insight behind Windmill's WAC `step()` fast path: use the database you already have, minimize ceremony around it.
+**The insight for Windmill:** DBOS proves that "durable execution on Postgres" can be simple and fast. Their approach (a library that uses Postgres transactions directly) is the lightest possible weight. It's the same insight behind Windmill's WAC `step()` fast path: use the database you already have, minimize ceremony around it.
 
 **The trade-off:** Being a library means no centralized UI, no built-in monitoring, no visual flow builder. You get durability but not orchestration platform features. Also, being Postgres-bound means the same per-step latency ceiling as any Postgres-backed engine (~1ms per step).
 
 ### Hatchet: DAG Steps with a Go Engine
 
-[Hatchet](https://hatchet.run) (6.8K stars) is a Go-based workflow engine that uses an explicit DAG model for steps — you declare parent dependencies, and the engine handles scheduling:
+[Hatchet](https://hatchet.run) (6.8K stars) is a Go-based workflow engine that uses an explicit DAG model for steps. You declare parent dependencies, and the engine handles scheduling:
 
 ```typescript
 const workflow = hatchet.workflow("process-order");
@@ -1037,32 +1023,19 @@ workflow.step("ship", async (ctx) => { return shipping.dispatch(ctx.stepOutput("
   { parents: ["charge"] });
 ```
 
-**How it works:** Steps declare their parent dependencies explicitly. The Hatchet engine (Go) builds the DAG and dispatches steps via Postgres + RabbitMQ. Workers connect via gRPC. No deterministic replay — steps execute once, results are persisted.
+**How it works:** Steps declare their parent dependencies explicitly. The Hatchet engine (Go) builds the DAG and dispatches steps via Postgres + RabbitMQ. Workers connect via gRPC. No deterministic replay: steps execute once, results are persisted.
 
-**Where it sits:** Between Airflow (static DAG) and Temporal (imperative code). You get DAG-level parallelism (steps with no parents run in parallel automatically) without the determinism constraints of Temporal. But you lose the ability to use arbitrary control flow (if/else, loops) within the workflow — the DAG structure is fixed at registration time.
+**Where it sits:** Between Airflow (static DAG) and Temporal (imperative code). You get DAG-level parallelism (steps with no parents run in parallel automatically) without the determinism constraints of Temporal. But you lose the ability to use arbitrary control flow (if/else, loops) within the workflow. The DAG structure is fixed at registration time.
 
 ---
 
 ## The Landscape at a Glance
 
-```
-                         ┌─────────────────────────────────────────┐
-                         │          GitHub Stars (Apr 2026)         │
-                         │                                         │
-  Airflow ████████████████████████████████████████████████ 45,050  │
-  Prefect ████████████████████████  22,177                         │
-  Temporal ███████████████████  19,598                             │
-  Windmill ████████████████  16,241                                │
-  Hatchet  ██████  6,826                                           │
-  Inngest  █████  5,202                                            │
-  Restate  ███  3,729                                              │
-  DBOS     █  1,137 (TS) / 1,267 (Python)                         │
-                         └─────────────────────────────────────────┘
-```
+<GithubStarsChart />
 
 Stars don't measure quality, but they measure mindshare. Airflow's dominance reflects a decade of production use. Temporal's growth reflects the industry shift toward durable execution. Windmill's position reflects being both a workflow engine and a broader platform.
 
-The interesting trend: **every engine launched after 2020 supports durable execution.** The market has decided that "crash → retry entire task" (Airflow's model) is not good enough. The question is now *how* to implement durable execution — event sourcing vs checkpoints vs journals vs HTTP memoization vs Postgres transactions — not *whether* to implement it.
+The interesting trend: **every engine launched after 2020 supports durable execution.** The market has decided that "crash → retry entire task" (Airflow's model) is not good enough. The question is now *how* to implement durable execution (event sourcing vs checkpoints vs journals vs HTTP memoization vs Postgres transactions), not *whether* to implement it.
 
 ---
 
@@ -1077,8 +1050,8 @@ All workflow engines are converging on the same insight from different direction
 
 The theoretical limit is: **per-step cost = one durable write.** Whether that write goes to Postgres, a replicated log, or an embedded database determines how close you get.
 
-We're not there yet. But the gap between engines is shrinking, and the choice increasingly comes down to which model fits your team's mental model — not which one is fundamentally faster.
+We're not there yet. But the gap between engines is shrinking, and the choice increasingly comes down to which model fits your team's mental model, not which one is fundamentally faster.
 
 ---
 
-*All benchmark code is [open source](https://github.com/windmill-labs/windmill/tree/main/benchmarks/comparison) and reproducible. We tried to be fair — if you think we weren't, the code is there. File an issue.*
+*A standalone repro repo (Docker Compose, workload definitions, raw CSVs) is in the works. Until it lands, the numbers above are directional. If you think we got something wrong, file an issue or reach out on Discord.*
