@@ -500,6 +500,17 @@ export const sections = [
 				link: '/docs/core_concepts/staging_prod'
 			},
 			{
+				name: 'CI test scripts with auto-trigger on deploy',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/advanced/ci_tests'
+			},
+			{
 				name: 'OpenID Connect (OIDC)',
 				tiers: {
 					'tier-free-selfhost': false,
