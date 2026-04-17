@@ -140,6 +140,22 @@ def process_item [item] {
 
 All items processed, one job executed.
 
+## Flow-level debounce node
+
+In addition to job-level debouncing, you can add a **debounce node** to a [flow](../../flows/1_flow_editor.mdx) to consolidate executions of a specific step. This is an [Enterprise](/pricing) feature.
+
+While job-level debouncing consolidates multiple triggers of the same script or flow, a debounce node consolidates repeated executions of a single step within a flow. When a step with debouncing enabled is reached, execution is delayed; if another execution arrives within the window, the previous is superseded.
+
+To enable it, select a flow step and toggle **Debouncing** in its settings. The configuration fields are the same as job-level debouncing:
+
+- **Delay in seconds**: the debounce time window.
+- **Custom debounce key** (optional): global key for grouping. Supports `$workspace` and `$args[name_of_arg]` interpolation. Default: `$workspace/flow/<flow_path>-<module_id>`.
+- **Argument to accumulate** (optional): a list-type argument whose values are appended across debounced executions.
+- **Max total debouncing time** (optional): maximum seconds before forced execution.
+- **Max total debounces amount** (optional): maximum number of debounces before forced execution.
+
+Parallel steps (for-loops, branchall with multiple branches) are excluded from debouncing to avoid cancelling sibling sub-jobs.
+
 ## Use cases
 
 ### High-volume webhook processing

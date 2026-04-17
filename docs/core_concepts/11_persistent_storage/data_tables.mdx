@@ -105,6 +105,19 @@ The Windmill editor understands your data table's schema and **type-checks queri
 
 String-interpolated parameters (e.g. `` sql`SELECT * FROM friend WHERE id = ${user_id}` ``) are always transformed into safe parameterized queries, so type checking covers both the SQL itself and the bindings.
 
+#### `sql.raw` for dynamic SQL fragments
+
+Use `sql.raw(value)` to inline a string directly into the SQL query without parameterization. This is useful for dynamic table or column names that cannot be bound as parameters:
+
+```ts
+const sql = wmill.datatable();
+const table = sql.raw("users");
+await sql`SELECT * FROM ${table} WHERE age > ${21}`.fetch();
+// Produces: SELECT * FROM users WHERE age > $1::BIGINT
+```
+
+`sql.raw` is available on both `wmill.datatable()` and `wmill.ducklake()`. Since the value is inlined verbatim, ensure it comes from trusted input to avoid SQL injection.
+
 When a data table schema changes, the editor re-introspects it so downstream scripts immediately see the new columns and types without a manual refresh.
 
 ### Assets integration

@@ -139,6 +139,18 @@ Once setup, the groups page should contain a new section:
 
 ![New section SCIM](okta-scim-groups.png.webp)
 
+## User deprovisioning
+
+When your identity provider sends a SCIM PATCH request with `active: false` for a user, Windmill disables the user at the instance level rather than deleting them. Disabled users:
+
+- Cannot log in or authenticate via any method
+- Are excluded from on-behalf-of selectors and workspace menus (shown as "user disabled")
+- Retain their workspace memberships and item ownership for auditability
+
+When a user is re-enabled via SCIM (`active: true`), their access is restored.
+
+A SAML metadata endpoint is also available at `GET /api/saml/metadata` for identity providers that require it during setup.
+
 ## Instance groups
 
 When SCIM is properly configured, groups from your identity provider will be automatically synchronized to Windmill as **instance groups**. These are special groups that:

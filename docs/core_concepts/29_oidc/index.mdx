@@ -122,6 +122,7 @@ The token also includes custom claims provided by Windmill. To see the full list
 - `username`: the username the requester has in the given workspace
 - `email`: the email of the requester
 - `workspace`: workspace_id the job is executed in
+- `end_user_email`: the email of the end user when the job runs on behalf of a different user (e.g. via approval flows or operator impersonation)
 
 The following example token was requested with the audience `sts.amazonaws.com` from the script `u/admin/ambitious_script` in the `foobar` workspace:
 
