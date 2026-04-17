@@ -11,50 +11,23 @@ import DocCard from '@site/src/components/DocCard';
 
 # Native Windows automation without Docker, WSL, or workarounds
 
-You manage Windows servers, Active Directory, MSSQL databases, and PowerShell runbooks. You want a modern workflow engine — something with version control, a real API, approval flows, and an auto-generated UI — but every tool you evaluate assumes Linux. Install Docker, configure WSL2, containerize your scripts. The tooling works *around* your infrastructure instead of *with* it.
+You manage Windows servers, Active Directory, MSSQL, and PowerShell runbooks. You need to automate server provisioning, user management, database maintenance, compliance checks — and you need version control, approval workflows, and audit trails around all of it.
 
-The landscape isn't quite "no Windows support anywhere." Some tools can technically run on Windows: n8n via Node.js, Kestra as a JAR, Prefect's Python workers. But none of them treat the Windows ecosystem as a first-class citizen. None offer native PowerShell with typed parameters, MSSQL with Kerberos authentication, C#/.NET 9 scripts with NuGet, or Windows service management via `sc.exe`.
+The usual answer is "install Docker" or "set up WSL2." But your PowerShell scripts need access to AD, your MSSQL queries use Kerberos tickets from the domain, and your modules come from private Azure Artifacts feeds. Containerizing all of that means fighting your own infrastructure.
 
-Windmill runs as a native Windows service and treats the entire Microsoft stack as a first-class citizen. This post covers what that means in practice: from running `windmill-ee.exe` as a managed service, to PowerShell scripts with auto-generated UIs, to AI agents that query Active Directory and MSSQL using your domain credentials.
+Windmill runs as a native Windows service — `windmill-ee.exe` registered via `sc.exe`, executing PowerShell, C#, and SQL directly on your domain-joined servers. This post walks through what that enables: typed PowerShell with `[CmdletBinding()]`, MSSQL with Kerberos auth, Teams approvals, and AI agents that use all of the above as tools.
 
 {/* truncate */}
 
-## The Linux-first blind spot
-
-Enterprise Windows infrastructure is built on Active Directory, Group Policy, MSSQL, file shares, and PowerShell. These are not legacy tools waiting to be replaced — they are actively maintained, deeply integrated systems that run critical business operations.
-
-When you try to automate this infrastructure with a Linux-first workflow engine, you hit friction everywhere. Your PowerShell scripts need to run inside containers. Your MSSQL connections can't use Windows Integrated Authentication because the container has no Kerberos ticket. Your workflows can't access network file shares or interact with AD directly. You end up maintaining a parallel Linux infrastructure just to orchestrate your Windows infrastructure.
-
-Some tools get partway there. [Kestra](https://kestra.io/) runs as a JAR on Windows and has a basic PowerShell plugin, but scripts default to Docker containers and there's no typed parameter inference, no private Azure Artifacts support, and no Windows service management. [n8n](https://n8n.io/) runs via Node.js on Windows, but it's low-code and connector-focused — no native PowerShell, C#, or MSSQL Kerberos support. [Airflow](https://airflow.apache.org/) has an [open issue for Windows support](https://github.com/apache/airflow/issues/10388) since 2020 with no plans to address it. [Prefect](https://www.prefect.io/) workers can run on Windows via pip, but it's not a first-class deployment target.
-
-Then there's Power Automate. It integrates well with Microsoft 365, but it's cloud-only with no self-hosted option. There's no version control, no Git integration, no code-first approach. Premium licensing costs $15/user/month. Performance can be irregular and debugging is difficult. For teams managing infrastructure at scale, these are dealbreakers.
-
-The gap isn't any single feature — it's the combination. No other tool gives you native Windows service management, first-class PowerShell with typed params, C#/.NET 9, MSSQL with Kerberos, mixed Windows/Linux workers, and AI agents that can use all of the above as tools.
-
-| Capability | Windmill | Kestra | n8n | Airflow | Prefect | Power Automate |
-|---|---|---|---|---|---|---|
-| Runs on Windows | Native service | JAR file | Node.js | No (WSL only) | Partially | Cloud only |
-| Windows service mgmt | sc.exe/NSSM | No | No | No | No | N/A |
-| PowerShell first-class | Typed params, private repos | Basic plugin | No | No | No | Actions only |
-| C#/.NET scripts | Yes (.NET 9) | No | No | No | No | No |
-| MSSQL Kerberos auth | Yes | No | No | No | No | Via connector |
-| Kafka GSSAPI/Kerberos | Yes | Plugin | No | No | No | Via connector |
-| AI agents on Windows | Yes | No | No | No | No | No |
-| Code-first | Yes | Yes | Low-code | Yes | Yes | No |
-| Version control | Git-native | Git-native | Git | Git-native | Git-native | No |
-| Self-hosted | Yes | Yes | Yes | Yes | Yes | No |
-
 ## Native Windows workers
 
-Windmill's Windows worker is a single executable — `windmill-ee.exe` — that runs natively on Windows without Docker, WSL, or any virtualization layer. It supports three operating modes:
+Windmill's Windows worker is a single executable — `windmill-ee.exe`. It runs on any Windows machine: servers, workstations, laptops, edge devices — anywhere Windows runs and you need automation close to the infrastructure. Three modes:
 
-- **Worker**: connects directly to the Windmill database, executes jobs assigned to it
+- **Worker**: connects directly to the Windmill database, executes jobs
 - **Server**: runs the Windmill API and web UI
-- **Agent**: connects to a remote Windmill server over HTTPS, no direct database access needed — ideal for workers behind firewalls or in different network segments
+- **Agent**: connects to a remote Windmill server over HTTPS — no direct database access, ideal for workers behind firewalls
 
 ### Installing as a Windows service
-
-Register the worker as a Windows service with `sc.exe`:
 
 ```powershell
 sc.exe create WindmillWorker `
@@ -72,7 +45,7 @@ $envVars = @(
 Set-ItemProperty -Path $regPath -Name "Environment" -Value $envVars -Type MultiString
 ```
 
-For agent mode (connecting to a remote server):
+Agent mode (connecting to a remote server without database access):
 
 ```powershell
 sc.exe create WindmillAgent `
@@ -100,7 +73,7 @@ sc.exe start WindmillWorker
 
 ### Mixed Windows/Linux fleet
 
-A single Windmill instance can have both Linux and Windows workers. Use [worker tags](/docs/core_concepts/worker_groups) to route jobs: tag your Windows workers with `powershell`, `csharp`, or `windows`, and flows will automatically dispatch steps to the right worker. The same UI, the same flows, the same version control — the only difference is where the code executes.
+A single Windmill instance can run both Linux and Windows workers. Use [worker tags](/docs/core_concepts/worker_groups) to route jobs — tag your Windows workers with `powershell`, `csharp`, or `windows`, and flows dispatch steps to the right OS automatically.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -115,9 +88,9 @@ A single Windmill instance can have both Linux and Windows workers. Use [worker 
 	/>
 </div>
 
-## PowerShell as a first-class citizen
+## PowerShell as a first-class language
 
-Windmill doesn't just "run PowerShell" — it parses `param()` blocks to infer typed parameters, generates a UI form automatically, and handles dependency management. PowerShell scripts are full Windmill scripts with the same capabilities as Python or TypeScript: schedules, webhooks, approval flows, error handling, and flow composition.
+Windmill parses `param()` blocks to infer typed parameters and generates a UI form automatically. PowerShell scripts get the same capabilities as Python or TypeScript: schedules, webhooks, approval flows, error handling, and composition in [flows](/docs/flows/flow_editor).
 
 ### Querying Active Directory
 
@@ -142,9 +115,31 @@ $members = Get-ADGroupMember -Identity $GroupName -Server $Domain |
 $members | ConvertTo-Json
 ```
 
-`$GroupName` becomes a required text input, `$Domain` gets a default value — all auto-generated in the Windmill UI. The output is structured JSON that downstream flow steps can consume.
+`$GroupName` becomes a required text input, `$Domain` gets a default value — auto-generated in the Windmill UI. The JSON output is directly consumable by downstream flow steps.
 
-### Using private Azure Artifacts modules
+### CmdletBinding and common parameters
+
+When a script declares `[CmdletBinding()]`, Windmill shows toggles for `-Verbose`, `-Debug`, and an `-ErrorAction` dropdown in the run form — the same common parameters you'd use in a PowerShell console. `Write-Verbose` and `Write-Debug` output appears in job logs with `VERBOSE:` / `DEBUG:` prefixes. Scripts without `[CmdletBinding()]` are unaffected.
+
+```powershell
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$ServerName,
+
+    [ValidateSet("Full", "Quick", "Security")]
+    [string]$ScanType = "Quick"
+)
+
+Write-Verbose "Starting $ScanType scan on $ServerName"
+$result = Invoke-ServerScan -Server $ServerName -Type $ScanType
+Write-Debug "Raw result: $($result | ConvertTo-Json -Depth 1)"
+$result | ConvertTo-Json
+```
+
+![Auto-generated form with CmdletBinding parameters: Verbose/Debug toggles and ErrorAction dropdown](./cmdletbinding_params.png)
+
+### Private Azure Artifacts modules
 
 ```powershell
 #require -Module Az.Accounts
@@ -159,9 +154,7 @@ $results = Invoke-ServerHealthCheck -ServerName $ServerName -Checks $Checks
 $results | ConvertTo-Json
 ```
 
-Windmill resolves `#require` directives automatically, including modules from private Azure Artifacts NuGet feeds. No manual `Install-Module` needed.
-
-PowerShell steps compose naturally in [flows](/docs/flows/flow_editor) alongside Python, TypeScript, SQL, and any other language. A single flow might query AD with PowerShell, process the results with Python, and send a notification via TypeScript.
+Windmill resolves `#require` directives automatically, including from private NuGet feeds.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -171,26 +164,18 @@ PowerShell steps compose naturally in [flows](/docs/flows/flow_editor) alongside
 	/>
 </div>
 
-## MSSQL with enterprise auth
+## MSSQL with Kerberos
 
-Windmill's [MSSQL integration](/docs/integrations/mssql) supports three authentication methods:
+Windmill's [MSSQL integration](/docs/integrations/mssql) supports three auth methods: SQL auth (username/password), Azure AD/Entra (OAuth), and Windows Integrated Authentication (Kerberos).
 
-1. **Username/Password**: standard SQL auth with `user` and `password` fields
-2. **Azure AD (Entra)**: OAuth-based authentication via `aad_token`
-3. **Windows Integrated Authentication (Kerberos)**: enable `integrated_auth` to use the worker's domain credentials
-
-### Why Kerberos matters
-
-With Kerberos authentication, the Windmill worker's service account credentials are used directly — no database passwords stored in Windmill, no secret rotation to manage. The worker inherits its domain identity, and MSSQL trusts it through standard Active Directory authentication.
+With Kerberos, the worker's service account credentials are used directly — no database passwords stored in Windmill. The worker inherits its domain identity, and MSSQL trusts it through AD.
 
 Requirements:
-- The worker must have a valid Kerberos ticket (via `kinit` or a keytab)
-- A valid `krb5.conf` with the correct realm configuration
-- The service account must have permissions on the target database
+- Valid Kerberos ticket on the worker (via `kinit` or a keytab)
+- Correct `krb5.conf` realm configuration
+- Service account permissions on the target database
 
-### MSSQL resource with integrated auth
-
-Configure an `ms_sql_server` resource with Kerberos:
+### Resource config
 
 ```json
 {
@@ -202,9 +187,7 @@ Configure an `ms_sql_server` resource with Kerberos:
 }
 ```
 
-No `user` or `password` fields needed. The worker's Kerberos ticket handles authentication.
-
-Then query it from a [SQL script](/docs/getting_started/scripts_quickstart/sql):
+No `user` or `password` fields. Then query with a [SQL script](/docs/getting_started/scripts_quickstart/sql):
 
 ```sql
 -- database u/admins/mssql_kerberos
@@ -219,7 +202,7 @@ WHERE e.Department = $1
 ORDER BY e.LastLogin DESC
 ```
 
-The `-- database` directive pins the script to the Kerberos-authenticated resource. The `$1` parameter maps to a typed input in the auto-generated UI.
+The `-- database` directive pins the script to the Kerberos-authenticated resource.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -234,9 +217,9 @@ The `-- database` directive pins the script to the Kerberos-authenticated resour
 	/>
 </div>
 
-## C#/.NET on Windows
+## C#/.NET 9
 
-Windmill runs C# scripts natively with .NET 9 — no containers, no build servers. NuGet dependencies are declared inline and resolved automatically.
+C# scripts run natively with .NET 9. NuGet dependencies are declared inline and resolved automatically.
 
 ```csharp
 //requirements:
@@ -269,7 +252,7 @@ public class Main
 }
 ```
 
-On a Windows worker, this runs directly on the installed .NET runtime — no container overhead, full access to Windows APIs and the local filesystem.
+On a Windows worker this runs on the installed .NET runtime with full access to Windows APIs and the local filesystem.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -279,15 +262,15 @@ On a Windows worker, this runs directly on the installed .NET runtime — no con
 	/>
 </div>
 
-## Microsoft ecosystem integration
+## Microsoft ecosystem integrations
 
 ### Teams
 
-Windmill's [Teams integration](/docs/integrations/teams) supports three patterns:
+Windmill's [Teams integration](/docs/integrations/teams) covers three patterns:
 
-**Commands**: users trigger Windmill scripts directly from Teams with `/windmill` commands. The bot receives the command, executes the script on a worker (including Windows workers), and responds in the channel.
+**Commands**: `/windmill` triggers in Teams channels execute scripts on any worker, including Windows workers, and reply with results.
 
-**Approval steps**: flows can pause and request interactive approval from a Teams channel. Approvers see the request context and can approve, reject, or modify parameters — all without leaving Teams.
+**Approval steps**: flows pause and request approval in a Teams channel. Approvers can approve, reject, or modify parameters inline.
 
 ```typescript
 await wmill.requestInteractiveTeamsApproval({
@@ -300,19 +283,21 @@ await wmill.requestInteractiveTeamsApproval({
 });
 ```
 
-**Error alerts**: configure flows to send failure notifications to a Teams channel with full error context.
+![Interactive Teams approval with input fields and Resume/Cancel buttons](./teams_approval.png)
 
-### Azure AD/Entra ID
+**Error alerts**: flow failures send notifications to Teams with full error context.
 
-Windmill supports SSO via [Azure AD OAuth](/docs/misc/setup_oauth). The same identity that logs users into Windmill can authenticate against MSSQL using the `aad_token` resource field — one identity for platform access and database access.
+### Azure AD/Entra ID SSO
+
+Windmill supports SSO via [Azure AD OAuth](/docs/misc/setup_oauth). The same identity can authenticate against MSSQL using `aad_token` — one login for platform access and database access.
 
 ### Azure Blob Storage
 
-Native [Azure Blob integration](/docs/integrations/microsoft-azure-blob) for file operations in flows — upload, download, list, and manage blobs as steps in your workflows.
+Native [Azure Blob integration](/docs/integrations/microsoft-azure-blob) for file operations in flows.
 
-### Kafka triggers with GSSAPI/Kerberos
+### Kafka with GSSAPI/Kerberos
 
-Enterprise Kafka clusters in Windows/AD environments often use Kerberos authentication. Windmill's [Kafka triggers](/docs/core_concepts/kafka_triggers) support `SASL_GSSAPI` and `SASL_SSL_GSSAPI` security modes natively with keytab support (file path or base64-encoded). Event-driven workflows triggered by Kafka messages in a Kerberos-secured environment work out of the box.
+Enterprise Kafka clusters in AD environments often use Kerberos. Windmill's [Kafka triggers](/docs/core_concepts/kafka_triggers) support `SASL_GSSAPI` and `SASL_SSL_GSSAPI` with keytab support (file path or base64-encoded):
 
 ```yaml
 kerberos_service_name: kafka
@@ -333,15 +318,15 @@ keytab_path: /etc/security/keytabs/windmill.keytab
 	/>
 </div>
 
-## AI agents that speak Windows
+## AI agents on Windows infrastructure
 
-Most AI agent platforms can call REST APIs. Very few can natively run PowerShell on your domain-joined servers or query MSSQL with Kerberos auth. Windmill can.
+Most AI agent platforms can call REST APIs. Few can natively run PowerShell on domain-joined servers or query MSSQL with Kerberos auth.
 
-Windmill's [AI agent](/docs/core_concepts/ai_agents) flow steps use scripts as tools. Any Windmill script — PowerShell, C#, SQL, Python, TypeScript — automatically becomes a tool the AI agent can invoke. Typed parameters become the tool's JSON schema. The agent sees what each tool does, what inputs it needs, and calls them to accomplish a goal.
+Windmill's [AI agent](/docs/core_concepts/ai_agents) flow steps use scripts as tools. Any Windmill script — PowerShell, C#, SQL, TypeScript — becomes a callable tool where typed parameters map to the tool's JSON schema. The agent sees what each tool does, what inputs it needs, and calls them to accomplish a goal.
 
 ### Scenario: AI IT ops assistant
 
-Consider an AI agent in a Windmill flow with these tools:
+An AI agent in a Windmill flow with these tools:
 
 - A PowerShell script that queries AD for user/group information
 - A PowerShell script that checks Windows Event Logs
@@ -350,42 +335,42 @@ Consider an AI agent in a Windmill flow with these tools:
 
 The agent receives a natural-language request — "check if user jsmith's account is locked and what errors their app generated today" — reasons about which tools to call, executes them on the Windows worker, and returns a structured report or escalates via Teams.
 
-Here's what the agent step configuration looks like:
+Each tool is a regular Windmill script. Here's the AD lookup tool — the agent calls it by name and fills in the `$Username` parameter:
 
+```powershell
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$Username
+)
+
+Import-Module ActiveDirectory
+
+$user = Get-ADUser -Identity $Username -Properties LockedOut, LastLogonDate, MemberOf, Enabled
+Write-Verbose "Querying AD for user: $Username"
+
+[PSCustomObject]@{
+    username    = $user.SamAccountName
+    locked_out  = $user.LockedOut
+    enabled     = $user.Enabled
+    last_logon  = $user.LastLogonDate
+    groups      = ($user.MemberOf | ForEach-Object { ($_ -split ',')[0] -replace 'CN=' })
+} | ConvertTo-Json
 ```
-System prompt:
-"You are a Windows IT operations assistant for corp.contoso.com.
-Use the available tools to investigate issues on our domain
-infrastructure. Always check AD status first, then correlate
-with event logs and application data. Escalate via Teams if
-you find critical issues."
 
-Tools:
-- get_ad_user_info (PowerShell): queries AD for account status, group membership, last login
-- get_event_log_errors (PowerShell): retrieves recent errors from Windows Event Log by source
-- query_app_errors (MSSQL): pulls application errors from the AppDatabase for a given user/timeframe
-- send_teams_alert (TypeScript): sends a formatted alert to the Infrastructure team channel
+In the flow editor, the agent step wires these tools together with a system prompt and iterates over affected users:
 
-User message:
-"Check if user jsmith's account is locked and what errors
-their app generated today"
-```
+![AI agent step in a Windmill flow with PowerShell, MSSQL, and Teams tools](./agent_step.png)
 
-The agent calls `get_ad_user_info` with `username=jsmith`, sees the account is locked, calls `get_event_log_errors` to check for related authentication failures, runs `query_app_errors` for today's errors, and compiles a report. If it finds critical issues, it calls `send_teams_alert` to escalate.
-
-Every tool invocation runs on the appropriate worker — PowerShell and MSSQL scripts on the Windows worker with domain credentials, TypeScript on any available worker.
+The agent calls `get_ad_user_info`, sees the account is locked, calls `get_event_log_errors` to check for related authentication failures, runs `query_app_errors` for today's errors, and compiles a report. If it finds critical issues, it calls `send_teams_alert` to escalate. Each tool runs on the appropriate worker — PowerShell and MSSQL on the Windows worker with domain credentials, TypeScript on any available worker.
 
 ### Multi-provider and MCP
 
-Windmill's AI agents work with OpenAI, Anthropic, Azure OpenAI (important for Microsoft shops that need data residency), Mistral, Google Gemini, and more. Azure OpenAI means your prompts and data stay within your Azure tenant.
-
-Windmill also exposes itself as an [MCP server](/docs/core_concepts/mcp), so external AI tools like Claude or Cursor can trigger Windmill scripts on your Windows infrastructure:
+Windmill's agents work with OpenAI, Anthropic, Azure OpenAI (for Microsoft shops needing data residency), Mistral, and others. Windmill also exposes itself as an [MCP server](/docs/core_concepts/mcp), so external AI tools (Claude, Cursor) can trigger scripts on your Windows infrastructure:
 
 ```bash
 claude mcp add --transport http windmill https://windmill.corp.contoso.com/api/mcp/w/prod/mcp?token=your_token
 ```
-
-This is the convergence: native Windows execution + AI orchestration. No other platform offers this combination.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -400,44 +385,47 @@ This is the convergence: native Windows execution + AI orchestration. No other p
 	/>
 </div>
 
-## Migration: from Task Scheduler + Power Automate to Windmill
+## Replacing Task Scheduler and Power Automate
 
-Here's a concrete before/after for a common enterprise setup.
+The typical migration path: PowerShell scripts scattered across servers on Task Scheduler, Power Automate for approvals, alerts via email, no audit trail.
 
-**Before:**
-- PowerShell scripts scattered across servers, triggered by Task Scheduler
-- Power Automate handling approval workflows and notifications
-- Alerts sent via email with no structured error handling
-- No audit trail, no version control, no centralized visibility
-- Different teams maintaining different scripts with no coordination
+In Windmill, each script becomes version-controlled, gets an auto-generated UI, and can be composed into flows with approval steps (via [Teams](/docs/integrations/teams)), error handling, and retries. Windows and Linux workers run in the same instance. Every execution is logged with inputs, outputs, duration, and who triggered it.
 
-**After:**
-- All scripts centralized in Windmill, version-controlled in Git
-- Approval steps handled via [Teams integration](/docs/integrations/teams) — approvers respond in their existing workflow
-- Structured error handling with retries, error handlers, and Teams alerts
-- Mixed Windows + Linux workers in the same instance, each running what they're best at
-- AI agents for intelligent triage — instead of paging an engineer at 2 AM, the agent investigates first
-- Full audit trail: every execution logged with inputs, outputs, duration, and who triggered it
+The migration is incremental — start with one runbook, schedule it in Windmill, and let the Task Scheduler job run in parallel until you're confident.
 
-{/* placeholder for flow diagram image showing a migration scenario: Task Scheduler scripts → Windmill flows with PowerShell steps, MSSQL queries, Teams approval, and error handling. Show mixed Windows/Linux workers. */}
+## How Windmill compares on Windows
 
-The migration is incremental. You don't have to move everything at once. Start with one critical PowerShell runbook, add it as a Windmill script, schedule it, and let the old Task Scheduler job run in parallel until you're confident. Then add approval flows, error handling, and AI triage as you expand.
+[Airflow](https://airflow.apache.org/) has an [open issue for Windows support](https://github.com/apache/airflow/issues/10388) since 2020 — not on the roadmap. [Prefect](https://www.prefect.io/) workers can run on Windows via pip, but the docs focus on Docker/Kubernetes and there's no service management. [n8n](https://n8n.io/) runs well via Node.js but is low-code and connector-focused. [Kestra](https://kestra.io/) is the closest — it runs as a JAR, has a PowerShell plugin, and supports a PROCESS runner — but lacks typed parameter inference, private Azure Artifacts, MSSQL Kerberos, and C# support.
+
+Power Automate has strong Teams integration, but no self-hosted option, no version control, no code-first workflow definition, and premium licensing at $15/user/month — which means no GitOps, no PR reviews on flow changes, and no self-hosted deployment.
+
+| Capability | Windmill | Kestra | n8n | Airflow | Prefect | Power Automate |
+|---|---|---|---|---|---|---|
+| Runs on Windows | Native service | JAR file | Node.js | No (WSL only) | Partially | Cloud only |
+| Windows service mgmt | sc.exe/NSSM | No | No | No | No | N/A |
+| PowerShell typed params | Yes + CmdletBinding | Basic plugin | No | No | No | Actions only |
+| C#/.NET scripts | Yes (.NET 9) | No | No | No | No | No |
+| MSSQL Kerberos auth | Yes | No | No | No | No | Via connector |
+| Kafka GSSAPI/Kerberos | Yes | Plugin | No | No | No | Via connector |
+| Code-first | Yes | Yes | Low-code | Yes | Yes | No |
+| Version control | Git-native | Git-native | Git | Git-native | Git-native | No |
+| Self-hosted | Yes | Yes | Yes | Yes | Yes | No |
 
 ## Getting started
 
-Windmill runs its server in Docker (Linux) while Windows workers connect as native agents — no Docker needed on the Windows side.
+The Windmill server runs in Docker (Linux). Windows workers connect as native agents — no Docker on the Windows side.
 
 1. Deploy the [Windmill server](/docs/advanced/self_host) (Docker Compose or Kubernetes)
 2. Download `windmill-ee.exe` on your Windows server
 3. Register it as a Windows service in agent mode
-4. Connect to your Windmill instance with an agent token
+4. Connect with an agent token
 
-Windows workers require an [Enterprise license](/pricing). See the full setup guide:
+Windows workers require an [Enterprise license](/pricing).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Windows workers setup"
-		description="Complete guide to installing and configuring Windmill workers on Windows."
+		description="Install and configure Windmill workers on Windows."
 		href="/docs/misc/windows_workers"
 	/>
 	<DocCard
@@ -446,5 +434,3 @@ Windows workers require an [Enterprise license](/pricing). See the full setup gu
 		href="/pricing"
 	/>
 </div>
-
-If you manage Windows infrastructure and want a workflow engine built for your environment — not around it — [try Windmill](https://app.windmill.dev/).
