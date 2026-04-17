@@ -16,6 +16,5 @@ The TypeScript client now exposes `sql.raw(value)` for inlining dynamic SQL frag
 
 ```ts
 const sql = wmill.datatable();
-const table = sql.raw("users");
-await sql`SELECT * FROM ${table} WHERE age > ${21}`.fetch();
+await sql`SELECT * FROM ${sql.raw(table)} WHERE age > ${age}`.fetch();
 ```

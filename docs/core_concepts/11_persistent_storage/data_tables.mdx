@@ -111,8 +111,7 @@ Use `sql.raw(value)` to inline a string directly into the SQL query without para
 
 ```ts
 const sql = wmill.datatable();
-const table = sql.raw("users");
-await sql`SELECT * FROM ${table} WHERE age > ${21}`.fetch();
+await sql`SELECT * FROM ${sql.raw(table)} WHERE age > ${age}`.fetch();
 // Produces: SELECT * FROM users WHERE age > $1::BIGINT
 ```
 
