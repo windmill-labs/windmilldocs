@@ -9,6 +9,11 @@ import LandingSection from '../landing/LandingSection';
 // Cache expiration time in milliseconds (24 hours)
 const CACHE_EXPIRATION = 24 * 60 * 60 * 1000;
 
+const formatWage = (wage) => {
+  if (!wage) return wage;
+  return wage.replace(/([$€£¥])\s?(\d+(?:\.\d+)?)(?!\s?k)/gi, '$1$2k');
+};
+
 export default function Careers() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,7 +101,7 @@ export default function Careers() {
               <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
                 <h1 className="!text-4xl font-bold tracking-tight sm:!text-5xl mb-8 text-blue-600">We are hiring</h1>
                 <p className="text-lg">Help us build the next generation infra software.</p>
-                <img src="/images/careers/team_sun.jpeg" alt="Team Sun" className="mx-auto mt-8 rounded-lg shadow-lg" />
+                <img src="/images/careers/team_sun2.jpg" alt="Team Sun" className="mx-auto mt-8 rounded-lg shadow-lg" />
               </div>
             </div>
           </>
@@ -146,8 +151,8 @@ export default function Careers() {
                           <h3 className="text-xl font-semibold text-blue-600 mb-2">{job.title}</h3>
                           <div className="space-y-3 mb-4">
                             <p><span className="font-medium">Location:</span> {job.location}</p>
-                            <p><span className="font-medium">Compensation:</span> {job.wage}</p>
-                            <p><span className="font-medium">Equity:</span> {job.equity}</p>
+                            <p><span className="font-medium">Compensation:</span> {formatWage(job.wage)}</p>
+                            <p><span className="font-medium">Experience:</span> {job.equity}</p>
                           </div>
                         </div>
                         <div className="mt-auto pt-4">
