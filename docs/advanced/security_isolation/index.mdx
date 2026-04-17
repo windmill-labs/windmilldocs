@@ -254,6 +254,38 @@ These configurations control resource limits, mount points, network isolation, a
 - Jobs can read any files the worker can read
 - You can still enable PID namespace isolation separately for process/memory protection (see below)
 
+### Running nsjail without privileged: true
+
+By default, nsjail requires `privileged: true` because it creates user namespaces, which need unmasked `/proc` access that only privileged containers provide. However, you can run nsjail without `privileged: true` by disabling user namespaces.
+
+**Required environment variables:**
+
+- `DISABLE_NSJAIL=false` — enable nsjail
+- `DISABLE_NUSER=true` — disable user namespace creation
+
+**Required capabilities (minimal set):**
+
+```yaml
+securityContext:
+  allowPrivilegeEscalation: true
+  capabilities:
+    drop: [ALL]
+    add:
+      - SYS_ADMIN       # nsjail: PID/mount namespaces and /proc mount
+      - SYS_RESOURCE    # worker: oom_score_adj to protect worker from OOM killer
+      - SETPCAP         # nsjail: prctl(PR_SET_SECUREBITS) for capability dropping
+  seccompProfile:
+    type: Unconfined
+  appArmorProfile:
+    type: Unconfined
+```
+
+Using `capabilities: add: [ALL]` also works if your security policy allows it.
+
+**Security tradeoff:**
+
+The only isolation you lose is UID remapping — with `privileged: true`, nsjail maps root outside to UID 1000 inside the jail, whereas with `DISABLE_NUSER=true` the jailed process runs as root (UID 0). However, this is a better tradeoff overall: `privileged: true` removes the container boundary entirely (full host access, all devices, unmasked `/proc`, no seccomp, no apparmor), so a jail escape gives full host access. With `DISABLE_NUSER=true` and limited capabilities, a jail escape only reaches the container, which remains sandboxed. You're trading an inner defense layer (UID remapping) for a much stronger outer one (container boundary).
+
 ## Isolation comparison
 
 | Feature                | NSJAIL      | PID Namespace | None       |
