@@ -82,6 +82,14 @@ You can use `:param` in the route path and access these as `params` in a [prepro
 
 ---
 
+### Enable/disable
+
+Each HTTP route has an **enabled** toggle that can be flipped without deleting the trigger. Disabled routes stop matching incoming requests and return `404` until re-enabled, which is useful when temporarily taking an endpoint offline for maintenance, cutting over between versions, or pausing a route that is misbehaving without losing its configuration.
+
+The toggle is available from the route editor and the HTTP routes list page. Only users with write access to the trigger can change its enabled state.
+
+---
+
 ### Workspace prefix
 
 On Windmill Cloud, all HTTP routes are automatically prefixed by the `workspace_id` (e.g., `{workspace_id}/{path}`).  
@@ -100,6 +108,16 @@ When workspace prefix is disabled (on self-hosted):
 **Example:**  
 If workspace A creates the route `/webhooks/github`, then without workspace prefix, no other workspace can create `/webhooks/github`.  
 With workspace prefix enabled, workspace A could have `/workspace_a/webhooks/github` and workspace B could have `/workspace_b/webhooks/github`.
+
+#### Enforcing the workspace prefix instance-wide
+
+On self-hosted instances, superadmins can enforce the workspace prefix for every HTTP route via the **HTTP route workspace prefix** instance setting (under `/#superadmin-settings`). When enabled:
+
+- New and existing routes are served under `/api/r/{workspace_id}/{route}` regardless of the per-route toggle.
+- The per-route workspace-prefix toggle in the route editor is disabled and labeled as enforced by the instance setting.
+- The setting can only be turned off again if no two workspaces share the same route path; otherwise a collision error is returned.
+
+This mirrors the equivalent `app_workspaced_route` setting for apps and is the recommended default for multi-tenant self-hosted instances.
 
 ---
 
@@ -254,6 +272,16 @@ Windmill supports several ways to secure HTTP triggers:
 
 ---
 
+### Token scopes
+
+When **Windmill Auth** is selected, the JWT token used to call the route must carry an `http_triggers:read` scope for the route path. A fully-scoped user token calling a route at `my/route` needs the scope `http_triggers:read:my/route`.
+
+From the route configuration page, Windmill can generate a token pre-scoped to exactly this route: in the **Windmill Auth** section click **Generate token**, and a new token limited to `http_triggers:read:<route_path>` is created. That token can safely be shared with the caller because it can only read (i.e., trigger) this specific HTTP route and cannot impersonate the issuing user for any other operation.
+
+See [User tokens](../59_user_tokens/index.mdx#token-scopes) for the full scope format and the list of available domains.
+
+---
+
 ### Signature Auth (HMAC-based)
 
 Use **Signature Auth** to validate incoming HTTP requests using HMAC-style signatures.
@@ -285,6 +313,35 @@ export async function main(body: unknown) {
 export async function main(raw_string: string) {
   console.log("Raw body received:", raw_string);
   return JSON.parse(raw_string);
+}
+```
+
+---
+
+## CORS headers
+
+HTTP route responses include permissive CORS headers by default so that routes can be called directly from browser clients:
+
+| Header | Default value |
+| --- | --- |
+| `Access-Control-Allow-Origin` | `*` |
+| `Access-Control-Allow-Methods` | `GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS` |
+| `Access-Control-Allow-Headers` | `content-type, authorization` |
+
+`OPTIONS` preflight requests are handled automatically by the HTTP trigger handler.
+
+To override any of these defaults for a route, set the corresponding header on the response returned by your runnable using the [`windmill_headers`](../4_webhooks/index.mdx#custom-response-headers) mechanism. Only headers that are **not** already present in the response are filled in with the defaults above, so you can restrict origins or allowed headers on a per-route basis:
+
+```ts
+export async function main() {
+  return {
+    windmill_headers: {
+      "Access-Control-Allow-Origin": "https://app.example.com",
+      "Access-Control-Allow-Methods": "GET, POST",
+      "Access-Control-Allow-Headers": "content-type, x-api-key"
+    },
+    result: { ok: true }
+  };
 }
 ```
 

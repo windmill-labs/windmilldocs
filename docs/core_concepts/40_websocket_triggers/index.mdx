@@ -69,6 +69,8 @@ The trigger also supports additional configuration options:
 If you enable the "Send runnable result" toggle, the runnable result will be sent to the WebSocket server as a message, as long as the job is a success and the result is not null.
 Like for [sync webhooks](../4_webhooks/index.mdx#synchronous), if the flow has the [early return](../../flows/19_early_return.mdx) setting set, the chosen node result will be sent and the rest of the flow will continue asynchronously.
 
+By default, only successful results are sent back. Enable the "Send result even on error" toggle to also forward error results to the WebSocket server, so the remote peer can react to failures (e.g. reply with an error frame). When disabled, failed jobs produce no outgoing message.
+
 
 ### Initial messages
 
@@ -84,11 +86,53 @@ The messages are sent in the order they are specified.
 ### Filters
 
 
-Instead of having all messages trigger the runnable, you can specify filters to only trigger the runnable when the message matches all filters.
+Instead of having all messages trigger the runnable, you can specify filters to restrict which messages trigger the runnable.
 Windmill supports the following filter:
 - **JSON**: The message is parsed as a JSON object and the filter checks that the filter `key` exists and the value at the key is equal or is a subset of the filter `value`.
 
+When multiple filters are configured, a filter logic selector lets you choose how they are combined:
+- **AND** (default): the message must match all filters to trigger the runnable.
+- **OR**: the message triggers the runnable as soon as it matches any one of the filters.
+
+Existing triggers without an explicit filter logic default to **AND**. The selector is only shown when at least one filter is present.
+
 ![Filters](./filters.png 'Filters')
+
+### Application-level heartbeat
+
+Some WebSocket protocols (such as [Discord Gateway](https://discord.com/developers/docs/events/gateway), STOMP, or custom APIs) require the client to send periodic keep-alive messages at the application level to maintain the connection. Windmill supports this natively with the heartbeat configuration.
+
+When enabled, Windmill sends a configurable message at a fixed interval through the WebSocket connection. This happens at the Rust level with zero job overhead — no scripts are executed for heartbeats.
+
+#### Configuration
+
+- **Interval (seconds)**: How often to send the heartbeat message.
+- **Message**: The message to send. You can use the `{{state}}` placeholder to include a value extracted from incoming messages.
+- **State field** (optional): A top-level JSON field to extract from every incoming message. The extracted value replaces `{{state}}` in the heartbeat message.
+
+![Heartbeat configuration](./heartbeat.png 'Heartbeat configuration for Discord Gateway')
+
+#### Examples
+
+**Static heartbeat** (STOMP, MQTT, simple APIs):
+
+| Field | Value |
+|-------|-------|
+| Interval | `10` |
+| Message | `{"type": "ping"}` |
+| State field | *(empty)* |
+
+**Stateful heartbeat** (Discord Gateway):
+
+Discord requires a heartbeat message that includes the last received sequence number (`s` field):
+
+| Field | Value |
+|-------|-------|
+| Interval | `41` |
+| Message | `{"op": 1, "d": {{state}}}` |
+| State field | `s` |
+
+Windmill extracts the `s` field from every incoming Discord event and substitutes it into the heartbeat message automatically. See the [Discord bot guide](/docs/misc/guides/discord_bot) for a complete walkthrough.
 
 ## Error handling
 

@@ -52,6 +52,14 @@ The base URL is the public base url of the instance.
 
 If the base URL is not set correctly, some server-side generated URLs like resume URLs will be incorrect. Additionally, [OAuth and SSO](#authoauth) functionalities will not work properly.
 
+### WebSocket base url
+
+Optional override for the base URL used by the frontend to open WebSocket connections to the LSP, debugger, and multiplayer services. When empty, WebSocket connections fall back to the current `window.location` (same host as the page).
+
+Set this when the browser cannot reach WebSocket services on the same host as the main app — for example, when WebSocket services are exposed under a dedicated subdomain (e.g. `wss://ws.example.com`). The value is used as a prefix for all frontend WebSocket connections (LSP, debugger, multiplayer).
+
+A "Test connectivity" button runs HTTP health and WebSocket ping checks for the three services in parallel and reports per-service results inline.
+
 ### Email domain
 
 Domain to display in webhooks for [email triggers](../17_email_triggers/index.mdx) (should match the [MX record](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/)).
@@ -174,6 +182,12 @@ Private Hub api secret. Only required if access to your [Private Hub is restrict
 
 This setting is only available on [Enterprise Edition](/pricing).
 
+### Disable hub
+
+When enabled, Windmill stops making any request to `hub.windmill.dev` (or your [Private Hub](../../core_concepts/32_private_hub/index.mdx)) and hides the hub pickers in the flow, app, and script editors. This is intended for closed/air-gapped deployments where outbound access to the hub is unavailable.
+
+When the hub is reachable but returns errors, the hub pickers display a persistent warning alert with a direct link back to this setting (instead of a transient error toast), guiding superadmins to toggle "Disable hub" and remove the warning.
+
 ## Auth/OAuth
 
 Windmill supports [SSO/OAuth](../../misc/2_setup_oauth/index.mdx) for user authentication. You can enable it from the Instance settings.
@@ -290,6 +304,19 @@ Provide the content of a Cargo `config.toml` file for configuring private [Rust]
 ### Nuget config
 
 Write a nuget.config file to set custom/private package sources and credentials.
+
+### Docker registries
+
+Credentials used by `crane` when pulling private container images for [sandbox](../../core_concepts/58_ai_sandbox/index.mdx) snapshot builds. Provide a JSON array of `{registry, username, password}` objects, for example:
+
+```json
+[
+  { "registry": "ghcr.io", "username": "my-user", "password": "ghp_xxx" },
+  { "registry": "registry.example.com", "username": "ci", "password": "..." }
+]
+```
+
+Windmill writes the corresponding Docker `config.json` to `/tmp/windmill/docker` and sets `DOCKER_CONFIG` when invoking `crane export`, so private base images can be resolved without exposing credentials in the snapshot build script. This setting is fully redacted in logs.
 
 ## Alerts
 
@@ -432,13 +459,36 @@ URL to receive POST requests for instance events such as user added, OAuth signu
 
 Configure it from **Instance settings > Monitoring > Webhooks**.
 
+## AI
+
+Configure [Windmill AI](../../core_concepts/22_ai_generation/index.mdx) providers, models, and prompts once at the instance level so every workspace inherits them. Navigate to **Instance settings > AI**.
+
+Resolution order used by AI chat, code generation, and code completion:
+
+1. **Workspace AI settings** when the workspace has any provider configured.
+2. **Instance AI settings** as the fallback when the workspace has no providers configured.
+
+The fallback references resources from the `admins` workspace, so any resources used by instance AI settings must exist there. A workspace using the instance fallback shows a read-only summary of the active instance AI config and an **Override for this workspace** button; clearing the workspace override instantly reverts to instance defaults.
+
+### AI_HTTP_HEADERS
+
+Set the `AI_HTTP_HEADERS` env var on the server and workers to attach custom headers to every outgoing AI request (OpenAI, Anthropic, Azure, Bedrock, Vertex, etc.). Headers are comma-separated:
+
+```bash
+AI_HTTP_HEADERS="X-Org: acme, X-Env: prod" ./windmill
+```
+
+Use this when AI traffic must flow through a corporate proxy or gateway that expects fixed auth/routing headers. Per-resource `headers` on the `customai` resource type are applied after this env var and take precedence on conflicting keys.
+
 ## Open Telemetry & Prometheus
 
 ![Open Telemetry & Prometheus](./otel_prometheus.png)
 
 ### OpenTelemetry (OTEL)
 
-Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelementry data sent to the collector consists of traces, logs and metrics (coming soon). Follow this [guide](../../misc/9_guides/otel/index.mdx) for an example setup.
+Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelemetry data sent to the collector consists of traces, logs, and [metrics](../../misc/9_guides/otel/index.mdx#exporting-windmill-metrics-via-otlp). You can independently toggle each signal (Tracing, Logs, Metrics) in the instance settings.
+
+The transport protocol can also be selected from a dropdown: **grpc** (default, port 4317) or **http/protobuf** (port 4318, sets `OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf`). Use `http/protobuf` when your collector or network environment does not support gRPC. Follow this [guide](../../misc/9_guides/otel/index.mdx) for an example setup.
 
 ### HTTP tracing
 
@@ -466,6 +516,12 @@ Expose [Prometheus](https://prometheus.io/) metrics for workers and servers on p
 ## Indexer 
 
 ![Indexer](./indexer.png)
+
+### Max index time window
+
+Maximum time window (in days) that the indexer looks back when indexing jobs and service logs. Defaults to 7 days. This caps both the initial population of the index and periodic cleanup — documents older than the window are not indexed and are evicted on the next refresh cycle. Windmill internally uses `min(max_index_time_window_secs, retention_period_secs)` so the window never exceeds the configured [retention period](#retention-period-in-secs). Setting the value to 0 disables the time window and falls back to the retention period alone.
+
+This setting can also be controlled via the `TANTIVY_MAX_INDEX_TIME_WINDOW__S` env var.
 
 ### Index writer memory budget 
 
@@ -545,3 +601,27 @@ This setting is found under **Advanced > GitHub Enterprise App** in Instance Set
 | Private Key (PEM) | The private key generated for your GitHub App |
 
 For setup instructions, see [Self-managed GitHub App](../../integrations/git_repository.mdx#self-managed-github-app).
+
+## DB Health
+
+The DB Health diagnostic dashboard provides on-demand insights into your Windmill database. It is available under **Monitoring > DB Health** in Instance Settings and is accessible to superadmins only.
+
+Click **Run Diagnostics** to execute a set of lightweight, read-only queries against your database. Results are displayed in collapsible sections with green/yellow/red status indicators.
+
+![DB Health](./db_health.png 'DB Health dashboard')
+
+### Diagnostics
+
+| Section | What it shows |
+|---------|---------------|
+| **Database Size** | Total database size and top 15 tables by size |
+| **Job Retention** | Oldest completed job age vs configured `retention_period_secs`, total completed job count. Green if cleanup is keeping up, yellow/red if jobs are accumulating beyond the retention window |
+| **Large Job Results** | Top 10 largest `result` payloads (by `pg_column_size`) among recently scanned jobs, plus average result size. Only results > 1 KB are listed |
+| **Connection Pool** | SQLx pool size, idle connections, max connections, and active PostgreSQL connections from `pg_stat_activity`. Green below 80% utilization, yellow below 95%, red at 95%+ |
+| **Table Maintenance** | Top 15 tables by dead tuples with dead/live ratio, last autovacuum and autoanalyze timestamps. Red when dead tuple ratio exceeds 30% |
+| **Slow Queries** | Top 10 queries by mean execution time from `pg_stat_statements`. If the extension is not installed, a message suggests enabling it |
+| **Datatables** | Instance-stored datatables with per-table size and estimated row count from `pg_class` |
+
+### Scan limit
+
+Use the **Scan last N jobs** dropdown to control how many recent completed jobs are scanned for the large results analysis. The default is 10,000. Higher values give more complete results but take longer on large databases. The allowed range is 1,000 to 1,000,000.

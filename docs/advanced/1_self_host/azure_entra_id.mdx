@@ -1,0 +1,384 @@
+---
+title: Windmill on Azure
+description: How do I deploy Windmill on Azure with AKS and optionally use Entra ID (Workload Identity) for passwordless PostgreSQL authentication?
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+Windmill can be deployed on Azure using [AKS](https://learn.microsoft.com/en-us/azure/aks/) (Azure Kubernetes Service) with an [Azure Database for PostgreSQL Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/). This guide walks through the full setup: networking, database, Helm deployment, and ingress. It then covers optional [Entra ID passwordless authentication](#entra-id-database-authentication-optional) for Enterprise users.
+
+Adapt replica counts and VM sizes to your workload. As a rule of thumb, allocate 1 [worker](../../core_concepts/9_worker_groups/index.mdx) per vCPU and 1–2 GB of RAM per worker.
+
+## Prerequisites
+
+- An Azure subscription
+- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) installed
+- [kubectl](https://kubernetes.io/docs/tasks/tools/) installed
+- [Helm](https://helm.sh/docs/intro/install/) installed
+
+## Create a resource group
+
+```bash
+az group create --name <rg> --location <region>
+```
+
+## Create an AKS cluster
+
+```bash
+az aks create \
+  --name <aks-cluster> \
+  --resource-group <rg> \
+  --node-count 3 \
+  --node-vm-size Standard_D4s_v3 \
+  --network-plugin azure \
+  --generate-ssh-keys
+```
+
+Get credentials to interact with the cluster:
+
+```bash
+az aks get-credentials --name <aks-cluster> --resource-group <rg>
+```
+
+:::tip
+If you plan to use [Entra ID database authentication](#entra-id-database-authentication-optional), enable the OIDC issuer and Workload Identity add-on now to avoid a cluster restart later:
+
+```bash
+az aks update \
+  --name <aks-cluster> \
+  --resource-group <rg> \
+  --enable-oidc-issuer \
+  --enable-workload-identity
+```
+:::
+
+## Create a PostgreSQL Flexible Server
+
+### Server creation
+
+```bash
+az postgres flexible-server create \
+  --name <pg-server> \
+  --resource-group <rg> \
+  --tier GeneralPurpose \
+  --sku-name Standard_D4s_v3 \
+  --storage-size 256 \
+  --admin-user windmill \
+  --admin-password '<strong-password>' \
+  --version 16
+```
+
+### Sizing guidance
+
+- **Instance size**: Windmill requires roughly 50 connections per server plus 5 per worker. `Standard_D4s_v3` supports up to 859 connections by default, which gives room to grow.
+- **Storage**: Windmill stores logs and job results in the database. A good starting point is 256 GiB with autoscaling enabled. Adjust based on your [job retention](../../core_concepts/20_jobs/index.mdx) policy.
+- **High availability**: For production, enable [zone-redundant HA](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-high-availability) with `--high-availability ZoneRedundant`.
+- **Backups**: Automated backups are enabled by default (7-day retention). Consider increasing retention for production.
+
+### Create the windmill database
+
+```bash
+az postgres flexible-server db create \
+  --server-name <pg-server> \
+  --resource-group <rg> \
+  --database-name windmill
+```
+
+### Network access
+
+If the AKS cluster and PostgreSQL server are in the same VNet, use [private access (VNet integration)](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-networking-private). Otherwise, use [private endpoints](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-networking-private-link) or allow access from the AKS outbound IPs via firewall rules.
+
+To add a firewall rule for a specific IP:
+
+```bash
+az postgres flexible-server firewall-rule create \
+  --name <pg-server> \
+  --resource-group <rg> \
+  --rule-name allow-aks \
+  --start-ip-address <aks-outbound-ip> \
+  --end-ip-address <aks-outbound-ip>
+```
+
+### Database role setup
+
+Azure Flexible Server does not provide a true PostgreSQL superuser. The standard [`init-db-as-superuser.sql`](https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-superuser.sql) uses `WITH BYPASSRLS` which is not available on Azure. Connect to the `windmill` database as the admin user and run the following adapted setup instead:
+
+```sql
+-- Create the windmill roles without BYPASSRLS
+CREATE ROLE windmill_user;
+CREATE ROLE windmill_admin;
+GRANT windmill_user TO windmill_admin;
+
+-- Grant schema access
+GRANT USAGE ON SCHEMA public TO windmill_admin;
+GRANT USAGE ON SCHEMA public TO windmill_user;
+
+-- Grant the roles to your login user (the user in DATABASE_URL)
+-- For password auth: GRANT windmill_admin TO windmill;
+-- For Entra ID:      GRANT windmill_admin TO "windmill-identity";
+GRANT windmill_admin TO <your-login-user>;
+GRANT windmill_user TO <your-login-user>;
+```
+
+:::note
+On recent Windmill versions (>= 1.414.0), Windmill automatically creates admin policies on all RLS-enabled tables as a fallback when `BYPASSRLS` is not available. No manual policy creation is needed.
+:::
+
+See [running Windmill without a Postgres superuser](./index.mdx#run-windmill-without-using-a-postgres-superuser) for more details.
+
+## Deploy Windmill with Helm
+
+```bash
+helm repo add windmill https://windmill-labs.github.io/windmill-helm-charts/
+helm repo update
+```
+
+Create a `values.yaml`:
+
+```yaml
+windmill:
+  baseDomain: "windmill.example.com"
+  baseProtocol: "https"
+  databaseUrl: postgresql://windmill:<strong-password>@<pg-server>.postgres.database.azure.com:5432/windmill?sslmode=require
+
+postgresql:
+  enabled: false
+```
+
+Install:
+
+```bash
+helm install windmill windmill/windmill \
+  --namespace windmill \
+  --create-namespace \
+  -f values.yaml
+```
+
+For Enterprise Edition, set `enterprise.enabled: true` in your `values.yaml`. The chart automatically uses the `windmill-ee` image when enterprise is enabled. See [Helm chart documentation](./index.mdx#helm-chart) for all available options.
+
+## Expose Windmill
+
+You can expose Windmill using an [Azure Load Balancer](https://learn.microsoft.com/en-us/azure/aks/load-balancer-standard) (L4) or the [Application Gateway Ingress Controller](https://learn.microsoft.com/en-us/azure/application-gateway/ingress-controller-overview) (AGIC, L7). For HTTPS, we recommend terminating TLS at the ingress layer.
+
+### Using Application Gateway (AGIC)
+
+AGIC is not installed by default. Enable the add-on on your AKS cluster:
+
+```bash
+az aks enable-addons \
+  --name <aks-cluster> \
+  --resource-group <rg> \
+  --addons ingress-appgw \
+  --appgw-name windmill-appgw \
+  --appgw-subnet-cidr "<available-/24-in-your-vnet>"
+```
+
+This creates an Application Gateway instance automatically. See the [AGIC add-on tutorial](https://learn.microsoft.com/en-us/azure/application-gateway/tutorial-ingress-controller-add-on-new) for detailed setup options.
+
+The Windmill Helm chart already includes an Ingress resource with the correct path routing (`/ws/`, `/ws_mp/`, `/`). Configure it for AGIC in your `values.yaml`:
+
+```yaml
+ingress:
+  enabled: true
+  className: "azure-application-gateway"
+  annotations:
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    appgw.ingress.kubernetes.io/request-timeout: "3600"
+  tls:
+    - hosts:
+        - windmill.example.com
+      secretName: windmill-tls
+```
+
+The `request-timeout` of 3600 seconds prevents Application Gateway from closing WebSocket connections (LSP and multiplayer) after the default 30-second timeout.
+
+Point your domain to the Application Gateway's public IP and configure a TLS certificate (e.g. via [cert-manager](https://cert-manager.io/), [Azure Key Vault](https://learn.microsoft.com/en-us/azure/application-gateway/key-vault-certs), or a manual TLS secret). Then set the [Base URL](../18_instance_settings/index.mdx#base-url) in Windmill instance settings.
+
+## Open Windmill
+
+Navigate to your domain or load balancer IP. You should see the Windmill login screen. The default credentials are `admin@windmill.dev` / `changeme`. Follow the setup wizard to configure your instance.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Instance setup"
+		description="Self-hosted instance initial setup guide."
+		href="/docs/advanced/self_host#self-hosted-instance-set-up"
+	/>
+	<DocCard
+		title="Workers and worker groups"
+		description="Worker groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
+</div>
+
+## Entra ID database authentication (optional)
+
+Windmill Enterprise supports [Azure Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview) for passwordless authentication to PostgreSQL Flexible Server via Microsoft Entra ID. Instead of a static password, Windmill obtains short-lived Azure AD tokens that are automatically refreshed in the background.
+
+:::info Enterprise feature
+Azure Entra ID database authentication is only available in Windmill [Enterprise Edition](/pricing).
+:::
+
+### Enable Workload Identity on AKS
+
+If you did not enable it during cluster creation:
+
+```bash
+az aks update \
+  --name <aks-cluster> \
+  --resource-group <rg> \
+  --enable-oidc-issuer \
+  --enable-workload-identity
+```
+
+### Create a managed identity with federated credential
+
+```bash
+# Create identity
+az identity create \
+  --name windmill-identity \
+  --resource-group <rg>
+
+# Get the identity client ID and AKS OIDC issuer URL
+export IDENTITY_CLIENT_ID=$(az identity show --name windmill-identity --resource-group <rg> --query clientId -o tsv)
+export AKS_OIDC_ISSUER=$(az aks show --name <aks-cluster> --resource-group <rg> --query "oidcIssuerProfile.issuerUrl" -o tsv)
+
+# Create the federated credential
+az identity federated-credential create \
+  --name windmill-federated \
+  --identity-name windmill-identity \
+  --resource-group <rg> \
+  --issuer "$AKS_OIDC_ISSUER" \
+  --subject system:serviceaccount:windmill:windmill \
+  --audiences api://AzureADTokenExchange
+```
+
+The `--subject` format is `system:serviceaccount:<namespace>:<service-account-name>`. The service account name is generated by the Helm chart's fullname template (matching the release name). Replace both values if you use a different namespace or release name.
+
+### Enable Entra auth on PostgreSQL
+
+```bash
+az postgres flexible-server update \
+  --name <pg-server> \
+  --resource-group <rg> \
+  --microsoft-entra-auth Enabled
+```
+
+### Set the Entra admin
+
+Assign the managed identity as the Entra administrator of the Flexible Server.
+
+```bash
+az postgres flexible-server microsoft-entra-admin create \
+  --server-name <pg-server> \
+  --resource-group <rg> \
+  --display-name windmill-identity \
+  --object-id $(az identity show --name windmill-identity --resource-group <rg> --query principalId -o tsv) \
+  --type ServicePrincipal
+```
+
+### Create the Entra-authenticated database role
+
+Connect using an Azure AD token and create the principal:
+
+```bash
+export PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
+psql "host=<pg-server>.postgres.database.azure.com dbname=postgres user=windmill-identity sslmode=require"
+```
+
+```sql
+-- pgaadauth_create_principal must be run from the postgres database
+SELECT * FROM pgaadauth_create_principal('windmill-identity', false, false);
+```
+
+Then grant database access and set up the Windmill roles as described in the [database role setup](#database-role-setup) section above, using `"windmill-identity"` as the login user:
+
+```sql
+\c windmill
+GRANT ALL ON DATABASE windmill TO "windmill-identity";
+```
+
+:::note
+`pgaadauth_create_principal` only exists in the `postgres` database. Always connect to `postgres` before calling it.
+:::
+
+### Configure Windmill for Entra ID
+
+Set the `DATABASE_URL` [environment variable](../../core_concepts/47_environment_variables/index.mdx) with `entraid` as the password sentinel:
+
+```
+postgresql://windmill-identity:entraid@<pg-server>.postgres.database.azure.com:5432/windmill?sslmode=require
+```
+
+When Windmill detects `entraid` as the password, it switches to Azure AD token-based authentication.
+
+When Workload Identity is configured on AKS, these environment variables are automatically injected into pods by the mutating webhook — you do not need to set them manually:
+
+| Variable | Description |
+|----------|-------------|
+| `AZURE_TENANT_ID` | Your Azure AD tenant ID |
+| `AZURE_CLIENT_ID` | Client ID of the managed identity |
+| `AZURE_FEDERATED_TOKEN_FILE` | Path to the projected service account token |
+| `AZURE_AUTHORITY_HOST` | Azure AD authority endpoint |
+
+For sovereign clouds (Azure Government, Azure China), the webhook sets `AZURE_AUTHORITY_HOST` to the appropriate endpoint automatically.
+
+### Helm values for Entra ID
+
+```yaml
+windmill:
+  baseDomain: "windmill.example.com"
+  baseProtocol: "https"
+  databaseUrl: postgresql://windmill-identity:entraid@<pg-server>.postgres.database.azure.com:5432/windmill?sslmode=require
+
+  app:
+    labels:
+      azure.workload.identity/use: "true"
+
+  indexer:
+    labels:
+      azure.workload.identity/use: "true"
+
+  workerGroups:
+    - name: default
+      replicas: 2
+      labels:
+        azure.workload.identity/use: "true"
+    - name: native
+      replicas: 1
+      labels:
+        azure.workload.identity/use: "true"
+
+serviceAccount:
+  annotations:
+    azure.workload.identity/client-id: "<IDENTITY_CLIENT_ID>"
+
+enterprise:
+  enabled: true
+
+postgresql:
+  enabled: false
+```
+
+The `azure.workload.identity/use: "true"` label must be present on every pod that connects to the database (app, indexer, and all worker groups).
+
+### How it works
+
+1. AKS projects a short-lived service account token into each pod via the Workload Identity webhook.
+2. At startup, Windmill detects the `entraid` sentinel password and reads the projected token from `AZURE_FEDERATED_TOKEN_FILE`.
+3. Windmill exchanges the federated token for an Azure AD access token scoped to `https://ossrdbms-aad.database.windows.net/.default`.
+4. The access token is used as the PostgreSQL password when opening connections.
+5. A background task refreshes the token approximately every 24 hours, before the previous token expires. Active connections are re-authenticated transparently.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self-host Windmill"
+		description="Self-host Windmill on your own infrastructure."
+		href="/docs/advanced/self_host"
+	/>
+	<DocCard
+		title="Windmill on AWS"
+		description="Deploy Windmill on AWS using EKS, ECS, or CloudFormation."
+		href="/docs/advanced/self_host/aws_eks_ecs"
+	/>
+</div>

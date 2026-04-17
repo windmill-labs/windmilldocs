@@ -166,7 +166,8 @@ const config = {
 		]
 	],
 	scripts: [
-		{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev' }
+		{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev' },
+		{ src: 'https://ingest.promptwatch.com/js/client.min.js', defer: true, 'data-project-id': '08b5d834-0ad7-4371-a250-26fb54b4cfba' }
 	],
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */

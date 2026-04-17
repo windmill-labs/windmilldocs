@@ -25,7 +25,7 @@ This present document gives a list of trusted services to use alongside Windmill
 
 <br />
 
-There are 5 kinds of persistent storage in Windmill:
+There are several kinds of persistent storage in Windmill:
 
 1. [Data tables](#data-tables) for out-of-the-box relational data storage.
 
@@ -38,6 +38,8 @@ There are 5 kinds of persistent storage in Windmill:
 5. [Big structured SQL data](#structured-sql-data-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
 6. [NoSQL and document database](#nosql--document-databases-mongodb-key-value-stores) such as MongoDB and Key-Value stores.
+
+7. [Volumes](#volumes) for persistent file storage attached to scripts, synced to object storage between runs.
 
 ## Data tables
 
@@ -116,6 +118,18 @@ All details at:
 		title="Big structured SQL data: Postgres (Supabase, Neon.tech)"
 		description="For Postgres databases (best for structured data storage and retrieval, where you can define schema and relationships between entities), we recommend using Supabase or Neon.tech."
 		href="/docs/core_concepts/persistent_storage/structured_databases"
+	/>
+</div>
+
+## Volumes
+
+[Volumes](../56_volumes/index.mdx) provide persistent file storage that can be attached to scripts via code annotations. Files written to a volume during a job run are synced back to object storage and restored on the next run, enabling stateful workflows like caching, model storage, or agent memory.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Volumes"
+		description="Persistent file storage attached to scripts via annotations."
+		href="/docs/core_concepts/volumes"
 	/>
 </div>
 

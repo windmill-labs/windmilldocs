@@ -7,7 +7,6 @@ import { useLocation } from '@docusaurus/router';
 import Head from '@docusaurus/Head';
 import Footer from '../../landing/Footer';
 import Roadmap from '../../components/roadmap';
-
 export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;
 	const hasSidebar = sidebar && sidebar.items.length > 0;
@@ -54,29 +53,29 @@ export default function BlogLayout(props) {
 									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-4">
 										<li>
 											<a
-												href="https://www.youtube.com/watch?v=3mNZ_rINuS0"
+												href="https://www.youtube.com/watch?v=bTfdiZZ9SlM"
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												Feb 20, 2026
+												April 10, 2026
 											</a>
 										</li>
 										<li>
 											<a
-												href="https://www.youtube.com/watch?v=QgGsxeH0CyU"
+												href="https://www.youtube.com/watch?v=zfp0mIuQG0g"
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												Feb 13, 2026
+												March 27, 2026
 											</a>
 										</li>
 										<li>
 											<a
-												href="https://www.youtube.com/watch?v=2dGd9TdT8xs"
+												href="https://www.youtube.com/watch?v=LNYobAXoW1w"
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												Feb 6, 2026
+												March 06, 2026
 											</a>
 										</li>
 									</ul>

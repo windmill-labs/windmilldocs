@@ -8,4 +8,5 @@ features:
   - Use any libraries of your choice
   - See preview and code editor directly
   - Integrated with Windmill backend flow/script capabilities
+image: ./full_code_ui_builder.png
 ---

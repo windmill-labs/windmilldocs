@@ -160,6 +160,33 @@ From a script or flow [deployed](../../core_concepts/0_draft_and_deploy/index.md
 
 ![Trigger panel](./trigger_panel.png "Trigger panel")
 
+### Enable/disable triggers
+
+Custom email triggers can be enabled or disabled from the trigger editor without having to delete and recreate them. Disabled triggers reject incoming emails for their address, making it easy to temporarily pause a trigger (e.g. during maintenance) and re-enable it later. Only workspace admins can toggle the enabled state.
+
+## Custom TLS certificate
+
+By default, the self-hosted SMTP server generates a self-signed TLS certificate on startup. For production deployments you can supply your own certificate so that senders can verify the server over STARTTLS.
+
+The certificate is configured via environment variables on the server container. Two modes are supported:
+
+- **Direct PEM content**: set `SMTP_TLS_CERT_PEM` and `SMTP_TLS_KEY_PKCS8_PEM` to the full PEM contents of the certificate and private key.
+- **File paths**: set `SMTP_TLS_CERT_PEM_PATH` and `SMTP_TLS_KEY_PKCS8_PEM_PATH` to paths inside the container (e.g. mounted from Kubernetes secrets or Docker volumes).
+
+The private key must be in PKCS#8 format. Convert an existing key with:
+
+```bash
+openssl pkcs8 -topk8 -nocrypt -in key.pem -out key_pkcs8.pem
+```
+
+When file paths are used, the certificate is reloaded from disk every 12 hours so that renewed certificates are picked up without restarting the server. If loading or validating the custom certificate fails, Windmill logs an error and falls back to the self-signed certificate.
+
+This feature is only available on [Enterprise Edition](/pricing).
+
+## Git sync
+
+Custom email triggers are included in [Git sync](../11_git_sync/index.mdx) alongside other event triggers (HTTP routes, WebSocket, Kafka, etc.). When the **Triggers** resource type is enabled on a git sync repository, email triggers are pushed to the repository as `*.email_trigger.yaml` files and pulled back into the workspace the same way. This lets you version, review, and promote email trigger definitions across workspaces using the regular Windmill [CLI](../3_cli/index.mdx) / git workflow.
+
 ## Error handling
 
 Email triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../../core_concepts/10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.

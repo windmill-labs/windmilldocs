@@ -94,7 +94,7 @@ Multiple paths can be combined with commas: `scripts:read:f/production/*,f/stagi
 
 When calling an [HTTP trigger](../39_http_routing/index.mdx) with Windmill Auth, the token must have `http_triggers:read` access to the trigger path. For example, a scoped token calling an HTTP route at `my_route` needs `http_triggers:read:my_route`.
 
-When configuring an HTTP trigger with **Windmill Auth**, you can generate a pre-scoped token directly from the trigger configuration page.
+When configuring an HTTP trigger with **Windmill Auth**, you can generate a pre-scoped token directly from the trigger configuration page. See [Token scopes for HTTP routes](../39_http_routing/index.mdx#token-scopes) for details.
 
 ## Webhook-specific tokens
 

@@ -64,11 +64,13 @@ In this benchmark study, we compared six job orchestration engines: [Airflow](ht
 
 We chose to compute Fibonacci numbers as a simple task that can easily be run with the three orchestrators. Given that Airflow has a first class support for Python, we used Python for all 3 orchestrators. The function in charge of computing the Fibonacci numbers was very naive:
 
-<DocCard
-	title="Benchmark conclusions"
-	description="Conclusions for each benchmark run for all engines in all languages and settings"
-	href="/docs/misc/benchmarks/competitors/results/conclusion/"
-/>
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Benchmark conclusions"
+		description="Conclusions for each benchmark run for all engines in all languages and settings"
+		href="/docs/misc/benchmarks/competitors/results/conclusion/"
+	/>
+</div>
 
 ## Benchmark use cases
 
@@ -126,11 +128,13 @@ def fibo(n: int):
 
 This approach eliminates the need for external libraries, providing a level playing field and highlighting the core performance of the orchestration engines.
 
-<DocCard
-	title="Detailed task and workflow definitions per engine"
-	description="Detailed task and workflow definitions per engine"
-	href="/docs/misc/benchmarks/competitors/results/"
-/>
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Detailed task and workflow definitions per engine"
+		description="Detailed task and workflow definitions per engine"
+		href="/docs/misc/benchmarks/competitors/results/"
+	/>
+</div>
 
 ## Language and runtime environment
 Given native Python support in Airflow, Python was used as the primary implementation language for initial benchmarks. For orchestrators supporting multiple runtimes, we expanded testing to:

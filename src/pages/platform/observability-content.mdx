@@ -316,13 +316,21 @@ export default function ObservabilityContent({ title, description }) {
 				video="/img/platform/observability/platform-observability-prometheus-otel.webm"
 			/>
 
+			{/* ═══════════════ Automatic tracing ═══════════════ */}
+			<Section
+				title="Automatic tracing"
+				desc={<span>Windmill can automatically instrument scripts and flows with <Link to="/docs/advanced/instance_settings#http-tracing" className="text-blue-600 dark:text-blue-400 hover:underline">distributed tracing</Link>. Enable it in instance settings to get traces for every execution without modifying your code. Traces are exported via OpenTelemetry to any compatible backend.</span>}
+				docLink="/docs/advanced/instance_settings#http-tracing"
+				video="/img/platform/observability/platform-observability-automatic-tracing.webm"
+				reverse
+			/>
+
 			{/* ═══════════════ Audit logs ═══════════════ */}
 			<Section
 				title="Audit logs"
 				desc={<span>Every deployment, permission change, resource modification, and login is recorded in the <Link to="/docs/core_concepts/audit_logs" className="text-blue-600 dark:text-blue-400 hover:underline">audit log</Link>. Filter by user, action type, or time range. Export logs for compliance reviews and security investigations.</span>}
 				docLink="/docs/core_concepts/audit_logs"
 				video="/img/platform/observability/platform-observability-audit-logs.webm"
-				reverse
 			/>
 
 			{/* ═══════════════ FAQ ═══════════════ */}

@@ -34,33 +34,33 @@ export default function Hero() {
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
 			<RadialBlur />
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl px-8 mx-auto py-16">
+			<div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 max-w-7xl px-8 mx-auto py-16">
 				<div>
 					<div className="flex flex-row items-end gap-8">
 						<GithubStarCount />
 					</div>
 					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
-						Build, deploy and monitor{' '}
+						Code-first{' '}
 						<span className="text-blue-500 dark:text-blue-450">
-							internal software
-						</span>{' '}
-						at scale
+							orchestration platform
+						</span>
+						{' '}for internal software
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						For developers who need real code capabilities without platform engineering overhead.
+						Built for teams to create and collaborate on internal software. Loved by engineers for full code flexibility and control over their infrastructure.
 					</div>
 					<div className="mt-8 flex flex-col gap-3">
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span><span className="text-blue-500">Open-source</span> and easy to self-host</span>
+							<span><span className="text-blue-500">Open-source</span> and easy to <Link to="/platform/self-host" className="underline">self-host</Link></span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Workflows, internal tools and data pipelines in one platform</span>
+							<span>Workflows, internal apps and data pipelines in one platform</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>
-							<span>Full flexibility of code with Git-based collaboration</span>
+							<span>Full flexibility of code and Git-based collaboration</span>
 						</div>
 						<div className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-100">
 							<span className="text-blue-500 font-bold">✓</span>

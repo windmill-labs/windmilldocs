@@ -41,6 +41,21 @@ version of the Script/Flow and the other one with just a hash, i.e. `/h/<hash>`,
 hiding potentially sensitive information and always corresponding to that
 version of the script, even with overwrites.
 
+#### Version-pinned webhooks (flows)
+
+Flows additionally expose version-pinned webhook endpoints that target a specific flow version by its numeric version ID instead of the latest deployment. They use the `fv/<version>` path segment and are available in the Triggers tab of the flow:
+
+```bash
+# async
+/api/w/<workspace>/jobs/run/fv/<version>
+# sync
+/api/w/<workspace>/jobs/run_wait_result/fv/<version>
+# SSE stream
+/api/w/<workspace>/jobs/run_and_stream/fv/<version>
+```
+
+Unlike the script `/h/<hash>` endpoint, the flow-by-version URL is stable across redeploys and guarantees that integrations keep calling the exact flow version they were tested against, even after new versions are published. Callers still need a token with permission to run the flow.
+
 #### Asynchronous
 
 Jobs can be triggered in asynchronous mode, meaning that the webhook is triggered, and the returning value is the uuid of the job assigned to execute the underlying code

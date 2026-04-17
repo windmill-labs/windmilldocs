@@ -8,20 +8,20 @@ Windmill provides multiple layers of process isolation to protect your infrastru
 
 ## Overview
 
-Windmill workers execute user-provided code in various languages. To protect the worker process and the underlying infrastructure, Windmill implements multiple isolation strategies:
+Windmill [workers](../../core_concepts/9_worker_groups/index.mdx) execute user-provided code in various languages. To protect the worker process and the underlying infrastructure, Windmill implements multiple isolation strategies:
 
-1. **PID Namespace Isolation** - Process memory and environment protection (disabled by default, requires configuration)
+1. **PID Namespace Isolation** - Process memory and [environment variable](../../core_concepts/47_environment_variables/index.mdx) protection (disabled by default, requires configuration)
 2. **NSJAIL Sandboxing** - Filesystem, network, and resource isolation (optional)
-3. **Agent Workers** - Workers without direct database access, communicating via the API
-4. **Worker Groups** - Logical separation of workers that can be used to run workers on separate clusters with different network/resource access
+3. **[Agent Workers](../../core_concepts/28_agent_workers/index.mdx)** - Workers without direct database access, communicating via the API
+4. **[Worker Groups](../../core_concepts/9_worker_groups/index.mdx)** - Logical separation of workers that can be used to run workers on separate clusters with different network/resource access
 
 ## Why isolation matters
 
-Without proper isolation, user scripts could:
+Without proper isolation, user [scripts](../../script_editor/index.mdx) could:
 
-- Access parent worker process memory to extract credentials and secrets
+- Access parent worker process memory to extract credentials and [secrets](../../core_concepts/2_variables_and_secrets/index.mdx)
 - Read environment variables from parent processes
-- Interfere with other jobs running on the same worker
+- Interfere with other [jobs](../../core_concepts/20_jobs/index.mdx) running on the same worker
 - Access files outside their job directory
 - Make unrestricted network connections
 - Consume unlimited system resources
@@ -38,7 +38,7 @@ Without proper isolation, user scripts could:
 
 ### What is PID namespace isolation?
 
-PID (Process ID) namespace isolation creates a separate process namespace for each job using Linux's `unshare` command. This prevents jobs from:
+PID (Process ID) namespace isolation creates a separate process namespace for each job using Linux's [`unshare`](https://man7.org/linux/man-pages/man1/unshare.1.html) command. This prevents jobs from:
 
 - Seeing parent worker processes in `ps` output
 - Reading parent process memory via `/proc/$pid/mem`
@@ -59,7 +59,7 @@ To enable PID namespace isolation, you need to:
    ENABLE_UNSHARE_PID=true
    ```
 
-2. **Enable privileged mode** in docker-compose.yml (required for the default `--mount-proc` flag):
+2. **Enable privileged mode** in [docker-compose.yml](../1_self_host/index.mdx) (required for the default `--mount-proc` flag):
    ```yaml
    windmill_worker:
      privileged: true
@@ -192,7 +192,7 @@ Solutions:
 
 ## Agent workers
 
-Another approach to isolation is using [agent workers](/docs/core_concepts/agent_workers). Agent workers:
+Another approach to isolation is using [agent workers](../../core_concepts/28_agent_workers/index.mdx). Agent workers:
 
 - Do not have direct database access
 - Communicate with the Windmill server only via the API
@@ -254,6 +254,38 @@ These configurations control resource limits, mount points, network isolation, a
 - Jobs can read any files the worker can read
 - You can still enable PID namespace isolation separately for process/memory protection (see below)
 
+### Running nsjail without privileged: true
+
+By default, nsjail requires `privileged: true` because it creates user namespaces, which need unmasked `/proc` access that only privileged containers provide. However, you can run nsjail without `privileged: true` by disabling user namespaces.
+
+**Required environment variables:**
+
+- `DISABLE_NSJAIL=false` — enable nsjail
+- `DISABLE_NUSER=true` — disable user namespace creation
+
+**Required capabilities (minimal set):**
+
+```yaml
+securityContext:
+  allowPrivilegeEscalation: true
+  capabilities:
+    drop: [ALL]
+    add:
+      - SYS_ADMIN       # nsjail: PID/mount namespaces and /proc mount
+      - SYS_RESOURCE    # worker: oom_score_adj to protect worker from OOM killer
+      - SETPCAP         # nsjail: prctl(PR_SET_SECUREBITS) for capability dropping
+  seccompProfile:
+    type: Unconfined
+  appArmorProfile:
+    type: Unconfined
+```
+
+Using `capabilities: add: [ALL]` also works if your security policy allows it.
+
+**Security tradeoff:**
+
+The only isolation you lose is UID remapping — with `privileged: true`, nsjail maps root outside to UID 1000 inside the jail, whereas with `DISABLE_NUSER=true` the jailed process runs as root (UID 0). However, this is a better tradeoff overall: `privileged: true` removes the container boundary entirely (full host access, all devices, unmasked `/proc`, no seccomp, no apparmor), so a jail escape gives full host access. With `DISABLE_NUSER=true` and limited capabilities, a jail escape only reaches the container, which remains sandboxed. You're trading an inner defense layer (UID remapping) for a much stronger outer one (container boundary).
+
 ## Isolation comparison
 
 | Feature                | NSJAIL      | PID Namespace | None       |
@@ -289,7 +321,7 @@ All language executors (Python, TypeScript/Bun, Deno, Go, Bash, Rust, C#, Java, 
 
 ### Per-script sandbox annotation {#sandbox-annotation}
 
-You can enable nsjail sandboxing on a per-script basis using the `sandbox` annotation. This works for Python, TypeScript (Bun and Deno), and Bash scripts. When present, the script runs inside an nsjail sandbox even if sandboxing is not enabled globally.
+You can enable nsjail sandboxing on a per-[script](../../script_editor/index.mdx) basis using the `sandbox` annotation. This works for Python, TypeScript (Bun and Deno), and Bash scripts. When present, the script runs inside an nsjail sandbox even if sandboxing is not enabled globally.
 
 The script will fail with a clear error if nsjail is not available on the worker.
 
@@ -347,11 +379,11 @@ Provides comprehensive isolation including filesystem, network, and resource lim
 1. **Enable isolation before production** - Isolation is **disabled by default**. You should manually enable either NSJAIL or PID isolation before deploying to production
 2. **Use PID isolation at minimum** - At a minimum, enable PID namespace isolation with `ENABLE_UNSHARE_PID=true` and `privileged: true`
 3. **Consider NSJAIL for untrusted code** - Use NSJAIL if you run code from untrusted sources or need filesystem isolation
-4. **Consider agent workers** - For sensitive environments, use [agent workers](/docs/core_concepts/agent_workers) that don't have direct database access and communicate only via the API
+4. **Consider agent workers** - For sensitive environments, use [agent workers](../../core_concepts/28_agent_workers/index.mdx) that don't have direct database access and communicate only via the API
 5. **Test your isolation** - Verify isolation is working by checking worker logs for isolation status messages
-6. **Use worker groups** - Separate untrusted workloads onto dedicated workers with stricter isolation, or run workers on separate clusters with different network/resource access
+6. **Use [worker groups](../../core_concepts/9_worker_groups/index.mdx)** - Separate untrusted workloads onto [dedicated workers](../../core_concepts/25_dedicated_workers/index.mdx) with stricter isolation, or run workers on separate clusters with different network/resource access
 7. **Keep systems updated** - Ensure kernel and util-linux are up to date
-8. **Review user permissions** - Limit who can create scripts in your Windmill instance
+8. **Review user permissions** - Limit who can create scripts in your Windmill instance using [roles and permissions](../../core_concepts/16_roles_and_permissions/index.mdx)
 
 ## Troubleshooting
 
@@ -452,7 +484,13 @@ For Helm deployments, set the appropriate values to enable privileged mode and t
 
 ## Related documentation
 
-- [Worker Groups](/docs/core_concepts/worker_groups) - Logical worker separation
-- [Self-Hosting](/docs/advanced/self_host) - Deployment configuration
-- [Environment Variables](/docs/core_concepts/environment_variables) - All worker configuration options
-- [Docker](/docs/advanced/docker) - Container-based execution
+- [Worker Groups](../../core_concepts/9_worker_groups/index.mdx) - Logical worker separation
+- [Agent Workers](../../core_concepts/28_agent_workers/index.mdx) - Workers without direct database access
+- [Dedicated Workers](../../core_concepts/25_dedicated_workers/index.mdx) - Workers assigned to specific scripts
+- [Self-Hosting](../1_self_host/index.mdx) - Deployment configuration
+- [Environment Variables](../../core_concepts/47_environment_variables/index.mdx) - All worker configuration options
+- [Docker](../7_docker/index.mdx) - Container-based execution
+- [Instance Settings](../18_instance_settings/index.mdx) - Instance-level configuration
+- [Roles and Permissions](../../core_concepts/16_roles_and_permissions/index.mdx) - Access control
+- [Audit Logs](../../core_concepts/14_audit_logs/index.mdx) - Activity tracking and compliance
+- [Workspace Secret Encryption](../../core_concepts/30_workspace_secret_encryption/index.mdx) - Secret encryption at rest

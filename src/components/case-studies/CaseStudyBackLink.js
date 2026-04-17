@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useLocation } from '@docusaurus/router';
 
 const USE_CASE_LABELS = {
-	'internal-tools': 'Internal tools',
+	'internal-apps': 'Internal apps',
 	'data-pipelines': 'Data pipelines',
 	'ai-agents': 'AI agents',
 	'triggers': 'Triggers',

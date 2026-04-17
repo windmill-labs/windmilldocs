@@ -89,6 +89,11 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/ruby_quickstart/index',
 									label: 'Ruby'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/rlang_quickstart/index',
+									label: 'R'
 								}
 							]
 						},
@@ -126,7 +131,8 @@ const sidebars = {
 								'misc/guides/snowflake_app_with_user_roles/index',
 								'misc/guides/otel/index',
 								'misc/guides/aws_marketplace/index',
-								'misc/guides/local_dev_with_ai/index'
+								'misc/guides/local_dev_with_ai/index',
+							'misc/guides/discord_bot/index'
 							]
 						}
 					]
@@ -380,13 +386,17 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'core_concepts/volumes/index',
+							label: 'Volumes'
+						},
+						{
+							type: 'doc',
 							id: 'core_concepts/persistent_storage/key_value_stores',
 							label: 'NoSQL & document databases'
 						}
 					]
 				},
 				'core_concepts/object_storage_in_windmill/index',
-				'core_concepts/volumes/index',
 				'core_concepts/custom_instance_database/index',
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
@@ -414,6 +424,7 @@ const sidebars = {
 				'core_concepts/workspace_dependencies/index',
 				'core_concepts/workspace_settings/index',
 				'core_concepts/streaming/index',
+				'core_concepts/labels/index',
 				{
 					type: 'category',
 					label: 'Integrations',
@@ -704,6 +715,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/tigris',
+							label: 'Tigris'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/telegram',
 							label: 'Telegram'
 						},
@@ -777,7 +793,8 @@ const sidebars = {
 						'flows/flow_approval',
 						'flows/sleep',
 						'flows/step_mocking',
-						'flows/sticky_notes'
+						'flows/sticky_notes',
+						'flows/flow_as_chat'
 					],
 					collapsed: true
 				},
@@ -963,7 +980,8 @@ const sidebars = {
 					items: [
 						'advanced/instance_settings/index',
 						'core_concepts/infrastructure_as_code/index',
-						'advanced/self_host/aws_eks_ecs'
+						'advanced/self_host/aws_eks_ecs',
+						'advanced/self_host/azure_entra_id'
 					]
 				},
 				{
@@ -1000,7 +1018,12 @@ const sidebars = {
 						'advanced/workspace_forks/index',
 						'advanced/deploy_gh_gl/index',
 						'core_concepts/staging_prod/index',
-						'core_concepts/protection_rulesets/index'
+						'core_concepts/protection_rulesets/index',
+						{
+							type: 'doc',
+							id: 'advanced/canonical_deployment_setups/index',
+							label: 'Collaboration and deployment stages'
+						}
 					],
 					collapsed: false
 				},
@@ -1032,11 +1055,14 @@ const sidebars = {
 						'advanced/cli/installation',
 						'advanced/cli/workspace-management',
 						'advanced/cli/sync',
+						'advanced/cli/wmill-yaml-reference',
+						'advanced/cli/generate-metadata',
 						'advanced/cli/environment-specific-items',
 						'advanced/cli/gitsync-settings',
 						'advanced/cli/user',
 						'advanced/cli/script',
 						'advanced/cli/flow',
+						'advanced/cli/job',
 						'advanced/cli/app',
 						'advanced/cli/resource',
 						'advanced/cli/variable',
@@ -1054,6 +1080,7 @@ const sidebars = {
 				'advanced/clients/rust_client',
 				'advanced/explicit_progress/index',
 				'advanced/scaling/index',
+				'advanced/high_availability/index',
 				'misc/share_on_hub/index'
 			]
 		},

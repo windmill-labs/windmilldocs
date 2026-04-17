@@ -88,19 +88,21 @@ Generates or updates:
 
 ## Generate lock files
 
-From the app directory:
+From the app directory, generate `.lock` files for each backend runnable that has dependencies (TypeScript, Python, PHP) using the [`wmill generate-metadata`](../../advanced/3_cli/generate-metadata.md) command:
 
 ```bash
-wmill app generate-locks
+wmill generate-metadata
 ```
-
-Generates `.lock` files for each backend runnable that has dependencies (TypeScript, Python, PHP).
 
 | Option | Description |
 |--------|-------------|
 | `--yes`, `-y` | Skip confirmation prompt |
 | `--dry-run` | Show what would be updated |
 | `--default-ts <bun\|deno>` | Default TypeScript runtime |
+
+:::info Legacy command
+Prior to the unified command, this was done with `wmill app generate-locks`. This command is now deprecated but still works.
+:::
 
 ## Deploy with sync
 
@@ -147,7 +149,7 @@ npm install
 wmill app dev
 
 # 4. Generate lock files before deploying
-wmill app generate-locks
+wmill generate-metadata
 
 # 5. Deploy to Windmill
 wmill sync push

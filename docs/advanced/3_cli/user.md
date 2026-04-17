@@ -89,3 +89,76 @@ There are two ways to create a token:
   The command will use your existing authentication credentials to create a token and display it.
 
 The command will display the generated token, which can be used for subsequent authenticated requests. Note that the token is not stored locally.
+
+## Groups
+
+The `wmill group` commands manage [workspace groups](../../core_concepts/8_groups_and_folders/index.mdx) and their members.
+
+```bash
+wmill group list
+wmill group get <name>
+wmill group create <name> [--summary <summary>]
+wmill group delete <name>
+wmill group add-user <group> <username>
+wmill group remove-user <group> <username>
+```
+
+### Examples
+
+```bash
+# List all groups and create a new one
+wmill group list
+wmill group create data-team --summary "Data engineering"
+
+# Manage membership
+wmill group add-user data-team alice
+wmill group remove-user data-team bob
+```
+
+## Audit logs
+
+The `wmill audit` commands read from the workspace [audit log](../../core_concepts/14_audit_logs/index.mdx) (Enterprise Edition).
+
+```bash
+wmill audit list [options]
+wmill audit get <id>
+```
+
+### Options
+
+| Option            | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| `--username`      | Filter by username.                                      |
+| `--operation`     | Filter by operation (e.g. `scripts.create`).             |
+| `--action-kind`   | Filter by action kind (`create`, `update`, `delete`, `execute`). |
+| `--before`        | Return entries before this timestamp.                    |
+| `--after`         | Return entries after this timestamp.                     |
+
+### Examples
+
+```bash
+# Recent activity by a user
+wmill audit list --username alice --after 2026-01-01
+
+# Inspect a single event
+wmill audit get 1234
+```
+
+## Tokens
+
+The `wmill token` commands manage API tokens for the current user.
+
+```bash
+wmill token list
+wmill token create [--label <label>] [--expires-in <seconds>]
+wmill token delete <token>
+```
+
+### Example
+
+```bash
+# Create a token valid for a CI job, then delete it after use
+TOKEN=$(wmill token create --label ci --expires-in 3600)
+...
+wmill token delete "$TOKEN"
+```

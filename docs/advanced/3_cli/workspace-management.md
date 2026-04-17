@@ -4,17 +4,25 @@ description: How do I manage workspaces using the Windmill CLI?
 
 # Workspace management
 
-Windmill CLI can be used on several workspaces from several instances.
+Windmill CLI can be used on several workspaces from several instances. For how multi-workspace setups fit into a team collaboration workflow, see the [collaboration and deployment stages](../23_canonical_deployment_setups/index.mdx) guide, in particular [stage 4](../23_canonical_deployment_setups/index.mdx#stage-4--add-multi-workspace-promotion).
 
 ## List workspaces
 
-You can list all the workspaces you have access to using:
+You can list all the workspaces registered locally on your machine with:
 
 ```bash
 wmill workspace
 ```
 
 The currently selected workspace will be <ins>underlined</ins>.
+
+### Listing remote workspaces
+
+`wmill workspace list` queries the currently selected remote server and shows every workspace the authenticated user has access to — regardless of whether each workspace is registered locally. This is useful to discover workspaces you could add with `wmill workspace add`.
+
+```bash
+wmill workspace list
+```
 
 ## Adding a workspace
 
@@ -157,3 +165,20 @@ The workspace encryption key is migrated along with the workspace. During the [p
 When [synchronizing workspaces](./sync.mdx), the `--include-key` option should be used to ensure the encryption key is also included in the sync process. This is essential for maintaining the security and integrity of encrypted data as it moves between environments.
 
 This option prompts you to confirm if the encryption key should be replaced or retained. Make an informed choice based on whether the destination environment requires a new key or should continue using the existing key.
+
+## Schedule enable/disable
+
+The `wmill schedule enable` and `wmill schedule disable` commands are a quick way to toggle a schedule on or off without editing the corresponding YAML file and running `wmill sync push`.
+
+```bash
+wmill schedule enable <path>
+wmill schedule disable <path>
+```
+
+### Example
+
+```bash
+# Pause a nightly job during a maintenance window, then re-enable it
+wmill schedule disable f/reports/nightly_etl
+wmill schedule enable f/reports/nightly_etl
+```

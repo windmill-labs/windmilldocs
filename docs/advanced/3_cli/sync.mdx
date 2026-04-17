@@ -9,7 +9,7 @@ import DocCard from '@site/src/components/DocCard';
 Synchronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
-The CLI supports [environment-specific items](./environment-specific-items.mdx) that allow different versions of resources and variables per environment/branch.
+The CLI supports [workspace-specific items](./environment-specific-items.mdx) that allow different versions of resources and variables per workspace (dev / staging / prod).
 
 Having a Windmill instance synchronized to folders & git repositories allows for
 local development through the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx).
@@ -90,7 +90,7 @@ wmill sync pull [options]
 | `--yes`                | None          | Pull without needing confirmation. The command proceeds automatically without user intervention.                                                                                                                     |
 | `--plain-secrets`      | None          | Pull secrets as plain text. Secrets are downloaded without encryption or obfuscation.                                                                                                                                |
 | `--json`               | None          | Use JSON instead of YAML. The downloaded files are in JSON format instead of YAML.                                                                                                                                   |
-| `--workspace`          | `<workspace>` | Specify the target workspace. This overrides the default workspace.                                                                                                                                                  |
+| `--workspace`          | `<workspace>` | Select the target workspace. Matches a key in `workspaces:` (applying its `overrides` / `specificItems`) and falls back to a local profile name if no entry matches.                                                 |
 | `--debug`, `--verbose` | None          | Show debug/verbose logs.                                                                                                                                                                                             |
 | `--show-diffs`         | None          | Show diff information when syncing (may show sensitive information).                                                                                                                                                 |
 | `--token`              | `<token>`     | Specify an API token. This will override any stored token.                                                                                                                                                           |
@@ -105,8 +105,8 @@ wmill sync pull [options]
 | `--include-settings`   | None          | Include syncing workspace settings.                                                                                                                                                                                  |
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                                    |
 | `--skip-branch-validation` | None      | Skip git branch validation and prompts. Useful for temporary feature branches that don't need to be added to wmill.yaml.                                                                                             |
-| `--branch`             | `<branch>`    | Override the current Git branch. Useful for working outside a Git repository or testing branch-specific configurations.                                                                                              |
-| `--env`                | `<env>`       | Override the environment name for single-branch setups. See [environment-specific items](./environment-specific-items.mdx).                                                                                                    |
+| `--branch`             | `<branch>`    | **Deprecated — use `--workspace` instead.** Overrides the detected git branch when resolving a `workspaces:` entry.                                                                                                  |
+| `--env`                | `<env>`       | **Deprecated — use `--workspace` instead.** Kept for single-branch setups that used the old `environments:` key.                                                                                                     |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Overrides `wmill.yaml` includes. Patterns can include `*` (any string until '/') and `**` (any string). |
 | `-e, --excludes`       | `<patterns>`  | Comma-separated patterns to specify which files to NOT take into account. Overrides `wmill.yaml` excludes.                                                                                                           |
 | `--extra-includes`     | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy.                  |
@@ -142,8 +142,8 @@ wmill sync push [options]
 | `--include-settings`   | None          | Include syncing workspace settings.                                                                                                                                                                 |
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                   |
 | `--skip-branch-validation` | None      | Skip git branch validation and prompts. Useful for temporary feature branches that don't need to be added to wmill.yaml.                                                                            |
-| `--branch`             | `<branch>`    | Override the current Git branch. Useful for working outside a Git repository or testing branch-specific configurations.                                                                             |
-| `--env`                | `<env>`       | Override the environment name for single-branch setups. See [environment-specific items](./environment-specific-items.mdx).                                                                                   |
+| `--branch`             | `<branch>`    | **Deprecated — use `--workspace` instead.** Overrides the detected git branch when resolving a `workspaces:` entry.                                                                                 |
+| `--env`                | `<env>`       | **Deprecated — use `--workspace` instead.** Kept for single-branch setups that used the old `environments:` key.                                                                                    |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Patterns can include `*` (any string until '/') and `**` (any string).                 |
 | `-e, --excludes`       | `<patterns>`  | Comma-separated patterns to specify which files to NOT take into account.                                                                                                                           |
 | `--extra-includes`     | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy. |
@@ -152,6 +152,32 @@ wmill sync push [options]
 ## wmill.yaml
 
 Note that you can set the default TypeScript language and explicitly exclude (or include) specific files or folders to be taken into account with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
+
+### Generating and inspecting the config
+
+`wmill init` generates a fully commented `wmill.yaml` with every option documented inline and grouped by category. Advanced / opt-in options are included as commented-out examples, so you can discover and enable them without having to look them up.
+
+`wmill config` prints a structured reference table of all config options with their types, defaults, and descriptions. Pair it with `--json` for programmatic consumption (for example, from an AI agent that edits `wmill.yaml`).
+
+For a human-readable walkthrough of every `wmill.yaml` option — with defaults, effects, and deprecated keys — see the [`wmill.yaml` reference](./wmill-yaml-reference.mdx).
+
+```bash
+wmill config            # human-readable reference
+wmill config --json     # JSON reference, one entry per option
+```
+
+A JSON Schema is also committed at [`cli/wmill.schema.json`](https://github.com/windmill-labs/windmill/blob/main/cli/wmill.schema.json) for editor autocomplete and validation of your `wmill.yaml`.
+
+### Non-dotted paths (`nonDottedPaths`)
+
+By default, local files for flows, apps, and raw apps are stored under folders named `<path>__flow/`, `<path>__app/`, and `<path>__raw_app/` (using `__flow`/`__app`/`__raw_app` suffixes rather than dotted extensions). This avoids filesystem edge-cases on Windows and with tooling that assumes a `.flow` extension means a file.
+
+```yaml
+# wmill.yaml
+nonDottedPaths: true   # default for new workspaces created with `wmill init --use-default`
+```
+
+Set `nonDottedPaths: false` to fall back to legacy `.flow`/`.app`/`.raw_app` folder names.
 
 ### Basic configuration
 
@@ -189,45 +215,37 @@ includeKey: false
 skipBranchValidation: false  # Skip validation for feature branches
 ```
 
-### Git branch-specific configuration
+### Workspaces
 
-The CLI supports branch-specific settings through the `gitBranches` configuration. For single-branch, multi-environment setups, you can use the `environments` key instead — it works the same way but with `--env` instead of `--branch`. See [environment-specific items](./environment-specific-items.mdx) for details.
+Multi-target setups live under a single `workspaces` key in `wmill.yaml`. Each entry maps a
+human-friendly workspace name to a Windmill instance, optional per-workspace sync overrides,
+and optional workspace-specific items.
 
 ```yaml
-gitBranches:
-  main:  # Branch name
-    baseUrl: 'http://localhost:8000/'  # Windmill instance URL
-    workspaceId: test  # Workspace ID
-    overrides: {}  # Override settings for this branch
-    promotionOverrides:  # Settings used when promoting TO this branch
+workspaces:
+  staging:
+    baseUrl: https://staging.windmill.dev
+    # workspaceId defaults to "staging" (the key)
+    # gitBranch defaults to "staging" (the key)
+    overrides:
+      includeSchedules: true
+
+  production:
+    baseUrl: https://app.windmill.dev
+    workspaceId: prod-ws      # explicit: differs from the key
+    gitBranch: main           # explicit: maps to git branch "main"
+    overrides:
+      skipSecrets: false
+    promotionOverrides:       # applied when pushing with --promotion
       skipApps: true
       skipFlows: true
-    specificItems:  # Branch-specific resources/variables
+    specificItems:            # workspace-specific items (see below)
       resources:
         - "u/alex/prod_*"
       variables:
         - "u/alex/env_*"
 
-  staging:
-    baseUrl: 'https://staging.windmill.dev/'
-    workspaceId: staging-workspace
-    overrides:
-      skipVariables: true
-      includeSettings: true
-    promotionOverrides:
-      skipSecrets: true
-
-  production:
-    baseUrl: 'https://app.windmill.dev/'
-    workspaceId: prod-workspace
-    overrides:
-      includeSettings: true
-      skipSecrets: false
-    promotionOverrides:
-      skipApps: true      # Don't sync apps during promotion
-      skipFlows: true     # Don't sync flows during promotion
-
-  # Common items that are branch-specific across all branches
+  # Items that are workspace-specific across ALL workspaces
   commonSpecificItems:
     resources:
       - "u/alex/config/**"
@@ -238,14 +256,89 @@ gitBranches:
     settings: true
 ```
 
+Key properties:
+
+- **Key = workspace name.** It's a human-friendly identifier, not the git branch.
+- **`workspaceId` defaults to the key** — only set it when the Windmill workspace id differs from the name.
+- **`gitBranch` defaults to the key** — only set it when the git branch name differs.
+- **`baseUrl`** points at the Windmill instance; the CLI resolves it to a local
+  [profile](./workspace-management.md) (baseUrl + workspaceId match), so the same
+  `wmill.yaml` works on any machine as long as a matching profile is logged in.
+- **`overrides`** override any top-level sync option when this workspace is the current one.
+- **`promotionOverrides`** apply when pushing to this workspace with `--promotion`.
+- **`specificItems`** declare items that are stored per-workspace on disk (see
+  [workspace-specific items](./environment-specific-items.mdx)).
+
+### Selecting a workspace
+
+The CLI picks the active workspace in this order:
+
+1. `--workspace <name>` — explicit override, matches a key in `workspaces:` (or a local profile name as a fallback).
+2. **Current git branch** — the first entry whose effective `gitBranch` matches `git rev-parse --abbrev-ref HEAD`.
+3. **Local profile** — the active profile set via `wmill workspace switch` (used when no `workspaces:` entry matches).
+
+All sync commands (`wmill sync pull`, `wmill sync push`, `wmill gitsync-settings`, etc.)
+accept `--workspace` and apply the matching workspace's `overrides` / `specificItems`.
+
+### Binding a workspace to wmill.yaml
+
+`wmill workspace bind` interactively creates or updates a `workspaces:` entry from the active
+local profile. It prompts for the workspace name, git branch (optional), and handles the
+`workspaceId` / `baseUrl` fields for you.
+
+```bash
+wmill workspace bind                       # interactive: pick profile, name, branch
+wmill workspace bind --workspace staging   # non-interactive: use "staging" as the key
+wmill workspace unbind --workspace staging # remove baseUrl/workspaceId from the entry
+```
+
+`wmill init` also runs the bind flow automatically for fresh projects.
+
 ### Configuration resolution priority
 
 Settings are resolved in this order (highest priority first):
 
 1. **CLI flags** (highest priority)
 2. **Promotion overrides** (if `--promotion` flag is used)
-3. **Branch-specific overrides** (if current branch has `overrides` defined)
+3. **Workspace overrides** (from the resolved workspace's `overrides` block)
 4. **Top-level settings** (base configuration)
+
+### Migrating from `gitBranches` / `environments`
+
+Before this change, the CLI had three separate keys — `gitBranches`, `environments`, and
+`git_branches` — with the branch name as the map key and `workspaceId` always required.
+Unifying everything under `workspaces:` removes that duplication: one key, one flag
+(`--workspace`), and sensible defaults so most entries drop to two lines.
+
+Legacy configs keep working. On the first read of a legacy `wmill.yaml`, the CLI normalizes
+it to `workspaces:` in memory and prints a one-time deprecation warning. `--branch` and
+`--env` on sync commands are still accepted with a deprecation warning — prefer `--workspace`.
+
+To migrate the file on disk in one command:
+
+```bash
+wmill config migrate
+# ✅ Migrated 'gitBranches' to 'workspaces' in wmill.yaml
+#    Workspace entries: main, staging
+```
+
+The migration preserves every field — `baseUrl`, `workspaceId`, `overrides`,
+`promotionOverrides`, `specificItems`, `commonSpecificItems`. Since legacy keys were branch
+names, the resulting workspace name equals the old branch name and `gitBranch` is left
+implicit (it defaults to the key). [Workspace-specific item files](./environment-specific-items.mdx)
+keep the same suffix — the file `database.main.resource.yaml` stays valid because the
+workspace is still named `main`.
+
+### Inspecting the config
+
+`wmill config` prints a structured reference of every option with its default, type, and
+description. Pair with `--json` for machine-readable output.
+
+```bash
+wmill config            # human-readable reference
+wmill config --json     # JSON reference, one entry per option
+wmill config migrate    # legacy → workspaces
+```
 
 ### Codebase configuration
 
@@ -266,7 +359,7 @@ codebases:
     inject: ['./polyfills.js']
 ```
 
-All sync options for your workspace can be found on this [file](https://github.com/windmill-labs/windmill/blob/main/cli/src/core/conf.ts#L16):
+All sync options for your workspace can be found on this [file](https://github.com/windmill-labs/windmill/blob/main/cli/src/core/conf.ts):
 
 ```ts
 export interface SyncOptions {
@@ -304,8 +397,8 @@ export interface SyncOptions {
   defaultTs?: 'bun' | 'deno';
   codebases?: Codebase[];
 
-  // Git branch configuration
-  gitBranches?: {
+  // Workspace bindings — the single unified config key
+  workspaces?: {
     commonSpecificItems?: {
       variables?: string[];
       resources?: string[];
@@ -313,11 +406,13 @@ export interface SyncOptions {
       folders?: string[];
       settings?: boolean;
     };
-    [branchName: string]: SyncOptions & {
+    [workspaceName: string]: SyncOptions & {
+      // Defaults to the key (workspace name) when omitted
+      gitBranch?: string;
+      workspaceId?: string;
+      baseUrl?: string;
       overrides?: Partial<SyncOptions>;
       promotionOverrides?: Partial<SyncOptions>;
-      baseUrl?: string;
-      workspaceId?: string;
       specificItems?: {
         variables?: string[];
         resources?: string[];
@@ -325,8 +420,14 @@ export interface SyncOptions {
         folders?: string[];
         settings?: boolean;
       };
-    }
+    };
   };
+
+  // Deprecated — still read, normalized to `workspaces` in memory
+  gitBranches?: unknown;
+  environments?: unknown;
+  git_branches?: unknown;
+
   promotion?: string;
 }
 ```

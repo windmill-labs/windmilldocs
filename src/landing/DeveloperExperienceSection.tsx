@@ -104,27 +104,7 @@ export function BenchmarkCard() {
 	}, []);
 
 	return (
-		<div className="dark:bg-gray-900 bg-gray-50 w-full p-6 rounded-xl">
-			<div className="mb-4">
-				<h3 className="text-2xl font-medium text-gray-900 dark:text-white mb-4">
-					Run at any scale with best performance
-				</h3>
-				<p className="text-md text-gray-600 dark:text-gray-300 mb-4">
-					We engineered Windmill to be the fastest orchestrator in the industry, ensuring your most
-					demanding workloads never bottleneck. From a single-node VPS to 1,000-node K8s clusters,
-					auto-scale on demand or isolate critical tasks with dedicated worker groups on Kubernetes
-					and Docker.
-				</p>
-				<a
-					href="https://www.windmill.dev/docs/misc/benchmarks/competitors"
-					className="text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 hover:ml-2 transition-all"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					See benchmarks
-					<ArrowRight size={20} />
-				</a>
-			</div>
+		<div className="w-full">
 			<div className="flex flex-row gap-2 items-center justify-end mb-4">
 				<span className={classNames('font-light text-sm text-gray-900 dark:text-white')}>
 					10 long tasks
