@@ -53,6 +53,15 @@ export default function BlogLayout(props) {
 									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-4">
 										<li>
 											<a
+												href="https://www.youtube.com/watch?v=jEhSMNS55Gg"
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												April 17, 2026
+											</a>
+										</li>
+										<li>
+											<a
 												href="https://www.youtube.com/watch?v=bTfdiZZ9SlM"
 												target="_blank"
 												rel="noopener noreferrer"
@@ -67,15 +76,6 @@ export default function BlogLayout(props) {
 												rel="noopener noreferrer"
 											>
 												March 27, 2026
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://www.youtube.com/watch?v=LNYobAXoW1w"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												March 06, 2026
 											</a>
 										</li>
 									</ul>
