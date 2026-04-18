@@ -4,21 +4,9 @@ import styles from './styles.module.css';
 // Roadmap data
 const roadmapItems = [
 	{
-		title: 'Dedicated workers v2',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5337',
-		description:
-			'Dedicated workers are currently a setting for individual scripts, flows and worker groups. A dedicated worker can only be dedicated to one script or flow. We mean to change that so that in the extreme case, it can handle a full workspace.\n\nWe want them to now have a configuration, let\'s call it the dedicated worker configurations that select all the flows and scripts (potentially apps) it will be dedicated to:\nfor all those it needs to do a compaction for ts and python where it will essentially route internally the job to the right subfunction based on job path which mean all those scripts can now run on the same runtime and we have at most 2 running runtimes (bun, python) on a dedicated worker. Those configuration can be deployed and each deployment will have a deployment version and a status . It corresponds to the status of creating the single lockfile for ts and single lockfile for python. If we have incompatible reqs for different scripts it will fail otherwise it pass.\n\nInstead of having to declare if a script or flow is ran on dedicated worker on the script or flow, they will be automatically updated when they are part of a successful deployment of a worker config such that their tag become dedicated:<dedicated_worker_config_name>\nThe creation of the compacted view is the "hard part". Once we have those, we can use our normal traversers to generated or fail to generate the single lockfile.'
-	},
-	{
 		title: 'Free form flows',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5435',
 		description: 'Free positioning of nodes'
-	},
-	{
-		title: 'Workflow as code v2',
-		issueLink: '',
-		description:
-			'Using a syntax similar to mastra/cloudflare workflows for better Workflow As Code support'
 	},
 	{
 		title: 'Local Windmill execution',
@@ -85,12 +73,6 @@ const roadmapItems = [
 		issueLink: '',
 		description: 'Better search from hub + better AI generation for steps.'
 	},
-	{
-		title: 'Hide sensitive values from logs',
-		category: 'Backend',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5450',
-		description: `SDK clients should automatically propagate to the workers (maybe using a special pattern in stdout) that there is some strings that are sensitive because they correspond to secrets pulled with getResource and getValue. Additionally, workers should be able to have a list of values to consider secrets synced from an external source-of-truth. Those sensitive values would always be masked in logs.`
-	}
 ];
 
 // Color categories based on types of features
