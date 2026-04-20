@@ -1,0 +1,116 @@
+---
+slug: discord-bot-stripe-sandboxed-ai
+authors: [alexpetric]
+tags: ['AI', 'Discord', 'Websocket triggers']
+description: 'How do I build an AI Discord bot that accesses Stripe without leaking API keys? Use Windmill sandboxed tools to give the AI capabilities, not credentials.'
+title: 'Your AI bot doesn''t need your Stripe key'
+image: './thumbnail.svg'
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Your AI bot doesn't need your Stripe key
+
+Earlier this month, [Vercel confirmed a breach](https://www.techradar.com/pro/security/weve-identified-a-security-incident-vercel-breach-confirmed-after-hackers-claim-stolen-data-for-sale-online) triggered by a compromised third-party AI tool. The attacker accessed customer environment variables — including API keys for payment processors, databases, and internal services. A hacker is [demanding $2M](https://www.newsbytesapp.com/news/science/cloud-development-platform-vercel-breached-hacker-demanding-2m-ransom/story) for the stolen data.
+
+Vibe-code something, deploy it, store secrets in env vars, hope nothing leaks. The AI code running in those apps has access to everything in the environment — every secret, every key.
+
+Give the AI **capabilities**, not **credentials**.
+
+{/* truncate */}
+
+## A concrete example: "Did Acme pay?"
+
+A Discord bot where your team asks billing questions and the AI checks Stripe:
+
+![Discord bot responding with Stripe invoice data](./discord_stripe_bot.png 'AI Discord bot checking open Stripe invoices')
+
+The bot runs as a single Windmill script connected to Discord via a [WebSocket trigger](/docs/core_concepts/websocket_triggers). The AI agent has two tools — and can only call these two tools:
+
+```typescript
+const toolServer = createSdkMcpServer({
+  name: "billing-tools",
+  tools: [
+    tool(
+      "search_invoices",
+      "Search Stripe invoices by customer email",
+      { email: z.string().email() },
+      async (args) => {
+        // Secret fetched server-side — the AI never sees this key
+        const stripe = await wmill.getResource("f/bot/stripe");
+        const resp = await fetch(
+          `https://api.stripe.com/v1/invoices/search?query=customer_email:'${encodeURIComponent(args.email)}'`,
+          { headers: { Authorization: `Bearer ${stripe.apiKey}` } }
+        );
+        const data = await resp.json();
+        return { content: [{ type: "text", text: JSON.stringify(data.data?.slice(0, 5), null, 2) }] };
+      }
+    ),
+    tool(
+      "get_customer",
+      "Look up a Stripe customer by email or name",
+      { query: z.string().describe("Customer name or email") },
+      async (args) => {
+        const stripe = await wmill.getResource("f/bot/stripe");
+        const resp = await fetch(
+          `https://api.stripe.com/v1/customers/search?query=name~'${encodeURIComponent(args.query)}' OR email~'${encodeURIComponent(args.query)}'`,
+          { headers: { Authorization: `Bearer ${stripe.apiKey}` } }
+        );
+        const data = await resp.json();
+        return { content: [{ type: "text", text: JSON.stringify(data.data?.slice(0, 5), null, 2) }] };
+      }
+    ),
+  ],
+});
+```
+
+"Did Acme pay?" → the AI calls `get_customer` → then `search_invoices` → responds in plain English. It never sees the Stripe secret key.
+
+## Why this matters
+
+The tool implementation fetches secrets from [Windmill resources](/docs/core_concepts/resources_and_types) at runtime. The AI agent sees the tool signature — "give me an email, I'll return invoice data" — but the credential lives in Windmill's encrypted resource store, injected only inside the tool function.
+
+Compare this to the typical setup: `STRIPE_SECRET_KEY` in an env var, the AI framework has full `process.env` access, and if the platform leaks env vars (as Vercel just demonstrated), your secrets are gone.
+
+## The security model
+
+The [Windmill sandbox](/docs/core_concepts/ai_sandbox) (backed by [nsjail](/docs/advanced/security_isolation#nsjail-sandboxing)) isolates scripts at the process level:
+
+- **Credential isolation**: API keys live in Windmill's encrypted [resource store](/docs/core_concepts/resources_and_types). The AI agent's `process.env` only contains Windmill runtime variables (workspace ID, job ID) — not your secrets. Even if the AI is jailbroken, there are no credentials in its environment to exfiltrate.
+- **Filesystem isolation**: the script runs in an isolated mount namespace. It can only access its job directory and explicitly mounted [volumes](/docs/core_concepts/volumes).
+- **Resource limits**: CPU, memory, and process limits per job prevent runaway execution.
+- **Network isolation** (optional): by default, scripts have outbound network access (needed for API calls in tools). For stricter setups, you can enable network namespace isolation via [unshare flags](/docs/advanced/security_isolation#pid-namespace-isolation) (`--net`) to cut all outbound access — forcing everything through explicitly defined tools.
+
+The key insight: even without network isolation, the AI can't *authenticate* to Stripe (or any other service) because it never has the key. It can only access what you wire up as tools.
+
+## Try it
+
+The full setup (Discord Gateway connection, heartbeat config, handler script with tool use) is in the guide:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Build an AI Discord bot"
+		description="Full guide: WebSocket trigger setup, heartbeat configuration, and handler script with tool use."
+		href="/docs/misc/guides/discord_bot"
+	/>
+	<DocCard
+		title="WebSocket triggers"
+		description="Connect to WebSocket servers and trigger scripts on incoming messages."
+		href="/docs/core_concepts/websocket_triggers"
+	/>
+</div>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="AI sandbox"
+		description="How Windmill isolates AI agents from credentials and the host environment."
+		href="/docs/core_concepts/ai_sandbox"
+	/>
+	<DocCard
+		title="Security and isolation"
+		description="nsjail, PID namespaces, and network isolation options."
+		href="/docs/advanced/security_isolation"
+	/>
+</div>
+
+To add Stripe tools: create a `stripe` resource in your workspace with your API key, define the tools in your handler script, and deploy.
