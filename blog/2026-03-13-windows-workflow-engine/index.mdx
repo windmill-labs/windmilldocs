@@ -25,7 +25,7 @@ Windmill's Windows worker is a single executable — `windmill-ee.exe`. It runs 
 
 - **Worker**: connects directly to the Windmill database, executes jobs
 - **Server**: runs the Windmill API and web UI
-- **Agent**: connects to a remote Windmill server over HTTPS — no direct database access, ideal for workers behind firewalls
+- **Agent**: connects to a remote Windmill server over HTTPS — no direct database access, ideal for workers behind firewalls. See [agent workers](/docs/core_concepts/agent_workers) for how to generate tokens
 
 ### Installing as a Windows service
 
@@ -141,20 +141,19 @@ $result | ConvertTo-Json
 
 ### Private Azure Artifacts modules
 
-```powershell
-#require -Module Az.Accounts
-#require -Module CompanyInternalTools -Repository https://pkgs.dev.azure.com/contoso/_packaging/InternalFeed/nuget/v2
+Configure your Azure Artifacts feed URL and PAT in [instance settings](/docs/advanced/imports#private-repository-azure-artifacts-feed), then use `Import-Module` as usual — Windmill checks the private feed first and falls back to PowerShell Gallery.
 
+```powershell
 param(
     [string]$ServerName,
     [string[]]$Checks = @("cpu", "memory", "disk")
 )
 
+Import-Module CompanyInternalTools
+
 $results = Invoke-ServerHealthCheck -ServerName $ServerName -Checks $Checks
 $results | ConvertTo-Json
 ```
-
-Windmill resolves `#require` directives automatically, including from private NuGet feeds.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
