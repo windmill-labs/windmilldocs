@@ -341,10 +341,6 @@ You can filter on:
 - **Encryption key** - Workspace encryption key
 - **[Workspace dependencies](../../core_concepts/55_workspace_dependencies/index.mdx)** - Shared dependency files. Creating, archiving, or deleting workspace dependencies triggers deployment callbacks for git sync.
 
-### Force branch
-
-The `force_branch` setting (configurable in `wmill.yaml`) overrides the branch Windmill commits to, regardless of the branch configured in the git repository resource. This is useful when you want all git sync commits to land on a specific branch (e.g. a staging branch) without changing the repository connection.
-
 ## Workspace forks integration
 
 Git sync automatically creates corresponding git branches for [workspace forks](../20_workspace_forks/index.mdx). When you fork a workspace with git sync enabled, Windmill creates a branch with the naming pattern `wm-fork/<parent-branch>/<fork-name>` and keeps it synchronized with the forked workspace.
