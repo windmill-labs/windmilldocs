@@ -134,7 +134,7 @@ Notes:
 - Masking happens in-memory before the logs are written to the database, so plaintext secrets never land in `job_logs`.
 - If your script needs to display a partial secret (e.g. the last 4 characters of a token), use string transformations inside the script before logging, since the full match will always be masked.
 
-## Secret storage backends <span className="text-red-500">EE</span>
+## Secret storage backends
 
 By default, Windmill stores encrypted secrets in its own database using a workspace-specific symmetric key. On [Enterprise Edition](/pricing), superadmins can instead delegate secret storage to an external secret manager, keeping the ciphertext out of the Windmill database entirely.
 
