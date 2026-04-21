@@ -11,9 +11,9 @@ import DocCard from '@site/src/components/DocCard';
 
 # Sandboxed AI bots: give capabilities, not credentials
 
-The [Vercel security incident](https://vercel.com/kb/bulletin/vercel-april-2026-security-incident) earlier this month leaked customer environment variables, including API keys for payment processors and databases. A compromised third-party AI tool gave an attacker access to an employee account, and from there to customer secrets stored as env vars. The attacker is [demanding $2M](https://www.bleepingcomputer.com/news/security/vercel-confirms-breach-as-hackers-claim-to-be-selling-stolen-data/) for the data.
+The [Vercel security incident](https://vercel.com/kb/bulletin/vercel-april-2026-security-incident) earlier this month leaked customer environment variables, including API keys for payment processors and databases. A month before that, [compromised LiteLLM packages on PyPI](https://docs.litellm.ai/blog/security-update-march-2026) stole AWS, GCP, and SSH credentials from developer machines. Secrets stored as env vars or in plaintext keep ending up in the wrong hands.
 
-It's a reminder that secrets in environment variables are one compromise away from exposure. If you're building AI agents that call sensitive APIs, the question is: does the agent actually need to see the API key, or just the ability to call the API?
+If you're building AI agents that call sensitive APIs, the question is: does the agent actually need to see the API key, or just the ability to call the API?
 
 {/* truncate */}
 
