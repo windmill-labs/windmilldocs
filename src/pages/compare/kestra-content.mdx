@@ -149,6 +149,20 @@ export function QASection({ id, kicker, question, summary, kestra, windmill, bot
 				)}
 			</motion.div>
 
+			{bottomLine && (
+				<motion.div
+					{...fadeIn}
+					className="rounded-xl border-l-4 border-blue-500 bg-blue-50/70 dark:bg-blue-950/30 p-5 mb-8"
+				>
+					<div className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-1">
+						Short answer
+					</div>
+					<div className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
+						{bottomLine}
+					</div>
+				</motion.div>
+			)}
+
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 				<motion.div
 					{...fadeIn}
@@ -178,20 +192,6 @@ export function QASection({ id, kicker, question, summary, kestra, windmill, bot
 			</div>
 
 			{children}
-
-			{bottomLine && (
-				<motion.div
-					{...fadeIn}
-					className="rounded-xl border-l-4 border-blue-500 bg-blue-50/70 dark:bg-blue-950/30 p-5"
-				>
-					<div className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-1">
-						Bottom line
-					</div>
-					<div className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
-						{bottomLine}
-					</div>
-				</motion.div>
-			)}
 		</section>
 	);
 }
@@ -208,9 +208,8 @@ export default function KestraCompareContent({ title, description }) {
 							Windmill vs Kestra
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
-							If you're evaluating Kestra and Windmill side-by-side, this page is for you.
-							We walk through the eight questions teams actually ask during a bake-off, and
-							we say honestly where each platform is the better choice.
+							Eight questions teams ask during a bake-off, with an honest answer on each one
+							for where Windmill or Kestra is the better pick.
 						</p>
 						<HeroCTAButtons />
 					</motion.div>
@@ -328,34 +327,27 @@ export default function KestraCompareContent({ title, description }) {
 				kestra={
 					<>
 						<p>
-							Built for <strong>mixed teams</strong>: data engineers, SREs, platform engineers <em>and</em> business
-							users. The declarative YAML authoring plus a no-code UI makes it easier for analysts or
-							operations people to edit workflows directly.
-						</p>
-						<p>
-							Kestra explicitly targets the boundary between technical and non-technical collaborators,
-							and this is arguably its strongest design axis.
+							<strong>Mixed teams.</strong> YAML + a no-code UI let analysts and ops people edit workflows directly
+							alongside engineers. Kestra's strongest design axis.
 						</p>
 					</>
 				}
 				windmill={
 					<>
 						<p>
-							Built primarily for <strong>developer-led teams</strong> (backend engineers, platform engineers,
-							data engineers) who want the full engineering loop: code, version control, local
-							development, code review, CI/CD, AI coding tools.
+							<strong>Developer-led teams.</strong> Engineers own the platform end-to-end: code, Git, local dev,
+							code review, CI/CD, AI coding tools.
 						</p>
 						<p>
-							Non-developers consume the platform through auto-generated UIs, custom apps and a
-							dedicated operator role, but they rarely author workflows themselves.
+							Non-developers consume through auto-generated UIs, custom apps and an operator role.
+							They don't author workflows.
 						</p>
 					</>
 				}
 				bottomLine={
 					<>
-						Windmill is the better fit if engineering owns the platform end-to-end and non-developers
-						primarily consume what engineering ships. Kestra is the better fit if you actively need
-						non-engineers to author workflows.
+						<strong>Windmill</strong> if engineering owns the platform end-to-end. <strong>Kestra</strong> if non-engineers
+						need to author workflows themselves.
 					</>
 				}
 			/>
@@ -364,39 +356,39 @@ export default function KestraCompareContent({ title, description }) {
 			<QASection
 				id="authoring"
 				kicker="02 · Authoring model"
-				question="YAML or code?"
-				summary="This is the most consequential difference between the two platforms, and the rest of the comparison flows from it."
+				question="YAML or code? And how much of the platform is manageable as code?"
+				summary="The most consequential difference, and it extends beyond workflows to how much of the platform itself lives in Git."
 				kestra={
 					<>
 						<p>
-							<strong>Declarative YAML.</strong> A workflow is a YAML file where each step references a plugin task
-							type (e.g. <code>io.kestra.plugin.scripts.python.Script</code>). Scripts can be inlined or
-							referenced as external files. Arguments between steps are passed through explicit outputs.
+							<strong>Declarative YAML.</strong> Each step is a plugin task (e.g.
+							<code> io.kestra.plugin.scripts.python.Script</code>). Arguments pass through explicit outputs.
+							The no-code UI generates the same YAML.
 						</p>
 						<p>
-							The no-code UI editor generates the same YAML behind the scenes, so the two surfaces
-							stay in sync.
+							<strong>Partial IaC.</strong> <code>kestractl</code> + <a href="https://kestra.io/docs/version-control-cicd/git" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Git sync</a> deploy flows and namespace files. Users,
+							RBAC and tenant settings still live in the UI or behind the API.
 						</p>
 					</>
 				}
 				windmill={
 					<>
 						<p>
-							<strong>Code.</strong> A step is just a function in TypeScript, Python, Go, Bash or SQL. Arguments
-							flow between steps as normal return values. Flows can be built visually in the flow
-							editor or expressed as code. Both compile to the same representation.
+							<strong>Code.</strong> A step is a function in TS, Python, Go, Bash or SQL. Arguments flow between
+							steps as return values. Flows can be visual or code; both compile to the same thing.
 						</p>
 						<p>
-							There is no separate YAML layer to learn: the function signature <em>is</em> the interface.
+							<strong>Full IaC.</strong> Scripts, flows, apps, resources, variables, secrets, schedules, folders,
+							groups and permissions are all files in Git, deployed via the <Link to="/docs/advanced/cli" className="text-blue-500 hover:underline">Windmill CLI</Link> and <Link to="/docs/advanced/git_sync" className="text-blue-500 hover:underline">Git sync</Link>.
+							Internal tooling runs like application code: PRs, reviews, rollbacks, CI/CD.
 						</p>
 					</>
 				}
 				bottomLine={
 					<>
-						<strong>Code has a higher ceiling</strong> (the full language and its libraries) at the cost of requiring
-						engineering ownership. <strong>YAML has a lower floor</strong> (easier for newcomers and
-						non-engineers, consistent structure) but a lower ceiling (complex logic needs templating
-						or plugins). Neither is universally better. This is a genuine trade-off.
+						<strong>Code</strong> has a higher ceiling (full language + libraries); <strong>YAML</strong> has a lower floor
+						(friendlier for non-engineers). On platform-level IaC, <strong>Windmill goes further</strong>:
+						the whole workspace is manageable as code, not just flows.
 					</>
 				}
 			/>
@@ -405,40 +397,37 @@ export default function KestraCompareContent({ title, description }) {
 			<QASection
 				id="scope"
 				kicker="03 · Scope"
-				question="An orchestrator, or a full developer platform?"
-				summary="Kestra and Windmill sit at different altitudes in the stack. This affects what else you'll need around them."
+				question="Just orchestration, or orchestration + more?"
+				summary="Both tools are full workflow orchestrators. The question is what else each one covers on the same runtime."
 				kestra={
 					<>
 						<p>
-							Kestra is <strong>purpose-built for orchestration</strong>: data pipelines, infra automation,
-							AI/ML workflows. It does that one thing deeply, with a large plugin catalog and strong
-							governance features.
+							<strong>Orchestration, focused.</strong> Data pipelines, infra automation, AI/ML workflows. Large
+							plugin catalog, strong governance. Everything centered on running flows.
 						</p>
 						<p>
-							If you need dashboards, admin tools or internal apps alongside your workflows, you bring
-							a separate system (Retool, Streamlit, custom React) and stitch them together.
+							Dashboards, admin tools or internal apps? You bring a separate system (Retool, Streamlit,
+							custom React) and integrate.
 						</p>
 					</>
 				}
 				windmill={
 					<>
 						<p>
-							Windmill is a <strong>unified developer platform</strong>: scripts, flows, internal apps
-							(low-code + React / Svelte) and AI agents all run on the same runtime, sharing one RBAC
-							model, one secrets store and one deployment pipeline.
+							<strong>Orchestration + more.</strong> The same queue-based workflow engine, plus scripts-as-APIs,
+							internal apps (low-code + React/Svelte) and AI agents, all on one runtime, one RBAC,
+							one secrets store.
 						</p>
 						<p>
-							This expands what a single tool covers, but it also means more surface area to learn
-							if you only need orchestration.
+							Broader scope means more surface area to learn if orchestration is the only thing you need.
 						</p>
 					</>
 				}
 				bottomLine={
 					<>
-						If you're consolidating tools or building an internal platform from scratch, Windmill's
-						broader scope saves integrating three or four systems. If you already have solutions for
-						internal apps, admin UIs and agent frameworks, Kestra's tighter scope is a feature,
-						with fewer overlapping concepts.
+						<strong>Windmill</strong> if you want orchestration <em>and</em> internal apps, scripts-as-APIs and agents
+						in one tool. <strong>Kestra</strong> if focused orchestration is the job and you already have
+						solutions for the rest.
 					</>
 				}
 			/>
@@ -452,34 +441,30 @@ export default function KestraCompareContent({ title, description }) {
 				kestra={
 					<>
 						<p>
-							<strong>A curated plugin catalog of 1,200+ plugins</strong>. Official plugins for common data-stack
-							tools (Snowflake, BigQuery, dbt, Airbyte, Salesforce, Databricks…) and triggers for
-							Kafka, AMQP, JMS, MQTT, S3 events and more.
+							<strong>1,200+ curated plugins.</strong> Official connectors for Snowflake, BigQuery, dbt, Airbyte,
+							Salesforce, Databricks. Triggers for Kafka, AMQP, JMS, MQTT, S3 events.
 						</p>
 						<p>
-							When a plugin exists, integrating is often just a few lines of YAML. When one doesn't,
-							you either write a plugin or drop to an inline script.
+							Plugin exists? A few lines of YAML. Plugin doesn't? Write one or drop to inline script.
 						</p>
 					</>
 				}
 				windmill={
 					<>
 						<p>
-							<strong>Any npm, PyPI, Go or Maven package is a first-class import</strong>. There is no plugin layer
-							between you and the SDKs. You write against the vendor's real library. A community
-							Hub offers reusable scripts and flows for common tasks.
+							<strong>Any npm, PyPI, Go or Maven package is a first-class import.</strong> No plugin layer: you
+							call the vendor's real SDK. A community Hub has reusable scripts and flows.
 						</p>
 						<p>
-							Triggers cover HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and WebSocket.
+							Built-in triggers: HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP, WebSocket.
 						</p>
 					</>
 				}
 				bottomLine={
 					<>
-						<strong>For niche, novel or bleeding-edge systems, or anywhere you need the full vendor SDK,
-						Windmill wins by letting you import it directly.</strong> For mainstream data-stack tools
-						Kestra has official plugins for, Kestra is often faster to get started; its curated
-						catalog is genuinely larger than Windmill's Hub today.
+						<strong>Windmill</strong> wins on niche or SDK-heavy systems (direct import).
+						<strong> Kestra</strong> wins on mainstream data-stack tools with an official plugin; its catalog
+						is genuinely larger today.
 					</>
 				}
 			/>
@@ -493,35 +478,29 @@ export default function KestraCompareContent({ title, description }) {
 				kestra={
 					<>
 						<p>
-							Non-developers can <strong>author workflows directly</strong> by editing YAML or using the no-code
-							UI (which generates YAML). Approval workflows and governance controls can gate what
-							they're allowed to change.
+							<strong>Non-developers can author.</strong> Edit YAML directly or use the no-code UI. Approval and
+							governance gate what they can change.
 						</p>
 						<p>
-							This is the scenario Kestra is explicitly designed for: one platform where engineers
-							and business users co-author flows.
+							Engineers and business users co-author flows. Kestra's designed scenario.
 						</p>
 					</>
 				}
 				windmill={
 					<>
 						<p>
-							Non-developers <strong>consume</strong> Windmill through auto-generated UIs (one form per script), custom
-							apps built by engineers, and a dedicated operator role that only sees and runs approved
-							workflows.
+							<strong>Non-developers consume, not author.</strong> Auto-generated UIs (one form per script), custom
+							apps, a locked-down operator role.
 						</p>
 						<p>
-							Authoring steps still requires writing code, so analysts and business users rarely
-							edit workflows themselves. Engineering ships, operators run.
+							Authoring requires code. Engineering ships, operators run.
 						</p>
 					</>
 				}
 				bottomLine={
 					<>
-						<strong>If your model is "engineering builds, non-engineers run," Windmill's operator experience
-						is stronger</strong>: auto-generated UIs and a locked-down operator role with no authoring
-						surface at all. If analysts, ops or business users need to actively author workflows,
-						Kestra is the better fit.
+						<strong>Windmill</strong> for "engineering builds, non-engineers run": strongest operator experience.
+						<strong> Kestra</strong> when non-engineers need to actively author workflows.
 					</>
 				}
 			/>
@@ -535,34 +514,31 @@ export default function KestraCompareContent({ title, description }) {
 				kestra={
 					<>
 						<p>
-							Kestra uses a queue-based, event-driven architecture that scales horizontally.
-							Per-task overhead comes from JVM startup, plugin loading and state persistence.
+							<strong>Queue-based, horizontally scalable.</strong> Per-task overhead: JVM startup, plugin loading,
+							state persistence.
 						</p>
 						<p>
-							For heavy-duty data pipelines where each task runs for minutes or more, this overhead
-							is negligible.
+							For long data tasks (minutes+), overhead is negligible.
 						</p>
 					</>
 				}
 				windmill={
 					<>
 						<p>
-							Same queue-based architecture, but optimized for low cold-start latency (~10ms).
-							In <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-500 hover:underline">dedicated-worker mode</Link>, pre-warmed runtimes keep the language and
-							dependency environment resident.
+							<strong>Same architecture, ~10ms cold starts.</strong> <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> keeps runtimes
+							and dependencies pre-warmed.
 						</p>
 						<p>
-							For short-running, high-volume tasks (webhooks, alerts, small scripts) this means fewer
-							workers for the same throughput.
+							Short, high-volume tasks (webhooks, alerts, small scripts): fewer workers for the same
+							throughput.
 						</p>
 					</>
 				}
 				bottomLine={
 					<>
-						On our <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">reproducible benchmarks</Link>, Windmill runs 40 lightweight Python tasks
-						roughly 3× faster than Kestra in dedicated-worker mode on equivalent hardware. For tasks that
-						run for minutes, the difference disappears. <strong>If your workload is dominated by short,
-						high-volume runs, Windmill is meaningfully cheaper to operate.</strong>
+						<strong>Windmill is ~3× faster on lightweight tasks</strong> in dedicated-worker mode on equivalent
+						hardware (<Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">reproducible benchmarks</Link>). For multi-minute tasks, the gap disappears.
+						Short, high-volume workloads are meaningfully cheaper on Windmill.
 					</>
 				}
 			>
@@ -587,27 +563,29 @@ export default function KestraCompareContent({ title, description }) {
 				kestra={
 					<>
 						<p>
-							<strong>Apache 2.0</strong> community edition, free and unlimited self-hosted. Enterprise edition adds
-							SSO, multi-tenancy, audit logs, advanced RBAC. <strong>Pricing is not publicly disclosed</strong>
-							and requires a sales conversation. Also available as a managed cloud.
+							<strong>Apache 2.0,</strong> free and unlimited self-hosted. Managed cloud available.
+						</p>
+						<p>
+							Enterprise adds SSO, multi-tenancy, audit logs, advanced RBAC.
+							<strong> Pricing not public;</strong> sales conversation required.
 						</p>
 					</>
 				}
 				windmill={
 					<>
 						<p>
-							<strong>AGPLv3</strong> community edition, free and unlimited self-hosted. Enterprise edition adds
-							SSO, audit logs, dedicated workers, advanced worker groups, with <strong>public per-seat and
-							per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>. Also available as a managed cloud.
+							<strong>AGPLv3,</strong> free and unlimited self-hosted. Managed cloud available.
+						</p>
+						<p>
+							Enterprise adds SSO, audit logs, dedicated workers, advanced worker groups.
+							<strong> Public per-seat and per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>.
 						</p>
 					</>
 				}
 				bottomLine={
 					<>
-						<strong>Windmill discloses Enterprise pricing upfront</strong>, where Kestra requires engaging sales.
-						<strong> Kestra's Apache 2.0 license is more permissive</strong> if you plan to modify and redistribute
-						Kestra itself as part of a commercial product. On pure "can I self-host for free,"
-						both answer yes.
+						<strong>Windmill publishes Enterprise pricing; Kestra doesn't.</strong> Kestra's Apache 2.0 is more
+						permissive than Windmill's AGPLv3 if you plan to redistribute. Both are free to self-host.
 					</>
 				}
 			/>
