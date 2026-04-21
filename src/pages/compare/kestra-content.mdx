@@ -1,0 +1,747 @@
+---
+title: "Windmill vs Kestra: an honest side-by-side comparison"
+description: "Evaluating Kestra and Windmill? A neutral, question-driven comparison across scope, authoring model, integrations, collaboration, performance, and pricing — including where each tool is genuinely the better choice."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import {
+	Check,
+	X,
+	Users,
+	FileCode,
+	Layers,
+	Puzzle,
+	UsersRound,
+	Gauge,
+	Scale,
+	Compass,
+	ArrowRight,
+} from 'lucide-react';
+import LogoClouds from '../../landing/LogoClouds';
+import GithubStarCount from '../../landing/GithubStarCount';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import ProductCTA from '../../components/products/ProductCTA';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 },
+};
+
+{/* ── The 8 big questions ── */}
+
+export const bigQuestions = [
+	{ id: 'audience',       kicker: 'Audience',        short: 'Who is each built for?',             icon: Users },
+	{ id: 'authoring',      kicker: 'Authoring model', short: 'YAML or code?',                      icon: FileCode },
+	{ id: 'scope',          kicker: 'Scope',           short: 'Orchestrator or full platform?',     icon: Layers },
+	{ id: 'integrations',   kicker: 'Integrations',    short: 'Plugins or imports?',                icon: Puzzle },
+	{ id: 'collaboration',  kicker: 'Collaboration',   short: 'What about non-developers?',         icon: UsersRound },
+	{ id: 'performance',    kicker: 'Performance',     short: 'Throughput and operational cost',    icon: Gauge },
+	{ id: 'licensing',      kicker: 'Licensing',       short: 'Open source, pricing, self-hosting', icon: Scale },
+	{ id: 'verdict',        kicker: 'Verdict',         short: 'Where is each one better?',          icon: Compass },
+];
+
+{/* ── Comparison table data ── */}
+
+export const comparisonRows = [
+	{ section: 'Platform scope' },
+	{ feature: 'Workflow orchestration', windmill: true, kestra: true },
+	{ feature: 'Scripts as standalone APIs & scheduled jobs', windmill: true, kestra: false },
+	{ feature: 'Internal apps (low-code + React / Svelte)', windmill: true, kestra: false },
+	{ feature: 'AI agents with tool calling & sandboxes', windmill: true, kestra: 'Partial' },
+	{ feature: 'Approval steps & operator portals', windmill: true, kestra: false },
+
+	{ section: 'Authoring experience' },
+	{ feature: 'Declarative YAML authoring', windmill: false, kestra: true },
+	{ feature: 'Step code in TypeScript, Python, Go, Bash, SQL', windmill: true, kestra: 'Partial' },
+	{ feature: 'Direct argument passing between steps', windmill: true, kestra: 'Via outputs' },
+	{ feature: 'Local dev, CLI, Git sync, VS Code, AI coding tools', windmill: true, kestra: 'Partial' },
+	{ feature: 'Automated dependency resolution & caching', windmill: true, kestra: false },
+	{ feature: 'Auto-generated UIs from script inputs', windmill: true, kestra: false },
+
+	{ section: 'Ecosystem & integrations' },
+	{ feature: 'Curated plugin / task catalog', windmill: 'Hub', kestra: '1,200+' },
+	{ feature: 'Any npm / PyPI / Go module as an import', windmill: true, kestra: 'Partial' },
+	{ feature: 'Community templates & blueprints', windmill: true, kestra: true },
+
+	{ section: 'Collaboration' },
+	{ feature: 'Non-developers can author workflows', windmill: 'Partial', kestra: true },
+	{ feature: 'Non-developers can run & monitor workflows', windmill: true, kestra: true },
+	{ feature: 'Dedicated operator role / operator UI', windmill: true, kestra: 'Partial' },
+
+	{ section: 'Production & governance' },
+	{ feature: 'Open source & self-hostable', windmill: 'AGPLv3', kestra: 'Apache 2.0' },
+	{ feature: 'RBAC, audit logs, SSO', windmill: true, kestra: true },
+	{ feature: '~3× faster execution (lightweight tasks, dedicated mode)', windmill: true, kestra: false },
+	{ feature: 'Public Enterprise pricing', windmill: true, kestra: false },
+];
+
+export function CheckCell({ value }) {
+	if (value === true) {
+		return <Check className="w-5 h-5 text-emerald-500 mx-auto" />;
+	}
+	if (value === false) {
+		return <X className="w-5 h-5 text-gray-400 mx-auto" />;
+	}
+	return <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">{value}</span>;
+}
+
+{/* ── FAQ ── */}
+
+export const faqs = [
+	{
+		question: 'Is Windmill a drop-in replacement for Kestra?',
+		textAnswer:
+			'Both platforms solve workflow orchestration with a queue-based, event-driven architecture, so the mental model transfers. Porting involves rewriting YAML workflow definitions as Windmill scripts and flows. Workflows that rely on specific Kestra plugins for exotic systems may require replacing those plugins with equivalent SDK calls in code.',
+	},
+	{
+		question: 'Can I migrate Kestra YAML flows to Windmill automatically?',
+		textAnswer:
+			'No, there is no automated YAML-to-Windmill converter today. In practice, the migration is a manual rewrite where each Kestra task becomes a Windmill script or flow step. Most ported workflows end up shorter because Windmill passes arguments directly between steps and auto-generates input UIs.',
+	},
+	{
+		question: 'Does Windmill have a plugin catalog comparable to Kestra\'s 1,200+ plugins?',
+		textAnswer:
+			'No. Windmill has a community Hub of reusable scripts and flows but not a curated plugin catalog the size of Kestra\'s. The trade-off: in Windmill, any npm, PyPI, Go or Maven package is a first-class integration via a normal import, so the effective catalog is the package ecosystems themselves. For mainstream data-pipeline tools that Kestra has official plugins for, Kestra is often easier to get started with.',
+	},
+	{
+		question: 'Can non-technical users author workflows on Windmill?',
+		textAnswer:
+			'Only partially. Windmill has a visual flow editor and auto-generated UIs, but authoring steps still involves writing code. Kestra\'s declarative YAML (and no-code UI that generates it) is easier for analysts or business users to author directly. If that audience is central, Kestra is the better fit.',
+	},
+	{
+		question: 'How does performance actually compare?',
+		textAnswer:
+			'We publish reproducible benchmarks covering Airflow, Prefect, Temporal, Kestra, Hatchet and Windmill. For lightweight task batches on a single worker, Windmill is slightly faster than Kestra in normal mode, and roughly 3× faster in dedicated-worker mode. For heavy-duty tasks that run for minutes, per-task overhead is a rounding error and the gap disappears.',
+	},
+	{
+		question: 'What about the licenses — AGPLv3 vs Apache 2.0?',
+		textAnswer:
+			'Kestra\'s community edition is Apache 2.0, which is more permissive if you plan to modify and redistribute. Windmill is AGPLv3, which requires source availability for network-exposed modifications. Both are genuinely free to self-host for unmodified use. If license permissiveness is a hard constraint, Kestra wins this axis.',
+	},
+	{
+		question: 'Is pricing public?',
+		textAnswer:
+			'Windmill publishes per-seat and per-worker Enterprise pricing on its pricing page. Kestra\'s Enterprise pricing is not publicly disclosed and requires a sales conversation.',
+	},
+];
+
+{/* ── Section wrapper helper ── */}
+
+export function QASection({ id, kicker, question, summary, kestra, windmill, bottomLine, children }) {
+	return (
+		<section id={id} className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
+			<motion.div {...fadeIn} className="mb-10">
+				<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+					{kicker}
+				</div>
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+					{question}
+				</h2>
+				{summary && (
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						{summary}
+					</p>
+				)}
+			</motion.div>
+
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+				<motion.div
+					{...fadeIn}
+					className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-6 shadow-sm"
+				>
+					<div className="mb-4 flex items-center gap-2">
+						<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+						<span className="text-base font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+					</div>
+					<div className="text-gray-700 dark:text-gray-200 leading-relaxed space-y-3">
+						{windmill}
+					</div>
+				</motion.div>
+				<motion.div
+					{...fadeIn}
+					className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6"
+				>
+					<div className="mb-4">
+						<span className="text-base font-bold bg-gradient-to-r from-[#F02C56] to-[#B53BF0] bg-clip-text text-transparent">
+							Kestra
+						</span>
+					</div>
+					<div className="text-gray-700 dark:text-gray-200 leading-relaxed space-y-3">
+						{kestra}
+					</div>
+				</motion.div>
+			</div>
+
+			{children}
+
+			{bottomLine && (
+				<motion.div
+					{...fadeIn}
+					className="rounded-xl border-l-4 border-blue-500 bg-blue-50/70 dark:bg-blue-950/30 p-5 max-w-4xl"
+				>
+					<div className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-1">
+						Bottom line
+					</div>
+					<div className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
+						{bottomLine}
+					</div>
+				</motion.div>
+			)}
+		</section>
+	);
+}
+
+export default function KestraCompareContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ── Hero ── */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Windmill vs Kestra
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							If you're evaluating Kestra and Windmill side-by-side, this page is for you.
+							We walk through the eight questions teams actually ask during a bake-off — and
+							we say honestly where each platform is the better choice.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<div className="flex items-center gap-8">
+							<motion.div
+								initial={{ opacity: 0, x: -30 }}
+								whileInView={{ opacity: 1, x: 0 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.5 }}
+								className="flex items-center justify-center w-40 h-40 rounded-3xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 shadow-md"
+							>
+								<motion.img
+									src="/img/windmill.svg"
+									alt="Windmill"
+									className="w-20 h-20"
+									animate={{ rotate: 360 }}
+									transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+								/>
+							</motion.div>
+							<motion.div
+								initial={{ opacity: 0, scale: 0.5 }}
+								whileInView={{ opacity: 1, scale: 1 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.4, delay: 0.2 }}
+								className="text-xl font-semibold text-gray-400 dark:text-gray-500"
+							>
+								vs
+							</motion.div>
+							<motion.div
+								initial={{ opacity: 0, x: 30 }}
+								whileInView={{ opacity: 1, x: 0 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.5, delay: 0.1 }}
+								className="flex items-center justify-center w-40 h-40 rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
+							>
+								<span className="text-3xl font-bold bg-gradient-to-r from-[#F02C56] to-[#B53BF0] bg-clip-text text-transparent">
+									Kestra
+								</span>
+							</motion.div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* ── Jump-to navigation (table of contents) ── */}
+			<section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-10 pb-4">
+				<motion.div {...fadeIn} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/60 p-6">
+					<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">
+						The 8 questions
+					</div>
+					<ol className="divide-y divide-gray-100 dark:divide-gray-800">
+						{bigQuestions.map((q, i) => (
+							<li key={q.id}>
+								<a
+									href={`#${q.id}`}
+									className="group flex items-baseline gap-4 py-3 !no-underline hover:text-blue-600 dark:hover:text-blue-400"
+								>
+									<span className="text-xs font-mono font-semibold text-gray-400 dark:text-gray-500 w-6 shrink-0">
+										{String(i + 1).padStart(2, '0')}
+									</span>
+									<span className="text-sm font-medium text-gray-500 dark:text-gray-400 w-32 shrink-0">
+										{q.kicker}
+									</span>
+									<span className="text-base text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 flex-1">
+										{q.short}
+									</span>
+									<ArrowRight className="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-blue-500 group-hover:translate-x-1 transition-all shrink-0" />
+								</a>
+							</li>
+						))}
+					</ol>
+				</motion.div>
+			</section>
+
+			<div className="mt-4 -mb-12 md:-mb-16"><LogoClouds /></div>
+
+			{/* ── Quick take ── */}
+			<section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-24">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+						<div className="mb-3 flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+							<span className="text-base font-bold text-blue-600 dark:text-blue-400">
+								Windmill in one sentence
+							</span>
+						</div>
+						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
+							An open-source <strong>developer platform</strong> where one runtime powers scripts,
+							flows, internal apps and AI agents, authored in code (TS / Python / Go / Bash / SQL)
+							with the full local-dev loop — built for engineering-led teams.
+						</p>
+					</div>
+					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6">
+						<div className="mb-3">
+							<span className="text-base font-bold bg-gradient-to-r from-[#F02C56] to-[#B53BF0] bg-clip-text text-transparent">
+								Kestra in one sentence
+							</span>
+						</div>
+						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
+							An open-source <strong>orchestration platform</strong> focused on data, AI and infrastructure
+							workflows, authored declaratively in YAML, with a large plugin catalog and a UI designed
+							for mixed teams including non-developers.
+						</p>
+					</div>
+				</motion.div>
+			</section>
+
+			{/* ── At a glance table ── */}
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-20">
+				<motion.div {...fadeIn} className="mx-auto max-w-3xl text-center mb-12">
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						At a glance
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						Where each platform lands across scope, authoring, ecosystem, collaboration and governance.
+						Scroll down for the detail behind each axis.
+					</p>
+				</motion.div>
+				<motion.div {...fadeIn} className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
+					<table className="w-full text-sm">
+						<thead className="bg-gray-50 dark:bg-gray-800/60">
+							<tr>
+								<th className="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white">Feature</th>
+								<th className="px-6 py-4 text-center font-semibold text-blue-600 dark:text-blue-400 w-32">Windmill</th>
+								<th className="px-6 py-4 text-center font-semibold text-gray-700 dark:text-gray-300 w-32">Kestra</th>
+							</tr>
+						</thead>
+						<tbody className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900">
+							{comparisonRows.map((row, i) => row.section ? (
+								<tr key={`section-${i}`} className="bg-gray-50 dark:bg-gray-800/40">
+									<td colSpan={3} className="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+										{row.section}
+									</td>
+								</tr>
+							) : (
+								<tr key={row.feature}>
+									<td className="px-6 py-4 text-gray-700 dark:text-gray-300">{row.feature}</td>
+									<td className="px-6 py-4 text-center"><CheckCell value={row.windmill} /></td>
+									<td className="px-6 py-4 text-center"><CheckCell value={row.kestra} /></td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</motion.div>
+			</section>
+
+			{/* ── Q1: Audience ── */}
+			<QASection
+				id="audience"
+				kicker="01 · Audience"
+				question="Who is each platform built for?"
+				summary="Both platforms describe themselves as 'for everyone,' but the authoring model quietly picks a primary audience."
+				kestra={
+					<>
+						<p>
+							Built for <strong>mixed teams</strong> — data engineers, SREs, platform engineers <em>and</em> business
+							users. The declarative YAML authoring plus a no-code UI makes it easier for analysts or
+							operations people to edit workflows directly.
+						</p>
+						<p>
+							Kestra explicitly targets the boundary between technical and non-technical collaborators,
+							and this is arguably its strongest design axis.
+						</p>
+					</>
+				}
+				windmill={
+					<>
+						<p>
+							Built primarily for <strong>developer-led teams</strong> — backend engineers, platform engineers,
+							data engineers — who want the full engineering loop: code, version control, local
+							development, code review, CI/CD, AI coding tools.
+						</p>
+						<p>
+							Non-developers consume the platform through auto-generated UIs, custom apps and a
+							dedicated operator role, but they rarely author workflows themselves.
+						</p>
+					</>
+				}
+				bottomLine={
+					<>
+						Kestra is the better fit if you actively need non-engineers to author workflows.
+						Windmill is the better fit if engineering owns the platform end-to-end and non-developers
+						primarily consume what engineering ships.
+					</>
+				}
+			/>
+
+			{/* ── Q2: Authoring model ── */}
+			<QASection
+				id="authoring"
+				kicker="02 · Authoring model"
+				question="YAML or code?"
+				summary="This is the most consequential difference between the two platforms, and the rest of the comparison flows from it."
+				kestra={
+					<>
+						<p>
+							<strong>Declarative YAML.</strong> A workflow is a YAML file where each step references a plugin task
+							type (e.g. <code>io.kestra.plugin.scripts.python.Script</code>). Scripts can be inlined or
+							referenced as external files. Arguments between steps are passed through explicit outputs.
+						</p>
+						<p>
+							The no-code UI editor generates the same YAML behind the scenes, so the two surfaces
+							stay in sync.
+						</p>
+					</>
+				}
+				windmill={
+					<>
+						<p>
+							<strong>Code.</strong> A step is just a function in TypeScript, Python, Go, Bash or SQL. Arguments
+							flow between steps as normal return values. Flows can be built visually in the flow
+							editor or expressed as code — both compile to the same representation.
+						</p>
+						<p>
+							There is no separate YAML layer to learn: the function signature <em>is</em> the interface.
+						</p>
+					</>
+				}
+				bottomLine={
+					<>
+						<strong>YAML has a lower floor</strong> (easier for newcomers and non-engineers, consistent structure) but
+						a lower ceiling (complex logic needs templating or plugins). <strong>Code has a higher ceiling</strong>
+						(the full language and its libraries) at the cost of requiring engineering ownership.
+						Neither is universally better — this is a genuine trade-off.
+					</>
+				}
+			/>
+
+			{/* ── Q3: Scope ── */}
+			<QASection
+				id="scope"
+				kicker="03 · Scope"
+				question="An orchestrator, or a full developer platform?"
+				summary="Kestra and Windmill sit at different altitudes in the stack. This affects what else you'll need around them."
+				kestra={
+					<>
+						<p>
+							Kestra is <strong>purpose-built for orchestration</strong> — data pipelines, infra automation,
+							AI/ML workflows. It does that one thing deeply, with a large plugin catalog and strong
+							governance features.
+						</p>
+						<p>
+							If you need dashboards, admin tools or internal apps alongside your workflows, you bring
+							a separate system (Retool, Streamlit, custom React) and stitch them together.
+						</p>
+					</>
+				}
+				windmill={
+					<>
+						<p>
+							Windmill is a <strong>unified developer platform</strong>: scripts, flows, internal apps
+							(low-code + React / Svelte) and AI agents all run on the same runtime, sharing one RBAC
+							model, one secrets store and one deployment pipeline.
+						</p>
+						<p>
+							This expands what a single tool covers, but it also means more surface area to learn
+							if you only need orchestration.
+						</p>
+					</>
+				}
+				bottomLine={
+					<>
+						If you already have solutions for internal apps, admin UIs and agent frameworks, Kestra's
+						tighter scope is a feature — fewer overlapping concepts. If you're consolidating tools
+						or building an internal platform from scratch, Windmill's broader scope saves integrating
+						three or four systems.
+					</>
+				}
+			/>
+
+			{/* ── Q4: Integrations ── */}
+			<QASection
+				id="integrations"
+				kicker="04 · Integrations"
+				question="Plugin catalog, or package ecosystem?"
+				summary="Both platforms claim broad integration coverage — but they reach it through fundamentally different models."
+				kestra={
+					<>
+						<p>
+							<strong>A curated plugin catalog of 1,200+ plugins</strong>. Official plugins for common data-stack
+							tools (Snowflake, BigQuery, dbt, Airbyte, Salesforce, Databricks…) and triggers for
+							Kafka, AMQP, JMS, MQTT, S3 events and more.
+						</p>
+						<p>
+							When a plugin exists, integrating is often just a few lines of YAML. When one doesn't,
+							you either write a plugin or drop to an inline script.
+						</p>
+					</>
+				}
+				windmill={
+					<>
+						<p>
+							<strong>Any npm, PyPI, Go or Maven package is a first-class import</strong>. There is no plugin layer
+							between you and the SDKs — you write against the vendor's real library. A community
+							Hub offers reusable scripts and flows for common tasks.
+						</p>
+						<p>
+							Triggers cover HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and WebSocket.
+						</p>
+					</>
+				}
+				bottomLine={
+					<>
+						<strong>For mainstream data-stack tools Kestra has official plugins for, Kestra is often faster
+						to get started.</strong> For niche, novel or bleeding-edge systems — or anywhere you need
+						the full vendor SDK — Windmill wins by letting you import it directly. Kestra's curated
+						catalog is genuinely larger than Windmill's Hub today.
+					</>
+				}
+			/>
+
+			{/* ── Q5: Collaboration ── */}
+			<QASection
+				id="collaboration"
+				kicker="05 · Collaboration"
+				question="How do non-developers fit in?"
+				summary="Both platforms give non-developers a way to run workflows. The difference is whether they can also author them."
+				kestra={
+					<>
+						<p>
+							Non-developers can <strong>author workflows directly</strong> by editing YAML or using the no-code
+							UI (which generates YAML). Approval workflows and governance controls can gate what
+							they're allowed to change.
+						</p>
+						<p>
+							This is the scenario Kestra is explicitly designed for: one platform where engineers
+							and business users co-author flows.
+						</p>
+					</>
+				}
+				windmill={
+					<>
+						<p>
+							Non-developers <strong>consume</strong> Windmill through auto-generated UIs (one form per script), custom
+							apps built by engineers, and a dedicated operator role that only sees and runs approved
+							workflows.
+						</p>
+						<p>
+							Authoring steps still requires writing code, so analysts and business users rarely
+							edit workflows themselves — engineering ships, operators run.
+						</p>
+					</>
+				}
+				bottomLine={
+					<>
+						<strong>If analysts, ops or business users need to actively author workflows, Kestra is the better
+						fit.</strong> If your model is "engineering builds, non-engineers run," Windmill's
+						operator experience is stronger — auto-generated UIs and a locked-down operator role
+						with no authoring surface at all.
+					</>
+				}
+			/>
+
+			{/* ── Q6: Performance ── */}
+			<QASection
+				id="performance"
+				kicker="06 · Performance"
+				question="How do they compare on throughput and operational cost?"
+				summary="For short, high-volume tasks, per-task overhead dominates. For long-running data jobs, it barely matters."
+				kestra={
+					<>
+						<p>
+							Kestra uses a queue-based, event-driven architecture that scales horizontally.
+							Per-task overhead comes from JVM startup, plugin loading and state persistence.
+						</p>
+						<p>
+							For heavy-duty data pipelines where each task runs for minutes or more, this overhead
+							is negligible.
+						</p>
+					</>
+				}
+				windmill={
+					<>
+						<p>
+							Same queue-based architecture, but optimized for low cold-start latency (~10ms).
+							In <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-500 hover:underline">dedicated-worker mode</Link>, pre-warmed runtimes keep the language and
+							dependency environment resident.
+						</p>
+						<p>
+							For short-running, high-volume tasks (webhooks, alerts, small scripts) this means fewer
+							workers for the same throughput.
+						</p>
+					</>
+				}
+				bottomLine={
+					<>
+						On our <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">reproducible benchmarks</Link>, Windmill runs 40 lightweight Python tasks
+						roughly 3× faster than Kestra in dedicated-worker mode on equivalent hardware. For tasks that
+						run for minutes, the difference disappears. <strong>If your workload is dominated by short,
+						high-volume runs, Windmill is meaningfully cheaper to operate.</strong>
+					</>
+				}
+			>
+				<motion.div {...fadeIn} className="max-w-5xl mx-auto mb-8">
+					<BenchmarkVisualization
+						usecase="fibonacci_40_10"
+						language="python"
+						engines={['kestra', 'windmill', 'windmill_dedicated']}
+						workers={1}
+						title="40 lightweight Python tasks — Kestra vs Windmill"
+						maintainAspectRatio={false}
+					/>
+				</motion.div>
+			</QASection>
+
+			{/* ── Q7: Licensing ── */}
+			<QASection
+				id="licensing"
+				kicker="07 · Licensing"
+				question="Open source, pricing and self-hosting?"
+				summary="Both have capable open-source editions. The differences are in license permissiveness and pricing transparency."
+				kestra={
+					<>
+						<p>
+							<strong>Apache 2.0</strong> community edition, free and unlimited self-hosted. Enterprise edition adds
+							SSO, multi-tenancy, audit logs, advanced RBAC — <strong>pricing is not publicly disclosed</strong>
+							and requires a sales conversation. Also available as a managed cloud.
+						</p>
+					</>
+				}
+				windmill={
+					<>
+						<p>
+							<strong>AGPLv3</strong> community edition, free and unlimited self-hosted. Enterprise edition adds
+							SSO, audit logs, dedicated workers, advanced worker groups — <strong>public per-seat and
+							per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>. Also available as a managed cloud.
+						</p>
+					</>
+				}
+				bottomLine={
+					<>
+						<strong>Kestra's Apache 2.0 license is more permissive</strong> if you plan to modify and redistribute
+						Kestra itself as part of a commercial product. <strong>Windmill discloses Enterprise pricing upfront</strong>,
+						where Kestra requires engaging sales. On pure "can I self-host for free," both answer yes.
+					</>
+				}
+			/>
+
+			{/* ── Q8: Verdict ── */}
+			<section id="verdict" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
+				<motion.div {...fadeIn} className="mb-12">
+					<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+						08 · Verdict
+					</div>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Where is each one the better choice?
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						No tool wins on every axis. Here are the scenarios where each platform is genuinely
+						the right pick.
+					</p>
+				</motion.div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<motion.div
+						{...fadeIn}
+						className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-8 shadow-md"
+					>
+						<div className="mb-4 flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-6 h-6" />
+							<span className="text-xl font-bold text-blue-600 dark:text-blue-400">
+								Pick Windmill if…
+							</span>
+						</div>
+						<ul className="space-y-3 text-gray-700 dark:text-gray-200">
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+								<span>You want <strong>one platform for scripts, flows, internal apps and AI agents</strong> — not three separate systems.</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+								<span>Your team is <strong>developer-led</strong> and values a real engineering loop (CLI, VS Code, Git sync, AI coding tools).</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+								<span>You want <strong>any npm / PyPI / Go package</strong> as an integration, not a plugin catalog.</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+								<span>Low per-task latency matters — <strong>high-volume short tasks</strong>, webhooks, alerts, internal tooling.</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+								<span>You want <strong>public, per-seat Enterprise pricing</strong> without a sales call.</span>
+							</li>
+						</ul>
+					</motion.div>
+
+					<motion.div
+						{...fadeIn}
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-8"
+					>
+						<div className="mb-4">
+							<span className="text-xl font-bold bg-gradient-to-r from-[#F02C56] to-[#B53BF0] bg-clip-text text-transparent">
+								Pick Kestra if…
+							</span>
+						</div>
+						<ul className="space-y-3 text-gray-700 dark:text-gray-200">
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+								<span>Non-developers (analysts, ops, business users) need to <strong>author</strong> workflows, not just run them.</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+								<span>Your workflows are dominated by <strong>mainstream data-stack tools</strong> (Snowflake, dbt, Airbyte, Databricks…) and you benefit from an official plugin.</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+								<span>You prefer <strong>declarative YAML's consistency</strong> over the flexibility of arbitrary code.</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+								<span>You need <strong>Apache 2.0 licensing</strong> specifically.</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+								<span>You only need orchestration and already have solutions for internal apps and admin UIs.</span>
+							</li>
+						</ul>
+					</motion.div>
+				</div>
+			</section>
+
+			{/* ── FAQ ── */}
+			<UseCaseFAQ faqs={faqs} />
+
+			{/* ── Final CTA ── */}
+			<ProductCTA />
+		</div>
+	);
+}
