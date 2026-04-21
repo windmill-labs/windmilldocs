@@ -321,45 +321,6 @@ export default function KestraCompareContent({ title, description }) {
 				</motion.div>
 			</section>
 
-			{/* ── At a glance table ── */}
-			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-20">
-				<motion.div {...fadeIn} className="mx-auto max-w-3xl text-center mb-12">
-					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						At a glance
-					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Where each platform lands across scope, authoring, ecosystem, collaboration and governance.
-						Scroll down for the detail behind each axis.
-					</p>
-				</motion.div>
-				<motion.div {...fadeIn} className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
-					<table className="w-full text-sm">
-						<thead className="bg-gray-50 dark:bg-gray-800/60">
-							<tr>
-								<th className="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white">Feature</th>
-								<th className="px-6 py-4 text-center font-semibold text-blue-600 dark:text-blue-400 w-32">Windmill</th>
-								<th className="px-6 py-4 text-center font-semibold text-gray-700 dark:text-gray-300 w-32">Kestra</th>
-							</tr>
-						</thead>
-						<tbody className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900">
-							{comparisonRows.map((row, i) => row.section ? (
-								<tr key={`section-${i}`} className="bg-gray-50 dark:bg-gray-800/40">
-									<td colSpan={3} className="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-										{row.section}
-									</td>
-								</tr>
-							) : (
-								<tr key={row.feature}>
-									<td className="px-6 py-4 text-gray-700 dark:text-gray-300">{row.feature}</td>
-									<td className="px-6 py-4 text-center"><CheckCell value={row.windmill} /></td>
-									<td className="px-6 py-4 text-center"><CheckCell value={row.kestra} /></td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</motion.div>
-			</section>
-
 			{/* ── Q1: Audience ── */}
 			<QASection
 				id="audience"
@@ -394,9 +355,9 @@ export default function KestraCompareContent({ title, description }) {
 				}
 				bottomLine={
 					<>
-						Kestra is the better fit if you actively need non-engineers to author workflows.
 						Windmill is the better fit if engineering owns the platform end-to-end and non-developers
-						primarily consume what engineering ships.
+						primarily consume what engineering ships. Kestra is the better fit if you actively need
+						non-engineers to author workflows.
 					</>
 				}
 			/>
@@ -434,10 +395,10 @@ export default function KestraCompareContent({ title, description }) {
 				}
 				bottomLine={
 					<>
-						<strong>YAML has a lower floor</strong> (easier for newcomers and non-engineers, consistent structure) but
-						a lower ceiling (complex logic needs templating or plugins). <strong>Code has a higher ceiling</strong>
-						(the full language and its libraries) at the cost of requiring engineering ownership.
-						Neither is universally better — this is a genuine trade-off.
+						<strong>Code has a higher ceiling</strong> (the full language and its libraries) at the cost of requiring
+						engineering ownership. <strong>YAML has a lower floor</strong> (easier for newcomers and
+						non-engineers, consistent structure) but a lower ceiling (complex logic needs templating
+						or plugins). Neither is universally better — this is a genuine trade-off.
 					</>
 				}
 			/>
@@ -476,10 +437,10 @@ export default function KestraCompareContent({ title, description }) {
 				}
 				bottomLine={
 					<>
-						If you already have solutions for internal apps, admin UIs and agent frameworks, Kestra's
-						tighter scope is a feature — fewer overlapping concepts. If you're consolidating tools
-						or building an internal platform from scratch, Windmill's broader scope saves integrating
-						three or four systems.
+						If you're consolidating tools or building an internal platform from scratch, Windmill's
+						broader scope saves integrating three or four systems. If you already have solutions for
+						internal apps, admin UIs and agent frameworks, Kestra's tighter scope is a feature —
+						fewer overlapping concepts.
 					</>
 				}
 			/>
@@ -517,9 +478,9 @@ export default function KestraCompareContent({ title, description }) {
 				}
 				bottomLine={
 					<>
-						<strong>For mainstream data-stack tools Kestra has official plugins for, Kestra is often faster
-						to get started.</strong> For niche, novel or bleeding-edge systems — or anywhere you need
-						the full vendor SDK — Windmill wins by letting you import it directly. Kestra's curated
+						<strong>For niche, novel or bleeding-edge systems — or anywhere you need the full vendor SDK —
+						Windmill wins by letting you import it directly.</strong> For mainstream data-stack tools
+						Kestra has official plugins for, Kestra is often faster to get started; its curated
 						catalog is genuinely larger than Windmill's Hub today.
 					</>
 				}
@@ -559,10 +520,10 @@ export default function KestraCompareContent({ title, description }) {
 				}
 				bottomLine={
 					<>
-						<strong>If analysts, ops or business users need to actively author workflows, Kestra is the better
-						fit.</strong> If your model is "engineering builds, non-engineers run," Windmill's
-						operator experience is stronger — auto-generated UIs and a locked-down operator role
-						with no authoring surface at all.
+						<strong>If your model is "engineering builds, non-engineers run," Windmill's operator experience
+						is stronger</strong> — auto-generated UIs and a locked-down operator role with no authoring
+						surface at all. If analysts, ops or business users need to actively author workflows,
+						Kestra is the better fit.
 					</>
 				}
 			/>
@@ -645,9 +606,10 @@ export default function KestraCompareContent({ title, description }) {
 				}
 				bottomLine={
 					<>
-						<strong>Kestra's Apache 2.0 license is more permissive</strong> if you plan to modify and redistribute
-						Kestra itself as part of a commercial product. <strong>Windmill discloses Enterprise pricing upfront</strong>,
-						where Kestra requires engaging sales. On pure "can I self-host for free," both answer yes.
+						<strong>Windmill discloses Enterprise pricing upfront</strong>, where Kestra requires engaging sales.
+						<strong> Kestra's Apache 2.0 license is more permissive</strong> if you plan to modify and redistribute
+						Kestra itself as part of a commercial product. On pure "can I self-host for free,"
+						both answer yes.
 					</>
 				}
 			/>
