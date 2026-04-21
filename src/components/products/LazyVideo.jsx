@@ -10,7 +10,7 @@ export default function LazyVideo({ src, className, loop = true }) {
 
 		const observer = new IntersectionObserver(
 			([entry]) => {
-				if (entry.isIntersecting) {
+				if (entry.intersectionRatio >= 0.999) {
 					el.play().catch(() => {
 						setShowControls(true);
 					});
@@ -18,7 +18,7 @@ export default function LazyVideo({ src, className, loop = true }) {
 					el.pause();
 				}
 			},
-			{ threshold: 0.25 }
+			{ threshold: [0, 1.0] }
 		);
 
 		observer.observe(el);

@@ -407,7 +407,7 @@ export default function DataPipelinesContent({ title, description }) {
 							A data pipeline is a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">DAG of steps</Link> where each step runs in its own isolated environment. Each step can be written in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link> or any supported language, so you can mix <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link> queries with Polars transformations and remote warehouse calls in the same run.
 						</p>
 						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-							Steps pass datasets as lightweight pointers to your <Link to="/docs/core_concepts/persistent_storage" className="text-blue-600 dark:text-blue-400 hover:underline">workspace S3 bucket</Link>, so there is no serialization overhead between steps and no memory limits on what you can move through the pipeline. Every run gets retries, error handling, scheduling and full <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link> out of the box.
+							Steps pass datasets as lightweight pointers to your <Link to="/docs/core_concepts/persistent_storage" className="text-blue-600 dark:text-blue-400 hover:underline">workspace S3 bucket</Link>, so there is no serialization overhead between steps and no memory limits on what you can move through the pipeline. Every run gets retries, error handling, scheduling and full <Link to="/platform/observability" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link> out of the box.
 						</p>
 					</motion.div>
 					<motion.div {...stagger(0.1)}>
@@ -423,7 +423,13 @@ export default function DataPipelinesContent({ title, description }) {
 			{/* DAG visualizer */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-					<motion.div {...fadeIn}>
+					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/workflow-editor/platform-flow-editor-overview.webm"
+						/>
+					</motion.div>
+					<motion.div {...fadeIn} className="order-1 md:order-2">
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 							DAG visualizer
 						</h2>
@@ -434,25 +440,13 @@ export default function DataPipelinesContent({ title, description }) {
 							<BookOpen className="w-4 h-4" /> Learn more about the flow editor
 						</Link>
 					</motion.div>
-					<motion.div {...stagger(0.1)}>
-						<LazyVideo
-							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-							src="/img/platform/workflow-editor/platform-flow-editor-overview.webm"
-						/>
-					</motion.div>
 				</div>
 			</div>
 
 			{/* Steps as code in any language */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
-						<LazyVideo
-							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-							src="/img/platform/script-editor/platform-script-20languages.webm"
-						/>
-					</motion.div>
-					<motion.div {...fadeIn} className="order-1 md:order-2">
+					<motion.div {...fadeIn}>
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 							Steps as code in any language
 						</h2>
@@ -463,13 +457,25 @@ export default function DataPipelinesContent({ title, description }) {
 							<BookOpen className="w-4 h-4" /> Learn more about the script editor
 						</Link>
 					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/script-editor/platform-script-20languages.webm"
+						/>
+					</motion.div>
 				</div>
 			</div>
 
 			{/* Data tables */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-					<motion.div {...fadeIn}>
+					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/datatables/platform-datatables-asset-tracking.webm"
+						/>
+					</motion.div>
+					<motion.div {...fadeIn} className="order-1 md:order-2">
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 							Built-in data tables
 						</h2>
@@ -483,25 +489,13 @@ export default function DataPipelinesContent({ title, description }) {
 							<BookOpen className="w-4 h-4" /> Learn more about data tables
 						</Link>
 					</motion.div>
-					<motion.div {...stagger(0.1)}>
-						<LazyVideo
-							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-							src="/img/platform/datatables/platform-datatables-asset-tracking.webm"
-						/>
-					</motion.div>
 				</div>
 			</div>
 
 			{/* Retries and error handlers */}
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
-						<LazyVideo
-							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-							src="/img/platform/workflow-editor/platform-flow-step-level-reliability.webm"
-						/>
-					</motion.div>
-					<motion.div {...fadeIn} className="order-1 md:order-2">
+					<motion.div {...fadeIn}>
 						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 							Retries and error handlers
 						</h2>
@@ -511,6 +505,12 @@ export default function DataPipelinesContent({ title, description }) {
 						<Link to="/docs/flows/retries" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
 							<BookOpen className="w-4 h-4" /> Learn more about retries and error handling
 						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/workflow-editor/platform-flow-step-level-reliability.webm"
+						/>
 					</motion.div>
 				</div>
 			</div>
