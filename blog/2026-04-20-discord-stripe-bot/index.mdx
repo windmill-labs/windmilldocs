@@ -26,6 +26,8 @@ A Discord bot where your team asks billing questions and gets answers from Strip
 The bot runs as a single Windmill script connected to Discord via a [WebSocket trigger](/docs/core_concepts/websocket_triggers). The agent has two tools:
 
 ```typescript
+import { query, tool, createSdkMcpServer } from "@anthropic-ai/claude-agent-sdk";
+
 const toolServer = createSdkMcpServer({
   name: "billing-tools",
   tools: [
