@@ -2,6 +2,7 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 import { motion } from 'framer-motion';
 import { BookOpen } from 'lucide-react';
+import LazyVideo from '../products/LazyVideo';
 
 const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -15,8 +16,13 @@ const stagger = (delay = 0) => ({
 	transition: { duration: 0.5, delay }
 });
 
-export default function BuiltInTriggers({ variant = 'script' }) {
-	const label = variant === 'workflow' ? 'workflow' : 'script';
+export default function BuiltInTriggers({ variant = 'script', video }) {
+	const label =
+		variant === 'workflow'
+			? 'workflow'
+			: variant === 'data-pipeline'
+			? 'data pipeline'
+			: 'script';
 
 	return (
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
@@ -33,12 +39,19 @@ export default function BuiltInTriggers({ variant = 'script' }) {
 					</Link>
 				</motion.div>
 				<motion.div {...stagger(0.1)}>
-					<img
-						src="/img/money-pages/triggers.webp"
-						alt={`${label} triggers`}
-						className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
-						loading="lazy"
-					/>
+					{video ? (
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src={video}
+						/>
+					) : (
+						<img
+							src="/img/money-pages/triggers.webp"
+							alt={`${label} triggers`}
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							loading="lazy"
+						/>
+					)}
 				</motion.div>
 			</div>
 		</div>

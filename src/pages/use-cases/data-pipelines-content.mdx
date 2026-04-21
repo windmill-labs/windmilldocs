@@ -9,9 +9,11 @@ import { motion } from 'framer-motion';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import UseCaseCarousel from '../../components/use-cases/UseCaseCarousel';
 import LogoClouds from '../../landing/LogoClouds';
-import { ArrowRight, AlertTriangle, Zap, GitBranch, FileJson, RotateCcw, Code, Play, BookOpen, Database, Plug, Layers, Rocket, Eye } from 'lucide-react';
+import { ArrowRight, FileJson, BookOpen } from 'lucide-react';
 import BarChart from '../../components/BarChart';
-import TabFeatureSection from '../../components/use-cases/TabFeatureSection';
+import LazyVideo from '../../components/products/LazyVideo';
+import BuiltInTriggers from '../../components/use-cases/BuiltInTriggers';
+import BuiltForProduction from '../../components/use-cases/BuiltForProduction';
 import GithubStarCount from '../../landing/GithubStarCount';
 import ProductCTA from '../../components/products/ProductCTA';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
@@ -112,22 +114,6 @@ export const integrations = [
 	{ id: 'polars', logo: '/third_party_logos/polars.svg', label: 'Polars', desc: 'Lightning-fast DataFrames in Python. Read and write Parquet directly from your workspace S3 bucket with zero config.', image: '/img/money-pages/polars.webp', docLink: '/docs/core_concepts/data_pipelines#windmill-integration-with-polars-and-duckdb-for-data-pipelines' },
 	{ id: 'datasets', logo: null, label: 'Assets lineage', desc: 'Pipeline steps pass datasets as lightweight JSON pointers to S3 objects. No serialization overhead, no memory limits.', image: '/img/money-pages/dataset-ref.webp', docLink: '/docs/core_concepts/persistent_storage' },
 ];
-
-{/* TODO: add screenshots for each DAG feature (parallel branches, restart from any step, retries & error handlers, trigger from anywhere) */}
-
-export const dagFeatures = [
-	{ icon: Code, title: 'Steps as code', desc: <span>Write each pipeline step in the language that fits best. <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link>, Rust, PHP and 20+ more. Mix and match freely within a single pipeline.</span>, image: '/img/money-pages/workflow-code.webp', docLink: '/docs/getting_started/scripts_quickstart' },
-	{ icon: Layers, title: 'DAG visualizer', desc: <span>See your entire pipeline as an interactive graph. Inspect inputs and outputs at each node, follow data as it flows between <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">steps</Link>, spot bottlenecks at a glance and restart from any step without replaying the full run.</span>, image: '/img/money-pages/dag-workflow.webp', docLink: '/docs/flows/flow_editor' },
-	{ icon: Plug, title: 'Connect to any service', desc: <span>Connect to <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">databases, APIs and third-party services</Link> using typed <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Credentials are stored centrally and injected at runtime. Share connections across scripts and flows without duplicating secrets.</span>, image: '/img/money-pages/resource.webp', docLink: '/docs/core_concepts/resources_and_types' },
-	{ icon: GitBranch, title: 'Parallel branches', desc: <span>Fan out extraction steps across independent sources with <Link to="/docs/flows/flow_branches" className="text-blue-600 dark:text-blue-400 hover:underline">parallel branches</Link> and collect results automatically. Configure <Link to="/docs/flows/flow_loops" className="text-blue-600 dark:text-blue-400 hover:underline">for-loops</Link> with configurable parallelism to process batches concurrently.</span>, image: '/img/money-pages/parallel-branches.webp', docLink: '/docs/flows/flow_branches' },
-	{ icon: RotateCcw, title: 'Restart from any step', desc: <span>Fix a bug and re-run from the failing step in the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link>. No need to replay the entire pipeline or re-extract data from upstream sources.</span>, image: '/img/money-pages/restart-from-step.webp', docLink: '/docs/flows/flow_editor' },
-	{ icon: AlertTriangle, title: 'Retries & error handlers', desc: <span>Each step can have its own <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> strategy and configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with exponential backoff. Run a custom script on failure (send a Slack alert, create a ticket), stop the pipeline early or mark non-critical steps to continue on error.</span>, image: '/img/money-pages/error-handler.webp', docLink: '/docs/flows/retries' },
-	{ icon: Zap, title: 'Trigger from anywhere', desc: <span>Start pipelines from <Link to="/docs/core_concepts/scheduling" className="text-blue-600 dark:text-blue-400 hover:underline">cron schedules</Link>, <Link to="/docs/core_concepts/webhooks" className="text-blue-600 dark:text-blue-400 hover:underline">webhooks</Link>, <Link to="/docs/getting_started/triggers" className="text-blue-600 dark:text-blue-400 hover:underline">Postgres CDC, Kafka, SQS</Link>, or manually from the UI. Combine multiple trigger types on the same pipeline.</span>, image: '/img/money-pages/triggers.webp', docLink: '/docs/getting_started/triggers' },
-	{ icon: Database, title: 'Data tables', desc: <span>Built-in relational storage with zero setup via <Link to="/docs/core_concepts/persistent_storage/data_tables" className="text-blue-600 dark:text-blue-400 hover:underline">data tables</Link>. Query from Python, TypeScript, SQL or <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link>. Credentials are managed internally and never exposed.</span>, image: '/img/money-pages/datatables.webp', docLink: '/docs/core_concepts/persistent_storage/data_tables' },
-	{ icon: Rocket, title: 'Deploy & version control', desc: <span>Promote pipelines from <Link to="/docs/core_concepts/draft_and_deploy" className="text-blue-600 dark:text-blue-400 hover:underline">draft to production</Link> in one click with full deployment history and instant rollbacks. Sync your workspace with <Link to="/docs/advanced/deploy_gh_gl" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub or GitLab</Link>, use your existing code review workflows and deploy via the UI, the <Link to="/docs/advanced/cli" className="text-blue-600 dark:text-blue-400 hover:underline">CLI</Link> or <Link to="/docs/advanced/git_sync" className="text-blue-600 dark:text-blue-400 hover:underline">CI/CD pipelines</Link>.</span>, image: '/img/money-pages/deploy-workflow.webp', docLink: '/docs/advanced/git_sync' },
-	{ icon: Eye, title: 'Full observability', desc: <span>Every pipeline run is logged with inputs, outputs, duration and status. Filter by success or failure, inspect <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">logs</Link> and re-run with one click. Track resource usage, monitor <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 dark:text-blue-400 hover:underline">worker groups</Link> and set up alerts for failures.</span>, image: '/img/money-pages/monitoring.webp', docLink: '/docs/core_concepts/jobs' },
-];
-
 
 export function IntegrationsSection() {
 	const [active, setActive] = useState(0);
@@ -410,12 +396,126 @@ export default function DataPipelinesContent({ title, description }) {
 
 			<div className="mt-8 -mb-12 md:-mb-16"><LogoClouds /></div>
 
-			{/* DAG orchestration */}
-			<TabFeatureSection
-				title="Everything you need to build and run production-grade data pipelines"
-				subtitle={<>Write each step in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link> or any supported language, connect to your data sources with native <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link> and <Link to="/docs/core_concepts/persistent_storage/ducklake" className="text-blue-600 dark:text-blue-400 hover:underline">Ducklake</Link> integrations, and deploy with built-in scheduling, retries and observability.</>}
-				features={dagFeatures}
-			/>
+			{/* What is a data pipeline on Windmill? */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							What is a data pipeline on Windmill?
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							A data pipeline is a <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">DAG of steps</Link> where each step runs in its own isolated environment. Each step can be written in <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link> or any supported language, so you can mix <Link to="/docs/integrations/duckdb" className="text-blue-600 dark:text-blue-400 hover:underline">DuckDB</Link> queries with Polars transformations and remote warehouse calls in the same run.
+						</p>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Steps pass datasets as lightweight pointers to your <Link to="/docs/core_concepts/persistent_storage" className="text-blue-600 dark:text-blue-400 hover:underline">workspace S3 bucket</Link>, so there is no serialization overhead between steps and no memory limits on what you can move through the pipeline. Every run gets retries, error handling, scheduling and full <Link to="/docs/core_concepts/jobs" className="text-blue-600 dark:text-blue-400 hover:underline">observability</Link> out of the box.
+						</p>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						{/* TODO: video walkthrough of building a data pipeline on Windmill — show the flow editor with a DuckDB step reading from S3, a Polars transformation, and the DAG visualizer with step outputs streaming in real time */}
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/workflow-editor/platform-flow-realtime-logs.webm"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* DAG visualizer */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							DAG visualizer
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							See your entire pipeline as an interactive graph in the <Link to="/docs/flows/flow_editor" className="text-blue-600 dark:text-blue-400 hover:underline">flow editor</Link>. Inspect inputs and outputs at each node, follow data as it flows between steps, spot bottlenecks at a glance and restart from any step without replaying the full run.
+						</p>
+						<Link to="/docs/flows/flow_editor" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about the flow editor
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/workflow-editor/platform-flow-editor-overview.webm"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* Steps as code in any language */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/script-editor/platform-script-20languages.webm"
+						/>
+					</motion.div>
+					<motion.div {...fadeIn} className="order-1 md:order-2">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Steps as code in any language
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Write each pipeline step in the language that fits best. <Link to="/docs/getting_started/scripts_quickstart" className="text-blue-600 dark:text-blue-400 hover:underline">Python, TypeScript, SQL, Go, Bash</Link>, Rust, PHP and 20+ more. Connect to <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-600 dark:text-blue-400 hover:underline">databases, APIs and third-party services</Link> using typed <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">resources</Link>. Credentials are stored centrally and injected at runtime.
+						</p>
+						<Link to="/platform/script-editor" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about the script editor
+						</Link>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* Data tables */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Built-in data tables
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+							Connect your pipeline to your existing <Link to="/docs/core_concepts/resources_and_types" className="text-blue-600 dark:text-blue-400 hover:underline">database resources</Link> (Postgres, MySQL, Snowflake, BigQuery and more) and interact with them directly from your scripts using the <code>wmill.datatable()</code> command.
+						</p>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Read and write rows in any language, track asset lineage across pipeline steps and browse tables visually from the workspace UI. No connection strings, drivers or boilerplate to manage.
+						</p>
+						<Link to="/platform/datatables" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about data tables
+						</Link>
+					</motion.div>
+					<motion.div {...stagger(0.1)}>
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/datatables/platform-datatables-asset-tracking.webm"
+						/>
+					</motion.div>
+				</div>
+			</div>
+
+			{/* Retries and error handlers */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...stagger(0.1)} className="order-2 md:order-1">
+						<LazyVideo
+							className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full shadow-lg"
+							src="/img/platform/workflow-editor/platform-flow-step-level-reliability.webm"
+						/>
+					</motion.div>
+					<motion.div {...fadeIn} className="order-1 md:order-2">
+						<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+							Retries and error handlers
+						</h2>
+						<p className="text-base text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+							Each step can have its own <Link to="/docs/flows/error_handling" className="text-blue-600 dark:text-blue-400 hover:underline">error handling</Link> strategy and configurable <Link to="/docs/flows/retries" className="text-blue-600 dark:text-blue-400 hover:underline">retries</Link> with exponential backoff. Run a custom script on failure (send a Slack alert, create a ticket), stop the pipeline early or mark non-critical steps to continue on error. Restart from the failing step without replaying upstream work.
+						</p>
+						<Link to="/docs/flows/retries" className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline !no-underline">
+							<BookOpen className="w-4 h-4" /> Learn more about retries and error handling
+						</Link>
+					</motion.div>
+				</div>
+			</div>
+
+			<BuiltInTriggers variant="data-pipeline" />
 
 			{/* Integrations: interactive 2-column selector */}
 			<IntegrationsSection />
@@ -491,6 +591,8 @@ export default function DataPipelinesContent({ title, description }) {
 					Windmill also orchestrates Snowflake, BigQuery and other warehouses. You can mix local DuckDB steps with remote warehouse queries in the same pipeline.
 				</p>
 			</div>
+
+			<BuiltForProduction variant="data-pipeline" />
 
 			{/* Performance */}
 			<BenchmarkSection />
