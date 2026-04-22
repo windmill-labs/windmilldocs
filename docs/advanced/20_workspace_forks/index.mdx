@@ -138,6 +138,12 @@ The merge will transfer all selected scripts, flows, apps, resources, and variab
 
 Workspace forks do not copy over triggers when being created. This avoids unnecessary executions or confusing collitions. However, you can still create triggers on your fork to test something, and the merge UI will remind you which ones have been created so that you can manually deploy them and/or disable them or delete them.
 
+### Git sync based merging
+
+When git sync is properly setup, the workspace is synchronized with one of the branches in your repo, and the forks are also synchronized with their own branches. It is then possible your preferred git workflow to merge into or out of these branches to sync, so you can update the fork, or deploy changes into the parent workspace.
+
+## Related features
+
 ### Workspace-specific tags and forks
 
 When [workspace-specific default tags](../../core_concepts/9_worker_groups/index.mdx#set-tags-to-assign-specific-queues) are enabled (the instance setting that appends the workspace id to every job tag, e.g. `python3-myworkspace`), forked workspaces automatically resolve to their **parent workspace's tag**. This means fork jobs are routed to the same worker group as the parent workspace — there is no need to provision separate workers for every fork.
@@ -148,11 +154,6 @@ For example, if the parent workspace is `staging` and a fork `wm-fork-feature1` 
 
 If you want to route fork jobs to their own worker pool — for instance to isolate fork workloads from the parent — you can enable the **"Fork workspace tag: append -fork suffix"** toggle in the instance settings under the **Default Tags** section. When enabled, fork jobs are tagged with the parent workspace id plus a `-fork` suffix (e.g. `python3-staging-fork`), so all forks of a given parent share a common dedicated tag. You can then provision a worker group listening to `*-staging-fork` tags to handle all fork jobs for that parent.
 
-### Git sync based merging
-
-When git sync is properly setup, the workspace is synchronized with one of the branches in your repo, and the forks are also synchronized with their own branches. It is then possible your preferred git workflow to merge into or out of these branches to sync, so you can update the fork, or deploy changes into the parent workspace.
-
-## Related features
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
