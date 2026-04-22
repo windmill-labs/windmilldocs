@@ -373,6 +373,8 @@ Under the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), both types o
 
 When adjustments are made in the Worker Management UI, the workers will shut down and are expected to be restarted by their supervisor (Docker or k8s).
 
+Workers in a group can also be restarted via the API endpoint `POST /api/settings/restart_worker_group/{worker_group}`. This is a global endpoint (not workspace-scoped) that requires devops permissions. The restart is staggered with DB coordination to avoid downtime.
+
 ### Init scripts
 
 [Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.

@@ -23,12 +23,14 @@ Adopting workspace forks corresponds to **stage 2** of the [collaboration and de
 
 ## How workspace forks work
 
-Workspace forks create a complete copy of your workspace, including scripts, flows, apps, resources, and variables. Each fork operates independently and changes can later be merged to a parent workspace through a couple of methods.
+Workspace forks create a complete copy of your workspace, including scripts, flows, apps, resources, variables, and [data tables](../../core_concepts/11_persistent_storage/data_tables.mdx). Each fork operates independently and changes can later be merged to a parent workspace through a couple of methods.
 
 Key features:
 - **Independent development**: Make changes without affecting the parent workspace
 - **Git integration**: Automatically creates corresponding git branches using the git sync workflow
 - **Team collaboration**: Multiple developers can work on separate forks simultaneously
+- **Data table forking**: Data tables are included in the fork, giving each fork its own isolated copy of the data
+- **CLI merge**: Use `wmill workspace merge` to merge changes from a fork back to the parent workspace
 
 ![Workspace Forks and Git Sync](/images/workspace_forks.png)
 
