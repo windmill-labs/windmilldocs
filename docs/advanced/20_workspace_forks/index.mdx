@@ -146,6 +146,17 @@ When git sync is properly setup, the workspace is synchronized with one of the b
 
 ## Related features
 
+### Workspace-specific tags and forks
+
+When [workspace-specific default tags](../../core_concepts/9_worker_groups/index.mdx#set-tags-to-assign-specific-queues) are enabled (the instance setting that appends the workspace id to every job tag, e.g. `python3-myworkspace`), forked workspaces automatically resolve to their **parent workspace's tag**. This means fork jobs are routed to the same worker group as the parent workspace — there is no need to provision separate workers for every fork.
+
+For example, if the parent workspace is `staging` and a fork `wm-fork-feature1` runs a Python script, the job tag will be `python3-staging` (not `python3-wm-fork-feature1`).
+
+#### Dedicated fork workers (optional)
+
+If you want to route fork jobs to their own worker pool — for instance to isolate fork workloads from the parent — you can enable the **"Fork workspace tag: append -fork suffix"** toggle in the instance settings under the **Default Tags** section. When enabled, fork jobs are tagged with the parent workspace id plus a `-fork` suffix (e.g. `python3-staging-fork`), so all forks of a given parent share a common dedicated tag. You can then provision a worker group listening to `*-staging-fork` tags to handle all fork jobs for that parent.
+
+
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Git sync"
