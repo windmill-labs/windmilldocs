@@ -220,3 +220,23 @@ Combined with the ["run on behalf of" selector during deployments](../12_staging
 		href="/docs/core_concepts/staging_prod"
 	/>
 </div>
+
+## User offboarding
+
+When removing a user, you can reassign all their items to another user or [folder](../8_groups_and_folders/index.mdx#folders) so that [schedules](../1_scheduling/index.mdx), [triggers](../../getting_started/8_triggers/index.mdx), and everything else keeps working.
+
+From **Workspace settings** > **Users**, click **Remove** on a user. The modal shows what they own, what runs on their behalf, and what references their paths. Pick a target user or folder, confirm, and everything is moved in one step.
+
+![Offboard user](./offboard_user.png 'Offboard user')
+
+You can also use **Reassign** to transfer ownership without removing the user — useful when moving personal scripts into shared folders.
+
+![Reassign user items](./reassign_user_items.png 'Reassign user items')
+
+If the target already has items at the same paths, the operation is blocked until you resolve the conflicts.
+
+### Instance-level offboarding
+
+[Superadmins](#superadmin) can offboard a user across all workspaces at once from **Instance settings** > **Users**, with a different reassignment target per workspace.
+
+![Global offboard](./global_offboard.png 'Reassign user items globally')

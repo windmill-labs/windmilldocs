@@ -284,20 +284,24 @@ Prefer simple workspace keys (`dev`, `staging`, `prod`) to avoid collisions.
 ## Git sync integration
 
 When [Git sync](../11_git_sync/index.mdx) is configured, workspace-specific items work
-seamlessly with your Git repository setup. Git sync pushes changes to the correct
-workspace-specific files based on the resolved workspace.
+seamlessly with your Git repository setup. On each Windmill-triggered sync, the backend
+invokes the CLI with `--base-url` and `--workspace` set to the current instance and
+workspace id. The CLI matches these against the `workspaces:` entries in `wmill.yaml`
+(on `baseUrl` + `workspaceId`) and applies the corresponding entry — no extra configuration
+on the Windmill side.
 
 - **One git branch per workspace**: each Windmill workspace's `git_repository` resource
-  points to a different branch. Git sync detects the branch and applies the matching
-  `workspaces:` entry automatically.
+  points to a different branch, and the `wmill.yaml` entry for that workspace sets
+  `gitBranch` accordingly.
   - **Production workspace**: `git_repository` pointing to `repoX` on `main` branch
     - Changes to `database.resource.yaml` → pushed as `database.prod.resource.yaml`
   - **Development workspace**: `git_repository` pointing to `repoX` on `dev` branch
     - Changes to `database.resource.yaml` → pushed as `database.dev.resource.yaml`
 
-- **Multiple workspaces on one git branch**: all Windmill workspaces point to the same
-  branch. Set the workspace name in the Git sync advanced settings so Git sync applies the
-  matching `workspaces:` entry.
+- **Multiple workspaces on one git branch** (mono-branch): all Windmill workspaces point to
+  the same branch. List each workspace under `workspaces:` with a distinct `workspaceId`
+  (and the same `gitBranch`); the CLI selects the right entry from the `--workspace` flag
+  the backend passes, so no UI toggle is needed.
 
 ## Related documentation
 
