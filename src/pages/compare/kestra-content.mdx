@@ -109,14 +109,14 @@ export function CheckCell({ value }) {
 {/* ── What you can build — row data ── */}
 
 export const buildRows = [
-	{ feature: 'Workflows',               description: 'Chain scripts into flows with branching, retries and approval steps',    windmill: true, kestra: true },
-	{ feature: 'Data pipelines',          description: 'ETL, syncs and scheduled data jobs with parallel branches',              windmill: true, kestra: true },
-	{ feature: 'Scripts',                 description: 'Functions in any language, deployed as APIs, webhooks or cron jobs',     windmill: true, kestra: false },
-	{ feature: 'AI agent workflows',      description: 'Build agents that call tools, branch on outputs and run as workflows',   windmill: true, kestra: true },
-	{ feature: 'AI sandboxes & volumes',  description: 'Isolated environments with persistent volumes for running agents',       windmill: true, kestra: false },
-	{ feature: 'Low-code internal apps',  description: 'Drag-and-drop dashboards and admin tools with built-in components',      windmill: true, kestra: 'Enterprise' },
-	{ feature: 'Full-code internal apps', description: 'Custom dashboards and admin tools built in React or Svelte',             windmill: true, kestra: false },
-	{ feature: 'Scheduled tasks',         description: 'Cron jobs with retries, error handling and alerting',                    windmill: true, kestra: true },
+	{ feature: 'Workflows',               href: '/use-cases/workflows',         description: 'Chain scripts into flows with branching, retries and approval steps',    windmill: true, kestra: true },
+	{ feature: 'Data pipelines',          href: '/use-cases/data-pipelines',    description: 'ETL, syncs and scheduled data jobs with parallel branches',              windmill: true, kestra: true },
+	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Functions in any language, deployed as APIs, webhooks or cron jobs',     windmill: true, kestra: false },
+	{ feature: 'AI agent workflows',      href: '/use-cases/ai-agents',         description: 'Build agents that call tools, branch on outputs and run as workflows',   windmill: true, kestra: true },
+	{ feature: 'AI sandboxes & volumes',  href: '/platform/sandboxes',          description: 'Isolated environments with persistent volumes for running agents',       windmill: true, kestra: false },
+	{ feature: 'Low-code internal apps',  href: '/use-cases/internal-apps',     description: 'Drag-and-drop dashboards and admin tools with built-in components',      windmill: true, kestra: 'Enterprise' },
+	{ feature: 'Full-code internal apps', href: '/platform/app-builder',        description: 'Custom dashboards and admin tools built in React or Svelte',             windmill: true, kestra: false },
+	{ feature: 'Scheduled tasks',         href: '/use-cases/scheduled-tasks',   description: 'Cron jobs with retries, error handling and alerting',                    windmill: true, kestra: true },
 ];
 
 {/* ── FAQ ── */}
@@ -422,7 +422,15 @@ export default function KestraCompareContent({ title, description }) {
 							{buildRows.map((row) => (
 								<tr key={row.feature}>
 									<td className="px-6 py-4">
-										<div className="font-semibold text-gray-900 dark:text-white">{row.feature}</div>
+										<div className="font-semibold text-gray-900 dark:text-white">
+											{row.href ? (
+												<Link to={row.href} className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">
+													{row.feature}
+												</Link>
+											) : (
+												row.feature
+											)}
+										</div>
 										{row.description && (
 											<div className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{row.description}</div>
 										)}
@@ -494,15 +502,14 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Authoring',
 						windmill: (
 							<p>
-								Build scripts in 20+ languages with full code, then connect them into workflows, data
-								pipelines or full-code internal apps.
+								Build scripts in 20+ languages in the <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>, then connect them into <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">workflows</Link>, data pipelines or <Link to="/platform/app-builder" className="text-blue-500 hover:underline">internal apps</Link>.
 							</p>
 						),
 						kestra: (
 							<p>
-								Declarative YAML. Each step is a plugin task (e.g.
-								<code> io.kestra.plugin.scripts.python.Script</code>). A no-code UI generates the same
-								YAML.
+								Declarative YAML for orchestration. Each step is a <a href="https://kestra.io/plugins" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">plugin task</a>, with support for
+								inline <a href="https://kestra.io/plugins/plugin-script-python" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Python, Node.js, R, Shell and other language scripts</a> in each step. A no-code UI
+								generates the same YAML.
 							</p>
 						),
 					},
@@ -510,9 +517,8 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Local dev & IDE',
 						windmill: (
 							<p>
-								Run scripts locally with the <Link to="/docs/advanced/cli" className="text-blue-500 hover:underline">Windmill CLI</Link>. <Link to="/docs/script_editor/vs_code_scripts" className="text-blue-500 hover:underline">VS Code extension</Link>,
-								native language tooling (LSP, type-checking, linting) and AI coding tools (Claude
-								Code, Codex).
+								Run scripts locally with the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">Windmill CLI</Link>. VS Code extension, native language tooling
+								(LSP, type-checking, linting) and AI coding tools (Claude Code, Codex).
 							</p>
 						),
 						kestra: (
@@ -534,9 +540,9 @@ export default function KestraCompareContent({ title, description }) {
 						),
 						kestra: (
 							<p>
-								Open source ships basic secrets as base64-encoded environment variables. The UI secret
-								manager, namespace- and tenant-scoped secrets, and external backends (Vault, AWS
-								Secrets Manager) are <EnterpriseBadge />.
+								Open source ships <a href="https://kestra.io/docs/concepts/secret" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">basic secrets</a> as base64-encoded environment variables. The UI
+								secret manager, namespace- and tenant-scoped secrets, and external backends (Vault,
+								AWS Secrets Manager) are <EnterpriseBadge />.
 							</p>
 						),
 					},
@@ -545,9 +551,9 @@ export default function KestraCompareContent({ title, description }) {
 						windmill: (
 							<p>
 								Full IaC: scripts, flows, apps, resources, variables, secrets, schedules, folders,
-								groups and permissions are all files in Git, deployed via the CLI and <Link to="/docs/advanced/git_sync" className="text-blue-500 hover:underline">Git sync</Link>. Internal
-								tooling runs like application code: PRs, reviews, rollbacks, CI/CD. Git sync is free
-								for up to 2 users; beyond that is <EnterpriseBadge />.
+								groups and permissions are all files in Git, deployed via the CLI and <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. Internal tooling runs like
+								application code: PRs, reviews, rollbacks, CI/CD. Git sync is free for up to 2 users;
+								beyond that is <EnterpriseBadge />.
 							</p>
 						),
 						kestra: (
@@ -585,8 +591,8 @@ export default function KestraCompareContent({ title, description }) {
 						),
 						kestra: (
 							<p>
-								A curated catalog of 1,200+ plugins. Official connectors for Snowflake, BigQuery, dbt,
-								Airbyte, Salesforce, Databricks and most common data-stack tools.
+								A curated <a href="https://kestra.io/plugins" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">catalog of 1,200+ plugins</a>. Official connectors for Snowflake, BigQuery,
+								dbt, Airbyte, Salesforce, Databricks and most common data-stack tools.
 							</p>
 						),
 					},
@@ -594,13 +600,13 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Receiving events',
 						windmill: (
 							<p>
-								Native triggers for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
+								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
 								WebSocket.
 							</p>
 						),
 						kestra: (
 							<p>
-								Native triggers for Kafka, AMQP, JMS, MQTT, S3 events, webhooks and cron.
+								Native <a href="https://kestra.io/docs/workflow-components/triggers" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">triggers</a> for Kafka, AMQP, JMS, MQTT, S3 events, webhooks and cron.
 							</p>
 						),
 					},
@@ -639,8 +645,9 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Getting in',
 						windmill: (
 							<p>
-								Paste a function body, Windmill infers args, generates a UI, handles dependencies. No
-								YAML to learn. Triggers, schedules, variables, apps migrate one by one.
+								Paste a function body into the <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>, Windmill infers args, generates a UI,
+								handles dependencies. No YAML to learn. <Link to="/platform/triggers" className="text-blue-500 hover:underline">Triggers</Link>, schedules, variables and <Link to="/platform/app-builder" className="text-blue-500 hover:underline">apps</Link> migrate
+								one by one.
 							</p>
 						),
 						kestra: (
@@ -661,9 +668,12 @@ export default function KestraCompareContent({ title, description }) {
 						),
 						kestra: (
 							<p>
-								Workflow YAML is tied to <code>io.kestra.plugin.*</code> task types. Leaving means
-								rewriting plugin-backed tasks against the underlying vendor SDKs, or reproducing the
-								plugin layer on the new platform.
+								Migration difficulty depends on what your flows use. Inline Python, Node or Shell
+								scripts port cleanly, since the code body is standard. Ecosystem plugins
+								(<code>io.kestra.plugin.snowflake.*</code>, <code>stripe.*</code>, etc.) need rewriting
+								against the vendor's SDK. Built-in flow primitives (subflows, retries, conditionals)
+								and Pebble templating (<code>{'{{ inputs.x }}'}</code>) also need reimplementing on the
+								new platform.
 							</p>
 						),
 					},
@@ -688,8 +698,8 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Observability',
 						windmill: (
 							<p>
-								Real-time streaming logs, per-run inputs / outputs / duration, built-in worker queue
-								metrics and a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-500 hover:underline">Prometheus exporter</Link>. Trace ID on every job.
+								<Link to="/platform/observability" className="text-blue-500 hover:underline">Real-time streaming logs</Link>, per-run inputs / outputs / duration, built-in worker queue
+								metrics and a Prometheus exporter. Trace ID on every job.
 							</p>
 						),
 						kestra: (
@@ -715,8 +725,8 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Security',
 						windmill: (
 							<p>
-								SOC 2 Type II compliant. <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-500 hover:underline">RBAC</Link>, SSO (SAML / OIDC), encrypted secrets
-								at rest, sandboxed script execution.
+								SOC 2 Type II compliant. <Link to="/platform/rbac" className="text-blue-500 hover:underline">RBAC</Link>, SSO (SAML / OIDC), encrypted secrets at rest, sandboxed
+								script execution.
 							</p>
 						),
 						kestra: (
@@ -747,9 +757,9 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Performance',
 						windmill: (
 							<p>
-								~10ms cold starts. <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes
-								and dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Roughly 3× faster</Link> than Kestra on lightweight
-								tasks on equivalent hardware.
+								~10ms cold starts. <Link to="/platform/scale" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes and
+								dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Roughly 3× faster</Link> than Kestra on lightweight tasks on
+								equivalent hardware.
 							</p>
 						),
 						kestra: (
