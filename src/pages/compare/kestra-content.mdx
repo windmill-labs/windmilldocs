@@ -23,6 +23,9 @@ import GithubStarCount from '../../landing/GithubStarCount';
 import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 import ProductCTA from '../../components/products/ProductCTA';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
 
 export const fadeIn = {
@@ -128,7 +131,7 @@ export function CheckCell({ value }) {
 export const buildRows = [
 	{ feature: 'Workflows',               href: '/use-cases/workflows',         description: 'Chain scripts into flows with branching, retries and approval steps',    windmill: true, kestra: true },
 	{ feature: 'Data pipelines',          href: '/use-cases/data-pipelines',    description: 'ETL, syncs and scheduled data jobs with parallel branches',              windmill: true, kestra: true },
-	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Functions in any language, deployed as APIs, webhooks or cron jobs',     windmill: true, kestra: false },
+	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Standalone functions exposed as APIs, webhooks or cron jobs without a wrapping workflow',     windmill: true, kestra: false },
 	{ feature: 'AI agent workflows',      href: '/use-cases/ai-agents',         description: 'Build agents that call tools, branch on outputs and run as workflows',   windmill: true, kestra: true },
 	{ feature: 'AI sandboxes & volumes',  href: '/platform/sandboxes',          description: 'Isolated environments with persistent volumes for running agents',       windmill: true, kestra: false },
 	{ feature: 'Low-code internal apps',  href: '/use-cases/internal-apps',     description: 'Drag-and-drop dashboards and admin tools with built-in components',      windmill: true, kestra: 'Enterprise' },
@@ -518,16 +521,77 @@ export default function KestraCompareContent({ title, description }) {
 					{
 						label: 'Authoring',
 						windmill: (
-							<p>
-								Build scripts in 20+ languages in the <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>, then connect them into <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">workflows</Link>, data pipelines or <Link to="/platform/app-builder" className="text-blue-500 hover:underline">internal apps</Link>.
-							</p>
+							<div className="flex flex-col h-full">
+								<p className="min-h-[8.5rem]">
+									Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
+									primitive with its own UI, API endpoint and scheduler; no YAML wrapper required to
+									run. YAML exists in Windmill too, for <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">flows</Link>, resources, schedules and workspace
+									configuration, but it never wraps the script code itself. Any public or private
+									package is a first-class import with automatic dependency resolution.
+								</p>
+								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
+									<Tabs className="unique-tabs">
+										<TabItem value="script" label="main.py" default>
+											<CodeBlock language="python">{`import requests
+
+def main():
+    r = requests.get('https://windmill.dev')
+    return {
+        'status': r.status_code,
+        'text': r.text,
+    }`}</CodeBlock>
+										</TabItem>
+										<TabItem value="yaml" label="flow.yaml">
+											<CodeBlock language="yaml">{`summary: Fetch Windmill homepage
+value:
+  modules:
+    - id: a
+      value:
+        type: script
+        path: f/scripts/fetch_windmill
+        input_transforms: {}`}</CodeBlock>
+										</TabItem>
+									</Tabs>
+								</div>
+							</div>
 						),
 						kestra: (
-							<p>
-								Declarative YAML for orchestration. Each step is a <a href="https://kestra.io/plugins" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">plugin task</a>, with support for
-								inline <a href="https://kestra.io/plugins/plugin-script-python" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Python, Node.js, R, Shell and other language scripts</a> in each step. A no-code UI
-								generates the same YAML.
-							</p>
+							<div className="flex flex-col h-full">
+								<p className="min-h-[8.5rem]">
+									Kestra also has a script editor for <a href="https://kestra.io/plugins/plugin-script-python" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Python, Node.js, R, Shell and other language scripts</a>,
+									saved as namespace files. But a script can't run on its own: every execution
+									happens as a task inside a YAML flow, which defines inputs, outputs, dependencies
+									and triggers. No standalone script primitive with its own UI or API endpoint.
+								</p>
+								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
+									<Tabs className="unique-tabs">
+										<TabItem value="script" label="main.py" default>
+											<CodeBlock language="python">{`import requests
+from kestra import Kestra
+
+r = requests.get('https://kestra.io')
+Kestra.outputs({
+    'status': r.status_code,
+    'text': r.text,
+})`}</CodeBlock>
+										</TabItem>
+										<TabItem value="yaml" label="flow.yaml">
+											<CodeBlock language="yaml">{`id: python_demo
+namespace: company.team
+
+tasks:
+  - id: python
+    type: io.kestra.plugin.scripts.python.Commands
+    namespaceFiles:
+      enabled: true
+    beforeCommands:
+      - pip install requests kestra
+    commands:
+      - python main.py`}</CodeBlock>
+										</TabItem>
+									</Tabs>
+								</div>
+							</div>
 						),
 					},
 					{
@@ -637,8 +701,8 @@ export default function KestraCompareContent({ title, description }) {
 						),
 						kestra: (
 							<p>
-								No plugin for what you need? Write a Java plugin, or drop to an inline script inside a
-								flow.
+								No plugin for what you need? Write a Java plugin, drop to an inline script inside a
+								flow, or save code as namespace files and call it from a flow task.
 							</p>
 						),
 					},
