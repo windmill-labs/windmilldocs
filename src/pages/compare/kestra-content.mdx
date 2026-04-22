@@ -35,9 +35,9 @@ export const fadeIn = {
 {/* ── The 8 big questions ── */}
 
 export const bigQuestions = [
+	{ id: 'build',        kicker: 'What you can build',     short: 'Which solution fits for your specific use case', icon: Boxes },
 	{ id: 'target',       kicker: 'Target',                 short: 'Who the platform is built for',                          icon: Users },
 	{ id: 'devex',        kicker: 'Developer experience',   short: 'How developers interact with the platform',              icon: Terminal },
-	{ id: 'build',        kicker: 'What you can build',     short: 'Data pipelines, internal apps, workflows, AI agents, …', icon: Boxes },
 	{ id: 'integrations', kicker: 'Integrations',           short: 'How the platform integrates with your existing stack',   icon: Puzzle },
 	{ id: 'migration',    kicker: 'Migration & lock-in',    short: 'How hard to get in, how hard to get out',                icon: ArrowRightLeft },
 	{ id: 'enterprise',   kicker: 'Enterprise requirements', short: 'Audit logs, observability, security, performance',      icon: Gauge },
@@ -80,6 +80,14 @@ export const comparisonRows = [
 	{ feature: 'Public Enterprise pricing', windmill: true, kestra: false },
 ];
 
+export function EnterpriseBadge() {
+	return (
+		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
+			Enterprise only
+		</span>
+	);
+}
+
 export function CheckCell({ value }) {
 	if (value === true) {
 		return <Check className="w-5 h-5 text-emerald-500 mx-auto" />;
@@ -87,18 +95,28 @@ export function CheckCell({ value }) {
 	if (value === false) {
 		return <X className="w-5 h-5 text-gray-400 mx-auto" />;
 	}
+	if (value === 'Enterprise') {
+		return (
+			<div className="flex flex-col items-center gap-1">
+				<Check className="w-5 h-5 text-emerald-500" />
+				<EnterpriseBadge />
+			</div>
+		);
+	}
 	return <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">{value}</span>;
 }
 
 {/* ── What you can build — row data ── */}
 
 export const buildRows = [
-	{ feature: 'Workflows',              description: 'Chain scripts into flows with branching, retries and approval steps', windmill: true, kestra: true },
-	{ feature: 'Data pipelines',         description: 'ETL, syncs and scheduled data jobs with parallel branches',           windmill: true, kestra: true },
-	{ feature: 'Scripts',                description: 'Functions in any language, deployed as APIs, webhooks or cron jobs',  windmill: true, kestra: false },
-	{ feature: 'AI sandboxes & volumes', description: 'Isolated environments with persistent volumes for running agents',    windmill: true, kestra: false },
-	{ feature: 'Internal apps',          description: 'Dashboards and admin tools (low-code or full-code in React / Svelte)',              windmill: true, kestra: false },
-	{ feature: 'Scheduled tasks',        description: 'Cron jobs with retries, error handling and alerting',                 windmill: true, kestra: true },
+	{ feature: 'Workflows',               description: 'Chain scripts into flows with branching, retries and approval steps',    windmill: true, kestra: true },
+	{ feature: 'Data pipelines',          description: 'ETL, syncs and scheduled data jobs with parallel branches',              windmill: true, kestra: true },
+	{ feature: 'Scripts',                 description: 'Functions in any language, deployed as APIs, webhooks or cron jobs',     windmill: true, kestra: false },
+	{ feature: 'AI agent workflows',      description: 'Build agents that call tools, branch on outputs and run as workflows',   windmill: true, kestra: true },
+	{ feature: 'AI sandboxes & volumes',  description: 'Isolated environments with persistent volumes for running agents',       windmill: true, kestra: false },
+	{ feature: 'Low-code internal apps',  description: 'Drag-and-drop dashboards and admin tools with built-in components',      windmill: true, kestra: 'Enterprise' },
+	{ feature: 'Full-code internal apps', description: 'Custom dashboards and admin tools built in React or Svelte',             windmill: true, kestra: false },
+	{ feature: 'Scheduled tasks',         description: 'Cron jobs with retries, error handling and alerting',                    windmill: true, kestra: true },
 ];
 
 {/* ── FAQ ── */}
@@ -143,38 +161,75 @@ export const faqs = [
 
 {/* ── Section wrapper helper ── */}
 
-export function QASection({ id, kicker, question, summary, kestra, windmill, bottomLine, children }) {
+export function QASection({ id, kicker, question, summary, kestra, windmill, subsections, bottomLine, children, reverse }) {
 	return (
-		<section id={id} className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
-			<motion.div {...fadeIn} className="mb-10">
-				<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
+			{/* Hero: title + subtitle */}
+			<motion.div {...fadeIn} className="mb-12">
+				<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-3">
 					{kicker}
 				</div>
-				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-5">
 					{question}
 				</h2>
-				{summary && (
-					<p className="text-lg text-gray-600 dark:text-gray-300">
-						{summary}
+				{bottomLine && (
+					<p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+						{bottomLine}
 					</p>
 				)}
 			</motion.div>
 
-			{bottomLine && (
-				<motion.div
-					{...fadeIn}
-					className="rounded-xl border-l-4 border-blue-500 bg-blue-50/70 dark:bg-blue-950/30 p-5 mb-8"
-				>
-					<div className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-1">
-						Short answer
+			{/* Details: subsections (preferred) or fallback 2-card layout */}
+			{subsections && subsections.length > 0 && (
+				<div className="divide-y divide-gray-200 dark:divide-gray-800">
+					{/* Shared column headers — desktop only */}
+					<div className="hidden md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 pb-4">
+						<div />
+						<div className="flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+							<span className="text-base font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<img src="/img/kestra.svg" alt="Kestra" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">Kestra</span>
+						</div>
 					</div>
-					<div className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
-						{bottomLine}
-					</div>
-				</motion.div>
+
+					{subsections.map((sub, i) => (
+						<motion.div
+							key={sub.label || i}
+							{...fadeIn}
+							className="py-6 md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 md:items-start"
+						>
+							{sub.label && (
+								<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-4 md:mb-0">
+									{sub.label}
+								</h3>
+							)}
+							<div className="mb-4 md:mb-0">
+								<div className="md:hidden mb-2 flex items-center gap-2">
+									<img src="/img/windmill.svg" alt="Windmill" className="w-4 h-4" />
+									<span className="text-sm font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+								</div>
+								<div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed space-y-2">
+									{sub.windmill}
+								</div>
+							</div>
+							<div>
+								<div className="md:hidden mb-2 flex items-center gap-2">
+									<img src="/img/kestra.svg" alt="Kestra" className="w-4 h-4" />
+									<span className="text-sm font-bold text-gray-900 dark:text-white">Kestra</span>
+								</div>
+								<div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed space-y-2">
+									{sub.kestra}
+								</div>
+							</div>
+						</motion.div>
+					))}
+				</div>
 			)}
 
-			{(windmill || kestra) && (
+			{!subsections && (windmill || kestra) && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 					<motion.div
 						{...fadeIn}
@@ -267,7 +322,7 @@ export default function KestraCompareContent({ title, description }) {
 			</div>
 
 			{/* ── Jump-to navigation (table of contents) ── */}
-			<section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-10 pb-4">
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-4">
 				<motion.div {...fadeIn} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/60 p-6">
 					<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">
 						The 8 questions
@@ -298,7 +353,7 @@ export default function KestraCompareContent({ title, description }) {
 
 
 			{/* ── Quick take ── */}
-			<section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-24">
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
 				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<div className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
 						<div className="mb-3 flex items-center gap-2">
@@ -308,9 +363,10 @@ export default function KestraCompareContent({ title, description }) {
 							</span>
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
-							An open-source <strong>developer platform</strong> where one runtime powers scripts,
-							flows, internal apps and AI agents, authored in code (TS / Python / Go / Bash / SQL)
-							with the full local-dev loop. Built for engineering-led teams.
+							An open-source platform to <strong>build and orchestrate all your internal software</strong>:
+							scripts, workflows, data pipelines, AI agents and internal apps. Made for engineers who
+							want full code flexibility and local dev experience, both to build internal software and to manage the underlying
+							infrastructure.
 						</p>
 					</div>
 					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6">
@@ -321,108 +377,25 @@ export default function KestraCompareContent({ title, description }) {
 							</span>
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
-							An open-source <strong>orchestration platform</strong> focused on data, AI and infrastructure
-							workflows, authored declaratively in YAML, with a large plugin catalog and a UI designed
-							for mixed teams including non-developers.
+							An open-source <strong>workflow orchestrator</strong> for data, AI and infrastructure
+							pipelines. Declarative YAML with a 1,200-plugin catalog and a no-code UI that lets
+							analysts and ops author flows directly. Best for mixed teams where non-developers
+							need to edit workflows themselves.
 						</p>
 					</div>
 				</motion.div>
 			</section>
 
-			{/* ── Q1: Audience ── */}
-			<QASection
-				id="target"
-				kicker="01 · Target"
-				question="Who is each platform built for?"
-				summary="Both tools say 'for everyone'. In practice, the authoring model picks a primary audience, and it matters a lot once the team grows."
-				kestra={
-					<>
-						<p>
-							<strong>Mixed teams.</strong> YAML + a no-code UI let analysts and ops people edit workflows directly
-							alongside engineers. Kestra's strongest design axis.
-						</p>
-					</>
-				}
-				windmill={
-					<>
-						<p>
-							<strong>Developer-led teams.</strong> Engineers own the platform end-to-end: code, Git, local dev,
-							code review, CI/CD, AI coding tools.
-						</p>
-						<p>
-							Non-developers consume through auto-generated UIs, custom apps and an operator role.
-							They don't author workflows.
-						</p>
-					</>
-				}
-				bottomLine={
-					<>
-						Pick <strong>Windmill</strong> if engineers build and own the platform.
-						Pick <strong>Kestra</strong> if analysts, ops or business users need to edit workflows themselves.
-					</>
-				}
-			/>
-
-			{/* ── Q2: Authoring model ── */}
-			<QASection
-				id="devex"
-				kicker="02 · Developer experience"
-				question="How do developers interact with the platform?"
-				summary="Covers the authoring model, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
-				kestra={
-					<>
-						<p>
-							<strong>Authoring.</strong> Declarative YAML. Each step is a plugin task (e.g.
-							<code> io.kestra.plugin.scripts.python.Script</code>). A no-code UI generates the same YAML.
-						</p>
-						<p>
-							<strong>Local dev & IDE.</strong> YAML schema with validation in VS Code and JetBrains plugins.
-							Local server for running flows before deploy.
-						</p>
-						<p>
-							<strong>Git & CI.</strong> <code>kestractl</code> + <a href="https://kestra.io/docs/version-control-cicd/git" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Git sync</a> deploy flows and namespace files. Users,
-							RBAC and tenant settings still live in the UI or behind the API.
-						</p>
-					</>
-				}
-				windmill={
-					<>
-						<p>
-							<strong>Authoring.</strong> A step is a function in TS, Python, Go, Bash or SQL. Arguments flow
-							between steps as return values. Flows can be visual or code; both compile to the same thing.
-						</p>
-						<p>
-							<strong>Local dev & IDE.</strong> Run scripts locally with the <Link to="/docs/advanced/cli" className="text-blue-500 hover:underline">Windmill CLI</Link>. <Link to="/docs/script_editor/vs_code_scripts" className="text-blue-500 hover:underline">VS Code extension</Link>,
-							native language tooling (LSP, type-checking, linting) and AI coding tools (Claude Code, Codex).
-						</p>
-						<p>
-							<strong>Git & CI (full IaC).</strong> Scripts, flows, apps, resources, variables, secrets, schedules,
-							folders, groups and permissions are all files in Git, deployed via the CLI and <Link to="/docs/advanced/git_sync" className="text-blue-500 hover:underline">Git sync</Link>.
-							Internal tooling runs like application code: PRs, reviews, rollbacks, CI/CD.
-						</p>
-					</>
-				}
-				bottomLine={
-					<>
-						Pick <strong>Windmill</strong> if you want full code flexibility and a whole-workspace Git workflow
-						(scripts, flows, apps, resources, permissions all versioned like application code).
-						Pick <strong>Kestra</strong> if you prefer a declarative YAML layer that non-engineers can read and edit.
-					</>
-				}
-			/>
-
-			{/* ── Q3: Scope ── */}
+			{/* ── Q1: Scope ── */}
 			<QASection
 				id="build"
-				kicker="03 · What you can build"
-				question="Data pipelines, internal apps, workflows, AI agents, …?"
+				kicker="01 · What you can build"
+				question="Which internal software can you build and orchestrate?"
 				summary="Both platforms orchestrate workflows. The real question is what else you can build on the same runtime."
 				bottomLine={
 					<>
-						Pick <strong>Windmill</strong> if you want to build and orchestrate all your internal software on
-						one platform (scripts, workflows, data pipelines, full-code apps, AI agents, operator UIs).
-						Pick <strong>Kestra</strong> if workflow orchestration is the only thing you need and you bring a
-						separate stack for dashboards, internal apps and agent front-ends.
+						<strong>Windmill</strong> is built to centralize and orchestrate all your internal software in one place. Scripts, workflows, data pipelines, full-code apps, AI agents and operator UIs run on a single runtime, with shared resources, auth and observability.
+						<strong> Kestra</strong> focuses on workflow orchestration, so you bring your own stack for dashboards, internal apps and agent front-ends.
 					</>
 				}
 			>
@@ -463,151 +436,339 @@ export default function KestraCompareContent({ title, description }) {
 				</motion.div>
 			</QASection>
 
-			{/* ── Q4: Integrations ── */}
+			{/* ── Q2: Audience ── */}
 			<QASection
-				id="integrations"
-				kicker="04 · Integrations"
-				question="How does the platform integrate with your existing stack?"
-				summary="Three directions: calling external systems, receiving events from them, and extending the platform with things neither tool covers natively."
-				kestra={
-					<>
-						<p>
-							<strong>Connecting out.</strong> A curated catalog of 1,200+ plugins. Official connectors for
-							Snowflake, BigQuery, dbt, Airbyte, Salesforce, Databricks and most common data-stack tools.
-						</p>
-						<p>
-							<strong>Receiving events.</strong> Native triggers for Kafka, AMQP, JMS, MQTT, S3 events,
-							webhooks and cron.
-						</p>
-						<p>
-							<strong>Extending.</strong> No plugin for what you need? Write a Java / Kotlin plugin, or drop
-							to an inline script inside a flow.
-						</p>
-					</>
-				}
-				windmill={
-					<>
-						<p>
-							<strong>Connecting out.</strong> Any npm, PyPI, Go or Maven package is a first-class import.
-							No plugin layer: you call the vendor's real SDK. A community <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable
-							scripts and flows for common tasks.
-						</p>
-						<p>
-							<strong>Receiving events.</strong> Native triggers for HTTP, cron, Kafka, NATS, Postgres CDC,
-							SQS, MQTT, SMTP and WebSocket.
-						</p>
-						<p>
-							<strong>Extending.</strong> A new integration is just a script with a new import. No plugin
-							release cycle to wait on.
-						</p>
-					</>
-				}
+				id="target"
+				kicker="02 · Target"
+				question="Who is each platform built for?"
+				summary="Both tools say 'for everyone'. In practice, how you write workflows picks a primary audience, and it matters a lot once the team grows."
+				subsections={[
+					{
+						label: 'Primary audience',
+						windmill: (
+							<p>
+								Developer-led teams. Engineers own the platform end-to-end: code, Git, local dev, workspace forks, code
+								review, CI/CD, AI coding tools, infrastructure as code.
+							</p>
+						),
+						kestra: (
+							<p>
+								Mixed teams. YAML + a no-code UI let analysts and ops people edit workflows directly
+								alongside engineers. Kestra's strongest design axis.
+							</p>
+						),
+					},
+					{
+						label: 'How non-developers participate',
+						windmill: (
+							<p>
+								Non-developers consume through auto-generated UIs, custom apps and an operator role.
+								They can build with AI assistance, but the experience is less optimized for them.
+							</p>
+						),
+						kestra: (
+							<p>
+								Non-developers can author directly in YAML or via the no-code UI that writes the YAML
+								for them.
+							</p>
+						),
+					},
+				]}
 				bottomLine={
 					<>
-						Pick <strong>Windmill</strong> if your stack relies on niche or bleeding-edge systems you'd rather
-						call with the vendor's real SDK. Pick <strong>Kestra</strong> if your workflows revolve around
-						mainstream data-stack tools with an official plugin (Snowflake, dbt, Airbyte, Databricks).
+						<strong>Windmill</strong> is built for developer-led teams where engineers own the platform end-to-end.
+						<strong> Kestra</strong> is designed for mixed teams where analysts, ops and business users author workflows themselves.
 					</>
 				}
 			/>
 
-			{/* ── Q5: Collaboration ── */}
+			{/* ── Q3: Authoring model ── */}
+			<QASection
+				reverse
+				id="devex"
+				kicker="03 · Developer experience"
+				question="How do developers interact with the platform?"
+				summary="Covers how you write workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
+				subsections={[
+					{
+						label: 'Authoring',
+						windmill: (
+							<p>
+								Build scripts in 20+ languages with full code, then connect them into workflows, data
+								pipelines or full-code internal apps.
+							</p>
+						),
+						kestra: (
+							<p>
+								Declarative YAML. Each step is a plugin task (e.g.
+								<code> io.kestra.plugin.scripts.python.Script</code>). A no-code UI generates the same
+								YAML.
+							</p>
+						),
+					},
+					{
+						label: 'Local dev & IDE',
+						windmill: (
+							<p>
+								Run scripts locally with the <Link to="/docs/advanced/cli" className="text-blue-500 hover:underline">Windmill CLI</Link>. <Link to="/docs/script_editor/vs_code_scripts" className="text-blue-500 hover:underline">VS Code extension</Link>,
+								native language tooling (LSP, type-checking, linting) and AI coding tools (Claude
+								Code, Codex).
+							</p>
+						),
+						kestra: (
+							<p>
+								YAML schema with validation in VS Code and JetBrains plugins. Local server for running
+								flows before deploy.
+							</p>
+						),
+					},
+					{
+						label: 'Resources & secrets',
+						windmill: (
+							<p>
+								<Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Resources</Link> (typed JSON for credentials, connection info, configs)
+								and <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-500 hover:underline">Variables</Link> (individual secrets) are first-class and reusable
+								across scripts, flows and apps. They're encrypted at rest, scoped via folders and
+								groups for access control, and versioned in Git like everything else.
+							</p>
+						),
+						kestra: (
+							<p>
+								Open source ships basic secrets as base64-encoded environment variables. The UI secret
+								manager, namespace- and tenant-scoped secrets, and external backends (Vault, AWS
+								Secrets Manager) are <EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Git & CI',
+						windmill: (
+							<p>
+								Full IaC: scripts, flows, apps, resources, variables, secrets, schedules, folders,
+								groups and permissions are all files in Git, deployed via the CLI and <Link to="/docs/advanced/git_sync" className="text-blue-500 hover:underline">Git sync</Link>. Internal
+								tooling runs like application code: PRs, reviews, rollbacks, CI/CD. Git sync is free
+								for up to 2 users; beyond that is <EnterpriseBadge />.
+							</p>
+						),
+						kestra: (
+							<p>
+								<code>kestractl</code> + <a href="https://kestra.io/docs/version-control-cicd/git" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Git sync</a> deploy flows and namespace files, available in open
+								source. Users, RBAC and tenant settings still live in the UI or behind the API.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> gives you full code flexibility with a local dev loop and whole-workspace Git sync. Scripts, flows, apps, resources, permissions and infrastructure all live in Git like application code.
+						<strong> Kestra</strong> uses a declarative YAML layer that non-engineers can read and edit.
+					</>
+				}
+			/>
+
+			{/* ── Q4: Integrations ── */}
+			<QASection
+				reverse
+				id="integrations"
+				kicker="04 · Integrations"
+				question="How does the platform integrate with your existing stack?"
+				summary="Three directions: calling external systems, receiving events from them, and extending the platform with things neither tool covers natively."
+				subsections={[
+					{
+						label: 'Connecting out',
+						windmill: (
+							<p>
+								Any npm, PyPI, Go or Maven package is a first-class import. No plugin layer: you call
+								the vendor's real SDK. A community <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and
+								flows for common tasks.
+							</p>
+						),
+						kestra: (
+							<p>
+								A curated catalog of 1,200+ plugins. Official connectors for Snowflake, BigQuery, dbt,
+								Airbyte, Salesforce, Databricks and most common data-stack tools.
+							</p>
+						),
+					},
+					{
+						label: 'Receiving events',
+						windmill: (
+							<p>
+								Native triggers for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
+								WebSocket.
+							</p>
+						),
+						kestra: (
+							<p>
+								Native triggers for Kafka, AMQP, JMS, MQTT, S3 events, webhooks and cron.
+							</p>
+						),
+					},
+					{
+						label: 'Extending',
+						windmill: (
+							<p>
+								A new integration is just a script with a new import. No plugin release cycle to wait
+								on.
+							</p>
+						),
+						kestra: (
+							<p>
+								No plugin for what you need? Write a Java plugin, or drop to an inline script inside a
+								flow.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> lets you import any public package (npm, PyPI, Go or Maven) or your own, and call the vendor's real SDK directly.
+						<strong> Kestra</strong> ships a curated catalog of 1,200+ plugins for mainstream data tools like Snowflake, dbt, Airbyte and Databricks.
+					</>
+				}
+			/>
+
+			{/* ── Q5: Migration ── */}
 			<QASection
 				id="migration"
 				kicker="05 · Migration & lock-in"
 				question="How hard to get in, and how hard to get out?"
 				summary="Two simple questions: how much work to move your existing workflows onto the platform, and how much to move them off if you ever change your mind."
-				kestra={
-					<>
-						<p>
-							<strong>Getting in.</strong> If you already think in YAML DAGs (Airflow), the mental model
-							transfers. Each task becomes a plugin reference; scripts inline or as files.
-						</p>
-						<p>
-							<strong>Getting out.</strong> Workflow YAML is tied to <code>io.kestra.plugin.*</code> task types. Leaving
-							means rewriting plugin-backed tasks against the underlying vendor SDKs, or reproducing
-							the plugin layer on the new platform.
-						</p>
-					</>
-				}
-				windmill={
-					<>
-						<p>
-							<strong>Getting in.</strong> Paste a function body, Windmill infers args, generates a UI, handles
-							dependencies. No YAML to learn. Triggers, schedules, variables, apps migrate one by one.
-						</p>
-						<p>
-							<strong>Getting out.</strong> Step logic is already standard code (TS, Python, Go, Bash, SQL) that
-							runs anywhere. The CLI exports the full workspace as plain files. What you lose leaving
-							Windmill is the runtime, not the step code.
-						</p>
-					</>
-				}
+				subsections={[
+					{
+						label: 'Getting in',
+						windmill: (
+							<p>
+								Paste a function body, Windmill infers args, generates a UI, handles dependencies. No
+								YAML to learn. Triggers, schedules, variables, apps migrate one by one.
+							</p>
+						),
+						kestra: (
+							<p>
+								If you already think in YAML DAGs (Airflow), the mental model transfers. Each task
+								becomes a plugin reference; scripts inline or as files.
+							</p>
+						),
+					},
+					{
+						label: 'Getting out',
+						windmill: (
+							<p>
+								Step logic is already standard code (TS, Python, Go, Bash, SQL) that runs anywhere. The
+								CLI exports the full workspace as plain files. What you lose leaving Windmill is the
+								runtime, not the step code.
+							</p>
+						),
+						kestra: (
+							<p>
+								Workflow YAML is tied to <code>io.kestra.plugin.*</code> task types. Leaving means
+								rewriting plugin-backed tasks against the underlying vendor SDKs, or reproducing the
+								plugin layer on the new platform.
+							</p>
+						),
+					},
+				]}
 				bottomLine={
 					<>
-						Pick <strong>Windmill</strong> if low switching cost matters: step code is standard and runs anywhere,
-						including after you leave. Pick <strong>Kestra</strong> if you already think in YAML DAGs
-						(from Airflow or similar) and don't plan to migrate off.
+						<strong>Windmill</strong> keeps switching cost low. Step code is standard TS, Python, Go, Bash or SQL that runs anywhere, including after you leave Windmill.
+						<strong> Kestra</strong> fits naturally if you already think in YAML DAGs (from Airflow or similar) and plan to stay.
 					</>
 				}
 			/>
 
-			{/* ── Q6: Performance ── */}
+			{/* ── Q6: Enterprise requirements ── */}
 			<QASection
+				reverse
 				id="enterprise"
 				kicker="06 · Enterprise requirements"
 				question="Audit logs, observability, security, performance"
 				summary="Once it's in production, the non-functional requirements dominate. Here's how each platform handles the four that matter most at scale."
-				kestra={
-					<>
-						<p>
-							<strong>Observability.</strong> Execution logs, task-level timings, metrics via OpenTelemetry.
-							Dashboards per namespace.
-						</p>
-						<p>
-							<strong>Audit logs.</strong> Enterprise feature. Tracks platform events and user activity.
-						</p>
-						<p>
-							<strong>Security.</strong> SOC 2 compliant on Enterprise. RBAC, SSO (SAML / OIDC), secret
-							manager integrations, multi-tenancy (Enterprise).
-						</p>
-						<p>
-							<strong>Performance.</strong> Queue-based, horizontally scalable. Per-task overhead from JVM
-							startup, plugin loading and state persistence. Negligible for multi-minute tasks.
-						</p>
-					</>
-				}
-				windmill={
-					<>
-						<p>
-							<strong>Observability.</strong> Real-time streaming logs, per-run inputs / outputs / duration,
-							built-in worker queue metrics and a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-500 hover:underline">Prometheus exporter</Link>. Trace ID on every job.
-						</p>
-						<p>
-							<strong>Audit logs.</strong> Full trail of who ran / edited / deployed what (Enterprise adds
-							extended retention).
-						</p>
-						<p>
-							<strong>Security.</strong> SOC 2 Type II compliant. <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-500 hover:underline">RBAC</Link>, SSO (SAML / OIDC),
-							encrypted secrets at rest, sandboxed script execution, workspace isolation.
-						</p>
-						<p>
-							<strong>Performance.</strong> ~10ms cold starts. <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> keeps runtimes
-							and dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Roughly 3× faster</Link> than Kestra on lightweight
-							tasks on equivalent hardware.
-						</p>
-					</>
-				}
+				subsections={[
+					{
+						label: 'Observability',
+						windmill: (
+							<p>
+								Real-time streaming logs, per-run inputs / outputs / duration, built-in worker queue
+								metrics and a <Link to="/docs/core_concepts/monitor_past_and_future_runs" className="text-blue-500 hover:underline">Prometheus exporter</Link>. Trace ID on every job.
+							</p>
+						),
+						kestra: (
+							<p>
+								Execution logs, task-level timings, metrics via OpenTelemetry. Dashboards per namespace.
+							</p>
+						),
+					},
+					{
+						label: 'Audit logs',
+						windmill: (
+							<p>
+								Full trail of who ran / edited / deployed what. Extended retention is <EnterpriseBadge />.
+							</p>
+						),
+						kestra: (
+							<p>
+								Tracks platform events and user activity. <EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Security',
+						windmill: (
+							<p>
+								SOC 2 Type II compliant. <Link to="/docs/core_concepts/roles_and_permissions" className="text-blue-500 hover:underline">RBAC</Link>, SSO (SAML / OIDC), encrypted secrets
+								at rest, sandboxed script execution.
+							</p>
+						),
+						kestra: (
+							<p>
+								SOC 2 compliance, RBAC, SSO (SAML / OIDC) and secret manager integrations are all{' '}
+								<EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Multi-tenancy & isolation',
+						windmill: (
+							<p>
+								Multiple isolated <Link to="/docs/core_concepts/roles_and_permissions#workspace" className="text-blue-500 hover:underline">workspaces</Link> on the same instance, each with their own users,
+								resources, secrets and access controls. Free tier is capped at 3 workspaces; unlimited
+								is <EnterpriseBadge />.
+							</p>
+						),
+						kestra: (
+							<p>
+								Single tenant in open source. Namespaces organize flows but share the same users,
+								secrets and access controls across the whole instance. True tenant isolation is{' '}
+								<EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Performance',
+						windmill: (
+							<p>
+								~10ms cold starts. <Link to="/docs/core_concepts/dedicated_workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes
+								and dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Roughly 3× faster</Link> than Kestra on lightweight
+								tasks on equivalent hardware.
+							</p>
+						),
+						kestra: (
+							<p>
+								Queue-based, horizontally scalable. Per-task overhead from JVM startup, plugin loading
+								and state persistence. Negligible for multi-minute tasks.
+							</p>
+						),
+					},
+				]}
 				bottomLine={
 					<>
-						Both cover the enterprise basics (RBAC, SSO, audit logs, SOC 2). Pick <strong>Windmill</strong> if
-						short, high-volume workloads dominate (webhooks, alerts, small scripts): ~3× lower per-task
-						overhead becomes real money at scale. Pick <strong>Kestra</strong> if your workload is long-running
-						data tasks where per-task overhead doesn't matter.
+						Both cover the enterprise basics: RBAC, SSO, audit logs and SOC 2.
+						<strong> Windmill</strong> is faster for short, high-volume workloads like webhooks, alerts and small scripts, with roughly 3× lower per-task overhead.
+						<strong> Kestra</strong> is a good fit for long-running data tasks where per-task overhead doesn't matter.
 					</>
 				}
 			>
-				<motion.div {...fadeIn} className="max-w-5xl mx-auto mb-8">
+				<motion.div {...fadeIn} className="max-w-5xl mx-auto mt-12 mb-8">
 					<BenchmarkVisualization
 						usecase="fibonacci_40_10"
 						language="python"
@@ -625,39 +786,43 @@ export default function KestraCompareContent({ title, description }) {
 				kicker="07 · Licensing & pricing"
 				question="Open source, pricing, and self-hosting?"
 				summary="Both are free to self-host. The real differences are the license terms and whether Enterprise pricing is public."
-				kestra={
-					<>
-						<p>
-							<strong>Apache 2.0,</strong> free and unlimited self-hosted. Managed cloud available.
-						</p>
-						<p>
-							Enterprise adds SSO, multi-tenancy, audit logs, advanced RBAC.
-							<strong> Pricing not public;</strong> sales conversation required.
-						</p>
-					</>
-				}
-				windmill={
-					<>
-						<p>
-							<strong>AGPLv3,</strong> free and unlimited self-hosted. Managed cloud available.
-						</p>
-						<p>
-							Enterprise adds SSO, audit logs, dedicated workers, advanced worker groups.
-							<strong> Public per-seat and per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>.
-						</p>
-					</>
-				}
+				subsections={[
+					{
+						label: 'Open-source license',
+						windmill: (
+							<p>AGPLv3, free and unlimited self-hosted. Managed cloud available.</p>
+						),
+						kestra: (
+							<p>Apache 2.0, free and unlimited self-hosted. Managed cloud available.</p>
+						),
+					},
+					{
+						label: 'Enterprise pricing',
+						windmill: (
+							<p>
+								Enterprise adds SSO, audit logs, dedicated workers, advanced worker groups.{' '}
+								<strong>Public per-seat and per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>.
+							</p>
+						),
+						kestra: (
+							<p>
+								Enterprise adds SSO, multi-tenancy, audit logs, advanced RBAC.{' '}
+								<strong>Pricing not public;</strong> sales conversation required.
+							</p>
+						),
+					},
+				]}
 				bottomLine={
 					<>
-						Pick <strong>Windmill</strong> if you want upfront per-seat / per-worker pricing without a sales call.
-						Pick <strong>Kestra</strong> if Apache 2.0 licensing matters (more permissive than Windmill's AGPLv3
-						for redistribution). Both are free to self-host.
+						<strong>Windmill</strong> publishes upfront per-seat and per-worker Enterprise pricing, no sales call needed.
+						<strong> Kestra</strong> ships under Apache 2.0, which is more permissive than Windmill's AGPLv3 for redistribution.
+						Both are free to self-host.
 					</>
 				}
 			/>
 
 			{/* ── Q8: Verdict ── */}
-			<section id="verdict" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
+			<section id="verdict" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
 				<motion.div {...fadeIn} className="mb-12">
 					<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
 						08 · Verdict
