@@ -80,6 +80,23 @@ export const comparisonRows = [
 	{ feature: 'Public Enterprise pricing', windmill: true, kestra: false },
 ];
 
+export function MiniCaseStudy({ logo, logoDark, excerpt, link }) {
+	return (
+		<Link
+			to={`${link}?from=compare-kestra`}
+			className="group mt-3 flex items-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 hover:border-blue-300 dark:hover:border-blue-700 transition-all !no-underline"
+		>
+			<img src={logo} alt="" className="h-6 w-auto flex-shrink-0 dark:hidden" />
+			<img src={logoDark} alt="" className="h-6 w-auto flex-shrink-0 hidden dark:block" />
+			<div className="flex-1 min-w-0">
+				<div className="text-[10px] font-semibold uppercase tracking-wide text-blue-500 dark:text-blue-400">Case study</div>
+				<div className="text-xs text-gray-700 dark:text-gray-200 leading-snug">{excerpt}</div>
+			</div>
+			<ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-500 flex-shrink-0" />
+		</Link>
+	);
+}
+
 export function EnterpriseBadge() {
 	return (
 		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
@@ -660,11 +677,19 @@ export default function KestraCompareContent({ title, description }) {
 					{
 						label: 'Getting out',
 						windmill: (
-							<p>
-								Step logic is already standard code (TS, Python, Go, Bash, SQL) that runs anywhere. The
-								CLI exports the full workspace as plain files. What you lose leaving Windmill is the
-								runtime, not the step code.
-							</p>
+							<>
+								<p>
+									Step logic is already standard code (TS, Python, Go, Bash, SQL) that runs anywhere.
+									The CLI exports the full workspace as plain files. What you lose leaving Windmill
+									is the runtime, not the step code.
+								</p>
+								<MiniCaseStudy
+									logo="/images/brands/panther-light.svg"
+									logoDark="/images/brands/panther-dark.svg"
+									excerpt="Panther Labs avoided vendor lock-in with a platform-agnostic architecture on Windmill, after migrating off Airplane.dev in 30 days."
+									link="/case-studies/panther-labs"
+								/>
+							</>
 						),
 						kestra: (
 							<p>
@@ -739,11 +764,19 @@ export default function KestraCompareContent({ title, description }) {
 					{
 						label: 'Multi-tenancy & isolation',
 						windmill: (
-							<p>
-								Multiple isolated <Link to="/docs/core_concepts/roles_and_permissions#workspace" className="text-blue-500 hover:underline">workspaces</Link> on the same instance, each with their own users,
-								resources, secrets and access controls. Free tier is capped at 3 workspaces; unlimited
-								is <EnterpriseBadge />.
-							</p>
+							<>
+								<p>
+									Multiple isolated <Link to="/docs/core_concepts/roles_and_permissions#workspace" className="text-blue-500 hover:underline">workspaces</Link> on the same instance, each with their own users,
+									resources, secrets and access controls. Free tier is capped at 3 workspaces;
+									unlimited is <EnterpriseBadge />.
+								</p>
+								<MiniCaseStudy
+									logo="/images/brands/axians-light.svg"
+									logoDark="/images/brands/axians-dark.svg"
+									excerpt="Axians runs multi-tenant orchestration across ~150 enterprise customers."
+									link="/case-studies/axians"
+								/>
+							</>
 						),
 						kestra: (
 							<p>
@@ -800,7 +833,15 @@ export default function KestraCompareContent({ title, description }) {
 					{
 						label: 'Open-source license',
 						windmill: (
-							<p>AGPLv3, free and unlimited self-hosted. Managed cloud available.</p>
+							<>
+								<p>AGPLv3, free and unlimited self-hosted. Managed cloud available.</p>
+								<MiniCaseStudy
+									logo="/images/brands/athena-light.svg"
+									logoDark="/images/brands/athena-dark.svg"
+									excerpt="Athena Intelligence deploys Windmill inside regulated customer environments."
+									link="/case-studies/athena-intelligence"
+								/>
+							</>
 						),
 						kestra: (
 							<p>Apache 2.0, free and unlimited self-hosted. Managed cloud available.</p>
