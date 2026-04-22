@@ -175,6 +175,8 @@ The deletion is irreversible.
 
 :::
 
+You can also configure a **retention period** instead of immediate deletion: toggle the setting and specify a number of seconds. After job completion, logs, arguments and results will be scheduled for deletion after the specified delay. This is available per-script and per-flow-step. [Enterprise](/pricing) only.
+
 ### High priority script
 
 Jobs within a same job queue can be given a [priority](../core_concepts/20_jobs/index.mdx#high-priority-jobs) between 1 and 100. Jobs with a higher priority value will be given precedence over jobs with a lower priority value in the job queue.
