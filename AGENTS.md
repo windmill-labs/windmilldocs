@@ -22,6 +22,7 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 - Don't use bold font, unless you're adding to content already using it.
 - Titles, subtiles and docs in general follow sentence case ('Like this')
 - On docs, nothing shouldfollow title case ('Like This')
+- Do not add color styling in docs content or titles (for example, avoid HTML like `## Secret storage backends <span className="text-red-500">EE</span>`)
 
 ## Component usage
 
