@@ -41,6 +41,30 @@ Sending a message starts a new flow run with the message as input. The assistant
 
 While a turn is in-flight, the **Send** button is replaced by a **Stop** button. Clicking Stop cancels the underlying queued job (via `JobService.cancelQueuedJob`) so a long-running flow doesn't block the conversation. Cancel works in both polling and streaming modes.
 
+### Customizing the assistant reply
+
+When the final step of a chat flow is **not** an [AI agent](../core_concepts/54_ai_agents/index.mdx), the flow's output is persisted as the assistant message. By default, the whole result is pretty-printed as JSON into the chat transcript. If the result is a plain string, that string is shown as-is.
+
+To control exactly what the user sees, return a `windmill_chat_answer` key from the final step:
+
+- `windmill_chat_answer: "<string>"` — the string is used as the assistant message; other keys in the result are ignored in the transcript (they are still part of the flow output).
+- `windmill_chat_answer: null` — no assistant message is appended for this turn. Use this when your flow has already written its own messages to the conversation, or when the turn should stay silent.
+- Key absent — the default behavior applies (full pretty-printed JSON, or the string itself if the result is a string).
+
+```ts
+// Deno example — final step of a chat-enabled flow
+export async function main(prompt: string) {
+  const answer = await computeAnswer(prompt);
+  return {
+    windmill_chat_answer: answer,
+    // any other keys remain in the flow's output but are not shown in chat
+    debug: { prompt, timestamp: Date.now() }
+  };
+}
+```
+
+When the last step **is** an AI agent, the agent's own message is used for the assistant reply and `windmill_chat_answer` has no effect — unless the flow errored, in which case the override still applies.
+
 ### Image outputs
 
 If the flow's output contains image data (data URLs, base64-encoded images, or S3 objects resolving to images), the chat renders them inline in the assistant's reply. This lets chat flows return generated charts, screenshots, or AI-generated images without any extra configuration.
