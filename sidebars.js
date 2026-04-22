@@ -425,6 +425,7 @@ const sidebars = {
 				'core_concepts/workspace_settings/index',
 				'core_concepts/streaming/index',
 				'core_concepts/labels/index',
+				'core_concepts/trashbin/index',
 				{
 					type: 'category',
 					label: 'Integrations',

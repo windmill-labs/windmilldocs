@@ -23,12 +23,14 @@ Adopting workspace forks corresponds to **stage 2** of the [collaboration and de
 
 ## How workspace forks work
 
-Workspace forks create a complete copy of your workspace, including scripts, flows, apps, resources, and variables. Each fork operates independently and changes can later be merged to a parent workspace through a couple of methods.
+Workspace forks create a complete copy of your workspace, including scripts, flows, apps, resources, variables, and [data tables](../../core_concepts/11_persistent_storage/data_tables.mdx). Each fork operates independently and changes can later be merged to a parent workspace through a couple of methods.
 
 Key features:
 - **Independent development**: Make changes without affecting the parent workspace
 - **Git integration**: Automatically creates corresponding git branches using the git sync workflow
 - **Team collaboration**: Multiple developers can work on separate forks simultaneously
+- **Data table forking**: Data tables are included in the fork, giving each fork its own isolated copy of the data
+- **CLI merge**: Use `wmill workspace merge` to merge changes from a fork back to the parent workspace
 
 ![Workspace Forks and Git Sync](/images/workspace_forks.png)
 
@@ -143,6 +145,17 @@ Workspace forks do not copy over triggers when being created. This avoids unnece
 When git sync is properly setup, the workspace is synchronized with one of the branches in your repo, and the forks are also synchronized with their own branches. It is then possible your preferred git workflow to merge into or out of these branches to sync, so you can update the fork, or deploy changes into the parent workspace.
 
 ## Related features
+
+### Workspace-specific tags and forks
+
+When [workspace-specific default tags](../../core_concepts/9_worker_groups/index.mdx#set-tags-to-assign-specific-queues) are enabled (the instance setting that appends the workspace id to every job tag, e.g. `python3-myworkspace`), forked workspaces automatically resolve to their **parent workspace's tag**. This means fork jobs are routed to the same worker group as the parent workspace — there is no need to provision separate workers for every fork.
+
+For example, if the parent workspace is `staging` and a fork `wm-fork-feature1` runs a Python script, the job tag will be `python3-staging` (not `python3-wm-fork-feature1`).
+
+#### Dedicated fork workers (optional)
+
+If you want to route fork jobs to their own worker pool — for instance to isolate fork workloads from the parent — you can enable the **"Fork workspace tag: append -fork suffix"** toggle in the instance settings under the **Default Tags** section. When enabled, fork jobs are tagged with the parent workspace id plus a `-fork` suffix (e.g. `python3-staging-fork`), so all forks of a given parent share a common dedicated tag. You can then provision a worker group listening to `*-staging-fork` tags to handle all fork jobs for that parent.
+
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
