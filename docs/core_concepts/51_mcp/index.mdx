@@ -180,7 +180,9 @@ Claude will use the **Resources** endpoint tools to list, create, or update reso
 
 ## Available MCP Tools
 
-In addition to your workspace scripts and flows (which are exposed as individual tools), the Windmill MCP server provides the following built-in API endpoint tools:
+In addition to your workspace scripts and flows (which are exposed as individual tools), the Windmill MCP server provides the following built-in API endpoint tools.
+
+When configuring the MCP scope (via OAuth or token generation), you can select **multiple folders** to restrict which scripts and flows are exposed as tools. This lets you expose only the tools relevant to a specific use case without granting access to the entire workspace.
 
 ### Scripts & Flows
 
@@ -220,6 +222,8 @@ In addition to your workspace scripts and flows (which are exposed as individual
 
 | Tool | Description |
 |------|-------------|
+| `getJob` | Get details of a specific job by ID |
+| `getJobLogs` | Get logs for a specific job by ID |
 | `listJobs` | List all completed jobs |
 | `listQueue` | List all queued jobs |
 | `listSchedules` | List all schedules |
