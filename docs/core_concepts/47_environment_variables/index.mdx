@@ -62,6 +62,9 @@ You can use them in a Script by clicking on "+Context Var":
 | QUIET | false | When set to `true` or `1`, enables quiet mode which suppresses verbose per-job worker logs (fetched job, started handling, job finished) and reduces frequency of periodic "still running" and memory snapshot logs by 10x. Useful for reducing log noise in production. | Worker |
 | LOGIN_DOMAIN | None | When set, normalizes external login emails by appending `@{LOGIN_DOMAIN}` if the email has no `@` sign. Also lowercases all emails. Useful for identity providers that send usernames instead of full emails. | Server |
 | HIDE_WORKERS_FOR_NON_ADMINS | false | When set to `true`, hides the workers page from non-admin users. | Server |
+| WINDMILL_DIR | /tmp/windmill | The base directory Windmill uses for temporary job files. Defaults to `/tmp/windmill`. | Worker |
+| LIMIT_WINDOWS_TO_1CU | false | When set to `true`, caps Windows workers to 1 vCPU and 2 GB memory for both the worker and child processes. | Worker |
+| RSCRIPT_PATH | /usr/bin/Rscript | The path to the Rscript binary for R language support. Only available in `windmill-full` Docker images. | Worker |
 
 ## Contextual variables
 

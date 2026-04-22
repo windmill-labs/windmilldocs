@@ -134,7 +134,7 @@ Notes:
 - Masking happens in-memory before the logs are written to the database, so plaintext secrets never land in `job_logs`.
 - If your script needs to display a partial secret (e.g. the last 4 characters of a token), use string transformations inside the script before logging, since the full match will always be masked.
 
-## Secret storage backends <span className="text-red-500">EE</span>
+## Secret storage backends
 
 By default, Windmill stores encrypted secrets in its own database using a workspace-specific symmetric key. On [Enterprise Edition](/pricing), superadmins can instead delegate secret storage to an external secret manager, keeping the ciphertext out of the Windmill database entirely.
 
@@ -151,6 +151,7 @@ Configuration requires:
 - The Vault server URL and namespace (if applicable).
 - A KV v2 mount path where Windmill will read and write secrets.
 - A JWT auth role configured in Vault. Windmill exposes a JWKS endpoint at `/.well-known/jwks.json` that Vault uses to validate the short-lived JWTs Windmill issues on every secret operation.
+- **Skip SSL verify** (optional): disable TLS certificate verification for the Vault connection. Useful for development environments with self-signed certificates.
 
 Once configured:
 - All new and updated secret variables are written to Vault.
@@ -162,6 +163,17 @@ Once configured:
 Windmill can also store secrets in [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault). Configuration requires the Key Vault URL and service principal credentials (tenant ID, client ID, client secret) with the necessary `Get`/`Set`/`Delete` permissions on the vault.
 
 The migration and fail-closed semantics are identical to the Vault backend.
+
+### AWS Secrets Manager backend (Beta)
+
+Windmill can store secrets in [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/). Configuration requires:
+
+- **Region** (required): the AWS region, e.g. `us-east-1`.
+- **Access key ID** / **Secret access key** (optional): static AWS credentials. If omitted, the default AWS credential chain is used (IAM role, environment variables, etc.).
+- **Prefix** (optional): prefix for secret names in AWS Secrets Manager, defaults to `windmill/`.
+- **Endpoint URL** (optional): custom endpoint for testing with LocalStack.
+
+The migration and fail-closed semantics are identical to the Vault and Azure Key Vault backends.
 
 ## Sensitive and secret inputs
 
