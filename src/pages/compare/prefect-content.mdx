@@ -1,6 +1,6 @@
 ---
-title: "Windmill vs Retool: an honest side-by-side comparison"
-description: "Evaluating Retool and Windmill? A neutral, question-driven comparison across target audience, developer experience, scope, integrations, migration, enterprise requirements, and pricing, including where each tool is genuinely the better choice."
+title: "Windmill vs Prefect: an honest side-by-side comparison"
+description: "Evaluating Prefect and Windmill? A neutral, question-driven comparison across target audience, developer experience, scope, integrations, migration, performance, and pricing, including where each tool is genuinely the better choice."
 ---
 
 import React from 'react';
@@ -26,6 +26,7 @@ import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -37,20 +38,28 @@ export const fadeIn = {
 {/* ── The 8 big questions ── */}
 
 export const bigQuestions = [
-	{ id: 'build',        kicker: 'What you can build',     short: 'Which solution fits for your specific use case',        icon: Boxes },
-	{ id: 'target',       kicker: 'Target',                 short: 'Who the platform is built for',                         icon: Users },
-	{ id: 'devex',        kicker: 'Developer experience',   short: 'How developers interact with the platform',             icon: Terminal },
-	{ id: 'integrations', kicker: 'Integrations',           short: 'How the platform integrates with your existing stack',  icon: Puzzle },
-	{ id: 'migration',    kicker: 'Migration & lock-in',    short: 'How hard to get in, how hard to get out',               icon: ArrowRightLeft },
-	{ id: 'enterprise',   kicker: 'Enterprise requirements', short: 'Audit logs, observability, security, performance',     icon: Gauge },
-	{ id: 'licensing',    kicker: 'Licensing & pricing',    short: 'Open source, pricing, self-hosting',                    icon: Scale },
-	{ id: 'verdict',      kicker: 'Verdict',                short: 'The verdict',                                           icon: Compass },
+	{ id: 'build',        kicker: 'What you can build',     short: 'Which solution fits for your specific use case', icon: Boxes },
+	{ id: 'target',       kicker: 'Target',                 short: 'Who the platform is built for',                          icon: Users },
+	{ id: 'devex',        kicker: 'Developer experience',   short: 'How developers interact with the platform',              icon: Terminal },
+	{ id: 'integrations', kicker: 'Integrations',           short: 'How the platform integrates with your existing stack',   icon: Puzzle },
+	{ id: 'migration',    kicker: 'Migration & lock-in',    short: 'How hard to get in, how hard to get out',                icon: ArrowRightLeft },
+	{ id: 'enterprise',   kicker: 'Enterprise requirements', short: 'Audit logs, observability, security, performance',      icon: Gauge },
+	{ id: 'licensing',    kicker: 'Licensing & pricing',    short: 'Open source, pricing, self-hosting',                     icon: Scale },
+	{ id: 'verdict',      kicker: 'Verdict',                short: 'The verdict',                                            icon: Compass },
 ];
 
 export function EnterpriseBadge() {
 	return (
 		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
 			Enterprise only
+		</span>
+	);
+}
+
+export function CloudBadge() {
+	return (
+		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
+			Prefect Cloud only
 		</span>
 	);
 }
@@ -70,65 +79,73 @@ export function CheckCell({ value }) {
 			</div>
 		);
 	}
+	if (value === 'Cloud') {
+		return (
+			<div className="flex flex-col items-center gap-1">
+				<Check className="w-5 h-5 text-emerald-500" />
+				<CloudBadge />
+			</div>
+		);
+	}
 	return <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">{value}</span>;
 }
 
 {/* ── What you can build — row data ── */}
 
 export const buildRows = [
-	{ feature: 'Low-code internal apps',  href: '/use-cases/internal-apps',     description: 'Drag-and-drop dashboards and admin tools with a built-in component library',  windmill: true, retool: true },
-	{ feature: 'Full-code internal apps', href: '/platform/app-builder',        description: 'Custom dashboards and admin tools built in React or Svelte',                   windmill: true, retool: false },
-	{ feature: 'Workflows',               href: '/use-cases/workflows',         description: 'Chain steps into flows with branching, retries and approval steps',           windmill: true, retool: true },
-	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Standalone functions exposed as APIs, webhooks or cron jobs with their own UI', windmill: true, retool: false },
-	{ feature: 'Data pipelines',          href: '/use-cases/data-pipelines',    description: 'ETL, syncs and scheduled data jobs with parallel branches',                   windmill: true, retool: 'Partial' },
-	{ feature: 'AI agents with tool calling', href: '/use-cases/ai-agents',     description: 'Build agents that call tools, branch on outputs and run as workflows',        windmill: true, retool: true },
-	{ feature: 'AI sandboxes & volumes',  href: '/platform/sandboxes',          description: 'Isolated environments with persistent volumes for running agents',            windmill: true, retool: false },
-	{ feature: 'Scheduled tasks',         href: '/use-cases/scheduled-tasks',   description: 'Cron jobs with retries, error handling and alerting',                          windmill: true, retool: true },
+	{ feature: 'Workflows',               href: '/use-cases/workflows',         description: 'Chain scripts into flows with branching, retries and approval steps',              windmill: true, prefect: true },
+	{ feature: 'Data pipelines',          href: '/use-cases/data-pipelines',    description: 'ETL, syncs and scheduled data jobs with parallel branches',                        windmill: true, prefect: true },
+	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Standalone functions exposed as APIs, webhooks or cron jobs without a wrapping flow', windmill: true, prefect: false },
+	{ feature: 'AI agent workflows',      href: '/use-cases/ai-agents',         description: 'Build agents that call tools, branch on outputs and run as workflows',              windmill: true, prefect: 'Partial' },
+	{ feature: 'AI sandboxes & volumes',  href: '/platform/sandboxes',          description: 'Isolated environments with persistent volumes for running agents',                 windmill: true, prefect: false },
+	{ feature: 'Low-code internal apps',  href: '/use-cases/internal-apps',     description: 'Drag-and-drop dashboards and admin tools with built-in components',                windmill: true, prefect: false },
+	{ feature: 'Full-code internal apps', href: '/platform/app-builder',        description: 'Custom dashboards and admin tools built in React or Svelte',                       windmill: true, prefect: false },
+	{ feature: 'Scheduled tasks',         href: '/use-cases/scheduled-tasks',   description: 'Cron jobs with retries, error handling and alerting',                              windmill: true, prefect: true },
 ];
 
 {/* ── FAQ ── */}
 
 export const faqs = [
 	{
-		question: 'Is Windmill a drop-in replacement for Retool?',
+		question: 'Is Windmill a drop-in replacement for Prefect?',
 		textAnswer:
-			'For the internal-apps use case, yes, with caveats. Windmill has a visual app builder with a component library similar to Retool\'s, plus a full-code option in React or Svelte that Retool does not offer. Porting involves rebuilding apps component by component, since Retool\'s canvas definition is proprietary and not directly importable. Teams that lean heavily on Retool\'s richer widget catalog (mobile-specific components, some specialty inputs) should audit component parity before committing to a migration.',
+			'Both platforms handle workflow orchestration with a queue-and-worker architecture, so the mental model transfers. Porting involves rewriting Prefect @flow and @task Python functions as Windmill scripts and flow steps. Prefect-specific features (blocks, deployments, states, automations) need to be reimplemented using Windmill resources, triggers and flows.',
 	},
 	{
-		question: 'Can I migrate Retool apps to Windmill automatically?',
+		question: 'Can I migrate Prefect flows to Windmill automatically?',
 		textAnswer:
-			'No. Retool apps are stored in Retool\'s proprietary canvas format and there is no official export to an open format. Migrations are manual rebuilds, where each query becomes a Windmill script and each component maps to the closest Windmill equivalent. Because Windmill scripts run as standalone primitives with their own API endpoints, many of the queries you rebuild can be reused outside the app (as webhooks, scheduled jobs, or flow steps), which was not possible inside Retool.',
+			'No, there is no automated Prefect-to-Windmill converter today. In practice, the body of each Prefect task ports over as standard Python; the decorators and orchestration wiring are rewritten as Windmill scripts linked together in the flow editor. Most ported flows end up shorter because Windmill passes arguments directly between steps and auto-generates input UIs.',
 	},
 	{
-		question: 'Is Retool open source?',
+		question: 'Does Windmill have an integration catalog comparable to Prefect\'s prefect-aws, prefect-gcp, prefect-dbt packages?',
 		textAnswer:
-			'No. Retool is a proprietary, closed-source product. Self-hosting is available only on the Enterprise plan. Windmill, by contrast, ships an AGPLv3 open-source core that is free to self-host without a sales conversation, with Enterprise features in a separate proprietary codebase.',
+			'Prefect ships about 18 first-party integration packages. Windmill does not maintain a parallel catalog. Instead, any pip, npm, Go or Maven package is a first-class import, so you call the vendor\'s real SDK directly (boto3, google-cloud-storage, snowflake-connector-python). For teams who want curated, opinionated connectors for mainstream data tools, Prefect\'s catalog is often easier to get started with.',
 	},
 	{
-		question: 'Does Windmill support JavaScript and SQL queries the way Retool does?',
+		question: 'Can non-Python developers use Prefect?',
 		textAnswer:
-			'Yes, and more. Windmill scripts can be written in TypeScript, JavaScript, Python, Go, Bash, SQL, PHP, Rust, C#, and any Docker container. Retool supports JavaScript inside apps and a mix of JavaScript and Python inside Workflows, which covers the common cases but is narrower than Windmill\'s language range. For SQL specifically, both platforms let you write raw queries against connected databases.',
+			'Prefect flows and tasks are Python functions. There is no YAML authoring layer, no multi-language support, and no visual no-code editor. Teams with Node, Go, Bash or SQL heavy workloads either wrap them in Python subprocess calls or use a different orchestrator. Windmill supports 20+ languages natively alongside visual flows, so mixed-language teams have more options.',
 	},
 	{
-		question: 'Is Retool better for non-technical users who want to build apps?',
+		question: 'How does performance actually compare?',
 		textAnswer:
-			'Retool is more polished for that audience on the app-building side: a deeper component library, more mature drag-and-drop interactions, and a UX that assumes no CLI or Git. Windmill has a visual app builder too, but authoring queries still involves writing code. If your primary users are business analysts assembling CRUD UIs over a single database, Retool is often faster to stand up. If the team is developer-led or needs to ship code-driven automations alongside apps, Windmill fits better.',
+			'We publish reproducible benchmarks covering Airflow, Prefect, Temporal, Kestra, Hatchet and Windmill. For lightweight task batches on a single worker, Windmill is roughly 3× faster than Prefect in normal mode and several times faster in dedicated-worker mode. For heavy-duty tasks that run for minutes, per-task overhead is a rounding error and the gap disappears.',
 	},
 	{
-		question: 'How does pricing compare?',
+		question: 'What about the licenses, AGPLv3 vs Apache 2.0?',
 		textAnswer:
-			'Retool charges per user: builders at around €46/month on the Business plan (end users at €14/month), with SSO, Git sync and self-hosting only on Enterprise (custom pricing). Windmill is free and unlimited to self-host for up to 10 SSO users and 3 workspaces, with published per-seat and per-worker Enterprise pricing starting at $120/month. For larger teams the cost difference can be substantial, especially if most users are builders.',
+			'Prefect\'s OSS core is Apache 2.0, which is more permissive if you plan to modify and redistribute. Windmill\'s OSS core is AGPLv3, which requires source availability for network-exposed modifications. Both ship Enterprise features in separate proprietary codebases, and both are genuinely free to self-host the core for unmodified use. If license permissiveness of the core is a hard constraint, Prefect wins this axis.',
 	},
 	{
-		question: 'Can I self-host Retool the way I can self-host Windmill?',
+		question: 'Is pricing public?',
 		textAnswer:
-			'Not on the free or Team plans. Retool self-hosting requires an Enterprise contract. Windmill\'s open-source core is free to self-host at any scale: clone the repo, run docker compose, done. If self-hosting without a sales conversation is a hard requirement (for compliance, budget, or preference), this is often the single most decisive difference.',
+			'Windmill publishes per-seat and per-worker Enterprise pricing on its pricing page. Prefect publishes Cloud tier pricing (Hobby, Starter, Team, Pro) but Enterprise pricing is not disclosed and requires a sales conversation.',
 	},
 ];
 
 {/* ── Section wrapper helper ── */}
 
-export function QASection({ id, kicker, question, summary, retool, windmill, subsections, bottomLine, children, reverse }) {
+export function QASection({ id, kicker, question, summary, prefect, windmill, subsections, bottomLine, children, reverse }) {
 	return (
 		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
 			{/* Hero: title + subtitle */}
@@ -157,8 +174,8 @@ export function QASection({ id, kicker, question, summary, retool, windmill, sub
 							<span className="text-base font-bold text-blue-600 dark:text-blue-400">Windmill</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<img src="/img/retool.webp" alt="Retool" className="w-5 h-5" />
-							<span className="text-base font-bold text-gray-900 dark:text-white">Retool</span>
+							<img src="/img/prefect.svg" alt="Prefect" className="w-5 h-5 dark:invert" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">Prefect</span>
 						</div>
 					</div>
 
@@ -184,11 +201,11 @@ export function QASection({ id, kicker, question, summary, retool, windmill, sub
 							</div>
 							<div>
 								<div className="md:hidden mb-2 flex items-center gap-2">
-									<img src="/img/retool.webp" alt="Retool" className="w-4 h-4" />
-									<span className="text-sm font-bold text-gray-900 dark:text-white">Retool</span>
+									<img src="/img/prefect.svg" alt="Prefect" className="w-4 h-4 dark:invert" />
+									<span className="text-sm font-bold text-gray-900 dark:text-white">Prefect</span>
 								</div>
 								<div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed space-y-2">
-									{sub.retool}
+									{sub.prefect}
 								</div>
 							</div>
 						</motion.div>
@@ -196,7 +213,7 @@ export function QASection({ id, kicker, question, summary, retool, windmill, sub
 				</div>
 			)}
 
-			{!subsections && (windmill || retool) && (
+			{!subsections && (windmill || prefect) && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 					<motion.div
 						{...fadeIn}
@@ -215,11 +232,11 @@ export function QASection({ id, kicker, question, summary, retool, windmill, sub
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6"
 					>
 						<div className="mb-4 flex items-center gap-2">
-							<img src="/img/retool.webp" alt="Retool" className="w-5 h-5" />
-							<span className="text-base font-bold text-gray-900 dark:text-white">Retool</span>
+							<img src="/img/prefect.svg" alt="Prefect" className="w-5 h-5 dark:invert" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">Prefect</span>
 						</div>
 						<div className="text-gray-700 dark:text-gray-200 leading-relaxed space-y-3">
-							{retool}
+							{prefect}
 						</div>
 					</motion.div>
 				</div>
@@ -230,7 +247,7 @@ export function QASection({ id, kicker, question, summary, retool, windmill, sub
 	);
 }
 
-export default function RetoolCompareContent({ title, description }) {
+export default function PrefectCompareContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			{/* ── Hero ── */}
@@ -239,11 +256,11 @@ export default function RetoolCompareContent({ title, description }) {
 					<motion.div {...fadeIn}>
 						<div className="mb-4"><GithubStarCount /></div>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Windmill vs Retool
+							Windmill vs Prefect
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 							Eight questions teams ask during a bake-off, with an honest answer on each one
-							for where Windmill or Retool is the better pick.
+							for where Windmill or Prefect is the better pick.
 						</p>
 						<HeroCTAButtons />
 					</motion.div>
@@ -281,7 +298,7 @@ export default function RetoolCompareContent({ title, description }) {
 								transition={{ duration: 0.5, delay: 0.1 }}
 								className="flex items-center justify-center w-40 h-40 rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
 							>
-								<img src="/img/retool.webp" alt="Retool" className="w-20 h-20" />
+								<img src="/img/prefect.svg" alt="Prefect" className="w-20 h-20 dark:invert" />
 							</motion.div>
 						</div>
 					</div>
@@ -338,16 +355,16 @@ export default function RetoolCompareContent({ title, description }) {
 					</div>
 					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6">
 						<div className="mb-3 flex items-center gap-2">
-							<img src="/img/retool.webp" alt="Retool" className="w-5 h-5" />
+							<img src="/img/prefect.svg" alt="Prefect" className="w-5 h-5 dark:invert" />
 							<span className="text-base font-bold text-gray-900 dark:text-white">
-								Retool in one sentence
+								Prefect in one sentence
 							</span>
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
-							A proprietary, closed-source <strong>low-code platform for internal apps</strong>, with
-							a drag-and-drop canvas, a large component library and JavaScript queries on top of your
-							databases and APIs. Workflows and AI Agents extend the same canvas model to automations.
-							Best for teams that want a polished app-builder and accept per-user SaaS pricing.
+							An open-source <strong>Pythonic workflow orchestrator</strong> for data pipelines. Flows
+							and tasks are plain Python functions decorated with <code>@flow</code> and <code>@task</code>,
+							with a modern UI for runs, schedules and state. Best for Python-first data teams that want
+							code-native workflows without a separate DSL.
 						</p>
 					</div>
 				</motion.div>
@@ -358,11 +375,11 @@ export default function RetoolCompareContent({ title, description }) {
 				id="build"
 				kicker="01 · What you can build"
 				question="Which internal software can you build and orchestrate?"
-				summary="Both platforms build internal apps. The real question is what else you can build on the same runtime."
+				summary="Both platforms orchestrate workflows. The real question is what else you can build on the same runtime."
 				bottomLine={
 					<>
-						<strong>Windmill</strong> centralizes scripts, workflows, data pipelines, full-code apps, AI agents and operator UIs on a single runtime, with shared resources, auth and observability.
-						<strong> Retool</strong> is app-builder first, with Workflows and Agents layered on the same visual canvas. Strong for internal apps. Narrower for scripts-as-APIs, heavy data pipelines and code-first automations.
+						<strong>Windmill</strong> is built to centralize and orchestrate all your internal software in one place. Scripts, workflows, data pipelines, full-code apps, AI agents and operator UIs run on a single runtime, with shared resources, auth and observability.
+						<strong> Prefect</strong> focuses on Python workflow orchestration, so you bring your own stack for dashboards, internal apps, agent front-ends and non-Python workloads.
 					</>
 				}
 			>
@@ -379,8 +396,8 @@ export default function RetoolCompareContent({ title, description }) {
 								</th>
 								<th className="px-6 py-4 text-center font-semibold text-gray-700 dark:text-gray-300 w-32">
 									<span className="inline-flex items-center gap-2">
-										<img src="/img/retool.webp" alt="Retool" className="w-4 h-4" />
-										Retool
+										<img src="/img/prefect.svg" alt="Prefect" className="w-4 h-4 dark:invert" />
+										Prefect
 									</span>
 								</th>
 							</tr>
@@ -403,7 +420,7 @@ export default function RetoolCompareContent({ title, description }) {
 										)}
 									</td>
 									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.windmill} /></td>
-									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.retool} /></td>
+									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.prefect} /></td>
 								</tr>
 							))}
 						</tbody>
@@ -416,46 +433,59 @@ export default function RetoolCompareContent({ title, description }) {
 				id="target"
 				kicker="02 · Target"
 				question="Who is each platform built for?"
-				summary="Both tools say 'for everyone'. In practice, how you author picks a primary audience, and it matters a lot once the team grows."
+				summary="Both tools say 'for everyone'. In practice, how you write workflows picks a primary audience, and it matters a lot once the team grows."
 				subsections={[
 					{
 						label: 'Primary audience',
 						windmill: (
 							<p>
-								Developer-led teams. Engineers own the platform end-to-end: code, Git, local dev, workspace
-								forks, code review, CI/CD, AI coding tools, infrastructure as code.
+								Developer-led teams across languages. Engineers own the platform end-to-end: code in
+								TypeScript, Python, Go, Bash, SQL and more, with Git, local dev, workspace forks, code
+								review, CI/CD, AI coding tools and infrastructure as code.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Developers and low-code engineers building internal tools. The canvas-first UX is designed
-								for people who think visually and write short JavaScript or SQL for glue logic. Common
-								audience: full-stack devs, data engineers, ops engineers, technical PMs.
+								Python-first data teams. Data engineers and data scientists who already live in Python
+								get a natural authoring model through <code>@flow</code> and <code>@task</code> decorators,
+								with strong appeal for teams migrating from Airflow.
 							</p>
 						),
 					},
 					{
-						label: 'How non-developers participate',
+						label: 'Languages supported',
 						windmill: (
 							<p>
-								Non-developers consume through auto-generated UIs, custom apps and an operator role.
-								They can build simple apps with AI assistance, but authoring scripts and flows still
-								involves writing code.
+								TypeScript, Python, Go, Bash, SQL, PHP, Rust, C# and any Docker image, as first-class
+								script languages with shared resources, auth and observability.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								The drag-and-drop app canvas is approachable for non-developers who can read a bit of
-								JavaScript. Deeper flows and Workflows still require real code, so a purely no-code user
-								hits a ceiling fast.
+								Python only. Other languages run as subprocess calls wrapped inside Python tasks.
+							</p>
+						),
+					},
+					{
+						label: 'How non-Python workloads fit',
+						windmill: (
+							<p>
+								Each language is a native script primitive with its own UI, API and scheduler. No wrapping
+								layer required to run a TypeScript script, a SQL query or a Bash command.
+							</p>
+						),
+						prefect: (
+							<p>
+								Non-Python code runs via <code>subprocess</code> or shell tasks inside a Python flow. Fine
+								for an occasional helper, heavier lift if your team is genuinely polyglot.
 							</p>
 						),
 					},
 				]}
 				bottomLine={
 					<>
-						<strong>Windmill</strong> is built for developer-led teams where engineers own the platform end-to-end.
-						<strong> Retool</strong> is built for developers and low-code engineers who want a polished visual canvas for internal tools, with JavaScript and SQL for the glue logic.
+						<strong>Windmill</strong> is built for engineering teams across languages, with first-class support for TypeScript, Python, Go, Bash, SQL and Docker.
+						<strong> Prefect</strong> is designed for Python-first data teams, with a decorator-based authoring model that fits naturally for teams migrating from Airflow.
 					</>
 				}
 			/>
@@ -466,7 +496,7 @@ export default function RetoolCompareContent({ title, description }) {
 				id="devex"
 				kicker="03 · Developer experience"
 				question="How do developers interact with the platform?"
-				summary="Covers how you write apps and workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
+				summary="Covers how you write workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
 				subsections={[
 					{
 						label: 'Authoring',
@@ -474,9 +504,9 @@ export default function RetoolCompareContent({ title, description }) {
 							<div className="flex flex-col h-full">
 								<p className="min-h-[8.5rem]">
 									Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
-									primitive with its own UI, API endpoint and scheduler, no visual canvas required to
-									run. The <Link to="/platform/app-builder" className="text-blue-500 hover:underline">app builder</Link> gives you both a drag-and-drop canvas and a full-code React or Svelte
-									option. Any public or private package is a first-class import with automatic dependency
+									primitive with its own UI, API endpoint and scheduler; no Python wrapper required to
+									run. <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">Flows</Link> glue scripts together through a visual editor backed by YAML.
+									Any public or private package is a first-class import with automatic dependency
 									resolution.
 								</p>
 								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
@@ -505,32 +535,43 @@ value:
 								</div>
 							</div>
 						),
-						retool: (
+						prefect: (
 							<div className="flex flex-col h-full">
 								<p className="min-h-[8.5rem]">
-									Authoring happens on a visual canvas. Apps are built by dragging components and wiring
-									them to <a href="https://docs.retool.com/queries" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">queries</a> (REST, SQL, JS transformers).
-									Workflows use a separate canvas with blocks for code, queries, loops and branches.
-									Code blocks accept JavaScript; Workflow code blocks also accept Python. App definitions
-									live in Retool's database, not as files in your repo by default.
+									Prefect flows and tasks are Python functions decorated with <code>@flow</code> and{' '}
+									<code>@task</code>. No YAML authoring, no multi-language support: the flow, its tasks
+									and the orchestration wiring all live in the same Python file. Deployment metadata
+									(schedules, work pools, parameters) sits in a separate <code>prefect.yaml</code> or is
+									declared from Python.
 								</p>
 								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
 									<Tabs className="unique-tabs">
-										<TabItem value="js" label="code_block.js" default>
-											<CodeBlock language="javascript">{`// Retool code block inside a Workflow
-const res = await fetch('https://retool.com');
-return {
-  status: res.status,
-  text: await res.text(),
-};`}</CodeBlock>
+										<TabItem value="script" label="main.py" default>
+											<CodeBlock language="python">{`from prefect import flow, task
+import requests
+
+@task
+def fetch():
+    r = requests.get('https://prefect.io')
+    return {
+        'status': r.status_code,
+        'text': r.text,
+    }
+
+@flow
+def main():
+    return fetch()`}</CodeBlock>
 										</TabItem>
-										<TabItem value="query" label="rest_query.json">
-											<CodeBlock language="json">{`{
-  "resource": "restApi",
-  "method": "GET",
-  "url": "https://retool.com",
-  "transformer": "return data;"
-}`}</CodeBlock>
+										<TabItem value="yaml" label="prefect.yaml">
+											<CodeBlock language="yaml">{`name: fetch-demo
+prefect-version: 3.0.0
+
+deployments:
+  - name: fetch-homepage
+    entrypoint: main.py:main
+    work_pool:
+      name: default
+    schedule: null`}</CodeBlock>
 										</TabItem>
 									</Tabs>
 								</div>
@@ -545,11 +586,10 @@ return {
 								(LSP, type-checking, linting) and AI coding tools (Claude Code, Codex).
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								No local-dev loop for apps. Development happens in Retool's web IDE against live data.
-								Query code can be edited inline; longer JavaScript or Python lives in the canvas editor.
-								There is no offline mode and no way to run an app locally before deploying.
+								Standard Python tooling: VS Code, PyCharm, pytest, type-checkers and any linter. The{' '}
+								<code>prefect</code> CLI starts a local server and runs flows end-to-end before deploy.
 							</p>
 						),
 					},
@@ -564,11 +604,12 @@ return {
 								Secrets Manager) are <EnterpriseBadge />.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Resources (database and API connections) and environment variables are configured at the
-								organization level. Values are encrypted at rest and not visible in app code. External
-								secret managers (AWS Secrets Manager, Vault) are <EnterpriseBadge />.
+								<a href="https://docs.prefect.io/v3/concepts/blocks" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Blocks</a> hold typed configuration and credentials,
+								with <code>SecretStr</code> fields encrypted at rest. Pre-built blocks cover AWS, GCP,
+								Azure, Snowflake, Databricks and other common services. External secret backends (Vault,
+								AWS Secrets Manager) are <CloudBadge />.
 							</p>
 						),
 					},
@@ -582,20 +623,20 @@ return {
 								beyond that is <EnterpriseBadge />.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Retool <a href="https://docs.retool.com/source-control" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Source Control</a> syncs apps, workflows, resources and themes to GitHub,
-								GitLab, Bitbucket, AWS CodeCommit or Azure Repos via pull requests. It is listed as{' '}
-								<EnterpriseBadge /> on the pricing page. Lower tiers rely on App Release Versions
-								inside Retool itself.
+								Python project in Git. Deployments go out through the <code>prefect</code> CLI or CI
+								pipelines, with flow code pulled from a repo at runtime. Users, RBAC, workspaces and
+								automations are configured in the Prefect Cloud UI and not version-controlled alongside
+								the code.
 							</p>
 						),
 					},
 				]}
 				bottomLine={
 					<>
-						<strong>Windmill</strong> is code-first: scripts are real files in any of 20+ languages, runnable locally, and the whole workspace lives in Git.
-						<strong> Retool</strong> is canvas-first: apps and workflows are built visually in a web IDE against live data, with JavaScript and SQL for glue code. Great for getting started fast, harder to treat like application code.
+						<strong>Windmill</strong> gives you multi-language scripts as standalone primitives, with a local dev loop and whole-workspace Git sync covering scripts, flows, apps, resources and permissions.
+						<strong> Prefect</strong> is pure Python with a decorator-based authoring model. Clean if you're already a Python shop, but limited for polyglot teams.
 					</>
 				}
 			/>
@@ -617,11 +658,12 @@ return {
 								flows for common tasks.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								<a href="https://retool.com/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">100+ pre-built connectors</a> for databases (Postgres, MySQL, Snowflake, BigQuery),
-								SaaS (Salesforce, Stripe, HubSpot) and auth protocols. For anything not in the catalog,
-								you fall back to a generic REST API resource or a JavaScript code block.
+								About 18 first-party <a href="https://docs.prefect.io/integrations/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">integration packages</a> (<code>prefect-aws</code>,{' '}
+								<code>prefect-gcp</code>, <code>prefect-dbt</code>, <code>prefect-snowflake</code>,{' '}
+								<code>prefect-databricks</code>, <code>prefect-kubernetes</code>) with curated tasks and
+								blocks. Any other pip package also works as a normal Python import inside a task.
 							</p>
 						),
 					},
@@ -633,11 +675,11 @@ return {
 								WebSocket.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Workflows support cron schedules and webhooks as triggers. Event-driven triggers
-								beyond that (Kafka consumers, CDC, queue consumers) require polling workarounds or
-								an external event bridge.
+								Webhooks and cron schedules in open source. <a href="https://docs.prefect.io/v3/concepts/event-triggers" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Event triggers</a> and automations
+								work on both OSS and Cloud; metric-based triggers are <CloudBadge />. No native Kafka,
+								Postgres CDC or SQS trigger: those are typically polled from inside a flow.
 							</p>
 						),
 					},
@@ -645,23 +687,22 @@ return {
 						label: 'Extending',
 						windmill: (
 							<p>
-								A new integration is just a script with a new import. No plugin release cycle to wait
-								on. Custom UI components can be added as React components.
+								A new integration is just a script with a new import. No plugin release cycle to wait on.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Custom components exist but are limited compared to writing a standalone React app.
-								Custom auth, custom connectors and advanced integrations often require dropping to a
-								generic REST resource with hand-rolled JavaScript transformers.
+								No official integration for what you need? Import the vendor SDK directly in a task, or
+								write your own block type and task collection. Community integrations are published as
+								standalone pip packages.
 							</p>
 						),
 					},
 				]}
 				bottomLine={
 					<>
-						<strong>Windmill</strong> treats any public package (npm, PyPI, Go or Maven) or your own as a first-class import, so the effective integration catalog is the package ecosystems themselves.
-						<strong> Retool</strong> ships 100+ polished connectors for the most common databases and SaaS tools. Easier out of the box for mainstream stacks. Tighter ceiling for the long tail.
+						<strong>Windmill</strong> lets you import any public package (npm, PyPI, Go or Maven) or your own, and call the vendor's real SDK directly.
+						<strong> Prefect</strong> ships curated first-party packages for common data tools and falls back to raw pip packages everywhere else.
 					</>
 				}
 			/>
@@ -671,23 +712,22 @@ return {
 				id="migration"
 				kicker="05 · Migration & lock-in"
 				question="How hard to get in, and how hard to get out?"
-				summary="Two simple questions: how much work to move your existing internal tools onto the platform, and how much to move them off if you ever change your mind."
+				summary="Two simple questions: how much work to move your existing workflows onto the platform, and how much to move them off if you ever change your mind."
 				subsections={[
 					{
 						label: 'Getting in',
 						windmill: (
 							<p>
 								Paste a function body into the <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>, Windmill infers args, generates a UI,
-								handles dependencies. Drag-and-drop apps, <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link>, schedules and variables migrate one by one.
-								No learning curve around a proprietary canvas format.
+								handles dependencies. No Python wrapper or decorator to learn. <Link to="/platform/triggers" className="text-blue-500 hover:underline">Triggers</Link>, schedules,
+								variables and <Link to="/platform/app-builder" className="text-blue-500 hover:underline">apps</Link> migrate one by one.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Fast if you already think in terms of drag-and-drop apps wired to queries. Common CRUD
-								UIs over a database can be live in under an hour. Migrating existing code-based internal
-								tools usually means redrawing the UI component by component, since there is no import
-								from React, HTML or other app formats.
+								If you already think in Python decorators (or DAGs, from Airflow), the mental model
+								transfers cleanly. Wrap existing Python functions with <code>@flow</code> and{' '}
+								<code>@task</code>, declare deployments in <code>prefect.yaml</code>, push to a work pool.
 							</p>
 						),
 					},
@@ -700,12 +740,12 @@ return {
 								runtime, not the step code.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Retool apps are stored in a proprietary canvas format. With Source Control enabled
-								(<EnterpriseBadge />), apps and workflows sync to Git as JSON, but the format is
-								Retool-specific and not portable to another platform without a rewrite. JavaScript and
-								SQL inside queries are portable; the visual layout and component bindings are not.
+								Task bodies are standard Python: strip out the <code>@flow</code> and <code>@task</code>{' '}
+								decorators and you have plain functions that run anywhere. What needs rewriting:
+								Prefect-specific features like blocks, deployments, state handling, automations and work
+								pools.
 							</p>
 						),
 					},
@@ -713,7 +753,7 @@ return {
 				bottomLine={
 					<>
 						<strong>Windmill</strong> keeps switching cost low. Step code is standard TS, Python, Go, Bash or SQL that runs anywhere, including after you leave Windmill.
-						<strong> Retool</strong> has higher lock-in: apps are stored in a proprietary canvas format, and Git export is an Enterprise feature that still produces Retool-specific files.
+						<strong> Prefect</strong> also keeps the core code portable (task bodies are plain Python). The orchestration wiring (blocks, deployments, automations) is the part that locks in.
 					</>
 				}
 			/>
@@ -734,11 +774,10 @@ return {
 								metrics and a Prometheus exporter. Trace ID on every job.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Workflow run logs with per-block timings and I/O. App-level usage analytics and query
-								history. No native Prometheus exporter. OpenTelemetry export is available on
-								self-hosted Enterprise deployments.
+								Run logs, task-level timings and state transitions in the Prefect UI. OpenTelemetry
+								export and advanced dashboards are <CloudBadge />.
 							</p>
 						),
 					},
@@ -749,9 +788,10 @@ return {
 								Full trail of who ran / edited / deployed what. Extended retention is <EnterpriseBadge />.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Audit logs track user and admin activity. Available on the Business plan and above, not on Free or Team.
+								Audit logs track workspace events and user activity. <CloudBadge /> (Pro and Enterprise
+								tiers).
 							</p>
 						),
 					},
@@ -764,11 +804,11 @@ return {
 								controls (SCIM, SAML) are <EnterpriseBadge />.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								SOC 2 Type II, HIPAA and ISO 27001 compliant. Rich RBAC is on Business and above. Custom
-								SSO (SAML, OpenID), SCIM, custom branding and independent workspaces are all{' '}
-								<EnterpriseBadge />. Google SSO is available on lower tiers.
+								Open source ships basic auth only. RBAC, object-level permissions, custom roles, SSO
+								(SAML / OIDC) and SCIM are <CloudBadge /> (Pro and Enterprise). Prefect Cloud is SOC 2
+								compliant.
 							</p>
 						),
 					},
@@ -781,11 +821,11 @@ return {
 								is <EnterpriseBadge />.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Independent workspaces (Retool's term for isolated tenants) are <EnterpriseBadge />.
-								Lower tiers share a single space. Environments (dev / staging / prod) for resources
-								are available from Team upward.
+								Open source is single-tenant. Prefect Cloud's free Hobby tier is capped at 1 workspace
+								and 2 users; multi-workspace support starts at the Team tier. True tenant isolation is{' '}
+								<CloudBadge /> (Pro and Enterprise).
 							</p>
 						),
 					},
@@ -794,33 +834,45 @@ return {
 						windmill: (
 							<p>
 								~10ms cold starts. <Link to="/platform/workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes and
-								dependencies pre-warmed. Published <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">benchmarks</Link> against other orchestrators.
+								dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Roughly 3× faster</Link> than Prefect on lightweight tasks on
+								equivalent hardware.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Performance is dominated by query and rendering time in apps, and by block startup in
-								Workflows. No published performance benchmarks. Workflow runs are capped at 5,000/month
-								on Team and Business. Higher volumes require Enterprise.
+								Work-pool and worker architecture with horizontal scaling. Per-task overhead from Python
+								interpreter startup and state persistence. Negligible for multi-minute data tasks, more
+								visible for high-volume short tasks.
 							</p>
 						),
 					},
 				]}
 				bottomLine={
 					<>
-						Both cover the enterprise basics. The difference is where those features sit on the price sheet.
-						<strong> Windmill</strong> ships RBAC, SSO (up to 10 users), encrypted secrets and multi-workspace isolation in the free self-hosted core.
-						<strong> Retool</strong> gates custom SSO, Git sync, independent workspaces and self-hosting behind Enterprise, with RBAC and audit logs starting at Business.
+						Both cover the enterprise basics: RBAC, SSO, audit logs and SOC 2 (on their managed tiers).
+						<strong> Windmill</strong> is faster for short, high-volume workloads like webhooks, alerts and small scripts, with roughly 3× lower per-task overhead.
+						<strong> Prefect</strong> is a good fit for long-running data pipelines where per-task overhead doesn't matter and state management is the main requirement.
 					</>
 				}
-			/>
+			>
+				<motion.div {...fadeIn} className="max-w-5xl mx-auto mt-12 mb-8">
+					<BenchmarkVisualization
+						usecase="fibonacci_40_10"
+						language="python"
+						engines={['prefect', 'windmill', 'windmill_dedicated']}
+						workers={1}
+						title="40 lightweight Python tasks: Prefect vs Windmill"
+						maintainAspectRatio={false}
+					/>
+				</motion.div>
+			</QASection>
 
 			{/* ── Q7: Licensing ── */}
 			<QASection
 				id="licensing"
 				kicker="07 · Licensing & pricing"
 				question="Open source, pricing, and self-hosting?"
-				summary="This is the sharpest difference between the two platforms."
+				summary="Both are free to self-host. The real differences are the license terms, how much sits behind the managed tier, and whether Enterprise pricing is public."
 				subsections={[
 					{
 						label: 'Open-source license',
@@ -831,10 +883,11 @@ return {
 								codebase. Managed cloud available.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Proprietary and closed-source. There is no open-source edition. Self-hosting is{' '}
-								<EnterpriseBadge />. Free, Team and Business plans are cloud-only.
+								Apache 2.0 core, free and unlimited self-hosted. Enterprise-grade features (RBAC, SSO,
+								audit logs, multi-tenancy, external secret backends, service accounts, metric triggers)
+								live in the proprietary <a href="https://www.prefect.io/pricing" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Prefect Cloud</a> SaaS, not as a self-hostable Enterprise build.
 							</p>
 						),
 					},
@@ -842,24 +895,23 @@ return {
 						label: 'Enterprise pricing',
 						windmill: (
 							<p>
-								<strong>Public per-seat and per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>,
-								starting at $120/month. Enterprise adds SSO, audit logs, dedicated workers, advanced worker groups.
+								Enterprise adds SSO, audit logs, dedicated workers, advanced worker groups.{' '}
+								<strong>Public per-seat and per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>.
 							</p>
 						),
-						retool: (
+						prefect: (
 							<p>
-								Per-user pricing: builders at €9/Team, €46/Business, custom on Enterprise. End users
-								at €5/Team, €14/Business. External-user tier available on Business+. Enterprise pricing
-								not public. A sales conversation is required for custom SSO, Git sync, self-hosting and
-								independent workspaces.
+								<a href="https://www.prefect.io/pricing" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Prefect Cloud</a> tiers (Hobby, Starter, Team, Pro) publish per-seat
+								and usage-based pricing. <strong>Enterprise tier pricing is not public;</strong> sales
+								conversation required.
 							</p>
 						),
 					},
 				]}
 				bottomLine={
 					<>
-						<strong>Windmill</strong> is open source (AGPLv3 core), free to self-host at any scale, with public per-seat and per-worker Enterprise pricing.
-						<strong> Retool</strong> is proprietary and closed-source, priced per user. Self-hosting and most governance features require an Enterprise contract.
+						<strong>Windmill</strong> publishes upfront per-seat and per-worker Enterprise pricing, no sales call needed.
+						<strong> Prefect's</strong> OSS core is Apache 2.0, more permissive than Windmill's AGPLv3 for redistribution, but more enterprise features live exclusively in Prefect Cloud (the SaaS), whereas Windmill Enterprise is self-hostable.
 					</>
 				}
 			/>
@@ -874,7 +926,7 @@ return {
 						The verdict
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The biggest difference between Windmill and Retool is how <strong>open and code-first</strong> each platform is. Windmill is an open-source AGPLv3 core you can self-host for free, authored in real files, 20+ languages, versioned in Git, and runnable locally. Retool is a proprietary SaaS with a polished visual canvas, where apps live in Retool's database and self-hosting or Git sync require an Enterprise contract. The other major difference is the <strong>range of internal software you can build</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and both low-code and full-code internal apps on one runtime, while Retool is app-builder first with Workflows and Agents layered on the same canvas. If you are deciding between the two, the fastest way to judge is to spend an afternoon in each.
+						The biggest difference between Windmill and Prefect is the <strong>developer experience</strong>. Windmill is polyglot and scripts-first: each script is a standalone primitive with its own UI, API and scheduler across 20+ languages, and the whole workspace (scripts, flows, apps, resources, permissions) lives in Git. Prefect is Python-only and flow-first, with an elegant decorator-based authoring model that fits naturally for Python data teams and Airflow migrants. The other major difference is the <strong>range of internal software you can build on each platform</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and internal apps on one runtime, while Prefect is focused on Python workflow orchestration. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
 			</section>
