@@ -1,0 +1,73 @@
+<svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)" />
+
+  <!-- Subtle grid lines -->
+  <g stroke="#334155" stroke-width="0.5" opacity="0.3">
+    <line x1="0" y1="90" x2="1200" y2="90" />
+    <line x1="0" y1="180" x2="1200" y2="180" />
+    <line x1="0" y1="270" x2="1200" y2="270" />
+    <line x1="0" y1="360" x2="1200" y2="360" />
+    <line x1="0" y1="450" x2="1200" y2="450" />
+    <line x1="0" y1="540" x2="1200" y2="540" />
+    <line x1="150" y1="0" x2="150" y2="630" />
+    <line x1="300" y1="0" x2="300" y2="630" />
+    <line x1="450" y1="0" x2="450" y2="630" />
+    <line x1="600" y1="0" x2="600" y2="630" />
+    <line x1="750" y1="0" x2="750" y2="630" />
+    <line x1="900" y1="0" x2="900" y2="630" />
+    <line x1="1050" y1="0" x2="1050" y2="630" />
+  </g>
+
+  <!-- Concentric circles illustration (right side) -->
+  <circle cx="880" cy="315" r="200" fill="none" stroke="#3b82f6" stroke-opacity="0.12" stroke-width="2" />
+  <circle cx="880" cy="315" r="155" fill="none" stroke="#3b82f6" stroke-opacity="0.18" stroke-width="2" />
+  <circle cx="880" cy="315" r="110" fill="none" stroke="#3b82f6" stroke-opacity="0.25" stroke-width="2" />
+  <circle cx="880" cy="315" r="65" fill="none" stroke="#3b82f6" stroke-opacity="0.35" stroke-width="2" />
+
+  <!-- Core dot -->
+  <circle cx="880" cy="315" r="20" fill="#3b82f6" opacity="0.3" />
+  <circle cx="880" cy="315" r="8" fill="#3b82f6" opacity="0.6" />
+
+  <!-- Orbiting dots on rings -->
+  <circle cx="1035" cy="315" r="5" fill="#60a5fa" opacity="0.5" />
+  <circle cx="880" cy="160" r="5" fill="#60a5fa" opacity="0.4" />
+  <circle cx="770" cy="315" r="4" fill="#60a5fa" opacity="0.45" />
+  <circle cx="940" cy="225" r="4" fill="#60a5fa" opacity="0.35" />
+  <circle cx="815" cy="400" r="4" fill="#60a5fa" opacity="0.3" />
+  <circle cx="1000" cy="420" r="3" fill="#60a5fa" opacity="0.25" />
+  <circle cx="750" cy="230" r="3" fill="#60a5fa" opacity="0.2" />
+
+  <!-- Scattered decorative circles (left-bottom) -->
+  <circle cx="200" cy="450" r="30" fill="none" stroke="#3b82f6" stroke-opacity="0.1" stroke-width="1.5" />
+  <circle cx="200" cy="450" r="15" fill="none" stroke="#3b82f6" stroke-opacity="0.15" stroke-width="1.5" />
+  <circle cx="320" cy="500" r="20" fill="none" stroke="#3b82f6" stroke-opacity="0.08" stroke-width="1.5" />
+
+  <!-- Glow effect -->
+  <circle cx="880" cy="315" r="250" fill="#3b82f6" opacity="0.04" />
+  <circle cx="880" cy="315" r="150" fill="#3b82f6" opacity="0.03" />
+
+  <!-- Windmill logo -->
+  <g transform="translate(80, 130) scale(0.16)">
+    <polygon fill="#BCD4FC" points="134.78,14.22 114.31,48.21 101.33,69.75 158.22,69.75 177.97,36.95 191.67,14.22"/>
+    <polygon fill="#3B82F6" points="227.55,69.75 186.61,69.75 101.33,69.75 129.78,119.02 158.16,119.02 228.61,119.02 256,119.02"/>
+    <polygon fill="#3B82F6" points="136.93,132.47 116.46,167.93 73.82,241.78 130.71,241.78 144.9,217.2 180.13,156.18 193.82,132.46"/>
+    <polygon fill="#3B82F6" points="121.7,131.95 101.23,96.49 58.59,22.63 30.15,71.91 44.34,96.49 79.57,157.5 93.26,181.22"/>
+    <polygon fill="#BCD4FC" points="64.81,131.95 25.15,131.21 0,130.74 28.44,180.01 66.73,180.72 93.26,181.21"/>
+    <polygon fill="#BCD4FC" points="165.38,181.74 184.58,216.46 196.75,238.47 225.19,189.2 206.66,155.69 193.83,132.46"/>
+  </g>
+  <text x="130" y="161" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="32" font-weight="700" fill="#ffffff">Windmill</text>
+
+  <!-- Text: Title -->
+  <text x="80" y="330" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="64" font-weight="700" fill="#ffffff" letter-spacing="-0.03em">Sandboxed AI bots</text>
+
+  <!-- Text: Subtitle -->
+  <text x="80" y="390" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="24" fill="#94a3b8">Give capabilities, not credentials</text>
+</svg>
