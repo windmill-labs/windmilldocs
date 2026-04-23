@@ -76,7 +76,7 @@ In the typical setup, `STRIPE_SECRET_KEY` sits in an env var and the whole proce
 
 Windmill's [AI sandboxes](/blog/launch-week-ai-sandboxes) (introduced during [launch week](/launch-week-march-2026)) use [nsjail](/docs/advanced/security_isolation#nsjail-sandboxing) for process-level isolation:
 
-- **Credential isolation**: API keys live in the encrypted [resource store](/docs/core_concepts/resources_and_types), not in the agent's environment. Secrets can be managed directly in Windmill with [workspace encryption](/docs/core_concepts/workspace_secret_encryption), or fetched at runtime from an external KMS like [Hashicorp Vault via OIDC](/docs/core_concepts/oidc#use-oidc-with-hashicorp-vault). Either way, the agent never sees them.
+- **Credential isolation**: API keys live in the encrypted [resource store](/docs/core_concepts/resources_and_types), not in the agent's environment. Windmill supports [multiple secret storage backends](/docs/core_concepts/variables_and_secrets): its own encrypted store, HashiCorp Vault, Azure Key Vault, and AWS Secrets Manager. Either way, the agent never sees them.
 - **Filesystem isolation**: scripts run in an isolated mount namespace with access only to their job directory and explicitly mounted [volumes](/docs/core_concepts/volumes).
 - **Resource limits**: CPU, memory, and process limits per job.
 - **Network isolation** (optional): outbound network access is on by default (tools need it to call APIs). For stricter setups, you can enable network namespace isolation via [unshare flags](/docs/advanced/security_isolation#pid-namespace-isolation) (`--net`) to block all outbound connections.
