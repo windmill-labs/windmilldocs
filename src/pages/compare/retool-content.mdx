@@ -1,0 +1,889 @@
+---
+title: "Windmill vs Retool: an honest side-by-side comparison"
+description: "Evaluating Retool and Windmill? A neutral, question-driven comparison across target audience, developer experience, scope, integrations, migration, enterprise requirements, and pricing, including where each tool is genuinely the better choice."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import {
+	Check,
+	X,
+	Users,
+	Terminal,
+	Boxes,
+	Puzzle,
+	ArrowRightLeft,
+	Gauge,
+	Scale,
+	Compass,
+	ArrowRight,
+} from 'lucide-react';
+import GithubStarCount from '../../landing/GithubStarCount';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import ProductCTA from '../../components/products/ProductCTA';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 },
+};
+
+{/* ── The 8 big questions ── */}
+
+export const bigQuestions = [
+	{ id: 'build',        kicker: 'What you can build',     short: 'Which solution fits for your specific use case',        icon: Boxes },
+	{ id: 'target',       kicker: 'Target',                 short: 'Who the platform is built for',                         icon: Users },
+	{ id: 'devex',        kicker: 'Developer experience',   short: 'How developers interact with the platform',             icon: Terminal },
+	{ id: 'integrations', kicker: 'Integrations',           short: 'How the platform integrates with your existing stack',  icon: Puzzle },
+	{ id: 'migration',    kicker: 'Migration & lock-in',    short: 'How hard to get in, how hard to get out',               icon: ArrowRightLeft },
+	{ id: 'enterprise',   kicker: 'Enterprise requirements', short: 'Audit logs, observability, security, performance',     icon: Gauge },
+	{ id: 'licensing',    kicker: 'Licensing & pricing',    short: 'Open source, pricing, self-hosting',                    icon: Scale },
+	{ id: 'verdict',      kicker: 'Verdict',                short: 'The verdict',                                           icon: Compass },
+];
+
+export function EnterpriseBadge() {
+	return (
+		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
+			Enterprise only
+		</span>
+	);
+}
+
+export function CheckCell({ value }) {
+	if (value === true) {
+		return <Check className="w-5 h-5 text-emerald-500 mx-auto" />;
+	}
+	if (value === false) {
+		return <X className="w-5 h-5 text-gray-400 mx-auto" />;
+	}
+	if (value === 'Enterprise') {
+		return (
+			<div className="flex flex-col items-center gap-1">
+				<Check className="w-5 h-5 text-emerald-500" />
+				<EnterpriseBadge />
+			</div>
+		);
+	}
+	return <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">{value}</span>;
+}
+
+{/* ── What you can build — row data ── */}
+
+export const buildRows = [
+	{ feature: 'Low-code internal apps',  href: '/use-cases/internal-apps',     description: 'Drag-and-drop dashboards and admin tools with a built-in component library',  windmill: true, retool: true },
+	{ feature: 'Full-code internal apps', href: '/platform/app-builder',        description: 'Custom dashboards and admin tools built in React or Svelte',                   windmill: true, retool: false },
+	{ feature: 'Workflows',               href: '/use-cases/workflows',         description: 'Chain steps into flows with branching, retries and approval steps',           windmill: true, retool: true },
+	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Standalone functions exposed as APIs, webhooks or cron jobs with their own UI', windmill: true, retool: false },
+	{ feature: 'Data pipelines',          href: '/use-cases/data-pipelines',    description: 'ETL, syncs and scheduled data jobs with parallel branches',                   windmill: true, retool: 'Partial' },
+	{ feature: 'AI agents with tool calling', href: '/use-cases/ai-agents',     description: 'Build agents that call tools, branch on outputs and run as workflows',        windmill: true, retool: true },
+	{ feature: 'AI sandboxes & volumes',  href: '/platform/sandboxes',          description: 'Isolated environments with persistent volumes for running agents',            windmill: true, retool: false },
+	{ feature: 'Scheduled tasks',         href: '/use-cases/scheduled-tasks',   description: 'Cron jobs with retries, error handling and alerting',                          windmill: true, retool: true },
+];
+
+{/* ── FAQ ── */}
+
+export const faqs = [
+	{
+		question: 'Is Windmill a drop-in replacement for Retool?',
+		textAnswer:
+			'For the internal-apps use case, yes, with caveats. Windmill has a visual app builder with a component library similar to Retool\'s, plus a full-code option in React or Svelte that Retool does not offer. Porting involves rebuilding apps component by component, since Retool\'s canvas definition is proprietary and not directly importable. Teams that lean heavily on Retool\'s richer widget catalog (mobile-specific components, some specialty inputs) should audit component parity before committing to a migration.',
+	},
+	{
+		question: 'Can I migrate Retool apps to Windmill automatically?',
+		textAnswer:
+			'No. Retool apps are stored in Retool\'s proprietary canvas format and there is no official export to an open format. Migrations are manual rebuilds, where each query becomes a Windmill script and each component maps to the closest Windmill equivalent. Because Windmill scripts run as standalone primitives with their own API endpoints, many of the queries you rebuild can be reused outside the app (as webhooks, scheduled jobs, or flow steps), which was not possible inside Retool.',
+	},
+	{
+		question: 'Is Retool open source?',
+		textAnswer:
+			'No. Retool is a proprietary, closed-source product. Self-hosting is available only on the Enterprise plan. Windmill, by contrast, ships an AGPLv3 open-source core that is free to self-host without a sales conversation, with Enterprise features in a separate proprietary codebase.',
+	},
+	{
+		question: 'Does Windmill support JavaScript and SQL queries the way Retool does?',
+		textAnswer:
+			'Yes, and more. Windmill scripts can be written in TypeScript, JavaScript, Python, Go, Bash, SQL, PHP, Rust, C#, and any Docker container. Retool supports JavaScript inside apps and a mix of JavaScript and Python inside Workflows, which covers the common cases but is narrower than Windmill\'s language range. For SQL specifically, both platforms let you write raw queries against connected databases.',
+	},
+	{
+		question: 'Is Retool better for non-technical users who want to build apps?',
+		textAnswer:
+			'Retool is more polished for that audience on the app-building side: a deeper component library, more mature drag-and-drop interactions, and a UX that assumes no CLI or Git. Windmill has a visual app builder too, but authoring queries still involves writing code. If your primary users are business analysts assembling CRUD UIs over a single database, Retool is often faster to stand up. If the team is developer-led or needs to ship code-driven automations alongside apps, Windmill fits better.',
+	},
+	{
+		question: 'How does pricing compare?',
+		textAnswer:
+			'Retool charges per user: builders at around €46/month on the Business plan (end users at €14/month), with SSO, Git sync and self-hosting only on Enterprise (custom pricing). Windmill is free and unlimited to self-host for up to 10 SSO users and 3 workspaces, with published per-seat and per-worker Enterprise pricing starting at $120/month. For larger teams the cost difference can be substantial, especially if most users are builders.',
+	},
+	{
+		question: 'Can I self-host Retool the way I can self-host Windmill?',
+		textAnswer:
+			'Not on the free or Team plans. Retool self-hosting requires an Enterprise contract. Windmill\'s open-source core is free to self-host at any scale: clone the repo, run docker compose, done. If self-hosting without a sales conversation is a hard requirement (for compliance, budget, or preference), this is often the single most decisive difference.',
+	},
+];
+
+{/* ── Section wrapper helper ── */}
+
+export function QASection({ id, kicker, question, summary, retool, windmill, subsections, bottomLine, children, reverse }) {
+	return (
+		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
+			{/* Hero: title + subtitle */}
+			<motion.div {...fadeIn} className="mb-12">
+				<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-3">
+					{kicker}
+				</div>
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-5">
+					{question}
+				</h2>
+				{bottomLine && (
+					<p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+						{bottomLine}
+					</p>
+				)}
+			</motion.div>
+
+			{/* Details: subsections (preferred) or fallback 2-card layout */}
+			{subsections && subsections.length > 0 && (
+				<div className="divide-y divide-gray-200 dark:divide-gray-800">
+					{/* Shared column headers — desktop only */}
+					<div className="hidden md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 pb-4">
+						<div />
+						<div className="flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+							<span className="text-base font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<img src="/img/retool.jpg" alt="Retool" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">Retool</span>
+						</div>
+					</div>
+
+					{subsections.map((sub, i) => (
+						<motion.div
+							key={sub.label || i}
+							{...fadeIn}
+							className="py-6 md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 md:items-start"
+						>
+							{sub.label && (
+								<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-4 md:mb-0">
+									{sub.label}
+								</h3>
+							)}
+							<div className="mb-4 md:mb-0">
+								<div className="md:hidden mb-2 flex items-center gap-2">
+									<img src="/img/windmill.svg" alt="Windmill" className="w-4 h-4" />
+									<span className="text-sm font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+								</div>
+								<div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed space-y-2">
+									{sub.windmill}
+								</div>
+							</div>
+							<div>
+								<div className="md:hidden mb-2 flex items-center gap-2">
+									<img src="/img/retool.jpg" alt="Retool" className="w-4 h-4" />
+									<span className="text-sm font-bold text-gray-900 dark:text-white">Retool</span>
+								</div>
+								<div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed space-y-2">
+									{sub.retool}
+								</div>
+							</div>
+						</motion.div>
+					))}
+				</div>
+			)}
+
+			{!subsections && (windmill || retool) && (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+					<motion.div
+						{...fadeIn}
+						className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-6 shadow-sm"
+					>
+						<div className="mb-4 flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+							<span className="text-base font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+						</div>
+						<div className="text-gray-700 dark:text-gray-200 leading-relaxed space-y-3">
+							{windmill}
+						</div>
+					</motion.div>
+					<motion.div
+						{...fadeIn}
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6"
+					>
+						<div className="mb-4 flex items-center gap-2">
+							<img src="/img/retool.jpg" alt="Retool" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">Retool</span>
+						</div>
+						<div className="text-gray-700 dark:text-gray-200 leading-relaxed space-y-3">
+							{retool}
+						</div>
+					</motion.div>
+				</div>
+			)}
+
+			{children}
+		</section>
+	);
+}
+
+export default function RetoolCompareContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ── Hero ── */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Windmill vs Retool
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Eight questions teams ask during a bake-off, with an honest answer on each one
+							for where Windmill or Retool is the better pick.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<div className="flex items-center gap-8">
+							<motion.div
+								initial={{ opacity: 0, x: -30 }}
+								whileInView={{ opacity: 1, x: 0 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.5 }}
+								className="flex items-center justify-center w-40 h-40 rounded-3xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 shadow-md"
+							>
+								<motion.img
+									src="/img/windmill.svg"
+									alt="Windmill"
+									className="w-20 h-20"
+									animate={{ rotate: 360 }}
+									transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+								/>
+							</motion.div>
+							<motion.div
+								initial={{ opacity: 0, scale: 0.5 }}
+								whileInView={{ opacity: 1, scale: 1 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.4, delay: 0.2 }}
+								className="text-xl font-semibold text-gray-400 dark:text-gray-500"
+							>
+								vs
+							</motion.div>
+							<motion.div
+								initial={{ opacity: 0, x: 30 }}
+								whileInView={{ opacity: 1, x: 0 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.5, delay: 0.1 }}
+								className="flex items-center justify-center w-40 h-40 rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
+							>
+								<img src="/img/retool.jpg" alt="Retool" className="w-20 h-20" />
+							</motion.div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* ── Jump-to navigation (table of contents) ── */}
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-4">
+				<motion.div {...fadeIn} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/60 p-6">
+					<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">
+						The 8 questions
+					</div>
+					<ol className="divide-y divide-gray-100 dark:divide-gray-800">
+						{bigQuestions.map((q, i) => (
+							<li key={q.id}>
+								<a
+									href={`#${q.id}`}
+									className="group flex items-baseline gap-4 py-3 !no-underline hover:text-blue-600 dark:hover:text-blue-400"
+								>
+									<span className="text-xs font-mono font-semibold text-gray-400 dark:text-gray-500 w-6 shrink-0">
+										{String(i + 1).padStart(2, '0')}
+									</span>
+									<span className="text-sm font-medium text-gray-500 dark:text-gray-400 w-48 shrink-0 whitespace-nowrap">
+										{q.kicker}
+									</span>
+									<span className="text-base text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 flex-1 whitespace-nowrap">
+										{q.short}
+									</span>
+									<ArrowRight className="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-blue-500 group-hover:translate-x-1 transition-all shrink-0" />
+								</a>
+							</li>
+						))}
+					</ol>
+				</motion.div>
+			</section>
+
+
+			{/* ── Quick take ── */}
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+						<div className="mb-3 flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+							<span className="text-base font-bold text-blue-600 dark:text-blue-400">
+								Windmill in one sentence
+							</span>
+						</div>
+						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
+							An open-source platform to <strong>build and orchestrate all your internal software</strong>:
+							scripts, workflows, data pipelines, AI agents and internal apps. Made for engineers who
+							want full code flexibility and local dev experience, both to build internal software and to manage the underlying
+							infrastructure.
+						</p>
+					</div>
+					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6">
+						<div className="mb-3 flex items-center gap-2">
+							<img src="/img/retool.jpg" alt="Retool" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">
+								Retool in one sentence
+							</span>
+						</div>
+						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
+							A proprietary, closed-source <strong>low-code platform for internal apps</strong>, with
+							a drag-and-drop canvas, a large component library and JavaScript queries on top of your
+							databases and APIs. Workflows and AI Agents extend the same canvas model to automations.
+							Best for teams that want a polished app-builder and accept per-user SaaS pricing.
+						</p>
+					</div>
+				</motion.div>
+			</section>
+
+			{/* ── Q1: Scope ── */}
+			<QASection
+				id="build"
+				kicker="01 · What you can build"
+				question="Which internal software can you build and orchestrate?"
+				summary="Both platforms build internal apps. The real question is what else you can build on the same runtime."
+				bottomLine={
+					<>
+						<strong>Windmill</strong> centralizes scripts, workflows, data pipelines, full-code apps, AI agents and operator UIs on a single runtime, with shared resources, auth and observability.
+						<strong> Retool</strong> is app-builder first, with Workflows and Agents layered on the same visual canvas. Strong for internal apps. Narrower for scripts-as-APIs, heavy data pipelines and code-first automations.
+					</>
+				}
+			>
+				<motion.div {...fadeIn} className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
+					<table className="w-full text-sm !table !mb-0 !border-collapse [&_th]:!border-0 [&_td]:!border-0 [&_tr]:!border-0 [&_tbody]:!border-0">
+						<thead className="bg-gray-50 dark:bg-gray-800/60">
+							<tr>
+								<th className="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white">Primitive</th>
+								<th className="px-6 py-4 text-center font-semibold text-blue-600 dark:text-blue-400 w-32">
+									<span className="inline-flex items-center gap-2">
+										<img src="/img/windmill.svg" alt="Windmill" className="w-4 h-4" />
+										Windmill
+									</span>
+								</th>
+								<th className="px-6 py-4 text-center font-semibold text-gray-700 dark:text-gray-300 w-32">
+									<span className="inline-flex items-center gap-2">
+										<img src="/img/retool.jpg" alt="Retool" className="w-4 h-4" />
+										Retool
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900">
+							{buildRows.map((row) => (
+								<tr key={row.feature}>
+									<td className="px-6 py-4">
+										<div className="font-semibold text-gray-900 dark:text-white">
+											{row.href ? (
+												<Link to={row.href} className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">
+													{row.feature}
+												</Link>
+											) : (
+												row.feature
+											)}
+										</div>
+										{row.description && (
+											<div className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{row.description}</div>
+										)}
+									</td>
+									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.windmill} /></td>
+									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.retool} /></td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</motion.div>
+			</QASection>
+
+			{/* ── Q2: Audience ── */}
+			<QASection
+				id="target"
+				kicker="02 · Target"
+				question="Who is each platform built for?"
+				summary="Both tools say 'for everyone'. In practice, how you author picks a primary audience, and it matters a lot once the team grows."
+				subsections={[
+					{
+						label: 'Primary audience',
+						windmill: (
+							<p>
+								Developer-led teams. Engineers own the platform end-to-end: code, Git, local dev, workspace
+								forks, code review, CI/CD, AI coding tools, infrastructure as code.
+							</p>
+						),
+						retool: (
+							<p>
+								Developers and low-code engineers building internal tools. The canvas-first UX is designed
+								for people who think visually and write short JavaScript or SQL for glue logic. Common
+								audience: full-stack devs, data engineers, ops engineers, technical PMs.
+							</p>
+						),
+					},
+					{
+						label: 'How non-developers participate',
+						windmill: (
+							<p>
+								Non-developers consume through auto-generated UIs, custom apps and an operator role.
+								They can build simple apps with AI assistance, but authoring scripts and flows still
+								involves writing code.
+							</p>
+						),
+						retool: (
+							<p>
+								The drag-and-drop app canvas is approachable for non-developers who can read a bit of
+								JavaScript. Deeper flows and Workflows still require real code, so a purely no-code user
+								hits a ceiling fast.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> is built for developer-led teams where engineers own the platform end-to-end.
+						<strong> Retool</strong> is built for developers and low-code engineers who want a polished visual canvas for internal tools, with JavaScript and SQL for the glue logic.
+					</>
+				}
+			/>
+
+			{/* ── Q3: Authoring model ── */}
+			<QASection
+				reverse
+				id="devex"
+				kicker="03 · Developer experience"
+				question="How do developers interact with the platform?"
+				summary="Covers how you write apps and workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
+				subsections={[
+					{
+						label: 'Authoring',
+						windmill: (
+							<div className="flex flex-col h-full">
+								<p className="min-h-[8.5rem]">
+									Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
+									primitive with its own UI, API endpoint and scheduler, no visual canvas required to
+									run. The <Link to="/platform/app-builder" className="text-blue-500 hover:underline">app builder</Link> gives you both a drag-and-drop canvas and a full-code React or Svelte
+									option. Any public or private package is a first-class import with automatic dependency
+									resolution.
+								</p>
+								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
+									<Tabs className="unique-tabs">
+										<TabItem value="script" label="main.py" default>
+											<CodeBlock language="python">{`import requests
+
+def main():
+    r = requests.get('https://windmill.dev')
+    return {
+        'status': r.status_code,
+        'text': r.text,
+    }`}</CodeBlock>
+										</TabItem>
+										<TabItem value="yaml" label="flow.yaml">
+											<CodeBlock language="yaml">{`summary: Fetch Windmill homepage
+value:
+  modules:
+    - id: a
+      value:
+        type: script
+        path: f/scripts/fetch_windmill
+        input_transforms: {}`}</CodeBlock>
+										</TabItem>
+									</Tabs>
+								</div>
+							</div>
+						),
+						retool: (
+							<div className="flex flex-col h-full">
+								<p className="min-h-[8.5rem]">
+									Authoring happens on a visual canvas. Apps are built by dragging components and wiring
+									them to <a href="https://docs.retool.com/queries" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">queries</a> (REST, SQL, JS transformers).
+									Workflows use a separate canvas with blocks for code, queries, loops and branches.
+									Code blocks accept JavaScript; Workflow code blocks also accept Python. App definitions
+									live in Retool's database, not as files in your repo by default.
+								</p>
+								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
+									<Tabs className="unique-tabs">
+										<TabItem value="js" label="code_block.js" default>
+											<CodeBlock language="javascript">{`// Retool code block inside a Workflow
+const res = await fetch('https://retool.com');
+return {
+  status: res.status,
+  text: await res.text(),
+};`}</CodeBlock>
+										</TabItem>
+										<TabItem value="query" label="rest_query.json">
+											<CodeBlock language="json">{`{
+  "resource": "restApi",
+  "method": "GET",
+  "url": "https://retool.com",
+  "transformer": "return data;"
+}`}</CodeBlock>
+										</TabItem>
+									</Tabs>
+								</div>
+							</div>
+						),
+					},
+					{
+						label: 'Local dev & IDE',
+						windmill: (
+							<p>
+								Run scripts locally with the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">Windmill CLI</Link>. VS Code extension, native language tooling
+								(LSP, type-checking, linting) and AI coding tools (Claude Code, Codex).
+							</p>
+						),
+						retool: (
+							<p>
+								No local-dev loop for apps. Development happens in Retool's web IDE against live data.
+								Query code can be edited inline; longer JavaScript or Python lives in the canvas editor.
+								There is no offline mode and no way to run an app locally before deploying.
+							</p>
+						),
+					},
+					{
+						label: 'Resources & secrets',
+						windmill: (
+							<p>
+								<Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Resources</Link> (typed JSON for credentials, connection info, configs)
+								and <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-500 hover:underline">Variables</Link> (individual secrets) are first-class and reusable
+								across scripts, flows and apps. They're encrypted at rest, scoped via folders and
+								groups for access control, and versioned in Git. External secret backends (Vault, AWS
+								Secrets Manager) are <EnterpriseBadge />.
+							</p>
+						),
+						retool: (
+							<p>
+								Resources (database and API connections) and environment variables are configured at the
+								organization level. Values are encrypted at rest and not visible in app code. External
+								secret managers (AWS Secrets Manager, Vault) are <EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Git & CI',
+						windmill: (
+							<p>
+								Full IaC: scripts, flows, apps, resources, variables, secrets, schedules, folders,
+								groups and permissions are all files in Git, deployed via the CLI and <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. Internal tooling runs like
+								application code: PRs, reviews, rollbacks, CI/CD. Git sync is free for up to 2 users;
+								beyond that is <EnterpriseBadge />.
+							</p>
+						),
+						retool: (
+							<p>
+								Retool <a href="https://docs.retool.com/source-control" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Source Control</a> syncs apps, workflows, resources and themes to GitHub,
+								GitLab, Bitbucket, AWS CodeCommit or Azure Repos via pull requests. It is listed as{' '}
+								<EnterpriseBadge /> on the pricing page. Lower tiers rely on App Release Versions
+								inside Retool itself.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> is code-first: scripts are real files in any of 20+ languages, runnable locally, and the whole workspace lives in Git.
+						<strong> Retool</strong> is canvas-first: apps and workflows are built visually in a web IDE against live data, with JavaScript and SQL for glue code. Great for getting started fast, harder to treat like application code.
+					</>
+				}
+			/>
+
+			{/* ── Q4: Integrations ── */}
+			<QASection
+				reverse
+				id="integrations"
+				kicker="04 · Integrations"
+				question="How does the platform integrate with your existing stack?"
+				summary="Three directions: calling external systems, receiving events from them, and extending the platform with things neither tool covers natively."
+				subsections={[
+					{
+						label: 'Connecting out',
+						windmill: (
+							<p>
+								Any npm, PyPI, Go or Maven package is a first-class import. No plugin layer: you call
+								the vendor's real SDK. A community <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and
+								flows for common tasks.
+							</p>
+						),
+						retool: (
+							<p>
+								<a href="https://retool.com/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">100+ pre-built connectors</a> for databases (Postgres, MySQL, Snowflake, BigQuery),
+								SaaS (Salesforce, Stripe, HubSpot) and auth protocols. For anything not in the catalog,
+								you fall back to a generic REST API resource or a JavaScript code block.
+							</p>
+						),
+					},
+					{
+						label: 'Receiving events',
+						windmill: (
+							<p>
+								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
+								WebSocket.
+							</p>
+						),
+						retool: (
+							<p>
+								Workflows support cron schedules and webhooks as triggers. Event-driven triggers
+								beyond that (Kafka consumers, CDC, queue consumers) require polling workarounds or
+								an external event bridge.
+							</p>
+						),
+					},
+					{
+						label: 'Extending',
+						windmill: (
+							<p>
+								A new integration is just a script with a new import. No plugin release cycle to wait
+								on. Custom UI components can be added as React components.
+							</p>
+						),
+						retool: (
+							<p>
+								Custom components exist but are limited compared to writing a standalone React app.
+								Custom auth, custom connectors and advanced integrations often require dropping to a
+								generic REST resource with hand-rolled JavaScript transformers.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> treats any public package (npm, PyPI, Go or Maven) or your own as a first-class import, so the effective integration catalog is the package ecosystems themselves.
+						<strong> Retool</strong> ships 100+ polished connectors for the most common databases and SaaS tools. Easier out of the box for mainstream stacks. Tighter ceiling for the long tail.
+					</>
+				}
+			/>
+
+			{/* ── Q5: Migration ── */}
+			<QASection
+				id="migration"
+				kicker="05 · Migration & lock-in"
+				question="How hard to get in, and how hard to get out?"
+				summary="Two simple questions: how much work to move your existing internal tools onto the platform, and how much to move them off if you ever change your mind."
+				subsections={[
+					{
+						label: 'Getting in',
+						windmill: (
+							<p>
+								Paste a function body into the <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>, Windmill infers args, generates a UI,
+								handles dependencies. Drag-and-drop apps, <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link>, schedules and variables migrate one by one.
+								No learning curve around a proprietary canvas format.
+							</p>
+						),
+						retool: (
+							<p>
+								Fast if you already think in terms of drag-and-drop apps wired to queries. Common CRUD
+								UIs over a database can be live in under an hour. Migrating existing code-based internal
+								tools usually means redrawing the UI component by component, since there is no import
+								from React, HTML or other app formats.
+							</p>
+						),
+					},
+					{
+						label: 'Getting out',
+						windmill: (
+							<p>
+								Step logic is already standard code (TS, Python, Go, Bash, SQL) that runs anywhere. The
+								CLI exports the full workspace as plain files. What you lose leaving Windmill is the
+								runtime, not the step code.
+							</p>
+						),
+						retool: (
+							<p>
+								Retool apps are stored in a proprietary canvas format. With Source Control enabled
+								(<EnterpriseBadge />), apps and workflows sync to Git as JSON, but the format is
+								Retool-specific and not portable to another platform without a rewrite. JavaScript and
+								SQL inside queries are portable; the visual layout and component bindings are not.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> keeps switching cost low. Step code is standard TS, Python, Go, Bash or SQL that runs anywhere, including after you leave Windmill.
+						<strong> Retool</strong> has higher lock-in: apps are stored in a proprietary canvas format, and Git export is an Enterprise feature that still produces Retool-specific files.
+					</>
+				}
+			/>
+
+			{/* ── Q6: Enterprise requirements ── */}
+			<QASection
+				reverse
+				id="enterprise"
+				kicker="06 · Enterprise requirements"
+				question="Audit logs, observability, security, performance"
+				summary="Once it's in production, the non-functional requirements dominate. Here's how each platform handles the four that matter most at scale."
+				subsections={[
+					{
+						label: 'Observability',
+						windmill: (
+							<p>
+								<Link to="/platform/observability" className="text-blue-500 hover:underline">Real-time streaming logs</Link>, per-run inputs / outputs / duration, built-in worker queue
+								metrics and a Prometheus exporter. Trace ID on every job.
+							</p>
+						),
+						retool: (
+							<p>
+								Workflow run logs with per-block timings and I/O. App-level usage analytics and query
+								history. No native Prometheus exporter. OpenTelemetry export is available on
+								self-hosted Enterprise deployments.
+							</p>
+						),
+					},
+					{
+						label: 'Audit logs',
+						windmill: (
+							<p>
+								Full trail of who ran / edited / deployed what. Extended retention is <EnterpriseBadge />.
+							</p>
+						),
+						retool: (
+							<p>
+								Audit logs track user and admin activity. Available on the Business plan and above, not on Free or Team.
+							</p>
+						),
+					},
+					{
+						label: 'Security',
+						windmill: (
+							<p>
+								SOC 2 Type II compliant. <Link to="/platform/rbac" className="text-blue-500 hover:underline">RBAC</Link>, SSO (up to 10 users), encrypted secrets at rest and
+								sandboxed script execution in open source. Uncapped SSO, audit logs and advanced access
+								controls (SCIM, SAML) are <EnterpriseBadge />.
+							</p>
+						),
+						retool: (
+							<p>
+								SOC 2 Type II, HIPAA and ISO 27001 compliant. Rich RBAC is on Business and above. Custom
+								SSO (SAML, OpenID), SCIM, custom branding and independent workspaces are all{' '}
+								<EnterpriseBadge />. Google SSO is available on lower tiers.
+							</p>
+						),
+					},
+					{
+						label: 'Multi-tenancy & isolation',
+						windmill: (
+							<p>
+								Multiple isolated <Link to="/docs/core_concepts/roles_and_permissions#workspace" className="text-blue-500 hover:underline">workspaces</Link> on the same instance, each with their own users,
+								resources, secrets and access controls. Free tier is capped at 3 workspaces; unlimited
+								is <EnterpriseBadge />.
+							</p>
+						),
+						retool: (
+							<p>
+								Independent workspaces (Retool's term for isolated tenants) are <EnterpriseBadge />.
+								Lower tiers share a single space. Environments (dev / staging / prod) for resources
+								are available from Team upward.
+							</p>
+						),
+					},
+					{
+						label: 'Performance',
+						windmill: (
+							<p>
+								~10ms cold starts. <Link to="/platform/workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes and
+								dependencies pre-warmed. Published <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">benchmarks</Link> against other orchestrators.
+							</p>
+						),
+						retool: (
+							<p>
+								Performance is dominated by query and rendering time in apps, and by block startup in
+								Workflows. No published performance benchmarks. Workflow runs are capped at 5,000/month
+								on Team and Business. Higher volumes require Enterprise.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						Both cover the enterprise basics. The difference is where those features sit on the price sheet.
+						<strong> Windmill</strong> ships RBAC, SSO (up to 10 users), encrypted secrets and multi-workspace isolation in the free self-hosted core.
+						<strong> Retool</strong> gates custom SSO, Git sync, independent workspaces and self-hosting behind Enterprise, with RBAC and audit logs starting at Business.
+					</>
+				}
+			/>
+
+			{/* ── Q7: Licensing ── */}
+			<QASection
+				id="licensing"
+				kicker="07 · Licensing & pricing"
+				question="Open source, pricing, and self-hosting?"
+				summary="This is the sharpest difference between the two platforms."
+				subsections={[
+					{
+						label: 'Open-source license',
+						windmill: (
+							<p>
+								AGPLv3 core, free and unlimited self-hosted. Enterprise features (SSO, dedicated
+								workers, audit logs, external secret backends) ship in a separate proprietary
+								codebase. Managed cloud available.
+							</p>
+						),
+						retool: (
+							<p>
+								Proprietary and closed-source. There is no open-source edition. Self-hosting is{' '}
+								<EnterpriseBadge />. Free, Team and Business plans are cloud-only.
+							</p>
+						),
+					},
+					{
+						label: 'Enterprise pricing',
+						windmill: (
+							<p>
+								<strong>Public per-seat and per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>,
+								starting at $120/month. Enterprise adds SSO, audit logs, dedicated workers, advanced worker groups.
+							</p>
+						),
+						retool: (
+							<p>
+								Per-user pricing: builders at €9/Team, €46/Business, custom on Enterprise. End users
+								at €5/Team, €14/Business. External-user tier available on Business+. Enterprise pricing
+								not public. A sales conversation is required for custom SSO, Git sync, self-hosting and
+								independent workspaces.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> is open source (AGPLv3 core), free to self-host at any scale, with public per-seat and per-worker Enterprise pricing.
+						<strong> Retool</strong> is proprietary and closed-source, priced per user. Self-hosting and most governance features require an Enterprise contract.
+					</>
+				}
+			/>
+
+			{/* ── Q8: Verdict ── */}
+			<section id="verdict" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
+				<motion.div {...fadeIn}>
+					<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+						08 · Verdict
+					</div>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						The verdict
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						The biggest difference between Windmill and Retool is how <strong>open and code-first</strong> each platform is. Windmill is an open-source AGPLv3 core you can self-host for free, authored in real files, 20+ languages, versioned in Git, and runnable locally. Retool is a proprietary SaaS with a polished visual canvas, where apps live in Retool's database and self-hosting or Git sync require an Enterprise contract. The other major difference is the <strong>range of internal software you can build</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and both low-code and full-code internal apps on one runtime, while Retool is app-builder first with Workflows and Agents layered on the same canvas. If you are deciding between the two, the fastest way to judge is to spend an afternoon in each.
+					</p>
+				</motion.div>
+			</section>
+
+			{/* ── FAQ ── */}
+			<UseCaseFAQ faqs={faqs} />
+
+			{/* ── Final CTA ── */}
+			<ProductCTA />
+		</div>
+	);
+}
