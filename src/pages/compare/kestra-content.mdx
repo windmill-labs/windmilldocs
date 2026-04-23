@@ -83,23 +83,6 @@ export const comparisonRows = [
 	{ feature: 'Public Enterprise pricing', windmill: true, kestra: false },
 ];
 
-export function MiniCaseStudy({ logo, logoDark, excerpt, link }) {
-	return (
-		<Link
-			to={`${link}?from=compare-kestra`}
-			className="group mt-3 flex items-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 hover:border-blue-300 dark:hover:border-blue-700 transition-all !no-underline"
-		>
-			<img src={logo} alt="" className="h-6 w-auto flex-shrink-0 dark:hidden" />
-			<img src={logoDark} alt="" className="h-6 w-auto flex-shrink-0 hidden dark:block" />
-			<div className="flex-1 min-w-0">
-				<div className="text-[10px] font-semibold uppercase tracking-wide text-blue-500 dark:text-blue-400">Case study</div>
-				<div className="text-xs text-gray-700 dark:text-gray-200 leading-snug">{excerpt}</div>
-			</div>
-			<ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-500 flex-shrink-0" />
-		</Link>
-	);
-}
-
 export function EnterpriseBadge() {
 	return (
 		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
@@ -170,7 +153,7 @@ export const faqs = [
 	{
 		question: 'What about the licenses, AGPLv3 vs Apache 2.0?',
 		textAnswer:
-			'Kestra\'s community edition is Apache 2.0, which is more permissive if you plan to modify and redistribute. Windmill is AGPLv3, which requires source availability for network-exposed modifications. Both are genuinely free to self-host for unmodified use. If license permissiveness is a hard constraint, Kestra wins this axis.',
+			'Kestra\'s OSS core is Apache 2.0, which is more permissive if you plan to modify and redistribute. Windmill\'s OSS core is AGPLv3, which requires source availability for network-exposed modifications. Both ship Enterprise features in separate proprietary codebases, and both are genuinely free to self-host the core for unmodified use. If license permissiveness of the core is a hard constraint, Kestra wins this axis.',
 	},
 	{
 		question: 'Is pricing public?',
@@ -420,7 +403,7 @@ export default function KestraCompareContent({ title, description }) {
 				}
 			>
 				<motion.div {...fadeIn} className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
-					<table className="w-full text-sm !table !mb-0 [&_th]:!border-0 [&_td]:!border-0">
+					<table className="w-full text-sm !table !mb-0 !border-collapse [&_th]:!border-0 [&_td]:!border-0 [&_tr]:!border-0 [&_tbody]:!border-0">
 						<thead className="bg-gray-50 dark:bg-gray-800/60">
 							<tr>
 								<th className="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white">Primitive</th>
@@ -616,7 +599,8 @@ tasks:
 								<Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Resources</Link> (typed JSON for credentials, connection info, configs)
 								and <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-500 hover:underline">Variables</Link> (individual secrets) are first-class and reusable
 								across scripts, flows and apps. They're encrypted at rest, scoped via folders and
-								groups for access control, and versioned in Git like everything else.
+								groups for access control, and versioned in Git. External secret backends (Vault, AWS
+								Secrets Manager) are <EnterpriseBadge />.
 							</p>
 						),
 						kestra: (
@@ -741,19 +725,11 @@ tasks:
 					{
 						label: 'Getting out',
 						windmill: (
-							<>
-								<p>
-									Step logic is already standard code (TS, Python, Go, Bash, SQL) that runs anywhere.
-									The CLI exports the full workspace as plain files. What you lose leaving Windmill
-									is the runtime, not the step code.
-								</p>
-								<MiniCaseStudy
-									logo="/images/brands/panther-light.svg"
-									logoDark="/images/brands/panther-dark.svg"
-									excerpt="Panther Labs avoided vendor lock-in with a platform-agnostic architecture on Windmill, after migrating off Airplane.dev in 30 days."
-									link="/case-studies/panther-labs"
-								/>
-							</>
+							<p>
+								Step logic is already standard code (TS, Python, Go, Bash, SQL) that runs anywhere. The
+								CLI exports the full workspace as plain files. What you lose leaving Windmill is the
+								runtime, not the step code.
+							</p>
 						),
 						kestra: (
 							<p>
@@ -814,8 +790,9 @@ tasks:
 						label: 'Security',
 						windmill: (
 							<p>
-								SOC 2 Type II compliant. <Link to="/platform/rbac" className="text-blue-500 hover:underline">RBAC</Link>, SSO (SAML / OIDC), encrypted secrets at rest, sandboxed
-								script execution.
+								SOC 2 Type II compliant. <Link to="/platform/rbac" className="text-blue-500 hover:underline">RBAC</Link>, SSO (up to 10 users), encrypted secrets at rest and
+								sandboxed script execution in open source. Uncapped SSO, audit logs and advanced access
+								controls (SCIM, SAML) are <EnterpriseBadge />.
 							</p>
 						),
 						kestra: (
@@ -828,19 +805,11 @@ tasks:
 					{
 						label: 'Multi-tenancy & isolation',
 						windmill: (
-							<>
-								<p>
-									Multiple isolated <Link to="/docs/core_concepts/roles_and_permissions#workspace" className="text-blue-500 hover:underline">workspaces</Link> on the same instance, each with their own users,
-									resources, secrets and access controls. Free tier is capped at 3 workspaces;
-									unlimited is <EnterpriseBadge />.
-								</p>
-								<MiniCaseStudy
-									logo="/images/brands/axians-light.svg"
-									logoDark="/images/brands/axians-dark.svg"
-									excerpt="Axians runs multi-tenant orchestration across ~150 enterprise customers."
-									link="/case-studies/axians"
-								/>
-							</>
+							<p>
+								Multiple isolated <Link to="/docs/core_concepts/roles_and_permissions#workspace" className="text-blue-500 hover:underline">workspaces</Link> on the same instance, each with their own users,
+								resources, secrets and access controls. Free tier is capped at 3 workspaces; unlimited
+								is <EnterpriseBadge />.
+							</p>
 						),
 						kestra: (
 							<p>
@@ -897,18 +866,18 @@ tasks:
 					{
 						label: 'Open-source license',
 						windmill: (
-							<>
-								<p>AGPLv3, free and unlimited self-hosted. Managed cloud available.</p>
-								<MiniCaseStudy
-									logo="/images/brands/athena-light.svg"
-									logoDark="/images/brands/athena-dark.svg"
-									excerpt="Athena Intelligence deploys Windmill inside regulated customer environments."
-									link="/case-studies/athena-intelligence"
-								/>
-							</>
+							<p>
+								AGPLv3 core, free and unlimited self-hosted. Enterprise features (SSO, dedicated
+								workers, audit logs, external secret backends) ship in a separate proprietary
+								codebase. Managed cloud available.
+							</p>
 						),
 						kestra: (
-							<p>Apache 2.0, free and unlimited self-hosted. Managed cloud available.</p>
+							<p>
+								Apache 2.0 core, free and unlimited self-hosted. Enterprise features (RBAC, SSO, audit
+								logs, secret manager backends, multi-tenancy) ship in a separate proprietary codebase.
+								Managed cloud available.
+							</p>
 						),
 					},
 					{
@@ -930,15 +899,15 @@ tasks:
 				bottomLine={
 					<>
 						<strong>Windmill</strong> publishes upfront per-seat and per-worker Enterprise pricing, no sales call needed.
-						<strong> Kestra</strong> ships under Apache 2.0, which is more permissive than Windmill's AGPLv3 for redistribution.
-						Both are free to self-host.
+						<strong> Kestra's</strong> OSS core is Apache 2.0, more permissive than Windmill's AGPLv3 for redistribution.
+						Both ship Enterprise features in separate proprietary codebases and both are free to self-host the core.
 					</>
 				}
 			/>
 
 			{/* ── Q8: Verdict ── */}
 			<section id="verdict" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
-				<motion.div {...fadeIn} className="mb-12">
+				<motion.div {...fadeIn}>
 					<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
 						08 · Verdict
 					</div>
@@ -946,80 +915,9 @@ tasks:
 						The verdict
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						No tool wins on every axis. Here are the scenarios where each platform is genuinely
-						the right pick.
+						The biggest difference between Windmill and Kestra is the <strong>developer experience</strong>. Windmill is built for engineering teams, with a code-first editor, full local-dev loop and deeper tooling across the board. Kestra opens authoring to non-technical users via YAML and a no-code UI, at the cost of a shallower DX. The other major difference is the <strong>range of internal software you can build on each platform</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and internal apps on one runtime, while Kestra focuses on workflow orchestration. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
-
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<motion.div
-						{...fadeIn}
-						className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-8 shadow-md"
-					>
-						<div className="mb-4 flex items-center gap-2">
-							<img src="/img/windmill.svg" alt="Windmill" className="w-6 h-6" />
-							<span className="text-xl font-bold text-blue-600 dark:text-blue-400">
-								Pick Windmill if…
-							</span>
-						</div>
-						<ul className="space-y-3 text-gray-700 dark:text-gray-200">
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-								<span>You want <strong>one platform for all your internal software</strong>: scripts, workflows, data pipelines, AI agents and full-code internal apps, not a separate stack per primitive.</span>
-							</li>
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-								<span>Your team is <strong>developer-led</strong> and values the full engineering loop: code in 20+ languages, local dev, VS Code, Git sync for the whole workspace, AI coding tools.</span>
-							</li>
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-								<span><strong>Avoiding vendor lock-in</strong> matters: step code is standard TypeScript, Python, Go, Bash or SQL with no plugin layer in between, and runs anywhere after you leave.</span>
-							</li>
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-								<span>You run <strong>high-volume short tasks</strong> (webhooks, alerts, small scripts) where ~3× lower per-task overhead turns into real money at scale.</span>
-							</li>
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-								<span>You want <strong>transparent per-seat and per-worker pricing</strong> without a sales call.</span>
-							</li>
-						</ul>
-					</motion.div>
-
-					<motion.div
-						{...fadeIn}
-						className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-8"
-					>
-						<div className="mb-4 flex items-center gap-2">
-							<img src="/img/kestra.svg" alt="Kestra" className="w-6 h-6" />
-							<span className="text-xl font-bold text-gray-900 dark:text-white">
-								Pick Kestra if…
-							</span>
-						</div>
-						<ul className="space-y-3 text-gray-700 dark:text-gray-200">
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-								<span>Your team is <strong>mixed</strong>: analysts, ops or business users need to author workflows themselves via YAML or a no-code UI, not just run them.</span>
-							</li>
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-								<span>Your stack is dominated by <strong>mainstream data-stack tools</strong> (Snowflake, dbt, Airbyte, Databricks, Salesforce…) where the 1,200+ curated plugin catalog saves real wiring time.</span>
-							</li>
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-								<span>You already think in <strong>YAML DAGs</strong> (from Airflow or similar) and want the same declarative mental model.</span>
-							</li>
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-								<span><strong>Apache 2.0 licensing</strong> is a hard requirement for redistribution, since it's more permissive than Windmill's AGPLv3.</span>
-							</li>
-							<li className="flex items-start gap-2">
-								<Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-								<span>You only need <strong>workflow orchestration</strong>, and already have separate tools for dashboards, internal apps and operator UIs.</span>
-							</li>
-						</ul>
-					</motion.div>
-				</div>
 			</section>
 
 			{/* ── FAQ ── */}
