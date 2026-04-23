@@ -7,9 +7,9 @@ import DocCard from '@site/src/components/DocCard';
 
 # Build an AI Discord bot with WebSocket triggers
 
-This guide walks you through building a Discord bot that connects to the Discord Gateway via Windmill's WebSocket trigger, uses the application-level heartbeat feature to maintain the connection, and responds to messages using Claude (Anthropic API).
+This guide walks you through building a Discord bot that connects to the Discord Gateway via Windmill's WebSocket trigger, uses the application-level heartbeat feature to maintain the connection, and responds to messages using the [Claude Agent SDK](https://docs.anthropic.com/en/docs/agents/claude-agent-sdk) with tool use.
 
-Everything runs inside Windmill — no external bot framework, no separate server, no Docker containers.
+Everything runs inside Windmill — the AI agent can only call the tools you explicitly define, and secrets are managed via [resources](/docs/core_concepts/resources_and_types) (never exposed to the AI).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -31,14 +31,15 @@ The architecture is simple:
 
 1. A **WebSocket trigger** connects to Discord's Gateway (`wss://gateway.discord.gg`)
 2. The **heartbeat config** keeps the connection alive by sending periodic heartbeat messages (required by Discord's protocol)
-3. A **handler script** processes incoming events — authenticates the bot, and responds to messages using Claude
-4. Responses are sent back to Discord via the REST API
+3. A **handler script** processes incoming events — authenticates the bot, and runs a Claude agent with tools
+4. The agent decides which tools to call based on the message, and responses are sent back via the Discord REST API
 
 ## Prerequisites
 
 - A Windmill instance (self-hosted with EE, WebSocket triggers are not available on Cloud Free/Team plans)
 - A Discord bot token ([create one in the Discord Developer Portal](https://discord.com/developers/applications))
 - An Anthropic API key for Claude
+- The `@anthropic-ai/claude-agent-sdk` package (available on npm)
 
 ## Step 1: Create a Discord bot
 
@@ -74,17 +75,40 @@ Create two resources in your Windmill workspace:
 
 ## Step 3: Create the handler script
 
-Create a new Bun/TypeScript script (e.g., `f/bot/discord_handler`). This script handles all Discord Gateway events:
+Create a new Bun/TypeScript script (e.g., `f/bot/discord_handler`). This script handles all Discord Gateway events and runs a Claude agent with tools when a message is received:
 
 ```typescript
-import Anthropic from "@anthropic-ai/sdk";
+import { query, tool, createSdkMcpServer } from "@anthropic-ai/claude-agent-sdk";
 import * as wmill from "windmill-client";
+import { z } from "zod";
 
-// Restrict to a specific channel (optional)
+// Restrict to a specific channel (optional — remove for all channels)
 const ALLOWED_CHANNEL = "YOUR_CHANNEL_ID";
 
 // Your bot's application ID (same as the user ID for bots)
 const BOT_USER_ID = "YOUR_BOT_APPLICATION_ID";
+
+// Optional: allow DMs from a specific user (your Discord user ID)
+const ALLOWED_DM_USER = "YOUR_DISCORD_USER_ID";
+
+// Define tools the AI agent can use via an in-process MCP server
+const toolServer = createSdkMcpServer({
+  name: "bot-tools",
+  tools: [
+    tool(
+      "get_current_time",
+      "Get the current date and time",
+      {},
+      async () => ({
+        content: [{ type: "text", text: new Date().toISOString() }],
+      })
+    ),
+    // Add your own tools here — e.g. query a database, check an API, etc.
+    // The AI agent can only call the tools defined here.
+    // Secrets are fetched inside the tool implementation via wmill.getResource(),
+    // so the AI never sees raw API keys or credentials.
+  ],
+});
 
 export async function main(msg: string): Promise<string | null> {
   let event: any;
@@ -104,7 +128,7 @@ export async function main(msg: string): Promise<string | null> {
       op: 2,
       d: {
         token,
-        intents: 33281, // GUILDS + GUILD_MESSAGES + MESSAGE_CONTENT
+        intents: 37377, // GUILDS + GUILD_MESSAGES + MESSAGE_CONTENT + DIRECT_MESSAGES
         properties: { os: "linux", browser: "windmill", device: "windmill" }
       }
     });
@@ -128,12 +152,17 @@ export async function main(msg: string): Promise<string | null> {
       // Ignore bot messages
       if (d.author?.bot) return null;
 
-      // Only respond in the allowed channel (remove this check to respond everywhere)
-      if (d.channel_id !== ALLOWED_CHANNEL) return null;
-
-      // Only respond to @mentions (remove this check to respond to all messages)
-      const mentioned = d.mentions?.some((m: any) => m.id === BOT_USER_ID);
-      if (!mentioned) return null;
+      // Handle DMs and channel messages differently
+      const isDM = !d.guild_id;
+      if (isDM) {
+        // Only accept DMs from the allowed user (remove this check to accept all DMs)
+        if (d.author?.id !== ALLOWED_DM_USER) return null;
+      } else {
+        // In channels: only respond in the allowed channel and when @mentioned
+        if (d.channel_id !== ALLOWED_CHANNEL) return null;
+        const mentioned = d.mentions?.some((m: any) => m.id === BOT_USER_ID);
+        if (!mentioned) return null;
+      }
 
       const channelId = d.channel_id;
       const content = d.content
@@ -143,54 +172,85 @@ export async function main(msg: string): Promise<string | null> {
 
       console.log(`[#${channelId}] ${username}: ${content}`);
 
-      // Call Claude
+      // Set up Anthropic API key for the agent SDK
       const anthropicRes = await wmill.getResource("f/bot/anthropic");
-      const client = new Anthropic({ apiKey: anthropicRes.apiKey });
+      process.env.ANTHROPIC_API_KEY = anthropicRes.apiKey;
 
-      const response = await client.messages.create({
-        model: "claude-sonnet-4-6",
-        max_tokens: 500,
-        system: "You are a helpful assistant in a Discord channel. Be concise.",
-        messages: [{ role: "user", content: `${username} says: ${content}` }],
-      });
-
-      const reply = response.content
-        .filter((b: any) => b.type === "text")
-        .map((b: any) => b.text)
-        .join("");
-
-      if (!reply) return null;
-
-      // Send reply via Discord REST API
-      const token = (await wmill.getResource("f/bot/discord_token")).token;
-      const resp = await fetch(
-        `https://discord.com/api/v10/channels/${channelId}/messages`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bot ${token}`,
-          },
-          body: JSON.stringify({ content: reply }),
+      // Run the Claude agent with tools
+      let response = "";
+      for await (const agentMsg of query({
+        prompt: `${username} says: ${content}\n\nRespond concisely in Discord style. Use your tools when relevant.`,
+        options: {
+          model: "sonnet",
+          pathToClaudeCodeExecutable: "/usr/bin/claude",
+          permissionMode: "bypassPermissions",
+          allowDangerouslySkipPermissions: true,
+          mcpServers: { tools: toolServer },
+        },
+      })) {
+        if (agentMsg.type === "assistant") {
+          const text = agentMsg.message.content
+            .filter((b: any) => b.type === "text")
+            .map((b: any) => b.text)
+            .join("");
+          if (text) response = text;
         }
-      );
-
-      if (!resp.ok) {
-        console.log(`Discord send failed: ${resp.status} ${await resp.text()}`);
-      } else {
-        console.log(`Replied: ${reply.slice(0, 100)}`);
       }
+
+      if (!response.trim()) return null;
+
+      // Send reply via Discord REST API (split long messages)
+      const token = (await wmill.getResource("f/bot/discord_token")).token;
+      const chunks = splitMessage(response.trim(), 2000);
+      for (const chunk of chunks) {
+        const resp = await fetch(
+          `https://discord.com/api/v10/channels/${channelId}/messages`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bot ${token}`,
+            },
+            body: JSON.stringify({ content: chunk }),
+          }
+        );
+        if (!resp.ok) {
+          console.log(`Discord send failed: ${resp.status} ${await resp.text()}`);
+          break;
+        }
+      }
+
+      console.log(`Replied (${response.length} chars): ${response.slice(0, 100)}`);
     }
   }
 
   return null;
+}
+
+function splitMessage(text: string, maxLen: number): string[] {
+  if (text.length <= maxLen) return [text];
+  const chunks: string[] = [];
+  let remaining = text;
+  while (remaining.length > 0) {
+    if (remaining.length <= maxLen) {
+      chunks.push(remaining);
+      break;
+    }
+    let splitAt = remaining.lastIndexOf("\n", maxLen);
+    if (splitAt < maxLen / 2) splitAt = maxLen;
+    chunks.push(remaining.slice(0, splitAt));
+    remaining = remaining.slice(splitAt).trimStart();
+  }
+  return chunks;
 }
 ```
 
 Key points:
 - **Op 10 (Hello)**: When Discord sends the Hello event, the script returns an Identify payload to authenticate the bot. This is sent back through the WebSocket because "Send runnable result" is enabled.
 - **Op 11 (Heartbeat ACK)**: Ignored — the heartbeat itself is handled by the trigger's heartbeat configuration, not the script.
-- **MESSAGE_CREATE**: The script filters for messages in the allowed channel from non-bot users, calls Claude, and sends the reply via the Discord REST API.
+- **MESSAGE_CREATE**: The script filters for messages in the allowed channel (or DMs from an allowed user), then runs a Claude agent with access to the tools you define. The agent decides which tools to call based on the user's message.
+- **Tool use**: Tools are defined via `createSdkMcpServer` from the Claude Agent SDK. The AI can only call tools you explicitly register — it has no access to environment variables, the filesystem, or arbitrary network calls. Secrets are fetched inside tool implementations via `wmill.getResource()`, so the AI never sees raw credentials.
+- **Message splitting**: Discord has a 2000-character limit per message, so long responses are split at newline boundaries.
 
 ## Step 4: Create the WebSocket trigger
 
@@ -237,17 +297,18 @@ You can verify the heartbeat is working by checking completed jobs — you shoul
 
 ## Discord Gateway intents
 
-The Identify payload uses `intents: 33281`, which is a bitmask combining:
+The Identify payload uses `intents: 37377`, which is a bitmask combining:
 
 | Intent | Value | Purpose |
 |--------|-------|---------|
 | `GUILDS` | `1 << 0` = 1 | Receive guild/channel metadata |
 | `GUILD_MESSAGES` | `1 << 9` = 512 | Receive message events in guild channels |
+| `DIRECT_MESSAGES` | `1 << 12` = 4096 | Receive DM events |
 | `MESSAGE_CONTENT` | `1 << 15` = 32768 | Access message content (privileged — must be enabled in the Developer Portal) |
 
-**Total: 1 + 512 + 32768 = 33281**
+**Total: 1 + 512 + 4096 + 32768 = 37377**
 
-Without `MESSAGE_CONTENT`, the `content` field in message events will be empty for messages from other users.
+Without `MESSAGE_CONTENT`, the `content` field in message events will be empty for messages from other users. Without `DIRECT_MESSAGES`, the bot won't receive DM events.
 
 ## Adding AI sandbox with volumes
 
