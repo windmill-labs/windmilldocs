@@ -117,6 +117,10 @@ You will find a helper to convert days, hours, minutes, and seconds to seconds.
 
 This setting is only available on [Enterprise Edition](/pricing).
 
+### Audit log retention (days)
+
+How long to keep audit log entries in the database. Default: 365 days (EE), 14 days (CE). Audit logs are internally partitioned by day for performance — expired partitions are dropped automatically rather than deleted row by row.
+
 ### Instance object storage
 
 [Connect your instance](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to a S3 bucket to [store large logs](../../core_concepts/20_jobs/index.mdx#large-job-logs-management) and [global cache for Python and Go](../../misc/13_s3_cache/index.mdx).
@@ -304,6 +308,10 @@ Provide the content of a Cargo `config.toml` file for configuring private [Rust]
 ### Nuget config
 
 Write a nuget.config file to set custom/private package sources and credentials.
+
+### Workspace-specific registry overrides
+
+Superadmins can configure per-workspace overrides for package registry settings. This allows different workspaces to use different private registries (e.g. workspace A uses registry-a.example.com while workspace B uses registry-b.example.com). All registry settings except the Python version and uv index strategy can be overridden per workspace. Configure these under the "Workspace Registries" section.
 
 ### Docker registries
 

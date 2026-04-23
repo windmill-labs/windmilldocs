@@ -103,3 +103,7 @@ Dedicated workers can also be assigned to a flow. In that case, the dedicated wo
 Other steps will be run on the same worker but without any optimization.
 
 To enable it, the process is the same as for scripts, but the "Dedicated Workers" option for that flow has to be enabled in the [flow Settings](../../flows/3_editor_components.mdx#settings).
+
+## Preprocessor support
+
+[Preprocessors](../43_preprocessors/index.mdx) are supported on dedicated workers and bunnative scripts. This means scripts assigned to dedicated workers for lower latency can also use preprocessors for HTTP triggers, webhooks, and other trigger types.

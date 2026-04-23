@@ -1,0 +1,63 @@
+---
+description: How do I recover deleted items in Windmill? Use the trashbin to restore accidentally deleted scripts, flows, apps and other workspace items.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Trashbin
+
+When you delete a script, flow, app, schedule, variable, resource, or trigger in Windmill, the item is moved to the trashbin instead of being permanently removed. This gives you a safety window to restore accidentally deleted items.
+
+The trashbin is accessible from **Workspace settings > Trashbin** and requires admin permissions.
+
+## Supported item types
+
+All deletable workspace items go through the trashbin:
+
+- [Scripts](../../script_editor/index.mdx) (all versions and drafts are preserved)
+- [Flows](../../flows/1_flow_editor.mdx) (including versions and nodes)
+- [Apps](../../apps/0_app_editor/index.mdx) (including full-code/raw apps)
+- [Schedules](../1_scheduling/index.mdx)
+- [Variables](../2_variables_and_secrets/index.mdx) and [resources](../3_resources_and_types/index.mdx)
+- All [trigger types](../../getting_started/8_triggers/index.mdx) (HTTP, WebSocket, Kafka, NATS, Postgres, MQTT, SQS, GCP, email)
+
+## How it works
+
+When you delete an item through the UI or API, Windmill serializes the item's full data and stores it in the trashbin table, then removes it from the original table. The deletion is recorded with the user who performed it and a timestamp.
+
+### Restoring items
+
+Click **Restore** on any trashbin entry to re-insert the item at its original path. Windmill restores all associated data (versions, drafts, linked resources). If an item already exists at the same path, the restore will fail to prevent accidental overwrites.
+
+### Permanent deletion
+
+Click **Delete** on a specific entry or use **Empty trashbin** to permanently remove all trashed items. Both actions require confirmation.
+
+### Automatic expiration
+
+Trashed items expire automatically after **3 days**. Expired items are permanently deleted by a background process. This retention period is not configurable.
+
+## API
+
+The trashbin API is available under `/api/w/{workspace}/trash/`:
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/list` | GET | List trashed items (filterable by `item_kind`, paginated) |
+| `/get/{id}` | GET | Get a trashed item with its full serialized data |
+| `/restore/{id}` | POST | Restore an item from the trashbin |
+| `/delete/{id}` | DELETE | Permanently delete a single item |
+| `/empty` | POST | Permanently delete all trashed items in the workspace |
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Versioning"
+		description="Scripts, flows, and apps are versioned. Access previous versions from the script editor."
+		href="/docs/core_concepts/versioning"
+	/>
+	<DocCard
+		title="Roles and permissions"
+		description="Control access to workspace items at instance and workspace level."
+		href="/docs/core_concepts/roles_and_permissions"
+	/>
+</div>
