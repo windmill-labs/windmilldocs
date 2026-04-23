@@ -1,0 +1,189 @@
+---
+description: How do I trigger scripts and flows from Azure Event Grid events in Windmill?
+---
+
+# Azure Event Grid triggers
+
+Windmill can connect to [**Azure Event Grid**](https://learn.microsoft.com/en-us/azure/event-grid/overview) and trigger runnables (scripts, flows) when events are delivered from custom topics, system topics, domains, or Event Grid Namespace topics.
+
+Azure Event Grid triggers are a [self-hosted Enterprise](/pricing) feature. They are disabled on the [Cloud](/pricing).
+
+{/* TODO: add a screenshot of the Azure Event Grid trigger editor with the mode selector visible. */}
+
+## Trigger modes
+
+A single Azure trigger covers three delivery modes, selected via the **Edition** (Basic / Namespace) and **Delivery** (Push / Pull) toggles in the editor:
+
+| Mode | Edition | Delivery | Use when |
+|------|---------|----------|----------|
+| `basic_push` | Basic | Push | Reacting to first-party Azure events from custom topics, [system topics](https://learn.microsoft.com/en-us/azure/event-grid/system-topics) (Storage, Resource Manager, Key Vault, Service Bus, IoT Hub control-plane, etc.) or [domains](https://learn.microsoft.com/en-us/azure/event-grid/event-domains). |
+| `namespace_push` | Namespace | Push | Pushing [CloudEvents 1.0](https://learn.microsoft.com/en-us/azure/event-grid/cloud-event-schema) events from [Event Grid Namespace topics](https://learn.microsoft.com/en-us/azure/event-grid/concepts-event-grid-namespaces) over HTTP. |
+| `namespace_pull` | Namespace | Pull | Pulling events from an Event Grid Namespace topic with lock-token ack/reject — enables dead-lettering and batched consumption. |
+
+In both namespace modes, Windmill creates the subscription with the **CloudEvents 1.0** schema, so push and pull share the same payload parser.
+
+## How to use
+
+### Configure the Azure Service Principal
+
+Select an existing **Azure Service Principal** resource or create a new one. The resource provides the credentials Windmill uses to manage subscriptions and (for pull mode) to receive events:
+
+- `tenant_id`
+- `client_id`
+- `client_secret`
+- `subscription_id` (default Azure subscription)
+
+The service principal must have enough permissions on the target scope (topic, namespace, or domain) to:
+
+- List topics, system topics and namespaces
+- Create and delete Event Grid subscriptions
+- For `namespace_pull`: call the `:receive`, `:acknowledge`, and `:reject` data-plane endpoints on the namespace topic
+
+The built-in role **EventGrid Contributor** covers the control-plane operations; **EventGrid Data Sender/Receiver** covers the namespace data-plane calls. Refer to the [Azure Event Grid security and authentication](https://learn.microsoft.com/en-us/azure/event-grid/security-authorization) documentation for the complete list.
+
+### Select the scope resource
+
+The editor auto-loads the resources the service principal can access:
+
+- **Basic edition**: pick a custom topic or system topic from the list (system topics are tagged with `(system)`).
+- **Namespace edition**: pick an Event Grid Namespace, then pick a topic inside it.
+
+Click **Refresh** if you just created a topic or namespace and it hasn't appeared yet.
+
+### Subscription name
+
+Windmill creates (or reuses) an Event Grid subscription named according to the **Subscription name** field. The name must be 3–50 characters, letters, digits, and hyphens only. If left empty, Windmill auto-generates one in the form `windmill-{workspace}-{trigger_path}` (truncated to 50 chars).
+
+> A subscription name is unique per `(subscription_name, scope_resource_id, workspace_id)` — two triggers cannot claim the same subscription on the same scope.
+
+### Push endpoint (push modes only)
+
+For `basic_push` and `namespace_push`, Windmill registers the subscription's webhook URL as:
+
+```
+{base_endpoint}/api/azure/w/{workspace_id}/{trigger_path}
+```
+
+Example: a trigger at `u/alice/cool_trigger` in workspace `demo` becomes:
+
+```
+{base_endpoint}/api/azure/w/demo/u/alice/cool_trigger
+```
+
+Windmill handles both Event Grid handshakes automatically:
+
+- The classic `SubscriptionValidationEvent` handshake (basic Event Grid)
+- The CloudEvents 1.0 `OPTIONS` abuse-protection handshake (namespace push)
+
+Push deliveries are authenticated with a server-managed shared secret. The secret is regenerated on every save of the trigger and never leaves the Windmill server.
+
+### Event type filters (optional)
+
+Restrict the trigger to specific event types (one per line) — for example `Microsoft.Storage.BlobCreated` or `Microsoft.Resources.ResourceWriteSuccess`. Leave empty to receive every event delivered to the subscription.
+
+### Choose the runnable
+
+Select the [script](../../script_editor/index.mdx) or [flow](../../flows/1_flow_editor.mdx) to execute when events are received.
+
+### Delete behavior
+
+When you delete a trigger, the editor offers an **Also delete Azure subscription** toggle. Leave it on to clean up the Event Grid subscription in Azure; turn it off to keep the Azure side in place (for example, when handing the subscription over to another trigger).
+
+## Implementation examples
+
+Windmill delivers each Event Grid event to your runnable as `payload` (a base64-encoded string containing the CloudEvents JSON for namespace modes, or the Event Grid event JSON for basic mode).
+
+### Basic script
+
+```typescript
+export async function main(payload: string) {
+  const decoded = new TextDecoder().decode(
+    Uint8Array.from(atob(payload), (c) => c.charCodeAt(0))
+  );
+
+  try {
+    const event = JSON.parse(decoded);
+    console.log('Event type:', event.type ?? event.eventType);
+    console.log('Subject:', event.subject);
+    console.log('Data:', event.data);
+  } catch (e) {
+    console.log('Received non-JSON payload:', decoded);
+  }
+
+  return { processed: true };
+}
+```
+
+### Using a preprocessor
+
+If you configure a [preprocessor](../43_preprocessors/index.mdx), you can extract fields before they reach the main function.
+
+#### Azure Event Grid trigger object
+
+- `subscription_name`: subscription the event was delivered to
+- `scope_resource_id`: ARM ID of the topic or namespace
+- `topic_name`: namespace topic name (namespace modes only)
+- `azure_mode`: `"basic_push"`, `"namespace_push"` or `"namespace_pull"`
+- `event_type`: CloudEvents `type` (or Event Grid `eventType` in basic mode)
+- `event_id`: CloudEvents `id` (or Event Grid `id`)
+- `event_time`: event timestamp
+- `subject`: CloudEvents `subject`
+- `source`: CloudEvents `source`
+- `headers`: HTTP headers (push modes only)
+
+```typescript
+export async function preprocessor(
+  event: {
+    kind: 'azure',
+    payload: string, // base64 encoded CloudEvents / Event Grid event JSON
+    subscription_name: string,
+    scope_resource_id: string,
+    topic_name?: string,
+    azure_mode: 'basic_push' | 'namespace_push' | 'namespace_pull',
+    event_type?: string,
+    event_id?: string,
+    event_time?: string,
+    subject?: string,
+    source?: string,
+    headers?: Record<string, string>,
+  }
+) {
+  if (event.kind !== 'azure') {
+    throw new Error(`Expected azure trigger kind got: ${event.kind}`);
+  }
+
+  const decoded = atob(event.payload);
+  const parsed = JSON.parse(decoded);
+
+  return {
+    eventType: event.event_type,
+    subject: event.subject,
+    data: parsed.data ?? parsed,
+  };
+}
+
+export async function main(
+  eventType: string | undefined,
+  subject: string | undefined,
+  data: any
+) {
+  console.log('Event type:', eventType);
+  console.log('Subject:', subject);
+  console.log('Data:', data);
+}
+```
+
+## Testing with capture
+
+The trigger editor includes a **Capture** button that listens for real events without running the runnable. Windmill creates a companion subscription suffixed with `-wm-capture` (subscription names are truncated to 39 chars before appending the suffix, so they stay within the 50-char Azure limit). The captured payloads can then be applied as script or flow arguments, or used to generate a schema.
+
+## Troubleshooting
+
+- **Permission denied on topic/namespace listing**: the service principal is missing `Microsoft.EventGrid/*/read` on the subscription or resource group. Grant **EventGrid Contributor** or equivalent and refresh.
+- **Handshake fails on push**: verify the webhook URL matches `{base_endpoint}/api/azure/w/{workspace}/{trigger_path}` and that the instance is reachable from Azure. For namespace push, the CloudEvents `OPTIONS` abuse-protection handshake must land on the same route.
+- **`namespace_pull` not receiving events**: confirm the service principal has the **EventGrid Data Receiver** role on the namespace, and that the subscription actually exists (check the Azure portal).
+- **Subscription name validation error**: names must match `[A-Za-z0-9-]{3,50}`.
+
+## Error handling
+
+Azure triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.

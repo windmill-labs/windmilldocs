@@ -1,5 +1,5 @@
 ---
-description: How do I trigger scripts and flows in Windmill? Use schedules, webhooks, emails, HTTP routes, websockets, Kafka, Postgres, NATS, SQS, MQTT and more.
+description: How do I trigger scripts and flows in Windmill? Use schedules, webhooks, emails, HTTP routes, websockets, Kafka, Postgres, NATS, SQS, MQTT, GCP, Azure Event Grid and more.
 ---
 
 import DocCard from '@site/src/components/DocCard';
@@ -32,6 +32,7 @@ Triggers from external events:
 - [SQS triggers](#sqs-triggers)
 - [MQTT triggers](#mqtt-triggers)
 - [GCP triggers](#gcp-triggers)
+- [Azure Event Grid triggers](#azure-event-grid-triggers)
 - [Native triggers](#native-triggers) (Nextcloud, Google Drive, Google Calendar)
 - [Scheduled polls](#scheduled-polls-scheduling--trigger-scripts)
 
@@ -383,6 +384,19 @@ Windmill can connect to Google Cloud Pub/Sub, subscribe to specific topics, and 
     title="GCP Pub/Sub triggers"
     description="Trigger scripts and flows from Google Cloud Pub/Sub."
     href="/docs/core_concepts/gcp_triggers"
+  />
+</div>
+
+
+### Azure Event Grid triggers
+
+Windmill can subscribe to Azure Event Grid topics, system topics, domains and Event Grid Namespace topics and trigger scripts or flows when events are delivered. Supports classic push, CloudEvents 1.0 push, and CloudEvents pull with lock-token ack. Preprocessors can transform the event data before it reaches your script or flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+  <DocCard
+    title="Azure Event Grid triggers"
+    description="Trigger scripts and flows from Azure Event Grid events."
+    href="/docs/core_concepts/azure_triggers"
   />
 </div>
 
