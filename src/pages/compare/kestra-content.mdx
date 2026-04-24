@@ -24,6 +24,7 @@ import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 import ProductCTA from '../../components/products/ProductCTA';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CodeBlock from '@theme/CodeBlock';
+import LazyVideo from '../../components/products/LazyVideo';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
@@ -82,6 +83,157 @@ export const comparisonRows = [
 	{ feature: '~3× faster execution (lightweight tasks, dedicated mode)', windmill: true, kestra: false },
 	{ feature: 'Public Enterprise pricing', windmill: true, kestra: false },
 ];
+
+export function BuildExperienceVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+	const [windmillMode, setWindmillMode] = React.useState('low-code');
+
+	const windmillModes = {
+		'low-code': {
+			src: '/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm',
+			caption: 'Compose steps visually as a DAG with branches, loops and approval steps. Each step can be written in 20+ languages.',
+		},
+		'as-code': {
+			src: '/img/platform/workflow-editor/platform-flow-workflow-as-code.webm',
+			caption: 'Define the workflow programmatically in Python or TypeScript with native try/catch, parallel branches and full language control flow.',
+		},
+	};
+
+	const kestraMode = {
+		src: '/img/compare/kestra-yaml-editor.webm',
+		caption: 'Author flows as declarative YAML. Each task is a plugin reference with inputs, outputs and triggers configured in the flow definition.',
+	};
+
+	const active = platform === 'windmill' ? windmillModes[windmillMode] : kestraMode;
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			{/* Primary platform switch */}
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('kestra')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'kestra'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/kestra.svg" alt="" className="w-4 h-4" />
+					Kestra
+				</button>
+			</div>
+
+			{/* Secondary Windmill sub-switch */}
+			{platform === 'windmill' && (
+				<div className="flex gap-6 mb-4 border-b border-gray-200 dark:border-gray-800">
+					<button
+						type="button"
+						onClick={() => setWindmillMode('low-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'low-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Low-code DAG
+					</button>
+					<button
+						type="button"
+						onClick={() => setWindmillMode('as-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'as-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Workflow as code
+					</button>
+				</div>
+			)}
+
+			<LazyVideo
+				key={active.src}
+				className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+				src={active.src}
+			/>
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
+
+export function IntegrationsVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+
+	const modes = {
+		windmill: {
+			src: '/img/platform/script-editor/platform-script-real-dependencies.webm',
+			caption: 'Import any npm, PyPI, Go or Maven package directly. Windmill generates a lockfile per script and resolves dependencies automatically.',
+		},
+		kestra: {
+			src: '/img/compare/kestra-integrations.webm',
+			caption: 'Pick from a curated catalog of 1,200+ plugins for data-stack tools. Each plugin is a task type you reference by its fully qualified name in the flow YAML.',
+		},
+	};
+
+	const active = modes[platform];
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('kestra')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'kestra'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/kestra.svg" alt="" className="w-4 h-4" />
+					Kestra
+				</button>
+			</div>
+
+			<LazyVideo
+				key={active.src}
+				className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+				src={active.src}
+			/>
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
 
 export function EnterpriseBadge() {
 	return (
@@ -164,7 +316,7 @@ export const faqs = [
 
 {/* ── Section wrapper helper ── */}
 
-export function QASection({ id, kicker, question, summary, kestra, windmill, subsections, bottomLine, children, reverse }) {
+export function QASection({ id, kicker, question, summary, kestra, windmill, subsections, bottomLine, afterHero, children, reverse }) {
 	return (
 		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
 			{/* Hero: title + subtitle */}
@@ -181,6 +333,8 @@ export function QASection({ id, kicker, question, summary, kestra, windmill, sub
 					</p>
 				)}
 			</motion.div>
+
+			{afterHero}
 
 			{/* Details: subsections (preferred) or fallback 2-card layout */}
 			{subsections && subsections.length > 0 && (
@@ -616,6 +770,7 @@ export default function KestraCompareContent({ title, description }) {
 						<strong> Kestra</strong> uses a declarative YAML layer familiar to teams that work with config files (Kubernetes, dbt, Airflow DAGs).
 					</>
 				}
+				afterHero={<BuildExperienceVideos />}
 			/>
 
 			{/* ── Q4: Integrations ── */}
@@ -678,6 +833,7 @@ export default function KestraCompareContent({ title, description }) {
 						<strong> Kestra</strong> ships a curated catalog of 1,200+ plugins for mainstream data tools like Snowflake, dbt, Airbyte and Databricks.
 					</>
 				}
+				afterHero={<IntegrationsVideos />}
 			/>
 
 			{/* ── Q5: Migration ── */}
