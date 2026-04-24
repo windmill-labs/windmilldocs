@@ -463,3 +463,16 @@ To push to an instance use `wmill instance push`. It takes the same options as p
 When using `--include-workspaces`, you will also have to select the instance prefix of the local workspaces you want to push (make sure you're in its parent folder).
 
 During the push process, you will be prompted to decide whether to [re-encrypt](./workspace-management.md#managing-encryption-keys) the secrets of the workspace on the remote instance. In the case of instance migration, it is recommended to select "no" as the secrets are already encrypted with the correct key.
+
+### Instance-level Slack
+
+The CLI also supports connecting Slack at the instance level (global bot token used for critical alerts) non-interactively:
+
+```bash
+wmill instance connect-slack \
+  --bot-token <xoxb-…> \
+  --team-id <T…> \
+  --team-name "<team name>"
+```
+
+Super-admin only. Writes the `global_settings.slack` row and the encrypted variable + resource at `f/slack_bot/global_bot_token` in the `admins` workspace — same artifacts the UI's "Connect instance to Slack" button produces. See the [Slack integration doc](../../integrations/slack.mdx#action-on-windmill-from-slack) for the full flow, including configuring the OAuth client (`client_id`/`client_secret`) via `wmill instance push`.
