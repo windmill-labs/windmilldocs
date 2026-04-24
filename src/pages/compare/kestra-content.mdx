@@ -1052,16 +1052,16 @@ export default function KestraCompareContent({ title, description }) {
 						The verdict
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
-						Windmill and Kestra solve orchestration with two different grammars. Kestra models a workflow as a declarative YAML flow where every task is a plugin reference. Windmill models a workflow as a graph of real scripts (TypeScript, Python, Go, Bash, SQL) where each script is also a standalone primitive with its own UI, API endpoint and scheduler.
+						Windmill and Kestra solve orchestration with two different grammars. Kestra models a workflow as a declarative YAML flow where every task is a plugin reference. Windmill models a workflow as a graph of real scripts where each script is also a standalone primitive with its own UI, API endpoint and scheduler.
 					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
-						Pick <strong>Kestra</strong> if your team already thinks in YAML DAGs and config files (Airflow, Kubernetes, dbt) and your workload is mainstream data orchestration. The 1,200+ plugin catalog covers Snowflake, BigQuery, dbt, Airbyte and Databricks out of the box, the Apache 2.0 license is permissive for redistribution, and the per-task overhead of the JVM plus plugin loading is negligible on multi-minute data tasks.
+						<strong>Kestra can be a good fit if</strong> your team already thinks in YAML DAGs, your workload is mainstream data orchestration that its plugin catalog already covers, and Apache 2.0 licensing of the core matters for redistribution.
 					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
-						Pick <strong>Windmill</strong> if you want a single platform for all internal software, not just workflows: scripts, data pipelines, AI agents, low-code and full-code internal apps run on one runtime with shared resources, auth and observability. You get real language tooling (LSP, VS Code, Claude Code, Codex), a local-dev loop via the CLI, whole-workspace Git sync covering scripts, flows, apps, resources, secrets and permissions, data tables with SQL and native S3, and roughly 3× lower per-task overhead on short, high-volume workloads like webhooks and alerts. More of the enterprise foundation (RBAC, SSO up to 10 users, basic audit logs, multi-workspace) ships in the open source edition, and per-seat and per-worker Enterprise pricing is published upfront instead of gated behind a sales call.
+						<strong>Windmill also works very well for those use cases</strong>, and goes considerably deeper. The developer experience is built around real language runtimes with a local-dev loop, AI coding tools against real source files, and whole-workspace Git sync for everything the platform manages. The runtime scope is wider too: the same platform that runs your workflows also powers data pipelines, AI agents and both low-code and full-code internal apps, with shared auth, secrets and observability across all of them. For short, high-volume workloads, Windmill is roughly 3× faster than Kestra on equivalent hardware. More of the enterprise foundation ships in open source, and Enterprise pricing is published upfront instead of gated behind a sales call.
 					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The switching cost is also asymmetric: Windmill step logic is standard code that runs anywhere after you leave, while Kestra flows built on ecosystem plugins and Pebble templating have to be rewritten against the vendor SDKs on any other platform. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
+						The switching cost is also asymmetric: Windmill step logic is standard code that runs anywhere after you leave, while Kestra flows built on ecosystem plugins and Pebble templating have to be rewritten on any other platform. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
 			</section>
