@@ -1014,8 +1014,17 @@ export default function N8nCompareContent({ title, description }) {
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 						The verdict
 					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						Windmill and n8n answer two different questions. n8n asks how non-developers can wire SaaS apps together on a visual canvas. Windmill asks how engineers can build and orchestrate all their internal software, scripts, workflows, data pipelines, AI agents and internal apps, on one runtime, with real language tooling and Git sync.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						Pick <strong>n8n</strong> if your primary authors are marketers, ops or analysts wiring mainstream SaaS apps together, and the 400+ pre-built nodes cover most of what you need. The visual canvas is the most accessible authoring surface, and credentials plus request shapes come already modelled.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						Pick <strong>Windmill</strong> if your team is developer-led and wants full code flexibility: real TypeScript, Python, Go, Bash and SQL runtimes, any npm or PyPI package as a first-class import, a local-dev loop with the CLI and VS Code, and a single platform that also covers data pipelines, internal apps and AI agents. You also get more of the enterprise foundation (RBAC, SSO up to 10 users, basic audit logs, multi-workspace) in the open source edition, an AGPLv3 license instead of the source-available Sustainable Use License, and flat per-seat and per-worker pricing instead of metering by workflow executions.
+					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The biggest difference between Windmill and n8n is the <strong>authoring model</strong>. n8n is a visual canvas with 400+ pre-built nodes, built for mixed teams where non-developers build automations themselves. Windmill is code-first, with real TypeScript, Python, Go, Bash and SQL runtimes, a full local-dev loop and whole-workspace Git sync. The other major difference is the <strong>range of internal software you can build on each platform</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and internal apps on one runtime, while n8n focuses on workflow automation and AI agents. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
+						Switching cost is the other asymmetry worth naming: Windmill step logic is standard code that runs anywhere after you leave, while workflows built on n8n pre-built nodes have to be rewritten against the vendor SDKs. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
 			</section>
