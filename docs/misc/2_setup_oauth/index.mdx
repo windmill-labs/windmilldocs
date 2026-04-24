@@ -355,6 +355,12 @@ Now users should be able to connect to Slack through OAuth:
 
 ![Slack Connect](./slack_connect.png 'Slack Connect')
 
+:::tip Non-interactive CLI alternative
+
+The Slack bot install at the instance level (that normally happens when the first super-admin clicks "Connect to Slack") can also be done non-interactively via the CLI with a pre-minted `xoxb-…` bot token: `wmill instance connect-slack --bot-token ... --team-id ... --team-name ...`. Same for workspace-level: `wmill workspace connect-slack ...`. See the [Slack integration doc](../../integrations/slack.mdx#action-on-windmill-from-slack) for the full flow. Useful for configure-as-code setups and scripted provisioning.
+
+:::
+
 #### Workspace-level Slack app
 
 In addition to instance-level configuration, workspace admins can configure their own Slack app with workspace-specific credentials. This provides workspace isolation, separate rate limits, and independent management.
@@ -363,6 +369,8 @@ To enable workspace-level Slack apps:
 1. Follow the same app manifest setup above to create a Slack app
 2. In workspace settings, navigate to the Slack app section
 3. Enter the workspace-specific Client ID and Client Secret
+
+Alternatively, via the CLI, commit `slack_oauth_client_id` and `slack_oauth_client_secret` to your workspace's `settings.yaml` and run `wmill sync push`. Both fields round-trip through `sync pull` (emitted as `null` when unset), so the committed YAML is the complete source of truth.
 
 When configured, the workspace will use its own Slack app instead of the instance-level app. See the [Slack integration documentation](../../integrations/slack.mdx#workspace-level-slack-app-configuration) for more details on workspace-level configuration and when to use it.
 
