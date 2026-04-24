@@ -40,7 +40,7 @@ export const fadeIn = {
 export const bigQuestions = [
 	{ id: 'build',        kicker: 'What you can build',     short: 'Which solution fits for your specific use case', icon: Boxes },
 	{ id: 'target',       kicker: 'Target',                 short: 'Who the platform is built for',                          icon: Users },
-	{ id: 'devex',        kicker: 'Developer experience',   short: 'How developers interact with the platform',              icon: Terminal },
+	{ id: 'devex',        kicker: 'Build experience',   short: 'How you build on each platform',              icon: Terminal },
 	{ id: 'integrations', kicker: 'Integrations',           short: 'How the platform integrates with your existing stack',   icon: Puzzle },
 	{ id: 'migration',    kicker: 'Migration & lock-in',    short: 'How hard to get in, how hard to get out',                icon: ArrowRightLeft },
 	{ id: 'enterprise',   kicker: 'Enterprise requirements', short: 'Audit logs, observability, security, performance',      icon: Gauge },
@@ -167,7 +167,7 @@ export function QASection({ id, kicker, question, summary, airflow, windmill, su
 			{subsections && subsections.length > 0 && (
 				<div className="divide-y divide-gray-200 dark:divide-gray-800">
 					{/* Shared column headers — desktop only */}
-					<div className="hidden md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 pb-4">
+					<div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] md:gap-8 pb-4">
 						<div />
 						<div className="flex items-center gap-2">
 							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
@@ -183,7 +183,7 @@ export function QASection({ id, kicker, question, summary, airflow, windmill, su
 						<motion.div
 							key={sub.label || i}
 							{...fadeIn}
-							className="py-6 md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 md:items-start"
+							className="py-6 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] md:gap-8 md:items-start"
 						>
 							{sub.label && (
 								<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-4 md:mb-0">
@@ -479,89 +479,29 @@ export default function AirflowCompareContent({ title, description }) {
 			<QASection
 				reverse
 				id="devex"
-				kicker="03 · Developer experience"
-				question="How do developers interact with the platform?"
+				kicker="03 · Build experience"
+				question="How do you build on each platform?"
 				summary="Covers how you write workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
 				subsections={[
 					{
 						label: 'Authoring',
 						windmill: (
-							<div className="flex flex-col h-full">
-								<p className="min-h-[8.5rem]">
-									Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
-									primitive with its own UI, API endpoint and scheduler; no wrapper required to run.
-									<Link to="/platform/flow-editor" className="text-blue-500 hover:underline"> Flows</Link> compose scripts into workflows with branching, retries and approval
-									steps. Any public or private package is a first-class import with automatic dependency
-									resolution.
-								</p>
-								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
-									<Tabs className="unique-tabs">
-										<TabItem value="script" label="main.py" default>
-											<CodeBlock language="python">{`import requests
-
-def main():
-    r = requests.get('https://windmill.dev')
-    return {
-        'status': r.status_code,
-        'text': r.text,
-    }`}</CodeBlock>
-										</TabItem>
-										<TabItem value="yaml" label="flow.yaml">
-											<CodeBlock language="yaml">{`summary: Fetch Windmill homepage
-value:
-  modules:
-    - id: a
-      value:
-        type: script
-        path: f/scripts/fetch_windmill
-        input_transforms: {}`}</CodeBlock>
-										</TabItem>
-									</Tabs>
-								</div>
-							</div>
+							<p>
+								Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
+								primitive with its own UI, API endpoint and scheduler; no wrapper required to run.
+								<Link to="/platform/flow-editor" className="text-blue-500 hover:underline"> Flows</Link> compose scripts into workflows with branching, retries and approval
+								steps. Any public or private package is a first-class import with automatic dependency
+								resolution.
+							</p>
 						),
 						airflow: (
-							<div className="flex flex-col h-full">
-								<p className="min-h-[8.5rem]">
-									DAGs are Python files placed in a <code>dags/</code> folder and parsed by a scheduler.
-									Tasks are built from <a href="https://airflow.apache.org/docs/apache-airflow-providers/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">operators</a> (PythonOperator, BashOperator, provider-specific
-									operators) or authored with the TaskFlow <code>@task</code> decorator. Data flows
-									between tasks through XComs. Non-Python languages run as subprocesses inside a Python
-									task.
-								</p>
-								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
-									<Tabs className="unique-tabs">
-										<TabItem value="script" label="main.py" default>
-											<CodeBlock language="python">{`import requests
-
-def fetch_airflow():
-    r = requests.get('https://airflow.apache.org')
-    return {
-        'status': r.status_code,
-        'text': r.text,
-    }`}</CodeBlock>
-										</TabItem>
-										<TabItem value="dag" label="dag.py">
-											<CodeBlock language="python">{`from datetime import datetime
-from airflow import DAG
-from airflow.decorators import task
-
-with DAG(
-    dag_id='fetch_airflow',
-    start_date=datetime(2024, 1, 1),
-    schedule='@daily',
-    catchup=False,
-):
-    @task
-    def run():
-        from main import fetch_airflow
-        return fetch_airflow()
-
-    run()`}</CodeBlock>
-										</TabItem>
-									</Tabs>
-								</div>
-							</div>
+							<p>
+								DAGs are Python files placed in a <code>dags/</code> folder and parsed by a scheduler.
+								Tasks are built from <a href="https://airflow.apache.org/docs/apache-airflow-providers/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">operators</a> (PythonOperator, BashOperator, provider-specific
+								operators) or authored with the TaskFlow <code>@task</code> decorator. Data flows
+								between tasks through XComs. Non-Python languages run as subprocesses inside a Python
+								task.
+							</p>
 						),
 					},
 					{
@@ -577,6 +517,24 @@ with DAG(
 								<code>airflow standalone</code> spins up a local scheduler, webserver and SQLite metadata
 								DB for testing. The <a href="https://www.astronomer.io/docs/astro/cli/overview/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Astronomer astro CLI</a> adds a Docker-based local dev loop.
 								Standard Python IDE tooling applies to DAG files.
+							</p>
+						),
+					},
+					{
+						label: 'Language runtimes',
+						windmill: (
+							<p>
+								TypeScript (Deno, Bun, Node.js), Python, Go, Bash, SQL, PowerShell, PHP, Rust and more
+								(20+ languages total). Any npm, PyPI, Go, Maven or Cargo package is a first-class
+								import with automatic dependency resolution.
+							</p>
+						),
+						airflow: (
+							<p>
+								Python is first-class (<code>PythonOperator</code>, <code>@task</code> decorator).
+								Other languages run through <code>BashOperator</code> or container-based operators
+								(<code>DockerOperator</code>, <code>KubernetesPodOperator</code>). No native runtime for
+								TypeScript, Go or other languages without wrapping them in a container.
 							</p>
 						),
 					},

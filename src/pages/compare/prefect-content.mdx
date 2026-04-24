@@ -40,7 +40,7 @@ export const fadeIn = {
 export const bigQuestions = [
 	{ id: 'build',        kicker: 'What you can build',     short: 'Which solution fits for your specific use case', icon: Boxes },
 	{ id: 'target',       kicker: 'Target',                 short: 'Who the platform is built for',                          icon: Users },
-	{ id: 'devex',        kicker: 'Developer experience',   short: 'How developers interact with the platform',              icon: Terminal },
+	{ id: 'devex',        kicker: 'Build experience',   short: 'How you build on each platform',              icon: Terminal },
 	{ id: 'integrations', kicker: 'Integrations',           short: 'How the platform integrates with your existing stack',   icon: Puzzle },
 	{ id: 'migration',    kicker: 'Migration & lock-in',    short: 'How hard to get in, how hard to get out',                icon: ArrowRightLeft },
 	{ id: 'enterprise',   kicker: 'Enterprise requirements', short: 'Audit logs, observability, security, performance',      icon: Gauge },
@@ -167,7 +167,7 @@ export function QASection({ id, kicker, question, summary, prefect, windmill, su
 			{subsections && subsections.length > 0 && (
 				<div className="divide-y divide-gray-200 dark:divide-gray-800">
 					{/* Shared column headers — desktop only */}
-					<div className="hidden md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 pb-4">
+					<div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] md:gap-8 pb-4">
 						<div />
 						<div className="flex items-center gap-2">
 							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
@@ -183,7 +183,7 @@ export function QASection({ id, kicker, question, summary, prefect, windmill, su
 						<motion.div
 							key={sub.label || i}
 							{...fadeIn}
-							className="py-6 md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 md:items-start"
+							className="py-6 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] md:gap-8 md:items-start"
 						>
 							{sub.label && (
 								<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-4 md:mb-0">
@@ -494,88 +494,29 @@ export default function PrefectCompareContent({ title, description }) {
 			<QASection
 				reverse
 				id="devex"
-				kicker="03 · Developer experience"
-				question="How do developers interact with the platform?"
+				kicker="03 · Build experience"
+				question="How do you build on each platform?"
 				summary="Covers how you write workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
 				subsections={[
 					{
 						label: 'Authoring',
 						windmill: (
-							<div className="flex flex-col h-full">
-								<p className="min-h-[8.5rem]">
-									Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
-									primitive with its own UI, API endpoint and scheduler; no Python wrapper required to
-									run. <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">Flows</Link> glue scripts together through a visual editor backed by YAML.
-									Any public or private package is a first-class import with automatic dependency
-									resolution.
-								</p>
-								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
-									<Tabs className="unique-tabs">
-										<TabItem value="script" label="main.py" default>
-											<CodeBlock language="python">{`import requests
-
-def main():
-    r = requests.get('https://windmill.dev')
-    return {
-        'status': r.status_code,
-        'text': r.text,
-    }`}</CodeBlock>
-										</TabItem>
-										<TabItem value="yaml" label="flow.yaml">
-											<CodeBlock language="yaml">{`summary: Fetch Windmill homepage
-value:
-  modules:
-    - id: a
-      value:
-        type: script
-        path: f/scripts/fetch_windmill
-        input_transforms: {}`}</CodeBlock>
-										</TabItem>
-									</Tabs>
-								</div>
-							</div>
+							<p>
+								Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
+								primitive with its own UI, API endpoint and scheduler; no Python wrapper required to
+								run. <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">Flows</Link> glue scripts together through a visual editor backed by YAML. Any
+								public or private package is a first-class import with automatic dependency
+								resolution.
+							</p>
 						),
 						prefect: (
-							<div className="flex flex-col h-full">
-								<p className="min-h-[8.5rem]">
-									Prefect flows and tasks are Python functions decorated with <code>@flow</code> and{' '}
-									<code>@task</code>. No YAML authoring, no multi-language support: the flow, its tasks
-									and the orchestration wiring all live in the same Python file. Deployment metadata
-									(schedules, work pools, parameters) sits in a separate <code>prefect.yaml</code> or is
-									declared from Python.
-								</p>
-								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
-									<Tabs className="unique-tabs">
-										<TabItem value="script" label="main.py" default>
-											<CodeBlock language="python">{`from prefect import flow, task
-import requests
-
-@task
-def fetch():
-    r = requests.get('https://prefect.io')
-    return {
-        'status': r.status_code,
-        'text': r.text,
-    }
-
-@flow
-def main():
-    return fetch()`}</CodeBlock>
-										</TabItem>
-										<TabItem value="yaml" label="prefect.yaml">
-											<CodeBlock language="yaml">{`name: fetch-demo
-prefect-version: 3.0.0
-
-deployments:
-  - name: fetch-homepage
-    entrypoint: main.py:main
-    work_pool:
-      name: default
-    schedule: null`}</CodeBlock>
-										</TabItem>
-									</Tabs>
-								</div>
-							</div>
+							<p>
+								Prefect flows and tasks are Python functions decorated with <code>@flow</code> and{' '}
+								<code>@task</code>. No YAML authoring, no multi-language support: the flow, its tasks
+								and the orchestration wiring all live in the same Python file. Deployment metadata
+								(schedules, work pools, parameters) sits in a separate <code>prefect.yaml</code> or is
+								declared from Python.
+							</p>
 						),
 					},
 					{

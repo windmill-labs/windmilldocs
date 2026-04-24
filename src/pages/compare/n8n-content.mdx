@@ -24,6 +24,7 @@ import HeroCTAButtons from '../../components/products/HeroCTAButtons';
 import ProductCTA from '../../components/products/ProductCTA';
 import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CodeBlock from '@theme/CodeBlock';
+import LazyVideo from '../../components/products/LazyVideo';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
@@ -40,13 +41,164 @@ export const fadeIn = {
 export const bigQuestions = [
 	{ id: 'build',        kicker: 'What you can build',     short: 'Which solution fits for your specific use case', icon: Boxes },
 	{ id: 'target',       kicker: 'Target',                 short: 'Who the platform is built for',                          icon: Users },
-	{ id: 'devex',        kicker: 'Developer experience',   short: 'How developers interact with the platform',              icon: Terminal },
+	{ id: 'devex',        kicker: 'Build experience',   short: 'How you build on each platform',              icon: Terminal },
 	{ id: 'integrations', kicker: 'Integrations',           short: 'How the platform integrates with your existing stack',   icon: Puzzle },
 	{ id: 'migration',    kicker: 'Migration & lock-in',    short: 'How hard to get in, how hard to get out',                icon: ArrowRightLeft },
 	{ id: 'enterprise',   kicker: 'Enterprise requirements', short: 'Audit logs, observability, security, performance',      icon: Gauge },
 	{ id: 'licensing',    kicker: 'Licensing & pricing',    short: 'Open source, pricing, self-hosting',                     icon: Scale },
 	{ id: 'verdict',      kicker: 'Verdict',                short: 'The verdict',                                            icon: Compass },
 ];
+
+export function BuildExperienceVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+	const [windmillMode, setWindmillMode] = React.useState('low-code');
+
+	const windmillModes = {
+		'low-code': {
+			src: '/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm',
+			caption: 'Compose steps visually as a DAG with branches, loops and approval steps. Each step can be written in 20+ languages.',
+		},
+		'as-code': {
+			src: '/img/platform/workflow-editor/platform-flow-workflow-as-code.webm',
+			caption: 'Define the workflow programmatically in Python or TypeScript with native try/catch, parallel branches and full language control flow.',
+		},
+	};
+
+	const n8nMode = {
+		src: '/img/compare/n8n-low-code-builder.webm',
+		caption: 'Drag pre-built nodes onto a canvas and wire them together. Each node is a configured integration; custom logic lives inside a Code node constrained to n8n\'s data model.',
+	};
+
+	const active = platform === 'windmill' ? windmillModes[windmillMode] : n8nMode;
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			{/* Primary platform switch */}
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('n8n')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'n8n'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/n8n.svg" alt="" className="w-4 h-4" />
+					n8n
+				</button>
+			</div>
+
+			{/* Secondary Windmill sub-switch */}
+			{platform === 'windmill' && (
+				<div className="flex gap-6 mb-4 border-b border-gray-200 dark:border-gray-800">
+					<button
+						type="button"
+						onClick={() => setWindmillMode('low-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'low-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Low-code DAG
+					</button>
+					<button
+						type="button"
+						onClick={() => setWindmillMode('as-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'as-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Workflow as code
+					</button>
+				</div>
+			)}
+
+			<LazyVideo
+				key={active.src}
+				className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+				src={active.src}
+			/>
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
+
+export function IntegrationsVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+
+	const modes = {
+		windmill: {
+			src: '/img/platform/script-editor/platform-script-real-dependencies.webm',
+			caption: 'Import any npm, PyPI, Go or Maven package directly. Windmill generates a lockfile per script and resolves dependencies automatically.',
+		},
+		n8n: {
+			src: '/img/compare/n8n-integrations.webm',
+			caption: 'Pick from 400+ pre-built nodes for mainstream SaaS apps. Each node wraps the vendor API; custom endpoints go through a generic HTTP Request node.',
+		},
+	};
+
+	const active = modes[platform];
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('n8n')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'n8n'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/n8n.svg" alt="" className="w-4 h-4" />
+					n8n
+				</button>
+			</div>
+
+			<LazyVideo
+				key={active.src}
+				className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+				src={active.src}
+			/>
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
 
 export function EnterpriseBadge() {
 	return (
@@ -129,7 +281,7 @@ export const faqs = [
 
 {/* ── Section wrapper helper ── */}
 
-export function QASection({ id, kicker, question, summary, n8n, windmill, subsections, bottomLine, children, reverse }) {
+export function QASection({ id, kicker, question, summary, n8n, windmill, subsections, bottomLine, afterHero, children, reverse }) {
 	return (
 		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
 			{/* Hero: title + subtitle */}
@@ -147,11 +299,13 @@ export function QASection({ id, kicker, question, summary, n8n, windmill, subsec
 				)}
 			</motion.div>
 
+			{afterHero}
+
 			{/* Details: subsections (preferred) or fallback 2-card layout */}
 			{subsections && subsections.length > 0 && (
 				<div className="divide-y divide-gray-200 dark:divide-gray-800">
 					{/* Shared column headers — desktop only */}
-					<div className="hidden md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 pb-4">
+					<div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] md:gap-8 pb-4">
 						<div />
 						<div className="flex items-center gap-2">
 							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
@@ -167,7 +321,7 @@ export function QASection({ id, kicker, question, summary, n8n, windmill, subsec
 						<motion.div
 							key={sub.label || i}
 							{...fadeIn}
-							className="py-6 md:grid md:grid-cols-[1fr_2fr_2fr] md:gap-8 md:items-start"
+							className="py-6 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] md:gap-8 md:items-start"
 						>
 							{sub.label && (
 								<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-4 md:mb-0">
@@ -462,81 +616,30 @@ export default function N8nCompareContent({ title, description }) {
 			<QASection
 				reverse
 				id="devex"
-				kicker="03 · Developer experience"
-				question="How do developers interact with the platform?"
+				kicker="03 · Build experience"
+				question="How do you build on each platform?"
 				summary="Covers how you build workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
 				subsections={[
 					{
 						label: 'Authoring',
 						windmill: (
-							<div className="flex flex-col h-full">
-								<p className="min-h-[8.5rem]">
-									Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
-									primitive with its own UI, API endpoint and scheduler; no wrapper required to run.
-									Flows compose scripts via a visual <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">flow editor</Link> that serializes to YAML for Git
-									sync. Any public or private package is a first-class import with automatic dependency
-									resolution.
-								</p>
-								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
-									<Tabs className="unique-tabs">
-										<TabItem value="script" label="main.py" default>
-											<CodeBlock language="python">{`import requests
-
-def main():
-    r = requests.get('https://windmill.dev')
-    return {
-        'status': r.status_code,
-        'text': r.text,
-    }`}</CodeBlock>
-										</TabItem>
-										<TabItem value="yaml" label="flow.yaml">
-											<CodeBlock language="yaml">{`summary: Fetch Windmill homepage
-value:
-  modules:
-    - id: a
-      value:
-        type: script
-        path: f/scripts/fetch_windmill
-        input_transforms: {}`}</CodeBlock>
-										</TabItem>
-									</Tabs>
-								</div>
-							</div>
+							<p>
+								Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
+								primitive with its own UI, API endpoint and scheduler; no wrapper required to run.
+								Flows compose scripts either visually via a <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">flow editor</Link> or in full code via <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-500 hover:underline">workflow-as-code</Link>
+								(Python and TypeScript). Any public or private package is a first-class import with
+								automatic dependency resolution.
+							</p>
 						),
 						n8n: (
-							<div className="flex flex-col h-full">
-								<p className="min-h-[8.5rem]">
-									Build workflows on a drag-and-drop canvas by wiring <a href="https://n8n.io/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">pre-built nodes</a> together. Each
-									node is a configured integration (HTTP Request, Gmail, Slack, OpenAI, etc.) with its
-									parameters filled in through forms. For custom logic, a Code node embeds a JavaScript
-									or Python snippet. The whole workflow serializes to JSON under the hood.
-								</p>
-								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
-									<Tabs className="unique-tabs">
-										<TabItem value="script" label="code-node.js" default>
-											<CodeBlock language="javascript">{`const res = await this.helpers.httpRequest({
-  method: 'GET',
-  url: 'https://n8n.io',
-});
-return [{ json: {
-  status: res.statusCode,
-  text: res.body,
-}}];`}</CodeBlock>
-										</TabItem>
-										<TabItem value="workflow" label="workflow.json">
-											<CodeBlock language="json">{`{
-  "nodes": [
-    { "name": "Start", "type": "n8n-nodes-base.start" },
-    { "name": "Code",  "type": "n8n-nodes-base.code",
-      "parameters": { "language": "javascript",
-                      "jsCode": "..." } }
-  ],
-  "connections": { "Start": { "main": [[{ "node": "Code" }]] } }
-}`}</CodeBlock>
-										</TabItem>
-									</Tabs>
-								</div>
-							</div>
+							<p>
+								Build workflows on a drag-and-drop canvas by wiring <a href="https://n8n.io/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">pre-built nodes</a> together. Each
+								node is a configured integration (HTTP Request, Gmail, Slack, OpenAI, etc.) with its
+								parameters filled in through forms. For custom logic, a Code node embeds a JavaScript
+								or Python snippet, but the code must conform to <a href="https://docs.n8n.io/code/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">n8n's data model</a> (items as arrays
+								with item linking between input and output) and use n8n's built-in helpers rather
+								than plain language idioms.
+							</p>
 						),
 					},
 					{
@@ -557,6 +660,23 @@ return [{ json: {
 						),
 					},
 					{
+						label: 'Data handling',
+						windmill: (
+							<p>
+								First-class <Link to="/platform/datatables" className="text-blue-500 hover:underline">data tables</Link> with SQL queries, versioning and a browse / edit UI as a
+								persistent primitive separate from flows, plus native S3 integration for large
+								payloads, files and persistent storage across scripts, flows and apps.
+							</p>
+						),
+						n8n: (
+							<p>
+								A <a href="https://docs.n8n.io/data/data-tables/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Data Table node</a> handles tabular data inside a workflow, with row and table
+								operations. S3 goes through the <a href="https://docs.n8n.io/integrations/builtin/credentials/aws/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">AWS S3 node</a>. Binary data and file nodes cover large
+								payloads. No SQL-queryable persistent data-table primitive outside the node.
+							</p>
+						),
+					},
+					{
 						label: 'Language runtimes',
 						windmill: (
 							<p>
@@ -566,10 +686,10 @@ return [{ json: {
 						),
 						n8n: (
 							<p>
-								Code node runs JavaScript on Node.js (with npm module support, allowlisted by the admin)
-								and Python via <a href="https://pyodide.org" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Pyodide</a> (WASM), which is limited to pure-Python packages and a
-								curated set of compiled ones. Packages with native C extensions mostly don't work in the
-								Python Code node.
+								Code node runs JavaScript on Node.js (npm modules allowlisted by the admin) and <a href="https://docs.n8n.io/code/code-node/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">native
+								Python via task runners</a>, stable in v2 (replacing the legacy Pyodide runtime).
+								Self-hosted Python packages must be explicitly allowlisted in the <code>n8nio/runners</code>
+								image; on n8n cloud, Python library imports are disallowed entirely.
 							</p>
 						),
 					},
@@ -611,10 +731,11 @@ return [{ json: {
 				]}
 				bottomLine={
 					<>
-						<strong>Windmill</strong> gives you full code flexibility with a local dev loop, real language runtimes and whole-workspace Git sync. Scripts, flows, apps, resources and permissions all live in Git like application code.
-						<strong> n8n</strong> optimizes for a visual canvas where non-developers can build automations without opening an IDE.
+						<strong>Windmill</strong> gives you both a visual UI (flow editor, app builder) and full code flexibility with a local dev loop, real language runtimes and whole-workspace Git sync. Scripts, flows, apps, resources and permissions can all live in Git like application code when you want them to.
+						<strong> n8n</strong> focuses on a visual canvas where non-developers can build automations without opening an IDE.
 					</>
 				}
+				afterHero={<BuildExperienceVideos />}
 			/>
 
 			{/* ── Q4: Integrations ── */}
@@ -680,6 +801,7 @@ return [{ json: {
 						<strong> n8n</strong> ships 400+ pre-built nodes for mainstream SaaS apps, which is faster for the first wire-up but adds a plugin layer between you and the vendor SDK.
 					</>
 				}
+				afterHero={<IntegrationsVideos />}
 			/>
 
 			{/* ── Q5: Migration ── */}
