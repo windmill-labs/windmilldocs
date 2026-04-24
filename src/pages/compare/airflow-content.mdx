@@ -1,6 +1,6 @@
 ---
-title: "Windmill vs Kestra: an honest side-by-side comparison"
-description: "Evaluating Kestra and Windmill? A neutral, question-driven comparison across target audience, developer experience, scope, integrations, migration, performance, and pricing, including where each tool is genuinely the better choice."
+title: "Windmill vs Airflow: an honest side-by-side comparison"
+description: "Evaluating Apache Airflow and Windmill? A neutral, question-driven comparison across target audience, developer experience, scope, integrations, migration, performance, and pricing, including where each tool is genuinely the better choice."
 ---
 
 import React from 'react';
@@ -48,45 +48,18 @@ export const bigQuestions = [
 	{ id: 'verdict',      kicker: 'Verdict',                short: 'The verdict',                                            icon: Compass },
 ];
 
-{/* ── Comparison table data ── */}
-
-export const comparisonRows = [
-	{ section: 'Platform scope' },
-	{ feature: 'Workflow orchestration', windmill: true, kestra: true },
-	{ feature: 'Scripts as standalone APIs & scheduled jobs', windmill: true, kestra: false },
-	{ feature: 'Internal apps (low-code + React / Svelte)', windmill: true, kestra: false },
-	{ feature: 'AI agents with tool calling & sandboxes', windmill: true, kestra: 'Partial' },
-	{ feature: 'Approval steps & operator portals', windmill: true, kestra: false },
-
-	{ section: 'Authoring experience' },
-	{ feature: 'Declarative YAML authoring', windmill: false, kestra: true },
-	{ feature: 'Step code in TypeScript, Python, Go, Bash, SQL', windmill: true, kestra: 'Partial' },
-	{ feature: 'Direct argument passing between steps', windmill: true, kestra: 'Via outputs' },
-	{ feature: 'Local dev, CLI, Git sync, VS Code, AI coding tools', windmill: true, kestra: 'Partial' },
-	{ feature: 'Automated dependency resolution & caching', windmill: true, kestra: false },
-	{ feature: 'Auto-generated UIs from script inputs', windmill: true, kestra: false },
-
-	{ section: 'Ecosystem & integrations' },
-	{ feature: 'Curated plugin / task catalog', windmill: 'Hub', kestra: '1,200+' },
-	{ feature: 'Any npm / PyPI / Go module as an import', windmill: true, kestra: 'Partial' },
-	{ feature: 'Community templates & blueprints', windmill: true, kestra: true },
-
-	{ section: 'Collaboration' },
-	{ feature: 'Non-developers can author workflows', windmill: 'Partial', kestra: true },
-	{ feature: 'Non-developers can run & monitor workflows', windmill: true, kestra: true },
-	{ feature: 'Dedicated operator role / operator UI', windmill: true, kestra: 'Partial' },
-
-	{ section: 'Production & governance' },
-	{ feature: 'Open source & self-hostable', windmill: 'AGPLv3', kestra: 'Apache 2.0' },
-	{ feature: 'RBAC, audit logs, SSO', windmill: true, kestra: true },
-	{ feature: '~3× faster execution (lightweight tasks, dedicated mode)', windmill: true, kestra: false },
-	{ feature: 'Public Enterprise pricing', windmill: true, kestra: false },
-];
-
 export function EnterpriseBadge() {
 	return (
 		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
 			Enterprise only
+		</span>
+	);
+}
+
+export function VendorBadge() {
+	return (
+		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
+			Vendor only
 		</span>
 	);
 }
@@ -106,65 +79,73 @@ export function CheckCell({ value }) {
 			</div>
 		);
 	}
+	if (value === 'Vendor') {
+		return (
+			<div className="flex flex-col items-center gap-1">
+				<Check className="w-5 h-5 text-emerald-500" />
+				<VendorBadge />
+			</div>
+		);
+	}
 	return <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">{value}</span>;
 }
 
 {/* ── What you can build — row data ── */}
 
 export const buildRows = [
-	{ feature: 'Workflows',               href: '/use-cases/workflows',         description: 'Chain scripts into flows with branching, retries and approval steps',    windmill: true, kestra: true },
-	{ feature: 'Data pipelines',          href: '/use-cases/data-pipelines',    description: 'ETL, syncs and scheduled data jobs with parallel branches',              windmill: true, kestra: true },
-	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Standalone functions exposed as APIs, webhooks or cron jobs without a wrapping workflow',     windmill: true, kestra: false },
-	{ feature: 'AI agent workflows',      href: '/use-cases/ai-agents',         description: 'Build agents that call tools, branch on outputs and run as workflows',   windmill: true, kestra: true },
-	{ feature: 'AI sandboxes & volumes',  href: '/platform/sandboxes',          description: 'Isolated environments with persistent volumes for running agents',       windmill: true, kestra: false },
-	{ feature: 'Low-code internal apps',  href: '/use-cases/internal-apps',     description: 'Drag-and-drop dashboards and admin tools with built-in components',      windmill: true, kestra: 'Enterprise' },
-	{ feature: 'Full-code internal apps', href: '/platform/app-builder',        description: 'Custom dashboards and admin tools built in React or Svelte',             windmill: true, kestra: false },
-	{ feature: 'Scheduled tasks',         href: '/use-cases/scheduled-tasks',   description: 'Cron jobs with retries, error handling and alerting',                    windmill: true, kestra: true },
+	{ feature: 'Workflows',               href: '/use-cases/workflows',         description: 'Chain scripts into flows with branching, retries and approval steps',    windmill: true, airflow: true },
+	{ feature: 'Data pipelines',          href: '/use-cases/data-pipelines',    description: 'ETL, syncs and scheduled data jobs with parallel branches',              windmill: true, airflow: true },
+	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Standalone functions exposed as APIs, webhooks or cron jobs without a wrapping workflow',     windmill: true, airflow: false },
+	{ feature: 'AI agent workflows',      href: '/use-cases/ai-agents',         description: 'Build agents that call tools, branch on outputs and run as workflows',   windmill: true, airflow: 'Partial' },
+	{ feature: 'AI sandboxes & volumes',  href: '/platform/sandboxes',          description: 'Isolated environments with persistent volumes for running agents',       windmill: true, airflow: false },
+	{ feature: 'Low-code internal apps',  href: '/use-cases/internal-apps',     description: 'Drag-and-drop dashboards and admin tools with built-in components',      windmill: true, airflow: false },
+	{ feature: 'Full-code internal apps', href: '/platform/app-builder',        description: 'Custom dashboards and admin tools built in React or Svelte',             windmill: true, airflow: false },
+	{ feature: 'Scheduled tasks',         href: '/use-cases/scheduled-tasks',   description: 'Cron jobs with retries, error handling and alerting',                    windmill: true, airflow: true },
 ];
 
 {/* ── FAQ ── */}
 
 export const faqs = [
 	{
-		question: 'Is Windmill a drop-in replacement for Kestra?',
+		question: 'Is Windmill a drop-in replacement for Airflow?',
 		textAnswer:
-			'Both platforms solve workflow orchestration with a queue-based, event-driven architecture, so the mental model transfers. Porting involves rewriting YAML workflow definitions as Windmill scripts and flows. Workflows that rely on specific Kestra plugins for exotic systems may require replacing those plugins with equivalent SDK calls in code.',
+			'Both platforms orchestrate workflows and run Python code. The mental model is close enough that porting is usually straightforward: each Airflow task becomes a Windmill script, and the DAG becomes a Windmill flow. Workflows that depend on specific Airflow provider packages may require replacing those operators with equivalent SDK calls in code.',
 	},
 	{
-		question: 'Can I migrate Kestra YAML flows to Windmill automatically?',
+		question: 'Can I migrate Airflow DAGs to Windmill automatically?',
 		textAnswer:
-			'No, there is no automated YAML-to-Windmill converter today. In practice, the migration is a manual rewrite where each Kestra task becomes a Windmill script or flow step. Most ported workflows end up shorter because Windmill passes arguments directly between steps and auto-generates input UIs.',
+			'No, there is no automated DAG-to-Windmill converter today. In practice, migration is a manual rewrite where each task becomes a Windmill script and the DAG structure becomes a flow. Most ported workflows end up shorter because Windmill passes arguments directly between steps instead of going through XComs, and auto-generates input UIs.',
 	},
 	{
-		question: 'Does Windmill have a plugin catalog comparable to Kestra\'s 1,200+ plugins?',
+		question: 'Does Windmill have a provider catalog comparable to Airflow\'s 80+ providers?',
 		textAnswer:
-			'No. Windmill has a community Hub of reusable scripts and flows but not a curated plugin catalog the size of Kestra\'s. The trade-off: in Windmill, any npm, PyPI, Go or Maven package is a first-class integration via a normal import, so the effective catalog is the package ecosystems themselves. For mainstream data-pipeline tools that Kestra has official plugins for, Kestra is often easier to get started with.',
+			'Not as a curated catalog. Windmill has a community Hub of reusable scripts and flows but not the size of Airflow\'s official provider list. The trade-off: in Windmill, any npm, PyPI, Go or Maven package is a first-class integration via a normal import, so the effective catalog is the package ecosystems themselves. For mainstream data-stack tools that Airflow has official providers for (Snowflake, BigQuery, dbt, Databricks), Airflow is often easier to get started with.',
 	},
 	{
-		question: 'Can non-technical users author workflows on Windmill?',
+		question: 'Can non-Python users author workflows on Windmill?',
 		textAnswer:
-			'Only partially. Windmill has a visual flow editor and auto-generated UIs, but authoring steps still involves writing code. Kestra\'s declarative YAML is a better fit for teams already comfortable with config files (Kubernetes manifests, dbt configs, Airflow DAGs), though meaningful edits still require understanding plugin task types, Pebble templating and trigger configs. Neither platform makes genuinely non-technical authoring frictionless.',
+			'Windmill supports TypeScript, Python, Go, Bash, SQL, PHP and more as first-class languages. Every script can be built in any of them, and flows can mix languages across steps. Airflow is Python-only for DAG definitions; other languages run as subprocess calls inside a Python operator.',
 	},
 	{
 		question: 'How does performance actually compare?',
 		textAnswer:
-			'We publish reproducible benchmarks covering Airflow, Prefect, Temporal, Kestra, Hatchet and Windmill. For lightweight task batches on a single worker, Windmill is slightly faster than Kestra in normal mode, and roughly 3× faster in dedicated-worker mode. For heavy-duty tasks that run for minutes, per-task overhead is a rounding error and the gap disappears.',
+			'We publish reproducible benchmarks covering Airflow, Prefect, Temporal, Kestra, Hatchet and Windmill. For lightweight task batches on a single worker, Windmill is several times faster than Airflow, and roughly an order of magnitude faster in dedicated-worker mode. For heavy-duty tasks that run for minutes, per-task overhead is a rounding error and the gap disappears.',
 	},
 	{
 		question: 'What about the licenses, AGPLv3 vs Apache 2.0?',
 		textAnswer:
-			'Kestra\'s OSS core is Apache 2.0, which is more permissive if you plan to modify and redistribute. Windmill\'s OSS core is AGPLv3, which requires source availability for network-exposed modifications. Both ship Enterprise features in separate proprietary codebases, and both are genuinely free to self-host the core for unmodified use. If license permissiveness of the core is a hard constraint, Kestra wins this axis.',
+			'Airflow is Apache 2.0, which is more permissive if you plan to modify and redistribute. Windmill\'s OSS core is AGPLv3, which requires source availability for network-exposed modifications. Windmill ships Enterprise features in a separate proprietary codebase; Airflow\'s commercial features come from third-party vendors like Astronomer. Both are genuinely free to self-host the core for unmodified use. If license permissiveness of the core is a hard constraint, Airflow wins this axis.',
 	},
 	{
 		question: 'Is pricing public?',
 		textAnswer:
-			'Windmill publishes per-seat and per-worker Enterprise pricing on its pricing page. Kestra\'s Enterprise pricing is not publicly disclosed and requires a sales conversation.',
+			'Windmill publishes per-seat and per-worker Enterprise pricing on its pricing page. Astronomer, the main Airflow vendor, publishes hourly deployment and worker pricing for its Developer and Team tiers; Business and Enterprise tiers require a sales conversation. AWS MWAA and Google Cloud Composer publish infrastructure pricing.',
 	},
 ];
 
 {/* ── Section wrapper helper ── */}
 
-export function QASection({ id, kicker, question, summary, kestra, windmill, subsections, bottomLine, children, reverse }) {
+export function QASection({ id, kicker, question, summary, airflow, windmill, subsections, bottomLine, children, reverse }) {
 	return (
 		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
 			{/* Hero: title + subtitle */}
@@ -193,8 +174,8 @@ export function QASection({ id, kicker, question, summary, kestra, windmill, sub
 							<span className="text-base font-bold text-blue-600 dark:text-blue-400">Windmill</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<img src="/img/kestra.svg" alt="Kestra" className="w-5 h-5" />
-							<span className="text-base font-bold text-gray-900 dark:text-white">Kestra</span>
+							<img src="/img/airflow.png" alt="Airflow" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">Airflow</span>
 						</div>
 					</div>
 
@@ -220,11 +201,11 @@ export function QASection({ id, kicker, question, summary, kestra, windmill, sub
 							</div>
 							<div>
 								<div className="md:hidden mb-2 flex items-center gap-2">
-									<img src="/img/kestra.svg" alt="Kestra" className="w-4 h-4" />
-									<span className="text-sm font-bold text-gray-900 dark:text-white">Kestra</span>
+									<img src="/img/airflow.png" alt="Airflow" className="w-4 h-4" />
+									<span className="text-sm font-bold text-gray-900 dark:text-white">Airflow</span>
 								</div>
 								<div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed space-y-2">
-									{sub.kestra}
+									{sub.airflow}
 								</div>
 							</div>
 						</motion.div>
@@ -232,7 +213,7 @@ export function QASection({ id, kicker, question, summary, kestra, windmill, sub
 				</div>
 			)}
 
-			{!subsections && (windmill || kestra) && (
+			{!subsections && (windmill || airflow) && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 					<motion.div
 						{...fadeIn}
@@ -251,11 +232,11 @@ export function QASection({ id, kicker, question, summary, kestra, windmill, sub
 						className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6"
 					>
 						<div className="mb-4 flex items-center gap-2">
-							<img src="/img/kestra.svg" alt="Kestra" className="w-5 h-5" />
-							<span className="text-base font-bold text-gray-900 dark:text-white">Kestra</span>
+							<img src="/img/airflow.png" alt="Airflow" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">Airflow</span>
 						</div>
 						<div className="text-gray-700 dark:text-gray-200 leading-relaxed space-y-3">
-							{kestra}
+							{airflow}
 						</div>
 					</motion.div>
 				</div>
@@ -266,7 +247,7 @@ export function QASection({ id, kicker, question, summary, kestra, windmill, sub
 	);
 }
 
-export default function KestraCompareContent({ title, description }) {
+export default function AirflowCompareContent({ title, description }) {
 	return (
 		<div className="pt-32 max-w-full">
 			{/* ── Hero ── */}
@@ -275,11 +256,11 @@ export default function KestraCompareContent({ title, description }) {
 					<motion.div {...fadeIn}>
 						<div className="mb-4"><GithubStarCount /></div>
 						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
-							Windmill vs Kestra
+							Windmill vs Airflow
 						</h1>
 						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
 							Eight questions teams ask during a bake-off, with an honest answer on each one
-							for where Windmill or Kestra is the better pick.
+							for where Windmill or Airflow is the better pick.
 						</p>
 						<HeroCTAButtons />
 					</motion.div>
@@ -317,7 +298,7 @@ export default function KestraCompareContent({ title, description }) {
 								transition={{ duration: 0.5, delay: 0.1 }}
 								className="flex items-center justify-center w-40 h-40 rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
 							>
-								<img src="/img/kestra.svg" alt="Kestra" className="w-20 h-20" />
+								<img src="/img/airflow.png" alt="Airflow" className="w-20 h-20" />
 							</motion.div>
 						</div>
 					</div>
@@ -374,16 +355,15 @@ export default function KestraCompareContent({ title, description }) {
 					</div>
 					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6">
 						<div className="mb-3 flex items-center gap-2">
-							<img src="/img/kestra.svg" alt="Kestra" className="w-5 h-5" />
+							<img src="/img/airflow.png" alt="Airflow" className="w-5 h-5" />
 							<span className="text-base font-bold text-gray-900 dark:text-white">
-								Kestra in one sentence
+								Airflow in one sentence
 							</span>
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
-							An open-source <strong>workflow orchestrator</strong> for data, AI and infrastructure
-							pipelines. Declarative YAML with a 1,200-plugin catalog. Best for teams that prefer
-							configuration over imperative code and already think in YAML DAGs (Airflow, dbt,
-							Kubernetes).
+							An open-source <strong>workflow orchestrator</strong> for data engineering. Python-native
+							DAGs, 80+ provider packages for data-stack integrations, and a large ecosystem built up
+							over a decade. Best for Python-literate data teams running scheduled ETL and ML pipelines.
 						</p>
 					</div>
 				</motion.div>
@@ -398,7 +378,7 @@ export default function KestraCompareContent({ title, description }) {
 				bottomLine={
 					<>
 						<strong>Windmill</strong> is built to centralize and orchestrate all your internal software in one place. Scripts, workflows, data pipelines, full-code apps, AI agents and operator UIs run on a single runtime, with shared resources, auth and observability.
-						<strong> Kestra</strong> focuses on workflow orchestration, so you bring your own stack for dashboards, internal apps and agent front-ends.
+						<strong> Airflow</strong> focuses on workflow orchestration for data pipelines, so you bring your own stack for dashboards, internal apps and agent front-ends.
 					</>
 				}
 			>
@@ -415,8 +395,8 @@ export default function KestraCompareContent({ title, description }) {
 								</th>
 								<th className="px-6 py-4 text-center font-semibold text-gray-700 dark:text-gray-300 w-32">
 									<span className="inline-flex items-center gap-2">
-										<img src="/img/kestra.svg" alt="Kestra" className="w-4 h-4" />
-										Kestra
+										<img src="/img/airflow.png" alt="Airflow" className="w-4 h-4" />
+										Airflow
 									</span>
 								</th>
 							</tr>
@@ -439,7 +419,7 @@ export default function KestraCompareContent({ title, description }) {
 										)}
 									</td>
 									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.windmill} /></td>
-									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.kestra} /></td>
+									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.airflow} /></td>
 								</tr>
 							))}
 						</tbody>
@@ -458,39 +438,39 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Primary audience',
 						windmill: (
 							<p>
-								Developer-led teams. Engineers own the platform end-to-end: code, Git, local dev,
-								workspace forks, code review, CI/CD, AI coding tools, infrastructure as code.
+								Developer-led teams building any kind of internal software. Engineers own the platform
+								end-to-end: code, Git, local dev, workspace forks, code review, CI/CD, AI coding tools,
+								infrastructure as code. TypeScript, Python, Go, Bash, SQL and PHP are all first-class.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Teams that prefer declarative YAML over imperative code. Data, ops and SRE engineers
-								already comfortable with config files (Kubernetes manifests, dbt configs, Airflow DAGs)
-								onboard faster than they would on a code-first platform.
+								Python-literate data engineers running ETL and ML pipelines. A decade of community
+								convention, books and tutorials is aimed at that persona. DAGs are Python files, and
+								most integrations assume a Python runtime.
 							</p>
 						),
 					},
 					{
-						label: 'Reviewing and editing flows',
+						label: 'How non-developers participate',
 						windmill: (
 							<p>
 								Non-developers consume through auto-generated UIs, custom apps and an operator role.
-								Reading or editing the flow logic itself still requires comfort with code.
+								They can build with AI assistance, but the experience is less optimized for them.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Anyone comfortable reading YAML can inspect flows. Meaningful edits still require
-								understanding plugin task types, Pebble templating and trigger configs, which is its
-								own technical skill.
+								Non-developers can browse the DAG UI to monitor runs and trigger them manually. Authoring
+								requires writing Python, so business users and analysts rarely edit DAGs directly.
 							</p>
 						),
 					},
 				]}
 				bottomLine={
 					<>
-						<strong>Windmill</strong> is built for developer-led teams where engineers own the platform end-to-end.
-						<strong> Kestra</strong> is designed for teams that prefer declarative YAML over imperative code, including data, ops and SRE engineers used to config-driven tools.
+						<strong>Windmill</strong> is built for developer-led teams who want one platform for scripts, workflows, data pipelines, apps and agents across multiple languages.
+						<strong> Airflow</strong> is built for Python-literate data engineering teams running ETL and ML pipelines.
 					</>
 				}
 			/>
@@ -508,12 +488,11 @@ export default function KestraCompareContent({ title, description }) {
 						windmill: (
 							<div className="flex flex-col h-full">
 								<p className="min-h-[8.5rem]">
-									Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Windmill parses the function
-									signature to auto-generate the input UI, JSON schema and argument types. Dependencies
-									resolve automatically with a per-script lockfile, and relative imports work across
-									Python and TypeScript scripts in the same workspace. Arguments pass between flow
-									steps as direct return values (no templating). Any public or private package is a
-									first-class import.
+									Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
+									primitive with its own UI, API endpoint and scheduler; no wrapper required to run.
+									<Link to="/platform/flow-editor" className="text-blue-500 hover:underline"> Flows</Link> compose scripts into workflows with branching, retries and approval
+									steps. Any public or private package is a first-class import with automatic dependency
+									resolution.
 								</p>
 								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
 									<Tabs className="unique-tabs">
@@ -541,39 +520,44 @@ value:
 								</div>
 							</div>
 						),
-						kestra: (
+						airflow: (
 							<div className="flex flex-col h-full">
 								<p className="min-h-[8.5rem]">
-									Kestra also has a script editor for <a href="https://kestra.io/plugins/plugin-script-python" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Python, Node.js, R, Shell and other language scripts</a>,
-									saved as namespace files. But a script can't run on its own: every execution
-									happens as a task inside a YAML flow, which defines inputs, outputs, dependencies
-									and triggers. No standalone script primitive with its own UI or API endpoint.
+									DAGs are Python files placed in a <code>dags/</code> folder and parsed by a scheduler.
+									Tasks are built from <a href="https://airflow.apache.org/docs/apache-airflow-providers/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">operators</a> (PythonOperator, BashOperator, provider-specific
+									operators) or authored with the TaskFlow <code>@task</code> decorator. Data flows
+									between tasks through XComs. Non-Python languages run as subprocesses inside a Python
+									task.
 								</p>
 								<div className="mt-3 text-xs [&_pre]:!text-xs [&_pre]:!p-3 [&_pre]:!m-0 [&_.tabs]:!mb-2">
 									<Tabs className="unique-tabs">
 										<TabItem value="script" label="main.py" default>
 											<CodeBlock language="python">{`import requests
-from kestra import Kestra
 
-r = requests.get('https://kestra.io')
-Kestra.outputs({
-    'status': r.status_code,
-    'text': r.text,
-})`}</CodeBlock>
+def fetch_airflow():
+    r = requests.get('https://airflow.apache.org')
+    return {
+        'status': r.status_code,
+        'text': r.text,
+    }`}</CodeBlock>
 										</TabItem>
-										<TabItem value="yaml" label="flow.yaml">
-											<CodeBlock language="yaml">{`id: python_demo
-namespace: company.team
+										<TabItem value="dag" label="dag.py">
+											<CodeBlock language="python">{`from datetime import datetime
+from airflow import DAG
+from airflow.decorators import task
 
-tasks:
-  - id: python
-    type: io.kestra.plugin.scripts.python.Commands
-    namespaceFiles:
-      enabled: true
-    beforeCommands:
-      - pip install requests kestra
-    commands:
-      - python main.py`}</CodeBlock>
+with DAG(
+    dag_id='fetch_airflow',
+    start_date=datetime(2024, 1, 1),
+    schedule='@daily',
+    catchup=False,
+):
+    @task
+    def run():
+        from main import fetch_airflow
+        return fetch_airflow()
+
+    run()`}</CodeBlock>
 										</TabItem>
 									</Tabs>
 								</div>
@@ -588,27 +572,11 @@ tasks:
 								(LSP, type-checking, linting) and AI coding tools (Claude Code, Codex).
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								YAML schema with validation in VS Code and JetBrains plugins. Local server for running
-								flows before deploy.
-							</p>
-						),
-					},
-					{
-						label: 'Data handling',
-						windmill: (
-							<p>
-								First-class <Link to="/platform/datatables" className="text-blue-500 hover:underline">data tables</Link> with SQL queries, versioning and a browse / edit UI, plus
-								native S3 integration for large payloads, files and persistent storage across
-								scripts, flows and apps.
-							</p>
-						),
-						kestra: (
-							<p>
-								S3 access goes through the <code>io.kestra.plugin.aws.s3.*</code> plugin. Per-task
-								input/output files and a built-in KV store cover smaller values. No dedicated data
-								tables primitive.
+								<code>airflow standalone</code> spins up a local scheduler, webserver and SQLite metadata
+								DB for testing. The <a href="https://www.astronomer.io/docs/astro/cli/overview/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Astronomer astro CLI</a> adds a Docker-based local dev loop.
+								Standard Python IDE tooling applies to DAG files.
 							</p>
 						),
 					},
@@ -623,11 +591,11 @@ tasks:
 								Secrets Manager) are <EnterpriseBadge />.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Open source ships <a href="https://kestra.io/docs/concepts/secret" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">basic secrets</a> as base64-encoded environment variables. The UI
-								secret manager, namespace- and tenant-scoped secrets, and external backends (Vault,
-								AWS Secrets Manager) are <EnterpriseBadge />.
+								<a href="https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/connections.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Connections</a> store credentials for external systems; <a href="https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/variables.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Variables</a> store
+								configuration values. Both live in the metadata DB by default; external secret backends
+								(Vault, AWS Secrets Manager, GCP Secret Manager) plug in via a config option.
 							</p>
 						),
 					},
@@ -641,10 +609,12 @@ tasks:
 								beyond that is <EnterpriseBadge />.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								<code>kestractl</code> + <a href="https://kestra.io/docs/version-control-cicd/git" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Git sync</a> deploy flows and namespace files, available in open
-								source. Users, RBAC and tenant settings still live in the UI or behind the API.
+								DAGs are Python files, so they version naturally in Git. Deployment depends on the
+								environment: sync the <code>dags/</code> folder to a shared volume, bake it into a Docker
+								image, or use a vendor deployment command. Connections, variables and RBAC config usually
+								live outside Git.
 							</p>
 						),
 					},
@@ -652,7 +622,7 @@ tasks:
 				bottomLine={
 					<>
 						<strong>Windmill</strong> gives you full code flexibility with a local dev loop and whole-workspace Git sync. Scripts, flows, apps, resources, permissions and infrastructure all live in Git like application code.
-						<strong> Kestra</strong> uses a declarative YAML layer familiar to teams that work with config files (Kubernetes, dbt, Airflow DAGs).
+						<strong> Airflow</strong> is Python-native DAGs as Python files, with a mature tooling story built around that single language.
 					</>
 				}
 			/>
@@ -674,10 +644,11 @@ tasks:
 								flows for common tasks.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								A curated <a href="https://kestra.io/plugins" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">catalog of 1,200+ plugins</a>. Official connectors for Snowflake, BigQuery,
-								dbt, Airbyte, Salesforce, Databricks and most common data-stack tools.
+								A curated catalog of <a href="https://airflow.apache.org/docs/apache-airflow-providers/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">80+ provider packages</a> for AWS, GCP, Azure, Snowflake, BigQuery,
+								dbt, Airbyte, Databricks, Slack and most common data-stack tools. Each provider bundles
+								operators, hooks and sensors.
 							</p>
 						),
 					},
@@ -689,9 +660,11 @@ tasks:
 								WebSocket.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Native <a href="https://kestra.io/docs/workflow-components/triggers" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">triggers</a> for Kafka, AMQP, JMS, MQTT, S3 events, webhooks and cron.
+								Cron-style schedules, <a href="https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/datasets.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">dataset-based triggering</a>, sensors that poll external state,
+								and HTTP webhook triggers via the REST API. No native Kafka or message-bus trigger; you
+								build one with a sensor or an operator.
 							</p>
 						),
 					},
@@ -703,10 +676,10 @@ tasks:
 								on.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								No plugin for what you need? Write a Java plugin, drop to an inline script inside a
-								flow, or save code as namespace files and call it from a flow task.
+								No provider for what you need? Build a custom operator, hook or sensor as a Python class,
+								or call any Python library directly from a PythonOperator or <code>@task</code>.
 							</p>
 						),
 					},
@@ -714,7 +687,7 @@ tasks:
 				bottomLine={
 					<>
 						<strong>Windmill</strong> lets you import any public package (npm, PyPI, Go or Maven) or your own, and call the vendor's real SDK directly.
-						<strong> Kestra</strong> ships a curated catalog of 1,200+ plugins for mainstream data tools like Snowflake, dbt, Airbyte and Databricks.
+						<strong> Airflow</strong> ships a curated catalog of 80+ providers for mainstream data tools like Snowflake, dbt, Airbyte and Databricks.
 					</>
 				}
 			/>
@@ -731,14 +704,16 @@ tasks:
 						windmill: (
 							<p>
 								Paste a function body into the <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>, Windmill infers args, generates a UI,
-								handles dependencies. No YAML to learn. <Link to="/platform/triggers" className="text-blue-500 hover:underline">Triggers</Link>, schedules, variables and <Link to="/platform/app-builder" className="text-blue-500 hover:underline">apps</Link> migrate
+								handles dependencies. No DAG boilerplate to learn. <Link to="/platform/triggers" className="text-blue-500 hover:underline">Triggers</Link>, schedules, variables and <Link to="/platform/app-builder" className="text-blue-500 hover:underline">apps</Link> migrate
 								one by one.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								If you already think in YAML DAGs (Airflow), the mental model transfers. Each task
-								becomes a plugin reference; scripts inline or as files.
+								If you already think in Python DAGs, onboarding is straightforward: add a file to the
+								<code>dags/</code> folder, set a schedule, pick operators. The learning curve is around
+								Airflow-specific concepts (XComs, scheduler semantics, execution_date, catchup) and the
+								operator catalog.
 							</p>
 						),
 					},
@@ -751,14 +726,12 @@ tasks:
 								runtime, not the step code.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Migration difficulty depends on what your flows use. Inline Python, Node or Shell
-								scripts port cleanly, since the code body is standard. Ecosystem plugins
-								(<code>io.kestra.plugin.snowflake.*</code>, <code>stripe.*</code>, etc.) need rewriting
-								against the vendor's SDK. Built-in flow primitives (subflows, retries, conditionals)
-								and Pebble templating (<code>{'{{ inputs.x }}'}</code>) also need reimplementing on the
-								new platform.
+								Task bodies written in plain Python port cleanly to any Python runtime. Logic that
+								depends on Airflow-specific primitives (XComs, sensors, dataset triggers, provider
+								operators, Jinja templating on <code>execution_date</code>) needs rewriting against the
+								new platform's equivalents.
 							</p>
 						),
 					},
@@ -766,7 +739,7 @@ tasks:
 				bottomLine={
 					<>
 						<strong>Windmill</strong> keeps switching cost low. Step code is standard TS, Python, Go, Bash or SQL that runs anywhere, including after you leave Windmill.
-						<strong> Kestra</strong> fits naturally if you already think in YAML DAGs (from Airflow or similar) and plan to stay.
+						<strong> Airflow</strong> is a natural fit if your team already thinks in Python DAGs and plans to stay on the Airflow runtime.
 					</>
 				}
 			/>
@@ -787,9 +760,11 @@ tasks:
 								metrics and a Prometheus exporter. Trace ID on every job.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Execution logs, task-level timings, metrics via OpenTelemetry. Dashboards per namespace.
+								Per-task logs, Gantt chart and grid view in the UI. StatsD and OpenTelemetry metrics for
+								scheduler and worker health. Vendor-managed Airflow typically layers richer observability
+								dashboards on top.
 							</p>
 						),
 					},
@@ -800,9 +775,10 @@ tasks:
 								Full trail of who ran / edited / deployed what. Extended retention is <EnterpriseBadge />.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Tracks platform events and user activity. <EnterpriseBadge />.
+								Basic audit log of user actions in the UI. Longer retention and richer filtering are
+								vendor features (Astronomer offers 7 days on Team, 90 days on Business). <VendorBadge />.
 							</p>
 						),
 					},
@@ -815,10 +791,12 @@ tasks:
 								controls (SCIM, SAML) are <EnterpriseBadge />.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								SOC 2 compliance, RBAC, SSO (SAML / OIDC) and secret manager integrations are all{' '}
-								<EnterpriseBadge />.
+								Basic RBAC with predefined roles (Admin, Op, User, Viewer) in open source. SSO,
+								custom RBAC, SCIM provisioning and SOC 2 / ISO certifications are supplied by commercial
+								vendors like Astronomer or come from the underlying cloud (MWAA, Cloud Composer).
+								<VendorBadge />.
 							</p>
 						),
 					},
@@ -831,11 +809,11 @@ tasks:
 								is <EnterpriseBadge />.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Single tenant in open source. Namespaces organize flows but share the same users,
-								secrets and access controls across the whole instance. True tenant isolation is{' '}
-								<EnterpriseBadge />.
+								Single-tenant by design in open source. Isolation between teams is usually achieved by
+								running separate Airflow deployments per team. Multi-deployment management is a vendor
+								feature. <VendorBadge />.
 							</p>
 						),
 					},
@@ -844,23 +822,24 @@ tasks:
 						windmill: (
 							<p>
 								~10ms cold starts. <Link to="/platform/workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes and
-								dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Roughly 3× faster</Link> than Kestra on lightweight tasks on
+								dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Significantly faster</Link> than Airflow on lightweight tasks on
 								equivalent hardware.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Queue-based, horizontally scalable. Per-task overhead from JVM startup, plugin loading
-								and state persistence. Negligible for multi-minute tasks.
+								Scheduler-based, horizontally scalable via Celery or Kubernetes executors. Per-task
+								overhead comes from scheduler heartbeat intervals, worker startup and XCom serialization.
+								Negligible for multi-minute tasks; significant for high-volume lightweight ones.
 							</p>
 						),
 					},
 				]}
 				bottomLine={
 					<>
-						Both cover the enterprise basics: RBAC, SSO, audit logs and SOC 2.
-						<strong> Windmill</strong> is faster for short, high-volume workloads like webhooks, alerts and small scripts, with roughly 3× lower per-task overhead.
-						<strong> Kestra</strong> is a good fit for long-running data tasks where per-task overhead doesn't matter.
+						Both cover the enterprise basics: RBAC, SSO, audit logs and observability.
+						<strong> Windmill</strong> is faster for short, high-volume workloads like webhooks, alerts and small scripts, with markedly lower per-task overhead.
+						<strong> Airflow</strong> is built for long-running data tasks where per-task overhead doesn't matter, and enterprise features typically come from commercial vendors.
 					</>
 				}
 			>
@@ -868,9 +847,9 @@ tasks:
 					<BenchmarkVisualization
 						usecase="fibonacci_40_10"
 						language="python"
-						engines={['kestra', 'windmill', 'windmill_dedicated']}
+						engines={['airflow', 'windmill', 'windmill_dedicated']}
 						workers={1}
-						title="40 lightweight Python tasks: Kestra vs Windmill"
+						title="40 lightweight Python tasks: Airflow vs Windmill"
 						maintainAspectRatio={false}
 					/>
 				</motion.div>
@@ -881,7 +860,7 @@ tasks:
 				id="licensing"
 				kicker="07 · Licensing & pricing"
 				question="Open source, pricing, and self-hosting?"
-				summary="Both are free to self-host. The real differences are the license terms and whether Enterprise pricing is public."
+				summary="Both are free to self-host. The real differences are the license terms and how commercial features are delivered."
 				subsections={[
 					{
 						label: 'Open-source license',
@@ -892,11 +871,11 @@ tasks:
 								codebase. Managed cloud available.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Apache 2.0 core, free and unlimited self-hosted. Enterprise features (RBAC, SSO, audit
-								logs, secret manager backends, multi-tenancy) ship in a separate proprietary codebase.
-								Managed cloud available.
+								Apache 2.0, free and unlimited self-hosted. Airflow itself has no proprietary tier:
+								commercial features (SSO, custom RBAC, managed infrastructure, higher-tier support) are
+								delivered by third-party vendors like Astronomer, AWS MWAA and Google Cloud Composer.
 							</p>
 						),
 					},
@@ -908,10 +887,11 @@ tasks:
 								<strong>Public per-seat and per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>.
 							</p>
 						),
-						kestra: (
+						airflow: (
 							<p>
-								Enterprise adds SSO, multi-tenancy, audit logs, advanced RBAC.{' '}
-								<strong>Pricing not public;</strong> sales conversation required.
+								Astronomer publishes hourly deployment and worker pricing for its <a href="https://www.astronomer.io/pricing/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Developer and Team
+								tiers</a>; Business and Enterprise tiers require a sales conversation. AWS MWAA and
+								Google Cloud Composer bill as cloud infrastructure.
 							</p>
 						),
 					},
@@ -919,8 +899,7 @@ tasks:
 				bottomLine={
 					<>
 						<strong>Windmill</strong> publishes upfront per-seat and per-worker Enterprise pricing, no sales call needed.
-						<strong> Kestra's</strong> OSS core is Apache 2.0, more permissive than Windmill's AGPLv3 for redistribution.
-						Both ship Enterprise features in separate proprietary codebases and both are free to self-host the core.
+						<strong> Airflow's</strong> Apache 2.0 license is more permissive than Windmill's AGPLv3 for redistribution. Airflow has no direct proprietary tier; commercial features come from vendors like Astronomer.
 					</>
 				}
 			/>
@@ -935,7 +914,7 @@ tasks:
 						The verdict
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The biggest difference between Windmill and Kestra is the <strong>developer experience</strong>. Windmill is built for engineering teams, with a code-first editor, full local-dev loop and deeper tooling across the board. Kestra's authoring is declarative YAML, familiar to teams already comfortable with config files (Kubernetes, dbt, Airflow), but the DX is shallower for coding tasks. The other major difference is the <strong>range of internal software you can build on each platform</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and internal apps on one runtime, while Kestra focuses on workflow orchestration. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
+						The biggest difference between Windmill and Airflow is the <strong>developer experience</strong>. Windmill gives you a code-first editor with scripts as standalone primitives, a full local-dev loop, multi-language support and whole-workspace Git sync. Airflow is Python-native DAGs with a decade of data engineering convention and a large provider catalog for the mainstream data stack. The other major difference is the <strong>range of internal software you can build on each platform</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and internal apps on one runtime, while Airflow focuses on scheduled data-pipeline orchestration. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
 			</section>

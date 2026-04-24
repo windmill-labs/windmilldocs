@@ -170,9 +170,10 @@ const solutionsByUseCase = [
 
 const solutionsCompare = [
 	{ name: 'vs Kestra', href: '/compare/kestra' },
+	{ name: 'vs n8n', href: '/compare/n8n' },
 	{ name: 'vs Retool', href: '/compare/retool' },
 	{ name: 'vs Prefect', href: '/compare/prefect' },
-	{ name: 'vs Airflow', href: '/docs/compared_to/peers' },
+	{ name: 'vs Airflow', href: '/compare/airflow' },
 	{ name: 'All alternatives', href: '/docs/compared_to/peers' },
 ];
 
