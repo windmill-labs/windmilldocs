@@ -59,6 +59,7 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 - Use backlinks in particular in the introduction of a document or section to reference the main related pages
 - When a page or section is deleted or renamed, update all backlinks to the new page or section
 - When a feature is Enterprise, Cloud or Pro only, mention it in the introduction of the document or section
+- The first mention of "Enterprise Edition" (or "EE") on any `.md` / `.mdx` page must link to the pricing page: `[Enterprise Edition](/pricing)`. Subsequent mentions on the same page do not need to be linked.
 - Reference to main related pages using DocCard components
 - Reference to same-page sections using `#` anchors
 - Maintain consistent linking patterns throughout documentation
