@@ -505,6 +505,39 @@ export default function AirflowCompareContent({ title, description }) {
 						),
 					},
 					{
+						label: 'Execution model',
+						windmill: (
+							<>
+								<p>
+									Two ways to define workflows, one runtime under both. The <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">visual flow builder</Link>
+									produces JSON DAGs with multi-language steps, transparent data passing via{' '}
+									<code>results.step_name</code> expressions, and built-in branches, loops, error
+									handlers and approval steps. <Link to="/docs/core_concepts/31_workflows_as_code" className="text-blue-500 hover:underline">Workflow-as-code</Link> defines the same flow
+									programmatically in Python or TypeScript.
+								</p>
+								<p>
+									In the workflow-as-code engine, two step primitives carry different cost profiles.
+									<code> task()</code> dispatches a child job in a separate process and surfaces as
+									its own job in the UI, for steps that need isolation or independent retries.
+									<code> step()</code> runs inline in the same process and checkpoints its result to
+									Postgres in roughly 0.5ms, for cheap units like a calculation, a CSV parse or a
+									small DB query. Each step picks the cost it actually needs.
+								</p>
+							</>
+						),
+						airflow: (
+							<p>
+								DAGs are defined in Python. Every task is an independent execution unit: a trivial
+								<code> @task</code> and a multi-minute job both go through the scheduler, executor
+								and worker, with state transitions written to the metadata DB at each hop. The
+								executor is pluggable (Local, Celery, Kubernetes), but the per-task overhead is
+								fundamental to the model and is most visible on lightweight, high-volume workloads.
+								The webserver renders DAGs (Graph, Grid, Gantt views) for monitoring, but
+								authoring is Python-only.
+							</p>
+						),
+					},
+					{
 						label: 'Local dev & IDE',
 						windmill: (
 							<p>
@@ -778,26 +811,44 @@ export default function AirflowCompareContent({ title, description }) {
 					{
 						label: 'Performance',
 						windmill: (
-							<p>
-								~10ms cold starts. <Link to="/platform/workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes and
-								dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Significantly faster</Link> than Airflow on lightweight tasks on
-								equivalent hardware.
-							</p>
+							<>
+								<p>
+									Workers poll Postgres directly with <code>SELECT ... FOR UPDATE SKIP LOCKED</code>
+									and self-schedule. No separate scheduler process, no broker, no extra polling
+									intervals on the dispatch path.
+								</p>
+								<p>
+									Cold start is around 12ms on Bun and 26ms on Python per job. <Link to="/platform/workers" className="text-blue-500 hover:underline">Dedicated-worker
+									mode</Link> <EnterpriseBadge /> keeps the runtime and dependencies pre-warmed for
+									0ms cold start. Arguments pass directly between steps, results are checkpointed
+									as JSONB in Postgres with no built-in size limit.
+								</p>
+							</>
 						),
 						airflow: (
-							<p>
-								Scheduler-based, horizontally scalable via Celery or Kubernetes executors. Per-task
-								overhead comes from scheduler heartbeat intervals, worker startup and XCom serialization.
-								Negligible for multi-minute tasks; significant for high-volume lightweight ones.
-							</p>
+							<>
+								<p>
+									Three-hop dispatch on the critical path: scheduler (polls the metadata DB,
+									re-parses DAG Python files every few seconds, evaluates dependencies, checks
+									pool limits) then DB state update, then broker (Redis or RabbitMQ for Celery),
+									then worker. Every state transition is a DB write.
+								</p>
+								<p>
+									Cold start depends on the executor. LocalExecutor forks a subprocess per task
+									that imports the full DAG file plus the Airflow framework (typically 1 to 2s).
+									KubernetesExecutor spins up a fresh pod per task (10 to 30s). Data passes
+									between tasks through <a href="https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/xcoms.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">XCom</a>, serialized to shared storage with a 48KB
+									default limit.
+								</p>
+							</>
 						),
 					},
 				]}
 				bottomLine={
 					<>
 						Both cover the enterprise basics: RBAC, SSO, audit logs and observability.
-						<strong> Windmill</strong> is faster for short, high-volume workloads like webhooks, alerts and small scripts, with markedly lower per-task overhead.
-						<strong> Airflow</strong> is built for long-running data tasks where per-task overhead doesn't matter, and enterprise features typically come from commercial vendors.
+						<strong> Windmill</strong> runs 40 lightweight Python tasks in 2.4s where Airflow takes 56s on equivalent hardware (around 23×), driven by single-hop worker dispatch instead of Airflow's scheduler, broker and worker chain.
+						<strong> Airflow</strong> is built for long-running data tasks where per-task overhead is a rounding error, and enterprise features typically come from commercial vendors.
 					</>
 				}
 			>
@@ -807,7 +858,7 @@ export default function AirflowCompareContent({ title, description }) {
 						language="python"
 						engines={['airflow', 'windmill', 'windmill_dedicated']}
 						workers={1}
-						title="40 lightweight Python tasks: Airflow vs Windmill"
+						title="40 lightweight Python tasks: 2.4s on Windmill vs 56s on Airflow"
 						maintainAspectRatio={false}
 					/>
 				</motion.div>
