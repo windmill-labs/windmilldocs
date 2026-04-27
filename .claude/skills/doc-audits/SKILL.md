@@ -24,5 +24,17 @@ Cross-reference feat/fix commits in `../windmill` against documentation in this 
 6. For ⚠️ and ❌ items, I might ask to later draft stub doc content in the appropriate `./docs/` subdirectory.
 7. If you are asked to draft stub doc content, always base it on the `../windmill` commit commit message **and code**, not only on the message of the summary made it the doc-gaps report. When writing docs, follow the rules set in `../../AGENTS.md`
 
+## Verifying against the UI
+
+**Critical:** Before writing documentation for a feature, verify where and how it actually appears in the product by checking the `../windmill` frontend code. Do NOT write docs based solely on commit messages — commit messages describe intent, not always the final UI.
+
+Specifically:
+- For instance settings features: check `frontend/src/lib/components/instanceSettings.ts` and the `instanceSettings/` directory to see what settings actually exist, their labels, and which section they belong to.
+- For script/flow settings: check `ScriptBuilder.svelte`, `FlowSettings.svelte`, etc. to see where the toggle/field appears.
+- For workspace settings: check `frontend/src/lib/components/settings/` for the actual tabs and fields.
+- A commit saying "add configurable X" might be a per-script setting, a per-workspace setting, an instance setting, or a backend-only config with no UI at all. The frontend code is the source of truth for what users actually see.
+
+This avoids writing docs that describe settings in the wrong place or document backend internals as if they were user-facing features.
+
 ## Scoping
 Always ask the user for a date range or commit range before starting.

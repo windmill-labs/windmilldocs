@@ -105,6 +105,10 @@ When using the **synchronous mode**, the webhook returns the result of the scrip
 
 When using the **asynchronous mode**, the webhook returns a `uuid` and you can poll the [get job](https://app.windmill.dev/openapi.html#/operations/getJob) API call to fetch the status and results once it is completed.
 
+### Content types
+
+Webhooks accept any content type, not just `application/json`. When the body is not JSON, the raw body string is available via a `raw_string` argument. Windmill still attempts to parse the body as JSON regardless of the content type, falling back gracefully for non-JSON payloads (XML, plain text, form-urlencoded, etc.).
+
 ### User token
 
 To interact with Windmill you always need to use `Bearer` token authentication.

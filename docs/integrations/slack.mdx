@@ -32,8 +32,12 @@ The goal here is to be able to invoke a Windmill Script from Slack, by using
 
 <br />
 
-First, you need to be a **workspace admin**. Then you
-should go to
+First, you need to be a **workspace admin**. Then connect either through the UI or the [CLI](../advanced/3_cli/index.mdx):
+
+<Tabs className="unique-tabs">
+<TabItem value="ui" label="UI" default>
+
+Go to
 
 <a href="https://app.windmill.dev/workspace_settings" rel="nofollow">
 	Workspace Settings Page
@@ -70,6 +74,55 @@ are working on getting the app approved but you can safely ignore it for now.
 :::
 
 You can connect multiple Windmill workspaces to the same Slack workspace. Only one Windmill workspace can accept the `/windmill` [commands](#using-commands-on-slack) from a given Slack workspace. This feature is mostly useful for the [error handler](#error-handlers).
+
+</TabItem>
+<TabItem value="cli" label="CLI (non-interactive)">
+
+The CLI lets you connect Slack without going through the browser OAuth flow — useful for configure-as-code setups, CI provisioning, and scripted onboarding. It produces the same DB state as the UI flow (workspace_settings fields, `g/slack` group, `slack_bot` folder, encrypted `f/slack_bot/bot_token` variable and resource).
+
+First, create a Slack app at [api.slack.com/apps](https://api.slack.com/apps) (or use your existing one). In **OAuth & Permissions**, add the bot scopes Windmill expects (`commands`, `chat:write`, `chat:write.public`, `channels:join`, `files:write`, `app_mentions:read`, `im:history`, `im:read`), then click **Install to Workspace** to get the **Bot User OAuth Token** (`xoxb-…`).
+
+Fetch the `team_id` and `team_name` by calling `auth.test`:
+
+```bash
+curl -s -X POST https://slack.com/api/auth.test \
+  -H "Authorization: Bearer xoxb-YOUR-TOKEN"
+```
+
+Then connect the workspace:
+
+```bash
+wmill workspace connect-slack \
+  --bot-token xoxb-... \
+  --team-id T01234ABC \
+  --team-name "Your Team Name"
+```
+
+The command is admin-only and idempotent — re-running with the same arguments is a no-op, and running with a different team rewrites the binding in place. To disconnect later:
+
+```bash
+wmill workspace disconnect-slack
+```
+
+This clears `slack_team_id` and `slack_name`. To also remove the bot token variable/resource/folder/group, delete the corresponding files from your local sync folder and run `wmill sync push`.
+
+At the **instance level**, a super-admin can mint the global bot token (used for critical alerts) similarly:
+
+```bash
+wmill instance connect-slack \
+  --bot-token xoxb-... \
+  --team-id T01234ABC \
+  --team-name "Your Team Name"
+```
+
+:::info Before you can use `wmill {workspace,instance} connect-slack`
+
+The OAuth client (`client_id` / `client_secret`) still needs to exist in instance settings so fallback paths and the UI "Connect" button keep working. Configure it via the [instance settings UI](../advanced/18_instance_settings/index.mdx) or by editing `instance_settings.yaml`'s `oauths` entry and running `wmill instance push`.
+
+:::
+
+</TabItem>
+</Tabs>
 
 ### Using commands on Slack
 
@@ -274,9 +327,29 @@ By default, workspaces use the instance-level Slack app configured by your Windm
 
 To configure a workspace-specific Slack app:
 
+<Tabs className="unique-tabs">
+<TabItem value="ui" label="UI" default>
+
 1. Navigate to workspace settings → Slack app section
 2. Enter your Slack app's **Client ID** and **Client Secret**
 3. Save the configuration
+
+</TabItem>
+<TabItem value="cli" label="CLI (settings.yaml)">
+
+The workspace-level OAuth override lives in `settings.yaml` as two fields that round-trip via `wmill sync pull` / `wmill sync push`:
+
+```yaml
+slack_oauth_client_id: "1234567890.1234567890"
+slack_oauth_client_secret: "abcdef0123456789"
+```
+
+Set both to values and push to upsert; clear them (delete the lines or set both to `""`) and push to remove the workspace-level override and fall back to the instance-level Slack app. `wmill sync pull` always emits the two fields (`null` when unset), so round-trip is bijective — the committed YAML is a complete snapshot.
+
+After the override is in place, use the CLI's non-interactive connect command described above, or the UI's workspace-specific "Save and Connect" button (which authorizes using the workspace-level client).
+
+</TabItem>
+</Tabs>
 
 :::note
 The workspace-level Slack app will only apply to the auomatically managed `f/slack_bot/bot_token` resource used for workspace handlers and slack approvals. For general user specific slack oauth tokens, the instance level OAuth connection will be used.

@@ -91,6 +91,42 @@ sql = wmill.datatable(':myschema'); // or 'named_datatable:myschema'
 sql`SELECT * FROM mytable`; // refers to myschema.mytable
 ```
 
+### Query methods
+
+Every `` sql`...` ``, `sql.query(...)` or `db.query(...)` call returns a statement object with four execution methods:
+
+- `fetch()` — all rows from the last statement (default)
+- `fetchOne()` / `fetch_one()` — first row only, or `null` / `None` if empty
+- `fetchOneScalar()` / `fetch_one_scalar()` — first column of the first row
+- `execute()` — run the query and return nothing
+
+For multi-statement queries or scalar-only results, pass a result collection mode to `fetch`:
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="Typescript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+await sql`...`.fetch({ resultCollection: 'all_statements_all_rows' });
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+db.query('...').fetch(result_collection='all_statements_all_rows')
+```
+
+</TabItem>
+</Tabs>
+
+Available modes: `last_statement_all_rows` (default), `last_statement_first_row`, `last_statement_all_rows_scalar`, `last_statement_first_row_scalar`, `all_statements_all_rows`, `all_statements_first_row`, `all_statements_all_rows_scalar`, `all_statements_first_row_scalar`.
+
+TypeScript also supports `sql.query(sql, ...params)` as an alternative to tagged-template syntax, matching the Python API:
+
+```ts
+await sql.query('SELECT * FROM friend WHERE id = $1', user_id).fetchOne();
+```
+
 ### Schemas
 
 Data tables support Postgres schemas to organize tables into logical groupings within a single data table. You can:
@@ -104,6 +140,18 @@ Data tables support Postgres schemas to organize tables into logical groupings w
 The Windmill editor understands your data table's schema and **type-checks queries at edit time** for TypeScript, Python and DuckDB scripts. The introspected schema (tables, columns, types) is surfaced in the editor's SQL IntelliSense, and invalid columns or type mismatches are flagged before the script ever runs.
 
 String-interpolated parameters (e.g. `` sql`SELECT * FROM friend WHERE id = ${user_id}` ``) are always transformed into safe parameterized queries, so type checking covers both the SQL itself and the bindings.
+
+#### `sql.raw` for dynamic SQL fragments
+
+Use `sql.raw(value)` to inline a string directly into the SQL query without parameterization. This is useful for dynamic table or column names that cannot be bound as parameters:
+
+```ts
+const sql = wmill.datatable();
+await sql`SELECT * FROM ${sql.raw(table)} WHERE age > ${age}`.fetch();
+// Produces: SELECT * FROM users WHERE age > $1::BIGINT
+```
+
+`sql.raw` is available on both `wmill.datatable()` and `wmill.ducklake()`. Since the value is inlined verbatim, ensure it comes from trusted input to avoid SQL injection.
 
 When a data table schema changes, the editor re-introspects it so downstream scripts immediately see the new columns and types without a manual refresh.
 
