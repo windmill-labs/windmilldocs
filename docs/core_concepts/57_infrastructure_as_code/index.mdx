@@ -26,7 +26,7 @@ Instance configuration covers everything you find under **Instance settings** in
 Windmill provides two mechanisms to manage these settings declaratively:
 
 - **`sync-config` CLI command** — reads a YAML file, resolves environment variable references, and syncs the result to the database. Works with any deployment (Docker Compose, VMs, Kubernetes).
-- **Kubernetes operator** — watches a ConfigMap and continuously reconciles the database to match. Re-syncs every 5 minutes to detect and correct drift. Enterprise Edition only.
+- **Kubernetes operator** — watches a ConfigMap and continuously reconciles the database to match. Re-syncs every 5 minutes to detect and correct drift.
 
 Both mechanisms use the same YAML schema and the same underlying diff engine. The only difference is how secrets are referenced and how the sync is triggered.
 
@@ -147,7 +147,7 @@ worker_configs:
 
 ## Kubernetes operator (recommended)
 
-If you deploy Windmill on Kubernetes, using the operator is the recommended way to manage instance configuration. It watches a ConfigMap and continuously reconciles the database to match the declared state, re-syncing every 5 minutes to detect and correct configuration drift. Enterprise Edition only.
+If you deploy Windmill on Kubernetes, using the operator is the recommended way to manage instance configuration. It watches a ConfigMap and continuously reconciles the database to match the declared state, re-syncing every 5 minutes to detect and correct configuration drift.
 
 :::caution
 Once the operator is enabled, it is the source of truth. Any settings changed directly in the UI will be reverted by the operator on the next reconciliation cycle (every 5 minutes). To make changes, update the `instanceSpec` in your Helm values or ConfigMap and re-deploy.

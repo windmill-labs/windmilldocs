@@ -591,26 +591,26 @@ export const sections = [
 			{
 				name: 'Workspace forks',
 				tiers: {
-					'tier-free-selfhost': false,
+					'tier-free-selfhost': 'Counts toward 3-workspace limit',
 					'tier-enterprise-selfhost': true,
 					'tier-enterprise-cloud': false,
-					'tier-free': false,
+					'tier-free': 'Counts toward 3-workspace limit',
 					'tier-team': false
 				},
 				link: '/docs/advanced/workspace_forks',
-				tooltip: 'Self-hosted Enterprise only'
+				tooltip: 'Self-hosted only — global 3-workspace limit applies on Community Edition'
 			},
 			{
-				name: 'Kubernetes operator for instance configuration',
+				name: 'Infrastructure as code & Kubernetes operator',
 				tiers: {
-					'tier-free-selfhost': false,
+					'tier-free-selfhost': true,
 					'tier-enterprise-selfhost': true,
 					'tier-enterprise-cloud': false,
-					'tier-free': false,
+					'tier-free': true,
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/infrastructure_as_code',
-				tooltip: 'Self-hosted Enterprise only'
+				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'CI test scripts with auto-trigger on deploy',
@@ -659,11 +659,11 @@ export const sections = [
 			{
 				name: 'Workspace dependencies (centralized dependency files)',
 				tiers: {
-					'tier-free-selfhost': false,
+					'tier-free-selfhost': true,
 					'tier-enterprise-selfhost': true,
 					'tier-enterprise-cloud': true,
-					'tier-free': false,
-					'tier-team': false
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/workspace_dependencies'
 			},
