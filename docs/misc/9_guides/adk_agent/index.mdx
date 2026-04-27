@@ -1,0 +1,292 @@
+---
+title: Build a Google ADK agent in an AI sandbox
+description: How do I run a Google ADK agent on Windmill? Wrap it in an AI sandbox script with persistent session memory.
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Build a Google ADK agent in an AI sandbox
+
+This guide walks you through running a [Google Agent Development Kit (ADK)](https://google.github.io/adk-docs/) agent on Windmill as a single Python [script](/docs/getting_started/scripts_quickstart). The agent runs inside an [AI sandbox](/docs/core_concepts/ai_sandbox), keeps its session state in a [volume](/docs/core_concepts/volumes), and exposes a clean `main()` entry point you can call from a [flow](/docs/flows/flow_editor), a [trigger](/docs/getting_started/triggers), or the UI.
+
+ADK is a code-first Python framework for building, evaluating, and orchestrating agents. It is optimized for [Gemini](https://aistudio.google.com/) but model-agnostic, so the same script works with other providers via [LiteLLM](https://google.github.io/adk-docs/agents/models/#non-google-models).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="AI sandbox"
+		description="Run AI agents with process isolation and persistent volumes."
+		href="/docs/core_concepts/ai_sandbox"
+	/>
+	<DocCard
+		title="ADK documentation"
+		description="Google's Agent Development Kit reference and samples."
+		href="https://google.github.io/adk-docs/"
+		target="_blank"
+	/>
+</div>
+
+## What you'll build
+
+A weather assistant agent that:
+
+- Defines a single ADK `Agent` with one Python function tool.
+- Runs inside an [nsjail](/docs/advanced/security_isolation#nsjail-sandboxing) sandbox so the agent process is isolated from the worker.
+- Persists session history to a SQLite database stored in a [volume](/docs/core_concepts/volumes), so subsequent runs resume where the conversation left off.
+- Takes a `prompt` and a `google_api_key` as script inputs and returns the agent's final response.
+
+## Prerequisites
+
+- A Windmill instance with [workspace object storage](/docs/core_concepts/object_storage_in_windmill#workspace-object-storage) configured (required for volumes).
+- [Workers](/docs/core_concepts/worker_groups) with `nsjail` available (included in standard Windmill Docker images).
+- A Google AI Studio API key — get one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
+
+## Step 1: Create the script
+
+Create a new Python script and paste the code below. The two annotations at the top are the only Windmill-specific parts — everything else is plain ADK.
+
+```python
+# sandbox
+# volume: adk-state .adk
+
+#requirements:
+#google-adk
+
+import asyncio
+import os
+from pathlib import Path
+
+from google.adk.agents import Agent
+from google.adk.runners import Runner
+from google.adk.sessions import DatabaseSessionService
+from google.genai import types
+
+
+def get_weather(city: str) -> dict:
+    """Return the current weather for a given city.
+
+    Args:
+        city: The city name to look up.
+    """
+    data = {
+        "paris": {"temp_c": 18, "conditions": "Sunny"},
+        "tokyo": {"temp_c": 22, "conditions": "Cloudy"},
+        "new york": {"temp_c": 12, "conditions": "Rainy"},
+    }
+    info = data.get(city.lower())
+    if info is None:
+        return {"status": "error", "message": f"No weather data for {city}."}
+    return {"status": "success", "city": city, **info}
+
+
+root_agent = Agent(
+    name="weather_agent",
+    model="gemini-2.5-flash",
+    description="Assistant that answers questions about the current weather.",
+    instruction=(
+        "You are a friendly weather assistant. "
+        "Call the get_weather tool when the user asks about weather. "
+        "If a city is not supported, suggest one of: Paris, Tokyo, New York."
+    ),
+    tools=[get_weather],
+)
+
+
+APP_NAME = "windmill_adk_demo"
+USER_ID = "windmill_user"
+STATE_DIR = Path(".adk")
+SESSION_FILE = STATE_DIR / "session-id.txt"
+DB_FILE = STATE_DIR / "sessions.db"
+
+
+async def _run(prompt: str) -> dict:
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+
+    session_service = DatabaseSessionService(db_url=f"sqlite:///{DB_FILE}")
+
+    saved_id = SESSION_FILE.read_text().strip() if SESSION_FILE.exists() else None
+    session = None
+    if saved_id:
+        session = await session_service.get_session(
+            app_name=APP_NAME, user_id=USER_ID, session_id=saved_id
+        )
+
+    is_resume = session is not None
+    if not is_resume:
+        session = await session_service.create_session(
+            app_name=APP_NAME, user_id=USER_ID
+        )
+        SESSION_FILE.write_text(session.id)
+
+    runner = Runner(
+        agent=root_agent,
+        app_name=APP_NAME,
+        session_service=session_service,
+    )
+
+    new_message = types.Content(
+        role="user", parts=[types.Part.from_text(text=prompt)]
+    )
+
+    response = ""
+    async for event in runner.run_async(
+        user_id=USER_ID, session_id=session.id, new_message=new_message
+    ):
+        if event.content and event.content.parts:
+            for part in event.content.parts:
+                if part.text:
+                    response += part.text
+
+    return {
+        "is_resume": is_resume,
+        "session_id": session.id,
+        "prompt": prompt,
+        "response": response,
+    }
+
+
+def main(google_api_key: str, prompt: str = "What's the weather in Paris?") -> dict:
+    # ADK reads GOOGLE_API_KEY from the environment, so set it before running.
+    # Script inputs are not env vars — see "Passing credentials" below.
+    os.environ["GOOGLE_API_KEY"] = google_api_key
+    return asyncio.run(_run(prompt))
+```
+
+## Step 2: Run it
+
+Click **Test** with a prompt like `"What's the weather in Paris?"` and your API key. You should see something like:
+
+```json
+{
+  "is_resume": false,
+  "session_id": "f7b2c1...",
+  "prompt": "What's the weather in Paris?",
+  "response": "It's sunny in Paris with a temperature of 18°C."
+}
+```
+
+Now run it again with `"And in Tokyo?"`. The script reads the saved session ID from the volume, resumes the same conversation, and the agent answers based on the prior turn:
+
+```json
+{
+  "is_resume": true,
+  "session_id": "f7b2c1...",
+  "prompt": "And in Tokyo?",
+  "response": "Tokyo is cloudy at 22°C."
+}
+```
+
+## How it works
+
+### `# sandbox`
+
+Wraps the job process in [nsjail](/docs/advanced/security_isolation#nsjail-sandboxing). The agent — and any subprocess it spawns (e.g. an MCP server or shell tool) — sees an isolated filesystem and cannot reach the worker's secrets or other jobs.
+
+### `# volume: adk-state .adk`
+
+Mounts a persistent volume at `./.adk` relative to the job's working directory. Files written there survive across runs and are synced to [object storage](/docs/core_concepts/object_storage_in_windmill). The script uses two files in the volume:
+
+- `.adk/session-id.txt` — the active ADK session ID, so the next run resumes the same conversation.
+- `.adk/sessions.db` — a SQLite database managed by ADK's `DatabaseSessionService`, holding the full session history.
+
+If you want a fresh conversation, delete the volume contents (or use a different volume name).
+
+### `DatabaseSessionService`
+
+ADK ships several [session services](https://google.github.io/adk-docs/sessions/session/). `InMemorySessionService` loses state at the end of each job — useless across Windmill runs. `DatabaseSessionService` with a SQLite URL inside the volume gives you persistence with zero infrastructure.
+
+For multi-user or multi-tenant setups, scope the volume per workspace or input:
+
+```python
+# volume: $workspace-adk-state .adk
+```
+
+See [dynamic volume names](/docs/core_concepts/volumes#dynamic-volume-names) for the full set of placeholders.
+
+### Passing credentials
+
+Script inputs are Python variables — they are **not** automatically exported as environment variables inside the sandbox. ADK (and the underlying `google-genai` client) reads `GOOGLE_API_KEY` from `os.environ`, so the script sets it explicitly:
+
+```python
+os.environ["GOOGLE_API_KEY"] = google_api_key
+```
+
+Apply the same pattern for any other credential the agent or its tools need at runtime — for example `OPENAI_API_KEY`, `TAVILY_API_KEY`, or an MCP server token.
+
+## Extending the agent
+
+### Use a different model
+
+ADK is model-agnostic via [LiteLLM](https://google.github.io/adk-docs/agents/models/#non-google-models). To run the same agent on Anthropic Claude, replace the `model=` line:
+
+```python
+from google.adk.models.lite_llm import LiteLlm
+
+root_agent = Agent(
+    name="weather_agent",
+    model=LiteLlm("anthropic/claude-3-5-sonnet-20241022"),
+    ...
+)
+```
+
+Then export `ANTHROPIC_API_KEY` (or the relevant provider key) the same way as `GOOGLE_API_KEY`. If you already have a Windmill `anthropic` [resource](/docs/core_concepts/resources_and_types), accept it as a script input:
+
+```python
+def main(anthropic: dict, prompt: str = "..."):
+    os.environ["ANTHROPIC_API_KEY"] = anthropic["apiKey"]
+    return asyncio.run(_run(prompt))
+```
+
+### Compose multiple agents
+
+ADK supports [multi-agent systems](https://google.github.io/adk-docs/agents/multi-agents/) out of the box — define sub-agents and assign them to a coordinator:
+
+```python
+greeter = Agent(name="greeter", model="gemini-2.5-flash", instruction="...", description="...")
+researcher = Agent(name="researcher", model="gemini-2.5-flash", instruction="...", description="...", tools=[...])
+
+root_agent = Agent(
+    name="coordinator",
+    model="gemini-2.5-flash",
+    description="Routes user requests to the right specialist.",
+    sub_agents=[greeter, researcher],
+)
+```
+
+The runner code stays unchanged — ADK handles the routing and tool calls.
+
+### Add MCP tools
+
+ADK can consume any [Model Context Protocol](https://modelcontextprotocol.io/) server via `MCPToolset`. Because the sandbox isolates subprocesses, you can safely launch MCP servers inside the same job:
+
+```python
+from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioServerParameters
+
+tools = await MCPToolset.from_server(
+    connection_params=StdioServerParameters(command="npx", args=["@modelcontextprotocol/server-filesystem", "."])
+)
+```
+
+Pair this with a separate volume for the MCP server's working directory if it needs persistent state.
+
+### Use the agent inside a flow
+
+Drop this script into any [flow](/docs/flows/flow_editor) step and chain it with other Windmill primitives — fetch context from a [database](/docs/integrations/postgresql), call the agent, then post the response to [Slack](/docs/integrations/slack). The volume keeps the agent's memory consistent across flow runs.
+
+## Troubleshooting
+
+- **`#sandbox` annotation but nsjail is not available** — your worker image does not include nsjail. Use a standard Windmill Docker image or remove the annotation.
+- **Volume not persisting** — check that workspace object storage is configured under [instance settings](/docs/advanced/instance_settings). Without it, volumes only exist for the duration of a single job.
+- **`GOOGLE_API_KEY not set`** — make sure you set `os.environ["GOOGLE_API_KEY"]` before calling `Runner.run_async`. Passing it to `Agent(...)` directly is not enough.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="AI sandbox"
+		description="Run AI agents with process isolation and persistent volumes."
+		href="/docs/core_concepts/ai_sandbox"
+	/>
+	<DocCard
+		title="Volumes"
+		description="Persistent file storage for scripts, synced to object storage."
+		href="/docs/core_concepts/volumes"
+	/>
+</div>

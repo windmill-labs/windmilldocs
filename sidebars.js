@@ -132,7 +132,8 @@ const sidebars = {
 								'misc/guides/otel/index',
 								'misc/guides/aws_marketplace/index',
 								'misc/guides/local_dev_with_ai/index',
-							'misc/guides/discord_bot/index'
+							'misc/guides/discord_bot/index',
+							'misc/guides/adk_agent/index'
 							]
 						}
 					]
