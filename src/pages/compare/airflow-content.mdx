@@ -145,8 +145,8 @@ export function IntegrationsVideos() {
 			caption: 'Import any npm, PyPI, Go or Maven package directly. Windmill generates a lockfile per script and resolves dependencies automatically.',
 		},
 		airflow: {
-			placeholder: true,
-			caption: 'Pick from a curated catalog of 80+ provider packages for AWS, GCP, Snowflake, dbt, Airbyte, Databricks and most data-stack tools. Each provider bundles operators, hooks and sensors.',
+			src: '/img/compare/airflow-integrations.webm',
+			caption: 'Beyond the 80+ provider catalog, you can pip install any PyPI package (here, the Stripe SDK) into the Airflow venv and import it from a @task. Each new package needs a scheduler / worker restart before DAGs can use it.',
 		},
 	};
 
@@ -709,15 +709,24 @@ export default function AirflowCompareContent({ title, description }) {
 						label: 'Local dev & IDE',
 						windmill: (
 							<p>
-								Run scripts locally with the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">Windmill CLI</Link>. VS Code extension, native language tooling
-								(LSP, type-checking, linting) and AI coding tools (Claude Code, Codex).
+								Author in the web editor with live runs and per-step logs, or edit the same scripts
+								and flows locally with the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">Windmill CLI</Link>. VS Code extension, native language
+								tooling (LSP, type-checking, linting) and AI coding tools (Claude Code, Codex). The
+								loop is hot-reload: save a script, click run, see the result, including when adding
+								a new dependency (resolved automatically per script, no worker restart).
 							</p>
 						),
 						airflow: (
 							<p>
-								<code>airflow standalone</code> spins up a local scheduler, webserver and SQLite metadata
-								DB for testing. The <a href="https://www.astronomer.io/docs/astro/cli/overview/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Astronomer astro CLI</a> adds a Docker-based local dev loop.
-								Standard Python IDE tooling applies to DAG files.
+								No in-browser editor: authoring happens in your IDE on files in the <code>dags/</code>
+								folder. <code>airflow standalone</code> spins up a local scheduler, webserver and
+								SQLite metadata DB for testing; the <a href="https://www.astronomer.io/docs/astro/cli/overview/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Astronomer astro CLI</a> adds a Docker-based local
+								dev loop. Standard Python IDE tooling applies to DAG files. The feedback loop has a
+								few intrinsic delays: the scheduler re-parses DAG files on its own cadence (defaults
+								to every 30s), so new or edited DAGs appear in the UI after that window. Installing
+								a new package requires restarting the scheduler and workers. <code>airflow tasks
+								test &lt;dag&gt; &lt;task&gt;</code> runs a single task in-process for tighter
+								iteration without going through the scheduler.
 							</p>
 						),
 					},
