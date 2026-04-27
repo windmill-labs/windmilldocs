@@ -153,7 +153,7 @@ export function IntegrationsVideos() {
 		},
 		n8n: {
 			src: '/img/compare/n8n-integrations.webm',
-			caption: 'Pick from 400+ pre-built nodes for mainstream SaaS apps. Each node wraps the vendor API; custom endpoints go through a generic HTTP Request node.',
+			caption: 'Pick from 1,600+ pre-built nodes for mainstream SaaS apps. Each node wraps the vendor API; custom endpoints go through a generic HTTP Request node.',
 		},
 	};
 
@@ -253,14 +253,14 @@ export const faqs = [
 			'No, there is no automated n8n-to-Windmill converter. Migration is a manual rewrite where each n8n node becomes a step in a Windmill flow, or a standalone script. The upside is that logic trapped inside Code nodes becomes regular code that runs anywhere. The downside is that workflows relying heavily on pre-built n8n nodes for niche integrations need those integrations rewritten against the vendor SDK.',
 	},
 	{
-		question: 'Does Windmill have 400+ pre-built integrations like n8n?',
+		question: 'Does Windmill have 1,600+ pre-built integrations like n8n?',
 		textAnswer:
 			'No. Windmill has a community Hub of reusable scripts and flows but not a pre-built node catalog the size of n8n\'s 400+ integrations. The trade-off: in Windmill, any npm or PyPI package is a first-class import, so the effective catalog is the entire package ecosystem. For mainstream SaaS integrations that n8n has a polished node for, n8n is faster to wire up the first time.',
 	},
 	{
 		question: 'Can non-technical users author workflows on Windmill?',
 		textAnswer:
-			'Only partially. Windmill has a visual flow editor and auto-generated UIs from script inputs, but the individual steps still involve writing code. n8n\'s drag-and-drop canvas with 400+ pre-built nodes is the more accessible authoring surface for analysts, marketers and ops users. If that audience needs to build workflows themselves, n8n is the better fit.',
+			'Only partially. Windmill has a visual flow editor and auto-generated UIs from script inputs, but the individual steps still involve writing code. n8n\'s drag-and-drop canvas with 1,600+ pre-built nodes is the more accessible authoring surface for analysts, marketers and ops users. If that audience needs to build workflows themselves, n8n is the better fit.',
 	},
 	{
 		question: 'How does performance compare?',
@@ -500,7 +500,7 @@ export default function N8nCompareContent({ title, description }) {
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
 							A source-available <strong>visual workflow automation</strong> tool with a drag-and-drop
-							canvas, 400+ pre-built nodes for SaaS apps and a growing AI agent builder. Best for mixed
+							canvas, 1,600+ pre-built nodes for SaaS apps and a growing AI agent builder. Best for mixed
 							teams where marketers, ops and non-developers automate tasks themselves alongside engineers.
 						</p>
 					</div>
@@ -750,16 +750,23 @@ export default function N8nCompareContent({ title, description }) {
 						label: 'Connecting out',
 						windmill: (
 							<p>
-								Any npm, PyPI, Go or Maven package is a first-class import. No plugin layer: you call
-								the vendor's real SDK directly. A community <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and
-								flows for common tasks.
+								Any npm, PyPI, Go or Maven package is a first-class import with automatic
+								per-script dependency resolution and lockfiles, and no plugin layer in between:
+								you call the vendor's real SDK with full type inference and auto-completion in
+								the editor. <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Typed resources</Link> hold connection info and credentials, are
+								shared across scripts, flows and apps, and are encrypted at rest. A community{' '}
+								<a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and flows for common tasks.
 							</p>
 						),
 						n8n: (
 							<p>
-								<a href="https://n8n.io/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">400+ pre-built nodes</a> for SaaS apps (Slack, Gmail, Notion, HubSpot, Salesforce,
-								Stripe, OpenAI, Airtable) with credential wizards and typed parameter forms. The
-								fastest path when the automation is a chain of mainstream SaaS calls.
+								<a href="https://n8n.io/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">1,600+ pre-built nodes</a> across communication, sales, marketing, dev, AI, data
+								and storage (Slack, Gmail, Notion, HubSpot, Salesforce, Stripe, OpenAI, Airtable,
+								Postgres, MongoDB and many more). Built-in credential wizards handle OAuth flows
+								and typed parameter forms expose each endpoint's options. Action nodes for
+								operations, Trigger nodes for incoming events, Core nodes for routing and
+								transforms, AI Agent nodes for tool-calling LLM steps. The fastest path when the
+								automation is a chain of mainstream SaaS calls.
 							</p>
 						),
 					},
@@ -767,14 +774,21 @@ export default function N8nCompareContent({ title, description }) {
 						label: 'Receiving events',
 						windmill: (
 							<p>
-								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
-								WebSocket.
+								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP
+								and WebSocket. Each trigger is a typed primitive in the UI: configure topic,
+								subject or path, attach it to a script or flow, and Windmill handles the
+								connection, replay and consumer-group state. Every script also gets an HTTP
+								endpoint and a webhook URL for free, so most receive paths need zero glue
+								code.
 							</p>
 						),
 						n8n: (
 							<p>
-								Trigger nodes for webhooks, cron, polling, Kafka, MQTT and app-specific events (Gmail
-								new email, Stripe event, GitHub push, etc.).
+								Trigger nodes for webhooks, cron, polling, Kafka, MQTT and app-specific events
+								(Gmail new email, Stripe event, GitHub push, Notion page updated, etc.). App
+								triggers either subscribe to the vendor's webhook or poll the API on a configurable
+								cadence, transparently to the workflow author. The webhook trigger generates a URL
+								per workflow with optional auth, response shaping and binary payload handling.
 							</p>
 						),
 					},
@@ -782,15 +796,21 @@ export default function N8nCompareContent({ title, description }) {
 						label: 'Extending',
 						windmill: (
 							<p>
-								A new integration is just a script with a new import. No plugin release cycle to wait
-								on.
+								A new integration is a script with a new import: save and run, no restart, no
+								image rebuild. The loop is hot-reload all the way through, in the web editor,
+								the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">CLI</Link> and <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. Custom logic can be exposed as a typed
+								script, packaged as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">resource type</Link> for shared use, or published to the
+								private workspace Hub for the team.
 							</p>
 						),
 						n8n: (
 							<p>
-								Write a <a href="https://docs.n8n.io/integrations/creating-nodes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">custom node</a> in TypeScript and install it as a community node, or drop an
-								HTTP Request node and call the vendor API directly. Code nodes handle one-off logic
-								inline.
+								Two ways to build a <a href="https://docs.n8n.io/integrations/creating-nodes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">custom node</a>: declarative (config-driven, lighter, covers
+								most REST APIs) or programmatic (full TypeScript, for richer logic). Either is
+								shipped as an npm package and installed as a community node on the n8n instance.
+								Inline escape hatches: an HTTP Request node calls any vendor API directly with
+								manual credential wiring, and a Code node runs JavaScript or Python in the same
+								process for one-off logic.
 							</p>
 						),
 					},
@@ -798,7 +818,7 @@ export default function N8nCompareContent({ title, description }) {
 				bottomLine={
 					<>
 						<strong>Windmill</strong> lets you import any public package (npm, PyPI, Go or Maven) or your own, and call the vendor's real SDK directly.
-						<strong> n8n</strong> ships 400+ pre-built nodes for mainstream SaaS apps, which is faster for the first wire-up but adds a plugin layer between you and the vendor SDK.
+						<strong> n8n</strong> ships 1,600+ pre-built nodes for mainstream SaaS apps, which is faster for the first wire-up but adds a plugin layer between you and the vendor SDK.
 					</>
 				}
 				afterHero={<IntegrationsVideos />}

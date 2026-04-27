@@ -51,9 +51,8 @@ export function BuildExperienceVideos() {
 		},
 	};
 
-	{/* TODO: capture an Airflow authoring video (DAG view + Python file in editor) and save as /static/img/compare/airflow-authoring.webm */}
 	const airflowMode = {
-		placeholder: true,
+		src: '/img/compare/airflow-authoring.webm',
 		caption: 'Author DAGs as Python files in a dags/ folder. The Airflow webserver renders them as Graph, Grid and Gantt views for monitoring; authoring stays in the editor.',
 	};
 
@@ -800,16 +799,21 @@ export default function AirflowCompareContent({ title, description }) {
 						label: 'Connecting out',
 						windmill: (
 							<p>
-								Any npm, PyPI, Go or Maven package is a first-class import. No plugin layer: you call
-								the vendor's real SDK. A community <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and
-								flows for common tasks.
+								Any npm, PyPI, Go or Maven package is a first-class import with automatic
+								per-script dependency resolution and lockfiles, and no plugin layer in between:
+								you call the vendor's real SDK with full type inference and auto-completion in
+								the editor. <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Typed resources</Link> hold connection info and credentials, are
+								shared across scripts, flows and apps, and are encrypted at rest. A community{' '}
+								<a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and flows for common tasks.
 							</p>
 						),
 						airflow: (
 							<p>
-								A curated catalog of <a href="https://airflow.apache.org/docs/apache-airflow-providers/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">80+ provider packages</a> for AWS, GCP, Azure, Snowflake, BigQuery,
-								dbt, Airbyte, Databricks, Slack and most common data-stack tools. Each provider bundles
-								operators, hooks and sensors.
+								Two paths. A curated catalog of <a href="https://airflow.apache.org/docs/apache-airflow-providers/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">80+ provider packages</a> (AWS, GCP, Azure,
+								Snowflake, BigQuery, dbt, Airbyte, Databricks, Slack and most data-stack tools) bundles
+								typed operators, hooks and sensors with managed connections and retries. Or pip install
+								any PyPI package into the worker environment and call its SDK directly from a
+								<code> @task</code>, the same way you would in Windmill.
 							</p>
 						),
 					},
@@ -817,15 +821,20 @@ export default function AirflowCompareContent({ title, description }) {
 						label: 'Receiving events',
 						windmill: (
 							<p>
-								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
-								WebSocket.
+								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP
+								and WebSocket. Each trigger is a typed primitive in the UI: configure topic,
+								subject or path, attach it to a script or flow, and Windmill handles the
+								connection, replay and consumer-group state. Every script also gets an HTTP
+								endpoint and a webhook URL for free, so most receive paths need zero glue
+								code.
 							</p>
 						),
 						airflow: (
 							<p>
-								Cron-style schedules, <a href="https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/datasets.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">dataset-based triggering</a>, sensors that poll external state,
-								and HTTP webhook triggers via the REST API. No native Kafka or message-bus trigger; you
-								build one with a sensor or an operator.
+								Cron-style schedules, <a href="https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/datasets.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">dataset-based triggering</a>, sensors that poll external
+								state, and HTTP webhook triggers via the REST API. <a href="https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/deferring.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Deferrable operators and the
+								Triggerer</a> handle event-like waits without holding a worker slot. No native Kafka
+								or message-bus trigger; you build one with a deferrable sensor or operator.
 							</p>
 						),
 					},
@@ -833,22 +842,28 @@ export default function AirflowCompareContent({ title, description }) {
 						label: 'Extending',
 						windmill: (
 							<p>
-								A new integration is just a script with a new import. No plugin release cycle to wait
-								on.
+								A new integration is a script with a new import: save and run, no restart, no
+								image rebuild. The loop is hot-reload all the way through, in the web editor,
+								the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">CLI</Link> and <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. Custom logic can be exposed as a typed
+								script, packaged as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">resource type</Link> for shared use, or published to the
+								private workspace Hub for the team.
 							</p>
 						),
 						airflow: (
 							<p>
-								No provider for what you need? Build a custom operator, hook or sensor as a Python class,
-								or call any Python library directly from a PythonOperator or <code>@task</code>.
+								Custom operator, hook or sensor as a Python class in <code>plugins/</code> or a packaged
+								provider. Authoring is straightforward; the friction is the deploy cycle: changes
+								typically need a worker restart or an image rebuild before they pick up. Calling a
+								Python library directly from <code>@task</code> sidesteps that and works for one-off
+								logic.
 							</p>
 						),
 					},
 				]}
 				bottomLine={
 					<>
-						<strong>Windmill</strong> lets you import any public package (npm, PyPI, Go or Maven) or your own, and call the vendor's real SDK directly.
-						<strong> Airflow</strong> ships a curated catalog of 80+ providers for mainstream data tools like Snowflake, dbt, Airbyte and Databricks.
+						<strong>Windmill</strong> imports any public package (npm, PyPI, Go or Maven) as a first-class dependency with automatic resolution, and the authoring loop is hot-reload: save and run.
+						<strong> Airflow</strong> ships a curated catalog of 80+ providers for mainstream data tools (Snowflake, dbt, Airbyte, Databricks) with managed connections and retries, and also lets you pip install any PyPI package into the worker for direct SDK calls from <code>@task</code>.
 					</>
 				}
 			/>

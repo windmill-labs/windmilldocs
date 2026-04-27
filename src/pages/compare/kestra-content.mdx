@@ -785,15 +785,22 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Connecting out',
 						windmill: (
 							<p>
-								Any npm, PyPI, Go or Maven package is a first-class import. No plugin layer: you call
-								the vendor's real SDK. A community <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and
-								flows for common tasks.
+								Any npm, PyPI, Go or Maven package is a first-class import with automatic
+								per-script dependency resolution and lockfiles, and no plugin layer in between:
+								you call the vendor's real SDK with full type inference and auto-completion in
+								the editor. <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Typed resources</Link> hold connection info and credentials, are
+								shared across scripts, flows and apps, and are encrypted at rest. A community{' '}
+								<a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and flows for common tasks.
 							</p>
 						),
 						kestra: (
 							<p>
-								A curated <a href="https://kestra.io/plugins" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">catalog of 1,200+ plugins</a>. Official connectors for Snowflake, BigQuery,
-								dbt, Airbyte, Salesforce, Databricks and most common data-stack tools.
+								A curated <a href="https://kestra.io/plugins" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">catalog of 1,200+ plugins</a> with official connectors for Snowflake, BigQuery,
+								dbt, Airbyte, Salesforce, Databricks and most common data-stack tools. Each plugin
+								bundles tasks, triggers and connection types referenced from the flow YAML, with
+								credentials supplied through pluggable secret backends and configuration that lives
+								in Git alongside the flow. Internally a task can wrap SQL, Python, shell or an API
+								call; from the flow definition's perspective the surface is uniform YAML.
 							</p>
 						),
 					},
@@ -801,13 +808,20 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Receiving events',
 						windmill: (
 							<p>
-								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
-								WebSocket.
+								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP
+								and WebSocket. Each trigger is a typed primitive in the UI: configure topic,
+								subject or path, attach it to a script or flow, and Windmill handles the
+								connection, replay and consumer-group state. Every script also gets an HTTP
+								endpoint and a webhook URL for free, so most receive paths need zero glue
+								code.
 							</p>
 						),
 						kestra: (
 							<p>
-								Native <a href="https://kestra.io/docs/workflow-components/triggers" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">triggers</a> for Kafka, AMQP, JMS, MQTT, S3 events, webhooks and cron.
+								Five core <a href="https://kestra.io/docs/workflow-components/triggers" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">trigger</a> types: Schedule (cron), Flow (run on another flow's
+								completion), Webhook, Polling (check an external system on a cadence) and Realtime
+								(react to events with millisecond latency). Plugin-based triggers extend the same
+								model to Kafka, AMQP, JMS, MQTT and S3 events.
 							</p>
 						),
 					},
@@ -815,14 +829,20 @@ export default function KestraCompareContent({ title, description }) {
 						label: 'Extending',
 						windmill: (
 							<p>
-								A new integration is just a script with a new import. No plugin release cycle to wait
-								on.
+								A new integration is a script with a new import: save and run, no restart, no
+								image rebuild. The loop is hot-reload all the way through, in the web editor,
+								the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">CLI</Link> and <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. Custom logic can be exposed as a typed
+								script, packaged as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">resource type</Link> for shared use, or published to the
+								private workspace Hub for the team.
 							</p>
 						),
 						kestra: (
 							<p>
-								No plugin for what you need? Write a Java plugin, drop to an inline script inside a
-								flow, or save code as namespace files and call it from a flow task.
+								Three escape hatches. Write a full Java plugin against the Kestra SDK and ship it as
+								a JAR alongside the worker for first-class integration. Drop to an inline Python,
+								Node or shell script inside a flow for one-off logic. Or save code as <a href="https://kestra.io/docs/concepts/namespace-files" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">namespace
+								files</a> and call them from any flow in that namespace, the closest analogue to
+								shared scripts.
 							</p>
 						),
 					},
