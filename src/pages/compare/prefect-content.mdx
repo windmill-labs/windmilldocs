@@ -27,6 +27,7 @@ import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -34,6 +35,171 @@ export const fadeIn = {
 	viewport: { once: true },
 	transition: { duration: 0.5 },
 };
+
+export function BuildExperienceVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+	const [windmillMode, setWindmillMode] = React.useState('low-code');
+
+	const windmillModes = {
+		'low-code': {
+			src: '/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm',
+			caption: 'Compose steps visually as a DAG with branches, loops and approval steps. Each step can be written in 20+ languages.',
+		},
+		'as-code': {
+			src: '/img/platform/workflow-editor/platform-flow-workflow-as-code.webm',
+			caption: 'Define the workflow programmatically in Python or TypeScript with native try/catch, parallel branches and full language control flow.',
+		},
+	};
+
+	{/* TODO: capture a Prefect authoring video (decorator-based flow + Prefect UI) and save as /static/img/compare/prefect-authoring.webm */}
+	const prefectMode = {
+		placeholder: true,
+		caption: 'Author flows as Python files using @flow and @task decorators. The Prefect UI surfaces deployments, runs and logs; authoring stays in your IDE.',
+	};
+
+	const active = platform === 'windmill' ? windmillModes[windmillMode] : prefectMode;
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('prefect')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'prefect'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/prefect.svg" alt="" className="w-4 h-4 dark:invert" />
+					Prefect
+				</button>
+			</div>
+
+			{platform === 'windmill' && (
+				<div className="flex gap-6 mb-4 border-b border-gray-200 dark:border-gray-800">
+					<button
+						type="button"
+						onClick={() => setWindmillMode('low-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'low-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Low-code DAG
+					</button>
+					<button
+						type="button"
+						onClick={() => setWindmillMode('as-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'as-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Workflow as code
+					</button>
+				</div>
+			)}
+
+			{active.placeholder ? (
+				<div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
+					<img src="/img/prefect.svg" alt="Prefect" className="w-12 h-12 opacity-70 dark:invert" />
+					<span className="text-sm font-medium text-gray-500 dark:text-gray-400">Prefect walkthrough video coming soon</span>
+				</div>
+			) : (
+				<LazyVideo
+					key={active.src}
+					className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+					src={active.src}
+				/>
+			)}
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
+
+export function IntegrationsVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+
+	{/* TODO: capture a Prefect integrations video (e.g. browsing prefect-aws / prefect-snowflake collections) and save as /static/img/compare/prefect-integrations.webm */}
+	const modes = {
+		windmill: {
+			src: '/img/platform/script-editor/platform-script-real-dependencies.webm',
+			caption: 'Import any npm, PyPI, Go or Maven package directly. Windmill generates a lockfile per script and resolves dependencies automatically.',
+		},
+		prefect: {
+			placeholder: true,
+			caption: 'Pick from ~18 first-party integration packages (prefect-aws, prefect-gcp, prefect-dbt, prefect-snowflake, prefect-databricks, prefect-kubernetes) with curated tasks and blocks. Any other PyPI package also works as a normal Python import inside a task.',
+		},
+	};
+
+	const active = modes[platform];
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('prefect')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'prefect'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/prefect.svg" alt="" className="w-4 h-4 dark:invert" />
+					Prefect
+				</button>
+			</div>
+
+			{active.placeholder ? (
+				<div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
+					<img src="/img/prefect.svg" alt="Prefect" className="w-12 h-12 opacity-70 dark:invert" />
+					<span className="text-sm font-medium text-gray-500 dark:text-gray-400">Prefect walkthrough video coming soon</span>
+				</div>
+			) : (
+				<LazyVideo
+					key={active.src}
+					className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+					src={active.src}
+				/>
+			)}
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
 
 {/* ── The 8 big questions ── */}
 
@@ -145,7 +311,7 @@ export const faqs = [
 
 {/* ── Section wrapper helper ── */}
 
-export function QASection({ id, kicker, question, summary, prefect, windmill, subsections, bottomLine, children, reverse }) {
+export function QASection({ id, kicker, question, summary, prefect, windmill, subsections, bottomLine, afterHero, children, reverse }) {
 	return (
 		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
 			{/* Hero: title + subtitle */}
@@ -162,6 +328,8 @@ export function QASection({ id, kicker, question, summary, prefect, windmill, su
 					</p>
 				)}
 			</motion.div>
+
+			{afterHero}
 
 			{/* Details: subsections (preferred) or fallback 2-card layout */}
 			{subsections && subsections.length > 0 && (
@@ -447,8 +615,8 @@ export default function PrefectCompareContent({ title, description }) {
 						prefect: (
 							<p>
 								Python-first data teams. Data engineers and data scientists who already live in Python
-								get a natural authoring model through <code>@flow</code> and <code>@task</code> decorators,
-								with strong appeal for teams migrating from Airflow.
+								get a focused authoring model through <code>@flow</code> and <code>@task</code> decorators,
+								with the flow and its tasks running in the same Python process by default.
 							</p>
 						),
 					},
@@ -485,7 +653,7 @@ export default function PrefectCompareContent({ title, description }) {
 				bottomLine={
 					<>
 						<strong>Windmill</strong> is built for engineering teams across languages, with first-class support for TypeScript, Python, Go, Bash, SQL and Docker.
-						<strong> Prefect</strong> is designed for Python-first data teams, with a decorator-based authoring model that fits naturally for teams migrating from Airflow.
+						<strong> Prefect</strong> is designed for Python-first data teams, with a same-process flow model and a focused <code>prefect-*</code> data-stack ecosystem.
 					</>
 				}
 			/>
@@ -497,6 +665,7 @@ export default function PrefectCompareContent({ title, description }) {
 				kicker="03 · Build experience"
 				question="How do you build on each platform?"
 				summary="Covers how you write workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
+				afterHero={<BuildExperienceVideos />}
 				subsections={[
 					{
 						label: 'Authoring',
@@ -516,6 +685,38 @@ export default function PrefectCompareContent({ title, description }) {
 								and the orchestration wiring all live in the same Python file. Deployment metadata
 								(schedules, work pools, parameters) sits in a separate <code>prefect.yaml</code> or is
 								declared from Python.
+							</p>
+						),
+					},
+					{
+						label: 'Execution model',
+						windmill: (
+							<>
+								<p>
+									Two ways to define workflows, one runtime under both. The <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">visual flow builder</Link>
+									produces JSON DAGs with multi-language steps, transparent data passing via{' '}
+									<code>results.step_name</code> expressions, and built-in branches, loops, error
+									handlers and approval steps. <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-500 hover:underline">Workflow-as-code</Link> defines the same flow
+									programmatically in Python or TypeScript.
+								</p>
+								<p>
+									In the workflow-as-code engine, two step primitives carry different cost profiles.
+									<code> task()</code> dispatches a child job in a separate process and surfaces as
+									its own job in the UI, for steps that need isolation or independent retries.
+									<code> step()</code> runs inline in the same process and checkpoints its result to
+									Postgres in roughly 0.5ms, for cheap units like a calculation, a CSV parse or a
+									small DB query. Each step picks the cost it actually needs.
+								</p>
+							</>
+						),
+						prefect: (
+							<p>
+								Hybrid model: the flow and its tasks execute in the same Python process by default,
+								so data passes through Python variables (no XCom problem). But each task run is
+								tracked by the Prefect API server through HTTP calls and Postgres writes for every
+								state transition (Pending, Running, Completed). Concurrency uses Python futures via{' '}
+								<code>.submit()</code>, running tasks in a thread or process pool, with the GIL as
+								the limit for CPU-bound parallelism.
 							</p>
 						),
 					},
@@ -589,14 +790,18 @@ export default function PrefectCompareContent({ title, description }) {
 				kicker="04 · Integrations"
 				question="How does the platform integrate with your existing stack?"
 				summary="Three directions: calling external systems, receiving events from them, and extending the platform with things neither tool covers natively."
+				afterHero={<IntegrationsVideos />}
 				subsections={[
 					{
 						label: 'Connecting out',
 						windmill: (
 							<p>
-								Any npm, PyPI, Go or Maven package is a first-class import. No plugin layer: you call
-								the vendor's real SDK. A community <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and
-								flows for common tasks.
+								Any npm, PyPI, Go or Maven package is a first-class import with automatic
+								per-script dependency resolution and lockfiles, and no plugin layer in between:
+								you call the vendor's real SDK with full type inference and auto-completion in
+								the editor. <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Typed resources</Link> hold connection info and credentials, are
+								shared across scripts, flows and apps, and are encrypted at rest. A community{' '}
+								<a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and flows for common tasks.
 							</p>
 						),
 						prefect: (
@@ -612,8 +817,12 @@ export default function PrefectCompareContent({ title, description }) {
 						label: 'Receiving events',
 						windmill: (
 							<p>
-								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
-								WebSocket.
+								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP
+								and WebSocket. Each trigger is a typed primitive in the UI: configure topic,
+								subject or path, attach it to a script or flow, and Windmill handles the
+								connection, replay and consumer-group state. Every script also gets an HTTP
+								endpoint and a webhook URL for free, so most receive paths need zero glue
+								code.
 							</p>
 						),
 						prefect: (
@@ -628,7 +837,11 @@ export default function PrefectCompareContent({ title, description }) {
 						label: 'Extending',
 						windmill: (
 							<p>
-								A new integration is just a script with a new import. No plugin release cycle to wait on.
+								A new integration is a script with a new import: save and run, no restart, no
+								image rebuild. The loop is hot-reload all the way through, in the web editor,
+								the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">CLI</Link> and <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. Custom logic can be exposed as a typed
+								script, packaged as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">resource type</Link> for shared use, or published to the
+								private workspace Hub for the team.
 							</p>
 						),
 						prefect: (
@@ -773,26 +986,45 @@ export default function PrefectCompareContent({ title, description }) {
 					{
 						label: 'Performance',
 						windmill: (
-							<p>
-								~10ms cold starts. <Link to="/platform/workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes and
-								dependencies pre-warmed. <Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">Roughly 3× faster</Link> than Prefect on lightweight tasks on
-								equivalent hardware.
-							</p>
+							<>
+								<p>
+									Workers poll Postgres directly with <code>SELECT ... FOR UPDATE SKIP LOCKED</code>
+									and self-schedule. No separate scheduler process, no broker, no extra polling
+									intervals on the dispatch path.
+								</p>
+								<p>
+									Cold start is around 12ms on Bun and 26ms on Python per job. <Link to="/platform/workers" className="text-blue-500 hover:underline">Dedicated-worker
+									mode</Link> <EnterpriseBadge /> keeps the runtime and dependencies pre-warmed for
+									0ms cold start. Arguments pass directly between steps, results are checkpointed
+									as JSONB in Postgres with no built-in size limit.
+								</p>
+							</>
 						),
 						prefect: (
-							<p>
-								Work-pool and worker architecture with horizontal scaling. Per-task overhead from Python
-								interpreter startup and state persistence. Negligible for multi-minute data tasks, more
-								visible for high-volume short tasks.
-							</p>
+							<>
+								<p>
+									Per-task overhead comes from state tracking: every task run hits the Prefect API
+									server with an HTTP call for each state transition (Pending, Running, Completed),
+									with each transition persisted to Postgres. For high-volume short tasks the
+									HTTP and DB round-trips dominate; for multi-minute data tasks they're a rounding
+									error.
+								</p>
+								<p>
+									Tasks run in the same Python process as the flow by default, so a worker holds the
+									process for the duration of the flow. <code>time.sleep(60)</code> inside a flow
+									holds the worker for those 60 seconds: there is no server-side sleep primitive
+									that releases the worker and wakes the flow later. A mid-task crash loses
+									in-task progress, since retries restart the task from the beginning.
+								</p>
+							</>
 						),
 					},
 				]}
 				bottomLine={
 					<>
 						Both cover the enterprise basics: RBAC, SSO, audit logs and SOC 2 (on their managed tiers).
-						<strong> Windmill</strong> is faster for short, high-volume workloads like webhooks, alerts and small scripts, with roughly 3× lower per-task overhead.
-						<strong> Prefect</strong> is a good fit for long-running data pipelines where per-task overhead doesn't matter and state management is the main requirement.
+						<strong> Windmill</strong> runs lightweight Python tasks roughly 3× faster than Prefect on equivalent hardware, driven by single-hop worker dispatch instead of per-task HTTP state-tracking round-trips.
+						<strong> Prefect</strong> is a good fit for long-running data pipelines where state-tracking overhead is a rounding error and Pythonic flow ergonomics are the main requirement.
 					</>
 				}
 			>
@@ -866,8 +1098,17 @@ export default function PrefectCompareContent({ title, description }) {
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 						The verdict
 					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						Windmill and Prefect share a goal (Python orchestration without Airflow's ceremony) but differ on the engine underneath. Prefect runs the flow and its tasks in the same Python process, so data passes through Python variables, then tracks every task transition with HTTP calls to its API server and Postgres writes. Windmill models a workflow either as a JSON DAG of multi-language scripts in the visual flow builder, or as workflow-as-code, with workers polling Postgres directly and a dual primitive that picks between dispatched child jobs and inline checkpointed steps.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						<strong>Prefect can be a good fit if</strong> the scope you need is Python workflow orchestration on its own: a Python-only team, scheduled data pipelines that run for minutes per task, and a preference for tasks running in the same Python process so values pass through variables. Within that bounded scope, the platform stays focused and consistent.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						<strong>Windmill also works very well for those use cases</strong>, and goes considerably deeper. The developer experience covers 20+ first-class language runtimes (TypeScript, Python, Go, Bash, SQL and more) with a local-dev loop, AI coding tools against real source files, and whole-workspace Git sync for scripts, flows, apps, resources and permissions. The runtime scope is wider too: the same platform that runs your workflows also powers data pipelines, AI agents and both low-code and full-code internal apps, with shared auth, secrets and observability across all of them. For short, high-volume workloads, Windmill runs roughly 3× faster than Prefect on equivalent hardware, driven by single-hop worker dispatch instead of per-task HTTP state-tracking round-trips. More of the enterprise foundation ships in open source, and Enterprise pricing is published upfront instead of gated behind a sales call.
+					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The biggest difference between Windmill and Prefect is the <strong>developer experience</strong>. Windmill is polyglot and scripts-first: each script is a standalone primitive with its own UI, API and scheduler across 20+ languages, and the whole workspace (scripts, flows, apps, resources, permissions) lives in Git. Prefect is Python-only and flow-first, with an elegant decorator-based authoring model that fits naturally for Python data teams and Airflow migrants. The other major difference is the <strong>range of internal software you can build on each platform</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and internal apps on one runtime, while Prefect is focused on Python workflow orchestration. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
+						The switching cost is also asymmetric: Windmill step logic is standard code (TypeScript, Python, Go, Bash, SQL) that runs anywhere after you leave Windmill, while Prefect flows built on the <code>@flow</code> / <code>@task</code> decorators, blocks and the Prefect runtime have to be rewritten on any other platform. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
 			</section>
