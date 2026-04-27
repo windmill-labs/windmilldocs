@@ -51,9 +51,8 @@ export function BuildExperienceVideos() {
 		},
 	};
 
-	{/* TODO: capture a Prefect authoring video (decorator-based flow + Prefect UI) and save as /static/img/compare/prefect-authoring.webm */}
 	const prefectMode = {
-		placeholder: true,
+		src: '/img/compare/prefect-authoring.webm',
 		caption: 'Author flows as Python files using @flow and @task decorators. The Prefect UI surfaces deployments, runs and logs; authoring stays in your IDE.',
 	};
 
@@ -143,11 +142,11 @@ export function IntegrationsVideos() {
 	const modes = {
 		windmill: {
 			src: '/img/platform/script-editor/platform-script-real-dependencies.webm',
-			caption: 'Import any npm, PyPI, Go or Maven package directly. Windmill generates a lockfile per script and resolves dependencies automatically.',
+			caption: 'Type `import stripe` in the script editor and run. Windmill detects the import, resolves the version and pins it in a per-script lockfile automatically. No venv, no pip install, no restart: the platform manages dependencies for you.',
 		},
 		prefect: {
-			placeholder: true,
-			caption: 'Pick from ~18 first-party integration packages (prefect-aws, prefect-gcp, prefect-dbt, prefect-snowflake, prefect-databricks, prefect-kubernetes) with curated tasks and blocks. Any other PyPI package also works as a normal Python import inside a task.',
+			src: '/img/compare/prefect-integrations.webm',
+			caption: 'Beyond the prefect-* integration packages, pip install any PyPI package (here, the Stripe SDK) into the Prefect venv and import it from a @task. Each `python flow.py` re-imports the venv, so new packages are picked up on the next run with no restart.',
 		},
 	};
 
@@ -808,8 +807,11 @@ export default function PrefectCompareContent({ title, description }) {
 							<p>
 								About 18 first-party <a href="https://docs.prefect.io/integrations/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">integration packages</a> (<code>prefect-aws</code>,{' '}
 								<code>prefect-gcp</code>, <code>prefect-dbt</code>, <code>prefect-snowflake</code>,{' '}
-								<code>prefect-databricks</code>, <code>prefect-kubernetes</code>) with curated tasks and
-								blocks. Any other pip package also works as a normal Python import inside a task.
+								<code>prefect-databricks</code>, <code>prefect-kubernetes</code>) installed as
+								regular pip packages. Each ships pre-built <code>@task</code> wrappers around the
+								vendor SDK and <a href="https://docs.prefect.io/v3/concepts/blocks" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Blocks</a> (typed config classes that hold connection info and
+								credentials, with <code>SecretStr</code> fields encrypted at rest). Any other pip
+								package works the same way: install into the venv, import inside a task.
 							</p>
 						),
 					},
@@ -1108,7 +1110,7 @@ export default function PrefectCompareContent({ title, description }) {
 						<strong>Windmill also works very well for those use cases</strong>, and goes considerably deeper. The developer experience covers 20+ first-class language runtimes (TypeScript, Python, Go, Bash, SQL and more) with a local-dev loop, AI coding tools against real source files, and whole-workspace Git sync for scripts, flows, apps, resources and permissions. The runtime scope is wider too: the same platform that runs your workflows also powers data pipelines, AI agents and both low-code and full-code internal apps, with shared auth, secrets and observability across all of them. For short, high-volume workloads, Windmill runs roughly 3× faster than Prefect on equivalent hardware, driven by single-hop worker dispatch instead of per-task HTTP state-tracking round-trips. More of the enterprise foundation ships in open source, and Enterprise pricing is published upfront instead of gated behind a sales call.
 					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The switching cost is also asymmetric: Windmill step logic is standard code (TypeScript, Python, Go, Bash, SQL) that runs anywhere after you leave Windmill, while Prefect flows built on the <code>@flow</code> / <code>@task</code> decorators, blocks and the Prefect runtime have to be rewritten on any other platform. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
+						The switching cost is also asymmetric. Task bodies port cleanly off either platform: a Prefect <code>@task</code> stripped of its decorator is just a Python function, the same way a Windmill script body is. The difference is in the orchestration layer around them. Windmill step logic sits inside a thin <code>main()</code> wrapper; the rest of the workspace (flows, resources, schedules, permissions) is YAML in Git that maps to standard concepts. Prefect adds a non-trivial Python-side layer (decorators, Blocks, futures, retry config, <code>flow.serve()</code> / <code>flow.deploy()</code>) that has to be rewritten against another platform's primitives. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
 			</section>
