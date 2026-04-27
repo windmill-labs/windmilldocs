@@ -1,15 +1,17 @@
 ---
 title: Build a Google ADK agent in an AI sandbox
-description: How do I run a Google ADK agent on Windmill? Wrap it in an AI sandbox script with persistent session memory.
+description: How do I run a Google ADK agent on Windmill? Wrap it in an AI sandbox script (Python or TypeScript) with persistent session memory.
 ---
 
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Build a Google ADK agent in an AI sandbox
 
-This guide walks you through running a [Google Agent Development Kit (ADK)](https://google.github.io/adk-docs/) agent on Windmill as a single Python [script](/docs/getting_started/scripts_quickstart). The agent runs inside an [AI sandbox](/docs/core_concepts/ai_sandbox), keeps its session state in a [volume](/docs/core_concepts/volumes), and exposes a clean `main()` entry point you can call from a [flow](/docs/flows/flow_editor), a [trigger](/docs/getting_started/triggers), or the UI.
+This guide walks you through running a [Google Agent Development Kit (ADK)](https://google.github.io/adk-docs/) agent on Windmill as a single script. The agent runs inside an [AI sandbox](/docs/core_concepts/ai_sandbox), keeps its session state in a [volume](/docs/core_concepts/volumes), and exposes a clean `main()` entry point you can call from a [flow](/docs/flows/flow_editor), a [trigger](/docs/getting_started/triggers), or the UI.
 
-ADK is a code-first Python framework for building, evaluating, and orchestrating agents. It is optimized for [Gemini](https://aistudio.google.com/) but model-agnostic, so the same script works with other providers via [LiteLLM](https://google.github.io/adk-docs/agents/models/#non-google-models).
+ADK is a code-first framework for building, evaluating, and orchestrating agents. It is optimized for [Gemini](https://aistudio.google.com/) but model-agnostic, so the same script works with other providers via [LiteLLM](https://google.github.io/adk-docs/agents/models/#non-google-models). The same patterns shown here work with both the Python ([`google-adk`](https://pypi.org/project/google-adk/)) and the TypeScript ([`@google/adk`](https://www.npmjs.com/package/@google/adk)) ports.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -29,10 +31,10 @@ ADK is a code-first Python framework for building, evaluating, and orchestrating
 
 A weather assistant agent that:
 
-- Defines a single ADK `Agent` with one Python function tool.
+- Defines a single ADK agent with one function tool.
 - Runs inside an [nsjail](/docs/advanced/security_isolation#nsjail-sandboxing) sandbox so the agent process is isolated from the worker.
 - Persists session history to a SQLite database stored in a [volume](/docs/core_concepts/volumes), so subsequent runs resume where the conversation left off.
-- Takes a `prompt` and a `google_api_key` as script inputs and returns the agent's final response.
+- Takes a `prompt` and a Gemini API key as script inputs and returns the agent's final response.
 
 ## Prerequisites
 
@@ -42,7 +44,10 @@ A weather assistant agent that:
 
 ## Step 1: Create the script
 
-Create a new Python script and paste the code below. The two annotations at the top are the only Windmill-specific parts — everything else is plain ADK.
+Create a new script and paste the code for your language. The two annotations at the top are the only Windmill-specific parts — everything else is plain ADK.
+
+<Tabs className="unique-tabs">
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 # sandbox
@@ -50,6 +55,7 @@ Create a new Python script and paste the code below. The two annotations at the 
 
 #requirements:
 #google-adk
+#aiosqlite
 
 import asyncio
 import os
@@ -101,7 +107,10 @@ DB_FILE = STATE_DIR / "sessions.db"
 async def _run(prompt: str) -> dict:
     STATE_DIR.mkdir(parents=True, exist_ok=True)
 
-    session_service = DatabaseSessionService(db_url=f"sqlite:///{DB_FILE}")
+    # ADK uses SQLAlchemy's async engine, so the URL needs the aiosqlite driver.
+    session_service = DatabaseSessionService(
+        db_url=f"sqlite+aiosqlite:///{DB_FILE}"
+    )
 
     saved_id = SESSION_FILE.read_text().strip() if SESSION_FILE.exists() else None
     session = None
@@ -151,6 +160,117 @@ def main(google_api_key: str, prompt: str = "What's the weather in Paris?") -> d
     return asyncio.run(_run(prompt))
 ```
 
+</TabItem>
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+// sandbox
+// volume: adk-state .adk
+
+import { LlmAgent, FunctionTool, Runner, DatabaseSessionService } from '@google/adk'
+import { createUserContent } from '@google/genai'
+import { z } from 'zod'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
+
+const getWeather = new FunctionTool({
+  name: 'get_weather',
+  description: 'Get the current weather for a city.',
+  parameters: z.object({
+    city: z.string().describe('The city name.'),
+  }),
+  execute: async ({ city }: { city: string }) => {
+    const data: Record<string, { temp_c: number; conditions: string }> = {
+      paris: { temp_c: 18, conditions: 'Sunny' },
+      tokyo: { temp_c: 22, conditions: 'Cloudy' },
+      'new york': { temp_c: 12, conditions: 'Rainy' },
+    }
+    const info = data[city.toLowerCase()]
+    if (!info) return { status: 'error', message: `No weather data for ${city}.` }
+    return { status: 'success', city, ...info }
+  },
+})
+
+const rootAgent = new LlmAgent({
+  name: 'weather_agent',
+  model: 'gemini-2.5-flash',
+  description: 'Assistant that answers questions about the current weather.',
+  instruction:
+    'You are a friendly weather assistant. ' +
+    'Call the get_weather tool when the user asks about weather. ' +
+    'If a city is not supported, suggest one of: Paris, Tokyo, New York.',
+  tools: [getWeather],
+})
+
+const APP_NAME = 'windmill_adk_demo'
+const USER_ID = 'windmill_user'
+const STATE_DIR = '.adk'
+const SESSION_FILE = path.join(STATE_DIR, 'session-id.txt')
+const DB_FILE = path.join(STATE_DIR, 'sessions.db')
+
+export async function main(
+  google_api_key: string,
+  prompt: string = "What's the weather in Paris?"
+) {
+  // adk-js reads GEMINI_API_KEY (or GOOGLE_GENAI_API_KEY) — script inputs
+  // are not env vars, set them explicitly. See "Passing credentials" below.
+  process.env.GEMINI_API_KEY = google_api_key
+  process.env.GOOGLE_GENAI_API_KEY = google_api_key
+
+  fs.mkdirSync(STATE_DIR, { recursive: true })
+
+  const sessionService = new DatabaseSessionService(`sqlite://${DB_FILE}`)
+
+  const savedId = fs.existsSync(SESSION_FILE)
+    ? fs.readFileSync(SESSION_FILE, 'utf-8').trim()
+    : undefined
+
+  let session = savedId
+    ? await sessionService.getSession({
+        appName: APP_NAME,
+        userId: USER_ID,
+        sessionId: savedId,
+      })
+    : undefined
+
+  const isResume = !!session
+  if (!session) {
+    session = await sessionService.createSession({
+      appName: APP_NAME,
+      userId: USER_ID,
+    })
+    fs.writeFileSync(SESSION_FILE, session.id)
+  }
+
+  const runner = new Runner({
+    appName: APP_NAME,
+    agent: rootAgent,
+    sessionService,
+  })
+
+  let response = ''
+  for await (const event of runner.runAsync({
+    userId: USER_ID,
+    sessionId: session.id,
+    newMessage: createUserContent(prompt),
+  })) {
+    for (const part of event.content?.parts ?? []) {
+      if (part.text) response += part.text
+    }
+  }
+
+  return {
+    is_resume: isResume,
+    session_id: session.id,
+    prompt,
+    response,
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ## Step 2: Run it
 
 Click **Test** with a prompt like `"What's the weather in Paris?"` and your API key. You should see something like:
@@ -158,9 +278,9 @@ Click **Test** with a prompt like `"What's the weather in Paris?"` and your API 
 ```json
 {
   "is_resume": false,
-  "session_id": "f7b2c1...",
+  "session_id": "51b81888-567e-4f46-9190-dff1e1c4eefd",
   "prompt": "What's the weather in Paris?",
-  "response": "It's sunny in Paris with a temperature of 18°C."
+  "response": "The weather in Paris is Sunny with a temperature of 18 degrees Celsius."
 }
 ```
 
@@ -169,7 +289,7 @@ Now run it again with `"And in Tokyo?"`. The script reads the saved session ID f
 ```json
 {
   "is_resume": true,
-  "session_id": "f7b2c1...",
+  "session_id": "51b81888-567e-4f46-9190-dff1e1c4eefd",
   "prompt": "And in Tokyo?",
   "response": "Tokyo is cloudy at 22°C."
 }
@@ -177,11 +297,11 @@ Now run it again with `"And in Tokyo?"`. The script reads the saved session ID f
 
 ## How it works
 
-### `# sandbox`
+### `# sandbox` / `// sandbox`
 
 Wraps the job process in [nsjail](/docs/advanced/security_isolation#nsjail-sandboxing). The agent — and any subprocess it spawns (e.g. an MCP server or shell tool) — sees an isolated filesystem and cannot reach the worker's secrets or other jobs.
 
-### `# volume: adk-state .adk`
+### `# volume: adk-state .adk` / `// volume: adk-state .adk`
 
 Mounts a persistent volume at `./.adk` relative to the job's working directory. Files written there survive across runs and are synced to [object storage](/docs/core_concepts/object_storage_in_windmill). The script uses two files in the volume:
 
@@ -194,21 +314,25 @@ If you want a fresh conversation, delete the volume contents (or use a different
 
 ADK ships several [session services](https://google.github.io/adk-docs/sessions/session/). `InMemorySessionService` loses state at the end of each job — useless across Windmill runs. `DatabaseSessionService` with a SQLite URL inside the volume gives you persistence with zero infrastructure.
 
+The URL format differs slightly between languages:
+
+- **Python** uses SQLAlchemy's async engine, so the URL needs the `aiosqlite` driver: `sqlite+aiosqlite:///<path>`. Add `aiosqlite` to your `#requirements:`.
+- **TypeScript** uses MikroORM's SQLite driver: `sqlite://<path>`. No extra dependency needed.
+
 For multi-user or multi-tenant setups, scope the volume per workspace or input:
 
-```python
-# volume: $workspace-adk-state .adk
+```
+// volume: $workspace-adk-state .adk
 ```
 
 See [dynamic volume names](/docs/core_concepts/volumes#dynamic-volume-names) for the full set of placeholders.
 
 ### Passing credentials
 
-Script inputs are Python variables — they are **not** automatically exported as environment variables inside the sandbox. ADK (and the underlying `google-genai` client) reads `GOOGLE_API_KEY` from `os.environ`, so the script sets it explicitly:
+Script inputs are language variables — they are **not** automatically exported as environment variables inside the sandbox. ADK reads its API key from the environment, so the scripts set it explicitly:
 
-```python
-os.environ["GOOGLE_API_KEY"] = google_api_key
-```
+- **Python** (`google-adk`) reads `GOOGLE_API_KEY`.
+- **TypeScript** (`@google/adk`) reads `GEMINI_API_KEY` or `GOOGLE_GENAI_API_KEY`.
 
 Apply the same pattern for any other credential the agent or its tools need at runtime — for example `OPENAI_API_KEY`, `TAVILY_API_KEY`, or an MCP server token.
 
@@ -216,7 +340,7 @@ Apply the same pattern for any other credential the agent or its tools need at r
 
 ### Use a different model
 
-ADK is model-agnostic via [LiteLLM](https://google.github.io/adk-docs/agents/models/#non-google-models). To run the same agent on Anthropic Claude, replace the `model=` line:
+ADK is model-agnostic. Both ports support [LiteLLM](https://google.github.io/adk-docs/agents/models/#non-google-models) (Python) or compatible model wrappers (TypeScript) to swap the underlying provider. To run the same agent on Anthropic Claude in Python, replace the `model=` line:
 
 ```python
 from google.adk.models.lite_llm import LiteLlm
@@ -276,7 +400,8 @@ Drop this script into any [flow](/docs/flows/flow_editor) step and chain it with
 
 - **`#sandbox` annotation but nsjail is not available** — your worker image does not include nsjail. Use a standard Windmill Docker image or remove the annotation.
 - **Volume not persisting** — check that workspace object storage is configured under [instance settings](/docs/advanced/instance_settings). Without it, volumes only exist for the duration of a single job.
-- **`GOOGLE_API_KEY not set`** — make sure you set `os.environ["GOOGLE_API_KEY"]` before calling `Runner.run_async`. Passing it to `Agent(...)` directly is not enough.
+- **`Failed to create database engine for URL 'sqlite:///…'`** (Python) — ADK's `DatabaseSessionService` uses an async engine, so the URL needs the `aiosqlite` driver: `sqlite+aiosqlite:///<path>`. Make sure `aiosqlite` is listed under `#requirements:`.
+- **`API key must be provided via constructor or GOOGLE_GENAI_API_KEY or GEMINI_API_KEY`** (TypeScript) — the JS port reads `GEMINI_API_KEY` / `GOOGLE_GENAI_API_KEY`, not `GOOGLE_API_KEY`. Set both for portability.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
