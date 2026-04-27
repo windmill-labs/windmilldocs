@@ -8,8 +8,6 @@ Windmill can connect to [**Azure Event Grid**](https://learn.microsoft.com/en-us
 
 Azure Event Grid triggers are a [self-hosted Enterprise](/pricing) feature. They are disabled on the [Cloud](/pricing).
 
-{/* TODO: add a screenshot of the Azure Event Grid trigger editor with the mode selector visible. */}
-
 ## Trigger modes
 
 A single Azure trigger covers three delivery modes, selected via the **Edition** (Basic / Namespace) and **Delivery** (Push / Pull) toggles in the editor:
@@ -20,7 +18,7 @@ A single Azure trigger covers three delivery modes, selected via the **Edition**
 | `namespace_push` | Namespace | Push | Pushing [CloudEvents 1.0](https://learn.microsoft.com/en-us/azure/event-grid/cloud-event-schema) events from [Event Grid Namespace topics](https://learn.microsoft.com/en-us/azure/event-grid/concepts-event-grid-namespaces) over HTTP. |
 | `namespace_pull` | Namespace | Pull | Pulling events from an Event Grid Namespace topic with lock-token ack/reject — enables dead-lettering and batched consumption. |
 
-In both namespace modes, Windmill creates the subscription with the **CloudEvents 1.0** schema, so push and pull share the same payload parser.
+All three modes subscribe with the **CloudEvents 1.0** schema (`eventDeliverySchema: CloudEventSchemaV1_0`), so basic, namespace push and namespace pull deliveries share the same payload parser.
 
 ## How to use
 
@@ -28,10 +26,11 @@ In both namespace modes, Windmill creates the subscription with the **CloudEvent
 
 Select an existing **Azure Service Principal** resource or create a new one. The resource provides the credentials Windmill uses to manage subscriptions and (for pull mode) to receive events:
 
-- `tenant_id`
-- `client_id`
-- `client_secret`
-- `subscription_id` (default Azure subscription)
+- `azureTenantId`
+- `azureClientId`
+- `azureClientSecret`
+
+The Azure subscription ID is not a field on the resource — Windmill extracts it at runtime from the ARM path of the topic or namespace you pick as the trigger scope.
 
 The service principal must have enough permissions on the target scope (topic, namespace, or domain) to:
 
@@ -75,7 +74,7 @@ Windmill handles both Event Grid handshakes automatically:
 - The classic `SubscriptionValidationEvent` handshake (basic Event Grid)
 - The CloudEvents 1.0 `OPTIONS` abuse-protection handshake (namespace push)
 
-Push deliveries are authenticated with a server-managed shared secret. The secret is regenerated on every save of the trigger and never leaves the Windmill server.
+Push deliveries are authenticated with a server-managed shared secret. Windmill stores only the sha256 hash; the plaintext is sent to Azure once during subscription create/update (Azure stores it as `isSecret: true` on the delivery attribute and attaches it to each delivery in an `X-Windmill-Secret` header). The secret is regenerated on every save of the trigger.
 
 ### Event type filters (optional)
 
@@ -91,79 +90,70 @@ When you delete a trigger, the editor offers an **Also delete Azure subscription
 
 ## Implementation examples
 
-Windmill delivers each Event Grid event to your runnable as `payload` (a base64-encoded string containing the CloudEvents JSON for namespace modes, or the Event Grid event JSON for basic mode).
+Windmill delivers the event's CloudEvent `data` field to your runnable as `payload`, passed through unchanged. For binary CloudEvents (where `data_base64` is set instead of `data`), `payload` is the base64 string and decoding is the script's job.
 
 ### Basic script
 
 ```typescript
-export async function main(payload: string) {
-  const decoded = new TextDecoder().decode(
-    Uint8Array.from(atob(payload), (c) => c.charCodeAt(0))
-  );
-
-  try {
-    const event = JSON.parse(decoded);
-    console.log('Event type:', event.type ?? event.eventType);
-    console.log('Subject:', event.subject);
-    console.log('Data:', event.data);
-  } catch (e) {
-    console.log('Received non-JSON payload:', decoded);
-  }
-
+export async function main(payload: any) {
+  // `payload` is the CloudEvent `data` field — typically a JSON object whose
+  // shape depends on the event source (Storage, Resource Manager, Key Vault,
+  // a custom topic, etc.). See the Azure docs for per-source schemas.
+  console.log('Event data:', payload);
   return { processed: true };
 }
 ```
 
 ### Using a preprocessor
 
-If you configure a [preprocessor](../43_preprocessors/index.mdx), you can extract fields before they reach the main function.
+If you configure a [preprocessor](../43_preprocessors/index.mdx), you can extract fields before they reach the main function. The preprocessor receives an `event` object with the full CloudEvent envelope alongside the `payload`.
 
 #### Azure Event Grid trigger object
 
-- `subscription_name`: subscription the event was delivered to
-- `scope_resource_id`: ARM ID of the topic or namespace
-- `topic_name`: namespace topic name (namespace modes only)
-- `azure_mode`: `"basic_push"`, `"namespace_push"` or `"namespace_pull"`
-- `event_type`: CloudEvents `type` (or Event Grid `eventType` in basic mode)
-- `event_id`: CloudEvents `id` (or Event Grid `id`)
-- `event_time`: event timestamp
-- `subject`: CloudEvents `subject`
+- `payload`: CloudEvent `data` field (usually a JSON object), or the `data_base64` string for binary CloudEvents
+- `id`: CloudEvents `id`
 - `source`: CloudEvents `source`
-- `headers`: HTTP headers (push modes only)
+- `type`: CloudEvents `type` (e.g. `Microsoft.Storage.BlobCreated`)
+- `subject`: CloudEvents `subject`
+- `time`: CloudEvents `time`
+- `specversion`, `datacontenttype`, `dataschema`: optional CloudEvents attributes when the event sets them
+- `delivery_type`: `"push"` or `"pull"`
+- `headers`: HTTP request headers (push modes); minimal map in pull mode
+- `lock_token`: lock token used to ack/reject the message (pull mode only)
+- `trigger_path`: path of the trigger that received the event (push modes only)
 
 ```typescript
 export async function preprocessor(
   event: {
     kind: 'azure',
-    payload: string, // base64 encoded CloudEvents / Event Grid event JSON
-    subscription_name: string,
-    scope_resource_id: string,
-    topic_name?: string,
-    azure_mode: 'basic_push' | 'namespace_push' | 'namespace_pull',
-    event_type?: string,
-    event_id?: string,
-    event_time?: string,
+    payload: any,
+    id: string,
+    source: string,
+    type: string,
     subject?: string,
-    source?: string,
+    time?: string,
+    specversion?: string,
+    datacontenttype?: string,
+    dataschema?: string,
+    delivery_type: 'push' | 'pull',
     headers?: Record<string, string>,
+    lock_token?: string,
+    trigger_path?: string,
   }
 ) {
   if (event.kind !== 'azure') {
     throw new Error(`Expected azure trigger kind got: ${event.kind}`);
   }
 
-  const decoded = atob(event.payload);
-  const parsed = JSON.parse(decoded);
-
   return {
-    eventType: event.event_type,
+    eventType: event.type,
     subject: event.subject,
-    data: parsed.data ?? parsed,
+    data: event.payload,
   };
 }
 
 export async function main(
-  eventType: string | undefined,
+  eventType: string,
   subject: string | undefined,
   data: any
 ) {
