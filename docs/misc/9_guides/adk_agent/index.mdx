@@ -34,13 +34,14 @@ A weather assistant agent that:
 - Defines a single ADK agent with one function tool.
 - Runs inside an [nsjail](/docs/advanced/security_isolation#nsjail-sandboxing) sandbox so the agent process is isolated from the worker.
 - Persists session history to a SQLite database stored in a [volume](/docs/core_concepts/volumes), so subsequent runs resume where the conversation left off.
-- Takes a `prompt` and a Gemini API key as script inputs and returns the agent's final response.
+- Takes a `prompt` and a `googleai` [resource](/docs/core_concepts/resources_and_types) as script inputs and returns the agent's final response.
 
 ## Prerequisites
 
 - A Windmill instance with [workspace object storage](/docs/core_concepts/object_storage_in_windmill#workspace-object-storage) configured (required for volumes).
 - [Workers](/docs/core_concepts/worker_groups) with `nsjail` available (included in standard Windmill Docker images).
 - A Google AI Studio API key — get one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
+- A `googleai` resource holding the API key. The `googleai` [resource type](https://hub.windmill.dev/resource_types/222/googleai) ships on the Windmill Hub; create a resource of that type and paste your key into `api_key`.
 
 ## Step 1: Create the script
 
@@ -55,16 +56,22 @@ Create a new script and paste the code for your language. The two annotations at
 
 #requirements:
 #google-adk
-#aiosqlite
 
 import asyncio
 import os
 from pathlib import Path
+from typing import TypedDict
 
 from google.adk.agents import Agent
 from google.adk.runners import Runner
-from google.adk.sessions import DatabaseSessionService
+from google.adk.sessions.sqlite_session_service import SqliteSessionService
 from google.genai import types
+
+
+class googleai(TypedDict):
+    api_key: str
+    base_url: str
+    platform: str
 
 
 def get_weather(city: str) -> dict:
@@ -107,10 +114,11 @@ DB_FILE = STATE_DIR / "sessions.db"
 async def _run(prompt: str) -> dict:
     STATE_DIR.mkdir(parents=True, exist_ok=True)
 
-    # ADK uses SQLAlchemy's async engine, so the URL needs the aiosqlite driver.
-    session_service = DatabaseSessionService(
-        db_url=f"sqlite+aiosqlite:///{DB_FILE}"
-    )
+    # SQLite-native service (REAL-typed timestamps, plain aiosqlite). ADK's
+    # generic DatabaseSessionService is SQLAlchemy-based and aimed at
+    # postgres/mysql; on SQLite it can fail on resume with
+    # `fromisoformat: argument must be str`.
+    session_service = SqliteSessionService(str(DB_FILE))
 
     saved_id = SESSION_FILE.read_text().strip() if SESSION_FILE.exists() else None
     session = None
@@ -153,10 +161,14 @@ async def _run(prompt: str) -> dict:
     }
 
 
-def main(google_api_key: str, prompt: str = "What's the weather in Paris?") -> dict:
-    # ADK reads GOOGLE_API_KEY from the environment, so set it before running.
-    # Script inputs are not env vars — see "Passing credentials" below.
-    os.environ["GOOGLE_API_KEY"] = google_api_key
+def main(gemini: googleai, prompt: str = "What's the weather in Paris?") -> dict:
+    # Script inputs are not env vars — set them explicitly.
+    # See "Passing credentials" below.
+    os.environ["GOOGLE_API_KEY"] = gemini["api_key"]
+    if gemini.get("platform") == "google_vertex_ai":
+        os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "true"
+    if gemini.get("base_url"):
+        os.environ["GOOGLE_GEMINI_BASE_URL"] = gemini["base_url"]
     return asyncio.run(_run(prompt))
 ```
 
@@ -209,13 +221,19 @@ const SESSION_FILE = path.join(STATE_DIR, 'session-id.txt')
 const DB_FILE = path.join(STATE_DIR, 'sessions.db')
 
 export async function main(
-  google_api_key: string,
+  gemini: RT.Googleai,
   prompt: string = "What's the weather in Paris?"
 ) {
   // adk-js reads GEMINI_API_KEY (or GOOGLE_GENAI_API_KEY) — script inputs
   // are not env vars, set them explicitly. See "Passing credentials" below.
-  process.env.GEMINI_API_KEY = google_api_key
-  process.env.GOOGLE_GENAI_API_KEY = google_api_key
+  process.env.GEMINI_API_KEY = gemini.api_key
+  process.env.GOOGLE_GENAI_API_KEY = gemini.api_key
+  if (gemini.platform === 'google_vertex_ai') {
+    process.env.GOOGLE_GENAI_USE_VERTEXAI = 'true'
+  }
+  if (gemini.base_url) {
+    process.env.GOOGLE_GEMINI_BASE_URL = gemini.base_url
+  }
 
   fs.mkdirSync(STATE_DIR, { recursive: true })
 
@@ -314,10 +332,10 @@ If you want a fresh conversation, delete the volume contents (or use a different
 
 ADK ships several [session services](https://google.github.io/adk-docs/sessions/session/). `InMemorySessionService` loses state at the end of each job — useless across Windmill runs. `DatabaseSessionService` with a SQLite URL inside the volume gives you persistence with zero infrastructure.
 
-The URL format differs slightly between languages:
+The two ports do not use the same SQLite implementation:
 
-- **Python** uses SQLAlchemy's async engine, so the URL needs the `aiosqlite` driver: `sqlite+aiosqlite:///<path>`. Add `aiosqlite` to your `#requirements:`.
-- **TypeScript** uses MikroORM's SQLite driver: `sqlite://<path>`. No extra dependency needed.
+- **Python** — use `SqliteSessionService` (in `google.adk.sessions.sqlite_session_service`). It's a SQLite-native service that stores timestamps as `REAL` and goes through `aiosqlite` directly, sidestepping a SQLAlchemy + aiosqlite type-marshalling bug that surfaces on resume as `fromisoformat: argument must be str`. The generic `DatabaseSessionService` is fine for postgres/mysql but should not be used with SQLite.
+- **TypeScript** — `DatabaseSessionService` works with a `sqlite://<path>` URL via MikroORM. No extra dependency needed.
 
 For multi-user or multi-tenant setups, scope the volume per workspace or input:
 
@@ -335,6 +353,11 @@ Script inputs are language variables — they are **not** automatically exported
 - **TypeScript** (`@google/adk`) reads `GEMINI_API_KEY` or `GOOGLE_GENAI_API_KEY`.
 
 Apply the same pattern for any other credential the agent or its tools need at runtime — for example `OPENAI_API_KEY`, `TAVILY_API_KEY`, or an MCP server token.
+
+The script also forwards the resource's optional `platform` and `base_url` fields:
+
+- `platform: "google_vertex_ai"` flips ADK to Vertex mode by setting `GOOGLE_GENAI_USE_VERTEXAI=true`. Vertex needs `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION` set on the worker (or wired through additional script inputs).
+- `base_url` is exported as `GOOGLE_GEMINI_BASE_URL` for users running behind a proxy or against a non-default endpoint. Most users leave both fields empty.
 
 ## Extending the agent
 
@@ -400,7 +423,7 @@ Drop this script into any [flow](/docs/flows/flow_editor) step and chain it with
 
 - **`#sandbox` annotation but nsjail is not available** — your worker image does not include nsjail. Use a standard Windmill Docker image or remove the annotation.
 - **Volume not persisting** — check that workspace object storage is configured under [instance settings](/docs/advanced/instance_settings). Without it, volumes only exist for the duration of a single job.
-- **`Failed to create database engine for URL 'sqlite:///…'`** (Python) — ADK's `DatabaseSessionService` uses an async engine, so the URL needs the `aiosqlite` driver: `sqlite+aiosqlite:///<path>`. Make sure `aiosqlite` is listed under `#requirements:`.
+- **`fromisoformat: argument must be str`** (Python, on resume) — you used `DatabaseSessionService` against SQLite, which hits a SQLAlchemy + aiosqlite type-marshalling bug. Switch to `SqliteSessionService` from `google.adk.sessions.sqlite_session_service` (the snippet above already does this) and delete the old `.adk/sessions.db`.
 - **`API key must be provided via constructor or GOOGLE_GENAI_API_KEY or GEMINI_API_KEY`** (TypeScript) — the JS port reads `GEMINI_API_KEY` / `GOOGLE_GENAI_API_KEY`, not `GOOGLE_API_KEY`. Set both for portability.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
