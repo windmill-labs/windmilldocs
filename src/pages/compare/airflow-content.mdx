@@ -27,6 +27,7 @@ import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -34,6 +35,171 @@ export const fadeIn = {
 	viewport: { once: true },
 	transition: { duration: 0.5 },
 };
+
+export function BuildExperienceVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+	const [windmillMode, setWindmillMode] = React.useState('low-code');
+
+	const windmillModes = {
+		'low-code': {
+			src: '/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm',
+			caption: 'Compose steps visually as a DAG with branches, loops and approval steps. Each step can be written in 20+ languages.',
+		},
+		'as-code': {
+			src: '/img/platform/workflow-editor/platform-flow-workflow-as-code.webm',
+			caption: 'Define the workflow programmatically in Python or TypeScript with native try/catch, parallel branches and full language control flow.',
+		},
+	};
+
+	{/* TODO: capture an Airflow authoring video (DAG view + Python file in editor) and save as /static/img/compare/airflow-authoring.webm */}
+	const airflowMode = {
+		placeholder: true,
+		caption: 'Author DAGs as Python files in a dags/ folder. The Airflow webserver renders them as Graph, Grid and Gantt views for monitoring; authoring stays in the editor.',
+	};
+
+	const active = platform === 'windmill' ? windmillModes[windmillMode] : airflowMode;
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('airflow')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'airflow'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/airflow.png" alt="" className="w-4 h-4" />
+					Airflow
+				</button>
+			</div>
+
+			{platform === 'windmill' && (
+				<div className="flex gap-6 mb-4 border-b border-gray-200 dark:border-gray-800">
+					<button
+						type="button"
+						onClick={() => setWindmillMode('low-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'low-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Low-code DAG
+					</button>
+					<button
+						type="button"
+						onClick={() => setWindmillMode('as-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'as-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Workflow as code
+					</button>
+				</div>
+			)}
+
+			{active.placeholder ? (
+				<div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
+					<img src="/img/airflow.png" alt="Airflow" className="w-12 h-12 opacity-70" />
+					<span className="text-sm font-medium text-gray-500 dark:text-gray-400">Airflow walkthrough video coming soon</span>
+				</div>
+			) : (
+				<LazyVideo
+					key={active.src}
+					className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+					src={active.src}
+				/>
+			)}
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
+
+export function IntegrationsVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+
+	{/* TODO: capture an Airflow providers / operator video (e.g. browsing the provider catalog or wiring a SnowflakeOperator) and save as /static/img/compare/airflow-integrations.webm */}
+	const modes = {
+		windmill: {
+			src: '/img/platform/script-editor/platform-script-real-dependencies.webm',
+			caption: 'Import any npm, PyPI, Go or Maven package directly. Windmill generates a lockfile per script and resolves dependencies automatically.',
+		},
+		airflow: {
+			placeholder: true,
+			caption: 'Pick from a curated catalog of 80+ provider packages for AWS, GCP, Snowflake, dbt, Airbyte, Databricks and most data-stack tools. Each provider bundles operators, hooks and sensors.',
+		},
+	};
+
+	const active = modes[platform];
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('airflow')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'airflow'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/airflow.png" alt="" className="w-4 h-4" />
+					Airflow
+				</button>
+			</div>
+
+			{active.placeholder ? (
+				<div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
+					<img src="/img/airflow.png" alt="Airflow" className="w-12 h-12 opacity-70" />
+					<span className="text-sm font-medium text-gray-500 dark:text-gray-400">Airflow walkthrough video coming soon</span>
+				</div>
+			) : (
+				<LazyVideo
+					key={active.src}
+					className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+					src={active.src}
+				/>
+			)}
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
 
 {/* ── The 8 big questions ── */}
 
@@ -145,7 +311,7 @@ export const faqs = [
 
 {/* ── Section wrapper helper ── */}
 
-export function QASection({ id, kicker, question, summary, airflow, windmill, subsections, bottomLine, children, reverse }) {
+export function QASection({ id, kicker, question, summary, airflow, windmill, subsections, bottomLine, afterHero, children, reverse }) {
 	return (
 		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
 			{/* Hero: title + subtitle */}
@@ -162,6 +328,8 @@ export function QASection({ id, kicker, question, summary, airflow, windmill, su
 					</p>
 				)}
 			</motion.div>
+
+			{afterHero}
 
 			{/* Details: subsections (preferred) or fallback 2-card layout */}
 			{subsections && subsections.length > 0 && (
@@ -482,6 +650,7 @@ export default function AirflowCompareContent({ title, description }) {
 				kicker="03 · Build experience"
 				question="How do you build on each platform?"
 				summary="Covers how you write workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
+				afterHero={<BuildExperienceVideos />}
 				subsections={[
 					{
 						label: 'Authoring',
@@ -512,7 +681,7 @@ export default function AirflowCompareContent({ title, description }) {
 									Two ways to define workflows, one runtime under both. The <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">visual flow builder</Link>
 									produces JSON DAGs with multi-language steps, transparent data passing via{' '}
 									<code>results.step_name</code> expressions, and built-in branches, loops, error
-									handlers and approval steps. <Link to="/docs/core_concepts/31_workflows_as_code" className="text-blue-500 hover:underline">Workflow-as-code</Link> defines the same flow
+									handlers and approval steps. <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-500 hover:underline">Workflow-as-code</Link> defines the same flow
 									programmatically in Python or TypeScript.
 								</p>
 								<p>
@@ -625,6 +794,7 @@ export default function AirflowCompareContent({ title, description }) {
 				kicker="04 · Integrations"
 				question="How does the platform integrate with your existing stack?"
 				summary="Three directions: calling external systems, receiving events from them, and extending the platform with things neither tool covers natively."
+				afterHero={<IntegrationsVideos />}
 				subsections={[
 					{
 						label: 'Connecting out',
@@ -922,8 +1092,17 @@ export default function AirflowCompareContent({ title, description }) {
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 						The verdict
 					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						Windmill and Airflow are both DAG-of-tasks orchestrators, but work moves through the engine in fundamentally different ways. Airflow models a workflow as Python files re-parsed by a scheduler that polls a metadata DB and dispatches tasks through an executor and a broker to workers. Windmill models a workflow either as a JSON DAG of multi-language scripts in the visual flow builder, or as workflow-as-code, with workers polling Postgres directly and a dual primitive that picks between dispatched child jobs and inline checkpointed steps.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						<strong>Airflow can be a good fit if</strong> your team already thinks in Python DAGs, your workload is mainstream data-pipeline orchestration that its 80+ provider catalog already covers, and Apache 2.0 licensing of the core matters for redistribution. A decade of community convention, books and tutorials makes onboarding a Python-literate data engineer straightforward.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						<strong>Windmill also works very well for those use cases</strong>, and goes considerably deeper. The developer experience covers 20+ first-class language runtimes with a local-dev loop, AI coding tools against real source files, and whole-workspace Git sync for scripts, flows, apps, resources and permissions. The runtime scope is wider too: the same platform that runs your workflows also powers data pipelines, AI agents and both low-code and full-code internal apps, with shared auth, secrets and observability across all of them. For short, high-volume workloads, Windmill runs around 23× faster than Airflow on equivalent hardware (40 lightweight Python tasks in 2.4s versus 56s), driven by single-hop worker dispatch instead of Airflow's scheduler, broker and worker chain. More of the enterprise foundation ships in open source, and Enterprise pricing is published upfront instead of gated behind a vendor sales call.
+					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The biggest difference between Windmill and Airflow is the <strong>developer experience</strong>. Windmill gives you a code-first editor with scripts as standalone primitives, a full local-dev loop, multi-language support and whole-workspace Git sync. Airflow is Python-native DAGs with a decade of data engineering convention and a large provider catalog for the mainstream data stack. The other major difference is the <strong>range of internal software you can build on each platform</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and internal apps on one runtime, while Airflow focuses on scheduled data-pipeline orchestration. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
+						The switching cost is also asymmetric: Windmill step logic is standard code (TypeScript, Python, Go, Bash, SQL) that runs anywhere after you leave Windmill, while Airflow workflows built on provider operators, XComs, sensors and dataset triggers have to be rewritten on any other platform. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
 			</section>
