@@ -5,6 +5,7 @@ import {
 	Bars3Icon,
 	XMarkIcon,
 	WrenchScrewdriverIcon,
+	Squares2X2Icon,
 	ArrowPathIcon,
 	CircleStackIcon,
 	CodeBracketIcon,
@@ -132,7 +133,7 @@ const solutionsByUseCase = [
 		name: 'Internal apps',
 		description: 'Build admin panels, dashboards and back-office apps.',
 		href: '/use-cases/internal-apps',
-		icon: WrenchScrewdriverIcon
+		icon: Squares2X2Icon
 	},
 	{
 		name: 'AI agents',
