@@ -272,6 +272,52 @@ export const sections = [
 				link: '/docs/core_concepts/variables_and_secrets#secret-storage-backends'
 			},
 			{
+				name: 'IAM database authentication for AWS RDS / Aurora',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/integrations/postgresql#iam-authentication-for-aws-rds-and-aurora',
+				tooltip: 'Self-hosted Enterprise only'
+			},
+			{
+				name: 'Entra ID database authentication for Azure PostgreSQL',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/self_host/azure_entra_id#entra-id-database-authentication-optional',
+				tooltip: 'Self-hosted Enterprise only'
+			},
+			{
+				name: 'Workspace service accounts',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/roles_and_permissions#service-accounts'
+			},
+			{
+				name: 'Instance-level roles via instance groups',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/roles_and_permissions#instance-level-roles-via-instance-groups'
+			},
+			{
 				name: 'Custom OAuth',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -414,6 +460,39 @@ export const sections = [
 					'tier-team': false
 				},
 				link: '/docs/advanced/instance_settings#http-tracing'
+			},
+			{
+				name: 'OpenTelemetry tracing & logging',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/misc/guides/otel'
+			},
+			{
+				name: 'Service logs storage on S3',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/service_logs#log-storage'
+			},
+			{
+				name: 'Instance events webhook',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/instance_settings#instance-events-webhook'
 			}
 		]
 	},
@@ -497,6 +576,17 @@ export const sections = [
 					'tier-team': true
 				},
 				link: '/docs/core_concepts/staging_prod'
+			},
+			{
+				name: '"Run on behalf of" selector when deploying across workspaces',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/staging_prod#run-on-behalf-of'
 			},
 			{
 				name: 'Workspace forks',
