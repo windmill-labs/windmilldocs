@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 export default function LazyVideo({ src, className, loop = true }) {
 	const ref = useRef(null);
+	const [showControls, setShowControls] = useState(false);
 
 	useEffect(() => {
 		const el = ref.current;
@@ -9,13 +10,15 @@ export default function LazyVideo({ src, className, loop = true }) {
 
 		const observer = new IntersectionObserver(
 			([entry]) => {
-				if (entry.isIntersecting) {
-					el.play().catch(() => {});
+				if (entry.intersectionRatio >= 0.999) {
+					el.play().catch(() => {
+						setShowControls(true);
+					});
 				} else {
 					el.pause();
 				}
 			},
-			{ threshold: 1.0 }
+			{ threshold: [0, 1.0] }
 		);
 
 		observer.observe(el);
@@ -29,6 +32,8 @@ export default function LazyVideo({ src, className, loop = true }) {
 			loop={loop}
 			muted
 			playsInline
+			preload="metadata"
+			controls={showControls}
 			src={src}
 		/>
 	);
