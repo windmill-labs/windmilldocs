@@ -26,6 +26,7 @@ import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
 import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import LazyVideo from '../../components/products/LazyVideo';
 
 export const fadeIn = {
 	initial: { opacity: 0, y: 30 },
@@ -33,6 +34,135 @@ export const fadeIn = {
 	viewport: { once: true },
 	transition: { duration: 0.5 },
 };
+
+export function BuildExperienceVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+
+	const modes = {
+		windmill: {
+			src: '/img/platform/app-builder/platform-app-builder-windmill-ui.webm',
+			caption: 'Build apps directly in the Windmill UI: a built-in IDE where the frontend wires to backend scripts and flows as runnables, with AI-assisted generation and one-click deploy with versioning.',
+		},
+		retool: {
+			src: '/img/compare/retool-authoring.webm',
+			caption: 'Drag-and-drop canvas with a large component library. JavaScript queries on top of your databases and APIs, configured in the same browser editor against live data.',
+		},
+	};
+
+	const active = modes[platform];
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('retool')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'retool'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/retool.webp" alt="" className="w-4 h-4" />
+					Retool
+				</button>
+			</div>
+
+			{active.placeholder ? (
+				<div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
+					<img src="/img/retool.webp" alt="Retool" className="w-12 h-12 opacity-70" />
+					<span className="text-sm font-medium text-gray-500 dark:text-gray-400">Retool walkthrough video coming soon</span>
+				</div>
+			) : (
+				<LazyVideo
+					key={active.src}
+					className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+					src={active.src}
+				/>
+			)}
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
+
+export function IntegrationsVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+
+	{/* TODO: capture a Retool integrations video (e.g. configuring a Postgres or Stripe resource in the resource UI) and save as /static/img/compare/retool-integrations.webm */}
+	const modes = {
+		windmill: {
+			src: '/img/platform/script-editor/platform-script-real-dependencies.webm',
+			caption: 'Type `import stripe` in the script editor and run. Windmill detects the import, resolves the version and pins it in a per-script lockfile automatically. No venv, no pip install, no restart: the platform manages dependencies for you.',
+		},
+		retool: {
+			src: '/img/compare/retool-integrations.webm',
+			caption: 'Import a query from Retool\'s library: pick a service (here, Firebase), Retool prepopulates a query template wired to the Resource you have configured, ready to drop into an app or workflow.',
+		},
+	};
+
+	const active = modes[platform];
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('retool')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'retool'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/retool.webp" alt="" className="w-4 h-4" />
+					Retool
+				</button>
+			</div>
+
+			{active.placeholder ? (
+				<div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
+					<img src="/img/retool.webp" alt="Retool" className="w-12 h-12 opacity-70" />
+					<span className="text-sm font-medium text-gray-500 dark:text-gray-400">Retool walkthrough video coming soon</span>
+				</div>
+			) : (
+				<LazyVideo
+					key={active.src}
+					className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+					src={active.src}
+				/>
+			)}
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
 
 {/* ── The 8 big questions ── */}
 
@@ -128,7 +258,7 @@ export const faqs = [
 
 {/* ── Section wrapper helper ── */}
 
-export function QASection({ id, kicker, question, summary, retool, windmill, subsections, bottomLine, children, reverse }) {
+export function QASection({ id, kicker, question, summary, retool, windmill, subsections, bottomLine, afterHero, children, reverse }) {
 	return (
 		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
 			{/* Hero: title + subtitle */}
@@ -145,6 +275,8 @@ export function QASection({ id, kicker, question, summary, retool, windmill, sub
 					</p>
 				)}
 			</motion.div>
+
+			{afterHero}
 
 			{/* Details: subsections (preferred) or fallback 2-card layout */}
 			{subsections && subsections.length > 0 && (
@@ -472,6 +604,7 @@ export default function RetoolCompareContent({ title, description }) {
 				kicker="03 · Build experience"
 				question="How do you build on each platform?"
 				summary="Covers how you write apps and workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
+				afterHero={<BuildExperienceVideos />}
 				subsections={[
 					{
 						label: 'Authoring',
@@ -535,6 +668,24 @@ export default function RetoolCompareContent({ title, description }) {
 						),
 					},
 					{
+						label: 'Data handling',
+						windmill: (
+							<p>
+								First-class <Link to="/platform/datatables" className="text-blue-500 hover:underline">data tables</Link> with SQL queries, versioning and a browse / edit UI as a
+								persistent primitive separate from apps, plus native S3 integration for large
+								payloads, files and persistent storage across scripts, flows and apps.
+							</p>
+						),
+						retool: (
+							<p>
+								<a href="https://retool.com/database" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Retool Database</a> is a hosted Postgres for app-backing data with a browse /
+								edit UI, available on Free and above with row caps that scale by tier. External
+								databases connect as Resources. Files and large binary data go through the File
+								component and the AWS S3 resource.
+							</p>
+						),
+					},
+					{
 						label: 'Resources & secrets',
 						windmill: (
 							<p>
@@ -588,6 +739,7 @@ export default function RetoolCompareContent({ title, description }) {
 				kicker="04 · Integrations"
 				question="How does the platform integrate with your existing stack?"
 				summary="Three directions: calling external systems, receiving events from them, and extending the platform with things neither tool covers natively."
+				afterHero={<IntegrationsVideos />}
 				subsections={[
 					{
 						label: 'Connecting out',
