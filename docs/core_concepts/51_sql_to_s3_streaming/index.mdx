@@ -25,9 +25,7 @@ All `-- s3` parameters are optional:
 
 ## Reading S3 files as parameters
 
-Declare an `(s3object)` argument and the worker downloads the file, decodes it (auto-detected from the extension: `.json` / `.jsonl` / `.parquet` / `.csv`), and binds it as a JSON-text parameter. Your SQL then reads it with the dialect's JSON-table function.
-
-This is the symmetric path to `-- s3`: a flow step that writes its result to S3 (any language, including Bun-native scripts that bypass the internal Postgres) can be consumed by a follow-up native SQL step without an intermediate Python or Bun client.
+Declare an `(s3object)` argument and the worker downloads the file, decodes it (auto-detected from the extension: `.json` / `.jsonl` / `.parquet` / `.csv`), and binds it as a JSON-text parameter. Your SQL then reads it with the dialect's JSON-table function. This is the symmetric path to `-- s3`: a previous flow step (in any language) can write its result to S3 and the next native SQL step picks it up directly.
 
 | Dialect | Argument declaration | JSON-consumption pattern |
 |---|---|---|

@@ -7,7 +7,7 @@ features:
   [
     'Declare an `(s3object)` argument in any native SQL dialect; the worker downloads the file and binds it as a JSON parameter.',
     'Auto-detects format from the object key extension: `.parquet`, `.csv`, `.json`/`.jsonl`.',
-    'Symmetric to the existing `-- s3` output flag — flow steps can hand S3 files between Bun-native and SQL steps without an intermediate client.',
+    'Symmetric to the existing `-- s3` output flag: a previous flow step writes to S3, the next native SQL step reads it as a parameter.',
   ]
 docs: /docs/core_concepts/sql_to_s3_streaming#reading-s3-files-as-parameters
 ---
@@ -19,4 +19,4 @@ Native SQL scripts (PostgreSQL, MSSQL, MySQL, BigQuery, Snowflake) now accept `(
 SELECT id, name FROM OPENJSON(@P1) WITH (id INT '$.id', name NVARCHAR(255) '$.name');
 ```
 
-This is the symmetric path to the existing `-- s3` output flag: a Bun-native step can write its result to S3 and a follow-up SQL step can read it directly with the dialect's JSON-table function (`OPENJSON`, `jsonb_to_recordset`, `JSON_TABLE`, `JSON_QUERY_ARRAY`, `FLATTEN(input => PARSE_JSON(?))`), without a Python or Bun client step in between.
+This is the symmetric path to the existing `-- s3` output flag: a previous flow step writes a file to workspace S3 storage, and the next native SQL step picks it up by reference and reads it with the dialect's JSON-table function (`OPENJSON`, `jsonb_to_recordset`, `JSON_TABLE`, `JSON_QUERY_ARRAY`, `FLATTEN(input => PARSE_JSON(?))`).
