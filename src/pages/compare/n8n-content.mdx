@@ -1,0 +1,1065 @@
+---
+title: "Windmill vs n8n: an honest side-by-side comparison"
+description: "Evaluating n8n and Windmill? A neutral, question-driven comparison across target audience, developer experience, scope, integrations, migration, performance, and pricing, including where each tool is genuinely the better choice."
+---
+
+import React from 'react';
+import Link from '@docusaurus/Link';
+import { motion } from 'framer-motion';
+import {
+	Check,
+	X,
+	Users,
+	Terminal,
+	Boxes,
+	Puzzle,
+	ArrowRightLeft,
+	Gauge,
+	Scale,
+	Compass,
+	ArrowRight,
+} from 'lucide-react';
+import GithubStarCount from '../../landing/GithubStarCount';
+import HeroCTAButtons from '../../components/products/HeroCTAButtons';
+import ProductCTA from '../../components/products/ProductCTA';
+import UseCaseFAQ from '../../components/use-cases/UseCaseFAQ';
+import CodeBlock from '@theme/CodeBlock';
+import LazyVideo from '../../components/products/LazyVideo';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { BenchmarkVisualization } from '../../components/BenchmarkVisualization';
+
+export const fadeIn = {
+	initial: { opacity: 0, y: 30 },
+	whileInView: { opacity: 1, y: 0 },
+	viewport: { once: true },
+	transition: { duration: 0.5 },
+};
+
+{/* ── The 8 big questions ── */}
+
+export const bigQuestions = [
+	{ id: 'build',        kicker: 'What you can build',     short: 'Which solution fits for your specific use case', icon: Boxes },
+	{ id: 'target',       kicker: 'Target',                 short: 'Who the platform is built for',                          icon: Users },
+	{ id: 'devex',        kicker: 'Build experience',   short: 'How you build on each platform',              icon: Terminal },
+	{ id: 'integrations', kicker: 'Integrations',           short: 'How the platform integrates with your existing stack',   icon: Puzzle },
+	{ id: 'migration',    kicker: 'Migration & lock-in',    short: 'How hard to get in, how hard to get out',                icon: ArrowRightLeft },
+	{ id: 'enterprise',   kicker: 'Enterprise requirements', short: 'Audit logs, observability, security, performance',      icon: Gauge },
+	{ id: 'licensing',    kicker: 'Licensing & pricing',    short: 'Open source, pricing, self-hosting',                     icon: Scale },
+	{ id: 'verdict',      kicker: 'Verdict',                short: 'The verdict',                                            icon: Compass },
+];
+
+export function BuildExperienceVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+	const [windmillMode, setWindmillMode] = React.useState('low-code');
+
+	const windmillModes = {
+		'low-code': {
+			src: '/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm',
+			caption: 'Compose steps visually as a DAG with branches, loops and approval steps. Each step can be written in 20+ languages.',
+		},
+		'as-code': {
+			src: '/img/platform/workflow-editor/platform-flow-workflow-as-code.webm',
+			caption: 'Define the workflow programmatically in Python or TypeScript with native try/catch, parallel branches and full language control flow.',
+		},
+	};
+
+	const n8nMode = {
+		src: '/img/compare/n8n-authoring.webm',
+		caption: 'Drag pre-built nodes onto a canvas and wire them together. Each node is a configured integration; custom logic lives inside a Code node constrained to n8n\'s data model.',
+	};
+
+	const active = platform === 'windmill' ? windmillModes[windmillMode] : n8nMode;
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			{/* Primary platform switch */}
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('n8n')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'n8n'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/n8n.svg" alt="" className="w-4 h-4" />
+					n8n
+				</button>
+			</div>
+
+			{/* Secondary Windmill sub-switch */}
+			{platform === 'windmill' && (
+				<div className="flex gap-6 mb-4 border-b border-gray-200 dark:border-gray-800">
+					<button
+						type="button"
+						onClick={() => setWindmillMode('low-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'low-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Low-code DAG
+					</button>
+					<button
+						type="button"
+						onClick={() => setWindmillMode('as-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'as-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Workflow as code
+					</button>
+				</div>
+			)}
+
+			<LazyVideo
+				key={active.src}
+				className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+				src={active.src}
+			/>
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
+
+export function IntegrationsVideos() {
+	const [platform, setPlatform] = React.useState('windmill');
+
+	const modes = {
+		windmill: {
+			src: '/img/platform/script-editor/platform-script-real-dependencies.webm',
+			caption: 'Type `import stripe` in the script editor and run. Windmill detects the import, resolves the version and pins it in a per-script lockfile automatically. No venv, no pip install, no restart: the platform manages dependencies for you.',
+		},
+		n8n: {
+			src: '/img/compare/n8n-integrations.webm',
+			caption: 'Pick from 1,600+ pre-built nodes for mainstream SaaS apps. Each node wraps the vendor API; custom endpoints go through a generic HTTP Request node.',
+		},
+	};
+
+	const active = modes[platform];
+
+	return (
+		<motion.div {...fadeIn} className="mb-20">
+			<div className="flex w-fit mx-auto gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-1 mb-4">
+				<button
+					type="button"
+					onClick={() => setPlatform('windmill')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'windmill'
+							? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/windmill.svg" alt="" className="w-4 h-4" />
+					Windmill
+				</button>
+				<button
+					type="button"
+					onClick={() => setPlatform('n8n')}
+					className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all ${
+						platform === 'n8n'
+							? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+							: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+					}`}
+					style={{ border: 'none' }}
+				>
+					<img src="/img/n8n.svg" alt="" className="w-4 h-4" />
+					n8n
+				</button>
+			</div>
+
+			<LazyVideo
+				key={active.src}
+				className="rounded-2xl border border-gray-200 dark:border-gray-700 w-full"
+				src={active.src}
+			/>
+			<p className="text-base text-gray-700 dark:text-gray-300 mt-4 text-center max-w-2xl mx-auto leading-relaxed">{active.caption}</p>
+		</motion.div>
+	);
+}
+
+export function EnterpriseBadge() {
+	return (
+		<span className="inline-flex items-center rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 mx-1 align-middle whitespace-nowrap">
+			Enterprise only
+		</span>
+	);
+}
+
+export function CheckCell({ value }) {
+	if (value === true) {
+		return <Check className="w-5 h-5 text-emerald-500 mx-auto" />;
+	}
+	if (value === false) {
+		return <X className="w-5 h-5 text-gray-400 mx-auto" />;
+	}
+	if (value === 'Enterprise') {
+		return (
+			<div className="flex flex-col items-center gap-1">
+				<Check className="w-5 h-5 text-emerald-500" />
+				<EnterpriseBadge />
+			</div>
+		);
+	}
+	return <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">{value}</span>;
+}
+
+{/* ── What you can build — row data ── */}
+
+export const buildRows = [
+	{ feature: 'Workflows',               href: '/use-cases/workflows',         description: 'Chain scripts into flows with branching, retries and approval steps',    windmill: true, n8n: true },
+	{ feature: 'Data pipelines',          href: '/use-cases/data-pipelines',    description: 'ETL, syncs and scheduled data jobs with parallel branches',              windmill: true, n8n: 'Partial' },
+	{ feature: 'Scripts',                 href: '/use-cases/scripts',           description: 'Standalone functions exposed as APIs, webhooks or cron jobs without a wrapping workflow',     windmill: true, n8n: false },
+	{ feature: 'AI agent workflows',      href: '/use-cases/ai-agents',         description: 'Build agents that call tools, branch on outputs and run as workflows',   windmill: true, n8n: true },
+	{ feature: 'AI sandboxes & volumes',  href: '/platform/sandboxes',          description: 'Isolated environments with persistent volumes for running agents',       windmill: true, n8n: false },
+	{ feature: 'Low-code internal apps',  href: '/use-cases/internal-apps',     description: 'Drag-and-drop dashboards and admin tools with built-in components',      windmill: true, n8n: false },
+	{ feature: 'Full-code internal apps', href: '/platform/app-builder',        description: 'Custom dashboards and admin tools built in React or Svelte',             windmill: true, n8n: false },
+	{ feature: 'Scheduled tasks',         href: '/use-cases/scheduled-tasks',   description: 'Cron jobs with retries, error handling and alerting',                    windmill: true, n8n: true },
+];
+
+{/* ── FAQ ── */}
+
+export const faqs = [
+	{
+		question: 'Is Windmill a drop-in replacement for n8n?',
+		textAnswer:
+			'Both platforms can automate workflows, run on triggers and call external APIs, so the use-case overlap is real. But the authoring model is different: n8n workflows are JSON graphs built in a visual canvas, while Windmill workflows are flows of scripts written in TypeScript, Python, Go, Bash or SQL. Porting is a rewrite, not a conversion, and most teams end up with fewer nodes because one Windmill script often replaces several n8n nodes chained together.',
+	},
+	{
+		question: 'Can I migrate n8n workflows to Windmill automatically?',
+		textAnswer:
+			'No, there is no automated n8n-to-Windmill converter. Migration is a manual rewrite where each n8n node becomes a step in a Windmill flow, or a standalone script. The upside is that logic trapped inside Code nodes becomes regular code that runs anywhere. The downside is that workflows relying heavily on pre-built n8n nodes for niche integrations need those integrations rewritten against the vendor SDK.',
+	},
+	{
+		question: 'Does Windmill have 1,600+ pre-built integrations like n8n?',
+		textAnswer:
+			'No. Windmill has a community Hub of reusable scripts and flows but not a pre-built node catalog the size of n8n\'s 400+ integrations. The trade-off: in Windmill, any npm or PyPI package is a first-class import, so the effective catalog is the entire package ecosystem. For mainstream SaaS integrations that n8n has a polished node for, n8n is faster to wire up the first time.',
+	},
+	{
+		question: 'Can non-technical users author workflows on Windmill?',
+		textAnswer:
+			'Only partially. Windmill has a visual flow editor and auto-generated UIs from script inputs, but the individual steps still involve writing code. n8n\'s drag-and-drop canvas with 1,600+ pre-built nodes is the more accessible authoring surface for analysts, marketers and ops users. If that audience needs to build workflows themselves, n8n is the better fit.',
+	},
+	{
+		question: 'How does performance compare?',
+		textAnswer:
+			'Windmill uses a queue-based, horizontally scalable worker pool with roughly 10ms cold starts and a dedicated-worker mode that keeps runtimes pre-warmed. n8n runs as a Node.js process with optional queue mode for scaling. For high-volume, short-lived workloads (webhooks, alerts, micro-tasks), Windmill has noticeably lower per-task overhead. For long-running workflows that call external APIs, both are bottlenecked by the APIs, not the runtime.',
+	},
+	{
+		question: 'What about the licenses, AGPLv3 vs Sustainable Use License?',
+		textAnswer:
+			'n8n\'s core is distributed under the Sustainable Use License, a source-available license that permits internal use and limited customisation but restricts offering n8n as a commercial service. It is not OSI-approved open source. Windmill\'s core is AGPLv3, which is OSI-approved open source and requires source availability for network-exposed modifications. If true OSS status matters (procurement, redistribution, modification), Windmill wins this axis. If you only need to self-host for internal use, both are effectively free.',
+	},
+	{
+		question: 'Is pricing public?',
+		textAnswer:
+			'Both publish cloud pricing. n8n\'s self-hosted Business tier is 667 euros per month with a fixed execution cap; their Enterprise tier is custom-quoted. Windmill publishes per-seat and per-worker Enterprise pricing on its pricing page with no execution metering.',
+	},
+];
+
+{/* ── Section wrapper helper ── */}
+
+export function QASection({ id, kicker, question, summary, n8n, windmill, subsections, bottomLine, afterHero, children, reverse }) {
+	return (
+		<section id={id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
+			{/* Hero: title + subtitle */}
+			<motion.div {...fadeIn} className="mb-12">
+				<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-3">
+					{kicker}
+				</div>
+				<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-5">
+					{question}
+				</h2>
+				{bottomLine && (
+					<p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+						{bottomLine}
+					</p>
+				)}
+			</motion.div>
+
+			{afterHero}
+
+			{/* Details: subsections (preferred) or fallback 2-card layout */}
+			{subsections && subsections.length > 0 && (
+				<div className="divide-y divide-gray-200 dark:divide-gray-800">
+					{/* Shared column headers — desktop only */}
+					<div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] md:gap-8 pb-4">
+						<div />
+						<div className="flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+							<span className="text-base font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<img src="/img/n8n.svg" alt="n8n" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">n8n</span>
+						</div>
+					</div>
+
+					{subsections.map((sub, i) => (
+						<motion.div
+							key={sub.label || i}
+							{...fadeIn}
+							className="py-6 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] md:gap-8 md:items-start"
+						>
+							{sub.label && (
+								<h3 className="text-base font-semibold text-gray-900 dark:text-white mb-4 md:mb-0">
+									{sub.label}
+								</h3>
+							)}
+							<div className="mb-4 md:mb-0">
+								<div className="md:hidden mb-2 flex items-center gap-2">
+									<img src="/img/windmill.svg" alt="Windmill" className="w-4 h-4" />
+									<span className="text-sm font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+								</div>
+								<div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed space-y-2">
+									{sub.windmill}
+								</div>
+							</div>
+							<div>
+								<div className="md:hidden mb-2 flex items-center gap-2">
+									<img src="/img/n8n.svg" alt="n8n" className="w-4 h-4" />
+									<span className="text-sm font-bold text-gray-900 dark:text-white">n8n</span>
+								</div>
+								<div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed space-y-2">
+									{sub.n8n}
+								</div>
+							</div>
+						</motion.div>
+					))}
+				</div>
+			)}
+
+			{!subsections && (windmill || n8n) && (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+					<motion.div
+						{...fadeIn}
+						className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-6 shadow-sm"
+					>
+						<div className="mb-4 flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+							<span className="text-base font-bold text-blue-600 dark:text-blue-400">Windmill</span>
+						</div>
+						<div className="text-gray-700 dark:text-gray-200 leading-relaxed space-y-3">
+							{windmill}
+						</div>
+					</motion.div>
+					<motion.div
+						{...fadeIn}
+						className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6"
+					>
+						<div className="mb-4 flex items-center gap-2">
+							<img src="/img/n8n.svg" alt="n8n" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">n8n</span>
+						</div>
+						<div className="text-gray-700 dark:text-gray-200 leading-relaxed space-y-3">
+							{n8n}
+						</div>
+					</motion.div>
+				</div>
+			)}
+
+			{children}
+		</section>
+	);
+}
+
+export default function N8nCompareContent({ title, description }) {
+	return (
+		<div className="pt-32 max-w-full">
+			{/* ── Hero ── */}
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<motion.div {...fadeIn}>
+						<div className="mb-4"><GithubStarCount /></div>
+						<h1 className="!text-4xl sm:!text-6xl !font-semibold !tracking-tight text-gray-900 dark:text-white mb-6">
+							Windmill vs n8n
+						</h1>
+						<p className="text-xl text-gray-600 dark:text-gray-100 mb-8">
+							Eight questions teams ask during a bake-off, with an honest answer on each one
+							for where Windmill or n8n is the better pick.
+						</p>
+						<HeroCTAButtons />
+					</motion.div>
+
+					<div className="hidden md:flex items-center justify-center">
+						<div className="flex items-center gap-8">
+							<motion.div
+								initial={{ opacity: 0, x: -30 }}
+								whileInView={{ opacity: 1, x: 0 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.5 }}
+								className="flex items-center justify-center w-40 h-40 rounded-3xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 shadow-md"
+							>
+								<motion.img
+									src="/img/windmill.svg"
+									alt="Windmill"
+									className="w-20 h-20"
+									animate={{ rotate: 360 }}
+									transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+								/>
+							</motion.div>
+							<motion.div
+								initial={{ opacity: 0, scale: 0.5 }}
+								whileInView={{ opacity: 1, scale: 1 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.4, delay: 0.2 }}
+								className="text-xl font-semibold text-gray-400 dark:text-gray-500"
+							>
+								vs
+							</motion.div>
+							<motion.div
+								initial={{ opacity: 0, x: 30 }}
+								whileInView={{ opacity: 1, x: 0 }}
+								viewport={{ once: true }}
+								transition={{ duration: 0.5, delay: 0.1 }}
+								className="flex items-center justify-center w-40 h-40 rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
+							>
+								<img src="/img/n8n.svg" alt="n8n" className="w-20 h-20" />
+							</motion.div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* ── Jump-to navigation (table of contents) ── */}
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-4">
+				<motion.div {...fadeIn} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/60 p-6">
+					<div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">
+						The 8 questions
+					</div>
+					<ol className="divide-y divide-gray-100 dark:divide-gray-800">
+						{bigQuestions.map((q, i) => (
+							<li key={q.id}>
+								<a
+									href={`#${q.id}`}
+									className="group flex items-baseline gap-4 py-3 !no-underline hover:text-blue-600 dark:hover:text-blue-400"
+								>
+									<span className="text-xs font-mono font-semibold text-gray-400 dark:text-gray-500 w-6 shrink-0">
+										{String(i + 1).padStart(2, '0')}
+									</span>
+									<span className="text-sm font-medium text-gray-500 dark:text-gray-400 w-48 shrink-0 whitespace-nowrap">
+										{q.kicker}
+									</span>
+									<span className="text-base text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 flex-1 whitespace-nowrap">
+										{q.short}
+									</span>
+									<ArrowRight className="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-blue-500 group-hover:translate-x-1 transition-all shrink-0" />
+								</a>
+							</li>
+						))}
+					</ol>
+				</motion.div>
+			</section>
+
+
+			{/* ── Quick take ── */}
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
+				<motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+						<div className="mb-3 flex items-center gap-2">
+							<img src="/img/windmill.svg" alt="Windmill" className="w-5 h-5" />
+							<span className="text-base font-bold text-blue-600 dark:text-blue-400">
+								Windmill in one sentence
+							</span>
+						</div>
+						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
+							An open-source platform to <strong>build and orchestrate all your internal software</strong>:
+							<Link to="/use-cases/scripts" className="text-blue-500 hover:underline"> scripts</Link>,{' '}
+							<Link to="/use-cases/workflows" className="text-blue-500 hover:underline">workflows</Link>,{' '}
+							<Link to="/use-cases/data-pipelines" className="text-blue-500 hover:underline">data pipelines</Link>,{' '}
+							<Link to="/use-cases/ai-agents" className="text-blue-500 hover:underline">AI agents</Link> and{' '}
+							<Link to="/use-cases/internal-apps" className="text-blue-500 hover:underline">internal apps</Link>. Made for engineers who
+							want full code flexibility and <Link to="/platform/local-dev" className="text-blue-500 hover:underline">local dev experience</Link>, both to build internal software and to manage the underlying
+							infrastructure.
+						</p>
+					</div>
+					<div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/60 p-6">
+						<div className="mb-3 flex items-center gap-2">
+							<img src="/img/n8n.svg" alt="n8n" className="w-5 h-5" />
+							<span className="text-base font-bold text-gray-900 dark:text-white">
+								n8n in one sentence
+							</span>
+						</div>
+						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
+							A source-available <strong>visual workflow automation</strong> tool with a drag-and-drop
+							canvas, 1,600+ pre-built nodes for SaaS apps and a growing AI agent builder. Best for mixed
+							teams where marketers, ops and non-developers automate tasks themselves alongside engineers.
+						</p>
+					</div>
+				</motion.div>
+			</section>
+
+			{/* ── Q1: Scope ── */}
+			<QASection
+				id="build"
+				kicker="01 · What you can build"
+				question="Which internal software can you build and orchestrate?"
+				summary="Both platforms automate workflows. The real question is what else you can build on the same runtime."
+				bottomLine={
+					<>
+						<strong>Windmill</strong> is built to centralize and orchestrate all your internal software in one place. Scripts, workflows, data pipelines, full-code apps, AI agents and operator UIs run on a single runtime, with shared resources, auth and observability.
+						<strong> n8n</strong> focuses on visual workflow automation and AI agents, so you bring your own stack for dashboards, internal apps and heavier data pipelines.
+					</>
+				}
+			>
+				<motion.div {...fadeIn} className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
+					<table className="w-full text-sm !table !mb-0 !border-collapse [&_th]:!border-0 [&_td]:!border-0 [&_tr]:!border-0 [&_tbody]:!border-0">
+						<thead className="bg-gray-50 dark:bg-gray-800/60">
+							<tr>
+								<th className="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white">Primitive</th>
+								<th className="px-6 py-4 text-center font-semibold text-blue-600 dark:text-blue-400 w-32">
+									<span className="inline-flex items-center gap-2">
+										<img src="/img/windmill.svg" alt="Windmill" className="w-4 h-4" />
+										Windmill
+									</span>
+								</th>
+								<th className="px-6 py-4 text-center font-semibold text-gray-700 dark:text-gray-300 w-32">
+									<span className="inline-flex items-center gap-2">
+										<img src="/img/n8n.svg" alt="n8n" className="w-4 h-4" />
+										n8n
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900">
+							{buildRows.map((row) => (
+								<tr key={row.feature}>
+									<td className="px-6 py-4">
+										<div className="font-semibold text-gray-900 dark:text-white">
+											{row.href ? (
+												<Link to={row.href} className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">
+													{row.feature}
+												</Link>
+											) : (
+												row.feature
+											)}
+										</div>
+										{row.description && (
+											<div className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{row.description}</div>
+										)}
+									</td>
+									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.windmill} /></td>
+									<td className="px-6 py-4 text-center align-top pt-5"><CheckCell value={row.n8n} /></td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</motion.div>
+			</QASection>
+
+			{/* ── Q2: Audience ── */}
+			<QASection
+				id="target"
+				kicker="02 · Target"
+				question="Who is each platform built for?"
+				summary="Both tools say 'for everyone'. In practice, how you build workflows picks a primary audience, and it matters a lot once the team grows."
+				subsections={[
+					{
+						label: 'Primary audience',
+						windmill: (
+							<p>
+								Developer-led teams. Engineers own the platform end-to-end: code, Git, local dev, workspace forks, code
+								review, CI/CD, AI coding tools, infrastructure as code.
+							</p>
+						),
+						n8n: (
+							<p>
+								Mixed and non-technical teams. Marketers, ops, sales and analysts build automations on a
+								drag-and-drop canvas with pre-built nodes, with developers stepping in for edge cases via
+								Code nodes or custom node development.
+							</p>
+						),
+					},
+					{
+						label: 'How non-developers participate',
+						windmill: (
+							<p>
+								Non-developers consume through auto-generated UIs, custom apps and an operator role.
+								They can build simple flows with AI assistance, but authoring is optimized for engineers.
+							</p>
+						),
+						n8n: (
+							<p>
+								Non-developers author directly on the visual canvas, wiring nodes together without
+								writing code. This is n8n's strongest design axis.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> is built for developer-led teams where engineers own the platform end-to-end.
+						<strong> n8n</strong> is designed for mixed teams where marketers, ops and business users build their own automations on a visual canvas.
+					</>
+				}
+			/>
+
+			{/* ── Q3: Authoring model ── */}
+			<QASection
+				reverse
+				id="devex"
+				kicker="03 · Build experience"
+				question="How do you build on each platform?"
+				summary="Covers how you build workflows, the local-dev loop, IDE and AI tooling, and how much of the platform itself is manageable from Git."
+				subsections={[
+					{
+						label: 'Authoring',
+						windmill: (
+							<p>
+								Build scripts in 20+ languages in a dedicated <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>. Each script is a standalone
+								primitive with its own UI, API endpoint and scheduler; no wrapper required to run.
+								Flows compose scripts either visually via a <Link to="/platform/flow-editor" className="text-blue-500 hover:underline">flow editor</Link> or in full code via <Link to="/docs/core_concepts/workflows_as_code" className="text-blue-500 hover:underline">workflow-as-code</Link>
+								(Python and TypeScript). Any public or private package is a first-class import with
+								automatic dependency resolution.
+							</p>
+						),
+						n8n: (
+							<p>
+								Build workflows on a drag-and-drop canvas by wiring <a href="https://n8n.io/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">pre-built nodes</a> together. Each
+								node is a configured integration (HTTP Request, Gmail, Slack, OpenAI, etc.) with its
+								parameters filled in through forms. For custom logic, a Code node embeds a JavaScript
+								or Python snippet, but the code must conform to <a href="https://docs.n8n.io/code/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">n8n's data model</a> (items as arrays
+								with item linking between input and output) and use n8n's built-in helpers rather
+								than plain language idioms.
+							</p>
+						),
+					},
+					{
+						label: 'Local dev & IDE',
+						windmill: (
+							<p>
+								Run scripts locally with the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">Windmill CLI</Link>. VS Code extension, native language tooling
+								(LSP, type-checking, linting) and AI coding tools (Claude Code, Codex) work against real
+								source files.
+							</p>
+						),
+						n8n: (
+							<p>
+								Primary authoring happens in the hosted canvas, not a local IDE. A CLI exists for
+								exporting and importing workflow JSON, and custom nodes can be built in TypeScript with a
+								local toolchain, but day-to-day workflow development is web-first.
+							</p>
+						),
+					},
+					{
+						label: 'Data handling',
+						windmill: (
+							<p>
+								First-class <Link to="/platform/datatables" className="text-blue-500 hover:underline">data tables</Link> with SQL queries, versioning and a browse / edit UI as a
+								persistent primitive separate from flows, plus native S3 integration for large
+								payloads, files and persistent storage across scripts, flows and apps.
+							</p>
+						),
+						n8n: (
+							<p>
+								A <a href="https://docs.n8n.io/data/data-tables/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Data Table node</a> handles tabular data inside a workflow, with row and table
+								operations. S3 goes through the <a href="https://docs.n8n.io/integrations/builtin/credentials/aws/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">AWS S3 node</a>. Binary data and file nodes cover large
+								payloads. No SQL-queryable persistent data-table primitive outside the node.
+							</p>
+						),
+					},
+					{
+						label: 'Language runtimes',
+						windmill: (
+							<p>
+								Real runtimes for TypeScript (Deno, Bun, Node), Python, Go, Bash, SQL, PowerShell, PHP
+								and Rust. Any npm or PyPI package runs natively, including ones with native extensions.
+							</p>
+						),
+						n8n: (
+							<p>
+								Code node runs JavaScript on Node.js (npm modules allowlisted by the admin) and <a href="https://docs.n8n.io/code/code-node/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">native
+								Python via task runners</a>, stable in v2 (replacing the legacy Pyodide runtime).
+								Self-hosted Python packages must be explicitly allowlisted in the <code>n8nio/runners</code>
+								image; on n8n cloud, Python library imports are disallowed entirely.
+							</p>
+						),
+					},
+					{
+						label: 'Resources & secrets',
+						windmill: (
+							<p>
+								<Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Resources</Link> (typed JSON for credentials, connection info, configs)
+								and <Link to="/docs/core_concepts/variables_and_secrets" className="text-blue-500 hover:underline">Variables</Link> (individual secrets) are first-class and reusable
+								across scripts, flows and apps. Encrypted at rest, scoped via folders and groups for
+								access control, versioned in Git. External secret backends (Vault, AWS Secrets Manager) are <EnterpriseBadge />.
+							</p>
+						),
+						n8n: (
+							<p>
+								Credentials are encrypted per-instance and attached to nodes. External secret backends
+								(Vault, AWS Secrets Manager, Infisical, etc.) are <EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Git & CI',
+						windmill: (
+							<p>
+								Full IaC: scripts, flows, apps, resources, variables, secrets, schedules, folders,
+								groups and permissions are all files in Git, deployed via the CLI and <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. Internal tooling runs like
+								application code: PRs, reviews, rollbacks, CI/CD. Git sync is free for up to 2 users;
+								beyond that is <EnterpriseBadge />.
+							</p>
+						),
+						n8n: (
+							<p>
+								<a href="https://docs.n8n.io/source-control-environments/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Source control and environments</a> (Git push/pull, staging/production branches) is{' '}
+								<EnterpriseBadge />. The community edition has no built-in Git sync; workflows are
+								exported and imported as JSON files.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> gives you both a visual UI (flow editor, app builder) and full code flexibility with a local dev loop, real language runtimes and whole-workspace Git sync. Scripts, flows, apps, resources and permissions can all live in Git like application code when you want them to.
+						<strong> n8n</strong> focuses on a visual canvas where non-developers can build automations without opening an IDE.
+					</>
+				}
+				afterHero={<BuildExperienceVideos />}
+			/>
+
+			{/* ── Q4: Integrations ── */}
+			<QASection
+				reverse
+				id="integrations"
+				kicker="04 · Integrations"
+				question="How does the platform integrate with your existing stack?"
+				summary="Three directions: calling external systems, receiving events from them, and extending the platform with things neither tool covers natively."
+				subsections={[
+					{
+						label: 'Connecting out',
+						windmill: (
+							<p>
+								Any npm, PyPI, Go or Maven package is a first-class import with automatic
+								per-script dependency resolution and lockfiles, and no plugin layer in between:
+								you call the vendor's real SDK with full type inference and auto-completion in
+								the editor. <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-500 hover:underline">50+ pre-built resource types</Link> cover common databases (Postgres,
+								Snowflake, BigQuery), SaaS (Slack, Stripe, GitHub, Notion, OpenAI) and infrastructure
+								(S3, Redis, Kafka): paste an API key into a typed form and the resource is shared
+								across scripts, flows and apps, encrypted at rest. A community{' '}
+								<a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and flows for common tasks.
+							</p>
+						),
+						n8n: (
+							<p>
+								<a href="https://n8n.io/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">1,600+ pre-built nodes</a> across communication, sales, marketing, dev, AI, data
+								and storage (Slack, Gmail, Notion, HubSpot, Salesforce, Stripe, OpenAI, Airtable,
+								Postgres, MongoDB and many more). Built-in credential wizards handle OAuth flows
+								and typed parameter forms expose each endpoint's options. Action nodes for
+								operations, Trigger nodes for incoming events, Core nodes for routing and
+								transforms, AI Agent nodes for tool-calling LLM steps. The fastest path when the
+								automation is a chain of mainstream SaaS calls.
+							</p>
+						),
+					},
+					{
+						label: 'Receiving events',
+						windmill: (
+							<p>
+								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP
+								and WebSocket. Each trigger is a typed primitive in the UI: configure topic,
+								subject or path, attach it to a script or flow, and Windmill handles the
+								connection, replay and consumer-group state. Every script also gets an HTTP
+								endpoint and a webhook URL for free, so most receive paths need zero glue
+								code.
+							</p>
+						),
+						n8n: (
+							<p>
+								Trigger nodes for webhooks, cron, polling, Kafka, MQTT and app-specific events
+								(Gmail new email, Stripe event, GitHub push, Notion page updated, etc.). App
+								triggers either subscribe to the vendor's webhook or poll the API on a configurable
+								cadence, transparently to the workflow author. The webhook trigger generates a URL
+								per workflow with optional auth, response shaping and binary payload handling.
+							</p>
+						),
+					},
+					{
+						label: 'Extending',
+						windmill: (
+							<p>
+								A new integration is a script with a new import: save and run, no restart, no
+								image rebuild. The loop is hot-reload all the way through, in the web editor,
+								the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">CLI</Link> and <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. Custom logic can be exposed as a typed
+								script, packaged as a <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">resource type</Link> for shared use, or published to the
+								private workspace Hub for the team.
+							</p>
+						),
+						n8n: (
+							<p>
+								Two ways to build a <a href="https://docs.n8n.io/integrations/creating-nodes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">custom node</a>: declarative (config-driven, lighter, covers
+								most REST APIs) or programmatic (full TypeScript, for richer logic). Either is
+								shipped as an npm package and installed as a community node on the n8n instance.
+								Inline escape hatches: an HTTP Request node calls any vendor API directly with
+								manual credential wiring, and a Code node runs JavaScript or Python in the same
+								process for one-off logic.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> lets you import any public package (npm, PyPI, Go or Maven) or your own, and call the vendor's real SDK directly.
+						<strong> n8n</strong> ships 1,600+ pre-built nodes for mainstream SaaS apps, which is faster for the first wire-up but adds a plugin layer between you and the vendor SDK.
+					</>
+				}
+				afterHero={<IntegrationsVideos />}
+			/>
+
+			{/* ── Q5: Migration ── */}
+			<QASection
+				id="migration"
+				kicker="05 · Migration & lock-in"
+				question="How hard to get in, and how hard to get out?"
+				summary="Two simple questions: how much work to move your existing automations onto the platform, and how much to move them off if you ever change your mind."
+				subsections={[
+					{
+						label: 'Getting in',
+						windmill: (
+							<p>
+								Paste a function body into the <Link to="/platform/script-editor" className="text-blue-500 hover:underline">script editor</Link>, Windmill infers args, generates a UI,
+								handles dependencies. No canvas to learn. <Link to="/platform/triggers" className="text-blue-500 hover:underline">Triggers</Link>, schedules, variables and <Link to="/platform/app-builder" className="text-blue-500 hover:underline">apps</Link> migrate
+								one by one.
+							</p>
+						),
+						n8n: (
+							<p>
+								Drag nodes onto the canvas, fill in credential and parameter forms, wire them together.
+								Very fast for workflows that are mostly SaaS calls because the credential and request
+								shapes are already modelled. Slower when the logic is custom, since it lives inside Code
+								nodes.
+							</p>
+						),
+					},
+					{
+						label: 'Getting out',
+						windmill: (
+							<p>
+								Step logic is already standard code (TS, Python, Go, Bash, SQL) that runs anywhere. The
+								CLI exports the full workspace as plain files. What you lose leaving Windmill is the
+								runtime, not the step code.
+							</p>
+						),
+						n8n: (
+							<p>
+								The heavier you lean on pre-built nodes, the more you rewrite on exit. Each node
+								(e.g. <code>n8n-nodes-base.slack</code>, <code>n8n-nodes-base.openAi</code>) has to be
+								reimplemented against the vendor SDK. Code node bodies port cleanly since they're just
+								JavaScript or Python. Expression syntax (<code>{'{{ $json.field }}'}</code>) and
+								connection topology also need reimplementing on the new platform.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> keeps switching cost low. Step code is standard TS, Python, Go, Bash or SQL that runs anywhere, including after you leave Windmill.
+						<strong> n8n</strong> is the fastest to get started with if your workflow is mostly pre-built node chains, at the cost of higher rewrite cost if you ever want to move off.
+					</>
+				}
+			/>
+
+			{/* ── Q6: Enterprise requirements ── */}
+			<QASection
+				reverse
+				id="enterprise"
+				kicker="06 · Enterprise requirements"
+				question="Audit logs, observability, security, performance"
+				summary="Once it's in production, the non-functional requirements dominate. Here's how each platform handles the four that matter most at scale."
+				subsections={[
+					{
+						label: 'Observability',
+						windmill: (
+							<p>
+								<Link to="/platform/observability" className="text-blue-500 hover:underline">Real-time streaming logs</Link>, per-run inputs / outputs / duration, built-in worker queue
+								metrics and a Prometheus exporter. Trace ID on every job.
+							</p>
+						),
+						n8n: (
+							<p>
+								Execution history with per-node inputs and outputs in the UI. Log streaming to external
+								systems (Datadog, Splunk, etc.) is <EnterpriseBadge />. Insights dashboard (365-day
+								retention) is <EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Audit logs',
+						windmill: (
+							<p>
+								Full trail of who ran / edited / deployed what. Extended retention is <EnterpriseBadge />.
+							</p>
+						),
+						n8n: (
+							<p>
+								Audit logging of user activity and workflow changes is <EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Security',
+						windmill: (
+							<p>
+								SOC 2 Type II compliant. <Link to="/platform/rbac" className="text-blue-500 hover:underline">RBAC</Link>, SSO (up to 10 users), encrypted secrets at rest and
+								sandboxed script execution in open source. Uncapped SSO, audit logs and advanced access
+								controls (SCIM, SAML) are <EnterpriseBadge />.
+							</p>
+						),
+						n8n: (
+							<p>
+								SOC 2 Type II compliant on Cloud. Basic user management in the community edition. SSO
+								(SAML, LDAP, OIDC), custom roles, external secrets and advanced security settings are{' '}
+								<EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Multi-tenancy & isolation',
+						windmill: (
+							<p>
+								Multiple isolated <Link to="/docs/core_concepts/roles_and_permissions#workspace" className="text-blue-500 hover:underline">workspaces</Link> on the same instance, each with their own users,
+								resources, secrets and access controls. Free tier is capped at 3 workspaces; unlimited
+								is <EnterpriseBadge />.
+							</p>
+						),
+						n8n: (
+							<p>
+								Projects organize workflows and credentials, but the self-hosted community edition has a
+								single shared project. Multi-environment support (separate dev/staging/prod
+								environments) and multiple shared projects are <EnterpriseBadge />.
+							</p>
+						),
+					},
+					{
+						label: 'Performance',
+						windmill: (
+							<p>
+								~10ms cold starts. <Link to="/platform/workers" className="text-blue-500 hover:underline">Dedicated-worker mode</Link> <EnterpriseBadge /> keeps runtimes and
+								dependencies pre-warmed. Queue-based, horizontally scalable. See the{' '}
+								<Link to="/docs/misc/benchmarks/competitors" className="text-blue-500 hover:underline">benchmarks</Link> covering Airflow, Prefect, Temporal, Kestra, Hatchet and Windmill.
+							</p>
+						),
+						n8n: (
+							<p>
+								Single Node.js process by default. <a href="https://docs.n8n.io/hosting/scaling/queue-mode/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Queue mode</a> adds Redis and worker scaling for higher
+								throughput. Per-execution overhead from node resolution, credential decryption and
+								expression evaluation adds up on short, high-volume workflows.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						Both cover the enterprise basics: RBAC, SSO, audit logs and SOC 2.
+						<strong> Windmill</strong> ships more of the foundation (RBAC, SSO up to 10 users, basic audit logs, multi-workspace) in the open source edition.
+						<strong> n8n</strong> gates SSO, external secrets, Git sync and multi-environment behind Enterprise.
+					</>
+				}
+			/>
+
+			{/* ── Q7: Licensing ── */}
+			<QASection
+				id="licensing"
+				kicker="07 · Licensing & pricing"
+				question="Open source, pricing, and self-hosting?"
+				summary="Both are free to self-host the core. The real differences are the license terms and what sits behind the Enterprise tier."
+				subsections={[
+					{
+						label: 'License',
+						windmill: (
+							<p>
+								AGPLv3 core, OSI-approved open source, free and unlimited self-hosted. Enterprise
+								features (SSO, dedicated workers, audit logs, external secret backends) ship in a
+								separate proprietary codebase. Managed cloud available.
+							</p>
+						),
+						n8n: (
+							<p>
+								<a href="https://docs.n8n.io/sustainable-use-license/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Sustainable Use License</a>: source-available, not OSI-approved. Permits internal
+								use and limited customisation but restricts offering n8n as a commercial service.
+								Enterprise features ship under a separate proprietary license. Managed cloud available.
+							</p>
+						),
+					},
+					{
+						label: 'Enterprise pricing',
+						windmill: (
+							<p>
+								Enterprise adds SSO, audit logs, dedicated workers, advanced worker groups.{' '}
+								<strong>Public per-seat and per-worker pricing</strong> on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>, no execution metering.
+							</p>
+						),
+						n8n: (
+							<p>
+								Cloud tiers start at 20 euros per month (Starter, 2,500 executions) and 50 euros per
+								month (Pro, 20 concurrent). Self-hosted Business is <strong>667 euros per month</strong>{' '}
+								for 40,000 executions and 30 concurrent. Enterprise (SSO, external secrets, log
+								streaming, advanced RBAC, multi-environment) is custom-quoted.
+							</p>
+						),
+					},
+				]}
+				bottomLine={
+					<>
+						<strong>Windmill</strong> is AGPLv3 (true OSS) and publishes flat per-seat and per-worker Enterprise pricing with no execution metering.
+						<strong> n8n</strong> ships under the Sustainable Use License (source-available, not OSS) and meters by workflow executions on all paid tiers.
+					</>
+				}
+			/>
+
+			{/* ── Q8: Verdict ── */}
+			<section id="verdict" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
+				<motion.div {...fadeIn}>
+					<div className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+						08 · Verdict
+					</div>
+					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						The verdict
+					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						Windmill and n8n answer two different questions. n8n asks how non-developers can wire SaaS apps together on a visual canvas. Windmill asks how engineers can build and orchestrate all their internal software on one runtime, with real language tooling and Git sync.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						<strong>n8n can be a good fit if</strong> your primary authors are marketers, ops or analysts who need to build automations themselves, and the work is mostly chaining mainstream SaaS apps that its pre-built nodes already cover. For that audience, the visual canvas is genuinely the most accessible authoring surface we've seen, and it's hard to beat on first wire-up speed.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						<strong>Windmill is built for a different audience</strong>: developer-led teams that want full code flexibility. Step logic lives in real TypeScript, Python, Go, Bash or SQL rather than inside Code nodes constrained to a data model, any npm or PyPI package is a first-class import instead of a plugin you wait on, and the local-dev loop covers VS Code, native language tooling and AI coding tools working against real source files. The runtime scope is also wider: the same platform that runs your workflows also powers data pipelines, AI agents and both low-code and full-code internal apps, with shared auth, secrets and observability across all of them. More of the enterprise foundation ships in open source, the license is AGPLv3 rather than source-available, and pricing is flat per-seat and per-worker rather than metered by workflow executions.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300">
+						The switching cost is also asymmetric: Windmill step logic is standard code that runs anywhere after you leave, while workflows built on n8n pre-built nodes have to be rewritten against the vendor SDKs on any other platform. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
+					</p>
+				</motion.div>
+			</section>
+
+			{/* ── FAQ ── */}
+			<UseCaseFAQ faqs={faqs} />
+
+			{/* ── Final CTA ── */}
+			<ProductCTA />
+		</div>
+	);
+}

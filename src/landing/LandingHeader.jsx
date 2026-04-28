@@ -5,6 +5,7 @@ import {
 	Bars3Icon,
 	XMarkIcon,
 	WrenchScrewdriverIcon,
+	Squares2X2Icon,
 	ArrowPathIcon,
 	CircleStackIcon,
 	CodeBracketIcon,
@@ -132,7 +133,7 @@ const solutionsByUseCase = [
 		name: 'Internal apps',
 		description: 'Build admin panels, dashboards and back-office apps.',
 		href: '/use-cases/internal-apps',
-		icon: WrenchScrewdriverIcon
+		icon: Squares2X2Icon
 	},
 	{
 		name: 'AI agents',
@@ -168,12 +169,15 @@ const solutionsByUseCase = [
 // 	{ name: 'Enterprise software', href: '/docs/intro', icon: ComputerDesktopIcon },
 // ];
 
-// const solutionsCompare = [
-// 	{ name: 'vs Retool', href: '/docs/compared_to/retool' },
-// 	{ name: 'vs Prefect', href: '/docs/compared_to/prefect' },
-// 	{ name: 'vs Airflow', href: '/docs/compared_to/peers' },
-// 	{ name: 'All alternatives', href: '/docs/compared_to/peers' },
-// ];
+const solutionsCompare = [
+	{ name: 'vs Airflow', href: '/compare/airflow' },
+	{ name: 'vs Prefect', href: '/compare/prefect' },
+	{ name: 'vs Temporal', href: '/compare/temporal' },
+	{ name: 'vs n8n', href: '/compare/n8n' },
+	{ name: 'vs Retool', href: '/compare/retool' },
+	{ name: 'vs Kestra', href: '/compare/kestra' },
+	{ name: 'All alternatives', href: '/docs/compared_to/peers' },
+];
 
 const resources = [
 	{
@@ -343,34 +347,49 @@ export default function LandingHeader() {
 										leaveFrom="opacity-100 translate-y-0"
 										leaveTo="opacity-0 translate-y-1"
 									>
-										<Popover.Panel className="absolute left-0 z-10 mt-3 w-screen max-w-md transform px-2 sm:px-0">
+										<Popover.Panel className="absolute left-0 z-10 mt-3 w-screen max-w-2xl transform px-2 sm:px-0">
 											<div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
-												<div className="bg-white dark:bg-gray-800 p-6">
-													<div>
-														{/* Use cases */}
-														<div>
-															{/* <p className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-white mb-3 px-3">
-																By use case
-															</p> */}
-															<div className="space-y-1">
-																{solutionsByUseCase.map((item) => (
-																	<Link
-																		key={item.name}
-																		to={item.href}
-																		className="group flex items-start gap-3 rounded-lg px-3 py-3 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
-																	>
-																		<item.icon className="h-6 w-6 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" />
-																		<div>
-																			<p className="text-base font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
-																				{item.name}
-																			</p>
-																			<p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
-																				{item.description}
-																			</p>
-																		</div>
-																	</Link>
-																))}
-															</div>
+												<div className="bg-white dark:bg-gray-800 p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+													{/* Use cases */}
+													<div className="md:col-span-2">
+														<p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 px-3">
+															By use case
+														</p>
+														<div className="space-y-1">
+															{solutionsByUseCase.map((item) => (
+																<Link
+																	key={item.name}
+																	to={item.href}
+																	className="group flex items-start gap-3 rounded-lg px-3 py-3 hover:bg-blue-50 dark:hover:bg-gray-700 !no-underline transition-colors"
+																>
+																	<item.icon className="h-6 w-6 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" />
+																	<div>
+																		<p className="text-base font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+																			{item.name}
+																		</p>
+																		<p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+																			{item.description}
+																		</p>
+																	</div>
+																</Link>
+															))}
+														</div>
+													</div>
+													{/* Compare */}
+													<div className="md:col-span-1 md:border-l md:border-gray-100 md:dark:border-gray-700 md:pl-6">
+														<p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 px-3">
+															Compare
+														</p>
+														<div className="space-y-0.5">
+															{solutionsCompare.map((item) => (
+																<Link
+																	key={item.name}
+																	to={item.href}
+																	className="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 !no-underline transition-colors"
+																>
+																	{item.name}
+																</Link>
+															))}
 														</div>
 													</div>
 												</div>

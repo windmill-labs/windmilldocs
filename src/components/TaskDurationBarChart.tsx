@@ -9,6 +9,7 @@ import {
 	Legend
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { useColorMode } from '@docusaurus/theme-common';
 import { useIntersectionObserver } from './useInteractionObserver';
 
 export default function BarChart({
@@ -25,6 +26,10 @@ export default function BarChart({
 	const ref = useRef<HTMLDivElement | null>(null);
 	const entry = useIntersectionObserver(ref, {});
 	const isVisible = !!entry?.isIntersecting;
+	const { colorMode } = useColorMode();
+	const isDark = colorMode === 'dark';
+	const textColor = isDark ? '#e5e7eb' : '#374151';
+	const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
 
 	// Check if rawData is valid before processing
 	if (!rawData || !rawData.length || !rawData[0] || !rawData[0].length) {
@@ -84,11 +89,16 @@ export default function BarChart({
 				max: maxXScale,
 				title: {
 					display: true,
-					text: xTitle
-				}
+					text: xTitle,
+					color: textColor
+				},
+				ticks: { color: textColor },
+				grid: { color: gridColor }
 			},
 			y: {
-				stacked: true
+				stacked: true,
+				ticks: { color: textColor },
+				grid: { color: gridColor }
 			}
 		},
 		responsive: true,
@@ -101,7 +111,8 @@ export default function BarChart({
 			},
 			title: {
 				display: true,
-				text: title
+				text: title,
+				color: textColor
 			}
 		},
 		animation: {
