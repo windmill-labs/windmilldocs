@@ -564,6 +564,8 @@ You can then query this file using the standard read_csv/read_parquet/read_json 
 SELECT * FROM read_parquet($file)
 ```
 
+The other native SQL dialects (PostgreSQL, MSSQL, MySQL, BigQuery, Snowflake) also accept `(s3object)` arguments, but bind the file's contents as a JSON parameter that the user SQL reads with the dialect's JSON-table function (`OPENJSON`, `jsonb_to_recordset`, `JSON_TABLE`, ...). See [Native SQL ↔ S3](../../../core_concepts/51_sql_to_s3_streaming/index.mdx#reading-s3-files-as-parameters).
+
 Alternatively, you can reference files on the workspace directly using s3:// notation.
 
 For primary workspace storage:
