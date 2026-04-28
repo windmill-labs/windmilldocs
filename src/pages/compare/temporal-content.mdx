@@ -38,23 +38,29 @@ export const fadeIn = {
 
 export function BuildExperienceVideos() {
 	const [platform, setPlatform] = React.useState('windmill');
-	const [windmillMode, setWindmillMode] = React.useState('low-code');
+	const [windmillMode, setWindmillMode] = React.useState('as-code');
 
 	const windmillModes = {
-		'low-code': {
-			src: '/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm',
-			caption: 'Compose steps visually as a DAG with branches, loops and approval steps. Each step can be written in 20+ languages.',
-		},
 		'as-code': {
 			src: '/img/platform/workflow-editor/platform-flow-workflow-as-code.webm',
-			caption: 'Define the workflow programmatically in Python or TypeScript with native try/catch, parallel branches and full language control flow.',
+			caption: 'Define the workflow programmatically in Python or TypeScript directly in the Windmill UI, with native try/catch, parallel branches and full language control flow. Author, run and inspect from the same surface, no separate SDK or worker process to deploy.',
+		},
+		'low-code': {
+			src: '/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm',
+			caption: 'Compose steps visually as a DAG with branches, loops and approval steps directly in the Windmill UI. Each step is a real script in any of 20+ languages, edited and triggered in the same surface.',
 		},
 	};
 
-	{/* TODO: capture a Temporal authoring video (workflow + activities in TS or Python, plus the Temporal UI) and save as /static/img/compare/temporal-authoring.webm */}
 	const temporalMode = {
-		placeholder: true,
-		caption: 'Author workflows and activities in TypeScript, Python, Go, Java, .NET, PHP or Ruby with the Temporal SDK. Workflows must be deterministic; activities run normal code. The Temporal UI surfaces per-workflow event history.',
+		src: '/img/compare/temporal-authoring.webm',
+		caption: (
+			<>
+				A completed ETL workflow viewed in the Temporal UI. The UI is observation-focused: you cannot
+				author or trigger workflows there, just inspect results. Each step expands into the underlying
+				event history, with state transitions, inputs and outputs recorded for every activity attempt.
+				Browse the equivalent monitoring view in Windmill's <Link to="/platform/observability" className="text-blue-500 hover:underline">observability</Link> page.
+			</>
+		),
 	};
 
 	const active = platform === 'windmill' ? windmillModes[windmillMode] : temporalMode;
@@ -94,18 +100,6 @@ export function BuildExperienceVideos() {
 				<div className="flex gap-6 mb-4 border-b border-gray-200 dark:border-gray-800">
 					<button
 						type="button"
-						onClick={() => setWindmillMode('low-code')}
-						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
-							windmillMode === 'low-code'
-								? 'border-blue-500 text-blue-600 dark:text-blue-400'
-								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
-						}`}
-						style={{ background: 'transparent' }}
-					>
-						Low-code DAG
-					</button>
-					<button
-						type="button"
 						onClick={() => setWindmillMode('as-code')}
 						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
 							windmillMode === 'as-code'
@@ -115,6 +109,18 @@ export function BuildExperienceVideos() {
 						style={{ background: 'transparent' }}
 					>
 						Workflow as code
+					</button>
+					<button
+						type="button"
+						onClick={() => setWindmillMode('low-code')}
+						className={`pb-2 px-1 text-sm font-medium cursor-pointer border-b-2 -mb-px transition-colors ${
+							windmillMode === 'low-code'
+								? 'border-blue-500 text-blue-600 dark:text-blue-400'
+								: 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+						}`}
+						style={{ background: 'transparent' }}
+					>
+						Low-code DAG
 					</button>
 				</div>
 			)}
@@ -146,8 +152,8 @@ export function IntegrationsVideos() {
 			caption: 'Type `import stripe` in the script editor and run. Windmill detects the import, resolves the version and pins it in a per-script lockfile automatically. No venv, no pip install, no restart: the platform manages dependencies for you.',
 		},
 		temporal: {
-			placeholder: true,
-			caption: 'Every integration is just an activity that imports the vendor SDK and calls it. No connector catalog, no plugin layer, no determinism rules inside activities. Each activity is a normal function in your SDK language.',
+			src: '/img/compare/temporal-integrations.webm',
+			caption: 'Pip install any PyPI package (here, the Stripe SDK) into the worker venv and call it from an activity. No connector catalog, no plugin layer, no determinism rules inside activities. Each activity is a normal function in your SDK language.',
 		},
 	};
 
@@ -535,10 +541,9 @@ export default function TemporalCompareContent({ title, description }) {
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
 							An open-source <strong>durable execution engine</strong> for long-running application
-							workflows. Records every workflow decision in an immutable event history and replays
-							the workflow function to recover state after a crash. Multi-language SDKs (TypeScript,
-							Python, Go, Java, .NET, PHP, Ruby). Best for engineering teams building mission-critical
-							multi-step logic: payment flows, sagas, signup orchestration, AI agents.
+							workflows. Records every workflow decision in an immutable <a href="https://docs.temporal.io/encyclopedia/event-history" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">event history</a> and replays
+							the <a href="https://docs.temporal.io/workflows" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">workflow function</a> to recover state after a crash. Best for engineering teams building
+							mission-critical multi-step logic: payment flows, sagas, signup orchestration, AI agents.
 						</p>
 					</div>
 				</motion.div>
@@ -692,9 +697,9 @@ export default function TemporalCompareContent({ title, description }) {
 						),
 						temporal: (
 							<p>
-								Workflows and activities are written using one of seven SDKs (TypeScript, Python, Go,
-								Java, .NET, PHP, Ruby), each with its own decorator or annotation pattern (e.g.
-								<code>@workflow.defn</code> + <code>@activity.defn</code> in Python). The strict
+								<a href="https://docs.temporal.io/workflows" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Workflows</a> and <a href="https://docs.temporal.io/activities" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">activities</a> are written using one of seven <a href="https://docs.temporal.io/develop" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">SDKs</a> (TypeScript,
+								Python, Go, Java, .NET, PHP, Ruby), each with its own decorator or annotation pattern
+								(e.g. <code>@workflow.defn</code> + <code>@activity.defn</code> in Python). The strict
 								<strong> workflow / activity split</strong>: workflows must be deterministic and orchestrate;
 								activities run normal code with side effects. Determinism is sandboxed in TS and Python,
 								convention-only in Go and Java.
@@ -726,13 +731,13 @@ export default function TemporalCompareContent({ title, description }) {
 							<>
 								<p>
 									Event sourcing plus deterministic replay. Every workflow decision (schedule activity,
-									start timer, send signal) is recorded as an event in an immutable history in Postgres,
-									MySQL or Cassandra. When the workflow resumes after a crash, the SDK replays the
-									workflow function from the beginning, returning each previous step's result from the
-									event history until it reaches the next decision.
+									start timer, send signal) is recorded as an event in an immutable <a href="https://docs.temporal.io/encyclopedia/event-history" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">event history</a> in
+									Postgres, MySQL or Cassandra. When the workflow resumes after a crash, the SDK replays
+									the workflow function from the beginning, returning each previous step's result from
+									the event history until it reaches the next decision.
 								</p>
 								<p>
-									This gives true durable execution (workflows can run for months and survive any
+									This gives true <a href="https://docs.temporal.io/temporal" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">durable execution</a> (workflows can run for months and survive any
 									crash) and a complete audit trail. The trade-off: workflow code must be deterministic
 									(no <code>Math.random()</code>, no direct clock access, no I/O) and a 3-step workflow
 									generates around 23 events. Activities run in normal code and are unrestricted.
@@ -751,9 +756,9 @@ export default function TemporalCompareContent({ title, description }) {
 						temporal: (
 							<p>
 								Standard tooling for whichever SDK language you pick: VS Code or any IDE, language-native
-								type-checking and linting, and the <code>temporal</code> CLI plus a local <code>temporal
-								server start-dev</code> for an in-memory dev cluster. Workflows can be unit-tested with
-								the SDK test framework that mocks time and activities.
+								type-checking and linting, and the <a href="https://docs.temporal.io/cli" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Temporal CLI</a> plus a local <code>temporal server
+								start-dev</code> for an in-memory dev cluster. Workflows can be unit-tested with the SDK
+								test framework that mocks time and activities.
 							</p>
 						),
 					},
@@ -926,8 +931,8 @@ export default function TemporalCompareContent({ title, description }) {
 							<p>
 								Activity bodies are plain code in your SDK language: strip the activity decorator and
 								you have a normal function that runs anywhere. What needs rewriting: workflow code
-								itself (signals, queries, child workflows, search attributes, the determinism patterns)
-								and any infrastructure tied to the Temporal server.
+								itself (<a href="https://docs.temporal.io/encyclopedia/workflow-message-passing" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">signals and queries</a>, <a href="https://docs.temporal.io/develop/typescript/child-workflows" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">child workflows</a>, search attributes, the determinism
+								patterns) and any infrastructure tied to the Temporal server.
 							</p>
 						),
 					},

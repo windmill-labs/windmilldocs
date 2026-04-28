@@ -43,17 +43,23 @@ export function BuildExperienceVideos() {
 	const windmillModes = {
 		'low-code': {
 			src: '/img/platform/workflow-editor/platform-flow-every-step-is-a-script.webm',
-			caption: 'Compose steps visually as a DAG with branches, loops and approval steps. Each step can be written in 20+ languages.',
+			caption: 'Compose steps visually as a DAG with branches, loops and approval steps directly in the Windmill UI. Each step is a real script in any of 20+ languages, edited and triggered in the same surface.',
 		},
 		'as-code': {
 			src: '/img/platform/workflow-editor/platform-flow-workflow-as-code.webm',
-			caption: 'Define the workflow programmatically in Python or TypeScript with native try/catch, parallel branches and full language control flow.',
+			caption: 'Define the workflow programmatically in Python or TypeScript directly in the Windmill UI, with native try/catch, parallel branches and full language control flow. Author, run and inspect from the same surface, no separate SDK or worker process to deploy.',
 		},
 	};
 
 	const airflowMode = {
 		src: '/img/compare/airflow-authoring.webm',
-		caption: 'Author DAGs as Python files in a dags/ folder. The Airflow webserver renders them as Graph, Grid and Gantt views for monitoring; authoring stays in the editor.',
+		caption: (
+			<>
+				Author DAGs as Python files in a dags/ folder. The Airflow webserver renders them as Graph,
+				Grid and Gantt views for monitoring; authoring stays in the editor. Browse the equivalent
+				monitoring view in Windmill's <Link to="/platform/observability" className="text-blue-500 hover:underline">observability</Link> page.
+			</>
+		),
 	};
 
 	const active = platform === 'windmill' ? windmillModes[windmillMode] : airflowMode;
