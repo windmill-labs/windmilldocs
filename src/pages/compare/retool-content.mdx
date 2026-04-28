@@ -331,8 +331,12 @@ export default function RetoolCompareContent({ title, description }) {
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
 							An open-source platform to <strong>build and orchestrate all your internal software</strong>:
-							scripts, workflows, data pipelines, AI agents and internal apps. Made for engineers who
-							want full code flexibility and local dev experience, both to build internal software and to manage the underlying
+							<Link to="/use-cases/scripts" className="text-blue-500 hover:underline"> scripts</Link>,{' '}
+							<Link to="/use-cases/workflows" className="text-blue-500 hover:underline">workflows</Link>,{' '}
+							<Link to="/use-cases/data-pipelines" className="text-blue-500 hover:underline">data pipelines</Link>,{' '}
+							<Link to="/use-cases/ai-agents" className="text-blue-500 hover:underline">AI agents</Link> and{' '}
+							<Link to="/use-cases/internal-apps" className="text-blue-500 hover:underline">internal apps</Link>. Made for engineers who
+							want full code flexibility and <Link to="/platform/local-dev" className="text-blue-500 hover:underline">local dev experience</Link>, both to build internal software and to manage the underlying
 							infrastructure.
 						</p>
 					</div>
@@ -344,10 +348,11 @@ export default function RetoolCompareContent({ title, description }) {
 							</span>
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
-							A proprietary, closed-source <strong>low-code platform for internal apps</strong>, with
-							a drag-and-drop canvas, a large component library and JavaScript queries on top of your
-							databases and APIs. Workflows and AI Agents extend the same canvas model to automations.
-							Best for teams that want a polished app-builder and accept per-user SaaS pricing.
+							A proprietary <strong>low-code platform for internal apps</strong>: drag-and-drop canvas,
+							large component library, JavaScript queries on top of your databases and APIs, and{' '}
+							<a href="https://retool.com/ai" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">AI-assisted app generation</a>.{' '}
+							<a href="https://retool.com/products/workflows" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Workflows</a> and{' '}
+							<a href="https://retool.com/agents" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">AI Agents</a> are adjacent products on the same canvas.
 						</p>
 					</div>
 				</motion.div>
@@ -493,15 +498,22 @@ export default function RetoolCompareContent({ title, description }) {
 						label: 'Local dev & IDE',
 						windmill: (
 							<p>
-								Run scripts locally with the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">Windmill CLI</Link>. VS Code extension, native language tooling
-								(LSP, type-checking, linting) and AI coding tools (Claude Code, Codex).
+								<Link to="/platform/app-builder" className="text-blue-500 hover:underline">Full-code apps</Link> are real React or Svelte source trees in your repo: edit in
+								VS Code, run a local dev server for hot-reload preview, and deploy via the <Link to="/platform/local-dev" className="text-blue-500 hover:underline">CLI</Link>{' '}
+								or <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. The backend <Link to="/use-cases/scripts" className="text-blue-500 hover:underline">scripts</Link> and <Link to="/use-cases/workflows" className="text-blue-500 hover:underline">flows</Link> that power your apps are
+								authored the same way: edit and test locally with the VS Code extension, then wire
+								them into the app as runnables. Native language tooling and AI coding tools (Claude
+								Code, Codex) work against real source files, not a canvas.
 							</p>
 						),
 						retool: (
 							<p>
-								No local-dev loop for apps. Development happens in Retool's web IDE against live data.
-								Query code can be edited inline; longer JavaScript or Python lives in the canvas editor.
-								There is no offline mode and no way to run an app locally before deploying.
+								A <a href="https://docs.retool.com/education/labs/development/cli" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Retool CLI</a> (Labs / educational) can scaffold apps, manage Retool DB,
+								list and export apps, and create custom components from the command line. It is not
+								a local-dev loop: editing pages still happens in Retool's web IDE against live data,
+								the CLI does not run apps locally, and canvas changes do not round-trip through it.
+								Query code is edited inline; longer JavaScript or Python lives in the canvas editor.
+								No offline mode.
 							</p>
 						),
 					},
@@ -581,16 +593,22 @@ export default function RetoolCompareContent({ title, description }) {
 						label: 'Connecting out',
 						windmill: (
 							<p>
-								Any npm, PyPI, Go or Maven package is a first-class import. No plugin layer: you call
-								the vendor's real SDK. A community <a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and
-								flows for common tasks.
+								Any npm, PyPI, Go or Maven package is a first-class import with automatic
+								per-script dependency resolution and lockfiles, and no plugin layer in between:
+								you call the vendor's real SDK with full type inference and auto-completion in
+								the editor. <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-500 hover:underline">50+ pre-built resource types</Link> cover common databases (Postgres,
+								Snowflake, BigQuery), SaaS (Slack, Stripe, GitHub, Notion, OpenAI) and infrastructure
+								(S3, Redis, Kafka): paste an API key into a typed form and the resource is shared
+								across scripts, flows and apps, encrypted at rest. A community{' '}
+								<a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and flows for common tasks.
 							</p>
 						),
 						retool: (
 							<p>
-								<a href="https://retool.com/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">100+ pre-built connectors</a> for databases (Postgres, MySQL, Snowflake, BigQuery),
-								SaaS (Salesforce, Stripe, HubSpot) and auth protocols. For anything not in the catalog,
-								you fall back to a generic REST API resource or a JavaScript code block.
+								<a href="https://retool.com/integrations" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">80+ pre-built connectors</a> for databases (Postgres, MySQL, Snowflake, BigQuery),
+								SaaS (Salesforce, Stripe, HubSpot, Slack, Zendesk, Jira) and AI providers (OpenAI,
+								Anthropic, Google Gemini). For anything not in the catalog, you fall back to a generic
+								REST or GraphQL resource or a JavaScript code block.
 							</p>
 						),
 					},
@@ -598,15 +616,20 @@ export default function RetoolCompareContent({ title, description }) {
 						label: 'Receiving events',
 						windmill: (
 							<p>
-								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP and
-								WebSocket.
+								Native <Link to="/platform/triggers" className="text-blue-500 hover:underline">triggers</Link> for HTTP, cron, Kafka, NATS, Postgres CDC, SQS, MQTT, SMTP
+								and WebSocket. Each trigger is a typed primitive in the UI: configure topic,
+								subject or path, attach it to a script or flow, and Windmill handles the
+								connection, replay and consumer-group state. Every script also gets an HTTP
+								endpoint and a webhook URL for free, so most receive paths need zero glue
+								code.
 							</p>
 						),
 						retool: (
 							<p>
-								Workflows support cron schedules and webhooks as triggers. Event-driven triggers
-								beyond that (Kafka consumers, CDC, queue consumers) require polling workarounds or
-								an external event bridge.
+								Three <a href="https://docs.retool.com/workflows/concepts/triggers" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">trigger types</a> on Workflows: Scheduled (cron), Webhook, and Query (BETA,
+								polls a database or SaaS query for new rows). Event-driven triggers beyond that
+								(Kafka consumers, CDC, queue consumers) require polling workarounds or an external
+								event bridge.
 							</p>
 						),
 					},
@@ -620,9 +643,9 @@ export default function RetoolCompareContent({ title, description }) {
 						),
 						retool: (
 							<p>
-								Custom components exist but are limited compared to writing a standalone React app.
-								Custom auth, custom connectors and advanced integrations often require dropping to a
-								generic REST resource with hand-rolled JavaScript transformers.
+								<a href="https://docs.retool.com/apps/guides/custom" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Custom components</a> exist but are limited compared to writing a standalone React
+								app. Custom auth, custom connectors and advanced integrations often require dropping
+								to a generic REST resource with hand-rolled JavaScript transformers.
 							</p>
 						),
 					},
@@ -817,10 +840,10 @@ export default function RetoolCompareContent({ title, description }) {
 						),
 						retool: (
 							<p>
-								Per-user pricing: builders at €9/Team, €46/Business, custom on Enterprise. End users
-								at €5/Team, €14/Business. External-user tier available on Business+. Enterprise pricing
-								not public. A sales conversation is required for custom SSO, Git sync, self-hosting and
-								independent workspaces.
+								<a href="https://retool.com/pricing" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Per-user pricing</a>: builders at €9/Team, €46/Business, custom on Enterprise.
+								End users at €5/Team, €14/Business. External-user tier available on Business+.
+								Enterprise pricing not public. A sales conversation is required for custom SSO,
+								<a href="https://docs.retool.com/source-control" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline"> Git sync</a>, self-hosting and independent workspaces.
 							</p>
 						),
 					},
@@ -842,8 +865,17 @@ export default function RetoolCompareContent({ title, description }) {
 					<h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
 						The verdict
 					</h2>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						Windmill and Retool answer the internal-app question with two different stances. Retool is a proprietary SaaS with a polished visual canvas, where apps, queries and component bindings live in Retool's database; authoring is browser-against-live-data, with a CLI in Labs for scaffolding. Windmill is an open-source AGPLv3 platform where apps are real React or Svelte source trees in your repo, scripts and flows are files in Git, and the whole workspace runs on infrastructure you control.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						<strong>Retool can be a good fit if</strong> your internal-tool need is a drag-and-drop dashboard on top of a database or SaaS API, your team is comfortable authoring inside the canvas, and a proprietary runtime is acceptable. The component library is broader and more mature than Windmill's, the visual editor is more refined for non-developer authors, and AI-assisted app generation lands quickly on mainstream patterns.
+					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-300 mb-5">
+						<strong>Windmill matches the same low-code surface</strong> and adds a <Link to="/platform/app-builder" className="text-blue-500 hover:underline">full-code React or Svelte</Link> option that Retool does not offer, with a real <Link to="/platform/local-dev" className="text-blue-500 hover:underline">local-dev loop</Link>: edit apps and the backend scripts and flows that power them in your IDE, with native language tooling and AI coding tools working against real source files, then deploy via the CLI or whole-workspace <Link to="/platform/deployment-versioning" className="text-blue-500 hover:underline">Git sync</Link>. The runtime scope is wider too: the same platform that runs your apps also powers <Link to="/use-cases/workflows" className="text-blue-500 hover:underline">workflow orchestration</Link>, <Link to="/use-cases/data-pipelines" className="text-blue-500 hover:underline">data pipelines</Link>, <Link to="/use-cases/scripts" className="text-blue-500 hover:underline">scripts as standalone APIs</Link> and <Link to="/use-cases/ai-agents" className="text-blue-500 hover:underline">AI agents</Link>, with shared auth, secrets and <Link to="/platform/observability" className="text-blue-500 hover:underline">observability</Link> across all of them. The core is AGPLv3 and free to self-host without an Enterprise contract, and Enterprise pricing is published upfront on the <Link to="/pricing" className="text-blue-500 hover:underline">pricing page</Link>.
+					</p>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						The biggest difference between Windmill and Retool is how <strong>open and code-first</strong> each platform is. Windmill is an open-source AGPLv3 core you can self-host for free, authored in real files, 20+ languages, versioned in Git, and runnable locally. Retool is a proprietary SaaS with a polished visual canvas, where apps live in Retool's database and self-hosting or Git sync require an Enterprise contract. The other major difference is the <strong>range of internal software you can build</strong>: Windmill covers scripts, workflows, data pipelines, AI agents and both low-code and full-code internal apps on one runtime, while Retool is app-builder first with Workflows and Agents layered on the same canvas. If you are deciding between the two, the fastest way to judge is to spend an afternoon in each.
+						The switching cost is also asymmetric. Retool apps live in a proprietary canvas format with no official export, so leaving Retool means rebuilding each app component-by-component, with queries and event handlers rewritten against another runtime. Windmill apps and scripts are plain source files in Git, so the per-app rewrite cost is much smaller, and the Git history travels with you. If you're deciding between the two, the fastest way to judge is to spend an afternoon in each.
 					</p>
 				</motion.div>
 			</section>

@@ -515,8 +515,12 @@ export default function PrefectCompareContent({ title, description }) {
 						</div>
 						<p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed">
 							An open-source platform to <strong>build and orchestrate all your internal software</strong>:
-							scripts, workflows, data pipelines, AI agents and internal apps. Made for engineers who
-							want full code flexibility and local dev experience, both to build internal software and to manage the underlying
+							<Link to="/use-cases/scripts" className="text-blue-500 hover:underline"> scripts</Link>,{' '}
+							<Link to="/use-cases/workflows" className="text-blue-500 hover:underline">workflows</Link>,{' '}
+							<Link to="/use-cases/data-pipelines" className="text-blue-500 hover:underline">data pipelines</Link>,{' '}
+							<Link to="/use-cases/ai-agents" className="text-blue-500 hover:underline">AI agents</Link> and{' '}
+							<Link to="/use-cases/internal-apps" className="text-blue-500 hover:underline">internal apps</Link>. Made for engineers who
+							want full code flexibility and <Link to="/platform/local-dev" className="text-blue-500 hover:underline">local dev experience</Link>, both to build internal software and to manage the underlying
 							infrastructure.
 						</p>
 					</div>
@@ -798,8 +802,10 @@ export default function PrefectCompareContent({ title, description }) {
 								Any npm, PyPI, Go or Maven package is a first-class import with automatic
 								per-script dependency resolution and lockfiles, and no plugin layer in between:
 								you call the vendor's real SDK with full type inference and auto-completion in
-								the editor. <Link to="/docs/core_concepts/resources_and_types" className="text-blue-500 hover:underline">Typed resources</Link> hold connection info and credentials, are
-								shared across scripts, flows and apps, and are encrypted at rest. A community{' '}
+								the editor. <Link to="/docs/integrations/integrations_on_windmill" className="text-blue-500 hover:underline">50+ pre-built resource types</Link> cover common databases (Postgres,
+								Snowflake, BigQuery), SaaS (Slack, Stripe, GitHub, Notion, OpenAI) and infrastructure
+								(S3, Redis, Kafka): paste an API key into a typed form and the resource is shared
+								across scripts, flows and apps, encrypted at rest. A community{' '}
 								<a href="https://hub.windmill.dev" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Hub</a> has reusable scripts and flows for common tasks.
 							</p>
 						),
