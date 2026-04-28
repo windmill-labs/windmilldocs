@@ -196,6 +196,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'core_concepts/azure_triggers/index',
+							label: 'Azure Event Grid'
+						},
+						{
+							type: 'doc',
 							id: 'core_concepts/native_triggers/index',
 							label: 'Native triggers'
 						}
