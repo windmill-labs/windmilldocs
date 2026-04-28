@@ -3,6 +3,7 @@ slug: native-sql-s3-input
 title: S3Object input for native SQL scripts
 tags: ['Script editor']
 description: Pass S3 objects as parameters to PostgreSQL, MSSQL, MySQL, BigQuery and Snowflake scripts and read them with the dialect's JSON-table function.
+version: v1.693.0
 features:
   [
     'Declare an `(s3object)` argument in any native SQL dialect; the worker downloads the file and binds it as a JSON parameter.',
