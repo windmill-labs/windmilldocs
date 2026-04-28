@@ -119,27 +119,17 @@ You can also choose to invite users instead of adding them directly. You only ne
 
 If [SMTP is configured](../../advanced/18_instance_settings/index.mdx#smtp), the invite will be sent even if no Windmill account is created yet. Once access is created to a Windmill account, an invite will be available from the "Select a workspace" menu.
 
-### Auto invite
+### Auto-add
 
-You can send auto-invites to the workspace to users from your domain.
+You can automatically add new users to the workspace as members, with no invite step required.
 
-From the Workspace settings, in the `Users & Invites` tab, go to "Set auto-invite to [domain]".
+From the Workspace settings, in the `Users & Invites` tab, enable "Auto-add new users". New users on the instance are inserted directly as workspace members the next time they log in.
 
-![Auto Invites](./auto_invite.png 'Auto invites')
+You can also choose whether auto-added users join as operators or developers.
 
-This will add users to the list of Pending Invites, from where you can still manually cancel any invite.
+Domain-based auto-add (only adding users whose email matches a specific domain) is only available on [Windmill Cloud](/pricing), where the instance is multi-tenant. On self-hosted instances, all new users are auto-added regardless of email domain.
 
-At last, you can enable "Auto-invited users to join as operators".
-
-![Pending invites](./pending_invites.png 'Pending invites')
-
-Once access is created to a Windmill account, an invite will be available in the "Invites to join a Workspace" section.
-
-![Select an invited workspace](./get_invite.png 'Select an invited workspace')
-
-From where each user can set their username.
-
-![Set Username](./set_username.png 'Set a Username')
+> Auto-add only grants workspace membership - it does not grant access to any scripts, flows, apps, or resources. Windmill is zero-trust by default: members start with no permissions on existing [folders](../8_groups_and_folders/index.mdx#folders). To give them access, assign permissions on the relevant folders, typically by adding the user to a [group](../8_groups_and_folders/index.mdx) that already has those permissions. Group membership can be automated with [SCIM](../../misc/14_saml_and_scim/index.md).
 
 ## Password reset
 

@@ -22,6 +22,7 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 - Don't use bold font, unless you're adding to content already using it.
 - Titles, subtiles and docs in general follow sentence case ('Like this')
 - On docs, nothing shouldfollow title case ('Like This')
+- Avoid using symbol '—' as it looks like obvious AI. Use sentences not using it or use '-' instead.
 
 ## Component usage
 
