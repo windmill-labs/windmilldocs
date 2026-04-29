@@ -504,6 +504,10 @@ The following event types are sent to the workspace webhook:
 | `TokenExpiringSoon` | An API token is expiring within 7 days |
 | `TokenExpired` | An API token has expired and been deleted |
 
+## Instance events webhook
+
+For instance-level events (user added, OAuth signup, user invited or joined a workspace), configure the [instance events webhook](../../advanced/18_instance_settings/index.mdx#instance-events-webhook) from instance settings. This is separate from the workspace webhook above and only available on [Enterprise Edition](/pricing).
+
 <!-- Resources -->
 
 [runs]: ../5_monitor_past_and_future_runs/index.mdx

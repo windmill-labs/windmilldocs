@@ -18,7 +18,7 @@ Please refer to the [SQL Getting started section](../getting_started/0_scripts_q
 
 :::info Enterprise
 
-This feature is available on [Windmill Enterprise Edition](../misc/7_plans_details/index.mdx) only.
+This feature is available on [Windmill Enterprise Edition](/pricing) only.
 
 :::
 

@@ -157,18 +157,6 @@ export const sections = [
 				link: '/docs/core_concepts/websocket_triggers'
 			},
 			{
-				name: 'Postgres triggers',
-				tiers: {
-					'tier-free-selfhost': true,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': true,
-					'tier-free': false,
-					'tier-team': false
-				},
-				link: '/docs/core_concepts/postgres_triggers',
-				tooltip: 'Self-hosted only'
-			},
-			{
 				name: 'MQTT triggers',
 				tiers: {
 					'tier-free-selfhost': true,
@@ -282,6 +270,63 @@ export const sections = [
 					'tier-team': true
 				},
 				link: '/docs/core_concepts/workspace_secret_encryption'
+			},
+			{
+				name: 'External secret backends (HashiCorp Vault, Azure Key Vault, AWS Secrets Manager)',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/variables_and_secrets#secret-storage-backends'
+			},
+			{
+				name: 'IAM database authentication for AWS RDS / Aurora',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/integrations/postgresql#iam-authentication-for-aws-rds-and-aurora',
+				tooltip: 'Self-hosted Enterprise only'
+			},
+			{
+				name: 'Entra ID database authentication for Azure PostgreSQL',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/self_host/azure_entra_id#entra-id-database-authentication-optional',
+				tooltip: 'Self-hosted Enterprise only'
+			},
+			{
+				name: 'Workspace service accounts',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/roles_and_permissions#service-accounts'
+			},
+			{
+				name: 'Instance-level roles via instance groups',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/roles_and_permissions#instance-level-roles-via-instance-groups'
 			},
 			{
 				name: 'Custom OAuth',
@@ -426,6 +471,39 @@ export const sections = [
 					'tier-team': false
 				},
 				link: '/docs/advanced/instance_settings#http-tracing'
+			},
+			{
+				name: 'OpenTelemetry tracing & logging',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/misc/guides/otel'
+			},
+			{
+				name: 'Service logs storage on S3',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/service_logs#log-storage'
+			},
+			{
+				name: 'Instance events webhook',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/instance_settings#instance-events-webhook'
 			}
 		]
 	},
@@ -467,6 +545,17 @@ export const sections = [
 				link: '/docs/advanced/deploy_to_prod'
 			},
 			{
+				name: 'Sync Windmill to a git repository (Git sync)',
+				tiers: {
+					'tier-free-selfhost': 'Up to 2 users',
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/advanced/git_sync'
+			},
+			{
 				name: 'Agent workers',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -476,17 +565,6 @@ export const sections = [
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/agent_workers'
-			},
-			{
-				name: 'Sync Windmill to a git repository (Git sync)',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': true,
-					'tier-free': true,
-					'tier-team': true
-				},
-				link: '/docs/advanced/git_sync'
 			},
 			{
 				name: 'GitHub App',
@@ -509,6 +587,41 @@ export const sections = [
 					'tier-team': true
 				},
 				link: '/docs/core_concepts/staging_prod'
+			},
+			{
+				name: '"Run on behalf of" selector when deploying across workspaces',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/staging_prod#run-on-behalf-of'
+			},
+			{
+				name: 'Workspace forks',
+				tiers: {
+					'tier-free-selfhost': 'Counts toward 3-workspace limit',
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': 'Counts toward 3-workspace limit',
+					'tier-team': false
+				},
+				link: '/docs/advanced/workspace_forks',
+				tooltip: 'Self-hosted only — global 3-workspace limit applies on Community Edition'
+			},
+			{
+				name: 'Infrastructure as code & Kubernetes operator',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': true,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/infrastructure_as_code',
+				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'CI test scripts with auto-trigger on deploy',
@@ -553,6 +666,17 @@ export const sections = [
 					'tier-team': false
 				},
 				link: '/docs/advanced/dependencies_in_typescript#private-npm-registry--private-npm-packages'
+			},
+			{
+				name: 'Workspace dependencies (centralized dependency files)',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/core_concepts/workspace_dependencies'
 			},
 			{
 				name: 'Distributed dependency cache backed by S3',
