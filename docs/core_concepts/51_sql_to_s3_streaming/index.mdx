@@ -1,23 +1,54 @@
 ---
-description: How do I stream large SQL query results to S3 as CSV, JSON, or Parquet files in Windmill?
+description: How do I stream SQL query results to S3 and read S3 files as parameters from native SQL scripts in Windmill?
 ---
 
-# S3 streaming for large queries
+# Native SQL ↔ S3
 
-Sometimes, your SQL script will return too much data which exceeds the 10 000 rows query limit within Windmill. In this case, you
-will want to use the s3 flag to stream your query result to a file. You will need to have workspace storage enabled for this.
+Native SQL scripts (PostgreSQL, MSSQL, MySQL, BigQuery, Snowflake) can both stream their results to [workspace S3 storage](../38_object_storage_in_windmill/index.mdx) and consume S3 files as parameters. Both flows require workspace storage to be configured.
+
+## Streaming results to S3
+
+Use the `-- s3` flag when a query would otherwise blow past the 10 000 row in-memory limit:
 
 ```sql
 -- s3 prefix=datalake format=csv
 SELECT id, created_at FROM users
 ```
 
-This will return a path string to the generated file which has the job id as its name, for example in this case:
-`"datalake/0196c8e6-1fd4-0d05-d31c-c7eae9a12b1a.csv"`,
-which you can use in the next step of a flow to stream the file back from s3 and process it.
+This returns a path string to the generated file, named after the job id — for example `"datalake/0196c8e6-1fd4-0d05-d31c-c7eae9a12b1a.csv"`. A downstream flow step can pick it up by reference.
 
-All parameters are optional :
+All `-- s3` parameters are optional:
 
-- prefix : adds a prefix to the object key of the generated file. Default: wmill_datalake/path/to/job/id
-- format : json (default), csv or parquet
-- storage : name of the secondary workspace storage to use
+- `prefix`: object-key prefix for the generated file. Default: `wmill_datalake/path/to/job/id`
+- `format`: `json` (default), `csv`, or `parquet`
+- `storage`: name of the secondary workspace storage to use
+
+## Reading S3 files as parameters
+
+Declare an `(s3object)` argument and the worker downloads the file, decodes it (auto-detected from the extension: `.json` / `.jsonl` / `.parquet` / `.csv`), and binds it as a JSON-text parameter. Your SQL then reads it with the dialect's JSON-table function. This is the symmetric path to `-- s3`: a previous flow step (in any language) can write its result to S3 and the next native SQL step picks it up directly.
+
+| Dialect | Argument declaration | JSON-consumption pattern |
+|---|---|---|
+| PostgreSQL | `-- $1 input_file (s3object)` | `SELECT * FROM jsonb_to_recordset($1::jsonb) AS x(id INT, name TEXT);` |
+| MSSQL | `-- @P1 input_file (s3object)` | `SELECT * FROM OPENJSON(@P1) WITH (id INT '$.id', name NVARCHAR(255) '$.name');` |
+| MySQL | `-- :input_file (s3object)` | `SELECT * FROM JSON_TABLE(:input_file, '$[*]' COLUMNS (id INT PATH '$.id', name VARCHAR(255) PATH '$.name')) AS x;` |
+| BigQuery | `-- @input_file (s3object)` | `SELECT JSON_VALUE(row, '$.id') AS id, JSON_VALUE(row, '$.name') AS name FROM UNNEST(JSON_QUERY_ARRAY(@input_file)) AS row;` |
+| Snowflake | `-- ? input_file (s3object)` | `SELECT v.value:id::int AS id, v.value:name::string AS name FROM TABLE(FLATTEN(input => PARSE_JSON(?))) v;` |
+
+The `input_file` argument shows up in the run form as the standard S3 object picker.
+
+### Format detection
+
+The decoder picks a path from the object key's extension:
+
+- `.parquet` — decoded via Apache Arrow's Parquet reader and re-serialized to a JSON array.
+- `.csv` — decoded via Arrow's CSV reader (first row used as headers, types inferred).
+- `.json`, `.jsonl`, `.ndjson`, no extension — passed through; JSONL inputs are repackaged as a JSON array so the user SQL can uniformly assume an array shape.
+
+### Size limits
+
+The whole payload is bound as a single SQL parameter, so it sits in the worker's memory once and on the database driver's buffer once. The path is tested up to roughly 500 MB; beyond that you should keep the data in S3 and read it through the database engine's own loader (`COPY FROM`, `BULK INSERT`, BigQuery load job, Snowflake `PUT`/`COPY`, DuckDB `read_parquet('s3://...')`).
+
+### DuckDB
+
+DuckDB has its own `(s3object)` path: the engine reads from S3 directly, so the worker just substitutes a `s3://...` URI. See the [DuckDB section of the SQL quickstart](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#duckdb) for the read_parquet/read_csv/read_json patterns.

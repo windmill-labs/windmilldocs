@@ -233,7 +233,7 @@ The `prod` workspace is never edited directly. Its only source of change is a me
 
 - Two (or more) workspaces, each on its own git branch
 - Each workspace has its own `git_repository` resource and its own entry under `workspaces:` in `wmill.yaml`
-- Git sync is configured in [promotion mode](../11_git_sync/index.mdx#git-promotion-workflow-cross-instance-deployment-using-a-git-workflow) from `staging` to `prod`
+- [Git Promotion](../11_git_sync/index.mdx#git-promotion-workflow-cross-instance-deployment-using-a-git-workflow) is configured from `staging` to `prod`
 - Developers edit `staging` via [forks](../20_workspace_forks/index.mdx) (stage 2 pattern)
 - `prod` is protected by [protection rulesets](../../core_concepts/56_protection_rulesets/index.mdx) and only the promotion CI/CD can deploy to it
 

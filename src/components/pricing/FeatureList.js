@@ -213,6 +213,17 @@ export const sections = [
 				link: '/docs/core_concepts/gcp_triggers'
 			},
 			{
+				name: 'Azure Event Grid triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/azure_triggers'
+			},
+			{
 				name: 'Private Hub',
 				tiers: {
 					'tier-free-selfhost': false,

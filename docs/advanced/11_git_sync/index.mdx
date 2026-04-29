@@ -12,7 +12,7 @@ Git sync lets Windmill workspaces be tracked by git. Each time an item is deploy
 
 :::tip Git sync is stage 3 of the collaboration guide
 
-Enabling git sync on a workspace corresponds to **stage 3** of the [collaboration and deployment stages](../23_canonical_deployment_setups/index.mdx#stage-3--add-git-sync) guide. Git sync in [promotion mode](#git-promotion-workflow-cross-instance-deployment-using-a-git-workflow) is the basis of **stage 4** (multi-workspace with promotion).
+Enabling Git Sync on a workspace corresponds to **stage 3** of the [collaboration and deployment stages](../23_canonical_deployment_setups/index.mdx#stage-3--add-git-sync) guide. [Git Promotion](#git-promotion-workflow-cross-instance-deployment-using-a-git-workflow) is the basis of **stage 4** (multi-workspace with promotion).
 
 :::
 
@@ -160,7 +160,7 @@ To allow for bidirectional sync, CI/CD can be configured to sync back changes to
    - Optionnaly, if you want to add a staging workspace, copy the previous GitHub action/workflow file but now set the `WMILL_WORKSPACE` variable to the id of the staging workspace and the `WMILL_URL` variable to the base URL of the Windmill instance if different than the one for prod. Also changes the trigger to listen to the branches: 'staging'.
    - `push-on-merge-to-forks.yaml`: This does the same as `push-on-merge.yaml` but for all [Workspace Forks](../20_workspace_forks/index.mdx), enabling the full power of the feature.
 3. In GitHub, [allow actions](https://docs.github.com/en/enterprise-server@3.10/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests) to create and approve pull requests.
-4. Create a [user token](../../core_concepts/4_webhooks/index.mdx#user-token) in Windmill and save it as a [secret](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) named `WMILL_TOKEN` in your GitHub repository Settings > "Secret and Variable" > "Actions".
+4. Create a [user token](../../core_concepts/4_webhooks/index.mdx#user-token) in Windmill and save it as a [secret](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) named `WMILL_TOKEN` in your GitHub repository Settings > "Secret and Variable" > "Actions". An unscoped token is the simplest choice; if you need a scoped one, see [CLI and git sync](../../core_concepts/59_user_tokens/index.mdx#cli-and-git-sync) for the required scopes.
 
 On top of `WMILL_TOKEN`, 2 other variables need to be set in the GitHub action workflow file:
 

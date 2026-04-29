@@ -22,10 +22,38 @@ const roles = {
       name: "ERP integration",
       colors: "bg-teal-50 text-teal-700 hover:text-teal-800",
       link: "/docs/misc/partners#erp-integration-and-automation"
+    },
+    "Version control and permissioning": {
+      name: "Version control and permissioning",
+      colors: "bg-purple-50 text-purple-700 hover:text-purple-800",
+      link: "/docs/misc/partners#have-a-devstagingprod-setup-for-version-controls-and-permissioning-fit-for-larger-organizations"
+    },
+    "Worker groups": {
+      name: "Worker groups",
+      colors: "bg-green-50 text-green-700 hover:text-green-800",
+      link: "/docs/misc/partners#maintain-a-complex-infrastructure-with-worker-groups-and-use-windmill-at-scale"
+    },
+    "AWS": {
+      name: "AWS",
+      colors: "bg-yellow-50 text-yellow-700 hover:text-yellow-800",
+      link: "/docs/misc/partners#deploy-on-a-specific-infrastructure-provider-gcp-aws-azure"
+    },
+    "Fintech": {
+      name: "Fintech",
+      colors: "bg-pink-50 text-pink-700 hover:text-pink-800",
+      link: "/docs/misc/partners#deploy-windmill-for-a-specific-industry"
     }
-  };  
+  };
 
 const people = [
+  {
+    name: 'Betabit Consulting',
+    description: "Betabit is an AI and software consultancy specializing in production-grade Windmill deployments. We've built and fully operationalized Windmill ecosystems - complex apps, AI workflows, big data pipelines, and infrastructure-as-code - for both small teams and large enterprise customers, with contributions merged upstream into Windmill OSS.",
+    roles: ['Common tree', 'App editor', 'Version control and permissioning', 'Worker groups', 'AWS', 'Fintech'],
+    email: 'hello@betabit.consulting',
+    profile: 'https://betabit.consulting/',
+    imageUrl: '/images/partners/bb-badge.png'
+  },
   {
     name: 'CloudShapers',
     description: 'CloudShapers is a Dutch cloud consultancy specializing in automation for MSPs and enterprise platform teams. We implemented Windmill at Axians and other customers, building multi-tenant orchestration platforms with hundreds of users and thousands of daily executions.',
@@ -70,39 +98,35 @@ const people = [
 
 function PartnersCatalog() {
     return (
-        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <ul role="list" className="grid grid-cols-1 gap-x-6 md:grid-cols-2 lg:grid-cols-3">
         {people.map((person) => (
-            <li key={person.email} className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white dark:bg-[#1F232D] text-center shadow">
-            <div className="flex flex-1 flex-col p-8">
-                <img alt="" src={person.imageUrl} className="mx-auto h-32 w-32 flex-shrink-0 rounded-full" />
-                <h3 className="mt-6 text-sm font-medium text-gray-900 dark:text-white">{person.name}</h3>
-                <dl className="mt-1 flex flex-grow flex-col justify-between">
-                <dd className="text-sm text-gray-500 dark:text-gray-200">{person.description}</dd>
-                <dd className="mt-3">
+            <li key={person.email} className="col-span-1 row-span-3 mb-6 grid [grid-template-rows:subgrid] rounded-lg bg-white dark:bg-[#1F232D] text-center shadow">
+                <div className="px-8 pt-8 pb-2">
+                    <img alt="" src={person.imageUrl} className="mx-auto h-32 w-32 flex-shrink-0 rounded-full" />
+                    <h3 className="mt-6 text-sm font-medium text-gray-900 dark:text-white">{person.name}</h3>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-200">{person.description}</p>
+                </div>
+                <div className="px-8 pt-3 pb-8 self-start">
                     {person.roles.map(role => (
                     <a key={role} href={roles[role].link} className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium mx-0.5 ${roles[role].colors}`}>
                         {role}
                     </a>
                     ))}
-                </dd>
-                </dl>
-            </div>
-            <div>
-                <div className="-mt-px flex divide-x divide-gray-200">
-                <div className="flex w-0 flex-1">
-                    <a href={`mailto:${person.email}`} className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 dark:text-white">
-                    <EnvelopeIcon aria-hidden="true" className="h-5 w-5 text-gray-400 dark:text-gray-200" />
-                    Email
-                    </a>
                 </div>
-                <div className="-ml-px flex w-0 flex-1">
-                    <a href={person.profile} className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900 dark:text-white">
-                    <LinkIcon aria-hidden="true" className="h-5 w-5 text-gray-400 dark:text-gray-200" />
-                    Profile
-                    </a>
+                <div className="-mt-px flex divide-x divide-gray-200 border-t border-gray-200">
+                    <div className="flex w-0 flex-1">
+                        <a href={`mailto:${person.email}`} className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 dark:text-white">
+                        <EnvelopeIcon aria-hidden="true" className="h-5 w-5 text-gray-400 dark:text-gray-200" />
+                        Email
+                        </a>
+                    </div>
+                    <div className="-ml-px flex w-0 flex-1">
+                        <a href={person.profile} className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900 dark:text-white">
+                        <LinkIcon aria-hidden="true" className="h-5 w-5 text-gray-400 dark:text-gray-200" />
+                        Profile
+                        </a>
+                    </div>
                 </div>
-                </div>
-            </div>
             </li>
         ))}
         </ul>

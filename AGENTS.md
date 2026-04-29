@@ -23,6 +23,7 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 - Titles, subtiles and docs in general follow sentence case ('Like this')
 - On docs, nothing shouldfollow title case ('Like This')
 - Do not add color styling in docs content or titles (for example, avoid HTML like `## Secret storage backends <span className="text-red-500">EE</span>`)
+- Avoid using symbol '—' as it looks like obvious AI. Use sentences not using it or use '-' instead.
 
 ## Component usage
 

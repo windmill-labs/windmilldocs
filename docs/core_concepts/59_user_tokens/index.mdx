@@ -96,6 +96,20 @@ When calling an [HTTP trigger](../39_http_routing/index.mdx) with Windmill Auth,
 
 When configuring an HTTP trigger with **Windmill Auth**, you can generate a pre-scoped token directly from the trigger configuration page. See [Token scopes for HTTP routes](../39_http_routing/index.mdx#token-scopes) for details.
 
+### CLI and git sync
+
+The Windmill CLI (`wmill sync push`/`pull`) and the [GitHub Action git sync](../../advanced/11_git_sync/index.mdx) authenticate with a user token. The simplest choice is an **unscoped token** (full user permissions).
+
+If you prefer a scoped token, sync needs `read` and `write` on every domain it touches:
+
+- `users:read` is always required — the CLI calls `whoami` on startup, so this is the first scope check that fires.
+- `folders`, `scripts`, `flows`, `apps` (and `raw_apps` if you have raw apps), `resources` — `read` and `write`.
+- `variables`, `schedules` — `read` and `write`, when those are not skipped in `wmill.yaml`.
+- All trigger domains (`http_triggers`, `websocket_triggers`, `kafka_triggers`, `nats_triggers`, `mqtt_triggers`, `sqs_triggers`, `gcp_triggers`, `azure_triggers`, `postgres_triggers`, `email_triggers`, `native_triggers`) — `read` and `write`, when `includeTriggers: true`.
+- `users:write`, `groups:read`, `groups:write` — only when syncing users or groups.
+
+The `git_sync` scope governs the git-sync **trigger configuration** endpoints (the integration set up in the workspace UI), not the CLI sync operation itself.
+
 ## Webhook-specific tokens
 
 [Webhooks](../4_webhooks/index.mdx) can generate tokens that are pre-scoped to only trigger a specific script or flow. These tokens cannot impersonate you for any other operation, making them safe to share publicly.

@@ -41,6 +41,35 @@ export async function main() {
 }
 ```
 
+### Wildcards
+
+Annotations support glob patterns so a single test script can cover a whole folder tree:
+
+- `*` matches one path segment.
+- `**` matches any depth.
+
+```typescript
+// test: script/u/admin/*
+// test: flow/u/team/**
+```
+
+The first pattern matches every script directly under `u/admin/`. The second matches every flow at any depth under `u/team/`. Wildcards can be combined with multi-target annotations on separate lines.
+
+### Branching on the triggering runnable
+
+CI test jobs receive a `WM_TESTED_RUNNABLE` environment variable containing `{kind}/{path}` of the runnable that triggered the test (for example, `script/u/admin/my_script`). This lets a single test script cover multiple targets and branch on which one fired it.
+
+```typescript
+// test: script/u/admin/*
+import * as wmill from "windmill-client";
+
+export async function main() {
+  const tested = process.env.WM_TESTED_RUNNABLE!; // e.g. "script/u/admin/my_script"
+  const path = tested.replace(/^script\//, "");
+  return await wmill.runScript(path, {});
+}
+```
+
 ### Python
 
 ```python
@@ -52,6 +81,8 @@ def main():
     assert result == 42
     return result
 ```
+
+In Python, the triggering runnable is exposed as `os.environ["WM_TESTED_RUNNABLE"]`.
 
 The annotation uses the comment syntax of each language (`//` for TypeScript, `#` for Python, etc.).
 

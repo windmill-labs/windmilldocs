@@ -377,17 +377,9 @@ If you have any questions, please contact support@windmill.dev
 
 ## Windmill Customer Portal
 
-As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & workers/compute units) from the portal. The portal also displays your last license renewal result and date in the top right corner, helping you track your subscription status. If you want to monitor your usage in real time, you can 'Send usage' from your [instance settings](../../advanced/18_instance_settings/index.mdx#telemetry) (if you have several instances, make sure to do it for each instance) and check how it converts into seats and compute units from the portal.
-
-From the portal, you can adjust your subscription on your own. If you adjust your subscription during a billing cycle, you will be charged a prorated amount for the additional resources. This means you will only pay for the portion of the year that remains after the adjustment. For example on a yearly subscription, if you make the adjustment 10 months into the year, you would pay for approximately 2/12 of the annual cost for the additional resources.
-
-Enterprise Edition customers with an active subscription can download our SOC2 report directly from the portal using the link in the bottom left. For other users, a "Request SOC2 report" button will open an email to support@windmill.dev.
+[Enterprise](/pricing) and [Pro](/pricing) customers manage subscriptions, usage, license keys, telemetry settings, and support issues from the [Customer Portal](https://portal.windmill.dev/). The portal also surfaces the result of the most recent [license key](#self-host) renewal so you can spot a failing renewal quickly.
 
 ![Portal](./portal.png 'Portal')
-
-Access to the portal is made through either:
-- From your [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key), in the "Core" tab. Where you can also renew your [license key](#self-host).
-- Through a direct link: [portal.windmill.dev](https://portal.windmill.dev/), filling in the email address used for the subscription, and then accessing a link sent by email.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -397,21 +389,90 @@ Access to the portal is made through either:
 	/>
 </div>
 
+### Accessing the portal
+
+Access is available through either:
+- From your [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key), in the "Core" tab — where you can also renew your [license key](#self-host).
+- Through a direct link at [portal.windmill.dev](https://portal.windmill.dev/), entering the email used for the subscription. A login link is then sent to that email.
+
+The login email can be the Stripe account email or any address listed in the **contact emails** of the subscription. Anyone matching by exact email becomes a portal admin, with full access to subscriptions, license keys, and the API. To grant a teammate the same access, add their address to the contact emails.
+
+Users who log in via a matched [authorized domain](#issues-and-feature-requests) (rather than an exact email match) get access only to the issues page at [portal.windmill.dev/issues](https://portal.windmill.dev/issues).
+
 ![Custom link from the instance settings](./portal_link_instance.png 'Custom link from the instance settings')
 
 > Custom link from the instance settings.
 
-<br/>
+### Subscriptions
 
-You can also enable/disable automatic renewal and automatic debit at any time. If disabled, you will need to pay by invoice.
+#### Updating seats and Compute Units
 
-This is also from the portal that you can [manage your issues and feature requests](../12_support_and_sla/index.mdx#feature-request-and-issue-dashboard). Access to the Issues Dasboard is made throught the 'Authorized domains'. Anyone with an email address from the set domains will be able to login to the issues page.
+You can increase seats or Compute Units from the portal; the prorated invoice is previewed before you confirm. If you adjust mid-cycle, you are charged a prorated amount for the additional resources — for example on a yearly subscription, an adjustment 10 months in is billed roughly 2/12 of the annual cost for the added resources.
 
-Usage of your instance is reported on the platform - metrics such as seats, workers, per-workspace job counts, language breakdowns, and worker occupancy rates are reported to Windmill. You can check whether your use of Windmill corresponds to your subscription, and report an error to Windmill if you wish. This comparison is made only for your instance of Prod, for which you can find the Base URL. The other instances URLs are also shown.
+To reduce seats or Compute Units, contact [support@windmill.dev](mailto:support@windmill.dev).
 
-### How to grant access to the portal
+#### Automatic renewal and payment by invoice
 
-To grant access to the portal, you need to add the email address to the 'Contact emails' list. You can do this by clicking on the "Update contact info" button in the portal.
+You can switch automatic renewal and payment by invoice on or off at any time:
+- **Automatic renewal** — when off, the subscription cancels at the end of the current period.
+- **Payment by invoice** — when on, automatic debit on the card on file is disabled, invoices are sent by email, and payment by bank transfer is allowed.
+
+#### Auto-upgrade seats
+
+On monthly subscriptions, you can enable auto-upgrade so the seat count automatically increases if usage exceeds the paid seats during the periodic refresh. No proration is applied — the new seat count is billed in the next invoice.
+
+#### Trial subscriptions
+
+While a subscription is in trial, you can request an extension from [support@windmill.dev](mailto:support@windmill.dev) or cancel the trial at any time.
+
+#### AWS Marketplace subscriptions
+
+Subscriptions billed through the [AWS Marketplace](#aws-marketplace) link directly to the underlying AWS contract — agreement details and auto-renewal status come from AWS, and seat or Compute Unit changes are made from the AWS console. Stripe-only options (invoices, payment by invoice, automatic renewal toggle) don't apply.
+
+### Usage and graphs
+
+For each subscription, the portal compares live usage against paid seats and Compute Units, with historical graphs covering Compute Units, seats, worker occupancy, and languages. Per-workspace graphs and the list of users counted as developers/operators (and external JWT tokens in use) are available when the relevant [telemetry controls](#telemetry-controls) are enabled.
+
+To monitor usage in real time, click "Send usage" from your [Instance settings](../../advanced/18_instance_settings/index.mdx#telemetry) (do this on each instance if you have several) and refresh the portal.
+
+### Telemetry controls
+
+Beyond the [default telemetry](#usage-checks), two opt-in toggles add detail to the data your instances send.
+
+#### Workspace telemetry
+
+When enabled, instances send per-workspace data — workspace names, job counts, and active user counts. This adds per-workspace breakdowns to the [usage graphs](#usage-and-graphs).
+
+#### Plain emails and external JWTs telemetry
+
+When enabled, instances send unhashed email addresses alongside usage telemetry — letting you see the actual users counted as developers and operators across all your instances (deduplicated) — and the [external JWT tokens](../../core_concepts/16_roles_and_permissions/index.mdx) used in the last 30 days, with their owner, workspace, label, and scopes. This setting auto-disables 24 hours after being turned on.
+
+### License keys
+
+You can copy the latest valid license key from the portal at any time (the first key is also sent in the signup email). A separate **dev license key** is also available for development and local instances: usage on dev keys does not count toward subscription limits, but they expire when the production key expires. The production key (and therefore dev keys) keep renewing only if production stays within usage limits and all invoices are paid.
+
+The portal also surfaces the License ID, whether the key is renewable, the last renewal attempt result, and the key expiry date — colored yellow within 10 days of expiry and red once expired.
+
+### Issues and feature requests
+
+The portal hosts the [feature request and issue dashboard](../12_support_and_sla/index.mdx#feature-request-and-issue-dashboard) for [Enterprise](/pricing) customers. You can configure:
+
+- **Authorized domains** — anyone with an email address from these domains can log in to the issues page (read/write issues only, no access to subscriptions).
+- **Linked GitHub users** — issues created on GitHub by these users are automatically added to the dashboard.
+- **Email notification addresses** — addresses that receive notifications about new issues and updates.
+
+### API access
+
+Portal admins can create API keys to consume the customer API programmatically — for example to fetch usage or list subscriptions from a monitoring script.
+
+- A new key is shown only once at creation; copy it immediately.
+- Revoking a key takes effect immediately and any integration using it stops working.
+
+API keys are read-only (GET requests only). The full API reference is published at [portal.windmill.dev/docs](https://portal.windmill.dev/docs) and is authenticated with the same login session as the portal.
+
+### SOC 2 report
+
+[Enterprise](/pricing) customers with an active subscription can download Windmill's SOC 2 report directly from the portal. Other users can request it from [support@windmill.dev](mailto:support@windmill.dev).
 
 ## Usage checks
 
@@ -431,7 +492,7 @@ When minimal telemetry is disabled, the following is also collected:
 
 How the data is calculated:
 - Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.
-- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month. [Non-prod instances](../../advanced/18_instance_settings/index.mdx#non-prod-instance) are not counted in the billing for computation usage. For development environments, you can also easily copy a development license key using the button in the bottom right of the portal. This provides an alternative to manually turning instances to Non-prod mode.
+- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month. [Non-prod instances](../../advanced/18_instance_settings/index.mdx#non-prod-instance) are not counted in the billing for computation usage. For development environments, a [dev license key](#license-keys) from the portal is an alternative to marking instances as non-prod manually.
 
 Using a number of seats, workers, or memory greater than the terms of your subscription is technically possible, but if you do not adjust your subscription accordingly (via the [Customer Portal](#windmill-customer-portal)), we will ask you to take steps to correct this, with 3 options:
 1. Our telemetry data may not be accurate or you do not understand it. In this case, please inform us or book a call: https://www.windmill.dev/ruben-30min

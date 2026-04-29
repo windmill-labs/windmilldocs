@@ -152,6 +152,38 @@ The wmill workspace whoami command allows you to display the currently active us
 wmill workspace whoami
 ```
 
+## Slack integration
+
+### Connect
+
+Non-interactively connect Slack to the active workspace using a pre-minted bot token (`xoxb-…`) obtained at [api.slack.com/apps](https://api.slack.com/apps). Produces the same DB state as the UI OAuth flow: `workspace_settings` fields, `g/slack` group, `slack_bot` folder, and the encrypted bot token variable + resource at `f/slack_bot/bot_token`.
+
+```bash
+wmill workspace connect-slack \
+  --bot-token <xoxb-…> \
+  --team-id <T…> \
+  --team-name "<team name>"
+```
+
+Admin-only. Idempotent: re-running with the same arguments is a no-op; a different `team-id` rewrites the binding in place.
+
+To get the `team-id` and `team-name` from the token, call Slack's `auth.test`:
+
+```bash
+curl -s -X POST https://slack.com/api/auth.test \
+  -H "Authorization: Bearer xoxb-YOUR-TOKEN"
+```
+
+For more context (scopes, instance-level counterpart, workspace-level OAuth override), see the [Slack integration doc](../../integrations/slack.mdx#action-on-windmill-from-slack).
+
+### Disconnect
+
+```bash
+wmill workspace disconnect-slack
+```
+
+Clears `slack_team_id` and `slack_name` on the active workspace. Does NOT remove the bot token variable/resource/folder/group — delete those from your local sync folder and run `wmill sync push` to tear them down. Does NOT remove the workspace-level OAuth override — set `slack_oauth_client_id` / `slack_oauth_client_secret` to `""` in `settings.yaml` and push.
+
 ## Managing encryption keys
 
 All [secrets](../../core_concepts/2_variables_and_secrets/index.mdx#secrets) of a workspace are [encrypted](../../core_concepts/30_workspace_secret_encryption/index.mdx) with a symmetric key unique to that workspace. This key is generated when the workspace is created and is stored in the database in the workspace_settings.
